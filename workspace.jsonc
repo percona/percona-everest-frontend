@@ -50,7 +50,11 @@
         "@teambit/typescript.typescript-compiler": "0.0.9",
         "eslint": "^7.28.0"
       },
-      "peerDependencies": {}
+      "peerDependencies": {
+        "@emotion/react": "^11.11.0",
+        "@emotion/styled": "^11.11.0",
+        "@mui/material": "^5.13.1"
+      }
     },
     "linkCoreAspects": true,
     "rootComponents": true
@@ -59,5 +63,6 @@
     "envs": [
       "percona.everest/envs/percona-react-env"
     ]
-  }
+  },
+  "percona.design/themes/base": {}
 }
