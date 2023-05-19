@@ -63,6 +63,5 @@
     "envs": [
       "percona.everest/envs/percona-react-env"
     ]
-  },
-  "percona.design/themes/base": {}
+  }
 }
