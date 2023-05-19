@@ -1,5 +1,3 @@
-# ignored files and directories will (also) be excluded from your components.
-
 # Bit
 .bit
 public

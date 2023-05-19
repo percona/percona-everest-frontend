@@ -9,28 +9,16 @@
  */
 
 {
-    "envs/percona-react-env": {
+    "themes/base": {
         "scope": "",
         "version": "",
-        "defaultScope": "percona.everest",
+        "defaultScope": "percona.design",
         "mainFile": "index.ts",
-        "rootDir": "everest/envs/percona-react-env",
+        "rootDir": "design/themes/base",
         "config": {
+            "teambit.react/react": {},
             "teambit.envs/envs": {
-                "env": "teambit.envs/env"
-            },
-            "teambit.dependencies/dependency-resolver": {},
-            "teambit.compositions/compositions": {},
-            "teambit.docs/docs": {},
-            "teambit.preview/preview": {},
-            "teambit.component/dev-files": {},
-            "teambit.pipelines/builder": {},
-            "teambit.component/forking": {
-                "forkedFrom": {
-                    "scope": "teambit.react",
-                    "name": "react-env-extension",
-                    "version": "0.0.23"
-                }
+                "env": "teambit.react/react"
             }
         }
     },
