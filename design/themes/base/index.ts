@@ -1,1 +1,1 @@
-export { BaseTheme } from './base';
+export { BaseTheme } from './BaseTheme';

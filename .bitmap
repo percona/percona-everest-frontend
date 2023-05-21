@@ -22,5 +22,18 @@
             }
         }
     },
+    "themes/everest": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.design",
+        "mainFile": "index.ts",
+        "rootDir": "design/themes/everest",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
     "$schema-version": "15.0.0"
 }
