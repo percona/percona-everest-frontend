@@ -11,7 +11,7 @@ const themeOptions: ThemeOptions = {
       },
       [BaseTheme.breakpoints.up('sm')]: {
         fontSize: '48px',
-      }
+      },
     },
     h2: {
       fontWeight: 600,
@@ -20,7 +20,7 @@ const themeOptions: ThemeOptions = {
       },
       [BaseTheme.breakpoints.up('sm')]: {
         fontSize: '40px',
-      }
+      },
     },
     h3: {
       fontWeight: 600,
@@ -29,7 +29,7 @@ const themeOptions: ThemeOptions = {
       },
       [BaseTheme.breakpoints.up('sm')]: {
         fontSize: '33px',
-      }
+      },
     },
     h4: {
       fontWeight: 600,
@@ -38,7 +38,7 @@ const themeOptions: ThemeOptions = {
       },
       [BaseTheme.breakpoints.up('sm')]: {
         fontSize: '28px',
-      }
+      },
     },
     h5: {
       fontWeight: 600,
@@ -47,7 +47,7 @@ const themeOptions: ThemeOptions = {
       },
       [BaseTheme.breakpoints.up('sm')]: {
         fontSize: '23px',
-      }
+      },
     },
     h6: {
       fontWeight: 600,
@@ -56,9 +56,9 @@ const themeOptions: ThemeOptions = {
       },
       [BaseTheme.breakpoints.up('sm')]: {
         fontSize: '19px',
-      }
-    }
-  }
+      },
+    },
+  },
 };
 
 BaseTheme = createTheme(BaseTheme, themeOptions);
