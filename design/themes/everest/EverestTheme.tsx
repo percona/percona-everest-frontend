@@ -1,9 +1,7 @@
 import { PaletteMode } from '@mui/material';
-import { ThemeOptions, createTheme } from '@mui/material';
+import { ThemeOptions, createTheme } from '@mui/material/styles';
 
 import { getTheme as getBaseTheme } from '@percona/design.themes.base';
-
-let EverestTheme = createTheme();
 
 const themeOptions = (mode: PaletteMode): ThemeOptions => ({
   // This is just an example to override base theme's typography.
@@ -16,55 +14,50 @@ const themeOptions = (mode: PaletteMode): ThemeOptions => ({
       },
       [EverestTheme.breakpoints.up('sm')]: {
         fontSize: '52px',
-      },
-    },
-    button: {
-      textTransform: 'none',
-      lineHeight: '1',
-      letterSpacing: '0.025em',
-    },
+      }
+    }
+  },
+  button: {
+    textTransform: 'none',
+    lineHeight: '1',
+    letterSpacing: '0.025em',
   },
   palette: {
     mode,
     ...(mode === 'light'
       ? {
-          action: {
-            hover: 'rgba(119, 79, 170, 0.04)',
-            hoverOpacity: 0.04,
-            selected: 'rgba(119, 79, 170, 0.08)',
-            selectedOpacity: 0.08,
-            focus: 'rgba(119, 79, 170, 0.12)',
-            focusOpacity: 0.12,
-            disabled: 'rgba(44, 50, 62, 0.12)',
-          },
+        action: {
+          hover: 'rgba(119, 79, 170, 0.04)',
+          hoverOpacity: 0.04,
+          selected: 'rgba(119, 79, 170, 0.08)',
+          selectedOpacity: 0.08,
+          focus: 'rgba(119, 79, 170, 0.12)',
+          focusOpacity: 0.12,
+          focusVisible: 'rgba(18, 119, 227, 0.3)',
+          focusVisibleOpacity: 0.3,
+        },
           primary: {
             main: '#0E5FB5',
             light: '#127AE8',
             dark: '#0B4A8C',
           },
-          text: {
-            disabled: 'rgba(48, 54, 66, 0.5)',
-          },
-        }
-      : {
-          action: {
-            hover: 'rgba(245, 204, 120, 0.08)',
-            hoverOpacity: 0.08,
-            selected: 'rgba(245, 204, 120, 0.12)',
-            selectedOpacity: 0.12,
-            focus: 'rgba(245, 204, 120, 0.15)',
-            focusOpacity: 0.15,
-            disabled: 'rgba(240, 241, 244, 0.14)',
-          },
+      } : {
+        action: {
+          hover: 'rgba(245, 204, 120, 0.08)',
+          hoverOpacity: 0.08,
+          selected: 'rgba(245, 204, 120, 0.12)',
+          selectedOpacity: 0.12,
+          focus: 'rgba(245, 204, 120, 0.15)',
+          focusOpacity: 0.15,
+          focusVisible: 'rgba(46, 147, 255, 0.3)',
+          focusVisibleOpacity: 0.3
+        },
           primary: {
             main: '#62AEFF',
             light: '#B6D9FF',
             dark: '#1486FF',
           },
-          text: {
-            disabled: 'rgba(255, 255, 255, 0.4)',
-          },
-        }),
+      }),
   },
   components: {
     MuiButton: {
@@ -119,5 +112,4 @@ const themeOptions = (mode: PaletteMode): ThemeOptions => ({
   },
 });
 
-export const getTheme = (mode: PaletteMode = 'light') =>
-  createTheme(getBaseTheme(mode), themeOptions(mode));
+export const getTheme = (mode: PaletteMode = 'light') => createTheme(getBaseTheme(mode), themeOptions(mode));
