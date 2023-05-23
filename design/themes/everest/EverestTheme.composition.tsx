@@ -22,7 +22,7 @@ export const Typography = () => (
   </ThemeProvider>
 );
 
-export const Button = () => (
+export const Buttons = () => (
   <ThemeProvider theme={getTheme()}>
     <CssBaseline />
     <div>
