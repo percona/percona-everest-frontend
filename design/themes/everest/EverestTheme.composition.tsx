@@ -1,15 +1,11 @@
-import {
-  ThemeProvider,
-  Typography as MuiTypography,
-  Button as MuiButton,
-} from '@mui/material';
+import { ThemeProvider, Typography as MuiTypography, Button as MuiButton } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 
+import { getTheme } from './EverestTheme';
 import React from 'react';
-import { EverestTheme } from './EverestTheme';
 
 export const Typography = () => (
-  <ThemeProvider theme={EverestTheme}>
+  <ThemeProvider theme={getTheme()}>
     <CssBaseline />
     <div>
       <MuiTypography variant="h1">H1 Heading</MuiTypography>
@@ -23,7 +19,7 @@ export const Typography = () => (
 );
 
 export const Button = () => (
-  <ThemeProvider theme={EverestTheme}>
+    <ThemeProvider theme={getTheme()}>
     <CssBaseline />
     <div>
       <MuiButton variant="contained" size="large">

@@ -1,11 +1,11 @@
 import { ThemeProvider, Typography as MuiTypography } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 
+import { getTheme } from './BaseTheme';
 import React from 'react';
-import { BaseTheme } from './BaseTheme';
 
 export const Typography = () => (
-  <ThemeProvider theme={BaseTheme}>
+  <ThemeProvider theme={getTheme()}>
     <CssBaseline />
     <div>
       <MuiTypography variant="h1">H1 Heading</MuiTypography>
