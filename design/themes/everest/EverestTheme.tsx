@@ -1,24 +1,9 @@
 import { PaletteMode } from '@mui/material';
-import { ThemeOptions, createTheme } from '@mui/material';
+import { ThemeOptions, createTheme } from '@mui/material/styles';
 
 import { getTheme as getBaseTheme } from '@percona/design.themes.base';
 
-let EverestTheme = createTheme();
-
 const themeOptions = (mode: PaletteMode): ThemeOptions => ({
-  // This is just an example to override base theme's typography.
-  // TODO remove afterwards
-  typography: {
-    h1: {
-      fontWeight: 200,
-      [EverestTheme.breakpoints.down('sm')]: {
-        fontSize: '48px',
-      },
-      [EverestTheme.breakpoints.up('sm')]: {
-        fontSize: '52px',
-      }
-    }
-  },
   palette: {
     mode,
     ...(mode === 'light'
@@ -30,6 +15,8 @@ const themeOptions = (mode: PaletteMode): ThemeOptions => ({
           selectedOpacity: 0.08,
           focus: 'rgba(119, 79, 170, 0.12)',
           focusOpacity: 0.12,
+          focusVisible: 'rgba(18, 119, 227, 0.3)',
+          focusVisibleOpacity: 0.3,
         }
       } : {
         action: {
@@ -39,6 +26,8 @@ const themeOptions = (mode: PaletteMode): ThemeOptions => ({
           selectedOpacity: 0.12,
           focus: 'rgba(245, 204, 120, 0.15)',
           focusOpacity: 0.15,
+          focusVisible: 'rgba(46, 147, 255, 0.3)',
+          focusVisibleOpacity: 0.3
         }
       }),
   },

@@ -1,4 +1,4 @@
-import { ThemeProvider, Typography as MuiTypography } from '@mui/material';
+import { ThemeProvider, Typography as MuiTypography, useTheme } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import { getTheme } from './BaseTheme';
@@ -17,3 +17,12 @@ export const Typography = () => (
     </div>
   </ThemeProvider>
 );
+
+export const Palette = () => {
+  const { palette } = useTheme();
+
+  const tokens = Object.entries(palette).map(([name, value]: [string, string]) => ({
+    name,
+    value,
+  }));
+}
