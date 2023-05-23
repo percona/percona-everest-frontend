@@ -1,4 +1,8 @@
-import { ThemeProvider, Typography as MuiTypography, Button as MuiButton } from '@mui/material';
+import {
+  ThemeProvider,
+  Typography as MuiTypography,
+  Button as MuiButton,
+} from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import { getTheme } from './EverestTheme';
@@ -19,7 +23,7 @@ export const Typography = () => (
 );
 
 export const Button = () => (
-    <ThemeProvider theme={getTheme()}>
+  <ThemeProvider theme={getTheme()}>
     <CssBaseline />
     <div>
       <MuiButton variant="contained" size="large">
