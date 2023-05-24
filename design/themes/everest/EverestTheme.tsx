@@ -1,7 +1,10 @@
 import { PaletteMode } from '@mui/material';
 import { ThemeOptions, createTheme } from '@mui/material/styles';
 
-import { getTheme as getBaseTheme, getThemeType } from '@percona/design.themes.base';
+import {
+  getTheme as getBaseTheme,
+  getThemeType,
+} from '@percona/design.themes.base';
 
 const themeOptions = (mode: PaletteMode): ThemeOptions => ({
   palette: {

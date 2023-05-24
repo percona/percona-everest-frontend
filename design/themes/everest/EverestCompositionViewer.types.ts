@@ -1,3 +1,3 @@
 export type EverestCompositionViewerProps = {
-  children: React.ReactNode
+  children: React.ReactNode;
 };

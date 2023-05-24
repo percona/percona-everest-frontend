@@ -17,11 +17,11 @@ import {
 const Toggler = () => {
   const colorMode = React.useContext(ColorModeContext);
 
-  return <button onClick={colorMode.toggleColorMode}>Toggle</button>
+  return <button onClick={colorMode.toggleColorMode}>Toggle</button>;
 };
 
 <ThemeContextProvider>
   <Toggler />
   <RestOfTheApp />
-</ThemeContextProvider>
+</ThemeContextProvider>;
 ```

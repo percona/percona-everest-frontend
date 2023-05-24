@@ -5,4 +5,6 @@ import { getTheme } from '@percona/design.themes.everest';
 
 export const EverestCompositionViewer = ({
   children,
-}: EverestCompositionViewerProps) => <CompositionViewer getThemeFn={getTheme}>{children}</CompositionViewer>;
+}: EverestCompositionViewerProps) => (
+  <CompositionViewer getThemeFn={getTheme}>{children}</CompositionViewer>
+);

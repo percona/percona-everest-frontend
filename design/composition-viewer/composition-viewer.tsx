@@ -7,14 +7,17 @@ import {
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { Stack, Box, IconButton, AppBar } from '@mui/material';
-import { ColorTogglerProps, CompositionViewerProps } from './composition-viewer.types';
+import {
+  ColorTogglerProps,
+  CompositionViewerProps,
+} from './composition-viewer.types';
 
 const ColorToggler = ({ ...props }: ColorTogglerProps) => {
   const colorMode = React.useContext(ColorModeContext);
   const theme = useTheme();
 
   return (
-    <IconButton onClick={colorMode.toggleColorMode}{...props}>
+    <IconButton onClick={colorMode.toggleColorMode} {...props}>
       {theme.palette.mode === 'dark' ? (
         <Brightness7Icon />
       ) : (
