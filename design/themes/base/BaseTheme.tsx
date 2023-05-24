@@ -289,6 +289,21 @@ const themeOptions = (mode: PaletteMode): ThemeOptions => ({
         }),
       },
     },
+    MuiButtonGroup: {
+      styleOverrides: {
+        root: {
+          borderRadius: '128px',
+        },
+        grouped: {
+          '&: not(:last-of-type)': {
+            marginLeft: '-2px',
+          },
+          '&: not(:first-of-type)': {
+            marginLeft: '-2px',
+          }
+        }
+      },
+    },
     MuiInputLabel: {
       styleOverrides: {
         root: {

@@ -2,6 +2,7 @@ import {
   ThemeProvider,
   Typography as MuiTypography,
   Button as MuiButton,
+  ButtonGroup as MuiButtonGroup,
   useTheme,
 } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -91,6 +92,18 @@ export const Buttons = () => (
       <MuiButton variant="text" size="small" disabled={true}>
         Small
       </MuiButton>
+    </div>
+    <div>
+      <MuiButtonGroup variant="contained">
+        <MuiButton>Medium</MuiButton>
+        <MuiButton>Medium</MuiButton>
+        <MuiButton>Medium</MuiButton>
+      </MuiButtonGroup>
+      <MuiButtonGroup variant="outlined">
+        <MuiButton>Medium</MuiButton>
+        <MuiButton>Medium</MuiButton>
+        <MuiButton>Medium</MuiButton>
+      </MuiButtonGroup>
     </div>
   </ThemeProvider>
 );

@@ -12,6 +12,9 @@ importers:
       '@emotion/styled':
         specifier: ^11.11.0
         version: registry.npmjs.org/@emotion/styled@11.11.0(@emotion/react@11.11.0)(@types/react@17.0.59)(react@17.0.2)
+      '@mui/icons-material':
+        specifier: ^5.11.16
+        version: registry.npmjs.org/@mui/icons-material@5.11.16(@mui/material@5.13.1)(@types/react@17.0.59)(react@17.0.2)
       '@mui/material':
         specifier: ^5.13.1
         version: registry.npmjs.org/@mui/material@5.13.1(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@17.0.59)(react-dom@17.0.2)(react@17.0.2)
@@ -642,6 +645,30 @@ packages:
     resolution: {integrity: sha512-qDHtNDO72NcBQMhaWBt9EZMvNiO+OXjPg5Sdk/6LgRDw6Zr3HdEZ5n2FJ/qtYsaT/okGyCuQavQkcZCOCEVf/g==, registry: https://node.bit.dev/, tarball: https://registry.npmjs.org/@mui/core-downloads-tracker/-/core-downloads-tracker-5.13.1.tgz}
     name: '@mui/core-downloads-tracker'
     version: 5.13.1
+    dev: false
+
+  registry.npmjs.org/@mui/icons-material@5.11.16(@mui/material@5.13.1)(@types/react@17.0.59)(react@17.0.2):
+    resolution: {integrity: sha512-oKkx9z9Kwg40NtcIajF9uOXhxiyTZrrm9nmIJ4UjkU2IdHpd4QVLbCc/5hZN/y0C6qzi2Zlxyr9TGddQx2vx2A==, registry: https://node.bit.dev/, tarball: https://registry.npmjs.org/@mui/icons-material/-/icons-material-5.11.16.tgz}
+    id: registry.npmjs.org/@mui/icons-material/5.11.16
+    name: '@mui/icons-material'
+    version: 5.11.16
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      '@mui/material': '*'
+      '@types/react': '*'
+      react: '*'
+    peerDependenciesMeta:
+      '@mui/material':
+        optional: true
+      '@types/react':
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      '@babel/runtime': registry.npmjs.org/@babel/runtime@7.21.5
+      '@mui/material': registry.npmjs.org/@mui/material@5.13.1(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@17.0.59)(react-dom@17.0.2)(react@17.0.2)
+      '@types/react': registry.npmjs.org/@types/react@17.0.59
+      react: registry.npmjs.org/react@17.0.2
     dev: false
 
   registry.npmjs.org/@mui/material@5.13.1(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@17.0.59)(react-dom@17.0.2)(react@17.0.2):
