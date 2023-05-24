@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Box,
-  Palette,
-  Stack,
-  Typography,
-  styled,
-  useTheme,
-} from '@mui/material';
+import { Box, Palette, Stack, Typography, styled } from '@mui/material';
 import LightMode from '@mui/icons-material/LightModeOutlined';
 import DarkMode from '@mui/icons-material/DarkModeOutlined';
 import { getThemeType } from '@percona/design.themes.base';
@@ -74,6 +67,9 @@ const Table = styled('table')(({ theme }) => ({
     '&:first-of-type': {
       '& td': { paddingTop: 6 },
     },
+    '&:nth-child(even)': {
+      backgroundColor: theme.palette.grey[300],
+    },
   },
 }));
 
@@ -127,9 +123,9 @@ export const PaletteThemeViewer = ({
           {paletteTokens
             .filter((token) => token !== 'mode')
             .map((token) => (
-              <tr key={token}>
+              <React.Fragment key={token}>
                 {typeof light[token] === 'string' ? (
-                  <>
+                  <tr>
                     <td>
                       <Typography sx={{ py: 1, display: 'block' }}>
                         {token}
@@ -163,9 +159,9 @@ export const PaletteThemeViewer = ({
                         {dark[token]}
                       </Box>
                     </td>
-                  </>
+                  </tr>
                 ) : null}
-              </tr>
+              </React.Fragment>
             ))}
         </tbody>
       </Table>
