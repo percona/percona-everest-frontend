@@ -1,3 +1,3 @@
 import { PaletteMode, Theme } from '@mui/material';
 
-export type getThemeType = (mode: PaletteMode) => Theme;
+export type getThemeType = (mode?: PaletteMode) => Theme;

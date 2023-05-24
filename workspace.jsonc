@@ -71,5 +71,6 @@
   "percona.design/theme-context-provider": {},
   "percona.design/composition-viewer": {},
   "percona.design/themes/base": {},
-  "percona.design/themes/everest": {}
+  "percona.design/themes/everest": {},
+  "percona.design/utils/palette-theme-viewer": {}
 }

@@ -61,5 +61,18 @@
             }
         }
     },
+    "utils/palette-theme-viewer": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.design",
+        "mainFile": "index.ts",
+        "rootDir": "design/utils/palette-theme-viewer",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
     "$schema-version": "15.0.0"
 }

@@ -1,6 +1,8 @@
-import { Typography as MuiTypography } from '@mui/material';
 import React from 'react';
+import { Typography as MuiTypography } from '@mui/material';
 import { CompositionViewer } from '@percona/design.composition-viewer';
+import { PaletteThemeViewer } from '@percona/design.utils.palette-theme-viewer';
+import { getTheme } from './BaseTheme';
 
 export const Typography = () => (
   <CompositionViewer>
@@ -18,3 +20,5 @@ export const Typography = () => (
     <MuiTypography variant="caption">Caption</MuiTypography>
   </CompositionViewer>
 );
+
+export const Palette = () => <PaletteThemeViewer getTheme={getTheme} />;
