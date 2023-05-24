@@ -33,8 +33,8 @@ export const CompositionViewer = ({
 }: CompositionViewerProps) => (
   <ThemeContextProvider {...rest}>
     <Stack>
-      <AppBar position="static">
-        <ColorToggler sx={{ marginLeft: 'auto' }} />
+      <AppBar position="static" sx={{ backgroundColor: 'primary.main' }}>
+        <ColorToggler sx={{ marginLeft: 'auto', color: 'white' }} />
       </AppBar>
       <Box>{children}</Box>
     </Stack>
