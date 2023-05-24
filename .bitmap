@@ -9,6 +9,32 @@
  */
 
 {
+    "composition-viewer": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.design",
+        "mainFile": "index.ts",
+        "rootDir": "design/composition-viewer",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
+    "theme-context-provider": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.design",
+        "mainFile": "index.ts",
+        "rootDir": "design/theme-context-provider",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
     "themes/base": {
         "scope": "",
         "version": "",
