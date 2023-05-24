@@ -1,6 +1,7 @@
 import {
   ThemeProvider,
   Typography as MuiTypography,
+  Button as MuiButton,
   useTheme,
 } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -24,6 +25,72 @@ export const Typography = () => (
       <MuiTypography variant="body1">Body 1</MuiTypography>
       <MuiTypography variant="body2">Body 2</MuiTypography>
       <MuiTypography variant="caption">Caption</MuiTypography>
+    </div>
+  </ThemeProvider>
+);
+
+export const Buttons = () => (
+  <ThemeProvider theme={getTheme()}>
+    <CssBaseline />
+    <div>
+      <MuiButton variant="contained" size="large">
+        Large
+      </MuiButton>
+      <MuiButton variant="contained" size="large" disabled={true}>
+        Large
+      </MuiButton>
+      <MuiButton variant="contained" size="medium">
+        Medium
+      </MuiButton>
+      <MuiButton variant="contained" size="medium" disabled={true}>
+        Medium
+      </MuiButton>
+      <MuiButton variant="contained" size="small">
+        Small
+      </MuiButton>
+      <MuiButton variant="contained" size="small" disabled={true}>
+        Small
+      </MuiButton>
+    </div>
+    <div>
+      <MuiButton variant="outlined" size="large">
+        Large
+      </MuiButton>
+      <MuiButton variant="outlined" size="large" disabled={true}>
+        Large
+      </MuiButton>
+      <MuiButton variant="outlined" size="medium">
+        Medium
+      </MuiButton>
+      <MuiButton variant="outlined" size="medium" disabled={true}>
+        Medium
+      </MuiButton>
+      <MuiButton variant="outlined" size="small">
+        Small
+      </MuiButton>
+      <MuiButton variant="outlined" size="small" disabled={true}>
+        Small
+      </MuiButton>
+    </div>
+    <div>
+      <MuiButton variant="text" size="large">
+        Large
+      </MuiButton>
+      <MuiButton variant="text" size="large" disabled={true}>
+        Large
+      </MuiButton>
+      <MuiButton variant="text" size="medium">
+        Medium
+      </MuiButton>
+      <MuiButton variant="text" size="medium" disabled={true}>
+        Medium
+      </MuiButton>
+      <MuiButton variant="text" size="small">
+        Small
+      </MuiButton>
+      <MuiButton variant="text" size="small" disabled={true}>
+        Small
+      </MuiButton>
     </div>
   </ThemeProvider>
 );
