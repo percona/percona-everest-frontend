@@ -48,6 +48,7 @@ const themeOptions = (mode: PaletteMode): ThemeOptions => ({
           },
           background: {
             default: '#FFFFFF',
+            paper: '#FFFFFF',
           },
         }
       : {
@@ -90,6 +91,7 @@ const themeOptions = (mode: PaletteMode): ThemeOptions => ({
           },
           background: {
             default: '#2C323E',
+            paper: '#2C323E',
           },
         }),
   },
