@@ -22,6 +22,32 @@
             }
         }
     },
+    "everest-composition-viewer": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.design",
+        "mainFile": "index.ts",
+        "rootDir": "design/everest-composition-viewer",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
+    "icons/everest": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui",
+        "mainFile": "index.ts",
+        "rootDir": "ui/icons/everest",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
     "theme-context-provider": {
         "scope": "",
         "version": "",

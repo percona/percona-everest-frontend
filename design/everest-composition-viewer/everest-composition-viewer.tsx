@@ -1,6 +1,6 @@
 import React from 'react';
 import { CompositionViewer } from '@percona/design.composition-viewer';
-import { EverestCompositionViewerProps } from './EverestCompositionViewer.types';
+import { EverestCompositionViewerProps } from './everest-composition-viewer.types';
 import { getTheme } from '@percona/design.themes.everest';
 
 export const EverestCompositionViewer = ({
