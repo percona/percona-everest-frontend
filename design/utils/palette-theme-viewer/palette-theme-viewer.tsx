@@ -1,8 +1,11 @@
 import React from 'react';
 import { Box, Palette, Stack, Typography, styled } from '@mui/material';
-import LightMode from '@mui/icons-material/LightModeOutlined';
-import DarkMode from '@mui/icons-material/DarkModeOutlined';
+import { LightMode, DarkMode } from '@mui/icons-material';
 import { getThemeType } from '@percona/design.themes.base';
+
+/**
+ * This component was based on https://mui.com/joy-ui/customization/theme-colors/
+ */
 
 const RenderSwatch = ({ token }: { token: string }) => (
   <Box
