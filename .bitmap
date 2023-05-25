@@ -35,6 +35,19 @@
             }
         }
     },
+    "icons/db": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui",
+        "mainFile": "index.ts",
+        "rootDir": "ui/icons/db",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
     "icons/everest": {
         "scope": "",
         "version": "",

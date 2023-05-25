@@ -232,8 +232,8 @@ export const EverestAppSquareIcon = (props: SvgIconProps) => (
     <path d="M112.646 86.5924C119.514 82.0993 124.052 74.3389 124.052 65.5186C124.052 51.6208 112.786 40.3544 98.888 40.3544C94.7944 40.3544 90.9291 41.3319 87.5127 43.0662L91.0047 49.1138C93.3898 47.9656 96.0638 47.3222 98.888 47.3222C108.938 47.3222 117.084 55.469 117.084 65.5186C117.084 71.7597 113.942 77.267 109.154 80.5448L112.646 86.5924Z" fill="white" />
     <defs>
       <radialGradient id="paint0_radial_11669_75181" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(5.05654 149.336) scale(244.062)">
-        <stop offset="0.333333" stop-color="#0E5FB5" />
-        <stop offset="1" stop-color="#62AEFF" />
+        <stop offset="0.333333" stopColor="#0E5FB5" />
+        <stop offset="1" stopColor="#62AEFF" />
       </radialGradient>
     </defs>
   </SvgIcon>
@@ -261,8 +261,8 @@ export const EverestAppRoundIcon = (props: SvgIconProps) => (
     <path d="M112.646 86.5924C119.514 82.0993 124.052 74.3389 124.052 65.5186C124.052 51.6208 112.786 40.3544 98.888 40.3544C94.7944 40.3544 90.9291 41.3319 87.5127 43.0662L91.0047 49.1138C93.3898 47.9656 96.0638 47.3222 98.888 47.3222C108.938 47.3222 117.084 55.469 117.084 65.5186C117.084 71.7597 113.942 77.267 109.154 80.5448L112.646 86.5924Z" fill="white" />
     <defs>
       <radialGradient id="paint0_radial_11669_75184" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(5.05654 149.336) scale(244.062)">
-        <stop offset="0.333333" stop-color="#0E5FB5" />
-        <stop offset="1" stop-color="#62AEFF" />
+        <stop offset="0.333333" stopColor="#0E5FB5" />
+        <stop offset="1" stopColor="#62AEFF" />
       </radialGradient>
     </defs>
   </SvgIcon>
@@ -290,8 +290,8 @@ export const EverestAppCircleIcon = (props: SvgIconProps) => (
     <path d="M112.646 80.5924C119.514 76.0993 124.052 68.3389 124.052 59.5186C124.052 45.6208 112.786 34.3544 98.888 34.3544C94.7944 34.3544 90.9291 35.3319 87.5127 37.0662L91.0047 43.1138C93.3898 41.9656 96.0638 41.3222 98.888 41.3222C108.938 41.3222 117.084 49.469 117.084 59.5186C117.084 65.7597 113.942 71.267 109.154 74.5448L112.646 80.5924Z" fill="white" />
     <defs>
       <radialGradient id="paint0_radial_11669_75187" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(5.05654 149.336) scale(244.062)">
-        <stop offset="0.333333" stop-color="#0E5FB5" />
-        <stop offset="1" stop-color="#62AEFF" />
+        <stop offset="0.333333" stopColor="#0E5FB5" />
+        <stop offset="1" stopColor="#62AEFF" />
       </radialGradient>
     </defs>
   </SvgIcon>
