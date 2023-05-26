@@ -1,0 +1,18 @@
+---
+description: A component to use on composition files that enables theme mode toggling.
+---
+
+import { CompositionViewer } from './composition-viewer';
+
+This component takes an optional `getTheme` function as prop. By default, it points to `BaseTheme.getTheme`.
+It takes care of mode toggling with `ThemeContextProvider`, by just adding an icon that calls `toggleColorMode` from `ThemeContextProvider.ColorModeContext`.
+
+### Component usage
+
+```js
+import { getTheme } from '@percona/design.themes.everest';
+
+<CompositionViewer theme={getTheme}>
+  <p>Hello World</p>
+</CompositionViewer>;
+```

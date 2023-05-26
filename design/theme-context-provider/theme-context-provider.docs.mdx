@@ -1,0 +1,27 @@
+---
+description: A component that encapsulates theming logic.
+---
+
+import { ThemeContextProvider } from './theme-context-provider';
+
+A wrapper that creates a context that allows to toggle light/dark mode.
+
+### Component usage
+
+```js
+import {
+  ColorModeContext,
+  ThemeContextProvider,
+} from '@percona/design.theme-context-provider';
+
+const Toggler = () => {
+  const colorMode = React.useContext(ColorModeContext);
+
+  return <button onClick={colorMode.toggleColorMode}>Toggle</button>;
+};
+
+<ThemeContextProvider>
+  <Toggler />
+  <RestOfTheApp />
+</ThemeContextProvider>;
+```

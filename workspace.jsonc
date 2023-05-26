@@ -52,6 +52,7 @@
       "peerDependencies": {
         "@emotion/react": "^11.11.0",
         "@emotion/styled": "^11.11.0",
+        "@mui/icons-material": "^5.11.16",
         "@mui/material": "^5.13.1",
         "@testing-library/react": "^12.1.5",
         "react": "17.0.2",
@@ -67,5 +68,12 @@
    * wrap the rule with curly brackets (e.g. `"{ui/*}": {}`)
    * see https://bit.dev/docs/workspace/variants for more info.
    **/
-  "teambit.workspace/variants": {}
+  "teambit.workspace/variants": {},
+  "percona.design/theme-context-provider": {},
+  "percona.design/composition-viewer": {},
+  "percona.design/themes/base": {},
+  "percona.design/themes/everest": {},
+  "percona.design/utils/palette-theme-viewer": {},
+  "percona.design/everest-composition-viewer": {},
+  "percona.ui/icons/everest": {}
 }

@@ -9,6 +9,71 @@
  */
 
 {
+    "composition-viewer": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.design",
+        "mainFile": "index.ts",
+        "rootDir": "design/composition-viewer",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
+    "everest-composition-viewer": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.design",
+        "mainFile": "index.ts",
+        "rootDir": "design/everest-composition-viewer",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
+    "icons/db": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui",
+        "mainFile": "index.ts",
+        "rootDir": "ui/icons/db",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
+    "icons/everest": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui",
+        "mainFile": "index.ts",
+        "rootDir": "ui/icons/everest",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
+    "theme-context-provider": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.design",
+        "mainFile": "index.ts",
+        "rootDir": "design/theme-context-provider",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
     "themes/base": {
         "scope": "",
         "version": "",
@@ -28,6 +93,19 @@
         "defaultScope": "percona.design",
         "mainFile": "index.ts",
         "rootDir": "design/themes/everest",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
+    "utils/palette-theme-viewer": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.design",
+        "mainFile": "index.ts",
+        "rootDir": "design/utils/palette-theme-viewer",
         "config": {
             "teambit.react/react": {},
             "teambit.envs/envs": {
