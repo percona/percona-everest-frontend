@@ -42,6 +42,35 @@ const themeOptions = (mode: PaletteMode): ThemeOptions => ({
           },
         }),
   },
+  components: {
+    MuiIconButton: {
+      defaultProps: {
+        disableRipple: true,
+      },
+      styleOverrides: {
+        root: ({ theme, ownerState }) => ({
+          '&: hover': {
+            backgroundColor: theme.palette.action.selected,
+          },
+          '&: focus': {
+            backgroundColor: theme.palette.action.focusVisible,
+          },
+          ...(ownerState.size === 'large' && {
+            svg: {
+              width: 40,
+              height: 40,
+            },
+          }),
+          ...(ownerState.size === 'small' && {
+            svg: {
+              width: 20,
+              height: 20,
+            },
+          }),
+        }),
+      },
+    },
+  },
 });
 
 export const getTheme = (mode: PaletteMode = 'light') =>

@@ -223,10 +223,20 @@ const themeOptions = (mode: PaletteMode): ThemeOptions => ({
       },
     },
     MuiButton: {
+      defaultProps: {
+        disableTouchRipple: true,
+      },
       styleOverrides: {
         root: ({ ownerState, theme }) => ({
-          borderRadius: '128px',
-          borderWidth: '2px',
+          borderRadius: 128,
+          borderWidth: 2,
+
+          '& >svg': {
+            width: 20,
+            height: 20,
+            margin: -2,
+          },
+
           ...(ownerState.variant === 'contained' && {
             ...(ownerState.size === 'large' && {
               padding: '13px 24px',
@@ -253,10 +263,10 @@ const themeOptions = (mode: PaletteMode): ThemeOptions => ({
           }),
 
           ...(ownerState.size === 'large' && {
-            fontSize: '16px',
+            fontSize: 16,
           }),
           ...(ownerState.size === 'medium' && {
-            fontSize: '16px',
+            fontSize: 16,
           }),
           ...(ownerState.size === 'small' && {
             fontSize: '14px',
@@ -265,7 +275,10 @@ const themeOptions = (mode: PaletteMode): ThemeOptions => ({
           '&: hover': {
             borderWidth: '2px',
             ...(ownerState.variant === 'outlined' && {
-              backgroundColor: theme.palette.action.hover
+              backgroundColor: theme.palette.action.focus,
+            }),
+            ...(ownerState.variant === 'text' && {
+              backgroundColor: theme.palette.action.focus,
             }),
           },
           '&: disabled': {
@@ -275,17 +288,6 @@ const themeOptions = (mode: PaletteMode): ThemeOptions => ({
             }),
             color: theme.palette.text.disabled,
           },
-          '&: focus': {
-            ...(ownerState.variant === 'outlined' && {
-              backgroundColor: theme.palette.action.focus,
-            }),
-            ...(ownerState.variant === 'contained' && {
-              backgroundColor: theme.palette.primary.dark,
-            }),
-            ...(ownerState.variant === 'text' && {
-              backgroundColor: theme.palette.action.focus,
-            }),
-          },
         }),
       },
     },
@@ -294,14 +296,17 @@ const themeOptions = (mode: PaletteMode): ThemeOptions => ({
         root: {
           borderRadius: '128px',
         },
-        grouped: {
+        grouped: ({ownerState}) => ({
           '&: not(:last-of-type)': {
+          ...(ownerState.variant === 'contained' && {
+            borderRight: 0,
+          }),
             marginLeft: '-2px',
           },
           '&: not(:first-of-type)': {
             marginLeft: '-2px',
-          }
-        }
+          },
+        }),
       },
     },
     MuiInputLabel: {
