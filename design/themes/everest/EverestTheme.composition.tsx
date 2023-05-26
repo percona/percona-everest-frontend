@@ -89,32 +89,6 @@ export const Buttons = () => (
       </MuiButton>
     </div>
     <div>
-      <div>
-        <MuiButtonGroup variant="contained" size="medium">
-          <MuiButton>Medium</MuiButton>
-          <MuiButton>Medium</MuiButton>
-          <MuiButton>Medium</MuiButton>
-        </MuiButtonGroup>
-        <MuiButtonGroup variant="contained" size="medium">
-          <MuiButton>Medium</MuiButton>
-          <MuiButton>
-            <Cached />
-          </MuiButton>
-        </MuiButtonGroup>
-      </div>
-      <div>
-        <MuiButtonGroup variant="outlined" size="medium">
-          <MuiButton>Medium</MuiButton>
-          <MuiButton>Medium</MuiButton>
-          <MuiButton>Medium</MuiButton>
-        </MuiButtonGroup>
-        <MuiButtonGroup variant="outlined" size="medium">
-          <MuiButton>Medium</MuiButton>
-          <MuiButton>
-            <Cached />
-          </MuiButton>
-        </MuiButtonGroup>
-      </div>
       {/*<div>*/}
       {/*  <MuiButtonGroup variant="contained" size="large">*/}
       {/*    <MuiButton>Large</MuiButton>*/}
@@ -129,12 +103,64 @@ export const Buttons = () => (
       {/*  </MuiButtonGroup>*/}
       {/*</div>*/}
       {/*<div>*/}
+      {/*  <MuiButtonGroup variant="outlined" size="large">*/}
+      {/*    <MuiButton>Large</MuiButton>*/}
+      {/*    <MuiButton>Large</MuiButton>*/}
+      {/*    <MuiButton>Large</MuiButton>*/}
+      {/*  </MuiButtonGroup>*/}
+      {/*  <MuiButtonGroup variant="outlined" size="large">*/}
+      {/*    <MuiButton>Large</MuiButton>*/}
+      {/*    <MuiButton>*/}
+      {/*      <Cached />*/}
+      {/*    </MuiButton>*/}
+      {/*  </MuiButtonGroup>*/}
+      {/*</div>*/}
+      <div>
+        <MuiButtonGroup variant="contained" size="medium">
+          <MuiButton>Medium</MuiButton>
+          <MuiButton>Medium</MuiButton>
+          <MuiButton>Medium</MuiButton>
+        </MuiButtonGroup>
+        <MuiButtonGroup variant="contained" size="medium">
+          <MuiButton>Medium</MuiButton>
+          <MuiButton>
+            <Cached />
+          </MuiButton>
+        </MuiButtonGroup>
+      </div>
+      <div>
+        <MuiButtonGroup variant="outlined" size="medium">
+          <MuiButton>Medium</MuiButton>
+          <MuiButton>Medium</MuiButton>
+          <MuiButton>Medium</MuiButton>
+        </MuiButtonGroup>
+        <MuiButtonGroup variant="outlined" size="medium">
+          <MuiButton>Medium</MuiButton>
+          <MuiButton>
+            <Cached />
+          </MuiButton>
+        </MuiButtonGroup>
+      </div>
+      {/*<div>*/}
       {/*  <MuiButtonGroup variant="contained" size="small">*/}
       {/*    <MuiButton>Small</MuiButton>*/}
       {/*    <MuiButton>Small</MuiButton>*/}
       {/*    <MuiButton>Small</MuiButton>*/}
       {/*  </MuiButtonGroup>*/}
       {/*  <MuiButtonGroup variant="contained" size="small">*/}
+      {/*    <MuiButton>Small</MuiButton>*/}
+      {/*    <MuiButton>*/}
+      {/*      <Cached />*/}
+      {/*    </MuiButton>*/}
+      {/*  </MuiButtonGroup>*/}
+      {/*</div>*/}
+      {/*<div>*/}
+      {/*  <MuiButtonGroup variant="outlined" size="small">*/}
+      {/*    <MuiButton>Small</MuiButton>*/}
+      {/*    <MuiButton>Small</MuiButton>*/}
+      {/*    <MuiButton>Small</MuiButton>*/}
+      {/*  </MuiButtonGroup>*/}
+      {/*  <MuiButtonGroup variant="outlined" size="small">*/}
       {/*    <MuiButton>Small</MuiButton>*/}
       {/*    <MuiButton>*/}
       {/*      <Cached />*/}
@@ -143,43 +169,24 @@ export const Buttons = () => (
       {/*</div>*/}
     </div>
     <div>
-      <MuiIconButton size="large">
+      <MuiIconButton size="large" color="primary">
         <Cached />
       </MuiIconButton>
       <MuiIconButton size="large" disabled={true}>
         <Cached />
       </MuiIconButton>
-      <MuiIconButton size="medium">
+      <MuiIconButton size="medium" color="primary">
         <Cached />
       </MuiIconButton>
       <MuiIconButton size="medium" disabled={true}>
         <Cached />
       </MuiIconButton>
-      <MuiIconButton size="small">
+      <MuiIconButton size="small" color="primary">
         <Cached />
       </MuiIconButton>
       <MuiIconButton size="small" disabled={true}>
         <Cached />
       </MuiIconButton>
     </div>
-    <MuiIconButton size="large" color="primary">
-      <Cached />
-    </MuiIconButton>
-    <MuiIconButton size="large" disabled={true}>
-      <Cached />
-    </MuiIconButton>
-    <MuiIconButton size="medium" color="primary">
-      <Cached />
-    </MuiIconButton>
-    <MuiIconButton size="medium" disabled={true}>
-      <Cached />
-    </MuiIconButton>
-    <MuiIconButton size="small" color="primary">
-      <Cached />
-    </MuiIconButton>
-    <MuiIconButton size="small" disabled={true}>
-      <Cached />
-    </MuiIconButton>
-    <div></div>
   </ThemeProvider>
 );

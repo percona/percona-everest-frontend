@@ -234,7 +234,7 @@ const themeOptions = (mode: PaletteMode): ThemeOptions => ({
           '& >svg': {
             width: 20,
             height: 20,
-            margin: -2,
+            margin: -3,
           },
 
           ...(ownerState.variant === 'contained' && {
@@ -296,11 +296,11 @@ const themeOptions = (mode: PaletteMode): ThemeOptions => ({
         root: {
           borderRadius: '128px',
         },
-        grouped: ({ownerState}) => ({
+        grouped: ({ ownerState }) => ({
           '&: not(:last-of-type)': {
-          ...(ownerState.variant === 'contained' && {
-            borderRight: 0,
-          }),
+            ...(ownerState.variant === 'contained' && {
+              borderRight: 0,
+            }),
             marginLeft: '-2px',
           },
           '&: not(:first-of-type)': {
