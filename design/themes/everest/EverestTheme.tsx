@@ -11,23 +11,23 @@ const themeOptions = (mode: PaletteMode): ThemeOptions => ({
     mode,
     ...(mode === 'light'
       ? {
-            action: {
-                hover: 'rgba(18, 119, 227, 0.04)',
-                hoverOpacity: 0.04,
-                selected: 'rgba(18, 119, 227, 0.08)',
-                selectedOpacity: 0.08,
-                focus: 'rgba(18, 119, 227, 0.12)',
-                focusOpacity: 0.12,
-                focusVisible: 'rgba(18, 119, 227, 0.3)',
-                focusVisibleOpacity: 0.3,
-                outlinedBorder: 'rgba(18, 119, 227, 0.5)',
-                outlinedBorderOpacity: 0.5,
-            },
-            primary: {
-                main: '#0E5FB5',
-                light: '#127AE8',
-                dark: '#0B4A8C',
-            },
+          action: {
+            hover: 'rgba(18, 119, 227, 0.04)',
+            hoverOpacity: 0.04,
+            selected: 'rgba(18, 119, 227, 0.08)',
+            selectedOpacity: 0.08,
+            focus: 'rgba(18, 119, 227, 0.12)',
+            focusOpacity: 0.12,
+            focusVisible: 'rgba(18, 119, 227, 0.3)',
+            focusVisibleOpacity: 0.3,
+            outlinedBorder: 'rgba(18, 119, 227, 0.5)',
+            outlinedBorderOpacity: 0.5,
+          },
+          primary: {
+            main: '#0E5FB5',
+            light: '#127AE8',
+            dark: '#0B4A8C',
+          },
         }
       : {
           action: {

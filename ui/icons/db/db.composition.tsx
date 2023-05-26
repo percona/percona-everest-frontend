@@ -6,19 +6,19 @@ import { getTheme } from '@percona/design.themes.everest';
 
 export const MySql = () => (
   <Box sx={{ fontSize: '100px', margin: 0 }}>
-    <MySqlIcon fontSize='inherit' />
+    <MySqlIcon fontSize="inherit" />
   </Box>
 );
 
 export const MongoDB = () => (
   <Box sx={{ fontSize: '100px', margin: 0 }}>
-    <MongoIcon fontSize='inherit' />
+    <MongoIcon fontSize="inherit" />
   </Box>
 );
 
 export const PostgreSql = () => (
   <Box sx={{ fontSize: '100px', margin: 0 }}>
-    <PostgreSqlIcon fontSize='inherit' />
+    <PostgreSqlIcon fontSize="inherit" />
   </Box>
 );
 
