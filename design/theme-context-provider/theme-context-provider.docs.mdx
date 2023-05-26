@@ -13,6 +13,7 @@ import {
   ColorModeContext,
   ThemeContextProvider,
 } from '@percona/design.theme-context-provider';
+import { baseThemeOptions } from '@percona/design.themes.base';
 
 const Toggler = () => {
   const colorMode = React.useContext(ColorModeContext);
@@ -20,7 +21,7 @@ const Toggler = () => {
   return <button onClick={colorMode.toggleColorMode}>Toggle</button>;
 };
 
-<ThemeContextProvider>
+<ThemeContextProvider themeOptions={baseThemeOptions}>
   <Toggler />
   <RestOfTheApp />
 </ThemeContextProvider>;

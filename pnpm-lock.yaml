@@ -14,6 +14,7 @@ importers:
       '@emotion/styled': ^11.11.0
       '@mui/icons-material': ^5.11.16
       '@mui/material': ^5.13.1
+      '@mui/utils': ^5.13.1
       '@teambit/eslint-config-bit-react': ~0.0.367
       '@testing-library/react': ^12.1.5
       '@types/jest': ^26.0.0
@@ -36,6 +37,7 @@ importers:
       '@emotion/styled': registry.npmjs.org/@emotion/styled/11.11.0_g43vdmz5dh73hgqvu2fikye3ui
       '@mui/icons-material': registry.npmjs.org/@mui/icons-material/5.11.16_2264c6dys2cghxyprlpvvvd4sa
       '@mui/material': registry.npmjs.org/@mui/material/5.13.1_tn4wpgotrfebequcwko5a5gkni
+      '@mui/utils': registry.npmjs.org/@mui/utils/5.13.1_react@17.0.2
       '@teambit/eslint-config-bit-react': registry.npmjs.org/@teambit/eslint-config-bit-react/0.0.367_ila2odovlggsd4ks6hgtkp6zma
       '@testing-library/react': registry.npmjs.org/@testing-library/react/12.1.5_sfoxds7t5ydpegc3knd667wn6m
       '@typescript-eslint/eslint-plugin': registry.npmjs.org/@typescript-eslint/eslint-plugin/5.35.1
@@ -56,10 +58,31 @@ importers:
       '@types/react-dom': registry.npmjs.org/@types/react-dom/17.0.20
       '@types/testing-library__jest-dom': registry.npmjs.org/@types/testing-library__jest-dom/5.9.5
 
+  design/composition-viewer:
+    specifiers: {}
+
+  design/everest-composition-viewer:
+    specifiers: {}
+
+  design/theme-context-provider:
+    specifiers: {}
+
   design/themes/base:
     specifiers: {}
 
   design/themes/everest:
+    specifiers: {}
+
+  design/themes/utils:
+    specifiers: {}
+
+  design/utils/palette-theme-viewer:
+    specifiers: {}
+
+  ui/icons/db:
+    specifiers: {}
+
+  ui/icons/everest:
     specifiers: {}
 
 packages:

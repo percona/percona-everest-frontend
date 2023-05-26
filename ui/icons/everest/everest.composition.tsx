@@ -14,22 +14,22 @@ export const Icons = () => (
   <EverestCompositionViewer>
     <Grid container spacing={2} sx={{ fontSize: '100px', margin: 0 }}>
       <Grid item xs={4}>
-        <EverestMainIcon fontSize='inherit' />
+        <EverestMainIcon fontSize="inherit" />
       </Grid>
       <Grid item xs={4}>
-        <EverestHorizontalIcon fontSize='inherit' />
+        <EverestHorizontalIcon fontSize="inherit" />
       </Grid>
       <Grid item xs={4}>
-        <EverestHorizontalAlternateIcon fontSize='inherit' />
+        <EverestHorizontalAlternateIcon fontSize="inherit" />
       </Grid>
       <Grid item xs={4}>
-        <EverestAppSquareIcon fontSize='inherit' />
+        <EverestAppSquareIcon fontSize="inherit" />
       </Grid>
       <Grid item xs={4}>
-        <EverestAppRoundIcon fontSize='inherit' />
+        <EverestAppRoundIcon fontSize="inherit" />
       </Grid>
       <Grid item xs={4}>
-        <EverestAppCircleIcon fontSize='inherit' />
+        <EverestAppCircleIcon fontSize="inherit" />
       </Grid>
     </Grid>
   </EverestCompositionViewer>

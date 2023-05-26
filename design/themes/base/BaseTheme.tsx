@@ -1,10 +1,8 @@
-import { PaletteMode } from '@mui/material';
-import { ThemeOptions, createTheme } from '@mui/material';
-import { getThemeType } from './BaseTheme.types';
+import { PaletteMode, ThemeOptions, createTheme } from '@mui/material';
 
 let BaseTheme = createTheme();
 
-const themeOptions = (mode: PaletteMode): ThemeOptions => ({
+export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
   palette: {
     mode,
     ...(mode === 'light'
@@ -238,6 +236,3 @@ const themeOptions = (mode: PaletteMode): ThemeOptions => ({
     },
   },
 });
-
-export const getTheme: getThemeType = (mode = 'light') =>
-  createTheme(BaseTheme, themeOptions(mode));

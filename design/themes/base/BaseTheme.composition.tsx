@@ -1,10 +1,9 @@
 import React from 'react';
-import { Grid, Typography as MuiTypography, Paper } from '@mui/material';
+import { Typography as MuiTypography, Paper } from '@mui/material';
 import { CompositionViewer } from '@percona/design.composition-viewer';
 import { PaletteThemeViewer } from '@percona/design.utils.palette-theme-viewer';
-import { getTheme } from './BaseTheme';
-import { Box } from '@mui/material';
-import { styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
+import { baseThemeOptions } from './BaseTheme';
 
 const PaperItem = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -15,7 +14,7 @@ const PaperItem = styled(Paper)(({ theme }) => ({
 }));
 
 export const Typography = () => (
-  <CompositionViewer>
+  <CompositionViewer themeOptions={baseThemeOptions}>
     <MuiTypography variant="h1">H1 Heading</MuiTypography>
     <MuiTypography variant="h2">H2 Heading</MuiTypography>
     <MuiTypography variant="h3">H3 Heading</MuiTypography>
@@ -31,10 +30,12 @@ export const Typography = () => (
   </CompositionViewer>
 );
 
-export const Palette = () => <PaletteThemeViewer getTheme={getTheme} />;
+export const Palette = () => (
+  <PaletteThemeViewer themeOptions={baseThemeOptions} />
+);
 
 export const Elevations = () => (
-  <CompositionViewer>
+  <CompositionViewer themeOptions={baseThemeOptions}>
     <Box
       sx={{
         p: 2,

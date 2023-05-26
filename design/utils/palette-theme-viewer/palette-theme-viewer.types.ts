@@ -1,6 +1,5 @@
 import { PaletteMode, ThemeOptions } from '@mui/material';
 
-export type ThemeContextProviderProps = {
-  children: React.ReactNode;
+export type PaletteThemeViewerProps = {
   themeOptions: (mode: PaletteMode) => ThemeOptions;
 };

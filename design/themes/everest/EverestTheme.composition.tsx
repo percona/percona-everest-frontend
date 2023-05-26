@@ -1,5 +1,7 @@
 import React from 'react';
 import { PaletteThemeViewer } from '@percona/design.utils.palette-theme-viewer';
-import { getTheme } from './EverestTheme';
+import { everestThemeOptions } from './EverestTheme';
 
-export const Palette = () => <PaletteThemeViewer getTheme={getTheme} />;
+export const Palette = () => (
+  <PaletteThemeViewer themeOptions={everestThemeOptions} />
+);

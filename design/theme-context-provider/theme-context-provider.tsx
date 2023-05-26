@@ -1,9 +1,8 @@
 import React, { createContext } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { useState } from 'react';
-import { PaletteMode } from '@mui/material';
+import { PaletteMode, createTheme } from '@mui/material';
 import { useMemo } from 'react';
-import { getTheme } from '@percona/design.themes.base';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeContextProviderProps } from './theme-context-provider.types';
 
@@ -11,7 +10,7 @@ export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
 export const ThemeContextProvider = ({
   children,
-  getThemeFn = getTheme,
+  themeOptions,
 }: ThemeContextProviderProps) => {
   const [mode, setMode] = useState<PaletteMode>('light');
   const colorMode = useMemo(
@@ -23,7 +22,7 @@ export const ThemeContextProvider = ({
     []
   );
 
-  const theme = useMemo(() => getThemeFn(mode), [mode]);
+  const theme = useMemo(() => createTheme(themeOptions(mode)), [mode]);
 
   return (
     <ColorModeContext.Provider value={colorMode}>
