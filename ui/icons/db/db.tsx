@@ -113,8 +113,7 @@ export const PostgreSqlIcon = (props: SvgIconProps) => (
         gradientUnits="userSpaceOnUse"
       >
         <stop offset="0.12" stopColor="#5E668C" />
-        <stop offset="0.96" stopColor="#439EFF" />
-      </linearGradient>
+        <stop offset="0.96" stopColor="#439EFF" /></linearGradient>
     </defs>
   </SvgIcon>
 );
