@@ -2,9 +2,6 @@ import React, { ReactNode } from 'react';
 import { ToggleButton, ToggleButtonProps, useTheme } from '@mui/material';
 
 export type ToggleCardProps = {
-  /**
-   * a node to be rendered in the special component.
-   */
   children?: ReactNode;
 } & ToggleButtonProps;
 
