@@ -18,6 +18,9 @@ importers:
       '@mui/material':
         specifier: ^5.13.1
         version: registry.npmjs.org/@mui/material@5.13.1(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@17.0.59)(react-dom@17.0.2)(react@17.0.2)
+      '@mui/utils':
+        specifier: ^5.13.1
+        version: registry.npmjs.org/@mui/utils@5.13.1(react@17.0.2)
       '@teambit/eslint-config-bit-react':
         specifier: ~0.0.367
         version: registry.npmjs.org/@teambit/eslint-config-bit-react@0.0.367(@teambit/legacy@node_modules+@teambit+legacy)(eslint-plugin-import@2.22.1)(eslint-plugin-jsx-a11y@6.4.1)(eslint-plugin-react@7.25.1)(react-dom@17.0.2)(react@17.0.2)

@@ -1,1 +1,1 @@
-export { getTheme } from './EverestTheme';
+export { everestThemeOptions } from './EverestTheme';

@@ -4,12 +4,14 @@ import {
   Paper,
   Button as MuiButton,
   ButtonGroup as MuiButtonGroup,
+  IconButton as MuiIconButton,
+  Box,
+  styled,
 } from '@mui/material';
 import { CompositionViewer } from '@percona/design.composition-viewer';
 import { PaletteThemeViewer } from '@percona/design.utils.palette-theme-viewer';
-import { getTheme } from './BaseTheme';
-import { Box } from '@mui/material';
-import { styled } from '@mui/material';
+import { baseThemeOptions } from './BaseTheme';
+import { Cached } from '@mui/icons-material';
 
 const PaperItem = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -20,7 +22,7 @@ const PaperItem = styled(Paper)(({ theme }) => ({
 }));
 
 export const Typography = () => (
-  <CompositionViewer>
+  <CompositionViewer themeOptions={baseThemeOptions}>
     <MuiTypography variant="h1">H1 Heading</MuiTypography>
     <MuiTypography variant="h2">H2 Heading</MuiTypography>
     <MuiTypography variant="h3">H3 Heading</MuiTypography>
@@ -36,87 +38,12 @@ export const Typography = () => (
   </CompositionViewer>
 );
 
-export const Palette = () => <PaletteThemeViewer getTheme={getTheme} />;
-
-export const Buttons = () => (
-  <CompositionViewer>
-    <div>
-      <MuiButton variant="contained" size="large">
-        Large
-      </MuiButton>
-      <MuiButton variant="contained" size="large" disabled={true}>
-        Large
-      </MuiButton>
-      <MuiButton variant="contained" size="medium">
-        Medium
-      </MuiButton>
-      <MuiButton variant="contained" size="medium" disabled={true}>
-        Medium
-      </MuiButton>
-      <MuiButton variant="contained" size="small">
-        Small
-      </MuiButton>
-      <MuiButton variant="contained" size="small" disabled={true}>
-        Small
-      </MuiButton>
-    </div>
-    <div>
-      <MuiButton variant="outlined" size="large">
-        Large
-      </MuiButton>
-      <MuiButton variant="outlined" size="large" disabled={true}>
-        Large
-      </MuiButton>
-      <MuiButton variant="outlined" size="medium">
-        Medium
-      </MuiButton>
-      <MuiButton variant="outlined" size="medium" disabled={true}>
-        Medium
-      </MuiButton>
-      <MuiButton variant="outlined" size="small">
-        Small
-      </MuiButton>
-      <MuiButton variant="outlined" size="small" disabled={true}>
-        Small
-      </MuiButton>
-    </div>
-    <div>
-      <MuiButton variant="text" size="large">
-        Large
-      </MuiButton>
-      <MuiButton variant="text" size="large" disabled={true}>
-        Large
-      </MuiButton>
-      <MuiButton variant="text" size="medium">
-        Medium
-      </MuiButton>
-      <MuiButton variant="text" size="medium" disabled={true}>
-        Medium
-      </MuiButton>
-      <MuiButton variant="text" size="small">
-        Small
-      </MuiButton>
-      <MuiButton variant="text" size="small" disabled={true}>
-        Small
-      </MuiButton>
-    </div>
-    <div>
-      <MuiButtonGroup variant="contained">
-        <MuiButton>Medium</MuiButton>
-        <MuiButton>Medium</MuiButton>
-        <MuiButton>Medium</MuiButton>
-      </MuiButtonGroup>
-      <MuiButtonGroup variant="outlined">
-        <MuiButton>Medium</MuiButton>
-        <MuiButton>Medium</MuiButton>
-        <MuiButton>Medium</MuiButton>
-      </MuiButtonGroup>
-    </div>
-  </CompositionViewer>
+export const Palette = () => (
+  <PaletteThemeViewer themeOptions={baseThemeOptions} />
 );
 
 export const Elevations = () => (
-  <CompositionViewer>
+  <CompositionViewer themeOptions={baseThemeOptions}>
     <Box
       sx={{
         p: 2,
@@ -131,6 +58,144 @@ export const Elevations = () => (
           {`elevation=${elevation}`}
         </PaperItem>
       ))}
+    </Box>
+  </CompositionViewer>
+);
+
+const buttonsLine = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 0.5,
+};
+
+export const Buttons = () => (
+  <CompositionViewer themeOptions={baseThemeOptions}>
+    <Box
+      sx={{
+        p: 2,
+        bgcolor: 'background.default',
+        display: 'grid',
+        gap: 1,
+      }}
+    >
+      <Box
+        sx={buttonsLine}
+      >
+        <MuiButton variant="contained" size="large">
+          Large
+        </MuiButton>
+        <MuiButton variant="contained" size="large" disabled={true}>
+          Large
+        </MuiButton>
+        <MuiButton variant="contained" size="medium">
+          Medium
+        </MuiButton>
+        <MuiButton variant="contained" size="medium" disabled={true}>
+          Medium
+        </MuiButton>
+        <MuiButton variant="contained" size="small">
+          Small
+        </MuiButton>
+        <MuiButton variant="contained" size="small" disabled={true}>
+          Small
+        </MuiButton>
+      </Box>
+      <Box
+        sx={buttonsLine}
+      >
+        <MuiButton variant="outlined" size="large">
+          Large
+        </MuiButton>
+        <MuiButton variant="outlined" size="large" disabled={true}>
+          Large
+        </MuiButton>
+        <MuiButton variant="outlined" size="medium">
+          Medium
+        </MuiButton>
+        <MuiButton variant="outlined" size="medium" disabled={true}>
+          Medium
+        </MuiButton>
+        <MuiButton variant="outlined" size="small">
+          Small
+        </MuiButton>
+        <MuiButton variant="outlined" size="small" disabled={true}>
+          Small
+        </MuiButton>
+      </Box>
+      <Box
+        sx={buttonsLine}
+      >
+        <MuiButton variant="text" size="large">
+          Large
+        </MuiButton>
+        <MuiButton variant="text" size="large" disabled={true}>
+          Large
+        </MuiButton>
+        <MuiButton variant="text" size="medium">
+          Medium
+        </MuiButton>
+        <MuiButton variant="text" size="medium" disabled={true}>
+          Medium
+        </MuiButton>
+        <MuiButton variant="text" size="small">
+          Small
+        </MuiButton>
+        <MuiButton variant="text" size="small" disabled={true}>
+          Small
+        </MuiButton>
+      </Box>
+      <Box
+        sx={buttonsLine}
+      >
+        <MuiButtonGroup variant="contained" size="medium">
+          <MuiButton>Medium</MuiButton>
+          <MuiButton>Medium</MuiButton>
+          <MuiButton>Medium</MuiButton>
+        </MuiButtonGroup>
+        <MuiButtonGroup variant="contained" size="medium">
+          <MuiButton>Medium</MuiButton>
+          <MuiButton>
+            <Cached />
+          </MuiButton>
+        </MuiButtonGroup>
+      </Box>
+      <Box
+        sx={buttonsLine}
+      >
+        <MuiButtonGroup variant="outlined" size="medium">
+          <MuiButton>Medium</MuiButton>
+          <MuiButton>Medium</MuiButton>
+          <MuiButton>Medium</MuiButton>
+        </MuiButtonGroup>
+        <MuiButtonGroup variant="outlined" size="medium">
+          <MuiButton>Medium</MuiButton>
+          <MuiButton>
+            <Cached />
+          </MuiButton>
+        </MuiButtonGroup>
+      </Box>
+      <Box
+        sx={buttonsLine}
+      >
+        <MuiIconButton size="large">
+          <Cached />
+        </MuiIconButton>
+        <MuiIconButton size="large" disabled={true}>
+          <Cached />
+        </MuiIconButton>
+        <MuiIconButton size="medium">
+          <Cached />
+        </MuiIconButton>
+        <MuiIconButton size="medium" disabled={true}>
+          <Cached />
+        </MuiIconButton>
+        <MuiIconButton size="small">
+          <Cached />
+        </MuiIconButton>
+        <MuiIconButton size="small" disabled={true}>
+          <Cached />
+        </MuiIconButton>
+      </Box>
     </Box>
   </CompositionViewer>
 );

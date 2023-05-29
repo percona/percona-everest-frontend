@@ -5,9 +5,12 @@ description: A theme palette viewer component.
 import { PaletteThemeViewer } from './palette-theme-viewer';
 
 A component that renders a table with the palette tokens for a given theme, with light and dark modes.
+The `themeOptions` prop is a function that gets the color mode and return theme options.
 
 ### Component usage
 
 ```js
-<PaletteThemeViewer getTheme={getTheme} />
+<PaletteThemeViewer
+  themeOptions={(mode) => ({ palette: { mode, ...remainingThemeOptions } })}
+/>
 ```

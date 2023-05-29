@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Palette, Stack, Typography, styled } from '@mui/material';
 import { LightMode, DarkMode } from '@mui/icons-material';
-import { getThemeType } from '@percona/design.themes.base';
+import { PaletteThemeViewerProps } from './palette-theme-viewer.types';
 
 /**
  * This component was based on https://mui.com/joy-ui/customization/theme-colors/
@@ -32,7 +32,7 @@ const RenderSwatch = ({ token }: { token: string }) => (
   />
 );
 
-const traverseObject = (palette: Palette) => {
+const traverseObject = (palette) => {
   const result: Record<string, any> = {};
   const traverse = (object: any, parts: string[] = []) => {
     if (object && typeof object === 'object') {
@@ -82,12 +82,10 @@ const collator = new Intl.Collator(undefined, {
 });
 
 export const PaletteThemeViewer = ({
-  getTheme,
-}: {
-  getTheme: getThemeType;
-}) => {
-  const light = traverseObject(getTheme('light').palette);
-  const dark = traverseObject(getTheme('dark').palette);
+  themeOptions,
+}: PaletteThemeViewerProps) => {
+  const light = traverseObject(themeOptions('light').palette);
+  const dark = traverseObject(themeOptions('dark').palette);
 
   const paletteTokens = Array.from(
     new Set([...Object.keys(dark), ...Object.keys(light)])
