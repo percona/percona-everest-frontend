@@ -23,7 +23,7 @@ const DbIcon = ({ type }: { type: DbType }) => {
 };
 
 export const DbToggleCard = ({ ...props }: DbToggleCardProps) => (
-  <ToggleCard {...props}>
+  <ToggleCard {...props} data-testid={`${props.value}-toggle-button`}>
     <DbIcon type={props.value} />
     <Typography variant="body1">{humanizeDbType(props.value)}</Typography>
   </ToggleCard>
