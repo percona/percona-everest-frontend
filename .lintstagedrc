@@ -1,3 +1,0 @@
-{
-  "*.{js,ts,tsx}": ["bit lint --changed --fix-type problem", "bit format --changed"]
-}
