@@ -63,9 +63,9 @@ export const Elevations = () => (
 );
 
 const buttonsLine = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 0.5,
+  display: 'flex',
+  alignItems: 'center',
+  gap: 0.5,
 };
 
 export const Buttons = () => (
@@ -78,75 +78,67 @@ export const Buttons = () => (
         gap: 1,
       }}
     >
-      <Box
-        sx={buttonsLine}
-      >
+      <Box sx={buttonsLine}>
         <MuiButton variant="contained" size="large">
           Large
         </MuiButton>
-        <MuiButton variant="contained" size="large" disabled={true}>
+        <MuiButton variant="contained" size="large" disabled>
           Large
         </MuiButton>
         <MuiButton variant="contained" size="medium">
           Medium
         </MuiButton>
-        <MuiButton variant="contained" size="medium" disabled={true}>
+        <MuiButton variant="contained" size="medium" disabled>
           Medium
         </MuiButton>
         <MuiButton variant="contained" size="small">
           Small
         </MuiButton>
-        <MuiButton variant="contained" size="small" disabled={true}>
+        <MuiButton variant="contained" size="small" disabled>
           Small
         </MuiButton>
       </Box>
-      <Box
-        sx={buttonsLine}
-      >
+      <Box sx={buttonsLine}>
         <MuiButton variant="outlined" size="large">
           Large
         </MuiButton>
-        <MuiButton variant="outlined" size="large" disabled={true}>
+        <MuiButton variant="outlined" size="large" disabled>
           Large
         </MuiButton>
         <MuiButton variant="outlined" size="medium">
           Medium
         </MuiButton>
-        <MuiButton variant="outlined" size="medium" disabled={true}>
+        <MuiButton variant="outlined" size="medium" disabled>
           Medium
         </MuiButton>
         <MuiButton variant="outlined" size="small">
           Small
         </MuiButton>
-        <MuiButton variant="outlined" size="small" disabled={true}>
+        <MuiButton variant="outlined" size="small" disabled>
           Small
         </MuiButton>
       </Box>
-      <Box
-        sx={buttonsLine}
-      >
+      <Box sx={buttonsLine}>
         <MuiButton variant="text" size="large">
           Large
         </MuiButton>
-        <MuiButton variant="text" size="large" disabled={true}>
+        <MuiButton variant="text" size="large" disabled>
           Large
         </MuiButton>
         <MuiButton variant="text" size="medium">
           Medium
         </MuiButton>
-        <MuiButton variant="text" size="medium" disabled={true}>
+        <MuiButton variant="text" size="medium" disabled>
           Medium
         </MuiButton>
         <MuiButton variant="text" size="small">
           Small
         </MuiButton>
-        <MuiButton variant="text" size="small" disabled={true}>
+        <MuiButton variant="text" size="small" disabled>
           Small
         </MuiButton>
       </Box>
-      <Box
-        sx={buttonsLine}
-      >
+      <Box sx={buttonsLine}>
         <MuiButtonGroup variant="contained" size="medium">
           <MuiButton>Medium</MuiButton>
           <MuiButton>Medium</MuiButton>
@@ -159,9 +151,7 @@ export const Buttons = () => (
           </MuiButton>
         </MuiButtonGroup>
       </Box>
-      <Box
-        sx={buttonsLine}
-      >
+      <Box sx={buttonsLine}>
         <MuiButtonGroup variant="outlined" size="medium">
           <MuiButton>Medium</MuiButton>
           <MuiButton>Medium</MuiButton>
@@ -174,25 +164,44 @@ export const Buttons = () => (
           </MuiButton>
         </MuiButtonGroup>
       </Box>
-      <Box
-        sx={buttonsLine}
-      >
+      <Box sx={buttonsLine}>
         <MuiIconButton size="large">
           <Cached />
         </MuiIconButton>
-        <MuiIconButton size="large" disabled={true}>
+        <MuiIconButton size="large" disabled>
           <Cached />
         </MuiIconButton>
         <MuiIconButton size="medium">
           <Cached />
         </MuiIconButton>
-        <MuiIconButton size="medium" disabled={true}>
+        <MuiIconButton size="medium" disabled>
           <Cached />
         </MuiIconButton>
         <MuiIconButton size="small">
           <Cached />
         </MuiIconButton>
-        <MuiIconButton size="small" disabled={true}>
+        <MuiIconButton size="small" disabled>
+          <Cached />
+        </MuiIconButton>
+      </Box>
+
+      <Box sx={buttonsLine}>
+        <MuiIconButton size="large" color="primary">
+          <Cached />
+        </MuiIconButton>
+        <MuiIconButton size="large">
+          <Cached />
+        </MuiIconButton>
+        <MuiIconButton size="medium" color="primary">
+          <Cached />
+        </MuiIconButton>
+        <MuiIconButton size="medium">
+          <Cached />
+        </MuiIconButton>
+        <MuiIconButton size="small" color="primary">
+          <Cached />
+        </MuiIconButton>
+        <MuiIconButton size="small" disabled>
           <Cached />
         </MuiIconButton>
       </Box>

@@ -232,7 +232,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
           borderRadius: 128,
           borderWidth: 2,
 
-          '& >svg': {
+          '& > svg': {
             width: 20,
             height: 20,
             margin: -3,
@@ -273,7 +273,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
             fontSize: 14,
           }),
 
-          '&: hover': {
+          '&:hover': {
             borderWidth: '2px',
             ...(ownerState.variant === 'outlined' && {
               backgroundColor: theme.palette.action.focus,
@@ -282,7 +282,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
               backgroundColor: theme.palette.action.focus,
             }),
           },
-          '&: disabled': {
+          '&:disabled': {
             borderWidth: '2px',
             ...(ownerState.variant === 'contained' && {
               backgroundColor: theme.palette.action.disabled,
@@ -298,13 +298,13 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
           borderRadius: '128px',
         },
         grouped: ({ ownerState }) => ({
-          '&: not(:last-of-type)': {
+          '&:not(:last-of-type)': {
             ...(ownerState.variant === 'contained' && {
               borderRight: 0,
             }),
             marginLeft: '-2px',
           },
-          '&: not(:first-of-type)': {
+          '&:not(:first-of-type)': {
             marginLeft: '-2px',
           },
         }),

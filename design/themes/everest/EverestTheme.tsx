@@ -53,14 +53,18 @@ export const everestThemeOptions = (mode: PaletteMode): ThemeOptions => {
     components: {
       MuiIconButton: {
         defaultProps: {
-          disableRipple: true,
+          disableTouchRipple: true,
         },
         styleOverrides: {
-          root: ({theme, ownerState}) => ({
-            '&: hover': {
+          root: ({ theme, ownerState }) => ({
+            color: theme.palette.text.primary,
+            ...(ownerState.color === 'primary' && {
+              color: theme.palette.primary.main,
+            }),
+            '&:hover': {
               backgroundColor: theme.palette.action.selected,
             },
-            '&: focus': {
+            '&:focus': {
               backgroundColor: theme.palette.action.focusVisible,
             },
             ...(ownerState.size === 'large' && {
@@ -78,41 +82,8 @@ export const everestThemeOptions = (mode: PaletteMode): ThemeOptions => {
           }),
         },
       },
-    }
+    },
   };
 
-  return deepmerge<ThemeOptions>(baseThemeOptions(mode), {
-    palette: {
-      mode,
-      ...(mode === 'light'
-        ? {
-            action: {
-              hover: 'rgba(18, 119, 227, 0.04)',
-              hoverOpacity: 0.04,
-              selected: 'rgba(18, 119, 227, 0.08)',
-              selectedOpacity: 0.08,
-              focus: 'rgba(18, 119, 227, 0.12)',
-              focusOpacity: 0.12,
-              focusVisible: 'rgba(18, 119, 227, 0.3)',
-              focusVisibleOpacity: 0.3,
-              outlinedBorder: 'rgba(18, 119, 227, 0.5)',
-              outlinedBorderOpacity: 0.5,
-            },
-          }
-        : {
-            action: {
-              hover: 'rgba(46, 147, 255, 0.08)',
-              hoverOpacity: 0.08,
-              selected: 'rgba(46, 147, 255, 0.12)',
-              selectedOpacity: 0.12,
-              focus: 'rgba(46, 147, 255, 0.15)',
-              focusOpacity: 0.15,
-              focusVisible: 'rgba(46, 147, 255, 0.3)',
-              focusVisibleOpacity: 0.3,
-              outlinedBorder: 'rgba(46, 147, 255, 0.5)',
-              outlinedBorderOpacity: 0.5,
-            },
-          }),
-    },
-  });
+  return deepmerge<ThemeOptions>(baseThemeOptions(mode), newOptions);
 };
