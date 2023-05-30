@@ -1,8 +1,6 @@
 import React from 'react';
 import { MySqlIcon, MongoIcon, PostgreSqlIcon } from './db';
-import { Box, Card, ToggleButton, Typography } from '@mui/material';
-import { ThemeContextProvider } from '@percona/design.theme-context-provider';
-import { getTheme } from '@percona/design.themes.everest';
+import { Box } from '@mui/material';
 
 export const MySql = () => (
   <Box sx={{ fontSize: '100px', margin: 0 }}>
