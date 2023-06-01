@@ -92,11 +92,13 @@ importers:
 
   design/utils/palette-theme-viewer: {}
 
-  everest/ui/resources-details/progress-bar: {}
+  everest/resources-detail: {}
 
   ui/icons/db: {}
 
   ui/icons/everest: {}
+
+  ui/progress-bar: {}
 
 packages:
 

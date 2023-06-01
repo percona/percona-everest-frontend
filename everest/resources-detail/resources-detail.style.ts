@@ -3,12 +3,12 @@ import { css } from '@emotion/css';
 export const getStyles = () => ({
   wrapper: css`
     display: flex;
-    flex-direction: column;
-    height: 37px;
+    gap: 10px;
     width: 100%;
+    align-items: center;
+    justify-content: center;
   `,
   label: css`
-    align-self: end;
-    font-size: 12px;
+    min-width: 100px;
   `,
 });
