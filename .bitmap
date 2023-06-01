@@ -35,19 +35,6 @@
             }
         }
     },
-    "everest-composition-viewer": {
-        "scope": "",
-        "version": "",
-        "defaultScope": "percona.design",
-        "mainFile": "index.ts",
-        "rootDir": "design/everest-composition-viewer",
-        "config": {
-            "teambit.react/react": {},
-            "teambit.envs/envs": {
-                "env": "teambit.react/react"
-            }
-        }
-    },
     "icons/db": {
         "scope": "",
         "version": "",

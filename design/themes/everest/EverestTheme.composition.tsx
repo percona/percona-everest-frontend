@@ -1,6 +1,5 @@
 import React from 'react';
 import { PaletteThemeViewer } from '@percona/design.utils.palette-theme-viewer';
-import { EverestCompositionViewer } from '@percona/design.everest-composition-viewer';
 import { everestThemeOptions } from './EverestTheme';
 
 import {
@@ -10,6 +9,7 @@ import {
   Box,
 } from '@mui/material';
 import { Cached } from '@mui/icons-material';
+import { CompositionViewer } from '@percona/design.composition-viewer';
 
 export const Palette = () => (
   <PaletteThemeViewer themeOptions={everestThemeOptions} />
@@ -21,7 +21,7 @@ const buttonsLine = {
   gap: 0.5,
 };
 export const Buttons = () => (
-  <EverestCompositionViewer>
+  <CompositionViewer themeOptions={everestThemeOptions}>
     <Box
       sx={{
         p: 2,
@@ -157,5 +157,5 @@ export const Buttons = () => (
         </MuiIconButton>
       </Box>
     </Box>
-  </EverestCompositionViewer>
+  </CompositionViewer>
 );
