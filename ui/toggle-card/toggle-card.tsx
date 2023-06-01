@@ -10,6 +10,7 @@ export const ToggleCard = ({ children, ...props }: ToggleCardProps) => {
 
   return (
     <ToggleButton
+     disableRipple
       sx={{
         backgroundColor: 'background.default',
         boxShadow: 4,
