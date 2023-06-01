@@ -1,6 +1,6 @@
 import React from 'react';
-import { ToggleCard } from '@percona/ui.toggle-card';
-import { PostgreSqlIcon, MongoIcon, MySqlIcon } from '@percona/ui.icons.db';
+import { ToggleCard } from '@percona/ui-lib.toggle-card';
+import { PostgreSqlIcon, MongoIcon, MySqlIcon } from '@percona/ui-lib.icons.db';
 import { SvgIconProps, Typography } from '@mui/material';
 import { DbToggleCardProps, DbType } from './db-toggle-card.types';
 import { humanizeDbType } from './db-toggle-card.utils';

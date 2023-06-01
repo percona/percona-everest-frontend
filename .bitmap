@@ -25,7 +25,7 @@
     "db-toggle-card": {
         "scope": "",
         "version": "",
-        "defaultScope": "percona.ui",
+        "defaultScope": "percona.ui-lib",
         "mainFile": "index.ts",
         "rootDir": "ui/db-toggle-card",
         "config": {
@@ -51,7 +51,7 @@
     "icons/db": {
         "scope": "",
         "version": "",
-        "defaultScope": "percona.ui",
+        "defaultScope": "percona.ui-lib",
         "mainFile": "index.ts",
         "rootDir": "ui/icons/db",
         "config": {
@@ -64,7 +64,7 @@
     "icons/everest": {
         "scope": "",
         "version": "",
-        "defaultScope": "percona.ui",
+        "defaultScope": "percona.ui-lib",
         "mainFile": "index.ts",
         "rootDir": "ui/icons/everest",
         "config": {
@@ -116,7 +116,7 @@
     "toggle-card": {
         "scope": "",
         "version": "",
-        "defaultScope": "percona.ui",
+        "defaultScope": "percona.ui-lib",
         "mainFile": "index.ts",
         "rootDir": "ui/toggle-card",
         "config": {

@@ -1,4 +1,4 @@
-import { ToggleCardProps } from '@percona/ui.toggle-card';
+import { ToggleCardProps } from '@percona/ui-lib.toggle-card';
 
 // TODO export to another scope when this needs to be reused
 export enum DbType {

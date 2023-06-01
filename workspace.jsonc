@@ -76,7 +76,7 @@
   "percona.design/themes/everest": {},
   "percona.design/utils/palette-theme-viewer": {},
   "percona.design/everest-composition-viewer": {},
-  "percona.ui/icons/everest": {},
-  "percona.ui/toggle-card": {},
-  "percona.ui/db-toggle-card": {}
+  "percona.ui-lib/db-toggle-card": {},
+  "percona.ui-lib/icons/everest": {},
+  "percona.ui-lib/toggle-card": {}
 }
