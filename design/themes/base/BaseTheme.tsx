@@ -1,5 +1,14 @@
 import { PaletteMode, ThemeOptions, createTheme } from '@mui/material';
 
+declare module '@mui/material/styles' {
+  interface TypeAction {
+    focusVisible: string;
+    focusVisibleOpacity: number;
+    outlinedBorder: string;
+    outlinedBorderOpacity: number;
+  } 
+}
+
 let BaseTheme = createTheme();
 
 export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
