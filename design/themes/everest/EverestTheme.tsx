@@ -82,6 +82,13 @@ export const everestThemeOptions = (mode: PaletteMode): ThemeOptions => {
           }),
         },
       },
+      MuiAppBar: {
+        styleOverrides: {
+          root: () => ({
+            backgroundColor: 'white',
+          }),
+        },
+      },
     },
   };
 
