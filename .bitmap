@@ -22,6 +22,19 @@
             }
         }
     },
+    "db-toggle-card": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui",
+        "mainFile": "index.ts",
+        "rootDir": "ui/db-toggle-card",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
     "everest-composition-viewer": {
         "scope": "",
         "version": "",
@@ -93,6 +106,19 @@
         "defaultScope": "percona.design",
         "mainFile": "index.ts",
         "rootDir": "design/themes/everest",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
+    "toggle-card": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui",
+        "mainFile": "index.ts",
+        "rootDir": "ui/toggle-card",
         "config": {
             "teambit.react/react": {},
             "teambit.envs/envs": {

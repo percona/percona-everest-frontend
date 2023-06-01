@@ -223,6 +223,11 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
         },
       },
     },
+    MuiButtonBase: {
+      defaultProps: {
+        disableRipple: true,
+      }
+    },
     MuiButton: {
       defaultProps: {
         disableTouchRipple: true,
