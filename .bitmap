@@ -87,19 +87,6 @@
             }
         }
     },
-    "resources-details": {
-        "scope": "",
-        "version": "",
-        "defaultScope": "percona.everest",
-        "mainFile": "index.ts",
-        "rootDir": "everest/resources-details",
-        "config": {
-            "teambit.react/react": {},
-            "teambit.envs/envs": {
-                "env": "teambit.react/react"
-            }
-        }
-    },
     "theme-context-provider": {
         "scope": "",
         "version": "",

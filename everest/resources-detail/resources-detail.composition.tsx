@@ -12,6 +12,7 @@ export const BasicResourcesDetail = () => {
         inputValue={inputValue}
         setInputValue={setInputValue}
         label="CPU"
+        labelProgressBar="Using 112.52 CPU (16.7%) of 675.33 CPU in total"
         units="CPU"
       />
     </EverestCompositionViewer>

@@ -1,6 +1,5 @@
-import { LinearProgress } from '@mui/material';
+import { Box, LinearProgress } from '@mui/material';
 import React from 'react';
-import { getStyles } from './progress-bar.style';
 
 export type ProgressBarProps = {
   /**
@@ -13,22 +12,27 @@ export type ProgressBarProps = {
 };
 
 export function ProgressBar({ value, buffer, total, label }: ProgressBarProps) {
-  const styles = getStyles();
-
   const value1Percentage = (value / total) * 100;
   const value2Percentage = (buffer / total) * 100;
   const isOverLimit = value2Percentage > 100;
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.label}>{label}</div>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '37px',
+        width: '100%',
+      }}
+    >
+      <Box sx={{ alignSelf: 'end', fontSize: '12px' }}>{label}</Box>
       <LinearProgress
         variant="buffer"
         value={value1Percentage}
         valueBuffer={value2Percentage}
-        sx={(theme) => ({
+        sx={{
           '&': {
             padding: '4px',
-            backgroundColor: theme.palette.action.selected,
+            backgroundColor: 'action.selected',
             borderRadius: '32px',
           },
           '& .MuiLinearProgress-bar': {
@@ -43,12 +47,12 @@ export function ProgressBar({ value, buffer, total, label }: ProgressBarProps) {
           },
           '& .MuiLinearProgress-bar2Buffer': {
             backgroundColor: isOverLimit
-              ? theme.palette.warning.main
-              : theme.palette.primary.contrastText,
+              ? 'warning.main'
+              : 'primary.contrastText',
             transform: isOverLimit ? 'none !important' : undefined,
           },
-        })}
+        }}
       />
-    </div>
+    </Box>
   );
 }
