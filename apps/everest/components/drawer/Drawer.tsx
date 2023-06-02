@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Drawer as MuiDrawer, Toolbar, styled } from '@mui/material';
 import StorageIcon from '@mui/icons-material/Storage';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import { DRAWER_WIDTH } from './Drawer.constants';
 import { closedMixin, openedMixin } from './Drawer.utils';
+import { DrawerContext } from './Drawer.context';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -32,19 +33,13 @@ const StyledDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== '
   }),
 );
 
-
-export const Drawer = () => {
-  const [open, setOpen] = useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen((val) => !val);
-  };
+const DrawerContent = ({ open }: { open: boolean }) => {
+  const { toggleOpen } = useContext(DrawerContext);
 
   return (
-    <StyledDrawer variant='permanent' open={open}>
-      <Toolbar />
+    <>
       <DrawerHeader>
-        <IconButton aria-label="open drawer" edge='start' onClick={handleDrawerOpen}>
+        <IconButton aria-label="open drawer" edge='start' onClick={toggleOpen}>
           {open ? <KeyboardDoubleArrowLeftIcon /> : <KeyboardDoubleArrowRightIcon />}
         </IconButton>
       </DrawerHeader>
@@ -66,6 +61,65 @@ export const Drawer = () => {
           </ListItemButton>
         </ListItem>
       </List>
+    </>
+  );
+};
+
+const TabletDrawer = () => {
+  const { open } = useContext(DrawerContext);
+
+  return (
+    <>
+      <StyledDrawer variant='permanent' open={false}>
+        <Toolbar />
+        <DrawerContent open={false} />
+      </StyledDrawer>
+      <MuiDrawer anchor='left' variant='temporary' open={open}>
+        <Toolbar />
+        <DrawerContent open={open} />
+      </MuiDrawer>
+    </>
+  );
+}
+
+const DesktopDrawer = () => {
+  const { open } = useContext(DrawerContext);
+
+  return (
+    <StyledDrawer variant='permanent' open={open}>
+      <Toolbar />
+      <DrawerContent open={open} />
     </StyledDrawer>
+  );
+}
+
+const MobileDrawer = () => {
+  const { open } = useContext(DrawerContext);
+
+  return (
+    <MuiDrawer anchor='left' variant='temporary' open={open}>
+      <DrawerContent open={open} />
+    </MuiDrawer>
+  );
+}
+
+
+export const Drawer = () => {
+  const { activeBreakpoint } = useContext(DrawerContext);
+
+  if (activeBreakpoint === 'mobile') {
+    return (
+      <MobileDrawer />
+    );
+  }
+
+  if (activeBreakpoint === 'desktop') {
+    return (
+      <DesktopDrawer />
+    );
+  }
+
+  return (
+    <TabletDrawer />
   );
 };
