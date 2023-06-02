@@ -3,11 +3,13 @@ import { Routes, Route } from 'react-router-dom';
 import { ThemeContextProvider } from '@percona/design.theme-context-provider';
 import { everestThemeOptions } from '@percona/design.themes.everest';
 import { AppBar } from './components/app-bar/AppBar';
+import { Drawer } from './components/drawer/Drawer';
 
 export function EverestApp() {
   return (
     <ThemeContextProvider themeOptions={everestThemeOptions}>
       <AppBar />
+      <Drawer />
        {/* header component */}
         <Routes>
           <Route path="/" element={<div>Hello Worldz!!</div>}>
