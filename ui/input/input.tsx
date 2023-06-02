@@ -13,6 +13,12 @@ export type InputProps = {
 export function Input({ value, setValue, units }: InputProps) {
   return (
     <OutlinedInput
+      sx={{
+        '& .MuiInputBase-input': {
+          textAlign: 'center',
+        },
+      }}
+      inputProps={{ min: 0 }}
       type="number"
       value={value}
       onChange={(e) => setValue(Number(e.target.value))}

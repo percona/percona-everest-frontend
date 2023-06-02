@@ -1,3 +1,4 @@
+import { useTheme } from '@mui/material';
 import { ProgressBar } from '@percona/everest.ui.resources-details.progress-bar';
 import { Input } from '@percona/ui.input';
 import React from 'react';
@@ -23,12 +24,15 @@ export function ResourcesDetail({
   inputValue,
   setInputValue,
 }: ResourcesDetailProps) {
-  const styles = getStyles();
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const value1Percentage = (value / total) * 100;
   return (
     <div className={styles.wrapper}>
       <div className={styles.label}>{label}</div>
-      <Input value={inputValue} setValue={setInputValue} units={units} />
+      <div className={styles.input}>
+        <Input value={inputValue} setValue={setInputValue} units={units} />
+      </div>
       <ProgressBar
         label={`Using ${value} ${units} (${value1Percentage}%) of ${total} ${units} in total`}
         buffer={inputValue}
