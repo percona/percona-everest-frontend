@@ -74,7 +74,11 @@ const TabletDrawer = () => {
         <Toolbar />
         <DrawerContent open={false} />
       </StyledDrawer>
-      <MuiDrawer anchor='left' variant='temporary' open={open}>
+      <MuiDrawer
+        anchor='left'
+        variant='temporary' open={open}
+        sx={{ '& .MuiDrawer-paper': {  width: DRAWER_WIDTH } }}
+      >
         <Toolbar />
         <DrawerContent open={open} />
       </MuiDrawer>
@@ -97,7 +101,15 @@ const MobileDrawer = () => {
   const { open } = useContext(DrawerContext);
 
   return (
-    <MuiDrawer anchor='left' variant='temporary' open={open}>
+    <MuiDrawer
+      anchor='left'
+      variant='temporary'
+      open={open}
+      ModalProps={{
+        keepMounted: true, // Better open performance on mobile.
+      }}
+      sx={{ '& .MuiDrawer-paper': {  width: DRAWER_WIDTH } }}
+    >
       <DrawerContent open={open} />
     </MuiDrawer>
   );
