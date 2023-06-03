@@ -21,7 +21,7 @@ export const AppBar = () => {
               aria-label="open drawer"
               onClick={toggleOpen}
               edge="start"
-              sx={{ mr: 2, ...(open && { display: 'none' }) }}
+              sx={{ mr: 2 }}
             >
               <KeyboardDoubleArrowRightIcon />
             </IconButton>
