@@ -3,9 +3,10 @@ import { Box, IconButton, AppBar as MuiAppBar, Toolbar } from '@mui/material';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import { EverestHorizontalIcon } from '@percona/ui-lib.icons.everest';
 import { DrawerContext } from '../drawer/Drawer.context';
+import { Link } from 'react-router-dom';
 
 export const AppBar = () => {
-  const { open, activeBreakpoint, toggleOpen } = useContext(DrawerContext);
+  const { activeBreakpoint, toggleOpen } = useContext(DrawerContext);
 
   return (
     <Box>
@@ -26,7 +27,9 @@ export const AppBar = () => {
               <KeyboardDoubleArrowRightIcon />
             </IconButton>
           }
-          <EverestHorizontalIcon sx={{ height: '32px', width: 'auto' }} />
+          <Link to='/'>
+            <EverestHorizontalIcon sx={{ height: '32px', width: 'auto' }} />
+          </Link>
         </Toolbar>
       </MuiAppBar>
     </Box>
