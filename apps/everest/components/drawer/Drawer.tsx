@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import { IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Drawer as MuiDrawer, Toolbar, styled } from '@mui/material';
+import { IconButton, List, Drawer as MuiDrawer, Toolbar, styled } from '@mui/material';
 import StorageIcon from '@mui/icons-material/Storage';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import { DRAWER_WIDTH } from './Drawer.constants';
 import { closedMixin, openedMixin } from './Drawer.utils';
 import { DrawerContext } from './Drawer.context';
+import { NavItem } from '../nav-item/NavItem';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -44,22 +45,7 @@ const DrawerContent = ({ open }: { open: boolean }) => {
         </IconButton>
       </DrawerHeader>
       <List>
-        <ListItem disablePadding sx={{ display: 'block' }}>
-          <ListItemButton sx={{
-            minHeight: 48,
-            justifyContent: open ? 'initial' : 'center',
-            px: 2.5,
-          }}>
-            <ListItemIcon sx={{
-              minWidth: 0,
-              mr: open ? 3 : 'auto',
-              justifyContent: 'center',
-            }}>
-              <StorageIcon />
-            </ListItemIcon>
-            <ListItemText primary="Databases" sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
-        </ListItem>
+        <NavItem to='/databases' open={open} icon={StorageIcon} text='Databases' />
       </List>
     </>
   );

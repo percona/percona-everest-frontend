@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { EverestApp } from './app';
 import { Typography } from '@mui/material';
 
@@ -26,6 +26,9 @@ const router = createBrowserRouter([
           sapien faucibus et molestie ac.
         </Typography>
       )
+    }, {
+      index: true,
+      element: <Navigate to="/databases" replace />
     }]
   },
 ]);
