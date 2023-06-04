@@ -10,13 +10,16 @@ export const AppBar = () => {
 
   return (
     <Box>
-      <MuiAppBar position='fixed' sx={(theme) => ({
-        ...(activeBreakpoint !== 'mobile' && {
-          zIndex: theme.zIndex.drawer + 1,
-        })
-      })}>
+      <MuiAppBar
+        position="fixed"
+        sx={(theme) => ({
+          ...(activeBreakpoint !== 'mobile' && {
+            zIndex: theme.zIndex.drawer + 1,
+          }),
+        })}
+      >
         <Toolbar>
-          {activeBreakpoint === 'mobile' &&
+          {activeBreakpoint === 'mobile' && (
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -26,12 +29,12 @@ export const AppBar = () => {
             >
               <KeyboardDoubleArrowRightIcon />
             </IconButton>
-          }
-          <Link to='/'>
+          )}
+          <Link to="/">
             <EverestHorizontalIcon sx={{ height: '32px', width: 'auto' }} />
           </Link>
         </Toolbar>
       </MuiAppBar>
     </Box>
   );
-}
+};

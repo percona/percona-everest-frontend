@@ -1,5 +1,11 @@
 import React, { useContext } from 'react';
-import { IconButton, List, Drawer as MuiDrawer, Toolbar, styled } from '@mui/material';
+import {
+  IconButton,
+  List,
+  Drawer as MuiDrawer,
+  Toolbar,
+  styled,
+} from '@mui/material';
 import StorageIcon from '@mui/icons-material/Storage';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
@@ -17,22 +23,22 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 
-const StyledDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    width: DRAWER_WIDTH,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
-    ...(open && {
-      ...openedMixin(theme),
-      '& .MuiDrawer-paper': openedMixin(theme),
-    }),
-    ...(!open && {
-      ...closedMixin(theme),
-      '& .MuiDrawer-paper': closedMixin(theme),
-    }),
+const StyledDrawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  width: DRAWER_WIDTH,
+  flexShrink: 0,
+  whiteSpace: 'nowrap',
+  boxSizing: 'border-box',
+  ...(open && {
+    ...openedMixin(theme),
+    '& .MuiDrawer-paper': openedMixin(theme),
   }),
-);
+  ...(!open && {
+    ...closedMixin(theme),
+    '& .MuiDrawer-paper': closedMixin(theme),
+  }),
+}));
 
 const DrawerContent = ({ open }: { open: boolean }) => {
   const { toggleOpen } = useContext(DrawerContext);
@@ -40,12 +46,21 @@ const DrawerContent = ({ open }: { open: boolean }) => {
   return (
     <>
       <DrawerHeader>
-        <IconButton aria-label="open drawer" edge='start' onClick={toggleOpen}>
-          {open ? <KeyboardDoubleArrowLeftIcon /> : <KeyboardDoubleArrowRightIcon />}
+        <IconButton aria-label="open drawer" edge="start" onClick={toggleOpen}>
+          {open ? (
+            <KeyboardDoubleArrowLeftIcon />
+          ) : (
+            <KeyboardDoubleArrowRightIcon />
+          )}
         </IconButton>
       </DrawerHeader>
       <List>
-        <NavItem to='/databases' open={open} icon={StorageIcon} text='Databases' />
+        <NavItem
+          to="/databases"
+          open={open}
+          icon={StorageIcon}
+          text="Databases"
+        />
       </List>
     </>
   );
@@ -56,68 +71,62 @@ const TabletDrawer = () => {
 
   return (
     <>
-      <StyledDrawer variant='permanent' open={false}>
+      <StyledDrawer variant="permanent" open={false}>
         <Toolbar />
         <DrawerContent open={false} />
       </StyledDrawer>
       <MuiDrawer
-        anchor='left'
-        variant='temporary' open={open}
-        sx={{ '& .MuiDrawer-paper': {  width: DRAWER_WIDTH } }}
+        anchor="left"
+        variant="temporary"
+        open={open}
+        sx={{ '& .MuiDrawer-paper': { width: DRAWER_WIDTH } }}
       >
         <Toolbar />
         <DrawerContent open={open} />
       </MuiDrawer>
     </>
   );
-}
+};
 
 const DesktopDrawer = () => {
   const { open } = useContext(DrawerContext);
 
   return (
-    <StyledDrawer variant='permanent' open={open}>
+    <StyledDrawer variant="permanent" open={open}>
       <Toolbar />
       <DrawerContent open={open} />
     </StyledDrawer>
   );
-}
+};
 
 const MobileDrawer = () => {
   const { open } = useContext(DrawerContext);
 
   return (
     <MuiDrawer
-      anchor='left'
-      variant='temporary'
+      anchor="left"
+      variant="temporary"
       open={open}
       ModalProps={{
         keepMounted: true, // Better open performance on mobile.
       }}
-      sx={{ '& .MuiDrawer-paper': {  width: DRAWER_WIDTH } }}
+      sx={{ '& .MuiDrawer-paper': { width: DRAWER_WIDTH } }}
     >
       <DrawerContent open={open} />
     </MuiDrawer>
   );
-}
-
+};
 
 export const Drawer = () => {
   const { activeBreakpoint } = useContext(DrawerContext);
 
   if (activeBreakpoint === 'mobile') {
-    return (
-      <MobileDrawer />
-    );
+    return <MobileDrawer />;
   }
 
   if (activeBreakpoint === 'desktop') {
-    return (
-      <DesktopDrawer />
-    );
+    return <DesktopDrawer />;
   }
 
-  return (
-    <TabletDrawer />
-  );
+  return <TabletDrawer />;
 };

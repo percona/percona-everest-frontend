@@ -85,7 +85,7 @@ export const everestThemeOptions = (mode: PaletteMode): ThemeOptions => {
       MuiAppBar: {
         styleOverrides: {
           root: ({ theme }) => ({
-            backgroundColor: theme.palette.background.default
+            backgroundColor: theme.palette.background.default,
           }),
         },
       },

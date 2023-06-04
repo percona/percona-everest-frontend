@@ -13,7 +13,11 @@ const BarAndDrawer = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
   const toggleOpen = () => setOpen((val) => !val);
-  const activeBreakpoint = isMobile ? 'mobile' : (isDesktop ? 'desktop' : 'tablet');
+  const activeBreakpoint = isMobile
+    ? 'mobile'
+    : isDesktop
+    ? 'desktop'
+    : 'tablet';
 
   return (
     <DrawerContext.Provider value={{ open, toggleOpen, activeBreakpoint }}>
@@ -28,11 +32,11 @@ export const EverestApp = () => {
     <ThemeContextProvider themeOptions={everestThemeOptions}>
       <Box sx={{ display: 'flex' }}>
         <BarAndDrawer />
-        <Box component='main' sx={{ padding: 4 }}>
+        <Box component="main" sx={{ padding: 4 }}>
           <Toolbar />
           <Outlet />
         </Box>
       </Box>
-    </ThemeContextProvider >
+    </ThemeContextProvider>
   );
-}
+};

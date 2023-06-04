@@ -1,25 +1,36 @@
 import React from 'react';
-import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import {
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material';
 import { NavItemProps } from './NavItem.types';
 import { NavLink } from 'react-router-dom';
 
 export const NavItem = ({ open, icon, text, to }: NavItemProps) => {
   return (
-      <ListItem disablePadding sx={{ display: 'block' }}>
-        <ListItemButton component={NavLink} to={to} sx={{
+    <ListItem disablePadding sx={{ display: 'block' }}>
+      <ListItemButton
+        component={NavLink}
+        to={to}
+        sx={{
           minHeight: 48,
           justifyContent: open ? 'initial' : 'center',
           px: 2.5,
-        }}>
-          <ListItemIcon sx={{
+        }}
+      >
+        <ListItemIcon
+          sx={{
             minWidth: 0,
             mr: open ? 3 : 'auto',
             justifyContent: 'center',
-          }}>
-            {React.createElement(icon)}
-          </ListItemIcon>
-          <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-        </ListItemButton>
-      </ListItem>
+          }}
+        >
+          {React.createElement(icon)}
+        </ListItemIcon>
+        <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+      </ListItemButton>
+    </ListItem>
   );
 };

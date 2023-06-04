@@ -3,4 +3,4 @@ export type NavItemProps = {
   icon: React.ElementType;
   text: string;
   to: string;
-}
+};
