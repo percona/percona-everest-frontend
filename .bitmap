@@ -28,9 +28,9 @@
         "mainFile": "index.ts",
         "rootDir": "apps/everest",
         "config": {
-            "teambit.harmony/aspect": {},
+            "teambit.react/react-env@0.0.66": {},
             "teambit.envs/envs": {
-                "env": "teambit.harmony/aspect"
+                "env": "teambit.react/react-env"
             }
         }
     },

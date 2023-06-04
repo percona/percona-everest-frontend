@@ -7,7 +7,7 @@ import { Drawer } from './components/drawer/Drawer';
 import { DrawerContext } from './components/drawer/Drawer.context';
 import { Box, Toolbar, useMediaQuery, useTheme } from '@mui/material';
 
-const BarAndDrawer = () => {
+export const BarAndDrawer = () => {
   const [open, setOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));

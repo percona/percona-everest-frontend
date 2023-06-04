@@ -41,12 +41,17 @@ const StyledDrawer = styled(MuiDrawer, {
 }));
 
 const DrawerContent = ({ open }: { open: boolean }) => {
-  const { toggleOpen } = useContext(DrawerContext);
+  const { toggleOpen, activeBreakpoint } = useContext(DrawerContext);
 
   return (
     <>
-      <DrawerHeader>
-        <IconButton aria-label="open drawer" edge="start" onClick={toggleOpen}>
+      <DrawerHeader data-testid={`${activeBreakpoint}-drawer-header`}>
+        <IconButton
+          aria-label="open drawer"
+          data-testid="open-drawer-button"
+          edge="start"
+          onClick={toggleOpen}
+        >
           {open ? (
             <KeyboardDoubleArrowLeftIcon />
           ) : (
