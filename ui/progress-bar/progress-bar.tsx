@@ -5,13 +5,20 @@ export type ProgressBarProps = {
   /**
    * a node to be rendered in the special component.
    */
+  dataTestId?: string;
   value: number;
   buffer: number;
   total: number;
   label: string;
 };
 
-export function ProgressBar({ value, buffer, total, label }: ProgressBarProps) {
+export function ProgressBar({
+  dataTestId,
+  value,
+  buffer,
+  total,
+  label,
+}: ProgressBarProps) {
   const value1Percentage = (value / total) * 100;
   const value2Percentage = (buffer / total) * 100;
   const isOverLimit = value2Percentage > 100;
@@ -29,6 +36,7 @@ export function ProgressBar({ value, buffer, total, label }: ProgressBarProps) {
         variant="buffer"
         value={value1Percentage}
         valueBuffer={value2Percentage}
+        data-testid={dataTestId ?? 'progress-bar'}
         sx={{
           '&': {
             padding: '4px',

@@ -4,15 +4,10 @@ description: A Input component.
 
 import { Input } from './input';
 
-A component that does something special and renders text in a div.
+This component is customized input for showing units
 
 ### Component usage
 ```js
-<Input>Hello world!</Input>
-```
-
-### Render hello world!
-
-```js live
-<Input>Hello world!</Input>
+  const [value, setValue] = useState<number>(0);
+<Input value={value} setValue={setValue} units="CPU" />
 ```

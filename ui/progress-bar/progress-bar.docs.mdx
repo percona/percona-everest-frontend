@@ -4,15 +4,15 @@ description: A ProgressBar component.
 
 import { ProgressBar } from './progress-bar';
 
-A component that does something special and renders text in a div.
+This component is customized progress bar with our design and change of color when buffer exceed max value
 
 ### Component usage
+
 ```js
-<ProgressBar>Hello world!</ProgressBar>
-```
-
-### Render hello world!
-
-```js live
-<ProgressBar>Hello world!</ProgressBar>
+<ProgressBar
+  label="Using 112.52 CPU (16.7%) of 675.33 CPU in total"
+  buffer={7}
+  value={5}
+  total={10}
+/>
 ```

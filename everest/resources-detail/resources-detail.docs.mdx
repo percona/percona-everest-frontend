@@ -4,15 +4,18 @@ description: A ResourcesDetail component.
 
 import { ResourcesDetail } from './resources-detail';
 
-A component that does something special and renders text in a div.
+This component is composition of `ProgressBar` and `Input` componets. For displaying resources.
 
 ### Component usage
+
 ```js
-<ResourcesDetail>Hello world!</ResourcesDetail>
-```
-
-### Render hello world!
-
-```js live
-<ResourcesDetail>Hello world!</ResourcesDetail>
+<ResourcesDetail
+  value={1}
+  total={10}
+  inputValue={inputValue}
+  setInputValue={setInputValue}
+  label="CPU"
+  labelProgressBar="Using 112.52 CPU (16.7%) of 675.33 CPU in total"
+  units="CPU"
+/>
 ```
