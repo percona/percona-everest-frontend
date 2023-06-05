@@ -126,9 +126,10 @@
             }
         }
     },
-    "ui/resources-details/progress-bar": {
+    "ui/progress-bar": {
         "scope": "",
         "version": "",
+        "defaultScope": "percona.ui",
         "mainFile": "index.ts",
         "rootDir": "ui/progress-bar",
         "config": {
