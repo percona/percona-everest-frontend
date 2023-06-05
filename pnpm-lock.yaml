@@ -98,6 +98,8 @@ importers:
 
   ui/icons/everest: {}
 
+  ui/input: {}
+
   ui/progress-bar: {}
 
 packages:

@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
-import { ProgressBar } from '@percona/everest.ui.resources-details.progress-bar';
 import { Input } from '@percona/ui.input';
+import { ProgressBar } from '@percona/ui.progress-bar';
 import React from 'react';
 
 export type ResourcesDetailProps = {
