@@ -1,5 +1,14 @@
 import { PaletteMode, ThemeOptions, createTheme } from '@mui/material';
 
+declare module '@mui/material/styles' {
+  interface TypeAction {
+    focusVisible: string;
+    focusVisibleOpacity: number;
+    outlinedBorder: string;
+    outlinedBorderOpacity: number;
+  } 
+}
+
 let BaseTheme = createTheme();
 
 export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
@@ -172,6 +181,11 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
       fontWeight: 400,
       fontSize: '13px',
     },
+    button: {
+      textTransform: 'none',
+      lineHeight: '1',
+      letterSpacing: '0.025em',
+    },
   },
   shadows: [
     'none',
@@ -216,6 +230,98 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
           fontSize: '16px',
           fontWeight: 400,
         },
+      },
+    },
+    MuiButtonBase: {
+      defaultProps: {
+        disableRipple: true,
+      }
+    },
+    MuiButton: {
+      defaultProps: {
+        disableTouchRipple: true,
+      },
+      styleOverrides: {
+        root: ({ ownerState, theme }) => ({
+          borderRadius: 128,
+          borderWidth: 2,
+
+          '& > svg': {
+            width: 20,
+            height: 20,
+            margin: -3,
+          },
+
+          ...(ownerState.variant === 'contained' && {
+            ...(ownerState.size === 'large' && {
+              padding: '13px 24px',
+            }),
+            ...(ownerState.size === 'medium' && {
+              padding: '11px 16px',
+            }),
+            ...(ownerState.size === 'small' && {
+              padding: '8px 12px',
+            }),
+          }),
+
+          ...(ownerState.variant === 'outlined' && {
+            ...(ownerState.size === 'large' && {
+              padding: '11px 22px',
+            }),
+            ...(ownerState.size === 'medium' && {
+              padding: '9px 14px',
+            }),
+            ...(ownerState.size === 'small' && {
+              padding: '6px 10px',
+            }),
+            borderColor: theme.palette.primary.main,
+          }),
+
+          ...(ownerState.size === 'large' && {
+            fontSize: 16,
+          }),
+          ...(ownerState.size === 'medium' && {
+            fontSize: 16,
+          }),
+          ...(ownerState.size === 'small' && {
+            fontSize: 14,
+          }),
+
+          '&:hover': {
+            borderWidth: '2px',
+            ...(ownerState.variant === 'outlined' && {
+              backgroundColor: theme.palette.action.focus,
+            }),
+            ...(ownerState.variant === 'text' && {
+              backgroundColor: theme.palette.action.focus,
+            }),
+          },
+          '&:disabled': {
+            borderWidth: '2px',
+            ...(ownerState.variant === 'contained' && {
+              backgroundColor: theme.palette.action.disabled,
+            }),
+            color: theme.palette.text.disabled,
+          },
+        }),
+      },
+    },
+    MuiButtonGroup: {
+      styleOverrides: {
+        root: {
+          borderRadius: '128px',
+        },
+        grouped: ({ ownerState }) => ({
+          '&:not(:last-of-type)': {
+            ...(ownerState.variant === 'contained' && {
+              borderRight: 0,
+            }),
+            marginLeft: '-2px',
+          },
+          '&:not(:first-of-type)': {
+            marginLeft: '-2px',
+          },
+        }),
       },
     },
     MuiInputLabel: {

@@ -50,6 +50,39 @@ export const everestThemeOptions = (mode: PaletteMode): ThemeOptions => {
             },
           }),
     },
+    components: {
+      MuiIconButton: {
+        defaultProps: {
+          disableTouchRipple: true,
+        },
+        styleOverrides: {
+          root: ({ theme, ownerState }) => ({
+            color: theme.palette.text.primary,
+            ...(ownerState.color === 'primary' && {
+              color: theme.palette.primary.main,
+            }),
+            '&:hover': {
+              backgroundColor: theme.palette.action.selected,
+            },
+            '&:focus': {
+              backgroundColor: theme.palette.action.focusVisible,
+            },
+            ...(ownerState.size === 'large' && {
+              svg: {
+                width: 40,
+                height: 40,
+              },
+            }),
+            ...(ownerState.size === 'small' && {
+              svg: {
+                width: 20,
+                height: 20,
+              },
+            }),
+          }),
+        },
+      },
+    },
   };
 
   return deepmerge<ThemeOptions>(baseThemeOptions(mode), newOptions);

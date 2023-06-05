@@ -8,10 +8,11 @@ import {
   EverestAppCircleIcon,
 } from './everest';
 import { Grid } from '@mui/material';
-import { EverestCompositionViewer } from '@percona/design.everest-composition-viewer';
+import { CompositionViewer } from '@percona/design.composition-viewer';
+import { everestThemeOptions } from '@percona/design.themes.everest';
 
 export const Icons = () => (
-  <EverestCompositionViewer>
+  <CompositionViewer themeOptions={everestThemeOptions}>
     <Grid container spacing={2} sx={{ fontSize: '100px', margin: 0 }}>
       <Grid item xs={4}>
         <EverestMainIcon fontSize="inherit" />
@@ -32,5 +33,5 @@ export const Icons = () => (
         <EverestAppCircleIcon fontSize="inherit" />
       </Grid>
     </Grid>
-  </EverestCompositionViewer>
+  </CompositionViewer>
 );

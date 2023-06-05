@@ -39,6 +39,7 @@
     "packageManager": "teambit.dependencies/pnpm",
     "policy": {
       "dependencies": {
+        "@mui/icons-material": "^5.11.16",
         "@teambit/eslint-config-bit-react": "~0.0.367",
         "@typescript-eslint/eslint-plugin": "5.35.1",
         "eslint-import-resolver-node": "0.3.6",
@@ -75,6 +76,7 @@
   "percona.design/themes/base": {},
   "percona.design/themes/everest": {},
   "percona.design/utils/palette-theme-viewer": {},
-  "percona.design/everest-composition-viewer": {},
-  "percona.ui/icons/everest": {}
+  "percona.ui-lib/db-toggle-card": {},
+  "percona.ui-lib/icons/everest": {},
+  "percona.ui-lib/toggle-card": {}
 }
