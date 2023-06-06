@@ -32,7 +32,7 @@ export const EverestApp = () => {
     <ThemeContextProvider themeOptions={everestThemeOptions}>
       <Box sx={{ display: 'flex' }}>
         <BarAndDrawer />
-        <Box component="main" sx={{ padding: 4 }}>
+        <Box component="main" sx={{ padding: 4, width: '100%' }}>
           <Toolbar />
           <Outlet />
         </Box>
