@@ -29,7 +29,7 @@ export const NewDatabasePage = () => {
 
   return (
     <>
-      <Stepper activeStep={activeStep}>
+      <Stepper activeStep={activeStep} sx={{ marginBottom: 4 }}>
         {
           steps.map(() => (
             <Step>
