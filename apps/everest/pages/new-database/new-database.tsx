@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import { Box, Button, Step, StepLabel, Stepper } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useForm, SubmitHandler } from "react-hook-form";
+import { DbType } from '@percona/ui-lib.db-toggle-card';
+import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { steps } from './steps';
 
 type Inputs = {
-  example: string,
+  dbType: DbType,
 };
 
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
+  const methods = useForm<Inputs>({
+    defaultValues: {
+      dbType: DbType.Postresql,
+    }
+  });
   const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
 
   const handleNext = () => {
@@ -31,17 +36,19 @@ export const NewDatabasePage = () => {
     <>
       <Stepper activeStep={activeStep} sx={{ marginBottom: 4 }}>
         {
-          steps.map(() => (
-            <Step>
+          steps.map((_, idx) => (
+            <Step key={`step-${idx + 1}`}>
               <StepLabel />
             </Step>
           ))
         }
       </Stepper>
       <Box>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {React.createElement(steps[activeStep])}
-        </form>
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            {React.createElement(steps[activeStep])}
+          </form>
+        </FormProvider>
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
         <Button
