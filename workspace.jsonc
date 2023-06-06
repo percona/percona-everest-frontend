@@ -62,6 +62,9 @@
     },
     "linkCoreAspects": true
   },
+  "teambit.generator/generator": {
+    "envs": ["percona.envs/percona-react-env"]
+  },
   /**
    * workspace variants allow to set different subsets of configuration for components in your
    * workspace. this is extremely useful for upgrading, aligning and building components with a new
