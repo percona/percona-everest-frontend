@@ -1,33 +1,47 @@
 import React, { useState } from 'react';
 import { Box, Button, Step, StepLabel, Stepper } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useForm, SubmitHandler } from "react-hook-form";
+import { steps } from './steps';
+
+type Inputs = {
+  example: string,
+};
 
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep < steps.length - 1) {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
+
+    // Submit
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    if (activeStep > 0) {
+      setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    }
   };
 
   return (
     <>
       <Stepper activeStep={activeStep}>
-        <Step>
-          <StepLabel />
-        </Step>
-        <Step>
-          <StepLabel />
-        </Step>
-        <Step>
-          <StepLabel />
-        </Step>
+        {
+          steps.map(() => (
+            <Step>
+              <StepLabel />
+            </Step>
+          ))
+        }
       </Stepper>
       <Box>
-        Step {activeStep + 1}
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {React.createElement(steps[activeStep])}
+        </form>
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
         <Button
