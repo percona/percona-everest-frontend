@@ -30,7 +30,13 @@ export const ToggleCard = ({ children, ...props }: ToggleCardProps) => {
           '&:not(:last-of-type)': {
             borderTopRightRadius: `${theme.shape.borderRadius}px`,
             borderBottomRightRadius: `${theme.shape.borderRadius}px`,
-            mr: 1,
+
+            [theme.breakpoints.down('sm')]: {
+              mb: 1,
+            },
+            [theme.breakpoints.up('sm')]: {
+              mr: 1,
+            },
           },
           '&:not(:first-of-type)': {
             borderTopLeftRadius: `${theme.shape.borderRadius}px`,
