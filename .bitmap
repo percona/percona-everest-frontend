@@ -59,6 +59,19 @@
             }
         }
     },
+    "stepper": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui",
+        "mainFile": "index.ts",
+        "rootDir": "ui/stepper",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
     "theme-context-provider": {
         "scope": "percona.design",
         "version": "0.0.1",
