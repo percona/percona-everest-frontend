@@ -1,4 +1,4 @@
-import React, { Fragment, ReactNode } from 'react';
+import React, { Fragment } from 'react';
 import { Stepper as MuiStepper, useTheme } from '@mui/material';
 import { StepperProps as MuiStepperProps } from '@mui/material/Stepper/Stepper';
 
@@ -17,7 +17,7 @@ export const Stepper = ({
 
   return (
     <MuiStepper
-      data-testid={`${dataTestId || ''}-stepper`}
+      data-testid={dataTestId}
       sx={{
         ...(noConnector && {
           '.MuiStep-root': {
@@ -36,6 +36,7 @@ export const Stepper = ({
         },
         '.MuiStepLabel-label.Mui-completed': {
           color: theme.palette.text.secondary,
+          fontWeight: 600,
         },
         '.MuiStepLabel-label': {
           fontWeight: 600,

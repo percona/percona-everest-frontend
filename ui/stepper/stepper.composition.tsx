@@ -16,10 +16,6 @@ export const StepperWithoutConnectors = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
 
-  const isStepOptional = (step: number) => {
-    return step === 1;
-  };
-
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
   };
@@ -37,19 +33,6 @@ export const StepperWithoutConnectors = () => {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
   };
 
   const handleReset = () => {
@@ -70,7 +53,7 @@ export const StepperWithoutConnectors = () => {
           })}
         </Stepper>
         {activeStep === steps.length ? (
-          <React.Fragment>
+          <>
             <Typography sx={{ mt: 2, mb: 1 }}>
               All steps completed - you&apos;re finished
             </Typography>
@@ -78,9 +61,9 @@ export const StepperWithoutConnectors = () => {
               <Box sx={{ flex: '1 1 auto' }} />
               <Button onClick={handleReset}>Reset</Button>
             </Box>
-          </React.Fragment>
+          </>
         ) : (
-          <React.Fragment>
+          <>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
               <Button
                 color="inherit"
@@ -95,7 +78,7 @@ export const StepperWithoutConnectors = () => {
                 {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
               </Button>
             </Box>
-          </React.Fragment>
+          </>
         )}
       </Box>
     </ThemeContextProvider>
@@ -110,10 +93,6 @@ export const VerticalStepperWithConnectors = () => {
   ];
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
-
-  const isStepOptional = (step: number) => {
-    return step === 1;
-  };
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -132,7 +111,7 @@ export const VerticalStepperWithConnectors = () => {
     <ThemeContextProvider themeOptions={everestThemeOptions}>
       <Box sx={{ padding: 1 }}>
         <Stepper activeStep={activeStep} orientation="vertical">
-          {steps.map(({ label }, index) => {
+          {steps.map(({ label }) => {
             const stepProps: { completed?: boolean } = {};
             const labelProps: {
               optional?: React.ReactNode;
@@ -145,7 +124,7 @@ export const VerticalStepperWithConnectors = () => {
           })}
         </Stepper>
         {activeStep === steps.length ? (
-          <React.Fragment>
+          <>
             <Typography sx={{ mt: 2, mb: 1 }}>
               All steps completed - you&apos;re finished
             </Typography>
@@ -153,9 +132,9 @@ export const VerticalStepperWithConnectors = () => {
               <Box sx={{ flex: '1 1 auto' }} />
               <Button onClick={handleReset}>Reset</Button>
             </Box>
-          </React.Fragment>
+          </>
         ) : (
-          <React.Fragment>
+          <>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
               <Button
                 color="inherit"
@@ -170,7 +149,7 @@ export const VerticalStepperWithConnectors = () => {
                 {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
               </Button>
             </Box>
-          </React.Fragment>
+          </>
         )}
       </Box>
     </ThemeContextProvider>
@@ -185,10 +164,6 @@ export const HorizontalStepperWithConnectors = () => {
   ];
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
-
-  const isStepOptional = (step: number) => {
-    return step === 1;
-  };
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -207,7 +182,7 @@ export const HorizontalStepperWithConnectors = () => {
     <ThemeContextProvider themeOptions={everestThemeOptions}>
       <Box sx={{ padding: 1, width: '400px' }}>
         <Stepper activeStep={activeStep}>
-          {steps.map(({ label }, index) => {
+          {steps.map(({ label }) => {
             const stepProps: { completed?: boolean } = {};
             const labelProps: {
               optional?: React.ReactNode;
@@ -220,14 +195,14 @@ export const HorizontalStepperWithConnectors = () => {
           })}
         </Stepper>
         {activeStep === steps.length ? (
-          <React.Fragment>
+          <>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
               <Box sx={{ flex: '1 1 auto' }} />
               <Button onClick={handleReset}>Reset</Button>
             </Box>
-          </React.Fragment>
+          </>
         ) : (
-          <React.Fragment>
+          <>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
               <Button
                 color="inherit"
@@ -242,7 +217,7 @@ export const HorizontalStepperWithConnectors = () => {
                 {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
               </Button>
             </Box>
-          </React.Fragment>
+          </>
         )}
       </Box>
     </ThemeContextProvider>
