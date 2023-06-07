@@ -19,14 +19,15 @@ export class PerconaReactEnvMain {
   static runtime = MainRuntime;
 
   static async provider([react, envs]: [ReactMain, EnvsMain]) {
+
     //const webpackModifiers: UseWebpackModifiers = {
-    //  previewConfig: [previewConfigTransformer],
-    //  devServerConfig: [devServerConfigTransformer],
+      //  previewConfig: [previewConfigTransformer],
+      //  devServerConfig: [devServerConfigTransformer],
     //};
 
     //const tsModifiers: UseTypescriptModifiers = {
-    //  devConfig: [devConfigTransformer],
-    //  buildConfig: [buildConfigTransformer],
+      //  devConfig: [devConfigTransformer],
+      //  buildConfig: [buildConfigTransformer],
     //};
 
     const PerconaReactEnvEnv = react.compose([
@@ -77,8 +78,8 @@ export class PerconaReactEnvMain {
       react.overrideDependencies({
         devDependencies: {
           // '@types/react': '17.0.3'
-        },
-      }),
+        }
+      })
     ]);
     envs.registerEnv(PerconaReactEnvEnv);
     return new PerconaReactEnvMain();
