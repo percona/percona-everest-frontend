@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import {
   HorizontalStepperWithConnectors,
   StepperWithoutConnectors,
@@ -14,7 +14,6 @@ describe('Stepper', () => {
   });
   it('should show the connector line when noConnector prop is false', () => {
     const { container } = render(<HorizontalStepperWithConnectors />);
-    console.log(container.getElementsByClassName('MuiStepConnector-root')[0]);
     expect(
       container.getElementsByClassName('MuiStepConnector-root')[0]
     ).toBeTruthy();
