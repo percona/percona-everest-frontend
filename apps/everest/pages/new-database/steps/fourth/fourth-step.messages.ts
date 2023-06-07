@@ -6,4 +6,6 @@ export const Messages = {
     Secure your database with strong controls, encryption, and firewalls. Use secure remote access, regularly back up data, and conduct security audits.
   `,
   enableExternalAccess: 'Enable External Access',
+  internetFacing: 'Internet Facing',
+  sourceRange: 'Source Range',
 };

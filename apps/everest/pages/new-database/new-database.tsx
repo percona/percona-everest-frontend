@@ -9,6 +9,8 @@ import { Messages } from './new-database.messages';
 type Inputs = {
   dbType: DbType,
   externalAccess: boolean;
+  internetFacing: boolean;
+  sourceRange: string;
 };
 
 export const NewDatabasePage = () => {
@@ -17,6 +19,8 @@ export const NewDatabasePage = () => {
     defaultValues: {
       dbType: DbType.Postresql,
       externalAccess: false,
+      internetFacing: true,
+      sourceRange: '',
     }
   });
   const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
@@ -26,6 +30,7 @@ export const NewDatabasePage = () => {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
 
+    // console.log(methods.getValues());
   };
 
   const handleBack = () => {
