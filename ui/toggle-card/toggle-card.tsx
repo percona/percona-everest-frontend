@@ -27,10 +27,10 @@ export const ToggleCard = ({ children, ...props }: ToggleCardProps) => {
           backgroundColor: 'background.default',
         },
         '&.MuiToggleButtonGroup-grouped': {
-          mr: 1,
           '&:not(:last-of-type)': {
             borderTopRightRadius: `${theme.shape.borderRadius}px`,
             borderBottomRightRadius: `${theme.shape.borderRadius}px`,
+            mr: 1,
           },
           '&:not(:first-of-type)': {
             borderTopLeftRadius: `${theme.shape.borderRadius}px`,
