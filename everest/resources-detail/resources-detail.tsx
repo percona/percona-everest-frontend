@@ -2,19 +2,7 @@ import { Box } from '@mui/material';
 import { Input } from '@percona/ui.input';
 import { ProgressBar } from '@percona/ui.progress-bar';
 import React from 'react';
-
-export type ResourcesDetailProps = {
-  /**
-   * a node to be rendered in the special component.
-   */
-  label: string;
-  labelProgressBar: string;
-  units: string;
-  value: number;
-  total: number;
-  inputValue: number;
-  setInputValue: React.Dispatch<React.SetStateAction<number>>;
-};
+import { ResourcesDetailProps } from './resources-detail.types';
 
 export function ResourcesDetail({
   label,

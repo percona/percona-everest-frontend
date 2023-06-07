@@ -1,16 +1,6 @@
 import { Box, LinearProgress } from '@mui/material';
 import React from 'react';
-
-export type ProgressBarProps = {
-  /**
-   * a node to be rendered in the special component.
-   */
-  dataTestId?: string;
-  value: number;
-  buffer: number;
-  total: number;
-  label: string;
-};
+import { ProgressBarProps } from './progress-bar.types';
 
 export function ProgressBar({
   dataTestId,

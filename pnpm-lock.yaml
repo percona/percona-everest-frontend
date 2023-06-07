@@ -6,9 +6,6 @@ importers:
 
   .:
     dependencies:
-      '@emotion/css':
-        specifier: ^11.11.0
-        version: registry.npmjs.org/@emotion/css@11.11.0
       '@emotion/react':
         specifier: ^11.11.0
         version: registry.npmjs.org/@emotion/react@11.11.0(@types/react@17.0.59)(react@17.0.2)
@@ -445,18 +442,6 @@ packages:
       '@emotion/utils': registry.npmjs.org/@emotion/utils@1.2.1
       '@emotion/weak-memoize': registry.npmjs.org/@emotion/weak-memoize@0.3.1
       stylis: registry.npmjs.org/stylis@4.2.0
-    dev: false
-
-  registry.npmjs.org/@emotion/css@11.11.0:
-    resolution: {integrity: sha512-m4g6nKzZyiKyJ3WOfdwrBdcujVcpaScIWHAnyNKPm/A/xJKwfXPfQAbEVi1kgexWTDakmg+r2aDj0KvnMTo4oQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/@emotion/css/-/css-11.11.0.tgz}
-    name: '@emotion/css'
-    version: 11.11.0
-    dependencies:
-      '@emotion/babel-plugin': registry.npmjs.org/@emotion/babel-plugin@11.11.0
-      '@emotion/cache': registry.npmjs.org/@emotion/cache@11.11.0
-      '@emotion/serialize': registry.npmjs.org/@emotion/serialize@1.1.2
-      '@emotion/sheet': registry.npmjs.org/@emotion/sheet@1.2.2
-      '@emotion/utils': registry.npmjs.org/@emotion/utils@1.2.1
     dev: false
 
   registry.npmjs.org/@emotion/hash@0.9.1:
