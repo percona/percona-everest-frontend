@@ -1,6 +1,6 @@
-import React, {Fragment, ReactNode} from 'react';
-import {Stepper as MuiStepper, useTheme} from "@mui/material";
-import {StepperProps as MuiStepperProps} from "@mui/material/Stepper/Stepper";
+import React, { Fragment, ReactNode } from 'react';
+import { Stepper as MuiStepper, useTheme } from '@mui/material';
+import { StepperProps as MuiStepperProps } from '@mui/material/Stepper/Stepper';
 
 export type StepperProps = MuiStepperProps & {
   noConnector?: boolean;
@@ -8,41 +8,41 @@ export type StepperProps = MuiStepperProps & {
 };
 
 export const Stepper = ({
-                          noConnector,
-                          connector,
-                          dataTestId,
-                          ...props
-                        }: StepperProps) => {
+  noConnector,
+  connector,
+  dataTestId,
+  ...props
+}: StepperProps) => {
   const theme = useTheme();
 
   return (
-      <MuiStepper
-          data-testid={`${dataTestId || ''}-stepper`}
-          sx={{
-            ...(noConnector && {
-              '.MuiStep-root': {
-                padding: 0,
-              },
-            }),
-            '.MuiStepIcon-root.Mui-active': {
-              color: theme.palette.text.primary,
-            },
-            '.MuiStepIcon-root.Mui-completed': {
-              color: theme.palette.primary.light,
-            },
-            '.MuiStepLabel-label.Mui-active': {
-              color: theme.palette.text.primary,
-                fontWeight: 600,
-            },
-            '.MuiStepLabel-label.Mui-completed': {
-              color: theme.palette.text.secondary,
-            },
-              '.MuiStepLabel-label': {
-                  fontWeight: 600,
-              },
-          }}
-          {...props}
-          connector={noConnector ? <Fragment /> : connector}
-      />
+    <MuiStepper
+      data-testid={`${dataTestId || ''}-stepper`}
+      sx={{
+        ...(noConnector && {
+          '.MuiStep-root': {
+            padding: 0,
+          },
+        }),
+        '.MuiStepIcon-root.Mui-active': {
+          color: theme.palette.text.primary,
+        },
+        '.MuiStepIcon-root.Mui-completed': {
+          color: theme.palette.primary.light,
+        },
+        '.MuiStepLabel-label.Mui-active': {
+          color: theme.palette.text.primary,
+          fontWeight: 600,
+        },
+        '.MuiStepLabel-label.Mui-completed': {
+          color: theme.palette.text.secondary,
+        },
+        '.MuiStepLabel-label': {
+          fontWeight: 600,
+        },
+      }}
+      {...props}
+      connector={noConnector ? <Fragment /> : connector}
+    />
   );
 };
