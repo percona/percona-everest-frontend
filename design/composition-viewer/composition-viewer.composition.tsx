@@ -2,7 +2,6 @@ import React from 'react';
 import { CompositionViewer } from './composition-viewer';
 
 export const BasicCompositionViewer = () => {
-
   const themeOptions = () => ({
     palette: {
       error: {
@@ -49,5 +48,9 @@ export const BasicCompositionViewer = () => {
     },
   });
 
-  return <CompositionViewer themeOptions={themeOptions}>hello world!</CompositionViewer>;
+  return (
+    <CompositionViewer themeOptions={themeOptions}>
+      hello world!
+    </CompositionViewer>
+  );
 };

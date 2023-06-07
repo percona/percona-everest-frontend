@@ -44,4 +44,3 @@ export const buildConfigTransformer: TsConfigTransformer = (
   newConfig.mergeTsConfig(tsConfig);
   return newConfig;
 };
-
