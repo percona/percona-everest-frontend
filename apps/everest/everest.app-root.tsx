@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import { EverestApp } from './app';
 import { DatabasesPage } from './pages/databases/databases';
+import { NewDatabasePage } from './pages/new-database/new-database';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       {
         path: 'databases',
         element: <DatabasesPage />,
+      },
+      {
+        path: 'databases/new',
+        element: <NewDatabasePage />,
       },
       {
         index: true,
