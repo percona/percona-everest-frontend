@@ -3,6 +3,7 @@ import { ToggleButtonGroup } from "@mui/material";
 import { Typography } from "@mui/material";
 import { DbToggleCard, DbType } from "@percona/ui-lib.db-toggle-card";
 import { Controller, useFormContext } from "react-hook-form";
+import { Messages } from "./first-step.messages";
 
 export const FirstStep = () => {
   const { control } = useFormContext();
@@ -10,7 +11,7 @@ export const FirstStep = () => {
   return (
     <>
       <Typography variant="h6">
-        What Database type do you want to deploy?
+        {Messages.dbTypeQuestion}
       </Typography>
       <Controller
         name="dbType"

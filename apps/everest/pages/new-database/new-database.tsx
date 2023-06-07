@@ -4,6 +4,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { steps } from './steps';
+import { Messages } from './new-database.messages';
 
 type Inputs = {
   dbType: DbType,
@@ -58,11 +59,11 @@ export const NewDatabasePage = () => {
           onClick={handleBack}
           sx={{ mr: 1 }}
         >
-          Previous
+          {Messages.previous}
         </Button>
         <Box sx={{ flex: '1 1 auto' }} />
         <Button onClick={handleNext} variant='contained'>
-          Continue
+          {Messages.continue}
         </Button>
       </Box>
     </>
