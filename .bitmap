@@ -33,6 +33,19 @@
         "mainFile": "index.ts",
         "rootDir": "ui/icons/everest"
     },
+    "percona-react-env": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.envs",
+        "mainFile": "index.ts",
+        "rootDir": "envs/percona-react-env",
+        "config": {
+            "teambit.envs/env": {},
+            "teambit.envs/envs": {
+                "env": "teambit.envs/env"
+            }
+        }
+    },
     "theme-context-provider": {
         "scope": "percona.design",
         "version": "0.0.1",
