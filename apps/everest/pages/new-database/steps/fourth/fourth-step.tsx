@@ -48,16 +48,20 @@ export const FourthStep = () => {
                 control={control}
                 name='sourceRange'
                 rules={{
+                  required: true,
                   pattern: IP_RANGE_PATTERN
                 }}
-                render={({ field }) => (
+                render={({ field, fieldState: { error } }) => (
                   <TextField
                     {...field}
                     variant="outlined"
+                    placeholder={Messages.sourceRangePlaceholder}
+                    error={error !== undefined}
+                    helperText={error ? Messages.sourceRangeError : ''}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <IconButton onClick={() => setValue('sourceRange', '')}>
+                          <IconButton onClick={() => setValue('sourceRange', '', { shouldValidate: true })}>
                             <DeleteIcon />
                           </IconButton>
                         </InputAdornment>

@@ -8,4 +8,6 @@ export const Messages = {
   enableExternalAccess: 'Enable External Access',
   internetFacing: 'Internet Facing',
   sourceRange: 'Source Range',
+  sourceRangePlaceholder: 'Please insert the single IP address or range using netmask',
+  sourceRangeError: 'Invalid address or range',
 };
