@@ -24,10 +24,12 @@ export const FirstStep = () => {
             sx={{ marginTop: 1 }}
             onChange={(
               event: React.MouseEvent<HTMLElement> | any,
-              value: string
+              value: DbType
             ) => {
-              event.target.value = value;
-              field.onChange(event);
+              if (value !== null) {
+                event.target.value = value;
+                field.onChange(event);
+              }
             }}
           >
             <DbToggleCard value={DbType.Postresql} />
