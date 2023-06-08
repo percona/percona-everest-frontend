@@ -1,13 +1,17 @@
+import { DbType } from "@percona/ui-lib.db-toggle-card";
 import { z } from "zod";
 import { IP_REGEX } from "./new-database.constants";
 
+// .passthrough tells Zod to not drop unrecognized keys
+// this is needed because we parse step by step
+// so, by default, Zod would leave behind the keys from previous steps
 const stepOneSchema = z.object({
-  dbType: z.string()
+  dbType: z.nativeEnum(DbType)
 }).passthrough();
 
 const stepTwoSchema = z.object({
   firstName: z.string().optional()
-}).passthrough()
+}).passthrough();
 
 const stepThreeSchema = z.object({
   lastName: z.string().optional()
