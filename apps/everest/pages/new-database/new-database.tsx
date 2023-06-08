@@ -11,11 +11,12 @@ import { DbWizardType, dbWizardSchema } from './new-database.types';
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const currentValidationSchema = dbWizardSchema[activeStep];
+  
   const methods = useForm<DbWizardType>({
     mode: 'onChange',
-    resolver: zodResolver(currentValidationSchema),
+    resolver: zodResolver(currentValidationSchema.passthrough()),
     defaultValues: {
-      dbType: DbType.Postresql,
+      dbType: DbType.Postresql
     }
   });
   const firstStep = activeStep === 0;
