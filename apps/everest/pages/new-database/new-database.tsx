@@ -5,17 +5,12 @@ import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { steps } from './steps';
 import { Messages } from './new-database.messages';
-
-type Inputs = {
-  dbType: DbType,
-  externalAccess: boolean;
-  internetFacing: boolean;
-  sourceRange: string;
-};
+import { DbWizardInputs } from './new-database.types';
 
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const methods = useForm<Inputs>({
+  const methods = useForm<DbWizardInputs>({
+    mode: 'onChange',
     defaultValues: {
       dbType: DbType.Postresql,
       externalAccess: false,
@@ -23,14 +18,20 @@ export const NewDatabasePage = () => {
       sourceRange: '',
     }
   });
-  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
+  const firstStep = activeStep === 0;
 
-  const handleNext = () => {
+  const onSubmit: SubmitHandler<DbWizardInputs> = data => {
+    console.log(data);
+  }
+
+  const handleNext: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
     if (activeStep < steps.length - 1) {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    }
+      const isStepValid = await methods.trigger();
 
-    // console.log(methods.getValues());
+      if (isStepValid) {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
+    }
   };
 
   const handleBack = () => {
@@ -50,28 +51,43 @@ export const NewDatabasePage = () => {
           ))
         }
       </Stepper>
-      <Box>
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <Box>
             {React.createElement(steps[activeStep])}
-          </form>
-        </FormProvider>
-      </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-        <Button
-          startIcon={<ArrowBackIcon />}
-          variant='text'
-          disabled={activeStep === 0}
-          onClick={handleBack}
-          sx={{ mr: 1 }}
-        >
-          {Messages.previous}
-        </Button>
-        <Box sx={{ flex: '1 1 auto' }} />
-        <Button type='button' onClick={handleNext} variant='contained'>
-          {Messages.continue}
-        </Button>
-      </Box>
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+            <Button
+              type='button'
+              startIcon={<ArrowBackIcon />}
+              variant='text'
+              disabled={firstStep}
+              onClick={handleBack}
+              sx={{ mr: 1 }}
+            >
+              {Messages.previous}
+            </Button>
+            <Box sx={{ flex: '1 1 auto' }} />
+            {
+              activeStep === steps.length - 1 ? (
+                <Button
+                  onClick={methods.handleSubmit(onSubmit)}
+                  variant='contained'
+                >
+                  {Messages.createDatabase}
+                </Button>
+              ) : (
+                <Button
+                  onClick={handleNext}
+                  variant='contained'
+                >
+                  {Messages.continue}
+                </Button>
+              )
+            }
+          </Box>
+        </form>
+      </FormProvider>
     </>
   );
 };
