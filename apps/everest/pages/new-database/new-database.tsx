@@ -3,14 +3,16 @@ import { Box, Button, Step, StepLabel, Stepper } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
+import { zodResolver } from '@hookform/resolvers/zod';
 import { steps } from './steps';
 import { Messages } from './new-database.messages';
-import { DbWizardInputs } from './new-database.types';
+import { DbWizardType, dbWizardSchema } from './new-database.types';
 
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const methods = useForm<DbWizardInputs>({
+  const methods = useForm<DbWizardType>({
     mode: 'onChange',
+    resolver: zodResolver(dbWizardSchema),
     defaultValues: {
       dbType: DbType.Postresql,
       externalAccess: false,
@@ -20,7 +22,7 @@ export const NewDatabasePage = () => {
   });
   const firstStep = activeStep === 0;
 
-  const onSubmit: SubmitHandler<DbWizardInputs> = data => {
+  const onSubmit: SubmitHandler<DbWizardType> = data => {
     console.log(data);
   }
 

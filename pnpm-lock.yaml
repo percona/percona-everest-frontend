@@ -12,6 +12,9 @@ importers:
       '@emotion/styled':
         specifier: ^11.11.0
         version: registry.npmjs.org/@emotion/styled@11.11.0(@emotion/react@11.11.0)(@types/react@17.0.59)(react@17.0.2)
+      '@hookform/resolvers':
+        specifier: ^3.1.0
+        version: registry.npmjs.org/@hookform/resolvers@3.1.0(react-hook-form@7.44.3)
       '@mui/icons-material':
         specifier: ^5.11.16
         version: registry.npmjs.org/@mui/icons-material@5.11.16(@mui/material@5.13.1)(@types/react@17.0.59)(react@17.0.2)
@@ -69,6 +72,9 @@ importers:
       react-router-dom:
         specifier: ^6.11.2
         version: registry.npmjs.org/react-router-dom@6.11.2(react-dom@17.0.2)(react@17.0.2)
+      zod:
+        specifier: ^3.21.4
+        version: registry.npmjs.org/zod@3.21.4
     devDependencies:
       '@babel/runtime':
         specifier: 7.20.0
@@ -608,6 +614,20 @@ packages:
     resolution: {integrity: sha512-EsBwpc7hBUJWAsNPBmJy4hxWx12v6bshQsldrVmjxJoc3isbxhOrF2IcCpaXxfvq03NwkI7sbsOLXbYuqF/8Ww==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/@emotion/weak-memoize/-/weak-memoize-0.3.1.tgz}
     name: '@emotion/weak-memoize'
     version: 0.3.1
+    dev: false
+
+  registry.npmjs.org/@hookform/resolvers@3.1.0(react-hook-form@7.44.3):
+    resolution: {integrity: sha512-z0A8K+Nxq+f83Whm/ajlwE6VtQlp/yPHZnXw7XWVPIGm1Vx0QV8KThU3BpbBRfAZ7/dYqCKKBNnQh85BkmBKkA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/@hookform/resolvers/-/resolvers-3.1.0.tgz}
+    id: registry.npmjs.org/@hookform/resolvers/3.1.0
+    name: '@hookform/resolvers'
+    version: 3.1.0
+    peerDependencies:
+      react-hook-form: '*'
+    peerDependenciesMeta:
+      react-hook-form:
+        optional: true
+    dependencies:
+      react-hook-form: registry.npmjs.org/react-hook-form@7.44.3(react@17.0.2)
     dev: false
 
   registry.npmjs.org/@jest/types@26.6.2:
@@ -4373,4 +4393,10 @@ packages:
     name: yaml
     version: 1.10.2
     engines: {node: '>= 6'}
+    dev: false
+
+  registry.npmjs.org/zod@3.21.4:
+    resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/zod/-/zod-3.21.4.tgz}
+    name: zod
+    version: 3.21.4
     dev: false
