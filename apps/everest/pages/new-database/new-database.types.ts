@@ -24,7 +24,6 @@ const stepFourSchema = z.object({
 }).passthrough().superRefine((input, ctx) => {
   if (!!input.externalAccess) {
     if (!input.sourceRange) {
-      console.log('empty');
       ctx.addIssue({
         code: z.ZodIssueCode.too_small,
         minimum: 1,
