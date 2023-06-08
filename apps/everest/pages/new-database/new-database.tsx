@@ -14,7 +14,7 @@ export const NewDatabasePage = () => {
   
   const methods = useForm<DbWizardType>({
     mode: 'onChange',
-    resolver: zodResolver(currentValidationSchema.passthrough()),
+    resolver: zodResolver(currentValidationSchema),
     defaultValues: {
       dbType: DbType.Postresql,
       externalAccess: false,

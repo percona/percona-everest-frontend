@@ -1,27 +1,47 @@
-import { DbType } from "@percona/ui-lib.db-toggle-card"
 import { z } from "zod";
+import { IP_REGEX } from "./new-database.constants";
 
 const stepOneSchema = z.object({
   dbType: z.string()
-});
+}).passthrough();
 
 const stepTwoSchema = z.object({
   firstName: z.string().optional()
-})
+}).passthrough()
 
 const stepThreeSchema = z.object({
   lastName: z.string().optional()
-});
+}).passthrough();
 
 const stepFourSchema = z.object({
   externalAccess: z.boolean(),
   internetFacing: z.boolean(),
-  sourceRange: z.string().ip(),
+  sourceRange: z.string().optional(),
+}).passthrough().superRefine((input, ctx) => {
+  if (!!input.externalAccess) {
+    if (!input.sourceRange) {
+      console.log('empty');
+      ctx.addIssue({
+        code: z.ZodIssueCode.too_small,
+        minimum: 1,
+        inclusive: true,
+        type: 'string',
+        message: 'EMPTY',
+        path: ['sourceRange'],
+      });
+    } else if (IP_REGEX.exec(input.sourceRange) === null) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.invalid_string,
+        validation: 'ip',
+        path: ['sourceRange'],
+      });
+    }
+  }
 });
 
 const stepFiveSchema = z.object({
   address: z.string().optional()
-});
+}).passthrough();
 
 // Each position of the array is the validation schema for a given step
 export const dbWizardSchema = [
