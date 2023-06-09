@@ -6,7 +6,7 @@ declare module '@mui/material/styles' {
     focusVisibleOpacity: number;
     outlinedBorder: string;
     outlinedBorderOpacity: number;
-  } 
+  }
 }
 
 let BaseTheme = createTheme();
@@ -235,7 +235,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
     MuiButtonBase: {
       defaultProps: {
         disableRipple: true,
-      }
+      },
     },
     MuiButton: {
       defaultProps: {
