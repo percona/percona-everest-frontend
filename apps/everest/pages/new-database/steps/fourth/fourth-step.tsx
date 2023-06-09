@@ -18,6 +18,7 @@ export const FourthStep = () => {
       <FormGroup sx={{ mt: 2 }}>
         <FormControlLabel
           label={Messages.enableExternalAccess}
+          data-testid="switch-external-access"
           control={
             <Controller
               control={control}
@@ -33,6 +34,7 @@ export const FourthStep = () => {
             <>
               <FormControlLabel
                 label={Messages.internetFacing}
+                data-testid="switch-internet-facing"
                 control={
                   <Controller
                     control={control}
@@ -66,6 +68,9 @@ export const FourthStep = () => {
                           </IconButton>
                         </InputAdornment>
                       )
+                    }}
+                    inputProps={{
+                      'data-testid': 'text-source-range'
                     }}
                   />
                 )}
