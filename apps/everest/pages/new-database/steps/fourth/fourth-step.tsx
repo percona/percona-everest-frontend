@@ -63,7 +63,7 @@ export const FourthStep = () => {
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <IconButton onClick={() => setValue('sourceRange', '', { shouldValidate: true })}>
+                          <IconButton data-testid="delete-button" onClick={() => setValue('sourceRange', '', { shouldValidate: true })}>
                             <DeleteIcon />
                           </IconButton>
                         </InputAdornment>
