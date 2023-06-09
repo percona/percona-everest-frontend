@@ -29,7 +29,6 @@ const stepFourSchema = z.object({
         minimum: 1,
         inclusive: true,
         type: 'string',
-        message: 'EMPTY',
         path: ['sourceRange'],
       });
     } else if (IP_REGEX.exec(input.sourceRange) === null) {
