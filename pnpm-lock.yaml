@@ -88,6 +88,8 @@ importers:
 
   apps/everest: {}
 
+  design/composition-viewer: {}
+
   design/theme-context-provider: {}
 
   design/themes/base: {}
@@ -95,6 +97,8 @@ importers:
   design/themes/everest: {}
 
   design/utils/palette-theme-viewer: {}
+
+  envs/percona-react-env: {}
 
   everest/resources-detail: {}
 
@@ -107,6 +111,8 @@ importers:
   ui/input: {}
 
   ui/progress-bar: {}
+
+  ui/stepper: {}
 
   ui/toggle-card: {}
 
@@ -1019,8 +1025,8 @@ packages:
       '@types/istanbul-lib-report': registry.npmjs.org/@types/istanbul-lib-report@3.0.0
     dev: true
 
-  registry.npmjs.org/@types/jest@26.0.24:
-    resolution: {integrity: sha512-E/X5Vib8BWqZNRlDxj9vYXhsDwPYbPINqKF9BsnSoon4RQ0D9moEuLD8txgyypFLH7J4+Lho9Nr/c8H0Fi+17w==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/@types/jest/-/jest-26.0.24.tgz}
+  registry.npmjs.org/@types/jest@26.0.20:
+    resolution: {integrity: sha512-9zi2Y+5USJRxd0FsahERhBwlcvFh6D2GLQnY2FH2BzK8J9s9omvNHIbvABwIluXa0fD8XVKMLTO0aOEuUfACAA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/@types/jest/-/jest-26.0.20.tgz}
     name: '@types/jest'
     version: 26.0.20
     dependencies:
