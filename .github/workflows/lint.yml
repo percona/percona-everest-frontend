@@ -26,6 +26,9 @@ jobs:
       - name: Setup BVM
         run: SHELL=bash npx @teambit/bvm install
 
+      - name: Set bit path
+        run: echo "export PATH=$HOME/bin:$PATH" >> "$GITHUB_ENV"
+
       - name: Install dependencies
         run: bit install
 
