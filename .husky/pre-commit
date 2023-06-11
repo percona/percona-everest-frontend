@@ -2,6 +2,7 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 # npx lint-staged --shell "/bin/bash"
-bit lint --changed --fix
+bit lint --changed
 bit format --changed
 git add -A
+
