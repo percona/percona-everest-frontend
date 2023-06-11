@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# npx lint-staged --shell "/bin/bash"
+# bit lint --changed --fix
+# bit format --changed
+# git add .
