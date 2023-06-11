@@ -1,9 +1,8 @@
-import React from 'react';
-import { ToggleCard } from './toggle-card';
+import React, { useState } from 'react';
 import { ThemeContextProvider } from '@percona/design.theme-context-provider';
 import { everestThemeOptions } from '@percona/design.themes.everest';
 import { Box, ToggleButtonGroup } from '@mui/material';
-import { useState } from 'react';
+import { ToggleCard } from './toggle-card';
 
 export const Single = () => {
   const [selected, setSelected] = useState(false);
