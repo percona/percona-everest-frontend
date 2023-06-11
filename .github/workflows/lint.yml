@@ -24,7 +24,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Setup BVM
-        run: npx @teambit/bvm install
+        run: SHELL=bash npx @teambit/bvm install
 
       - name: Install dependencies
         run: bit install
