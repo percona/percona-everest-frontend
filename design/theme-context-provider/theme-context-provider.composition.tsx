@@ -1,8 +1,8 @@
 import React from 'react';
-import { ThemeContextProvider } from './theme-context-provider';
 import { ColorModeContext } from '@percona/design.theme-context-provider';
-import { Box } from '@mui/material';
-import { PaletteMode, ThemeOptions } from '@mui/material';
+import { Box , PaletteMode, ThemeOptions } from '@mui/material';
+
+import { ThemeContextProvider } from './theme-context-provider';
 
 const themeOptions = (mode: PaletteMode): ThemeOptions => ({
   palette: {
@@ -100,7 +100,7 @@ const themeOptions = (mode: PaletteMode): ThemeOptions => ({
 const Toggler = () => {
   const colorMode = React.useContext(ColorModeContext);
 
-  return <button onClick={colorMode.toggleColorMode}>Toggle</button>;
+  return <button type='button' onClick={colorMode.toggleColorMode}>Toggle</button>;
 };
 
 export const BasicThemeContextProvider = () => (

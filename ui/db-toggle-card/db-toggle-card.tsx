@@ -22,9 +22,12 @@ const DbIcon = ({ type }: { type: DbType }) => {
   return <MappedIcon {...commonProps} />;
 };
 
-export const DbToggleCard = ({ ...props }: DbToggleCardProps) => (
-  <ToggleCard {...props} data-testid={`${props.value}-toggle-button`}>
-    <DbIcon type={props.value} />
-    <Typography variant="body1">{humanizeDbType(props.value)}</Typography>
-  </ToggleCard>
-);
+export const DbToggleCard = (props: DbToggleCardProps) => {
+ const { value } = props;
+
+  return (
+    <ToggleCard {...props} data-testid={`${value}-toggle-button`}>
+      <DbIcon type={value} />
+      <Typography variant="body1">{humanizeDbType(value)}</Typography>
+    </ToggleCard>);
+};

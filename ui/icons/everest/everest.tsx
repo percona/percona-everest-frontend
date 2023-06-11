@@ -845,8 +845,7 @@ export const EverestAppCircleIcon = (props: SvgIconProps) => (
         gradientTransform="translate(5.05654 149.336) scale(244.062)"
       >
         <stop offset="0.333333" stopColor="#0E5FB5" />
-        <stop offset="1" stopColor="#62AEFF" />
-      </radialGradient>
+        <stop offset="1" stopColor="#62AEFF" /></radialGradient>
     </defs>
   </SvgIcon>
 );
