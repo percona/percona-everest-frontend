@@ -23,11 +23,14 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Setup BVM
-        run: SHELL=bash npx @teambit/bvm install
+      - name: Install Bit Version Manager 
+        run: npm i -g @teambit/bvm
 
-      - name: Set bit path
-        run: echo "export PATH=$HOME/bin:$PATH" >> "$GITHUB_ENV"
+      - name: Install latest Bit version 
+        run: bvm install
+
+      - name: add bvm bin folder to path
+        run: echo "$HOME/bin" >> $GITHUB_PATH
 
       - name: Install dependencies
         run: bit install
