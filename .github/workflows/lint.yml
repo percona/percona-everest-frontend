@@ -7,9 +7,11 @@ on:
   pull_request:
 
 jobs:
-  test:
+  lint:
     name: Run ESLint
     runs-on: ubuntu-latest
+    env:
+      BIT_TOKEN: ${{ secrets.BIT_TOKEN }}
     strategy:
       matrix:
         node-version: [16.x]
@@ -31,6 +33,10 @@ jobs:
 
       - name: add bvm bin folder to path
         run: echo "$HOME/bin" >> $GITHUB_PATH
+
+      - name: Set up bit config
+        run: |
+            bit config set user.token $BIT_TOKEN
 
       - name: Install dependencies
         run: bit install
