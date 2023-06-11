@@ -36,4 +36,4 @@ jobs:
         run: bit install
 
       - name: Run linter 
-        run: bit run lint
+        run: bit lint
