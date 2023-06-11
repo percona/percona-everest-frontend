@@ -1,0 +1,33 @@
+---
+name: CI
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  test:
+    name: Run ESLint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - name: Checkout code
+        uses: percona-platform/checkout@v2
+
+      - name: Run with Node 16
+        uses: percona-platform/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Setup BVM
+        uses: bvm/gh-action@v1.1.0
+
+      - name: Install dependencies
+        run: bit install
+
+      - name: Run linter 
+        run: bit run lint
