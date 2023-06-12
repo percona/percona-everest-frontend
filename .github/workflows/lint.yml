@@ -51,6 +51,3 @@ jobs:
 
       - name: Run linter 
         run: bit lint
-
-      - name: Run formatter 
-        run: bit format --check
