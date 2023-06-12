@@ -23,11 +23,12 @@ const DbIcon = ({ type }: { type: DbType }) => {
 };
 
 export const DbToggleCard = (props: DbToggleCardProps) => {
- const { value } = props;
+  const { value } = props;
 
   return (
     <ToggleCard {...props} data-testid={`${value}-toggle-button`}>
       <DbIcon type={value} />
       <Typography variant="body1">{humanizeDbType(value)}</Typography>
-    </ToggleCard>);
+    </ToggleCard>
+  );
 };
