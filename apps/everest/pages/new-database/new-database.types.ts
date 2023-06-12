@@ -1,5 +1,6 @@
-import { DbType } from "@percona/ui-lib.db-toggle-card"
+import { DbType } from "@percona/ui-lib.db-toggle-card";
 import { z } from "zod";
+import { IP_REGEX } from "./new-database.constants";
 
 // .passthrough tells Zod to not drop unrecognized keys
 // this is needed because we parse step by step
@@ -17,8 +18,28 @@ const stepThreeSchema = z.object({
 }).passthrough();
 
 const stepFourSchema = z.object({
-  country: z.string().optional()
-}).passthrough();
+  externalAccess: z.boolean(),
+  internetFacing: z.boolean(),
+  sourceRange: z.string().optional(),
+}).passthrough().superRefine((input, ctx) => {
+  if (!!input.externalAccess) {
+    if (!input.sourceRange) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.too_small,
+        minimum: 1,
+        inclusive: true,
+        type: 'string',
+        path: ['sourceRange'],
+      });
+    } else if (IP_REGEX.exec(input.sourceRange) === null) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.invalid_string,
+        validation: 'ip',
+        path: ['sourceRange'],
+      });
+    }
+  }
+});
 
 const stepFiveSchema = z.object({
   monitoring: z.boolean(),

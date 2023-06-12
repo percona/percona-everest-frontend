@@ -17,6 +17,9 @@ export const NewDatabasePage = () => {
     resolver: zodResolver(currentValidationSchema),
     defaultValues: {
       dbType: DbType.Postresql,
+      externalAccess: false,
+      internetFacing: true,
+      sourceRange: '',
       monitoring: false,
       endpoint: ''
     }
