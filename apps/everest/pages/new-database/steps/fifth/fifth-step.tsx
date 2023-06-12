@@ -14,7 +14,7 @@ export const FifthStep = () => {
 
   return (
     <>
-      <Typography variant="h6">{Messages.monitoring}</Typography>
+      <Typography variant="h5">{Messages.monitoring}</Typography>
       <Typography variant="caption">{Messages.caption}</Typography>
       <FormGroup sx={{ mt: 2 }}>
         <FormControlLabel
