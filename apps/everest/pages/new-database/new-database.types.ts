@@ -42,8 +42,21 @@ const stepFourSchema = z.object({
 });
 
 const stepFiveSchema = z.object({
-  address: z.string().optional()
-}).passthrough();
+  monitoring: z.boolean(),
+  endpoint: z.string().url().optional()
+}).passthrough().superRefine((input, ctx) => {
+  if (!!input.monitoring) {
+    const { success } = z.string().url().nonempty().safeParse(input.endpoint);
+
+    if (!success) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.invalid_string,
+        validation: 'url',
+        path: ['endpoint']
+      });
+    }
+  }
+});
 
 // Each position of the array is the validation schema for a given step
 export const dbWizardSchema = [

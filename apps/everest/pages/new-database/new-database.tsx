@@ -20,6 +20,8 @@ export const NewDatabasePage = () => {
       externalAccess: false,
       internetFacing: true,
       sourceRange: '',
+      monitoring: false,
+      endpoint: ''
     }
   });
   const firstStep = activeStep === 0;
