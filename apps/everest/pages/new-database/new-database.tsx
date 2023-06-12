@@ -21,6 +21,13 @@ export const NewDatabasePage = () => {
       pitrEnabled: true,
       pitrTime: 60,
       storageLocation: '',
+      timeOf: 1,
+      selectTime: 'hours',
+      minute: 0,
+      hour: 0,
+      amPm: 'AM',
+      weekDay: 'Monday',
+      onDay: 1,
     },
   });
   const firstStep = activeStep === 0;

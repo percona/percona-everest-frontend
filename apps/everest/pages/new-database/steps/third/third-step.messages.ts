@@ -5,6 +5,7 @@ export const Messages = {
   enableBackups: 'Enable backups',
   backupsRepeat: 'Repeats every',
   storageLocation: 'Storage location',
+  repeatsEvery: 'Repeats every',
   enablePitr: 'Enable PITR',
   pitr: 'Point-in-time Recovery (PITR)',
   captionPitr:

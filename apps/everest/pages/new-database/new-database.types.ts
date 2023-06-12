@@ -22,6 +22,13 @@ const stepThreeSchema = z
     pitrEnabled: z.boolean(),
     pitrTime: z.number(),
     storageLocation: z.string(),
+    timeOf: z.number(),
+    selectTime: z.string(),
+    minute: z.number(),
+    hour: z.number(),
+    amPm: z.string(),
+    weekDay: z.string(),
+    onDay: z.number(),
   })
   .passthrough();
 
