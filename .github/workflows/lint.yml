@@ -10,6 +10,7 @@ jobs:
   lint:
     name: ESLint & format
     runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '--skip-ci')"
     env:
       BIT_TOKEN: ${{ secrets.BIT_TOKEN }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -49,4 +50,4 @@ jobs:
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "[CI] chore: format files"
+          commit_message: "chore: format files. --skip-ci"
