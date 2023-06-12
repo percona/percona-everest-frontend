@@ -16,7 +16,9 @@ export const NewDatabasePage = () => {
     mode: 'onChange',
     resolver: zodResolver(currentValidationSchema),
     defaultValues: {
-      dbType: DbType.Postresql
+      dbType: DbType.Postresql,
+      monitoring: false,
+      endpoint: ''
     }
   });
   const firstStep = activeStep === 0;
