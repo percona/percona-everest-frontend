@@ -14,7 +14,7 @@ export const FourthStep = () => {
   return (
     <>
       <Typography variant="h5">{Messages.externalAccess}</Typography>
-      <Typography variant="caption">{Messages.caption}</Typography>
+      <Typography variant="subtitle2">{Messages.caption}</Typography>
       <FormGroup sx={{ mt: 2 }}>
         <FormControlLabel
           label={Messages.enableExternalAccess}
