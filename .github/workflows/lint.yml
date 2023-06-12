@@ -1,5 +1,5 @@
 ---
-name: Lint and Format
+name: Lint
 on:
   push:
     branches:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   lint:
-    name: ESLint and Prettier
+    name: ESLint
     runs-on: ubuntu-latest
     env:
       BIT_TOKEN: ${{ secrets.BIT_TOKEN }}
