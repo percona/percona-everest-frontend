@@ -12,13 +12,18 @@ import { BasicInformationFields } from './steps/first/first-step.types';
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const currentValidationSchema = dbWizardSchema[activeStep];
-  
+
   const methods = useForm<DbWizardType>({
     mode: 'onChange',
     resolver: zodResolver(currentValidationSchema),
     defaultValues: {
       [BasicInformationFields.dbType]: DbType.Postresql,
-    },
+      externalAccess: false,
+      internetFacing: true,
+      sourceRange: '',
+      monitoring: false,
+      endpoint: ''
+    }
   });
   const firstStep = activeStep === 0;
 
