@@ -10,8 +10,8 @@ import {
 } from '@mui/material';
 import { CompositionViewer } from '@percona/design.composition-viewer';
 import { PaletteThemeViewer } from '@percona/design.utils.palette-theme-viewer';
-import { baseThemeOptions } from './BaseTheme';
 import { Cached } from '@mui/icons-material';
+import { baseThemeOptions } from './BaseTheme';
 
 const PaperItem = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,

@@ -12,8 +12,8 @@ export const commonTransformer: TsConfigTransformer = (
   const newConfig = config.addTypes([path.join(__dirname, 'styles.d.ts')]);
   newConfig.mergeTsConfig(tsConfig);
   // Some examples of other built in mutator functions:
-  //newConfig.addExclude(['someExclude']);
-  //newConfig.setCompileJs(true)
+  // newConfig.addExclude(['someExclude']);
+  // newConfig.setCompileJs(true)
   return newConfig;
 };
 

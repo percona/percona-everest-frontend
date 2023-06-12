@@ -43,6 +43,7 @@ export const Stepper = ({
         },
       }}
       {...props}
+      // eslint-disable-next-line react/jsx-fragments
       connector={noConnector ? <Fragment /> : connector}
     />
   );

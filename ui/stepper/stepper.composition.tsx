@@ -46,6 +46,7 @@ export const StepperWithoutConnectors = () => {
           {steps.map(({ label }, index) => {
             const stepProps: { completed?: boolean } = {};
             return (
+              // eslint-disable-next-line
               <Step key={`${label}_${index}`} {...stepProps}>
                 <StepLabel />
               </Step>

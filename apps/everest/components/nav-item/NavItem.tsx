@@ -5,8 +5,8 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
-import { NavItemProps } from './NavItem.types';
 import { NavLink } from 'react-router-dom';
+import { NavItemProps } from './NavItem.types';
 
 export const NavItem = ({ open, icon, text, to }: NavItemProps) => {
   return (
