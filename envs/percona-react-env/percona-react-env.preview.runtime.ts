@@ -9,7 +9,7 @@ export class PerconaReactEnvPreviewMain {
   static runtime = PreviewRuntime;
 
   static dependencies = [ReactAspect];
-
+  // eslint-disable-next-line
   static async provider([react]: [ReactPreview]) {
     const perconaReactEnvPreviewMain = new PerconaReactEnvPreviewMain();
     // uncomment the line below to register a new provider to wrap all compositions using this environment with a custom theme.

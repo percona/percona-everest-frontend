@@ -1,6 +1,6 @@
 import React from 'react';
-import { PaletteThemeViewer } from './palette-theme-viewer';
 import { PaletteMode, ThemeOptions } from '@mui/material';
+import { PaletteThemeViewer } from './palette-theme-viewer';
 
 const themeOptions = (mode: PaletteMode): ThemeOptions => ({
   palette: {

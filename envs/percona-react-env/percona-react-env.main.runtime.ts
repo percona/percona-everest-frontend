@@ -1,15 +1,16 @@
 import { MainRuntime } from '@teambit/cli';
+// eslint-disable-next-line
 import { ReactAspect, ReactMain, UseTypescriptModifiers } from '@teambit/react';
 import { EnvsAspect, EnvsMain } from '@teambit/envs';
 import { PerconaReactEnvAspect } from './percona-react-env.aspect';
-//import {
+// import {
 //  previewConfigTransformer,
 //  devServerConfigTransformer
-//} from './webpack/webpack-transformers';
-//import {
+// } from './webpack/webpack-transformers';
+// import {
 //  devConfigTransformer,
 //  buildConfigTransformer,
-//} from "./typescript/ts-transformer";
+// } from "./typescript/ts-transformer";
 
 export class PerconaReactEnvMain {
   static slots = [];
@@ -19,15 +20,15 @@ export class PerconaReactEnvMain {
   static runtime = MainRuntime;
 
   static async provider([react, envs]: [ReactMain, EnvsMain]) {
-    //const webpackModifiers: UseWebpackModifiers = {
+    // const webpackModifiers: UseWebpackModifiers = {
     //  previewConfig: [previewConfigTransformer],
     //  devServerConfig: [devServerConfigTransformer],
-    //};
+    // };
 
-    //const tsModifiers: UseTypescriptModifiers = {
+    // const tsModifiers: UseTypescriptModifiers = {
     //  devConfig: [devConfigTransformer],
     //  buildConfig: [buildConfigTransformer],
-    //};
+    // };
 
     const PerconaReactEnvEnv = react.compose([
       /**
@@ -45,14 +46,14 @@ export class PerconaReactEnvMain {
        * bit lint
        * bit lint --fix
        */
-      //react.useEslint({
-      //  transformers: [
-      //  (config) => {
-      //    config.setRule('no-console', ['error']);
-      //    return config;
-      //    }
-      //  ]
-      //}),
+      react.useEslint({
+        transformers: [
+          (config) => {
+            config.setRule('no-nested-ternary', ['off']);
+            return config;
+          },
+        ],
+      }),
 
       /**
        * override the Prettier default config here the check your formatting
@@ -60,14 +61,14 @@ export class PerconaReactEnvMain {
        * bit format --check
        * bit format
        */
-      //react.usePrettier({
+      // react.usePrettier({
       //  transformers: [
       //    (config) => {
       //      config.setKey('tabWidth', 2);
       //      return config;
       //    }
       //  ]
-      //}),
+      // }),
 
       /**
        * override dependencies here
