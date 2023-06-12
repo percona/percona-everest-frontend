@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { steps } from './steps';
 import { Messages } from './new-database.messages';
 import { DbWizardType, dbWizardSchema } from './new-database.types';
+import { BasicInformationFields } from './steps/first/first-step.types';
 
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -16,8 +17,8 @@ export const NewDatabasePage = () => {
     mode: 'onChange',
     resolver: zodResolver(currentValidationSchema),
     defaultValues: {
-      dbType: DbType.Postresql
-    }
+      [BasicInformationFields.dbType]: DbType.Postresql,
+    },
   });
   const firstStep = activeStep === 0;
 
