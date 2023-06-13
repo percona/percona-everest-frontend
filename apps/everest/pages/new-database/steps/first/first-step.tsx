@@ -1,18 +1,16 @@
-import React from "react";
-import { ToggleButtonGroup , Typography } from "@mui/material";
+import React from 'react';
+import { ToggleButtonGroup, Typography } from '@mui/material';
 
-import { DbToggleCard, DbType } from "@percona/ui-lib.db-toggle-card";
-import { Controller, useFormContext } from "react-hook-form";
-import { Messages } from "./first-step.messages";
+import { DbToggleCard, DbType } from '@percona/ui-lib.db-toggle-card';
+import { Controller, useFormContext } from 'react-hook-form';
+import { Messages } from './first-step.messages';
 
 export const FirstStep = () => {
   const { control } = useFormContext();
 
   return (
     <>
-      <Typography variant="h6">
-        {Messages.dbTypeQuestion}
-      </Typography>
+      <Typography variant="h6">{Messages.dbTypeQuestion}</Typography>
       <Controller
         name="dbType"
         control={control}

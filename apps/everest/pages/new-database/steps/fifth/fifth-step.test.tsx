@@ -5,13 +5,15 @@ import { TestWrapper } from '../../../../utils/test';
 import { FifthStep } from './fifth-step';
 
 const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
-  const methods = useForm({ defaultValues: { monitoring: false, endpoint: '' } });
+  const methods = useForm({
+    defaultValues: { monitoring: false, endpoint: '' },
+  });
 
-  return <FormProvider {...methods}>{children}</FormProvider>
-}
+  return <FormProvider {...methods}>{children}</FormProvider>;
+};
 
 describe('FourthStep', () => {
-  it('should render only monitoring input if it\'s off', () => {
+  it("should render only monitoring input if it's off", () => {
     render(
       <TestWrapper>
         <FormProviderWrapper>

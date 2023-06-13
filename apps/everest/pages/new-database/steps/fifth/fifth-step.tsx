@@ -1,12 +1,13 @@
-import { Typography , FormGroup , FormControlLabel , Switch , TextField } from "@mui/material";
-import React from "react";
-import { useFormContext , Controller } from "react-hook-form";
-import { Messages } from "./fifth-step.messages";
-
-
-
-
-
+import {
+  Typography,
+  FormGroup,
+  FormControlLabel,
+  Switch,
+  TextField,
+} from '@mui/material';
+import React from 'react';
+import { useFormContext, Controller } from 'react-hook-form';
+import { Messages } from './fifth-step.messages';
 
 export const FifthStep = () => {
   const { control, watch } = useFormContext();
@@ -30,33 +31,33 @@ export const FifthStep = () => {
             />
           }
         />
-        {
-          monitoring && (
-            <>
-              <Typography variant="h6" sx={{ mt: 5 }}>{Messages.endpointName}</Typography>
-              <Controller
-                control={control}
-                name='endpoint'
-                rules={{
-                  required: true
-                }}
-                render={({ field, fieldState: { error } }) => (
-                  <TextField
-                    {...field}
-                    variant="outlined"
-                    placeholder={Messages.endpointPlaceholder}
-                    error={error !== undefined}
-                    helperText={error ? Messages.endpointError : ''}
-                    inputProps={{
-                      'data-testid': 'text-endpoint'
-                    }}
-                  />
-                )}
-              />
-            </>
-          )
-        }
+        {monitoring && (
+          <>
+            <Typography variant="h6" sx={{ mt: 5 }}>
+              {Messages.endpointName}
+            </Typography>
+            <Controller
+              control={control}
+              name="endpoint"
+              rules={{
+                required: true,
+              }}
+              render={({ field, fieldState: { error } }) => (
+                <TextField
+                  {...field}
+                  variant="outlined"
+                  placeholder={Messages.endpointPlaceholder}
+                  error={error !== undefined}
+                  helperText={error ? Messages.endpointError : ''}
+                  inputProps={{
+                    'data-testid': 'text-endpoint',
+                  }}
+                />
+              )}
+            />
+          </>
+        )}
       </FormGroup>
     </>
   );
-}
+};
