@@ -1,10 +1,10 @@
-import { IconButton, InputAdornment, Switch, TextField, Typography } from "@mui/material";
+import { IconButton, InputAdornment, Switch, TextField, Typography , FormControlLabel, FormGroup } from "@mui/material";
 import React from "react";
-import { Messages } from "./fourth-step.messages";
-import { FormControlLabel, FormGroup } from "@mui/material";
+
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Controller } from "react-hook-form";
-import { useFormContext } from "react-hook-form";
+import { Controller , useFormContext } from "react-hook-form";
+import { Messages } from "./fourth-step.messages";
+
 import { IP_RANGE_PATTERN } from "./fourth-step.constants";
 
 export const FourthStep = () => {
@@ -69,6 +69,7 @@ export const FourthStep = () => {
                         </InputAdornment>
                       )
                     }}
+                    // eslint-disable-next-line react/jsx-no-duplicate-props
                     inputProps={{
                       'data-testid': 'text-source-range'
                     }}

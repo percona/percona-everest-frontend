@@ -1,10 +1,10 @@
 import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { TestWrapper } from '../../../../utils/test';
 import { FormProvider, useForm } from 'react-hook-form';
+import { TestWrapper } from '../../../../utils/test';
 import { FourthStep } from './fourth-step';
 
-const FormProviderWrapper = ({ children }) => {
+const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
   const methods = useForm({ defaultValues: { externalAccess: false, internetFacing: false, sourceRange: '' } });
 
   return <FormProvider {...methods}>{children}</FormProvider>

@@ -22,7 +22,7 @@ const stepFourSchema = z.object({
   internetFacing: z.boolean(),
   sourceRange: z.string().optional(),
 }).passthrough().superRefine((input, ctx) => {
-  if (!!input.externalAccess) {
+  if (input.externalAccess) {
     if (!input.sourceRange) {
       ctx.addIssue({
         code: z.ZodIssueCode.too_small,
@@ -45,7 +45,7 @@ const stepFiveSchema = z.object({
   monitoring: z.boolean(),
   endpoint: z.string().url().optional()
 }).passthrough().superRefine((input, ctx) => {
-  if (!!input.monitoring) {
+  if (input.monitoring) {
     const { success } = z.string().url().nonempty().safeParse(input.endpoint);
 
     if (!success) {

@@ -30,7 +30,7 @@ export const NewDatabasePage = () => {
     console.log(data);
   }
 
-  const handleNext: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
+  const handleNext: React.MouseEventHandler<HTMLButtonElement> = async () => {
     if (activeStep < steps.length - 1) {
       const isStepValid = await methods.trigger();
 

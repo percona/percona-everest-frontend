@@ -1,6 +1,6 @@
 import React from "react";
-import { ToggleButtonGroup } from "@mui/material";
-import { Typography } from "@mui/material";
+import { ToggleButtonGroup , Typography } from "@mui/material";
+
 import { DbToggleCard, DbType } from "@percona/ui-lib.db-toggle-card";
 import { Controller, useFormContext } from "react-hook-form";
 import { Messages } from "./first-step.messages";
@@ -27,8 +27,9 @@ export const FirstStep = () => {
               value: DbType
             ) => {
               if (value !== null) {
-                event.target.value = value;
-                field.onChange(event);
+                const newEvent = event;
+                newEvent.target.value = value;
+                field.onChange(newEvent);
               }
             }}
           >

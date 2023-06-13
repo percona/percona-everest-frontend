@@ -1,10 +1,10 @@
 import React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { TestWrapper } from '../../../../utils/test';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { TestWrapper } from '../../../../utils/test';
 import { FifthStep } from './fifth-step';
 
-const FormProviderWrapper = ({ children }) => {
+const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
   const methods = useForm({ defaultValues: { monitoring: false, endpoint: '' } });
 
   return <FormProvider {...methods}>{children}</FormProvider>
