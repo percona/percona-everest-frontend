@@ -115,8 +115,6 @@ importers:
 
   envs/percona-react-env: {}
 
-  everest/resources-detail: {}
-
   ui/db-toggle-card: {}
 
   ui/icons/db: {}

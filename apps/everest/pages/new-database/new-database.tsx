@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Step, StepLabel, Stepper } from '@mui/material';
+import { Box, Button, Step, StepLabel } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { steps } from './steps';
 import { Messages } from './new-database.messages';
 import { DbWizardType, dbWizardSchema } from './new-database.types';
+import { Stepper } from '@percona/ui.stepper';
 
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -48,7 +49,7 @@ export const NewDatabasePage = () => {
 
   return (
     <>
-      <Stepper activeStep={activeStep} sx={{ marginBottom: 4 }}>
+      <Stepper noConnector activeStep={activeStep} sx={{ marginBottom: 4 }}>
         {
           steps.map((_, idx) => (
             <Step key={`step-${idx + 1}`}>
