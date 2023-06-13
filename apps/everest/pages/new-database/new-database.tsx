@@ -4,10 +4,10 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Stepper } from '@percona/ui.stepper';
 import { steps } from './steps';
 import { Messages } from './new-database.messages';
 import { DbWizardType, dbWizardSchema } from './new-database.types';
-import { Stepper } from '@percona/ui.stepper';
 
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
