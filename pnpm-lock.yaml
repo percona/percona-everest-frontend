@@ -101,11 +101,17 @@ importers:
 
   envs/percona-react-env: {}
 
+  everest/resources-detail: {}
+
   ui/db-toggle-card: {}
 
   ui/icons/db: {}
 
   ui/icons/everest: {}
+
+  ui/input: {}
+
+  ui/progress-bar: {}
 
   ui/stepper: {}
 
