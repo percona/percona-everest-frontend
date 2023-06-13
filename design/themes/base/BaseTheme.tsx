@@ -9,7 +9,7 @@ declare module '@mui/material/styles' {
   }
 }
 
-let BaseTheme = createTheme();
+const BaseTheme = createTheme();
 
 export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
   palette: {

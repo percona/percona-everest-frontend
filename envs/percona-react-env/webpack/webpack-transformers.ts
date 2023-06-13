@@ -12,6 +12,7 @@ import {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function commonTransformation(
   config: WebpackConfigMutator,
+  // eslint-disable-next-line
   _context: WebpackConfigTransformContext
 ) {
   // Merge config with the webpack.config.js file if you choose to import a module export format config.

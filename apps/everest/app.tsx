@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { ThemeContextProvider } from '@percona/design.theme-context-provider';
 import { everestThemeOptions } from '@percona/design.themes.everest';
+import { Box, Toolbar, useMediaQuery, useTheme } from '@mui/material';
 import { AppBar } from './components/app-bar/AppBar';
 import { Drawer } from './components/drawer/Drawer';
 import { DrawerContext } from './components/drawer/Drawer.context';
-import { Box, Toolbar, useMediaQuery, useTheme } from '@mui/material';
 
 export const BarAndDrawer = () => {
   const [open, setOpen] = useState(false);

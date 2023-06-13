@@ -1,6 +1,5 @@
 import React from 'react';
 import { PaletteThemeViewer } from '@percona/design.utils.palette-theme-viewer';
-import { everestThemeOptions } from './EverestTheme';
 
 import {
   Button as MuiButton,
@@ -10,6 +9,7 @@ import {
 } from '@mui/material';
 import { Cached } from '@mui/icons-material';
 import { CompositionViewer } from '@percona/design.composition-viewer';
+import { everestThemeOptions } from './EverestTheme';
 
 export const Palette = () => (
   <PaletteThemeViewer themeOptions={everestThemeOptions} />
