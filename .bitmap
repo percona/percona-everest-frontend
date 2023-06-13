@@ -60,32 +60,6 @@
             }
         }
     },
-    "progress-bar": {
-        "scope": "",
-        "version": "",
-        "defaultScope": "percona.ui",
-        "mainFile": "index.ts",
-        "rootDir": "ui/progress-bar",
-        "config": {
-            "teambit.react/react": {},
-            "teambit.envs/envs": {
-                "env": "teambit.react/react"
-            }
-        }
-    },
-    "resources-detail": {
-        "scope": "",
-        "version": "",
-        "defaultScope": "percona.everest",
-        "mainFile": "index.ts",
-        "rootDir": "everest/resources-detail",
-        "config": {
-            "teambit.react/react": {},
-            "teambit.envs/envs": {
-                "env": "teambit.react/react"
-            }
-        }
-    },
     "percona-react-env": {
         "scope": "",
         "version": "",
@@ -96,6 +70,19 @@
             "teambit.envs/env": {},
             "teambit.envs/envs": {
                 "env": "teambit.envs/env"
+            }
+        }
+    },
+    "progress-bar": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui",
+        "mainFile": "index.ts",
+        "rootDir": "ui/progress-bar",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
             }
         }
     },
