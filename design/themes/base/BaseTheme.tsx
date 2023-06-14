@@ -7,6 +7,19 @@ declare module '@mui/material/styles' {
     outlinedBorder: string;
     outlinedBorderOpacity: number;
   }
+  interface TypographyVariants {
+    sectionHeading: React.CSSProperties;
+  }
+
+  interface TypographyVariantsOptions {
+    sectionHeading: React.CSSProperties;
+  }
+}
+
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    sectionHeading: true;
+  }
 }
 
 const BaseTheme = createTheme();
@@ -168,6 +181,11 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
     overline: {
       fontWeight: 800,
       fontSize: '12px',
+    },
+    sectionHeading: {
+      fontWeight: 700,
+      fontSize: '14px',
+      lineHeight: '17.5px',
     },
     body1: {
       fontWeight: 400,

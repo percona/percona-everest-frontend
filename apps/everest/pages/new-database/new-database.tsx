@@ -8,6 +8,7 @@ import { Stepper } from '@percona/ui.stepper';
 import { steps } from './steps';
 import { Messages } from './new-database.messages';
 import { DbWizardType, dbWizardSchema } from './new-database.types';
+import { BasicInformationFields } from './steps/first/first-step.types';
 
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -17,7 +18,7 @@ export const NewDatabasePage = () => {
     mode: 'onChange',
     resolver: zodResolver(currentValidationSchema),
     defaultValues: {
-      dbType: DbType.Postresql,
+      [BasicInformationFields.dbType]: DbType.Postresql,
       externalAccess: false,
       internetFacing: true,
       sourceRange: '',
@@ -28,6 +29,7 @@ export const NewDatabasePage = () => {
   const firstStep = activeStep === 0;
 
   const onSubmit: SubmitHandler<DbWizardType> = (data) => {
+    /* eslint-disable no-console */
     console.log(data);
   };
 
