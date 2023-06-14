@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { TestWrapper } from '../../../../utils/test';
@@ -12,7 +12,14 @@ jest.mock('./utils', () => ({
   generateShortUID: jest.fn(() => '123'),
 }));
 
-const FormProviderWrapper = ({ children, handleSubmit }) => {
+interface FormProviderWrapperProps {
+  handleSubmit: jest.Mock<any, any>;
+  children: ReactNode;
+}
+const FormProviderWrapper = ({
+  children,
+  handleSubmit,
+}: FormProviderWrapperProps) => {
   const methods = useForm({
     defaultValues: {
       [BasicInformationFields.dbType]: DbType.Postresql,

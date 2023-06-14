@@ -29,6 +29,7 @@ export const NewDatabasePage = () => {
   const firstStep = activeStep === 0;
 
   const onSubmit: SubmitHandler<DbWizardType> = (data) => {
+    /* eslint-disable no-console */
     console.log(data);
   };
 

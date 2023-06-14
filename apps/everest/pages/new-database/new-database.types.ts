@@ -2,7 +2,7 @@ import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { z } from 'zod';
 import { IP_REGEX } from './new-database.constants';
 import { BasicInformationFields } from './steps/first/first-step.types';
-import { Messages as FirstStepMessages } from "./steps/first/first-step.messages";
+import { Messages as FirstStepMessages } from './steps/first/first-step.messages';
 
 // .passthrough tells Zod to not drop unrecognized keys
 // this is needed because we parse step by step

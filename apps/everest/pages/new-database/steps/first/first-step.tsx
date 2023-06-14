@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { ToggleButtonGroup ,
+import {
+  ToggleButtonGroup,
   Typography,
   FormGroup,
   TextField,
@@ -79,6 +80,7 @@ export const FirstStep = () => {
                 value: DbType
               ) => {
                 if (value !== null) {
+                  /* eslint-disable no-param-reassign */
                   event.target.value = value;
                   field.onChange(event);
                 }
@@ -90,7 +92,7 @@ export const FirstStep = () => {
             </ToggleButtonGroup>
           )}
         />
-        <Typography variant="sectionHeading" sx={{ mt: 3, mb: 0.5 }}>
+        <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
           {Messages.labels.dbName}
         </Typography>
         <Controller
@@ -109,7 +111,7 @@ export const FirstStep = () => {
             />
           )}
         />
-        <Typography variant="sectionHeading" sx={{ mt: 3, mb: 0.5 }}>
+        <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
           {Messages.labels.k8sNamespace}
         </Typography>
         <Controller
@@ -137,7 +139,7 @@ export const FirstStep = () => {
             </Select>
           )}
         />
-        <Typography variant="sectionHeading" sx={{ mt: 3, mb: 0.5 }}>
+        <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
           {Messages.labels.dbEnvironment}
         </Typography>
         <Controller
@@ -165,7 +167,7 @@ export const FirstStep = () => {
             </Select>
           )}
         />
-        <Typography variant="sectionHeading" sx={{ mt: 3, mb: 0.5 }}>
+        <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
           {Messages.labels.dbVersion}
         </Typography>
         <Controller
