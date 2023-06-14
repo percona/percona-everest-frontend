@@ -9,7 +9,7 @@ export const Messages = {
     dbVersion: 'Database version',
   },
   placeholders: {
-    dbName: 'postgresql-123',
+    dbName: 'E.g. postgresql-123',
   },
   errors: {
     dbName: 'The database name is too long',
