@@ -18,54 +18,64 @@ const stepOneSchema = z
     })
     .passthrough();
 
-const stepTwoSchema = z.object({
-  firstName: z.string().optional()
-}).passthrough();
+const stepTwoSchema = z
+  .object({
+    firstName: z.string().optional(),
+  })
+  .passthrough();
 
-const stepThreeSchema = z.object({
-  lastName: z.string().optional()
-}).passthrough();
+const stepThreeSchema = z
+  .object({
+    lastName: z.string().optional(),
+  })
+  .passthrough();
 
-const stepFourSchema = z.object({
-  externalAccess: z.boolean(),
-  internetFacing: z.boolean(),
-  sourceRange: z.string().optional(),
-}).passthrough().superRefine((input, ctx) => {
-  if (!!input.externalAccess) {
-    if (!input.sourceRange) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.too_small,
-        minimum: 1,
-        inclusive: true,
-        type: 'string',
-        path: ['sourceRange'],
-      });
-    } else if (IP_REGEX.exec(input.sourceRange) === null) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.invalid_string,
-        validation: 'ip',
-        path: ['sourceRange'],
-      });
+const stepFourSchema = z
+  .object({
+    externalAccess: z.boolean(),
+    internetFacing: z.boolean(),
+    sourceRange: z.string().optional(),
+  })
+  .passthrough()
+  .superRefine((input, ctx) => {
+    if (input.externalAccess) {
+      if (!input.sourceRange) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.too_small,
+          minimum: 1,
+          inclusive: true,
+          type: 'string',
+          path: ['sourceRange'],
+        });
+      } else if (IP_REGEX.exec(input.sourceRange) === null) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.invalid_string,
+          validation: 'ip',
+          path: ['sourceRange'],
+        });
+      }
     }
-  }
-});
+  });
 
-const stepFiveSchema = z.object({
-  monitoring: z.boolean(),
-  endpoint: z.string().url().optional()
-}).passthrough().superRefine((input, ctx) => {
-  if (!!input.monitoring) {
-    const { success } = z.string().url().nonempty().safeParse(input.endpoint);
+const stepFiveSchema = z
+  .object({
+    monitoring: z.boolean(),
+    endpoint: z.string().url().optional(),
+  })
+  .passthrough()
+  .superRefine((input, ctx) => {
+    if (input.monitoring) {
+      const { success } = z.string().url().nonempty().safeParse(input.endpoint);
 
-    if (!success) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.invalid_string,
-        validation: 'url',
-        path: ['endpoint']
-      });
+      if (!success) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.invalid_string,
+          validation: 'url',
+          path: ['endpoint'],
+        });
+      }
     }
-  }
-});
+  });
 
 // Each position of the array is the validation schema for a given step
 export const dbWizardSchema = [
@@ -80,6 +90,6 @@ const superset = stepOneSchema
   .and(stepTwoSchema)
   .and(stepThreeSchema)
   .and(stepFourSchema)
-  .and(stepFiveSchema)
+  .and(stepFiveSchema);
 
 export type DbWizardType = z.infer<typeof superset>;

@@ -1,4 +1,7 @@
 import React from 'react';
+import { Grid } from '@mui/material';
+import { CompositionViewer } from '@percona/design.composition-viewer';
+import { everestThemeOptions } from '@percona/design.themes.everest';
 import {
   EverestMainIcon,
   EverestHorizontalIcon,
@@ -7,9 +10,6 @@ import {
   EverestAppRoundIcon,
   EverestAppCircleIcon,
 } from './everest';
-import { Grid } from '@mui/material';
-import { CompositionViewer } from '@percona/design.composition-viewer';
-import { everestThemeOptions } from '@percona/design.themes.everest';
 
 export const Icons = () => (
   <CompositionViewer themeOptions={everestThemeOptions}>

@@ -1,6 +1,6 @@
 import React from 'react';
-import { MySqlIcon, MongoIcon, PostgreSqlIcon } from './db';
 import { Box } from '@mui/material';
+import { MySqlIcon, MongoIcon, PostgreSqlIcon } from './db';
 
 export const MySql = () => (
   <Box sx={{ fontSize: '100px', margin: 0 }}>

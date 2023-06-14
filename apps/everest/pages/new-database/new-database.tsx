@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Button, Step, StepLabel, Stepper } from '@mui/material';
+import { Box, Button, Step, StepLabel } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { DbType } from '@percona/ui-lib.db-toggle-card';
-import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
+import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Stepper } from '@percona/ui.stepper';
 import { steps } from './steps';
 import { Messages } from './new-database.messages';
 import { DbWizardType, dbWizardSchema } from './new-database.types';
@@ -22,16 +23,16 @@ export const NewDatabasePage = () => {
       internetFacing: true,
       sourceRange: '',
       monitoring: false,
-      endpoint: ''
-    }
+      endpoint: '',
+    },
   });
   const firstStep = activeStep === 0;
 
-  const onSubmit: SubmitHandler<DbWizardType> = data => {
+  const onSubmit: SubmitHandler<DbWizardType> = (data) => {
     console.log(data);
-  }
+  };
 
-  const handleNext: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
+  const handleNext: React.MouseEventHandler<HTMLButtonElement> = async () => {
     if (activeStep < steps.length - 1) {
       const isStepValid = await methods.trigger();
 
@@ -49,25 +50,21 @@ export const NewDatabasePage = () => {
 
   return (
     <>
-      <Stepper activeStep={activeStep} sx={{ marginBottom: 4 }}>
-        {
-          steps.map((_, idx) => (
-            <Step key={`step-${idx + 1}`}>
-              <StepLabel />
-            </Step>
-          ))
-        }
+      <Stepper noConnector activeStep={activeStep} sx={{ marginBottom: 4 }}>
+        {steps.map((_, idx) => (
+          <Step key={`step-${idx + 1}`}>
+            <StepLabel />
+          </Step>
+        ))}
       </Stepper>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <Box>
-            {React.createElement(steps[activeStep])}
-          </Box>
+          <Box>{React.createElement(steps[activeStep])}</Box>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
-              type='button'
+              type="button"
               startIcon={<ArrowBackIcon />}
-              variant='text'
+              variant="text"
               disabled={firstStep}
               onClick={handleBack}
               sx={{ mr: 1 }}
@@ -75,23 +72,18 @@ export const NewDatabasePage = () => {
               {Messages.previous}
             </Button>
             <Box sx={{ flex: '1 1 auto' }} />
-            {
-              activeStep === steps.length - 1 ? (
-                <Button
-                  onClick={methods.handleSubmit(onSubmit)}
-                  variant='contained'
-                >
-                  {Messages.createDatabase}
-                </Button>
-              ) : (
-                <Button
-                  onClick={handleNext}
-                  variant='contained'
-                >
-                  {Messages.continue}
-                </Button>
-              )
-            }
+            {activeStep === steps.length - 1 ? (
+              <Button
+                onClick={methods.handleSubmit(onSubmit)}
+                variant="contained"
+              >
+                {Messages.createDatabase}
+              </Button>
+            ) : (
+              <Button onClick={handleNext} variant="contained">
+                {Messages.continue}
+              </Button>
+            )}
           </Box>
         </form>
       </FormProvider>

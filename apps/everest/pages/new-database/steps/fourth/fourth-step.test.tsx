@@ -1,17 +1,23 @@
 import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { TestWrapper } from '../../../../utils/test';
 import { FormProvider, useForm } from 'react-hook-form';
+import { TestWrapper } from '../../../../utils/test';
 import { FourthStep } from './fourth-step';
 
-const FormProviderWrapper = ({ children }) => {
-  const methods = useForm({ defaultValues: { externalAccess: false, internetFacing: false, sourceRange: '' } });
+const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
+  const methods = useForm({
+    defaultValues: {
+      externalAccess: false,
+      internetFacing: false,
+      sourceRange: '',
+    },
+  });
 
-  return <FormProvider {...methods}>{children}</FormProvider>
-}
+  return <FormProvider {...methods}>{children}</FormProvider>;
+};
 
 describe('FourthStep', () => {
-  it('should render only external access input if it\'s off', () => {
+  it("should render only external access input if it's off", () => {
     render(
       <TestWrapper>
         <FormProviderWrapper>
@@ -21,7 +27,9 @@ describe('FourthStep', () => {
     );
 
     expect(screen.getByTestId('switch-external-access')).toBeInTheDocument();
-    expect(screen.queryByTestId('switch-internet-facing')).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('switch-internet-facing')
+    ).not.toBeInTheDocument();
     expect(screen.queryByTestId('text-source-range')).not.toBeInTheDocument();
   });
 
@@ -53,7 +61,7 @@ describe('FourthStep', () => {
     fireEvent.click(screen.getByTestId('switch-external-access'));
 
     const input = screen.getByTestId('text-source-range');
-    fireEvent.change(input, { target: { value: 'test' }});
+    fireEvent.change(input, { target: { value: 'test' } });
 
     expect(input.getAttribute('value')).toBe('test');
 

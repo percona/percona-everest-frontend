@@ -34,7 +34,7 @@ describe('Drawer', () => {
     ).toBeInTheDocument();
   });
 
-  it('should show tablet drawer starting at "sm" breakpoint ', () => {
+  it('should show tablet drawer starting at "sm" breakpoint', () => {
     resizeScreenSize(600);
 
     render(
