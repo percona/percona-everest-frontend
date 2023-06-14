@@ -168,7 +168,7 @@ export const FirstStep = () => {
           name={BasicInformationFields.dbVersion}
           defaultValue={
             dbVersionOptions && dbVersionOptions[0]?.value
-              ? dbVersionOptions[0]?.value
+              ? dbVersionOptions[0].value
               : undefined
           }
           render={({ field, fieldState: { error } }) => (
