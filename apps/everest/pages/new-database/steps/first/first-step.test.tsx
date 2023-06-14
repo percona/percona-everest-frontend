@@ -14,7 +14,7 @@ jest.mock('./utils', () => ({
 const FormProviderWrapper = ({ children, handleSubmit }) => {
   const methods = useForm({
     defaultValues: {
-      [BasicInformationFields.dbType]: DbType.Mongo,
+      [BasicInformationFields.dbType]: DbType.Postresql,
       [BasicInformationFields.dbName]: '',
       [BasicInformationFields.k8sNamespace]: '',
       [BasicInformationFields.dbEnvironment]: '',
@@ -40,6 +40,6 @@ describe('First Step', () => {
     );
     await waitFor(() => fireEvent.submit(screen.getByTestId('submitButton')));
 
-    expect(handleSubmitMock).toHaveBeenCalledWith(expect.objectContaining({ dbType: DbType.Mongo, dbName: "mongodb-123" }),  expect.anything());
+    expect(handleSubmitMock).toHaveBeenCalledWith(expect.objectContaining({ dbType: DbType.Postresql, dbName: "postgresql-123" }),  expect.anything());
   });
 });
