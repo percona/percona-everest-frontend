@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { ToggleButtonGroup } from '@mui/material';
 import {
   Typography,
@@ -14,7 +14,7 @@ import { BasicInformationFields } from './first-step.types';
 import { generateShortUID } from "./utils";
 
 export const FirstStep = () => {
-  const { control, watch, handleSubmit } = useFormContext();
+  const { control, watch, handleSubmit, setValue } = useFormContext();
   handleSubmit((e) => console.log(e));
 
   //TODO change to api request's result
@@ -50,6 +50,10 @@ export const FirstStep = () => {
   ];
 
   const dbType = watch(BasicInformationFields.dbType);
+
+  useEffect(()=> {
+    setValue(BasicInformationFields.dbName, dbType ? `${dbType}-${generateShortUID()}`: undefined);
+  },[dbType])
 
   return (
     <>
@@ -90,7 +94,6 @@ export const FirstStep = () => {
         <Controller
           control={control}
           name={BasicInformationFields.dbName}
-          defaultValue={dbType ? `${dbType}-${generateShortUID()}`: undefined}
           render={({ field, fieldState: { error } }) => (
             <TextField
               {...field}
