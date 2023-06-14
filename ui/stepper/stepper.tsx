@@ -11,6 +11,7 @@ export const Stepper = ({
   noConnector,
   connector,
   dataTestId,
+  sx,
   ...props
 }: StepperProps) => {
   const theme = useTheme();
@@ -41,6 +42,7 @@ export const Stepper = ({
         '.MuiStepLabel-label': {
           fontWeight: 600,
         },
+        ...sx,
       }}
       {...props}
       // eslint-disable-next-line react/jsx-fragments
