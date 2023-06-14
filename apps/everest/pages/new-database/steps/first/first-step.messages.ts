@@ -13,5 +13,5 @@ export const Messages = {
   },
   errors: {
     dbName: 'The database name is too long',
-  }
+  },
 };

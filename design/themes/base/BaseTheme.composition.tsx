@@ -31,6 +31,7 @@ export const Typography = () => (
     <MuiTypography variant="h6">H6 Heading</MuiTypography>
     <MuiTypography variant="subtitle1">Subtitle 1</MuiTypography>
     <MuiTypography variant="subtitle2">Subtitle 2</MuiTypography>
+    <MuiTypography variant="sectionHeading">SectionHeading</MuiTypography>
     <MuiTypography variant="overline">Overline</MuiTypography>
     <MuiTypography variant="body1">Body 1</MuiTypography>
     <MuiTypography variant="body2">Body 2</MuiTypography>

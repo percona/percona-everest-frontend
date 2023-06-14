@@ -1,23 +1,22 @@
-import React, {useEffect} from 'react';
-import { ToggleButtonGroup } from '@mui/material';
-import {
+import React, { useEffect } from 'react';
+import { ToggleButtonGroup ,
   Typography,
   FormGroup,
   TextField,
   Select,
   MenuItem,
 } from '@mui/material';
+
 import { DbToggleCard, DbType } from '@percona/ui-lib.db-toggle-card';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Messages } from './first-step.messages';
 import { BasicInformationFields } from './first-step.types';
-import { generateShortUID } from "./utils";
+import { generateShortUID } from './utils';
 
 export const FirstStep = () => {
-  const { control, watch, handleSubmit, setValue } = useFormContext();
-  handleSubmit((e) => console.log(e));
+  const { control, watch, setValue } = useFormContext();
 
-  //TODO change to api request's result
+  // TODO change to api request's result
   const k8sNamespacesOptions = [
     {
       value: 'namespaceOne',
@@ -51,16 +50,19 @@ export const FirstStep = () => {
 
   const dbType = watch(BasicInformationFields.dbType);
 
-  useEffect(()=> {
-    setValue(BasicInformationFields.dbName, dbType ? `${dbType}-${generateShortUID()}`: undefined);
-  },[dbType])
+  useEffect(() => {
+    setValue(
+      BasicInformationFields.dbName,
+      dbType ? `${dbType}-${generateShortUID()}` : undefined
+    );
+  }, [dbType]);
 
   return (
     <>
       <Typography variant="h5">{Messages.pageTitle}</Typography>
       <Typography variant="subtitle2">{Messages.pageDescription}</Typography>
       <FormGroup sx={{ mt: 2 }}>
-        <Typography variant="h6" sx={{ mt: 5 }}>
+        <Typography variant="sectionHeading" sx={{ mt: 1, mb: 0.5 }}>
           {Messages.labels.dbType}
         </Typography>
         <Controller
@@ -88,7 +90,7 @@ export const FirstStep = () => {
             </ToggleButtonGroup>
           )}
         />
-        <Typography variant="h6" sx={{ mt: 5 }}>
+        <Typography variant="sectionHeading" sx={{ mt: 3, mb: 0.5 }}>
           {Messages.labels.dbName}
         </Typography>
         <Controller
@@ -107,7 +109,7 @@ export const FirstStep = () => {
             />
           )}
         />
-        <Typography variant="h6" sx={{ mt: 5 }}>
+        <Typography variant="sectionHeading" sx={{ mt: 3, mb: 0.5 }}>
           {Messages.labels.k8sNamespace}
         </Typography>
         <Controller
@@ -135,7 +137,7 @@ export const FirstStep = () => {
             </Select>
           )}
         />
-        <Typography variant="h6" sx={{ mt: 5 }}>
+        <Typography variant="sectionHeading" sx={{ mt: 3, mb: 0.5 }}>
           {Messages.labels.dbEnvironment}
         </Typography>
         <Controller
@@ -163,7 +165,7 @@ export const FirstStep = () => {
             </Select>
           )}
         />
-        <Typography variant="h6" sx={{ mt: 5 }}>
+        <Typography variant="sectionHeading" sx={{ mt: 3, mb: 0.5 }}>
           {Messages.labels.dbVersion}
         </Typography>
         <Controller
