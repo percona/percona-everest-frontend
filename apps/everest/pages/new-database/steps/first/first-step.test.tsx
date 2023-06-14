@@ -4,8 +4,12 @@ import { TestWrapper } from '../../../../utils/test';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BasicInformationFields } from './first-step.types';
 import { DbType } from '../../../../../../ui/db-toggle-card';
-import {FirstStep} from "./first-step";
+import { FirstStep } from "./first-step";
 jest.unmock('react-native');
+
+jest.mock('./utils', () => ({
+  generateShortUID: jest.fn(() => "123"),
+}));
 
 const FormProviderWrapper = ({ children, handleSubmit }) => {
   const methods = useForm({
@@ -18,12 +22,13 @@ const FormProviderWrapper = ({ children, handleSubmit }) => {
     },
   });
 
-  return <FormProvider {...methods} handleSubmit={handleSubmit}>{children}</FormProvider>;
+  return <FormProvider {...methods}>
+    <form onSubmit={methods.handleSubmit(handleSubmit)}>{children}</form></FormProvider>;
 };
 
 describe('First Step', () => {
   it("should set default values", async () => {
-    const handleSubmitMock = jest.fn((e)=> console.log(e));
+    const handleSubmitMock = jest.fn();
 
     render(
       <TestWrapper>
@@ -35,7 +40,6 @@ describe('First Step', () => {
     );
     await waitFor(() => fireEvent.submit(screen.getByTestId('submitButton')));
 
-    //TODO doesn't work
-    expect(handleSubmitMock).toHaveBeenCalledWith(expect.objectContaining({ dbType: DbType.Postresql }), expect.anything());
+    expect(handleSubmitMock).toHaveBeenCalledWith(expect.objectContaining({ dbType: DbType.Mongo, dbName: "mongodb-123" }),  expect.anything());
   });
 });
