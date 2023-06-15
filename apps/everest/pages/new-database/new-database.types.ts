@@ -22,7 +22,7 @@ const stepThreeSchema = z
     pitrEnabled: z.boolean(),
     pitrTime: z.number(),
     storageLocation: z.string(),
-    timeOf: z.number(),
+    timeNumbers: z.string(),
     selectTime: z.string(),
     minute: z.number(),
     hour: z.number(),
