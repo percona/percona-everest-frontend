@@ -10,20 +10,43 @@ import {
   Typography,
 } from '@mui/material';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Messages } from './third-step.messages';
 import { TimeValue } from './third-step.types';
-import { weekDays } from './third-step.utils';
+import { getTimeText, weekDays } from './third-step.utils';
 
 export const ThirdStep = () => {
   const { control, setValue, watch, getValues } = useFormContext();
   const backupsEnabled: boolean = watch('backupsEnabled');
   const pitrEnabled: boolean = watch('pitrEnabled');
   const selectedTime: TimeValue = watch('selectTime');
+  const timeNumbers: number = watch('timeNumbers');
+  const minuteHour: number = watch('minuteHour');
+  const minute: number = watch('minute');
+  const hour: number = watch('hour');
+  const amPm: string = watch('amPm');
+  const weekDay: string = watch('weekDay');
+  const onDay: number = watch('onDay');
+
   console.log(getValues());
 
   const fetchedStorageValues = ['S3', 'Local'];
+
+  const timeInfoText = useMemo(
+    () =>
+      getTimeText(
+        selectedTime,
+        timeNumbers,
+        minuteHour,
+        hour,
+        minute,
+        amPm,
+        weekDay,
+        onDay
+      ),
+    [selectedTime, timeNumbers, minuteHour, hour, minute, amPm, weekDay, onDay]
+  );
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -53,6 +76,9 @@ export const ThirdStep = () => {
                     {...field}
                     sx={{ width: '80px' }}
                     type="number"
+                    inputProps={{
+                      'data-testid': 'select-time-numbers',
+                    }}
                     onChange={(e) => {
                       const v = e.target.value;
                       if (v !== '' && Number(v) < 1) {
@@ -73,7 +99,7 @@ export const ThirdStep = () => {
                     sx={{ width: '120px' }}
                     select
                     inputProps={{
-                      'data-testid': 'select-storage-location',
+                      'data-testid': 'select-time-value',
                     }}
                   >
                     {Object.values(TimeValue).map((value) => (
@@ -86,17 +112,17 @@ export const ThirdStep = () => {
               />
               {selectedTime === TimeValue.hours && (
                 <>
-                  <Typography variant="h6">on minute</Typography>
+                  <Typography variant="h6">{Messages.onMinute}</Typography>
                   <Controller
                     control={control}
-                    name="minute"
+                    name="minuteHour"
                     render={({ field }) => (
                       <TextField
                         {...field}
                         sx={{ width: '80px' }}
                         select
                         inputProps={{
-                          'data-testid': 'select-storage-location',
+                          'data-testid': 'select-minute-in-hour',
                         }}
                       >
                         {Array.from({ length: 60 }, (_, i) => i).map(
@@ -113,7 +139,7 @@ export const ThirdStep = () => {
               )}
               {selectedTime === TimeValue.weeks && (
                 <>
-                  <Typography variant="h6">on</Typography>
+                  <Typography variant="h6">{Messages.on}</Typography>
                   <Controller
                     control={control}
                     name="weekDay"
@@ -122,7 +148,7 @@ export const ThirdStep = () => {
                         {...field}
                         select
                         inputProps={{
-                          'data-testid': 'select-storage-location',
+                          'data-testid': 'select-week-day',
                         }}
                       >
                         {weekDays.map((value) => (
@@ -137,7 +163,7 @@ export const ThirdStep = () => {
               )}
               {selectedTime === TimeValue.months && (
                 <>
-                  <Typography variant="h6">on day</Typography>
+                  <Typography variant="h6">{Messages.onDay}</Typography>
                   <Controller
                     control={control}
                     name="onDay"
@@ -146,7 +172,7 @@ export const ThirdStep = () => {
                         {...field}
                         select
                         inputProps={{
-                          'data-testid': 'select-storage-location',
+                          'data-testid': 'select-day-in-month',
                         }}
                       >
                         {Array.from({ length: 31 }, (_, i) => i + 1).map(
@@ -165,7 +191,7 @@ export const ThirdStep = () => {
                 selectedTime === TimeValue.weeks ||
                 selectedTime === TimeValue.months) && (
                 <>
-                  <Typography variant="h6">at</Typography>
+                  <Typography variant="h6">{Messages.at}</Typography>
                   <Controller
                     control={control}
                     name="hour"
@@ -174,10 +200,10 @@ export const ThirdStep = () => {
                         {...field}
                         select
                         inputProps={{
-                          'data-testid': 'select-storage-location',
+                          'data-testid': 'select-hour',
                         }}
                       >
-                        {Array.from({ length: 12 }, (_, i) => i).map(
+                        {Array.from({ length: 12 }, (_, i) => i + 1).map(
                           (value) => (
                             <MenuItem key={value} value={value}>
                               {value}
@@ -195,7 +221,7 @@ export const ThirdStep = () => {
                         {...field}
                         select
                         inputProps={{
-                          'data-testid': 'select-storage-location',
+                          'data-testid': 'select-minute',
                         }}
                       >
                         {Array.from({ length: 60 }, (_, i) => i).map(
@@ -216,11 +242,11 @@ export const ThirdStep = () => {
                         {...field}
                         select
                         inputProps={{
-                          'data-testid': 'select-storage-location',
+                          'data-testid': 'select-am-pm',
                         }}
                       >
-                        <MenuItem value="AM">AM</MenuItem>
-                        <MenuItem value="PM">PM</MenuItem>
+                        <MenuItem value="AM">{Messages.am}</MenuItem>
+                        <MenuItem value="PM">{Messages.pm}</MenuItem>
                       </TextField>
                     )}
                   />
@@ -228,7 +254,7 @@ export const ThirdStep = () => {
               )}
             </Box>
           </div>
-          <Alert severity="info">This is an info alert — check it out!</Alert>
+          <Alert severity="info">{Messages.infoText(timeInfoText)}</Alert>
           <Box
             sx={{
               paddingTop: 3,
@@ -242,15 +268,10 @@ export const ThirdStep = () => {
             <Controller
               control={control}
               name="storageLocation"
-              rules={{
-                required: 'Need to be set',
-              }}
-              render={({ field, fieldState: { error } }) => (
+              render={({ field }) => (
                 <TextField
                   {...field}
                   select
-                  error={error !== undefined}
-                  helperText={error ? 'need to be set' : ''}
                   inputProps={{
                     'data-testid': 'select-storage-location',
                   }}
@@ -288,7 +309,7 @@ export const ThirdStep = () => {
                 render={({ field }) => (
                   <OutlinedInput
                     {...field}
-                    sx={{ width: '216px' }}
+                    sx={{ width: '150px' }}
                     type="number"
                     onChange={(e) => {
                       const v = e.target.value;
@@ -299,7 +320,9 @@ export const ThirdStep = () => {
                       }
                     }}
                     endAdornment={
-                      <InputAdornment position="end">minutes</InputAdornment>
+                      <InputAdornment position="end">
+                        {Messages.minutes}
+                      </InputAdornment>
                     }
                     inputProps={{
                       'data-testid': 'pitr-time-minutes',

@@ -11,4 +11,12 @@ export const Messages = {
   captionPitr:
     'Point-in-time recovery provides continuous backups on your database to protect against accidental writes or deletes.',
   pitrCreateHeader: 'Create PITR backup every',
+  onMinute: 'on minute',
+  minutes: 'minutes',
+  on: 'on',
+  onDay: 'on day',
+  at: 'at',
+  am: 'AM',
+  pm: 'PM',
+  infoText: (value) => `Everest will create a backup of your database every ${value}`
 };

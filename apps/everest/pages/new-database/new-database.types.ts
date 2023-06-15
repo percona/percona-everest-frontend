@@ -24,6 +24,7 @@ const stepThreeSchema = z
     storageLocation: z.string(),
     timeNumbers: z.string(),
     selectTime: z.string(),
+    minuteHour: z.number(),
     minute: z.number(),
     hour: z.number(),
     amPm: z.string(),
