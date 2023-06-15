@@ -6,6 +6,8 @@ import { Box, Toolbar, useMediaQuery, useTheme } from '@mui/material';
 import { AppBar } from './components/app-bar/AppBar';
 import { Drawer } from './components/drawer/Drawer';
 import { DrawerContext } from './components/drawer/Drawer.context';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { K8ContextProvider } from './contexts/kubernetes/kubernetes.context';
 
 export const BarAndDrawer = () => {
   const [open, setOpen] = useState(false);
@@ -16,8 +18,8 @@ export const BarAndDrawer = () => {
   const activeBreakpoint = isMobile
     ? 'mobile'
     : isDesktop
-    ? 'desktop'
-    : 'tablet';
+      ? 'desktop'
+      : 'tablet';
 
   return (
     <DrawerContext.Provider value={{ open, toggleOpen, activeBreakpoint }}>
@@ -28,15 +30,21 @@ export const BarAndDrawer = () => {
 };
 
 export const EverestApp = () => {
+  const queryClient = new QueryClient();
+
   return (
-    <ThemeContextProvider themeOptions={everestThemeOptions}>
-      <Box sx={{ display: 'flex' }}>
-        <BarAndDrawer />
-        <Box component="main" sx={{ padding: 4, width: '100%' }}>
-          <Toolbar />
-          <Outlet />
-        </Box>
-      </Box>
-    </ThemeContextProvider>
+    <QueryClientProvider client={queryClient}>
+      <K8ContextProvider>
+        <ThemeContextProvider themeOptions={everestThemeOptions}>
+          <Box sx={{ display: 'flex' }}>
+            <BarAndDrawer />
+            <Box component="main" sx={{ padding: 4, width: '100%' }}>
+              <Toolbar />
+              <Outlet />
+            </Box>
+          </Box>
+        </ThemeContextProvider>
+      </K8ContextProvider>
+    </QueryClientProvider>
   );
 };
