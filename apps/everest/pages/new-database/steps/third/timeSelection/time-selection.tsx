@@ -40,197 +40,191 @@ export const TimeSelection = () => {
 
   return (
     <>
-      <div>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Controller
-            control={control}
-            name="timeNumbers"
-            render={({ field }) => (
-              <OutlinedInput
-                {...field}
-                sx={{ width: '80px' }}
-                type="number"
-                inputProps={{
-                  'data-testid': 'select-time-numbers',
-                }}
-                onChange={(e) => {
-                  const v = e.target.value;
-                  if (v !== '' && Number(v) < 1) {
-                    field.onChange('1');
-                  } else {
-                    field.onChange(v);
-                  }
-                }}
-                onBlur={(e) => {
-                  field.onBlur();
-                  const v = e.target.value;
-                  if (v === '') {
-                    field.onChange('1');
-                  }
-                }}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name="selectTime"
-            render={({ field }) => (
-              <TextField
-                {...field}
-                sx={{ width: '120px' }}
-                select
-                inputProps={{
-                  'data-testid': 'select-time-value',
-                }}
-              >
-                {Object.values(TimeValue).map((value) => (
-                  <MenuItem key={value} value={value}>
-                    {value}
-                  </MenuItem>
-                ))}
-              </TextField>
-            )}
-          />
-          {selectedTime === TimeValue.hours && (
-            <>
-              <Typography variant="h6">{Messages.onMinute}</Typography>
-              <Controller
-                control={control}
-                name="minuteHour"
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    sx={{ width: '80px' }}
-                    select
-                    inputProps={{
-                      'data-testid': 'select-minute-in-hour',
-                    }}
-                  >
-                    {Array.from({ length: 60 }, (_, i) => i).map((value) => (
-                      <MenuItem key={value} value={value}>
-                        {value}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                )}
-              />
-            </>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+        <Controller
+          control={control}
+          name="timeNumbers"
+          render={({ field }) => (
+            <OutlinedInput
+              {...field}
+              sx={{ width: '80px' }}
+              type="number"
+              inputProps={{
+                'data-testid': 'select-time-numbers',
+              }}
+              onChange={(e) => {
+                const v = e.target.value;
+                if (v !== '' && Number(v) < 1) {
+                  field.onChange('1');
+                } else {
+                  field.onChange(v);
+                }
+              }}
+              onBlur={(e) => {
+                field.onBlur();
+                const v = e.target.value;
+                if (v === '') {
+                  field.onChange('1');
+                }
+              }}
+            />
           )}
-          {selectedTime === TimeValue.weeks && (
-            <>
-              <Typography variant="h6">{Messages.on}</Typography>
-              <Controller
-                control={control}
-                name="weekDay"
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    select
-                    inputProps={{
-                      'data-testid': 'select-week-day',
-                    }}
-                  >
-                    {weekDays.map((value) => (
-                      <MenuItem key={value} value={value}>
-                        {value}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                )}
-              />
-            </>
+        />
+        <Controller
+          control={control}
+          name="selectTime"
+          render={({ field }) => (
+            <TextField
+              {...field}
+              sx={{ width: '120px' }}
+              select
+              inputProps={{
+                'data-testid': 'select-time-value',
+              }}
+            >
+              {Object.values(TimeValue).map((value) => (
+                <MenuItem key={value} value={value}>
+                  {value}
+                </MenuItem>
+              ))}
+            </TextField>
           )}
-          {selectedTime === TimeValue.months && (
-            <>
-              <Typography variant="h6">{Messages.onDay}</Typography>
-              <Controller
-                control={control}
-                name="onDay"
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    select
-                    inputProps={{
-                      'data-testid': 'select-day-in-month',
-                    }}
-                  >
-                    {Array.from({ length: 31 }, (_, i) => i + 1).map(
-                      (value) => (
-                        <MenuItem key={value} value={value}>
-                          {value}
-                        </MenuItem>
-                      )
-                    )}
-                  </TextField>
-                )}
-              />
-            </>
-          )}
-          {(selectedTime === TimeValue.days ||
-            selectedTime === TimeValue.weeks ||
-            selectedTime === TimeValue.months) && (
-            <>
-              <Typography variant="h6">{Messages.at}</Typography>
-              <Controller
-                control={control}
-                name="hour"
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    select
-                    inputProps={{
-                      'data-testid': 'select-hour',
-                    }}
-                  >
-                    {Array.from({ length: 12 }, (_, i) => i + 1).map(
-                      (value) => (
-                        <MenuItem key={value} value={value}>
-                          {value}
-                        </MenuItem>
-                      )
-                    )}
-                  </TextField>
-                )}
-              />
-              <Controller
-                control={control}
-                name="minute"
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    select
-                    inputProps={{
-                      'data-testid': 'select-minute',
-                    }}
-                  >
-                    {Array.from({ length: 60 }, (_, i) => i).map((value) => (
-                      <MenuItem key={value} value={value}>
-                        {value}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                )}
-              />
-              <Controller
-                control={control}
-                name="amPm"
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    select
-                    inputProps={{
-                      'data-testid': 'select-am-pm',
-                    }}
-                  >
-                    <MenuItem value="AM">{Messages.am}</MenuItem>
-                    <MenuItem value="PM">{Messages.pm}</MenuItem>
-                  </TextField>
-                )}
-              />
-            </>
-          )}
-        </Box>
-      </div>
+        />
+        {selectedTime === TimeValue.hours && (
+          <>
+            <Typography variant="h6">{Messages.onMinute}</Typography>
+            <Controller
+              control={control}
+              name="minuteHour"
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  sx={{ width: '80px' }}
+                  select
+                  inputProps={{
+                    'data-testid': 'select-minute-in-hour',
+                  }}
+                >
+                  {Array.from({ length: 60 }, (_, i) => i).map((value) => (
+                    <MenuItem key={value} value={value}>
+                      {value}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
+          </>
+        )}
+        {selectedTime === TimeValue.weeks && (
+          <>
+            <Typography variant="h6">{Messages.on}</Typography>
+            <Controller
+              control={control}
+              name="weekDay"
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  select
+                  inputProps={{
+                    'data-testid': 'select-week-day',
+                  }}
+                >
+                  {weekDays.map((value) => (
+                    <MenuItem key={value} value={value}>
+                      {value}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
+          </>
+        )}
+        {selectedTime === TimeValue.months && (
+          <>
+            <Typography variant="h6">{Messages.onDay}</Typography>
+            <Controller
+              control={control}
+              name="onDay"
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  select
+                  inputProps={{
+                    'data-testid': 'select-day-in-month',
+                  }}
+                >
+                  {Array.from({ length: 31 }, (_, i) => i + 1).map((value) => (
+                    <MenuItem key={value} value={value}>
+                      {value}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
+          </>
+        )}
+        {(selectedTime === TimeValue.days ||
+          selectedTime === TimeValue.weeks ||
+          selectedTime === TimeValue.months) && (
+          <>
+            <Typography variant="h6">{Messages.at}</Typography>
+            <Controller
+              control={control}
+              name="hour"
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  select
+                  inputProps={{
+                    'data-testid': 'select-hour',
+                  }}
+                >
+                  {Array.from({ length: 12 }, (_, i) => i + 1).map((value) => (
+                    <MenuItem key={value} value={value}>
+                      {value}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
+            <Controller
+              control={control}
+              name="minute"
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  select
+                  inputProps={{
+                    'data-testid': 'select-minute',
+                  }}
+                >
+                  {Array.from({ length: 60 }, (_, i) => i).map((value) => (
+                    <MenuItem key={value} value={value}>
+                      {value}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
+            <Controller
+              control={control}
+              name="amPm"
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  select
+                  inputProps={{
+                    'data-testid': 'select-am-pm',
+                  }}
+                >
+                  <MenuItem value="AM">{Messages.am}</MenuItem>
+                  <MenuItem value="PM">{Messages.pm}</MenuItem>
+                </TextField>
+              )}
+            />
+          </>
+        )}
+      </Box>
       <Alert severity="info">{Messages.infoText(timeInfoText)}</Alert>
     </>
   );
