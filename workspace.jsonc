@@ -1,7 +1,7 @@
 /**
  * this is the main configuration file of your bit workspace.
  * for full documentation, please see: https://bit.dev/docs/workspace/workspace-configuration
- **/ {
+ **/{
   "$schema": "https://static.bit.dev/teambit/schemas/schema.json",
   /**
    * main configuration of the Bit workspace.
@@ -70,7 +70,9 @@
     "linkCoreAspects": true
   },
   "teambit.generator/generator": {
-    "envs": ["percona.envs/percona-react-env"]
+    "envs": [
+      "percona.envs/percona-react-env"
+    ]
   },
   /**
    * workspace variants allow to set different subsets of configuration for components in your
