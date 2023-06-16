@@ -1,3 +1,4 @@
+import { Messages } from './third-step.messages';
 import { TimeValue } from './third-step.types';
 
 export const weekDays = [
@@ -27,15 +28,15 @@ export const getTimeText = (
   const minuteWithZero = addZeroToSingleDigit(minute);
 
   if (selectedTime === TimeValue.hours) {
-    return `${timeNumbers} hours, starting at minute ${minuteHour}.`;
+    return `${timeNumbers} ${Messages.getTimeText.hours} ${minuteHour}.`;
   }
   if (selectedTime === TimeValue.days) {
-    return `${timeNumbers} days, at ${hour}:${minuteWithZero}${amPm}.`;
+    return `${timeNumbers} ${Messages.getTimeText.days} ${hour}:${minuteWithZero}${amPm}.`;
   }
   if (selectedTime === TimeValue.weeks) {
-    return `${timeNumbers} weeks on ${weekDay}, at ${hour}:${minuteWithZero}${amPm}.`;
+    return `${timeNumbers} ${Messages.getTimeText.weeks} ${weekDay}, ${Messages.at} ${hour}:${minuteWithZero}${amPm}.`;
   }
   if (selectedTime === TimeValue.months) {
-    return `${timeNumbers} months, on day ${onDay} at ${hour}:${minuteWithZero}${amPm}.`;
+    return `${timeNumbers} ${Messages.getTimeText.months} ${onDay} ${Messages.at} ${hour}:${minuteWithZero}${amPm}.`;
   }
 };
