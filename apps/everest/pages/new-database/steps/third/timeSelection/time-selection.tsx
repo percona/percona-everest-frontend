@@ -5,6 +5,8 @@ import {
   OutlinedInput,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import React, { useMemo } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -44,7 +46,9 @@ export const TimeSelection = () => {
 
   return (
     <>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+      <Box
+        sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 2 }}
+      >
         <Controller
           control={control}
           name="timeNumbers"
@@ -80,7 +84,7 @@ export const TimeSelection = () => {
           render={({ field }) => (
             <TextField
               {...field}
-              sx={{ width: '120px' }}
+              sx={{ minWidth: '120px' }}
               select
               inputProps={{
                 'data-testid': 'select-time-value',
@@ -95,15 +99,17 @@ export const TimeSelection = () => {
           )}
         />
         {selectedTime === TimeValue.hours && (
-          <>
-            <Typography variant="sectionHeading">{Messages.onMinute}</Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Typography variant="sectionHeading">
+              {Messages.onMinute}
+            </Typography>
             <Controller
               control={control}
               name="minuteHour"
               render={({ field }) => (
                 <TextField
                   {...field}
-                  sx={{ width: '80px' }}
+                  sx={{ minWidth: '80px' }}
                   select
                   inputProps={{
                     'data-testid': 'select-minute-in-hour',
@@ -117,10 +123,10 @@ export const TimeSelection = () => {
                 </TextField>
               )}
             />
-          </>
+          </Box>
         )}
         {selectedTime === TimeValue.weeks && (
-          <>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Typography variant="sectionHeading">{Messages.on}</Typography>
             <Controller
               control={control}
@@ -128,6 +134,7 @@ export const TimeSelection = () => {
               render={({ field }) => (
                 <TextField
                   {...field}
+                  sx={{ minWidth: '120px' }}
                   select
                   inputProps={{
                     'data-testid': 'select-week-day',
@@ -141,10 +148,10 @@ export const TimeSelection = () => {
                 </TextField>
               )}
             />
-          </>
+          </Box>
         )}
         {selectedTime === TimeValue.months && (
-          <>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Typography variant="sectionHeading">{Messages.onDay}</Typography>
             <Controller
               control={control}
@@ -152,6 +159,7 @@ export const TimeSelection = () => {
               render={({ field }) => (
                 <TextField
                   {...field}
+                  sx={{ minWidth: '80px' }}
                   select
                   inputProps={{
                     'data-testid': 'select-day-in-month',
@@ -165,12 +173,12 @@ export const TimeSelection = () => {
                 </TextField>
               )}
             />
-          </>
+          </Box>
         )}
         {(selectedTime === TimeValue.days ||
           selectedTime === TimeValue.weeks ||
           selectedTime === TimeValue.months) && (
-          <>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Typography variant="sectionHeading">{Messages.at}</Typography>
             <Controller
               control={control}
@@ -178,6 +186,7 @@ export const TimeSelection = () => {
               render={({ field }) => (
                 <TextField
                   {...field}
+                  sx={{ minWidth: '80px' }}
                   select
                   inputProps={{
                     'data-testid': 'select-hour',
@@ -197,6 +206,7 @@ export const TimeSelection = () => {
               render={({ field }) => (
                 <TextField
                   {...field}
+                  sx={{ minWidth: '80px' }}
                   select
                   inputProps={{
                     'data-testid': 'select-minute',
@@ -216,6 +226,7 @@ export const TimeSelection = () => {
               render={({ field }) => (
                 <TextField
                   {...field}
+                  sx={{ minWidth: '80px' }}
                   select
                   inputProps={{
                     'data-testid': 'select-am-pm',
@@ -226,7 +237,7 @@ export const TimeSelection = () => {
                 </TextField>
               )}
             />
-          </>
+          </Box>
         )}
       </Box>
       <Alert severity="info">{Messages.infoText(timeInfoText)}</Alert>
