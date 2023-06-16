@@ -20,7 +20,7 @@ const stepThreeSchema = z
   .object({
     backupsEnabled: z.boolean(),
     pitrEnabled: z.boolean(),
-    pitrTime: z.number(),
+    pitrTime: z.string(),
     storageLocation: z.string(),
     timeNumbers: z.string(),
     selectTime: z.string(),

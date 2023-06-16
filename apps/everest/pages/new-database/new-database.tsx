@@ -19,7 +19,7 @@ export const NewDatabasePage = () => {
       dbType: DbType.Postresql,
       backupsEnabled: true,
       pitrEnabled: true,
-      pitrTime: 60,
+      pitrTime: '60',
       storageLocation: 'S3',
       timeNumbers: '1',
       selectTime: 'hours',

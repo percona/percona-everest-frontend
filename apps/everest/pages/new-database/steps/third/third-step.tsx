@@ -1,5 +1,4 @@
 import {
-  Alert,
   Box,
   FormControlLabel,
   InputAdornment,
@@ -10,43 +9,17 @@ import {
   Typography,
 } from '@mui/material';
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Messages } from './third-step.messages';
-import { TimeValue } from './third-step.types';
-import { getTimeText, weekDays } from './third-step.utils';
+import { TimeSelection } from './timeSelection/time-selection';
 
 export const ThirdStep = () => {
-  const { control, setValue, watch, getValues } = useFormContext();
+  const { control, watch, getValues } = useFormContext();
   const backupsEnabled: boolean = watch('backupsEnabled');
   const pitrEnabled: boolean = watch('pitrEnabled');
-  const selectedTime: TimeValue = watch('selectTime');
-  const timeNumbers: number = watch('timeNumbers');
-  const minuteHour: number = watch('minuteHour');
-  const minute: number = watch('minute');
-  const hour: number = watch('hour');
-  const amPm: string = watch('amPm');
-  const weekDay: string = watch('weekDay');
-  const onDay: number = watch('onDay');
-
-  console.log(getValues());
 
   const fetchedStorageValues = ['S3', 'Local'];
-
-  const timeInfoText = useMemo(
-    () =>
-      getTimeText(
-        selectedTime,
-        timeNumbers,
-        minuteHour,
-        hour,
-        minute,
-        amPm,
-        weekDay,
-        onDay
-      ),
-    [selectedTime, timeNumbers, minuteHour, hour, minute, amPm, weekDay, onDay]
-  );
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -66,195 +39,7 @@ export const ThirdStep = () => {
       {backupsEnabled && (
         <>
           <Typography variant="h6">{Messages.repeatsEvery}</Typography>
-          <div>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <Controller
-                control={control}
-                name="timeNumbers"
-                render={({ field }) => (
-                  <OutlinedInput
-                    {...field}
-                    sx={{ width: '80px' }}
-                    type="number"
-                    inputProps={{
-                      'data-testid': 'select-time-numbers',
-                    }}
-                    onChange={(e) => {
-                      const v = e.target.value;
-                      if (v !== '' && Number(v) < 1) {
-                        field.onChange('1');
-                      } else {
-                        field.onChange(v);
-                      }
-                    }}
-                  />
-                )}
-              />
-              <Controller
-                control={control}
-                name="selectTime"
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    sx={{ width: '120px' }}
-                    select
-                    inputProps={{
-                      'data-testid': 'select-time-value',
-                    }}
-                  >
-                    {Object.values(TimeValue).map((value) => (
-                      <MenuItem key={value} value={value}>
-                        {value}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                )}
-              />
-              {selectedTime === TimeValue.hours && (
-                <>
-                  <Typography variant="h6">{Messages.onMinute}</Typography>
-                  <Controller
-                    control={control}
-                    name="minuteHour"
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        sx={{ width: '80px' }}
-                        select
-                        inputProps={{
-                          'data-testid': 'select-minute-in-hour',
-                        }}
-                      >
-                        {Array.from({ length: 60 }, (_, i) => i).map(
-                          (value) => (
-                            <MenuItem key={value} value={value}>
-                              {value}
-                            </MenuItem>
-                          )
-                        )}
-                      </TextField>
-                    )}
-                  />
-                </>
-              )}
-              {selectedTime === TimeValue.weeks && (
-                <>
-                  <Typography variant="h6">{Messages.on}</Typography>
-                  <Controller
-                    control={control}
-                    name="weekDay"
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        select
-                        inputProps={{
-                          'data-testid': 'select-week-day',
-                        }}
-                      >
-                        {weekDays.map((value) => (
-                          <MenuItem key={value} value={value}>
-                            {value}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    )}
-                  />
-                </>
-              )}
-              {selectedTime === TimeValue.months && (
-                <>
-                  <Typography variant="h6">{Messages.onDay}</Typography>
-                  <Controller
-                    control={control}
-                    name="onDay"
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        select
-                        inputProps={{
-                          'data-testid': 'select-day-in-month',
-                        }}
-                      >
-                        {Array.from({ length: 31 }, (_, i) => i + 1).map(
-                          (value) => (
-                            <MenuItem key={value} value={value}>
-                              {value}
-                            </MenuItem>
-                          )
-                        )}
-                      </TextField>
-                    )}
-                  />
-                </>
-              )}
-              {(selectedTime === TimeValue.days ||
-                selectedTime === TimeValue.weeks ||
-                selectedTime === TimeValue.months) && (
-                <>
-                  <Typography variant="h6">{Messages.at}</Typography>
-                  <Controller
-                    control={control}
-                    name="hour"
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        select
-                        inputProps={{
-                          'data-testid': 'select-hour',
-                        }}
-                      >
-                        {Array.from({ length: 12 }, (_, i) => i + 1).map(
-                          (value) => (
-                            <MenuItem key={value} value={value}>
-                              {value}
-                            </MenuItem>
-                          )
-                        )}
-                      </TextField>
-                    )}
-                  />
-                  <Controller
-                    control={control}
-                    name="minute"
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        select
-                        inputProps={{
-                          'data-testid': 'select-minute',
-                        }}
-                      >
-                        {Array.from({ length: 60 }, (_, i) => i).map(
-                          (value) => (
-                            <MenuItem key={value} value={value}>
-                              {value}
-                            </MenuItem>
-                          )
-                        )}
-                      </TextField>
-                    )}
-                  />
-                  <Controller
-                    control={control}
-                    name="amPm"
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        select
-                        inputProps={{
-                          'data-testid': 'select-am-pm',
-                        }}
-                      >
-                        <MenuItem value="AM">{Messages.am}</MenuItem>
-                        <MenuItem value="PM">{Messages.pm}</MenuItem>
-                      </TextField>
-                    )}
-                  />
-                </>
-              )}
-            </Box>
-          </div>
-          <Alert severity="info">{Messages.infoText(timeInfoText)}</Alert>
+          <TimeSelection />
           <Box
             sx={{
               paddingTop: 3,
@@ -319,6 +104,13 @@ export const ThirdStep = () => {
                         field.onChange(v);
                       }
                     }}
+                    onBlur={(e) => {
+                      field.onBlur();
+                      const v = e.target.value;
+                      if (v === '') {
+                        field.onChange('1');
+                      }
+                    }}
                     endAdornment={
                       <InputAdornment position="end">
                         {Messages.minutes}
@@ -326,7 +118,6 @@ export const ThirdStep = () => {
                     }
                     inputProps={{
                       'data-testid': 'pitr-time-minutes',
-                      min: 1,
                     }}
                   />
                 )}
