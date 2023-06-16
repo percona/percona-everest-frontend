@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Palette, Stack, Typography, styled } from '@mui/material';
+import { Box, Stack, Typography, styled } from '@mui/material';
 import { LightMode, DarkMode } from '@mui/icons-material';
 import { PaletteThemeViewerProps } from './palette-theme-viewer.types';
 
@@ -36,6 +36,7 @@ const traverseObject = (palette) => {
   const result: Record<string, any> = {};
   const traverse = (object: any, parts: string[] = []) => {
     if (object && typeof object === 'object') {
+      // eslint-disable-next-line no-restricted-syntax
       for (const key of Object.keys(object)) {
         traverse(object[key], [...parts, key]);
       }

@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { Box, IconButton, AppBar as MuiAppBar, Toolbar } from '@mui/material';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import { EverestHorizontalIcon } from '@percona/ui-lib.icons.everest';
-import { DrawerContext } from '../drawer/Drawer.context';
 import { Link } from 'react-router-dom';
+import { DrawerContext } from '../drawer/Drawer.context';
 
 export const AppBar = () => {
   const { activeBreakpoint, toggleOpen } = useContext(DrawerContext);

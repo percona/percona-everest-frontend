@@ -1,12 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Box, Button, Step, StepLabel, Stepper } from '@mui/material';
+import { Box, Button, Step, StepLabel } from '@mui/material';
 import { DbType } from '@percona/ui-lib.db-toggle-card';
+import { Stepper } from '@percona/ui.stepper';
 import React, { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Messages } from './new-database.messages';
 import { dbWizardSchema, DbWizardType } from './new-database.types';
 import { steps } from './steps';
+import { BasicInformationFields } from './steps/first/first-step.types';
 
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -16,7 +18,6 @@ export const NewDatabasePage = () => {
     mode: 'onChange',
     resolver: zodResolver(currentValidationSchema),
     defaultValues: {
-      dbType: DbType.Postresql,
       backupsEnabled: true,
       pitrEnabled: true,
       pitrTime: '60',
@@ -29,15 +30,22 @@ export const NewDatabasePage = () => {
       amPm: 'AM',
       weekDay: 'Monday',
       onDay: 1,
+      [BasicInformationFields.dbType]: DbType.Postresql,
+      externalAccess: false,
+      internetFacing: true,
+      sourceRange: '',
+      monitoring: false,
+      endpoint: '',
     },
   });
   const firstStep = activeStep === 0;
 
   const onSubmit: SubmitHandler<DbWizardType> = (data) => {
+    /* eslint-disable no-console */
     console.log(data);
   };
 
-  const handleNext: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
+  const handleNext: React.MouseEventHandler<HTMLButtonElement> = async () => {
     if (activeStep < steps.length - 1) {
       const isStepValid = await methods.trigger();
 
@@ -55,7 +63,7 @@ export const NewDatabasePage = () => {
 
   return (
     <>
-      <Stepper activeStep={activeStep} sx={{ marginBottom: 4 }}>
+      <Stepper noConnector activeStep={activeStep} sx={{ marginBottom: 4 }}>
         {steps.map((_, idx) => (
           <Step key={`step-${idx + 1}`}>
             <StepLabel />

@@ -12,6 +12,7 @@
     "composition-viewer": {
         "scope": "percona.design",
         "version": "0.0.1",
+        "defaultScope": "percona.design",
         "mainFile": "index.ts",
         "rootDir": "design/composition-viewer"
     },
@@ -46,6 +47,19 @@
         "mainFile": "index.ts",
         "rootDir": "ui/icons/everest"
     },
+    "input": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui",
+        "mainFile": "index.ts",
+        "rootDir": "ui/input",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
     "percona-react-env": {
         "scope": "",
         "version": "",
@@ -59,21 +73,50 @@
             }
         }
     },
+    "progress-bar": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui",
+        "mainFile": "index.ts",
+        "rootDir": "ui/progress-bar",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
+    "stepper": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui",
+        "mainFile": "index.ts",
+        "rootDir": "ui/stepper",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
     "theme-context-provider": {
         "scope": "percona.design",
         "version": "0.0.1",
+        "defaultScope": "percona.design",
         "mainFile": "index.ts",
         "rootDir": "design/theme-context-provider"
     },
     "themes/base": {
         "scope": "percona.design",
         "version": "0.0.1",
+        "defaultScope": "percona.design",
         "mainFile": "index.ts",
         "rootDir": "design/themes/base"
     },
     "themes/everest": {
         "scope": "percona.design",
         "version": "0.0.1",
+        "defaultScope": "percona.design",
         "mainFile": "index.ts",
         "rootDir": "design/themes/everest"
     },
@@ -86,6 +129,7 @@
     "utils/palette-theme-viewer": {
         "scope": "percona.design",
         "version": "0.0.1",
+        "defaultScope": "percona.design",
         "mainFile": "index.ts",
         "rootDir": "design/utils/palette-theme-viewer"
     },
