@@ -10,7 +10,11 @@ import React, { useMemo } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Messages } from '../third-step.messages';
 import { TimeValue } from '../third-step.types';
-import { getTimeText, weekDays } from '../third-step.utils';
+import {
+  addZeroToSingleDigit,
+  getTimeText,
+  weekDays,
+} from '../third-step.utils';
 
 export const TimeSelection = () => {
   const { control, watch } = useFormContext();
@@ -200,7 +204,7 @@ export const TimeSelection = () => {
                 >
                   {Array.from({ length: 60 }, (_, i) => i).map((value) => (
                     <MenuItem key={value} value={value}>
-                      {value}
+                      {addZeroToSingleDigit(value)}
                     </MenuItem>
                   ))}
                 </TextField>

@@ -15,7 +15,7 @@ import { Messages } from './third-step.messages';
 import { TimeSelection } from './timeSelection/time-selection';
 
 export const ThirdStep = () => {
-  const { control, watch, getValues } = useFormContext();
+  const { control, watch } = useFormContext();
   const backupsEnabled: boolean = watch('backupsEnabled');
   const pitrEnabled: boolean = watch('pitrEnabled');
 
