@@ -96,7 +96,7 @@ export const TimeSelection = () => {
         />
         {selectedTime === TimeValue.hours && (
           <>
-            <Typography variant="h6">{Messages.onMinute}</Typography>
+            <Typography variant="sectionHeading">{Messages.onMinute}</Typography>
             <Controller
               control={control}
               name="minuteHour"
@@ -121,7 +121,7 @@ export const TimeSelection = () => {
         )}
         {selectedTime === TimeValue.weeks && (
           <>
-            <Typography variant="h6">{Messages.on}</Typography>
+            <Typography variant="sectionHeading">{Messages.on}</Typography>
             <Controller
               control={control}
               name="weekDay"
@@ -145,7 +145,7 @@ export const TimeSelection = () => {
         )}
         {selectedTime === TimeValue.months && (
           <>
-            <Typography variant="h6">{Messages.onDay}</Typography>
+            <Typography variant="sectionHeading">{Messages.onDay}</Typography>
             <Controller
               control={control}
               name="onDay"
@@ -171,7 +171,7 @@ export const TimeSelection = () => {
           selectedTime === TimeValue.weeks ||
           selectedTime === TimeValue.months) && (
           <>
-            <Typography variant="h6">{Messages.at}</Typography>
+            <Typography variant="sectionHeading">{Messages.at}</Typography>
             <Controller
               control={control}
               name="hour"

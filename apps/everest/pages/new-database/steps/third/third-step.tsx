@@ -38,7 +38,9 @@ export const ThirdStep = () => {
       />
       {backupsEnabled && (
         <>
-          <Typography variant="h6">{Messages.repeatsEvery}</Typography>
+          <Typography variant="sectionHeading">
+            {Messages.repeatsEvery}
+          </Typography>
           <TimeSelection />
           <Box
             sx={{
@@ -49,7 +51,9 @@ export const ThirdStep = () => {
               gap: 1,
             }}
           >
-            <Typography variant="h6">{Messages.storageLocation}</Typography>
+            <Typography variant="sectionHeading">
+              {Messages.storageLocation}
+            </Typography>
             <Controller
               control={control}
               name="storageLocation"
@@ -87,7 +91,9 @@ export const ThirdStep = () => {
           />
           {pitrEnabled && (
             <>
-              <Typography variant="h6">{Messages.pitrCreateHeader}</Typography>
+              <Typography variant="sectionHeading">
+                {Messages.pitrCreateHeader}
+              </Typography>
               <Controller
                 control={control}
                 name="pitrTime"
