@@ -27,9 +27,6 @@ export const getTimeText = (
 ) => {
   const minuteWithZero = addZeroToSingleDigit(minute);
 
-  if (selectedTime === TimeValue.hours) {
-    return `${timeNumbers} ${Messages.getTimeText.hours} ${minuteHour}.`;
-  }
   if (selectedTime === TimeValue.days) {
     return `${timeNumbers} ${Messages.getTimeText.days} ${hour}:${minuteWithZero}${amPm}.`;
   }
@@ -39,4 +36,5 @@ export const getTimeText = (
   if (selectedTime === TimeValue.months) {
     return `${timeNumbers} ${Messages.getTimeText.months} ${onDay} ${Messages.at} ${hour}:${minuteWithZero}${amPm}.`;
   }
+  return `${timeNumbers} ${Messages.getTimeText.hours} ${minuteHour}.`;
 };
