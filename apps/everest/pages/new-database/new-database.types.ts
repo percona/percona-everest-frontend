@@ -1,13 +1,22 @@
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { z } from 'zod';
 import { IP_REGEX } from './new-database.constants';
+import { BasicInformationFields } from './steps/first/first-step.types';
+import { Messages as FirstStepMessages } from './steps/first/first-step.messages';
 
 // .passthrough tells Zod to not drop unrecognized keys
 // this is needed because we parse step by step
 // so, by default, Zod would leave behind the keys from previous steps
 const stepOneSchema = z
   .object({
-    dbType: z.nativeEnum(DbType),
+    [BasicInformationFields.dbType]: z.nativeEnum(DbType),
+    [BasicInformationFields.dbName]: z
+      .string()
+      .max(255, FirstStepMessages.errors.dbName)
+      .nonempty(`The ${FirstStepMessages.labels.dbName} field is required`),
+    [BasicInformationFields.k8sNamespace]: z.string(),
+    [BasicInformationFields.dbEnvironment]: z.string(),
+    [BasicInformationFields.dbVersion]: z.string(),
   })
   .passthrough();
 
