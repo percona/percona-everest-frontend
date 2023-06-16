@@ -50,7 +50,7 @@
     "input": {
         "scope": "",
         "version": "",
-        "defaultScope": "percona.ui",
+        "defaultScope": "percona.ui-lib",
         "mainFile": "index.ts",
         "rootDir": "ui/input",
         "config": {
@@ -76,7 +76,7 @@
     "progress-bar": {
         "scope": "",
         "version": "",
-        "defaultScope": "percona.ui",
+        "defaultScope": "percona.ui-lib",
         "mainFile": "index.ts",
         "rootDir": "ui/progress-bar",
         "config": {
@@ -89,7 +89,7 @@
     "stepper": {
         "scope": "",
         "version": "",
-        "defaultScope": "percona.ui",
+        "defaultScope": "percona.ui-lib",
         "mainFile": "index.ts",
         "rootDir": "ui/stepper",
         "config": {
