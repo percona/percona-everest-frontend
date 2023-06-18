@@ -9,6 +9,8 @@ export const useKubernetesClusters = () => {
       throw new Error();
     }
 
-    return await result.json();
+    return [{ id: 'K1', name: 'Cluster One' }];
+    // TODO uncomment when API is ready
+    // return await result.json();
   }, { refetchOnWindowFocus: false })
 };
