@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import React from 'react';
 import { ThemeContextProvider } from '@percona/design.theme-context-provider';
 import { everestThemeOptions } from '@percona/design.themes.everest';
 import { QueryClient, QueryClientProvider } from 'react-query';

@@ -1,5 +1,5 @@
-import { Alert, Box, Button, Skeleton, Snackbar, Stack, Toolbar, Typography, useMediaQuery, useTheme } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
+import { Box, Button, Skeleton, Stack, Toolbar, Typography, useMediaQuery, useTheme } from "@mui/material";
+import React, { useContext, useState } from "react";
 import { Outlet } from "react-router-dom";
 import ReplayIcon from '@mui/icons-material/Replay';
 import { K8Context } from "../../contexts/kubernetes/kubernetes.context";
