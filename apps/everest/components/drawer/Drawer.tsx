@@ -6,10 +6,9 @@ import {
   Toolbar,
   styled,
 } from '@mui/material';
-import StorageIcon from '@mui/icons-material/Storage';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-import { DRAWER_WIDTH } from './Drawer.constants';
+import { DRAWER_WIDTH, ROUTES } from './Drawer.constants';
 import { closedMixin, openedMixin } from './Drawer.utils';
 import { DrawerContext } from './Drawer.context';
 import { NavItem } from '../nav-item/NavItem';
@@ -60,12 +59,16 @@ const DrawerContent = ({ open }: { open: boolean }) => {
         </IconButton>
       </DrawerHeader>
       <List>
-        <NavItem
-          to="/databases"
-          open={open}
-          icon={StorageIcon}
-          text="Databases"
-        />
+        {ROUTES.map(({ to, icon, text }) => (
+          <NavItem
+            onClick={toggleOpen}
+            to={to}
+            open={open}
+            icon={icon}
+            text={text}
+            key={to}
+          />
+        ))}´
       </List>
     </>
   );

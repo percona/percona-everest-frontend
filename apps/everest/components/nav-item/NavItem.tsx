@@ -8,7 +8,7 @@ import {
 import { NavLink } from 'react-router-dom';
 import { NavItemProps } from './NavItem.types';
 
-export const NavItem = ({ open, icon, text, to }: NavItemProps) => {
+export const NavItem = ({ open, icon, text, to, onClick }: NavItemProps) => {
   return (
     <ListItem disablePadding sx={{ display: 'block' }}>
       <ListItemButton
@@ -19,6 +19,7 @@ export const NavItem = ({ open, icon, text, to }: NavItemProps) => {
           justifyContent: open ? 'initial' : 'center',
           px: 2.5,
         }}
+        onClick={onClick}
       >
         <ListItemIcon
           sx={{

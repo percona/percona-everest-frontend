@@ -3,3 +3,9 @@ export interface DrawerContextProps {
   toggleOpen: () => any;
   activeBreakpoint: 'desktop' | 'tablet' | 'mobile';
 }
+
+export type EverestRoute = {
+  to: string;
+  text: string;
+  icon: React.ElementType;
+}
