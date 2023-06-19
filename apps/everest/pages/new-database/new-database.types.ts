@@ -79,7 +79,7 @@ const stepFourSchema = z
 const stepFiveSchema = z
   .object({
     monitoring: z.boolean(),
-    endpoint: z.string().url().optional(),
+    endpoint: z.string().optional(),
   })
   .passthrough()
   .superRefine((input, ctx) => {
