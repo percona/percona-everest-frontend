@@ -12,14 +12,14 @@ import {
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Messages } from './third-step.messages';
+import { StorageLocation } from './third-step.types';
 import { TimeSelection } from './timeSelection/time-selection';
 
 export const ThirdStep = () => {
   const { control, watch } = useFormContext();
   const backupsEnabled: boolean = watch('backupsEnabled');
   const pitrEnabled: boolean = watch('pitrEnabled');
-
-  const fetchedStorageValues = ['S3', 'Local'];
+  const fetchedStorageValues = Object.values(StorageLocation);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>

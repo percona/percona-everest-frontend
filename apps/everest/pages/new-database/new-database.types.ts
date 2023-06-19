@@ -3,6 +3,12 @@ import { z } from 'zod';
 import { IP_REGEX } from './new-database.constants';
 import { Messages as FirstStepMessages } from './steps/first/first-step.messages';
 import { BasicInformationFields } from './steps/first/first-step.types';
+import {
+  AmPM,
+  StorageLocation,
+  TimeValue,
+  WeekDays,
+} from './steps/third/third-step.types';
 
 // .passthrough tells Zod to not drop unrecognized keys
 // this is needed because we parse step by step
@@ -31,14 +37,14 @@ const stepThreeSchema = z
     backupsEnabled: z.boolean(),
     pitrEnabled: z.boolean(),
     pitrTime: z.string(),
-    storageLocation: z.string(),
+    storageLocation: z.nativeEnum(StorageLocation),
     timeNumbers: z.string(),
-    selectTime: z.string(),
+    selectTime: z.nativeEnum(TimeValue),
     minuteHour: z.number(),
     minute: z.number(),
     hour: z.number(),
-    amPm: z.string(),
-    weekDay: z.string(),
+    amPm: z.nativeEnum(AmPM),
+    weekDay: z.nativeEnum(WeekDays),
     onDay: z.number(),
   })
   .passthrough();

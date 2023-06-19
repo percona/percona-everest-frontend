@@ -8,13 +8,10 @@ import {
 } from '@mui/material';
 import React, { useMemo } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { DAYS_MONTH, HOURS_AM_PM, MINUTES } from '../third-step.constants';
 import { Messages } from '../third-step.messages';
-import { TimeValue } from '../third-step.types';
-import {
-  addZeroToSingleDigit,
-  getTimeText,
-  weekDays,
-} from '../third-step.utils';
+import { AmPM, TimeValue, WeekDays } from '../third-step.types';
+import { addZeroToSingleDigit, getTimeText } from '../third-step.utils';
 
 export const TimeSelection = () => {
   const { control, watch } = useFormContext();
@@ -113,7 +110,7 @@ export const TimeSelection = () => {
                     'data-testid': 'select-minute-in-hour',
                   }}
                 >
-                  {Array.from({ length: 60 }, (_, i) => i).map((value) => (
+                  {MINUTES.map((value) => (
                     <MenuItem key={value} value={value}>
                       {value}
                     </MenuItem>
@@ -138,7 +135,7 @@ export const TimeSelection = () => {
                     'data-testid': 'select-week-day',
                   }}
                 >
-                  {weekDays.map((value) => (
+                  {Object.values(WeekDays).map((value) => (
                     <MenuItem key={value} value={value}>
                       {value}
                     </MenuItem>
@@ -163,7 +160,7 @@ export const TimeSelection = () => {
                     'data-testid': 'select-day-in-month',
                   }}
                 >
-                  {Array.from({ length: 31 }, (_, i) => i + 1).map((value) => (
+                  {DAYS_MONTH.map((value) => (
                     <MenuItem key={value} value={value}>
                       {value}
                     </MenuItem>
@@ -190,7 +187,7 @@ export const TimeSelection = () => {
                     'data-testid': 'select-hour',
                   }}
                 >
-                  {Array.from({ length: 12 }, (_, i) => i + 1).map((value) => (
+                  {HOURS_AM_PM.map((value) => (
                     <MenuItem key={value} value={value}>
                       {value}
                     </MenuItem>
@@ -210,7 +207,7 @@ export const TimeSelection = () => {
                     'data-testid': 'select-minute',
                   }}
                 >
-                  {Array.from({ length: 60 }, (_, i) => i).map((value) => (
+                  {MINUTES.map((value) => (
                     <MenuItem key={value} value={value}>
                       {addZeroToSingleDigit(value)}
                     </MenuItem>
@@ -230,8 +227,8 @@ export const TimeSelection = () => {
                     'data-testid': 'select-am-pm',
                   }}
                 >
-                  <MenuItem value="AM">{Messages.am}</MenuItem>
-                  <MenuItem value="PM">{Messages.pm}</MenuItem>
+                  <MenuItem value={AmPM.AM}>{Messages.am}</MenuItem>
+                  <MenuItem value={AmPM.PM}>{Messages.pm}</MenuItem>
                 </TextField>
               )}
             />

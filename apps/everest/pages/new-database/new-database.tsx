@@ -9,6 +9,12 @@ import { Messages } from './new-database.messages';
 import { dbWizardSchema, DbWizardType } from './new-database.types';
 import { steps } from './steps';
 import { BasicInformationFields } from './steps/first/first-step.types';
+import {
+  AmPM,
+  StorageLocation,
+  TimeValue,
+  WeekDays,
+} from './steps/third/third-step.types';
 
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -21,16 +27,17 @@ export const NewDatabasePage = () => {
       backupsEnabled: true,
       pitrEnabled: true,
       pitrTime: '60',
-      storageLocation: 'S3',
+      storageLocation: StorageLocation.S3,
       timeNumbers: '1',
-      selectTime: 'hours',
+      selectTime: TimeValue.hours,
       minute: 0,
       minuteHour: 0,
       hour: 12,
-      amPm: 'AM',
-      weekDay: 'Monday',
+      amPm: AmPM.AM,
+      weekDay: WeekDays.Mo,
       onDay: 1,
       [BasicInformationFields.dbType]: DbType.Postresql,
+      [BasicInformationFields.dbName]: '',
       externalAccess: false,
       internetFacing: true,
       sourceRange: '',
