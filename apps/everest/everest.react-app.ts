@@ -17,11 +17,30 @@ const titleAndFaviconModifier = (configMutator) => {
   return configMutator;
 }
 
+const proxyModifier = (configMutator) => {
+  const apiPort = process.env.API_PORT || '8081';
+
+  const newWebpackConfig = {
+    devServer: {
+      proxy: {
+        '/v1': {
+          target: `http://localhost:${apiPort}`,
+          pathRewrite: { '^/v1': '' },
+        },
+      },
+    }
+  };
+
+  configMutator.merge(newWebpackConfig);
+
+  return configMutator;
+};
+
 export const EverestApp: ReactAppOptions = {
   name: 'everest',
   entry: [require.resolve('./everest.app-root')],
   favicon: require.resolve('./favicon.ico'),
-  webpackTransformers: [titleAndFaviconModifier]
+  webpackTransformers: [titleAndFaviconModifier, proxyModifier]
 };
 
 export default EverestApp;
