@@ -9,6 +9,6 @@ export const useKubernetesClusters = () => {
       throw new Error();
     }
 
-    return await result.json();
+    return result.json();
   }, { refetchOnWindowFocus: false })
 };
