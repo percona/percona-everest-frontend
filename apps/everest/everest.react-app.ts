@@ -23,10 +23,7 @@ const proxyModifier = (configMutator) => {
   const newWebpackConfig = {
     devServer: {
       proxy: {
-        '/v1': {
-          target: `http://localhost:${apiPort}`,
-          pathRewrite: { '^/v1': '' },
-        },
+        '/v1': `http://localhost:${apiPort}`,
       },
     }
   };
