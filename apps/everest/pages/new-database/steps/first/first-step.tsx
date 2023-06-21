@@ -70,36 +70,37 @@ export const FirstStep = () => {
         <Typography variant="sectionHeading" sx={{ mt: 1, mb: 0.5 }}>
           {Messages.labels.dbType}
         </Typography>
-        <Controller
-          name={BasicInformationFields.dbType}
-          control={control}
-          render={({ field }) => (
-            <ToggleButtonGroup
-              {...field}
-              fullWidth
-              exclusive
-              sx={{ marginTop: 1 }}
-              onChange={(
-                event: React.MouseEvent<HTMLElement> | any,
-                value: DbType
-              ) => {
-                if (value !== null) {
-                  /* eslint-disable no-param-reassign */
-                  event.target.value = value;
-                  field.onChange(event);
-                }
-              }}
-            >
-              {dbEnginesFetching ? (
-                <Skeleton />
-              ) : (
-                dbEngines?.items.map(({ spec: { type } }) => (
+        {dbEnginesFetching ? (
+          // This is roughly the height of the buttons
+          <Skeleton height={57} variant="rectangular" />
+        ) : (
+          <Controller
+            name={BasicInformationFields.dbType}
+            control={control}
+            render={({ field }) => (
+              <ToggleButtonGroup
+                {...field}
+                fullWidth
+                exclusive
+                sx={{ marginTop: 1 }}
+                onChange={(
+                  event: React.MouseEvent<HTMLElement> | any,
+                  value: DbType
+                ) => {
+                  if (value !== null) {
+                    /* eslint-disable no-param-reassign */
+                    event.target.value = value;
+                    field.onChange(event);
+                  }
+                }}
+              >
+                {dbEngines?.items.map(({ spec: { type } }) => (
                   <DbToggleCard value={dbEngineToDbType(type)} />
-                ))
-              )}
-            </ToggleButtonGroup>
-          )}
-        />
+                ))}
+              </ToggleButtonGroup>
+            )}
+          />
+        )}
         <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
           {Messages.labels.dbName}
         </Typography>

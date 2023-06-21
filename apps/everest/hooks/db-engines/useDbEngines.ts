@@ -5,7 +5,7 @@ import { useSelectedKubernetesCluster } from "../kubernetesClusters/useSelectedK
 export const useDbEngines = () => {
   const { id } =  useSelectedKubernetesCluster();
 
-  return useQuery<GetDbEnginesPayload>('kubernetesClusters', async () => {
+  return useQuery<GetDbEnginesPayload>('dbEngines', async () => {
     const result = await fetch(`/v1/kubernetes/${id}/database-engines`);
 
     if (!result.ok) {
