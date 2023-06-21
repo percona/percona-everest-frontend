@@ -1,6 +1,6 @@
 export enum DbEngine {
   PSMDB = 'psmdb',
-  PXB = 'pxc'
+  PXC = 'pxc'
 }
 
 export enum DbEngineStatus {

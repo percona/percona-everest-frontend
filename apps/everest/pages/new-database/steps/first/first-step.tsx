@@ -6,6 +6,7 @@ import {
   TextField,
   Select,
   MenuItem,
+  Skeleton,
 } from '@mui/material';
 
 import { DbToggleCard, DbType } from '@percona/ui-lib.db-toggle-card';
@@ -13,9 +14,12 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { Messages } from './first-step.messages';
 import { BasicInformationFields } from './first-step.types';
 import { generateShortUID } from './utils';
+import { useDbEngines } from '../../../../hooks/db-engines/useDbEngines';
+import { dbEngineToDbType } from '../../../../utils/db';
 
 export const FirstStep = () => {
   const { control, watch, setValue } = useFormContext();
+  const { data: dbEngines, isFetching: dbEnginesFetching } = useDbEngines();
 
   // TODO change to api request's result
   const k8sNamespacesOptions = [
@@ -86,9 +90,13 @@ export const FirstStep = () => {
                 }
               }}
             >
-              <DbToggleCard value={DbType.Postresql} />
-              <DbToggleCard value={DbType.Mongo} />
-              <DbToggleCard value={DbType.Mysql} />
+              {dbEnginesFetching ? (
+                <Skeleton />
+              ) : (
+                dbEngines?.items.map(({ spec: { type } }) => (
+                  <DbToggleCard value={dbEngineToDbType(type)} />
+                ))
+              )}
             </ToggleButtonGroup>
           )}
         />
