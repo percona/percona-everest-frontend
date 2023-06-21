@@ -3,6 +3,7 @@ import { ThemeContextProvider } from '@percona/design.theme-context-provider';
 import { everestThemeOptions } from '@percona/design.themes.everest';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { K8ContextProvider } from './contexts/kubernetes/kubernetes.context';
+import { DrawerContextProvider } from './contexts/drawer/drawer.context';
 import { Main } from './components/main/Main';
 
 
@@ -13,7 +14,9 @@ export const EverestApp = () => {
     <QueryClientProvider client={queryClient}>
       <K8ContextProvider>
         <ThemeContextProvider themeOptions={everestThemeOptions}>
-          <Main />
+          <DrawerContextProvider>
+            <Main />
+          </DrawerContextProvider>
         </ThemeContextProvider>
       </K8ContextProvider>
     </QueryClientProvider>
