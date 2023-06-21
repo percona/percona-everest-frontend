@@ -5,6 +5,7 @@ import {
   Button as MuiButton,
   ButtonGroup as MuiButtonGroup,
   IconButton as MuiIconButton,
+  Alert as MuiAlert,
   Box,
   styled,
 } from '@mui/material';
@@ -209,3 +210,14 @@ export const Buttons = () => (
     </Box>
   </CompositionViewer>
 );
+
+export const Alert = () => (
+    <CompositionViewer themeOptions={baseThemeOptions}>
+      <Box sx={{display: 'flex', flexDirection: 'column', gap: '5px', }}>
+      <MuiAlert severity="error">Message</MuiAlert>
+      <MuiAlert severity="warning">Message</MuiAlert>
+      <MuiAlert severity="info">Message</MuiAlert>
+      <MuiAlert severity="success">Message</MuiAlert>
+      </Box>
+    </CompositionViewer>
+)

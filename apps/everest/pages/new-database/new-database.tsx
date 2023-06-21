@@ -9,6 +9,12 @@ import { steps } from './steps';
 import { Messages } from './new-database.messages';
 import { DbWizardType, dbWizardSchema } from './new-database.types';
 import { BasicInformationFields } from './steps/first/first-step.types';
+import {
+  NumberOfNodes,
+  ResourcesFields,
+  ResourceSize,
+} from './steps/second/second-step.types';
+import { DEFAULT_SIZES } from './steps/second/second-step.utils';
 
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -24,6 +30,11 @@ export const NewDatabasePage = () => {
       sourceRange: '',
       monitoring: false,
       endpoint: '',
+      [ResourcesFields.numberOfNodes]: NumberOfNodes.oneNode,
+      [ResourcesFields.resourceSizePerNode]: ResourceSize.small,
+      [ResourcesFields.cpu]: DEFAULT_SIZES.small.cpu,
+      [ResourcesFields.disk]: DEFAULT_SIZES.small.disk,
+      [ResourcesFields.memory]: DEFAULT_SIZES.small.memory,
     },
   });
   const firstStep = activeStep === 0;
@@ -61,7 +72,7 @@ export const NewDatabasePage = () => {
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <Box>{React.createElement(steps[activeStep])}</Box>
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
             <Button
               type="button"
               startIcon={<ArrowBackIcon />}

@@ -12,7 +12,12 @@ export function ResourcesDetail({
   total,
   inputValue,
   setInputValue,
+  inputProps,
 }: ResourcesDetailProps) {
+  const labelProcessBarDefault = `Using ${inputValue} ${units} (${Math.floor(
+    (inputValue / total) * 100
+  )}%) of ${total} ${units} in total`;
+
   return (
     <Box
       sx={{
@@ -25,10 +30,15 @@ export function ResourcesDetail({
     >
       <Box sx={{ minWidth: '100px', color: 'text.primary' }}>{label}</Box>
       <Box sx={{ maxWidth: '150px' }}>
-        <Input value={inputValue} setValue={setInputValue} units={units} />
+        <Input
+          value={inputValue}
+          setValue={setInputValue}
+          units={units}
+          {...inputProps}
+        />
       </Box>
       <ProgressBar
-        label={labelProgressBar}
+        label={labelProgressBar ? labelProgressBar : labelProcessBarDefault}
         buffer={inputValue}
         value={value}
         total={total}

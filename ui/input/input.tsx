@@ -2,7 +2,7 @@ import { InputAdornment, OutlinedInput } from '@mui/material';
 import React from 'react';
 import { InputProps } from './input.types';
 
-export function Input({ value, setValue, units }: InputProps) {
+export function Input({ value, setValue, units, ...props }: InputProps) {
   return (
     <OutlinedInput
       sx={{
@@ -15,6 +15,7 @@ export function Input({ value, setValue, units }: InputProps) {
       value={value}
       onChange={(e) => setValue(Number(e.target.value))}
       endAdornment={<InputAdornment position="end">{units}</InputAdornment>}
+      {...props}
     />
   );
 }
