@@ -3,8 +3,8 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { TestWrapper } from '../../../../utils/test';
 import { BasicInformationFields } from './first-step.types';
-import { DbType } from '../../../../../../ui/db-toggle-card';
 import { FirstStep } from './first-step';
+import { DbType } from '@percona/ui-lib.db-toggle-card';
 
 jest.unmock('react-native');
 
