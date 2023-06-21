@@ -1,4 +1,4 @@
-export enum DbEngine {
+export enum DbEngineType {
   PSMDB = 'psmdb',
   PXC = 'pxc'
 }
@@ -10,11 +10,17 @@ export enum DbEngineStatus {
 export type GetDbEnginesPayload = {
   items: Array<{
     spec: {
-      type: DbEngine
+      type: DbEngineType
     },
     status: {
       status: DbEngineStatus,
       version: string
     }
   }>
+}
+
+export type DbEngine = {
+  type: DbEngineType,
+  status: DbEngineStatus,
+  version: string
 }

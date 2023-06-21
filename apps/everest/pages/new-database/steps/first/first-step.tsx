@@ -19,7 +19,7 @@ import { dbEngineToDbType } from '../../../../utils/db';
 
 export const FirstStep = () => {
   const { control, watch, setValue } = useFormContext();
-  const { data: dbEngines, isFetching: dbEnginesFetching } = useDbEngines();
+  const { data: dbEngines = [], isFetching: dbEnginesFetching } = useDbEngines();
 
   // TODO change to api request's result
   const k8sNamespacesOptions = [
@@ -70,7 +70,7 @@ export const FirstStep = () => {
         <Typography variant="sectionHeading" sx={{ mt: 1, mb: 0.5 }}>
           {Messages.labels.dbType}
         </Typography>
-        {dbEnginesFetching ? (
+        {dbEnginesFetching || !dbEngines.length ? (
           // This is roughly the height of the buttons
           <Skeleton height={57} variant="rectangular" />
         ) : (
@@ -94,7 +94,7 @@ export const FirstStep = () => {
                   }
                 }}
               >
-                {dbEngines?.items.map(({ spec: { type } }) => (
+                {dbEngines.map(({ type }) => (
                   <DbToggleCard key={type} value={dbEngineToDbType(type)} />
                 ))}
               </ToggleButtonGroup>

@@ -1,11 +1,11 @@
 import { DbType } from "@percona/ui-lib.db-toggle-card";
-import { DbEngine } from "../types/dbEngines.types";
+import { DbEngineType } from "../types/dbEngines.types";
 
-export const dbEngineToDbType = (dbEngine: DbEngine): DbType => {
+export const dbEngineToDbType = (dbEngine: DbEngineType): DbType => {
   switch (dbEngine) {
-    case DbEngine.PSMDB:
+    case DbEngineType.PSMDB:
       return DbType.Mongo
-    case DbEngine.PXC:
+    case DbEngineType.PXC:
       return DbType.Mysql
     default:
       return DbType.Mysql
