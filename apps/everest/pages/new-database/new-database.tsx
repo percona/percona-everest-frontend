@@ -18,7 +18,11 @@ export const NewDatabasePage = () => {
     mode: 'onChange',
     resolver: zodResolver(currentValidationSchema),
     defaultValues: {
-      [BasicInformationFields.dbType]: DbType.Postresql,
+      [BasicInformationFields.dbType]: DbType.Mysql,
+      [BasicInformationFields.dbName]: '',
+      [BasicInformationFields.k8sNamespace]: '',
+      [BasicInformationFields.dbEnvironment]: '',
+      [BasicInformationFields.dbVersion]: '',
       externalAccess: false,
       internetFacing: true,
       sourceRange: '',

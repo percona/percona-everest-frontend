@@ -95,7 +95,7 @@ export const FirstStep = () => {
                 }}
               >
                 {dbEngines?.items.map(({ spec: { type } }) => (
-                  <DbToggleCard value={dbEngineToDbType(type)} />
+                  <DbToggleCard key={type} value={dbEngineToDbType(type)} />
                 ))}
               </ToggleButtonGroup>
             )}
@@ -125,11 +125,6 @@ export const FirstStep = () => {
         </Typography>
         <Controller
           control={control}
-          defaultValue={
-            k8sNamespacesOptions && k8sNamespacesOptions[0]?.value
-              ? k8sNamespacesOptions[0]?.value
-              : undefined
-          }
           name={BasicInformationFields.k8sNamespace}
           render={({ field, fieldState: { error } }) => (
             <Select
@@ -154,11 +149,6 @@ export const FirstStep = () => {
         <Controller
           control={control}
           name={BasicInformationFields.dbEnvironment}
-          defaultValue={
-            dbEnvironmentOptions && dbEnvironmentOptions[0]?.value
-              ? dbEnvironmentOptions[0]?.value
-              : undefined
-          }
           render={({ field, fieldState: { error } }) => (
             <Select
               {...field}
@@ -182,11 +172,6 @@ export const FirstStep = () => {
         <Controller
           control={control}
           name={BasicInformationFields.dbVersion}
-          defaultValue={
-            dbVersionOptions && dbVersionOptions[0]?.value
-              ? dbVersionOptions[0].value
-              : undefined
-          }
           render={({ field, fieldState: { error } }) => (
             <Select
               {...field}
