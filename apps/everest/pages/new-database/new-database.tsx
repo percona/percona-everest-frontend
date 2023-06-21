@@ -14,7 +14,7 @@ import {
   ResourcesFields,
   ResourceSize,
 } from './steps/second/second-step.types';
-import { DEFAULT_SIZES } from './steps/second/second-step.utils';
+import { DEFAULT_SIZES } from './steps/second/second-step.const';
 
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);

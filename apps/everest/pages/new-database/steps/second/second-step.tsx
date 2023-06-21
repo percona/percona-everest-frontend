@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react';
 import { Messages } from './second-step.messages';
-import { Box, FormGroup, ToggleButtonGroup, Typography, Alert } from '@mui/material';
+import {
+  Alert,
+  Box,
+  FormGroup,
+  ToggleButtonGroup,
+  Typography,
+} from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import { ResourcesDetail } from '../../../../components/resources-detail';
 import {
@@ -11,17 +17,25 @@ import {
 import { ToggleCard } from '@percona/ui-lib.toggle-card';
 import {
   checkSwitchToCustom,
-  DEFAULT_SIZES,
   humanizeNumberOfNodesMap,
 } from './second-step.utils';
 import { ResourcesLegend } from './resources-legend/resources-legend';
+import { DEFAULT_SIZES } from './second-step.const';
 
 export const SecondStep = () => {
   const { control, watch, setValue } = useFormContext();
 
-  const resourceSizePerNode: ResourceSize = watch(
-    ResourcesFields.resourceSizePerNode
-  );
+  //TODO should be set from api
+  const TOTAL_SIZES = {
+    cpu: 32,
+    memory: 50,
+    disk: 50,
+  };
+
+  const resourceSizePerNode: ResourceSize = watch(ResourcesFields.resourceSizePerNode);
+  const cpuCapacityExceeded = watch(ResourcesFields.cpu) > TOTAL_SIZES.cpu;
+  const memoryCapacityExceeded = watch(ResourcesFields.memory) > TOTAL_SIZES.memory;
+  const diskCapacityExceeded = watch(ResourcesFields.disk) > TOTAL_SIZES.disk;
 
   useEffect(() => {
     if (resourceSizePerNode && resourceSizePerNode !== ResourceSize.custom) {
@@ -109,10 +123,26 @@ export const SecondStep = () => {
         />
 
         <Box sx={{ display: 'flex', flexDirection: 'column', mt: 4, gap: 1 }}>
-            <Alert severity="warning" sx={{mb: 1}}>{Messages.alerts.resourcesCapacityExceeding}</Alert>
+          {cpuCapacityExceeded && (
+            <Alert severity="warning" sx={{ mb: 1 }}>
+              {Messages.alerts.resourcesCapacityExceeding(Messages.labels.cpu)}
+            </Alert>
+          )}
+          {memoryCapacityExceeded && (
+            <Alert severity="warning" sx={{ mb: 1 }}>
+              {Messages.alerts.resourcesCapacityExceeding(
+                Messages.labels.memory
+              )}
+            </Alert>
+          )}
+          {diskCapacityExceeded && (
+            <Alert severity="warning" sx={{ mb: 1 }}>
+              {Messages.alerts.resourcesCapacityExceeding(Messages.labels.disk)}
+            </Alert>
+          )}
           <ResourcesDetail
             value={1}
-            total={32}
+            total={TOTAL_SIZES.cpu}
             inputValue={watch(ResourcesFields.cpu)}
             setInputValue={(value: number) => {
               setValue(ResourcesFields.cpu, value);
@@ -128,7 +158,7 @@ export const SecondStep = () => {
           />
           <ResourcesDetail
             value={1}
-            total={10}
+            total={TOTAL_SIZES.memory}
             inputValue={watch(ResourcesFields.memory)}
             setInputValue={(value: number) => {
               setValue(ResourcesFields.memory, value);
@@ -144,7 +174,7 @@ export const SecondStep = () => {
           />
           <ResourcesDetail
             value={1}
-            total={10}
+            total={TOTAL_SIZES.disk}
             inputValue={watch(ResourcesFields.disk)}
             setInputValue={(value: number) => {
               setValue(ResourcesFields.disk, value);

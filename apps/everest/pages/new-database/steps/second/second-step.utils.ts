@@ -4,6 +4,7 @@ import {
   ResourceSize,
 } from './second-step.types';
 import { UseFormSetValue, FieldValues } from 'react-hook-form';
+import { DEFAULT_SIZES } from './second-step.const';
 
 const humanizedNumberOfNodesMap: Record<NumberOfNodes, string> = {
   [NumberOfNodes.oneNode]: 'Standalone',
@@ -13,32 +14,6 @@ const humanizedNumberOfNodesMap: Record<NumberOfNodes, string> = {
 
 export const humanizeNumberOfNodesMap = (type: NumberOfNodes): string =>
   humanizedNumberOfNodesMap[type];
-
-export interface DBClusterDefaultResources {
-  [key: string]: {
-    [ResourcesFields.memory]: number;
-    [ResourcesFields.cpu]: number;
-    [ResourcesFields.disk]: number;
-  };
-}
-
-export const DEFAULT_SIZES: DBClusterDefaultResources = {
-  [ResourceSize.small]: {
-    memory: 2,
-    cpu: 1,
-    disk: 25,
-  },
-  [ResourceSize.medium]: {
-    memory: 8,
-    cpu: 4,
-    disk: 100,
-  },
-  [ResourceSize.large]: {
-    memory: 32,
-    cpu: 8,
-    disk: 500,
-  },
-};
 
 export const isCustom = (
   typeOfField:

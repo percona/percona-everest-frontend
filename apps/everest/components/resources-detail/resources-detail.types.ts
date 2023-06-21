@@ -1,5 +1,3 @@
-import { OutlinedInputProps } from '@mui/material';
-
 export type ResourcesDetailProps = {
   label: string;
   labelProgressBar?: string;
@@ -8,5 +6,4 @@ export type ResourcesDetailProps = {
   total: number;
   inputValue: number;
   setInputValue: React.Dispatch<React.SetStateAction<number>>;
-  inputProps?: Exclude<OutlinedInputProps, 'value'>;
 };

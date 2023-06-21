@@ -12,7 +12,6 @@ export function ResourcesDetail({
   total,
   inputValue,
   setInputValue,
-  inputProps,
 }: ResourcesDetailProps) {
   const labelProcessBarDefault = `Using ${inputValue} ${units} (${Math.floor(
     (inputValue / total) * 100
@@ -34,7 +33,6 @@ export function ResourcesDetail({
           value={inputValue}
           setValue={setInputValue}
           units={units}
-          {...inputProps}
         />
       </Box>
       <ProgressBar

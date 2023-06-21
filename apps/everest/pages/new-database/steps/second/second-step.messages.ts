@@ -10,6 +10,7 @@ export const Messages = {
     disk: 'Disk',
   },
   alerts: {
-    resourcesCapacityExceeding: 'The resources you have specified exceed the available CPU capacity of the cluster node. Database creation might fail.'
-  }
+    resourcesCapacityExceeding: (name: string) =>
+      `The resources you have specified exceed the available ${name} capacity of the cluster node. Database creation might fail.`,
+  },
 };
