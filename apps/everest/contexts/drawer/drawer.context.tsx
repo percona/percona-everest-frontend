@@ -1,8 +1,8 @@
-import React, { createContext } from "react";
+import React, { createContext , useState } from "react";
+import { useMediaQuery , useTheme } from "@mui/material";
 import { DrawerContextProps } from "./drawer.context.types";
-import { useState } from "react";
-import { useMediaQuery } from "@mui/material";
-import { useTheme } from "@mui/material";
+
+
 
 export const DrawerContext = createContext<DrawerContextProps>({
   open: false,
