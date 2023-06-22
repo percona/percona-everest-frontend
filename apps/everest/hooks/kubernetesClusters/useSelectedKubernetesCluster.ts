@@ -1,5 +1,3 @@
-import { useQuery } from "react-query";
-import { KubernetesClusterList } from "../../types/kubernetes.types";
 import { useContext } from "react";
 import { K8Context } from "../../contexts/kubernetes/kubernetes.context";
 
