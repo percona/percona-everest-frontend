@@ -21,9 +21,11 @@ import {
   TimeValue,
   WeekDays,
 } from './steps/third/third-step.types';
+import { SixthStep } from './steps/sixth/sixth-step';
 
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const currentValidationSchema = dbWizardSchema[activeStep];
 
   const methods = useForm<DbWizardType>({
@@ -61,6 +63,7 @@ export const NewDatabasePage = () => {
   const onSubmit: SubmitHandler<DbWizardType> = (data) => {
     /* eslint-disable no-console */
     console.log(data);
+    setFormSubmitted(true);
   };
 
   const handleNext: React.MouseEventHandler<HTMLButtonElement> = async () => {
@@ -79,7 +82,9 @@ export const NewDatabasePage = () => {
     }
   };
 
-  return (
+  return formSubmitted ? (
+    <SixthStep />
+  ) : (
     <>
       <Stepper noConnector activeStep={activeStep} sx={{ marginBottom: 4 }}>
         {steps.map((_, idx) => (
@@ -119,5 +124,5 @@ export const NewDatabasePage = () => {
         </form>
       </FormProvider>
     </>
-  );
+  )
 };
