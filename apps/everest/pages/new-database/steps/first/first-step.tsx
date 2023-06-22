@@ -58,10 +58,6 @@ export const FirstStep = () => {
     setDbVersions(newVersions);
   }, [dbType]);
 
-  // useEffect(() => {
-  //   setValue(BasicInformationFields.dbVersion, dbVersions[0]);
-  // }, [dbVersions]);
-
   return (
     <>
       <Typography variant="h5">{Messages.pageTitle}</Typography>
