@@ -22,26 +22,26 @@ export const FirstStep = () => {
   const { data: dbEngines = [], isFetching: dbEnginesFetching } = useDbEngines();
 
   // TODO change to api request's result
-  const k8sNamespacesOptions = [
-    {
-      value: 'namespaceOne',
-      label: 'namespaceOneLabel',
-    },
-    {
-      value: 'namespaceTwo',
-      label: 'namespaceTwoLabel',
-    },
-  ];
-  const dbEnvironmentOptions = [
-    {
-      value: 'dbEnvironmentOne',
-      label: 'dbEnvironmentOneLabel',
-    },
-    {
-      value: 'dbEnvironmentTwo',
-      label: 'dbEnvironmentTwoLabel',
-    },
-  ];
+  // const k8sNamespacesOptions = [
+  //   {
+  //     value: 'namespaceOne',
+  //     label: 'namespaceOneLabel',
+  //   },
+  //   {
+  //     value: 'namespaceTwo',
+  //     label: 'namespaceTwoLabel',
+  //   },
+  // ];
+  // const dbEnvironmentOptions = [
+  //   {
+  //     value: 'dbEnvironmentOne',
+  //     label: 'dbEnvironmentOneLabel',
+  //   },
+  //   {
+  //     value: 'dbEnvironmentTwo',
+  //     label: 'dbEnvironmentTwoLabel',
+  //   },
+  // ];
   const dbVersionOptions = [
     {
       value: 'dbVersionOne',
@@ -120,7 +120,7 @@ export const FirstStep = () => {
             />
           )}
         />
-        <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
+        {/* <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
           {Messages.labels.k8sNamespace}
         </Typography>
         <Controller
@@ -165,7 +165,7 @@ export const FirstStep = () => {
               ))}
             </Select>
           )}
-        />
+        /> */}
         <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
           {Messages.labels.dbVersion}
         </Typography>

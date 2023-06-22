@@ -20,8 +20,8 @@ export const NewDatabasePage = () => {
     defaultValues: {
       [BasicInformationFields.dbType]: DbType.Mysql,
       [BasicInformationFields.dbName]: '',
-      [BasicInformationFields.k8sNamespace]: '',
-      [BasicInformationFields.dbEnvironment]: '',
+      // [BasicInformationFields.k8sNamespace]: '',
+      // [BasicInformationFields.dbEnvironment]: '',
       [BasicInformationFields.dbVersion]: '',
       externalAccess: false,
       internetFacing: true,
