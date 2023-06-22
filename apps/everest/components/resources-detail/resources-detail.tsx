@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { Input } from '@percona/ui.input';
 import { ProgressBar } from '@percona/ui.progress-bar';
 import React from 'react';
@@ -13,9 +13,12 @@ export function ResourcesDetail({
   inputValue,
   setInputValue,
 }: ResourcesDetailProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const labelProcessBarDefault = `Using ${inputValue} ${units} (${Math.floor(
     (inputValue / total) * 100
-  )}%) of ${total} ${units} in total`;
+  )}%) of\n ${total} ${units} in total`;
 
   return (
     <Box
@@ -24,23 +27,43 @@ export function ResourcesDetail({
         gap: '10px',
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
       }}
+      data-testid = 'resource-box'
     >
-      <Box sx={{ minWidth: '100px', color: 'text.primary' }}>{label}</Box>
-      <Box sx={{ maxWidth: '150px' }}>
-        <Input
-          value={inputValue}
-          setValue={setInputValue}
-          units={units}
-        />
+      <Box
+        sx={{
+          minWidth: isMobile ? '70px' : '100px',
+          color: 'text.primary',
+          fontWeight: '800',
+          fontSize: '14px',
+        }}
+      >
+        {label}
       </Box>
-      <ProgressBar
-        label={labelProgressBar ? labelProgressBar : labelProcessBarDefault}
-        buffer={inputValue}
-        value={value}
-        total={total}
-      />
+      <Box sx={{ maxWidth: '150px', minWidth: '100px' }}>
+        <Input value={inputValue} setValue={setInputValue} units={units} />
+      </Box>
+      {isMobile ? (
+        <Box
+          sx={{
+            fontSize: '12px',
+            minWidth: '120px',
+            wordWrap: 'break-word',
+            whiteSpace: 'pre-wrap',
+            textAlign: 'end',
+          }}
+        >
+          {labelProgressBar ? labelProgressBar : labelProcessBarDefault}
+        </Box>
+      ) : (
+        <ProgressBar
+          label={labelProgressBar ? labelProgressBar : labelProcessBarDefault}
+          buffer={inputValue}
+          value={value}
+          total={total}
+        />
+      )}
     </Box>
   );
 }

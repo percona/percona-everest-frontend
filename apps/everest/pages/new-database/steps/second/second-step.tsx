@@ -6,6 +6,8 @@ import {
   FormGroup,
   ToggleButtonGroup,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import { ResourcesDetail } from '../../../../components/resources-detail';
@@ -28,14 +30,31 @@ export const SecondStep = () => {
   //TODO should be set from api
   const TOTAL_SIZES = {
     cpu: 32,
-    memory: 50,
-    disk: 50,
+    memory: 40,
+    disk: 200,
   };
 
-  const resourceSizePerNode: ResourceSize = watch(ResourcesFields.resourceSizePerNode);
+  const PREVIOUS_SIZES = {
+    cpu: 2,
+    memory: 12,
+    disk: 77,
+  };
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const resourceSizePerNode: ResourceSize = watch(
+    ResourcesFields.resourceSizePerNode
+  );
   const cpuCapacityExceeded = watch(ResourcesFields.cpu) > TOTAL_SIZES.cpu;
-  const memoryCapacityExceeded = watch(ResourcesFields.memory) > TOTAL_SIZES.memory;
+  const memoryCapacityExceeded =
+    watch(ResourcesFields.memory) > TOTAL_SIZES.memory;
   const diskCapacityExceeded = watch(ResourcesFields.disk) > TOTAL_SIZES.disk;
+
+  const alertLabels = [];
+  cpuCapacityExceeded && alertLabels.push(Messages.labels.cpu);
+  memoryCapacityExceeded && alertLabels.push(Messages.labels.memory);
+  diskCapacityExceeded && alertLabels.push(Messages.labels.disk);
 
   useEffect(() => {
     if (resourceSizePerNode && resourceSizePerNode !== ResourceSize.custom) {
@@ -65,6 +84,7 @@ export const SecondStep = () => {
               fullWidth
               exclusive
               sx={{ marginTop: 1 }}
+              data-testd="number-of-nodes-toggle-button-group"
               onChange={(
                 event: React.MouseEvent<HTMLElement> | any,
                 value: NumberOfNodes
@@ -76,15 +96,15 @@ export const SecondStep = () => {
                 }
               }}
             >
-              <ToggleCard value={NumberOfNodes.oneNode}>
+              <ToggleCard value={NumberOfNodes.oneNode} data-testid="toggle-button-one-node">
                 {humanizeNumberOfNodesMap(NumberOfNodes.oneNode)}
                 <br />({NumberOfNodes.twoNodes} node)
               </ToggleCard>
-              <ToggleCard value={NumberOfNodes.twoNodes}>
+              <ToggleCard value={NumberOfNodes.twoNodes} data-testid="toggle-button-two-nodes">
                 {humanizeNumberOfNodesMap(NumberOfNodes.twoNodes)}
                 <br />({NumberOfNodes.twoNodes} nodes)
               </ToggleCard>
-              <ToggleCard value={NumberOfNodes.threeNodes}>
+              <ToggleCard value={NumberOfNodes.threeNodes}  data-testid="toggle-button-three-nodes">
                 {humanizeNumberOfNodesMap(NumberOfNodes.threeNodes)}
                 <br />({NumberOfNodes.threeNodes} nodes)
               </ToggleCard>
@@ -103,6 +123,7 @@ export const SecondStep = () => {
               fullWidth
               exclusive
               sx={{ marginTop: 1 }}
+              data-testd="resource-size-per-node-toggle-button-group"
               onChange={(
                 event: React.MouseEvent<HTMLElement> | any,
                 value: ResourceSize
@@ -114,34 +135,22 @@ export const SecondStep = () => {
                 }
               }}
             >
-              <ToggleCard value={ResourceSize.small}>Small</ToggleCard>
-              <ToggleCard value={ResourceSize.medium}>Medium</ToggleCard>
-              <ToggleCard value={ResourceSize.large}>Large</ToggleCard>
-              <ToggleCard value={ResourceSize.custom}>Custom</ToggleCard>
+              <ToggleCard value={ResourceSize.small} data-testid="toggle-button-small">Small</ToggleCard>
+              <ToggleCard value={ResourceSize.medium} data-testid="toggle-button-medium">Medium</ToggleCard>
+              <ToggleCard value={ResourceSize.large} data-testid="toggle-button-large">Large</ToggleCard>
+              <ToggleCard value={ResourceSize.custom} data-testid="toggle-button-custom">Custom</ToggleCard>
             </ToggleButtonGroup>
           )}
         />
 
         <Box sx={{ display: 'flex', flexDirection: 'column', mt: 4, gap: 1 }}>
-          {cpuCapacityExceeded && (
-            <Alert severity="warning" sx={{ mb: 1 }}>
-              {Messages.alerts.resourcesCapacityExceeding(Messages.labels.cpu)}
-            </Alert>
-          )}
-          {memoryCapacityExceeded && (
-            <Alert severity="warning" sx={{ mb: 1 }}>
-              {Messages.alerts.resourcesCapacityExceeding(
-                Messages.labels.memory
-              )}
-            </Alert>
-          )}
-          {diskCapacityExceeded && (
-            <Alert severity="warning" sx={{ mb: 1 }}>
-              {Messages.alerts.resourcesCapacityExceeding(Messages.labels.disk)}
+          {alertLabels.length > 0 && (
+            <Alert severity="warning" sx={{ mb: 1 }} data-testid="resourcesExceedingAlert">
+              {Messages.alerts.resourcesCapacityExceeding(alertLabels)}
             </Alert>
           )}
           <ResourcesDetail
-            value={1}
+            value={PREVIOUS_SIZES.cpu}
             total={TOTAL_SIZES.cpu}
             inputValue={watch(ResourcesFields.cpu)}
             setInputValue={(value: number) => {
@@ -157,7 +166,7 @@ export const SecondStep = () => {
             units="CPU"
           />
           <ResourcesDetail
-            value={1}
+            value={PREVIOUS_SIZES.memory}
             total={TOTAL_SIZES.memory}
             inputValue={watch(ResourcesFields.memory)}
             setInputValue={(value: number) => {
@@ -169,15 +178,15 @@ export const SecondStep = () => {
                 setValue
               );
             }}
-            label={Messages.labels.memory}
+            label={Messages.labels.memory.toUpperCase()}
             units="GB"
           />
           <ResourcesDetail
-            value={1}
+            value={PREVIOUS_SIZES.disk}
             total={TOTAL_SIZES.disk}
             inputValue={watch(ResourcesFields.disk)}
-            setInputValue={(value: number) => {
-              setValue(ResourcesFields.disk, value);
+            setInputValue={(value) => {
+              setValue(ResourcesFields.disk, parseInt(`${value}`, 10));
               checkSwitchToCustom(
                 ResourcesFields.disk,
                 value,
@@ -185,10 +194,10 @@ export const SecondStep = () => {
                 setValue
               );
             }}
-            label={Messages.labels.disk}
+            label={Messages.labels.disk.toUpperCase()}
             units="GB"
           />
-          <ResourcesLegend />
+          {!isMobile && <ResourcesLegend />}
         </Box>
       </FormGroup>
     </>

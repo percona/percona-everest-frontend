@@ -14,6 +14,6 @@ export const DEFAULT_SIZES = {
   [ResourceSize.large]: {
     [ResourcesFields.cpu]: 8,
     [ResourcesFields.memory]: 32,
-    [ResourcesFields.disk]: 500,
+    [ResourcesFields.disk]: 200,
   },
 };

@@ -12,7 +12,7 @@ export function Input({ value, setValue, units, ...props }: InputProps) {
       }}
       inputProps={{ min: 0 }}
       type="number"
-      value={value}
+      value={value? value.toString(): value} //solve the leading zero problem from mui (https://github.com/mui/material-ui/issues/8380)
       onChange={(e) => setValue(Number(e.target.value))}
       endAdornment={<InputAdornment position="end">{units}</InputAdornment>}
       {...props}
