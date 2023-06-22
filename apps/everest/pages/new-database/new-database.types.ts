@@ -14,8 +14,8 @@ const stepOneSchema = z
       .string()
       .max(255, FirstStepMessages.errors.dbName)
       .nonempty(`The ${FirstStepMessages.labels.dbName} field is required`),
-    [BasicInformationFields.k8sNamespace]: z.string().nonempty(),
-    [BasicInformationFields.dbEnvironment]: z.string().nonempty(),
+    // [BasicInformationFields.k8sNamespace]: z.string().nonempty(),
+    // [BasicInformationFields.dbEnvironment]: z.string().nonempty(),
     [BasicInformationFields.dbVersion]: z.string().nonempty(),
   })
   .passthrough();

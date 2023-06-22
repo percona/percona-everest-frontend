@@ -6,8 +6,8 @@ export const dbEngineToDbType = (dbEngine: DbEngineType): DbType => {
     case DbEngineType.PSMDB:
       return DbType.Mongo
     case DbEngineType.PXC:
-      return DbType.Mysql
+      return DbType.Mysql;
     default:
-      return DbType.Mysql
+      return DbType.Postresql;
   }
 }

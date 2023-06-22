@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ToggleButtonGroup,
   Typography,
@@ -16,6 +16,7 @@ import { BasicInformationFields } from './first-step.types';
 import { generateShortUID } from './utils';
 import { useDbEngines } from '../../../../hooks/db-engines/useDbEngines';
 import { dbEngineToDbType } from '../../../../utils/db';
+import { DB_VERSIONS } from './first-step.constants';
 
 export const FirstStep = () => {
   const { control, watch, setValue } = useFormContext();
@@ -42,25 +43,24 @@ export const FirstStep = () => {
   //     label: 'dbEnvironmentTwoLabel',
   //   },
   // ];
-  const dbVersionOptions = [
-    {
-      value: 'dbVersionOne',
-      label: 'dbVersionOneLabel',
-    },
-    {
-      value: 'dbVersionTwo',
-      label: 'dbVersionTwoLabel',
-    },
-  ];
 
-  const dbType = watch(BasicInformationFields.dbType);
+  const dbType: DbType = watch(BasicInformationFields.dbType);
+  const [dbVersions, setDbVersions] = useState(DB_VERSIONS[dbType]);
 
   useEffect(() => {
-    setValue(
-      BasicInformationFields.dbName,
-      dbType ? `${dbType}-${generateShortUID()}` : undefined
-    );
+    if (!dbType) {
+      return;
+    }
+    const newVersions = DB_VERSIONS[dbType];
+
+    setValue(BasicInformationFields.dbName, `${dbType}-${generateShortUID()}`);
+    setValue(BasicInformationFields.dbVersion, newVersions[0]);
+    setDbVersions(newVersions);
   }, [dbType]);
+
+  // useEffect(() => {
+  //   setValue(BasicInformationFields.dbVersion, dbVersions[0]);
+  // }, [dbVersions]);
 
   return (
     <>
@@ -181,9 +181,10 @@ export const FirstStep = () => {
                 'data-testid': 'text-dbVersion',
               }}
             >
-              {dbVersionOptions.map((item) => (
-                <MenuItem value={item.value} key={item.value}>
-                  {item.label}
+              {/* TODO Replace with API call afterwards */}
+              {dbVersions.map((version) => (
+                <MenuItem value={version} key={version}>
+                  {version}
                 </MenuItem>
               ))}
             </Select>
