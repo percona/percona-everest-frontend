@@ -5,7 +5,7 @@ export type ToggleCardProps = {
   children?: ReactNode;
 } & ToggleButtonProps;
 
-export const ToggleCard = ({ children, ...props }: ToggleCardProps) => {
+export const ToggleCard = ({ children, sx, ...props }: ToggleCardProps) => {
   const theme = useTheme();
 
   return (
@@ -43,6 +43,11 @@ export const ToggleCard = ({ children, ...props }: ToggleCardProps) => {
             borderBottomLeftRadius: `${theme.shape.borderRadius}px`,
           },
         },
+          '&.MuiButtonBase-root': {
+              wordWrap: 'break-word',
+              whiteSpace: 'pre-wrap',
+          },
+          ...sx,
       }}
       {...props}
     >

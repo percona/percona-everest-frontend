@@ -1,19 +1,9 @@
 import { UseFormSetValue, FieldValues } from 'react-hook-form';
 import {
-  NumberOfNodes,
   ResourcesFields,
   ResourceSize,
 } from './second-step.types';
 import { DEFAULT_SIZES } from './second-step.const';
-
-const humanizedNumberOfNodesMap: Record<NumberOfNodes, string> = {
-  [NumberOfNodes.oneNode]: 'Standalone',
-  [NumberOfNodes.twoNodes]: 'Source Replica',
-  [NumberOfNodes.threeNodes]: 'Source Replica Replica',
-};
-
-export const humanizeNumberOfNodesMap = (type: NumberOfNodes): string =>
-  humanizedNumberOfNodesMap[type];
 
 const humanizedResourceSizeMap: Record<ResourceSize, string> = {
   [ResourceSize.small]: 'Small',

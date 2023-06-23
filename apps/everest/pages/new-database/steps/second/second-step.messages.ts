@@ -10,6 +10,9 @@ export const Messages = {
     cpu: 'CPU',
     memory: 'memory',
     disk: 'disk',
+    standalone: 'Standalone \n 1 node',
+    sourceReplica: 'Source Replica \n 2 nodes',
+    sourceReplicaReplica: 'Source Replica Replica \n 3 nodes',
   },
   alerts: {
     resourcesCapacityExceeding: (names: string[]) =>

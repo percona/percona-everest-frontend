@@ -19,7 +19,6 @@ import {
 } from './second-step.types';
 import {
   checkSwitchToCustom,
-  humanizeNumberOfNodesMap,
   humanizeResourceSizeMap,
 } from './second-step.utils';
 import { ResourcesLegend } from './resources-legend/resources-legend';
@@ -56,9 +55,9 @@ export const SecondStep = () => {
   const diskCapacityExceeded = disk > totalSizes.disk;
 
   const alertLabels = [];
-  if (cpuCapacityExceeded) { alertLabels.push(Messages.labels.cpu)};
-  if (memoryCapacityExceeded) { alertLabels.push(Messages.labels.memory)};
-  if (diskCapacityExceeded) {alertLabels.push(Messages.labels.disk)};
+  if (cpuCapacityExceeded) { alertLabels.push(Messages.labels.cpu)}
+  if (memoryCapacityExceeded) { alertLabels.push(Messages.labels.memory)}
+  if (diskCapacityExceeded) {alertLabels.push(Messages.labels.disk)}
 
   useEffect(() => {
     if (resourceSizePerNode && resourceSizePerNode !== ResourceSize.custom) {
@@ -104,22 +103,24 @@ export const SecondStep = () => {
                 value={NumberOfNodes.oneNode}
                 data-testid="toggle-button-one-node"
               >
-                {humanizeNumberOfNodesMap(NumberOfNodes.oneNode)}
-                <br />({NumberOfNodes.oneNode} node)
+                {Messages.labels.standalone}
               </ToggleCard>
               <ToggleCard
                 value={NumberOfNodes.twoNodes}
                 data-testid="toggle-button-two-nodes"
+                sx={{
+                  '&.MuiButtonBase-root': {
+                    wordWrap: 'break-word',
+                    whiteSpace: 'pre-wrap',
+                  }}}
               >
-                {humanizeNumberOfNodesMap(NumberOfNodes.twoNodes)}
-                <br />({NumberOfNodes.twoNodes} nodes)
+                {Messages.labels.sourceReplica}
               </ToggleCard>
               <ToggleCard
                 value={NumberOfNodes.threeNodes}
                 data-testid="toggle-button-three-nodes"
               >
-                {humanizeNumberOfNodesMap(NumberOfNodes.threeNodes)}
-                <br />({NumberOfNodes.threeNodes} nodes)
+                {Messages.labels.sourceReplicaReplica}
               </ToggleCard>
             </ToggleButtonGroup>
           )}
