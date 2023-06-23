@@ -13,14 +13,14 @@ const humanizedNumberOfNodesMap: Record<NumberOfNodes, string> = {
 };
 
 export const humanizeNumberOfNodesMap = (type: NumberOfNodes): string =>
-    humanizedNumberOfNodesMap[type];
+  humanizedNumberOfNodesMap[type];
 
 const humanizedResourceSizeMap: Record<ResourceSize, string> = {
   [ResourceSize.small]: 'Small',
   [ResourceSize.medium]: 'Medium',
   [ResourceSize.large]: 'Large',
   [ResourceSize.custom]: 'Custom',
-}
+};
 
 export const humanizeResourceSizeMap = (type: ResourceSize): string =>
   humanizedResourceSizeMap[type];
@@ -60,4 +60,3 @@ export const getResourceNames = (names: string[]): string => {
   if (names.length === 2) return `${names[0]} and ${names[1]}`;
   if (names.length === 3) return `${names[0]}, ${names[1]}, and ${names[2]}`;
 };
-

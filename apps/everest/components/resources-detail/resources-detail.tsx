@@ -64,7 +64,7 @@ export function ResourcesDetail({
         </Box>
       ) : (
         <ProgressBar
-            dataTestId={`${dataTestId}-progress-bar`}
+          dataTestId={`${dataTestId}-progress-bar`}
           label={labelProgressBar ? labelProgressBar : labelProcessBarDefault}
           buffer={inputValue}
           value={value}

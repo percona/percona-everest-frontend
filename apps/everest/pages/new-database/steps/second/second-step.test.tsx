@@ -126,24 +126,30 @@ describe('Second Step', () => {
   });
   it('should show warning when the value entered by the user exceeds the maximum recommended value ', async () => {
     render(
-        <TestWrapper>
-          <FormProviderWrapper handleSubmit={jest.fn()}>
-            <SecondStep />
-            <button data-testid="submitButton" type="submit">
-              submit
-            </button>
-          </FormProviderWrapper>
-        </TestWrapper>
+      <TestWrapper>
+        <FormProviderWrapper handleSubmit={jest.fn()}>
+          <SecondStep />
+          <button data-testid="submitButton" type="submit">
+            submit
+          </button>
+        </FormProviderWrapper>
+      </TestWrapper>
     );
 
     const cpu = screen.getByTestId('cpu-input').querySelector('input');
     expect(cpu).toHaveValue(
-        DEFAULT_SIZES[ResourceSize.small][ResourcesFields.cpu]
+      DEFAULT_SIZES[ResourceSize.small][ResourcesFields.cpu]
     );
-    expect(screen.queryByTestId('resources-exceeding-alert')).not.toBeInTheDocument();
-    const maxCPU = screen.queryByTestId('cpu-progress-bar').getAttribute('aria-valuemax');
+    expect(
+      screen.queryByTestId('resources-exceeding-alert')
+    ).not.toBeInTheDocument();
+    const maxCPU = screen
+      .queryByTestId('cpu-progress-bar')
+      .getAttribute('aria-valuemax');
 
-    await waitFor(() => fireEvent.change(cpu, { target: { value: +maxCPU+1 } }));
+    await waitFor(() =>
+      fireEvent.change(cpu, { target: { value: +maxCPU + 1 } })
+    );
     expect(screen.getByTestId('resources-exceeding-alert')).toBeInTheDocument();
   });
 });

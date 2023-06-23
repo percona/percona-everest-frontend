@@ -1,13 +1,29 @@
-import React, {useEffect} from 'react';
-import {Messages} from './second-step.messages';
-import {Alert, Box, FormGroup, ToggleButtonGroup, Typography, useMediaQuery, useTheme,} from '@mui/material';
-import {Controller, useFormContext} from 'react-hook-form';
-import {ResourcesDetail} from '../../../../components/resources-detail';
-import {NumberOfNodes, ResourcesFields, ResourceSize,} from './second-step.types';
-import {ToggleCard} from '@percona/ui-lib.toggle-card';
-import {checkSwitchToCustom, humanizeNumberOfNodesMap, humanizeResourceSizeMap,} from './second-step.utils';
-import {ResourcesLegend} from './resources-legend/resources-legend';
-import {DEFAULT_SIZES} from './second-step.const';
+import React, { useEffect } from 'react';
+import { Messages } from './second-step.messages';
+import {
+  Alert,
+  Box,
+  FormGroup,
+  ToggleButtonGroup,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
+import { Controller, useFormContext } from 'react-hook-form';
+import { ResourcesDetail } from '../../../../components/resources-detail';
+import {
+  NumberOfNodes,
+  ResourcesFields,
+  ResourceSize,
+} from './second-step.types';
+import { ToggleCard } from '@percona/ui-lib.toggle-card';
+import {
+  checkSwitchToCustom,
+  humanizeNumberOfNodesMap,
+  humanizeResourceSizeMap,
+} from './second-step.utils';
+import { ResourcesLegend } from './resources-legend/resources-legend';
+import { DEFAULT_SIZES } from './second-step.const';
 
 export const SecondStep = () => {
   const { control, watch, setValue } = useFormContext();
@@ -214,10 +230,10 @@ export const SecondStep = () => {
             setInputValue={(value: number) => {
               setValue(ResourcesFields.disk, value);
               checkSwitchToCustom(
-                  ResourcesFields.memory,
-                  value,
-                  resourceSizePerNode,
-                  setValue
+                ResourcesFields.memory,
+                value,
+                resourceSizePerNode,
+                setValue
               );
             }}
             label={Messages.labels.disk.toUpperCase()}
