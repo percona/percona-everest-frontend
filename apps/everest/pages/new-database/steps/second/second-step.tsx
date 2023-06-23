@@ -1,40 +1,25 @@
-import React, { useEffect } from 'react';
-import { Messages } from './second-step.messages';
-import {
-  Alert,
-  Box,
-  FormGroup,
-  ToggleButtonGroup,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
-import { Controller, useFormContext } from 'react-hook-form';
-import { ResourcesDetail } from '../../../../components/resources-detail';
-import {
-  NumberOfNodes,
-  ResourcesFields,
-  ResourceSize,
-} from './second-step.types';
-import { ToggleCard } from '@percona/ui-lib.toggle-card';
-import {
-  checkSwitchToCustom,
-  humanizeNumberOfNodesMap,
-} from './second-step.utils';
-import { ResourcesLegend } from './resources-legend/resources-legend';
-import { DEFAULT_SIZES } from './second-step.const';
+import React, {useEffect} from 'react';
+import {Messages} from './second-step.messages';
+import {Alert, Box, FormGroup, ToggleButtonGroup, Typography, useMediaQuery, useTheme,} from '@mui/material';
+import {Controller, useFormContext} from 'react-hook-form';
+import {ResourcesDetail} from '../../../../components/resources-detail';
+import {NumberOfNodes, ResourcesFields, ResourceSize,} from './second-step.types';
+import {ToggleCard} from '@percona/ui-lib.toggle-card';
+import {checkSwitchToCustom, humanizeNumberOfNodesMap, humanizeResourceSizeMap,} from './second-step.utils';
+import {ResourcesLegend} from './resources-legend/resources-legend';
+import {DEFAULT_SIZES} from './second-step.const';
 
 export const SecondStep = () => {
   const { control, watch, setValue } = useFormContext();
 
   //TODO should be set from api
-  const TOTAL_SIZES = {
+  const totalSizes = {
     cpu: 32,
     memory: 40,
     disk: 200,
   };
 
-  const PREVIOUS_SIZES = {
+  const consumedSizes = {
     cpu: 2,
     memory: 12,
     disk: 77,
@@ -46,10 +31,13 @@ export const SecondStep = () => {
   const resourceSizePerNode: ResourceSize = watch(
     ResourcesFields.resourceSizePerNode
   );
-  const cpuCapacityExceeded = watch(ResourcesFields.cpu) > TOTAL_SIZES.cpu;
-  const memoryCapacityExceeded =
-    watch(ResourcesFields.memory) > TOTAL_SIZES.memory;
-  const diskCapacityExceeded = watch(ResourcesFields.disk) > TOTAL_SIZES.disk;
+  const cpu = watch(ResourcesFields.cpu);
+  const memory = watch(ResourcesFields.memory);
+  const disk = watch(ResourcesFields.disk);
+
+  const cpuCapacityExceeded = cpu > totalSizes.cpu;
+  const memoryCapacityExceeded = memory > totalSizes.memory;
+  const diskCapacityExceeded = disk > totalSizes.disk;
 
   const alertLabels = [];
   cpuCapacityExceeded && alertLabels.push(Messages.labels.cpu);
@@ -96,15 +84,24 @@ export const SecondStep = () => {
                 }
               }}
             >
-              <ToggleCard value={NumberOfNodes.oneNode} data-testid="toggle-button-one-node">
+              <ToggleCard
+                value={NumberOfNodes.oneNode}
+                data-testid="toggle-button-one-node"
+              >
                 {humanizeNumberOfNodesMap(NumberOfNodes.oneNode)}
-                <br />({NumberOfNodes.twoNodes} node)
+                <br />({NumberOfNodes.oneNode} node)
               </ToggleCard>
-              <ToggleCard value={NumberOfNodes.twoNodes} data-testid="toggle-button-two-nodes">
+              <ToggleCard
+                value={NumberOfNodes.twoNodes}
+                data-testid="toggle-button-two-nodes"
+              >
                 {humanizeNumberOfNodesMap(NumberOfNodes.twoNodes)}
                 <br />({NumberOfNodes.twoNodes} nodes)
               </ToggleCard>
-              <ToggleCard value={NumberOfNodes.threeNodes}  data-testid="toggle-button-three-nodes">
+              <ToggleCard
+                value={NumberOfNodes.threeNodes}
+                data-testid="toggle-button-three-nodes"
+              >
                 {humanizeNumberOfNodesMap(NumberOfNodes.threeNodes)}
                 <br />({NumberOfNodes.threeNodes} nodes)
               </ToggleCard>
@@ -135,24 +132,51 @@ export const SecondStep = () => {
                 }
               }}
             >
-              <ToggleCard value={ResourceSize.small} data-testid="toggle-button-small">Small</ToggleCard>
-              <ToggleCard value={ResourceSize.medium} data-testid="toggle-button-medium">Medium</ToggleCard>
-              <ToggleCard value={ResourceSize.large} data-testid="toggle-button-large">Large</ToggleCard>
-              <ToggleCard value={ResourceSize.custom} data-testid="toggle-button-custom">Custom</ToggleCard>
+              <ToggleCard
+                value={ResourceSize.small}
+                data-testid="toggle-button-small"
+              >
+                {humanizeResourceSizeMap(ResourceSize.small)}
+              </ToggleCard>
+              <ToggleCard
+                value={ResourceSize.medium}
+                data-testid="toggle-button-medium"
+              >
+                {humanizeResourceSizeMap(ResourceSize.medium)}
+              </ToggleCard>
+              <ToggleCard
+                value={ResourceSize.large}
+                data-testid="toggle-button-large"
+              >
+                {humanizeResourceSizeMap(ResourceSize.large)}
+              </ToggleCard>
+              <ToggleCard
+                value={ResourceSize.custom}
+                data-testid="toggle-button-custom"
+              >
+                {humanizeResourceSizeMap(ResourceSize.custom)}
+              </ToggleCard>
             </ToggleButtonGroup>
           )}
         />
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', mt: 4, gap: 1 }}>
+        <Box
+          sx={{ display: 'flex', flexDirection: 'column', mt: 4, gap: 1 }}
+          data-testid="resources-box"
+        >
           {alertLabels.length > 0 && (
-            <Alert severity="warning" sx={{ mb: 1 }} data-testid="resourcesExceedingAlert">
+            <Alert
+              severity="warning"
+              sx={{ mb: 1 }}
+              data-testid="resources-exceeding-alert"
+            >
               {Messages.alerts.resourcesCapacityExceeding(alertLabels)}
             </Alert>
           )}
           <ResourcesDetail
-            value={PREVIOUS_SIZES.cpu}
-            total={TOTAL_SIZES.cpu}
-            inputValue={watch(ResourcesFields.cpu)}
+            value={consumedSizes.cpu}
+            total={totalSizes.cpu}
+            inputValue={cpu}
             setInputValue={(value: number) => {
               setValue(ResourcesFields.cpu, value);
               checkSwitchToCustom(
@@ -164,11 +188,12 @@ export const SecondStep = () => {
             }}
             label={Messages.labels.cpu}
             units="CPU"
+            dataTestId="cpu"
           />
           <ResourcesDetail
-            value={PREVIOUS_SIZES.memory}
-            total={TOTAL_SIZES.memory}
-            inputValue={watch(ResourcesFields.memory)}
+            value={consumedSizes.memory}
+            total={totalSizes.memory}
+            inputValue={memory}
             setInputValue={(value: number) => {
               setValue(ResourcesFields.memory, value);
               checkSwitchToCustom(
@@ -180,22 +205,24 @@ export const SecondStep = () => {
             }}
             label={Messages.labels.memory.toUpperCase()}
             units="GB"
+            dataTestId="memory"
           />
           <ResourcesDetail
-            value={PREVIOUS_SIZES.disk}
-            total={TOTAL_SIZES.disk}
-            inputValue={watch(ResourcesFields.disk)}
-            setInputValue={(value) => {
-              setValue(ResourcesFields.disk, parseInt(`${value}`, 10));
+            value={consumedSizes.disk}
+            total={totalSizes.disk}
+            inputValue={disk}
+            setInputValue={(value: number) => {
+              setValue(ResourcesFields.disk, value);
               checkSwitchToCustom(
-                ResourcesFields.disk,
-                value,
-                resourceSizePerNode,
-                setValue
+                  ResourcesFields.memory,
+                  value,
+                  resourceSizePerNode,
+                  setValue
               );
             }}
             label={Messages.labels.disk.toUpperCase()}
             units="GB"
+            dataTestId="disk"
           />
           {!isMobile && <ResourcesLegend />}
         </Box>

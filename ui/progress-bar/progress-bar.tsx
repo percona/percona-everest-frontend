@@ -21,7 +21,7 @@ export function ProgressBar({
         width: '100%',
       }}
     >
-      <Box sx={{ alignSelf: 'end', fontSize: '12px' }}>{label}</Box>
+      <Box sx={{ alignSelf: 'end', fontSize: '12px' }} data-testid={dataTestId ? `${dataTestId}-label`: 'progress-bar-label'}>{label}</Box>
       <LinearProgress
         variant="buffer"
         value={value1Percentage}

@@ -6,4 +6,5 @@ export type ResourcesDetailProps = {
   total: number;
   inputValue: number;
   setInputValue: React.Dispatch<React.SetStateAction<number>>;
+  dataTestId: string;
 };

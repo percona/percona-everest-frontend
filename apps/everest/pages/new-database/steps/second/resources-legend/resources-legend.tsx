@@ -13,7 +13,7 @@ export const ResourcesLegend = () => {
     >
       <ColoredLabel
         label={Messages.consumed}
-        sxBox={{ backgroundColor: theme.palette.primary.main }}
+        sxBox={{ backgroundColor: "primary.main" }}
       />
       <ColoredLabel
         label={Messages.required}

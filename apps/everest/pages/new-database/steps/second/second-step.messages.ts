@@ -1,12 +1,8 @@
-const getResourceNames = (names: string[]): string => {
-  if (names.length === 1) return names[0];
-  if (names.length === 2) return `${names[0]} and ${names[1]}`;
-  if (names.length === 3) return `${names[0]}, ${names[1]}, and ${names[2]}`;
-};
+import {getResourceNames} from "./second-step.utils";
 export const Messages = {
   pageTitle: 'Resources',
   pageDescription:
-    'Configure the resources-legend your new database will have access to.',
+    'Configure the resources your new database will have access to.',
   labels: {
     numberOfNodes: 'Number of nodes',
     resourceSizePerNode: 'Resource size per node',

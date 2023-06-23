@@ -12,6 +12,7 @@ export function ResourcesDetail({
   total,
   inputValue,
   setInputValue,
+  dataTestId,
 }: ResourcesDetailProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -29,7 +30,7 @@ export function ResourcesDetail({
         alignItems: 'center',
         justifyContent: 'space-between',
       }}
-      data-testid = 'resource-box'
+      data-testid={`${dataTestId}-resource-box`}
     >
       <Box
         sx={{
@@ -42,7 +43,12 @@ export function ResourcesDetail({
         {label}
       </Box>
       <Box sx={{ maxWidth: '150px', minWidth: '100px' }}>
-        <Input value={inputValue} setValue={setInputValue} units={units} />
+        <Input
+          value={inputValue}
+          setValue={setInputValue}
+          units={units}
+          data-testid={`${dataTestId}-input`}
+        />
       </Box>
       {isMobile ? (
         <Box
@@ -58,6 +64,7 @@ export function ResourcesDetail({
         </Box>
       ) : (
         <ProgressBar
+            dataTestId={`${dataTestId}-progress-bar`}
           label={labelProgressBar ? labelProgressBar : labelProcessBarDefault}
           buffer={inputValue}
           value={value}
