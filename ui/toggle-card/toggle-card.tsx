@@ -43,11 +43,11 @@ export const ToggleCard = ({ children, sx, ...props }: ToggleCardProps) => {
             borderBottomLeftRadius: `${theme.shape.borderRadius}px`,
           },
         },
-          '&.MuiButtonBase-root': {
-              wordWrap: 'break-word',
-              whiteSpace: 'pre-wrap',
-          },
-          ...sx,
+        '&.MuiButtonBase-root': {
+          wordWrap: 'break-word',
+          whiteSpace: 'pre-wrap',
+        },
+        ...sx,
       }}
       {...props}
     >
