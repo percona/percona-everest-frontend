@@ -1,6 +1,6 @@
 import { Box, useMediaQuery, useTheme } from '@mui/material';
-import { Input } from '@percona/ui.input';
-import { ProgressBar } from '@percona/ui.progress-bar';
+import { Input } from '@percona/ui-lib.input';
+import { ProgressBar } from '@percona/ui-lib.progress-bar';
 import React from 'react';
 import { ResourcesDetailProps } from './resources-detail.types';
 
