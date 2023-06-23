@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { ColoredLabelProps } from './colored-label.types';
+
 export const ColoredLabel = ({
   sxBox,
   sxTypography,

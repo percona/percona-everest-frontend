@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Messages } from './second-step.messages';
 import {
   Alert,
   Box,
@@ -10,13 +9,14 @@ import {
   useTheme,
 } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
+import { ToggleCard } from '@percona/ui-lib.toggle-card';
+import { Messages } from './second-step.messages';
 import { ResourcesDetail } from '../../../../components/resources-detail';
 import {
   NumberOfNodes,
   ResourcesFields,
   ResourceSize,
 } from './second-step.types';
-import { ToggleCard } from '@percona/ui-lib.toggle-card';
 import {
   checkSwitchToCustom,
   humanizeNumberOfNodesMap,
@@ -28,7 +28,7 @@ import { DEFAULT_SIZES } from './second-step.const';
 export const SecondStep = () => {
   const { control, watch, setValue } = useFormContext();
 
-  //TODO should be set from api
+  // TODO should be set from api
   const totalSizes = {
     cpu: 32,
     memory: 40,
@@ -56,9 +56,9 @@ export const SecondStep = () => {
   const diskCapacityExceeded = disk > totalSizes.disk;
 
   const alertLabels = [];
-  cpuCapacityExceeded && alertLabels.push(Messages.labels.cpu);
-  memoryCapacityExceeded && alertLabels.push(Messages.labels.memory);
-  diskCapacityExceeded && alertLabels.push(Messages.labels.disk);
+  if (cpuCapacityExceeded) { alertLabels.push(Messages.labels.cpu)};
+  if (memoryCapacityExceeded) { alertLabels.push(Messages.labels.memory)};
+  if (diskCapacityExceeded) {alertLabels.push(Messages.labels.disk)};
 
   useEffect(() => {
     if (resourceSizePerNode && resourceSizePerNode !== ResourceSize.custom) {

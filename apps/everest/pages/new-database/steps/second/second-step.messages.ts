@@ -1,4 +1,5 @@
 import { getResourceNames } from './second-step.utils';
+
 export const Messages = {
   pageTitle: 'Resources',
   pageDescription:

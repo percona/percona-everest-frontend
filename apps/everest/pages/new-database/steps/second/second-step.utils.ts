@@ -1,9 +1,9 @@
+import { UseFormSetValue, FieldValues } from 'react-hook-form';
 import {
   NumberOfNodes,
   ResourcesFields,
   ResourceSize,
 } from './second-step.types';
-import { UseFormSetValue, FieldValues } from 'react-hook-form';
 import { DEFAULT_SIZES } from './second-step.const';
 
 const humanizedNumberOfNodesMap: Record<NumberOfNodes, string> = {
@@ -59,4 +59,5 @@ export const getResourceNames = (names: string[]): string => {
   if (names.length === 1) return names[0];
   if (names.length === 2) return `${names[0]} and ${names[1]}`;
   if (names.length === 3) return `${names[0]}, ${names[1]}, and ${names[2]}`;
+  return '';
 };

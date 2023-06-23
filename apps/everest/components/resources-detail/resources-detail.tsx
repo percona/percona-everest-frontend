@@ -60,12 +60,12 @@ export function ResourcesDetail({
             textAlign: 'end',
           }}
         >
-          {labelProgressBar ? labelProgressBar : labelProcessBarDefault}
+          {labelProgressBar || labelProcessBarDefault}
         </Box>
       ) : (
         <ProgressBar
           dataTestId={`${dataTestId}-progress-bar`}
-          label={labelProgressBar ? labelProgressBar : labelProcessBarDefault}
+          label={labelProgressBar || labelProcessBarDefault}
           buffer={inputValue}
           value={value}
           total={total}
