@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import {
-  ToggleButtonGroup,
-  Typography,
   FormGroup,
-  TextField,
-  Select,
   MenuItem,
   Skeleton,
+  Select,
+  TextField,
+  ToggleButtonGroup,
+  Typography,
 } from '@mui/material';
 
 import { DbToggleCard, DbType } from '@percona/ui-lib.db-toggle-card';
