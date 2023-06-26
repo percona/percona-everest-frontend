@@ -42,7 +42,7 @@ export const NewDatabasePage = () => {
       amPm: AmPM.AM,
       weekDay: WeekDays.Mo,
       onDay: 1,
-      [BasicInformationFields.dbType]: DbType.Postresql,
+      [BasicInformationFields.dbType]: DbType.Mysql,
       [BasicInformationFields.dbName]: '',
       externalAccess: false,
       internetFacing: true,
