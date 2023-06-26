@@ -22,11 +22,15 @@ import {
   WeekDays,
 } from './steps/third/third-step.types';
 import { SixthStep } from './steps/sixth/sixth-step';
+import { useCreateDbCluster } from '../../hooks/db-cluster/useDbCluster';
+import { useSelectedKubernetesCluster } from '../../hooks/kubernetesClusters/useSelectedKubernetesCluster';
 
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const currentValidationSchema = dbWizardSchema[activeStep];
+  const { mutate: addDbCluster } = useCreateDbCluster();
+  const { id } = useSelectedKubernetesCluster();
 
   const methods = useForm<DbWizardType>({
     mode: 'onChange',
@@ -63,7 +67,12 @@ export const NewDatabasePage = () => {
   const onSubmit: SubmitHandler<DbWizardType> = (data) => {
     /* eslint-disable no-console */
     console.log(data);
-    setFormSubmitted(true);
+    addDbCluster({ dbPayload: data, id }, {
+      onSuccess: () => {
+        console.log('ALL GOOD');
+        setFormSubmitted(true)
+      }
+    });
   };
 
   const handleNext: React.MouseEventHandler<HTMLButtonElement> = async () => {
