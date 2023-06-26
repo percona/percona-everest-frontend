@@ -2,45 +2,53 @@ import AddIcon from '@mui/icons-material/Add';
 import { Box, Button, MenuItem, Stack, Typography } from '@mui/material';
 import {
   MaterialReactTable,
-  MRT_ExpandButton,
   type MRT_ColumnDef,
   type MRT_TableInstance,
 } from 'material-react-table';
 import React, { useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
-interface Person {
-  name: string;
-  age: number;
+interface DbCluster {
+  status: string;
+  databaseName: string;
+  technology: string;
+  backups: string;
+  kubernetesCluster: string;
 }
 
 export const DatabasesPage = () => {
-  const tableInstanceRef = useRef<MRT_TableInstance<Person>>(null);
+  const tableInstanceRef = useRef<MRT_TableInstance<DbCluster>>(null);
 
-  const data: Person[] = [
+  const data: DbCluster[] = [
     {
-      name: 'John', // key "name" matches `accessorKey` in ColumnDef down below
-      age: 30, // key "age" matches `accessorKey` in ColumnDef down below
+      status: 'Up',
+      databaseName: 'Data value',
+      technology: 'Mongo 6.0',
+      backups: 'enabled',
+      kubernetesCluster: 'minicube',
     },
     {
-      name: 'Sara',
-      age: 25,
+      status: 'Down',
+      databaseName: 'Data value 2',
+      technology: 'Mongo 7.0',
+      backups: 'disabled',
+      kubernetesCluster: 'minicube',
     },
   ];
 
-  const columns = useMemo<MRT_ColumnDef<Person>[]>(
+  const columns = useMemo<MRT_ColumnDef<DbCluster>[]>(
     () => [
       {
-        accessorKey: 'name', //simple recommended way to define a column
-        header: 'Name',
-        muiTableHeadCellProps: { sx: { color: 'green' } }, //custom props
+        accessorKey: 'status', //simple recommended way to define a column
+        header: 'Status',
       },
       {
-        accessorFn: (originalRow) => originalRow.age, //alternate way
-        id: 'age', //id required if you use accessorFn instead of accessorKey
-        header: 'Age',
-        Header: <i style={{ color: 'red' }}>Age</i>, //optional custom markup
+        accessorKey: 'databaseName',
+        header: 'Database name',
       },
+      { accessorKey: 'technology', header: 'Technology' },
+      { accessorKey: 'backups', header: 'Backups' },
+      { accessorKey: 'kubernetesCluster', header: 'Kubernetes Cluster' },
     ],
     []
   );
@@ -77,10 +85,10 @@ export const DatabasesPage = () => {
           // }}
           displayColumnDefOptions={{
             'mrt-row-actions': {
-              maxSize: 1,
+              maxSize: 50,
             },
             'mrt-row-expand': {
-              maxSize: 1,
+              maxSize: 50,
             },
           }}
           renderRowActionMenuItems={({ closeMenu, row }) => [
@@ -91,18 +99,18 @@ export const DatabasesPage = () => {
               Delete
             </MenuItem>,
           ]}
-          renderRowActions={({ row, cell }) => (
-            <Box>
-              {tableInstanceRef.current && (
-                <>
-                  <MRT_ExpandButton
-                    table={tableInstanceRef.current}
-                    row={row}
-                  />
-                </>
-              )}
-            </Box>
-          )}
+          // renderRowActions={({ row, cell }) => (
+          //   <Box>
+          //     {tableInstanceRef.current && (
+          //       <>
+          //         <MRT_ExpandButton
+          //           table={tableInstanceRef.current}
+          //           row={row}
+          //         />
+          //       </>
+          //     )}
+          //   </Box>
+          // )}
           renderTopToolbarCustomActions={() => (
             <Button
               size="small"
