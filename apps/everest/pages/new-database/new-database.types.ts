@@ -4,6 +4,11 @@ import { IP_REGEX } from './new-database.constants';
 import { Messages as FirstStepMessages } from './steps/first/first-step.messages';
 import { BasicInformationFields } from './steps/first/first-step.types';
 import {
+  NumberOfNodes,
+  ResourcesFields,
+  ResourceSize,
+} from './steps/second/second-step.types';
+import {
   AmPM,
   StorageLocation,
   TimeValue,
@@ -28,7 +33,11 @@ const stepOneSchema = z
 
 const stepTwoSchema = z
   .object({
-    firstName: z.string().optional(),
+    [ResourcesFields.cpu]: z.number(),
+    [ResourcesFields.memory]: z.number(),
+    [ResourcesFields.disk]: z.number(),
+    [ResourcesFields.resourceSizePerNode]: z.nativeEnum(ResourceSize),
+    [ResourcesFields.numberOfNodes]: z.nativeEnum(NumberOfNodes),
   })
   .passthrough();
 
