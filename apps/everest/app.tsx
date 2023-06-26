@@ -1,42 +1,24 @@
-import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import React from 'react';
 import { ThemeContextProvider } from '@percona/design.theme-context-provider';
 import { everestThemeOptions } from '@percona/design.themes.everest';
-import { Box, Toolbar, useMediaQuery, useTheme } from '@mui/material';
-import { AppBar } from './components/app-bar/AppBar';
-import { Drawer } from './components/drawer/Drawer';
-import { DrawerContext } from './components/drawer/Drawer.context';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { K8ContextProvider } from './contexts/kubernetes/kubernetes.context';
+import { DrawerContextProvider } from './contexts/drawer/drawer.context';
+import { Main } from './components/main/Main';
 
-export const BarAndDrawer = () => {
-  const [open, setOpen] = useState(false);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
-  const toggleOpen = () => setOpen((val) => !val);
-  const activeBreakpoint = isMobile
-    ? 'mobile'
-    : isDesktop
-    ? 'desktop'
-    : 'tablet';
-
-  return (
-    <DrawerContext.Provider value={{ open, toggleOpen, activeBreakpoint }}>
-      <AppBar />
-      <Drawer />
-    </DrawerContext.Provider>
-  );
-};
 
 export const EverestApp = () => {
+  const queryClient = new QueryClient();
+
   return (
-    <ThemeContextProvider themeOptions={everestThemeOptions}>
-      <Box sx={{ display: 'flex' }}>
-        <BarAndDrawer />
-        <Box component="main" sx={{ padding: 4, width: '100%' }}>
-          <Toolbar />
-          <Outlet />
-        </Box>
-      </Box>
-    </ThemeContextProvider>
+    <QueryClientProvider client={queryClient}>
+      <K8ContextProvider>
+        <ThemeContextProvider themeOptions={everestThemeOptions}>
+          <DrawerContextProvider>
+            <Main />
+          </DrawerContextProvider>
+        </ThemeContextProvider>
+      </K8ContextProvider>
+    </QueryClientProvider>
   );
 };
