@@ -1,11 +1,11 @@
 import {
+  FormControlLabel,
+  FormGroup,
   IconButton,
   InputAdornment,
   Switch,
   TextField,
   Typography,
-  FormControlLabel,
-  FormGroup,
 } from '@mui/material';
 import React from 'react';
 

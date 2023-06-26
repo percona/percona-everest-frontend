@@ -1,4 +1,4 @@
-import { PaletteMode, ThemeOptions, createTheme } from '@mui/material';
+import { createTheme, PaletteMode, ThemeOptions } from '@mui/material';
 
 declare module '@mui/material/styles' {
   interface TypeAction {
@@ -42,9 +42,9 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
             contrastText: '#000000',
           },
           info: {
-            light: '#CE3C3C',
-            main: '#BA1A1A',
-            dark: '#9F0000',
+            light: '#127AE8',
+            main: '#0E5FB5',
+            dark: '#0B4A8C',
             contrastText: '#FFFFFF',
           },
           success: {
