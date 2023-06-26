@@ -1,13 +1,19 @@
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { z } from 'zod';
 import { IP_REGEX } from './new-database.constants';
-import { BasicInformationFields } from './steps/first/first-step.types';
 import { Messages as FirstStepMessages } from './steps/first/first-step.messages';
+import { BasicInformationFields } from './steps/first/first-step.types';
 import {
   NumberOfNodes,
   ResourcesFields,
   ResourceSize,
 } from './steps/second/second-step.types';
+import {
+  AmPM,
+  StorageLocation,
+  TimeValue,
+  WeekDays,
+} from './steps/third/third-step.types';
 
 // .passthrough tells Zod to not drop unrecognized keys
 // this is needed because we parse step by step
@@ -37,7 +43,18 @@ const stepTwoSchema = z
 
 const stepThreeSchema = z
   .object({
-    lastName: z.string().optional(),
+    backupsEnabled: z.boolean(),
+    pitrEnabled: z.boolean(),
+    pitrTime: z.string(),
+    storageLocation: z.nativeEnum(StorageLocation),
+    timeNumbers: z.string(),
+    selectTime: z.nativeEnum(TimeValue),
+    minuteHour: z.number(),
+    minute: z.number(),
+    hour: z.number(),
+    amPm: z.nativeEnum(AmPM),
+    weekDay: z.nativeEnum(WeekDays),
+    onDay: z.number(),
   })
   .passthrough();
 

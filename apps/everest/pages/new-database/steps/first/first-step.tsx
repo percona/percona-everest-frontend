@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
 import {
+  FormGroup,
+  MenuItem,
+  Select,
+  TextField,
   ToggleButtonGroup,
   Typography,
-  FormGroup,
-  TextField,
-  Select,
-  MenuItem,
 } from '@mui/material';
+import React, { useEffect } from 'react';
 
 import { DbToggleCard, DbType } from '@percona/ui-lib.db-toggle-card';
 import { Controller, useFormContext } from 'react-hook-form';
