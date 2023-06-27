@@ -8,7 +8,7 @@ export const SixthStep = () => {
   return (
     <Stack alignItems='center'>
       <Stack direction='row' alignItems='center'>
-        <CheckCircleOutlineIcon sx={{ color: 'success.main', fontSize: 64, mr: 1 }} />
+        <CheckCircleOutlineIcon sx={{ color: 'success.contrastText', fontSize: 64, mr: 1 }} />
         <Stack direction='column'>
           <Typography variant='h6'>{Messages.dbBeingCreated}</Typography>
           <Typography variant='caption'>{Messages.sitTight}</Typography>
