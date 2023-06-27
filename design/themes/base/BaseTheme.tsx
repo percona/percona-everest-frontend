@@ -247,6 +247,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
         root: {
           fontSize: '16px',
           fontWeight: 400,
+          maxWidth: '100%'
         },
       },
     },
