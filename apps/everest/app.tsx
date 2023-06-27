@@ -8,7 +8,13 @@ import { Main } from './components/main/Main';
 
 
 export const EverestApp = () => {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false
+      }
+    }
+  });
 
   return (
     <QueryClientProvider client={queryClient}>
