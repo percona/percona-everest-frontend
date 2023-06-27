@@ -50,6 +50,7 @@ export const NewDatabasePage = () => {
       onDay: 1,
       [BasicInformationFields.dbType]: DbType.Mysql,
       [BasicInformationFields.dbName]: '',
+      [BasicInformationFields.dbVersion]: '',
       externalAccess: false,
       internetFacing: true,
       sourceRange: '',
