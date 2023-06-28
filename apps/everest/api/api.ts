@@ -16,7 +16,11 @@ api.interceptors.response.use(
       let message = DEFAULT_ERROR_MESSAGE;
     
       if (error.response.data && error.response.data.message) {
-        message = `${error.response.data.message.trim().substring(0, MAX_ERROR_MESSAGE_LENGTH)}...`;
+        if (error.response.data.message.length > MAX_ERROR_MESSAGE_LENGTH) {
+          message = `${error.response.data.message.trim().substring(0, MAX_ERROR_MESSAGE_LENGTH)}...`;
+        } else {
+          message = error.response.data.message.trim();
+        }
       }
 
       enqueueSnackbar(message, {
