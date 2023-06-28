@@ -20,7 +20,7 @@ export const BarAndDrawer = () => {
     : 'tablet';
 
   return (
-    <DrawerContext.Provider value={{ open, toggleOpen, activeBreakpoint }}>
+    <DrawerContext.Provider value={{ open, toggleOpen, setOpen, activeBreakpoint }}>
       <AppBar />
       <Drawer />
     </DrawerContext.Provider>

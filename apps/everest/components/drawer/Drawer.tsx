@@ -40,7 +40,7 @@ const StyledDrawer = styled(MuiDrawer, {
 }));
 
 const DrawerContent = ({ open }: { open: boolean }) => {
-  const { toggleOpen, activeBreakpoint } = useContext(DrawerContext);
+  const { toggleOpen, setOpen, activeBreakpoint } = useContext(DrawerContext);
 
   return (
     <>
@@ -61,7 +61,7 @@ const DrawerContent = ({ open }: { open: boolean }) => {
       <List>
         {ROUTES.map(({ to, icon, text }) => (
           <NavItem
-            onClick={toggleOpen}
+            onClick={() => setOpen(false)}
             to={to}
             open={open}
             icon={icon}
