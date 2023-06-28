@@ -8,9 +8,9 @@ import {
 import { NavLink } from 'react-router-dom';
 import { NavItemProps } from './NavItem.types';
 
-export const NavItem = ({ open, icon, text, to, onClick }: NavItemProps) => {
+export const NavItem = ({ open, icon, text, to, onClick, ...listItemProps }: NavItemProps) => {
   return (
-    <ListItem disablePadding sx={{ display: 'block' }}>
+    <ListItem disablePadding sx={{ display: 'block' }} {...listItemProps}>
       <ListItemButton
         component={NavLink}
         to={to}
