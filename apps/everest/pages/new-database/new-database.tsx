@@ -70,7 +70,6 @@ export const NewDatabasePage = () => {
     console.log(data);
     addDbCluster({ dbPayload: data, id }, {
       onSuccess: () => {
-        console.log('ALL GOOD');
         setFormSubmitted(true)
       }
     });
