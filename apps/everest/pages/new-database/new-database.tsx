@@ -138,7 +138,7 @@ export const NewDatabasePage = () => {
           <DatabasePreview
             activeStep={activeStep}
             nrSteps={steps.length}
-            sx={{ flex: '0 0 25%', padding: 2 }}
+            sx={{ flex: '0 0 25%' }}
           />
         </Stack>
       </FormProvider>

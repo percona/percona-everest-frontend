@@ -5,7 +5,7 @@ import { DatabasePreviewProps } from './database-preview.types';
 import { DbWizardType } from '../new-database.types';
 import { previewSections } from './sections';
 
-export const DatabasePreview = ({ activeStep, nrSteps, ...stackProps }: DatabasePreviewProps) => {
+export const DatabasePreview = ({ activeStep, nrSteps, sx, ...stackProps }: DatabasePreviewProps) => {
   const { getValues } = useFormContext<DbWizardType>();
   const [longestAchievedStep, setLongestAchievedStep] = useState(activeStep);
   const finalStepAchieved = longestAchievedStep === nrSteps - 1
@@ -24,9 +24,9 @@ export const DatabasePreview = ({ activeStep, nrSteps, ...stackProps }: Database
   const values = getValues();
 
   return (
-    <Stack {...stackProps}>
-      <Typography fontStyle='italic' color='text.secondary'>Database Preview</Typography>
-      <Stack>
+    <Stack sx={{ pr: 2, pl: 2, ...sx }} {...stackProps}>
+      <Typography fontStyle='italic' color='text.secondary' fontSize='12px'>Database Preview</Typography>
+      <Stack sx={{ pt: 1, pb: 1 }}>
         {previewSections.map((Section, idx) => (
           <React.Fragment key={`section-${idx}`}>
             <Section {...values} active={longestAchievedStep > idx - 1} />
