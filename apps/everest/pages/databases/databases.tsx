@@ -7,47 +7,70 @@ import {
 } from 'material-react-table';
 import React, { useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
-
-interface DbCluster {
-  status: string;
-  databaseName: string;
-  technology: string;
-  backups: string;
-  kubernetesCluster: string;
-}
+import { DbCluster } from '../../hooks/db-clusters/dbCluster.type';
+import { useDbClusters } from '../../hooks/db-clusters/useDbClusters';
 
 export const DatabasesPage = () => {
   const tableInstanceRef = useRef<MRT_TableInstance<DbCluster>>(null);
+  const dbClusters = useDbClusters();
+  console.log(dbClusters);
 
-  const data: DbCluster[] = [
-    {
-      status: 'Up',
-      databaseName: 'Data value',
-      technology: 'Mongo 6.0',
-      backups: 'enabled',
-      kubernetesCluster: 'minicube',
-    },
-    {
-      status: 'Down',
-      databaseName: 'Data value 2',
-      technology: 'Mongo 7.0',
-      backups: 'disabled',
-      kubernetesCluster: 'minicube',
-    },
-  ];
+  const loading = dbClusters.every((cluster) => cluster.isLoading);
+
+  let combinedData = dbClusters
+    .map((cluster) => {
+      return cluster?.data ?? [];
+    })
+    .flat() as DbCluster[];
+  //const combinedData = [];
+  console.log(loading);
+  console.log('combinedData', combinedData);
+  // const data: DbCluster[] = [
+  //   {
+  //     status: 'Up',
+  //     databaseName: 'Data value',
+  //     technology: 'Mongo 6.0',
+  //     backups: 'enabled',
+  //     kubernetesCluster: 'minicube',
+  //   },
+  //   {
+  //     status: 'Down',
+  //     databaseName: 'Data value 2',
+  //     technology: 'Mongo 7.0',
+  //     backups: 'disabled',
+  //     kubernetesCluster: 'minicube',
+  //   },
+  // ];
 
   const columns = useMemo<MRT_ColumnDef<DbCluster>[]>(
     () => [
       {
-        accessorKey: 'status', //simple recommended way to define a column
+        accessorKey: 'status',
         header: 'Status',
       },
       {
         accessorKey: 'databaseName',
         header: 'Database name',
       },
-      { accessorKey: 'technology', header: 'Technology' },
-      { accessorKey: 'backups', header: 'Backups' },
+      {
+        accessorFn: (row) => row.dbTypeIcon + '_' + row.dbVersion,
+        header: 'Technology',
+        id: 'technology',
+        Cell: ({ cell, row }) => {
+          return (
+            <span>
+              {row.original?.dbTypeIcon} {row.original?.dbVersion}
+            </span>
+          );
+        },
+      },
+      {
+        accessorKey: 'backupsEnabled',
+        header: 'Backups',
+        Cell: ({ cell }) => {
+          return cell.getValue() ? 'Enabled' : 'Disabled';
+        },
+      },
       { accessorKey: 'kubernetesCluster', header: 'Kubernetes Cluster' },
     ],
     []
@@ -70,9 +93,9 @@ export const DatabasesPage = () => {
           // }}
           tableInstanceRef={tableInstanceRef}
           columns={columns}
-          data={data}
-          enablePagination={data.length > 10}
-          enableBottomToolbar={data.length > 10}
+          data={combinedData}
+          enablePagination={combinedData.length > 10}
+          enableBottomToolbar={combinedData.length > 10}
           enableDensityToggle={false}
           enableFullScreenToggle={false}
           enableRowActions
