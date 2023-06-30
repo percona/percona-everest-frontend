@@ -8,7 +8,7 @@ export const PreviewSectionOne = ({ dbName, dbVersion, dbType }: SectionProps) =
   const Icon = useMemo(() => dbTypeToIcon(dbType), [dbType]);
 
   return (
-    <Stack sx={{ order: 1 }}>
+    <Stack>
       <Stack direction='row' alignItems='center'>
         <Icon fontSize='large' sx={{ mr: 1 }} />
         <Typography variant='subtitle2'>{dbName}</Typography>

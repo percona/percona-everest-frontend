@@ -5,7 +5,7 @@ import { Stack } from "@mui/material";
 
 export const PreviewSectionTwo = ({ numberOfNodes, cpu, disk, memory, active }: SectionProps) => {
   return (
-    <Stack sx={{ order: 3 }}>
+    <Stack>
       <PreviewSection title='NUMBER OF NODES' active={active}>
         <PreviewContentText text={`${numberOfNodes} nodes`} />
       </PreviewSection>
