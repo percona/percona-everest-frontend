@@ -1,4 +1,4 @@
-import { MenuItem, TextField, Typography } from '@mui/material';
+import { Box, MenuItem, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { HOURS_AM_PM, MINUTES } from '../../third-step.constants';
@@ -8,8 +8,16 @@ import { addZeroToSingleDigit } from '../../third-step.utils';
 
 export const TimeFields = () => {
   const { control } = useFormContext();
+
   return (
-    <>
+    <Box sx={(theme) => ({
+      display: 'flex',
+      alignItems: 'center',
+      gap: 2,
+      [theme.breakpoints.down('sm')]: {
+        flexBasis: '100%'
+      },
+    })}>
       <Typography variant="sectionHeading">{Messages.at}</Typography>
       <Controller
         control={control}
@@ -68,6 +76,6 @@ export const TimeFields = () => {
           </TextField>
         )}
       />
-    </>
+    </Box>
   );
 };

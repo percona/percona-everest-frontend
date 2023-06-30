@@ -49,9 +49,9 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
           },
           success: {
             light: '#127AE8',
-            main: '#0E5FB5',
+            main: 'rgba(231, 246, 241, 1)',
             dark: '#0B4A8C',
-            contrastText: '#FFFFFF',
+            contrastText: '#00745B',
           },
           text: {
             primary: '#303642',
@@ -92,9 +92,9 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
           },
           success: {
             light: '#A0EADC',
-            main: '#59DAC1',
+            main: '#00745B',
             dark: '#2CBEA2',
-            contrastText: '#0B322A',
+            contrastText: '#FFFFFF',
           },
           text: {
             primary: '#FFFFFF',
@@ -247,6 +247,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
         root: {
           fontSize: '16px',
           fontWeight: 400,
+          maxWidth: '100%',
         },
       },
     },
