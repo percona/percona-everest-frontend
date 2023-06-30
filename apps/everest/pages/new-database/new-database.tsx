@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Box, Button, Step, StepLabel } from '@mui/material';
+import { Box, Button, Divider, Stack, Step, StepLabel } from '@mui/material';
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { Stepper } from '@percona/ui-lib.stepper';
 import React, { useState } from 'react';
@@ -24,9 +24,11 @@ import {
 import { SixthStep } from './steps/sixth/sixth-step';
 import { useCreateDbCluster } from '../../hooks/db-cluster/useDbCluster';
 import { useSelectedKubernetesCluster } from '../../hooks/kubernetesClusters/useSelectedKubernetesCluster';
+import { DatabasePreview } from './database-preview/database-preview';
 
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const [longestAchievedStep, setLongestAchievedStep] = useState(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const currentValidationSchema = dbWizardSchema[activeStep];
   const { mutate: addDbCluster } = useCreateDbCluster();
@@ -80,7 +82,13 @@ export const NewDatabasePage = () => {
       const isStepValid = await methods.trigger();
 
       if (isStepValid) {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        setActiveStep((prevActiveStep) => {
+          const newStep = prevActiveStep + 1;
+          if (newStep > longestAchievedStep) {
+            setLongestAchievedStep(newStep);
+          }
+          return newStep;
+        });
       }
     }
   };
@@ -103,34 +111,42 @@ export const NewDatabasePage = () => {
         ))}
       </Stepper>
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <Box>{React.createElement(steps[activeStep])}</Box>
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
-            <Button
-              type="button"
-              startIcon={<ArrowBackIcon />}
-              variant="text"
-              disabled={firstStep}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
-              {Messages.previous}
-            </Button>
-            <Box sx={{ flex: '1 1 auto' }} />
-            {activeStep === steps.length - 1 ? (
+        <Stack direction='row'>
+          <form onSubmit={methods.handleSubmit(onSubmit)} style={{ flexGrow: 1 }}>
+            <Box>{React.createElement(steps[activeStep])}</Box>
+            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
               <Button
-                onClick={methods.handleSubmit(onSubmit)}
-                variant="contained"
+                type="button"
+                startIcon={<ArrowBackIcon />}
+                variant="text"
+                disabled={firstStep}
+                onClick={handleBack}
+                sx={{ mr: 1 }}
               >
-                {Messages.createDatabase}
+                {Messages.previous}
               </Button>
-            ) : (
-              <Button onClick={handleNext} variant="contained">
-                {Messages.continue}
-              </Button>
-            )}
-          </Box>
-        </form>
+              <Box sx={{ flex: '1 1 auto' }} />
+              {activeStep === steps.length - 1 ? (
+                <Button
+                  onClick={methods.handleSubmit(onSubmit)}
+                  variant="contained"
+                >
+                  {Messages.createDatabase}
+                </Button>
+              ) : (
+                <Button onClick={handleNext} variant="contained">
+                  {Messages.continue}
+                </Button>
+              )}
+            </Box>
+          </form>
+          <Divider orientation="vertical" flexItem sx={{ ml: 5 }} />
+          <DatabasePreview
+            longestAchievedStep={longestAchievedStep}
+            finalStepAchieved={longestAchievedStep === steps.length - 1}
+            sx={{ flex: '0 0 25%', padding: 2 }}
+          />
+        </Stack>
       </FormProvider>
     </>
   )

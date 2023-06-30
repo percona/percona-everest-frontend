@@ -1,5 +1,7 @@
+import React from "react";
 import { DbType } from "@percona/ui-lib.db-toggle-card";
 import { DbEngineType } from "../types/dbEngines.types";
+import { MongoIcon, MySqlIcon, PostgreSqlIcon } from "@percona/ui-lib.icons.db";
 
 export const dbEngineToDbType = (dbEngine: DbEngineType): DbType => {
   switch (dbEngine) {
@@ -9,5 +11,16 @@ export const dbEngineToDbType = (dbEngine: DbEngineType): DbType => {
       return DbType.Mysql;
     default:
       return DbType.Postresql;
+  }
+}
+
+export const dbTypeToIcon = (dbType: DbType) => {
+  switch (dbType) {
+    case DbType.Mongo:
+      return MongoIcon;
+    case DbType.Mysql:
+      return MySqlIcon;
+    default:
+      return PostgreSqlIcon;
   }
 }
