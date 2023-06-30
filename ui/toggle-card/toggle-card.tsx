@@ -5,7 +5,7 @@ export type ToggleCardProps = {
   children?: ReactNode;
 } & ToggleButtonProps;
 
-export const ToggleCard = ({ children, ...props }: ToggleCardProps) => {
+export const ToggleCard = ({ children, sx, ...props }: ToggleCardProps) => {
   const theme = useTheme();
 
   return (
@@ -27,16 +27,27 @@ export const ToggleCard = ({ children, ...props }: ToggleCardProps) => {
           backgroundColor: 'background.default',
         },
         '&.MuiToggleButtonGroup-grouped': {
-          mr: 1,
           '&:not(:last-of-type)': {
             borderTopRightRadius: `${theme.shape.borderRadius}px`,
             borderBottomRightRadius: `${theme.shape.borderRadius}px`,
+
+            [theme.breakpoints.down('sm')]: {
+              mb: 1,
+            },
+            [theme.breakpoints.up('sm')]: {
+              mr: 1,
+            },
           },
           '&:not(:first-of-type)': {
             borderTopLeftRadius: `${theme.shape.borderRadius}px`,
             borderBottomLeftRadius: `${theme.shape.borderRadius}px`,
           },
         },
+        '&.MuiButtonBase-root': {
+          wordWrap: 'break-word',
+          whiteSpace: 'pre-wrap',
+        },
+        ...sx,
       }}
       {...props}
     >

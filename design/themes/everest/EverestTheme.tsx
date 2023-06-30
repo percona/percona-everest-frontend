@@ -89,6 +89,15 @@ export const everestThemeOptions = (mode: PaletteMode): ThemeOptions => {
           }),
         },
       },
+      MuiToggleButtonGroup: {
+        styleOverrides: {
+          root: ({ theme }) => ({
+            [theme.breakpoints.down('sm')]: {
+              flexDirection: 'column',
+            },
+          }),
+        },
+      },
     },
   };
 

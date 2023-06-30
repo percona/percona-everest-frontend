@@ -5,6 +5,7 @@ import {
   Button as MuiButton,
   ButtonGroup as MuiButtonGroup,
   IconButton as MuiIconButton,
+  Alert as MuiAlert,
   Box,
   styled,
 } from '@mui/material';
@@ -31,6 +32,7 @@ export const Typography = () => (
     <MuiTypography variant="h6">H6 Heading</MuiTypography>
     <MuiTypography variant="subtitle1">Subtitle 1</MuiTypography>
     <MuiTypography variant="subtitle2">Subtitle 2</MuiTypography>
+    <MuiTypography variant="sectionHeading">SectionHeading</MuiTypography>
     <MuiTypography variant="overline">Overline</MuiTypography>
     <MuiTypography variant="body1">Body 1</MuiTypography>
     <MuiTypography variant="body2">Body 2</MuiTypography>
@@ -205,6 +207,17 @@ export const Buttons = () => (
           <Cached />
         </MuiIconButton>
       </Box>
+    </Box>
+  </CompositionViewer>
+);
+
+export const Alert = () => (
+  <CompositionViewer themeOptions={baseThemeOptions}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+      <MuiAlert severity="error">Message</MuiAlert>
+      <MuiAlert severity="warning">Message</MuiAlert>
+      <MuiAlert severity="info">Message</MuiAlert>
+      <MuiAlert severity="success">Message</MuiAlert>
     </Box>
   </CompositionViewer>
 );
