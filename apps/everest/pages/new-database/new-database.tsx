@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Box, Button, Divider, Stack, Step, StepLabel } from '@mui/material';
+import { Box, Button, Divider, Stack, Step, StepLabel, useMediaQuery, useTheme } from '@mui/material';
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { Stepper } from '@percona/ui-lib.stepper';
 import React, { useState } from 'react';
@@ -27,12 +27,14 @@ import { useSelectedKubernetesCluster } from '../../hooks/kubernetesClusters/use
 import { DatabasePreview } from './database-preview/database-preview';
 
 export const NewDatabasePage = () => {
+  const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
-  const [longestAchievedStep, setLongestAchievedStep] = useState(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const currentValidationSchema = dbWizardSchema[activeStep];
   const { mutate: addDbCluster } = useCreateDbCluster();
   const { id } = useSelectedKubernetesCluster();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
 
   const methods = useForm<DbWizardType>({
     mode: 'onChange',
@@ -105,8 +107,11 @@ export const NewDatabasePage = () => {
         ))}
       </Stepper>
       <FormProvider {...methods}>
-        <Stack direction='row'>
-          <form onSubmit={methods.handleSubmit(onSubmit)} style={{ flexGrow: 1 }}>
+        <Stack direction={isDesktop ? 'row' : 'column'}>
+          <form
+            onSubmit={methods.handleSubmit(onSubmit)}
+            style={{ flexGrow: 1, marginBottom: !isDesktop ? theme.spacing(4) : 0 }}
+          >
             <Box>{React.createElement(steps[activeStep])}</Box>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
               <Button
@@ -134,11 +139,25 @@ export const NewDatabasePage = () => {
               )}
             </Box>
           </form>
-          <Divider orientation="vertical" flexItem sx={{ ml: 5 }} />
+          {(isMobile || isDesktop) && (
+            <Divider
+              orientation={isDesktop ? 'vertical' : 'horizontal'}
+              flexItem
+              sx={{
+                ml: isMobile ? 0 : 5,
+                mb: isMobile ? 1.5 : 0
+              }}
+            />
+          )}
           <DatabasePreview
             activeStep={activeStep}
             nrSteps={steps.length}
-            sx={{ flex: '0 0 25%' }}
+            sx={{
+              flex: '0 0 25%',
+              ...(!isDesktop && {
+                padding: 0
+              })
+            }}
           />
         </Stack>
       </FormProvider>
