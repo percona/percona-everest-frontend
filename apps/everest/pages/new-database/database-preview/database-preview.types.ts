@@ -1,8 +1,8 @@
 import { StackProps } from "@mui/material";
 
 export type DatabasePreviewProps = {
-  longestAchievedStep: number;
-  finalStepAchieved: boolean;
+  activeStep: number;
+  nrSteps: number;
 } & StackProps;
 
 export type PreviewSectionProps  = {

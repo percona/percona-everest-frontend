@@ -82,13 +82,7 @@ export const NewDatabasePage = () => {
       const isStepValid = await methods.trigger();
 
       if (isStepValid) {
-        setActiveStep((prevActiveStep) => {
-          const newStep = prevActiveStep + 1;
-          if (newStep > longestAchievedStep) {
-            setLongestAchievedStep(newStep);
-          }
-          return newStep;
-        });
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
     }
   };
@@ -142,8 +136,8 @@ export const NewDatabasePage = () => {
           </form>
           <Divider orientation="vertical" flexItem sx={{ ml: 5 }} />
           <DatabasePreview
-            longestAchievedStep={longestAchievedStep}
-            finalStepAchieved={longestAchievedStep === steps.length - 1}
+            activeStep={activeStep}
+            nrSteps={steps.length}
             sx={{ flex: '0 0 25%', padding: 2 }}
           />
         </Stack>
