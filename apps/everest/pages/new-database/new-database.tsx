@@ -21,10 +21,16 @@ import {
   TimeValue,
   WeekDays,
 } from './steps/third/third-step.types';
+import { SixthStep } from './steps/sixth/sixth-step';
+import { useCreateDbCluster } from '../../hooks/db-cluster/useDbCluster';
+import { useSelectedKubernetesCluster } from '../../hooks/kubernetesClusters/useSelectedKubernetesCluster';
 
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const currentValidationSchema = dbWizardSchema[activeStep];
+  const { mutate: addDbCluster } = useCreateDbCluster();
+  const { id } = useSelectedKubernetesCluster();
 
   const methods = useForm<DbWizardType>({
     mode: 'onChange',
@@ -44,6 +50,7 @@ export const NewDatabasePage = () => {
       onDay: 1,
       [BasicInformationFields.dbType]: DbType.Mysql,
       [BasicInformationFields.dbName]: '',
+      [BasicInformationFields.dbVersion]: '',
       externalAccess: false,
       internetFacing: true,
       sourceRange: '',
@@ -61,6 +68,11 @@ export const NewDatabasePage = () => {
   const onSubmit: SubmitHandler<DbWizardType> = (data) => {
     /* eslint-disable no-console */
     console.log(data);
+    addDbCluster({ dbPayload: data, id }, {
+      onSuccess: () => {
+        setFormSubmitted(true)
+      }
+    });
   };
 
   const handleNext: React.MouseEventHandler<HTMLButtonElement> = async () => {
@@ -79,7 +91,9 @@ export const NewDatabasePage = () => {
     }
   };
 
-  return (
+  return formSubmitted ? (
+    <SixthStep />
+  ) : (
     <>
       <Stepper noConnector activeStep={activeStep} sx={{ marginBottom: 4 }}>
         {steps.map((_, idx) => (
@@ -119,5 +133,5 @@ export const NewDatabasePage = () => {
         </form>
       </FormProvider>
     </>
-  );
+  )
 };
