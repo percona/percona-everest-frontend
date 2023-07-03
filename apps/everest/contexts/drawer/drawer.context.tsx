@@ -1,17 +1,19 @@
-import React, { createContext , useState } from "react";
-import { useMediaQuery , useTheme } from "@mui/material";
-import { DrawerContextProps } from "./drawer.context.types";
-
-
+import React, { createContext, useState } from 'react';
+import { useMediaQuery, useTheme } from '@mui/material';
+import { DrawerContextProps } from './drawer.context.types';
 
 export const DrawerContext = createContext<DrawerContextProps>({
   open: false,
-  toggleOpen: () => { },
-  setOpen: () => { },
+  toggleOpen: () => {},
+  setOpen: () => {},
   activeBreakpoint: 'desktop',
 });
 
-export const DrawerContextProvider = ({ children }: { children: React.ReactNode }) => {
+export const DrawerContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const theme = useTheme();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const toggleOpen = () => setDrawerOpen((val) => !val);
@@ -20,12 +22,19 @@ export const DrawerContextProvider = ({ children }: { children: React.ReactNode 
   const activeBreakpoint = isMobile
     ? 'mobile'
     : isDesktop
-      ? 'desktop'
-      : 'tablet'; 
+    ? 'desktop'
+    : 'tablet';
 
   return (
-    <DrawerContext.Provider value={{ open: drawerOpen, toggleOpen, activeBreakpoint, setOpen: setDrawerOpen }}>
+    <DrawerContext.Provider
+      value={{
+        open: drawerOpen,
+        toggleOpen,
+        activeBreakpoint,
+        setOpen: setDrawerOpen,
+      }}
+    >
       {children}
     </DrawerContext.Provider>
   );
-}
+};

@@ -7,12 +7,14 @@ import {
   styled,
 } from '@mui/material';
 import StorageIcon from '@mui/icons-material/Storage';
+import Settings from '@mui/icons-material/Settings';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import { DRAWER_WIDTH } from './Drawer.constants';
 import { closedMixin, openedMixin } from './Drawer.utils';
 import { NavItem } from '../nav-item/NavItem';
 import { DrawerContext } from '../../contexts/drawer/drawer.context';
+import { SettingsTabs } from '../../pages/settings/settings.types';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -65,6 +67,12 @@ const DrawerContent = ({ open }: { open: boolean }) => {
           open={open}
           icon={StorageIcon}
           text="Databases"
+        />
+        <NavItem
+          to={`/settings/${SettingsTabs.defaultConfigurations}`}
+          open={open}
+          icon={Settings}
+          text="Settings"
         />
       </List>
     </>

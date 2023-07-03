@@ -6,7 +6,6 @@ import { K8ContextProvider } from './contexts/kubernetes/kubernetes.context';
 import { DrawerContextProvider } from './contexts/drawer/drawer.context';
 import { Main } from './components/main/Main';
 
-
 export const EverestApp = () => {
   const queryClient = new QueryClient();
 

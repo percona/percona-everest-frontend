@@ -1,8 +1,5 @@
 import { UseFormSetValue, FieldValues } from 'react-hook-form';
-import {
-  ResourcesFields,
-  ResourceSize,
-} from './second-step.types';
+import { ResourcesFields, ResourceSize } from './second-step.types';
 import { DEFAULT_SIZES } from './second-step.const';
 
 const humanizedResourceSizeMap: Record<ResourceSize, string> = {
