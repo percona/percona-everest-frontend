@@ -89,7 +89,7 @@ export const TimeSelection = () => {
             </TextField>
           )}
         />
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
           {selectedTime === TimeValue.hours && <HoursField />}
           {selectedTime === TimeValue.weeks && <WeeksField />}
           {selectedTime === TimeValue.months && <MonthsField />}

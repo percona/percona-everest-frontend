@@ -55,15 +55,9 @@ export const SecondStep = () => {
   const diskCapacityExceeded = disk > totalSizes.disk;
 
   const alertLabels = [];
-  if (cpuCapacityExceeded) {
-    alertLabels.push(Messages.labels.cpu);
-  }
-  if (memoryCapacityExceeded) {
-    alertLabels.push(Messages.labels.memory);
-  }
-  if (diskCapacityExceeded) {
-    alertLabels.push(Messages.labels.disk);
-  }
+  if (cpuCapacityExceeded) { alertLabels.push(Messages.labels.cpu)}
+  if (memoryCapacityExceeded) { alertLabels.push(Messages.labels.memory)}
+  if (diskCapacityExceeded) {alertLabels.push(Messages.labels.disk)}
 
   useEffect(() => {
     if (resourceSizePerNode && resourceSizePerNode !== ResourceSize.custom) {
@@ -118,8 +112,7 @@ export const SecondStep = () => {
                   '&.MuiButtonBase-root': {
                     wordWrap: 'break-word',
                     whiteSpace: 'pre-wrap',
-                  },
-                }}
+                  }}}
               >
                 {Messages.labels.sourceReplica}
               </ToggleCard>

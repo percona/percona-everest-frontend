@@ -20,8 +20,7 @@ import { DB_VERSIONS } from './first-step.constants';
 
 export const FirstStep = () => {
   const { control, watch, setValue } = useFormContext();
-  const { data: dbEngines = [], isFetching: dbEnginesFetching } =
-    useDbEngines();
+  const { data: dbEngines = [], isFetching: dbEnginesFetching } = useDbEngines();
 
   // TODO change to api request's result
   // const k8sNamespacesOptions = [

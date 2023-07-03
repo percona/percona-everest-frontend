@@ -6,15 +6,12 @@ import {
   Toolbar,
   styled,
 } from '@mui/material';
-import StorageIcon from '@mui/icons-material/Storage';
-import Settings from '@mui/icons-material/Settings';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-import { DRAWER_WIDTH } from './Drawer.constants';
+import { DRAWER_WIDTH, ROUTES } from './Drawer.constants';
 import { closedMixin, openedMixin } from './Drawer.utils';
 import { NavItem } from '../nav-item/NavItem';
 import { DrawerContext } from '../../contexts/drawer/drawer.context';
-import { SettingsTabs } from '../../pages/settings/settings.types';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -43,7 +40,7 @@ const StyledDrawer = styled(MuiDrawer, {
 }));
 
 const DrawerContent = ({ open }: { open: boolean }) => {
-  const { toggleOpen, activeBreakpoint } = useContext(DrawerContext);
+  const { toggleOpen, setOpen, activeBreakpoint } = useContext(DrawerContext);
 
   return (
     <>
@@ -62,18 +59,16 @@ const DrawerContent = ({ open }: { open: boolean }) => {
         </IconButton>
       </DrawerHeader>
       <List>
-        <NavItem
-          to="/databases"
-          open={open}
-          icon={StorageIcon}
-          text="Databases"
-        />
-        <NavItem
-          to={`/settings/${SettingsTabs.defaultConfigurations}`}
-          open={open}
-          icon={Settings}
-          text="Settings"
-        />
+        {ROUTES.map(({ to, icon, text }) => (
+          <NavItem
+            onClick={() => setOpen(false)}
+            to={to}
+            open={open}
+            icon={icon}
+            text={text}
+            key={to}
+          />
+        ))}´
       </List>
     </>
   );

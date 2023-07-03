@@ -1,18 +1,6 @@
-import { useQuery } from 'react-query';
-import { KubernetesClusterList } from '../../types/kubernetes.types';
+import { useQuery } from "react-query";
+import { KubernetesClusterList } from "../../types/kubernetes.types";
+import { getKubernetesClustersFn } from "../../api/kubernetesClusterApi";
 
-export const useKubernetesClusters = () => {
-  return useQuery<KubernetesClusterList>(
-    'kubernetesClusters',
-    async () => {
-      const result = await fetch('/v1/kubernetes');
-
-      if (!result.ok) {
-        throw new Error();
-      }
-
-      return result.json();
-    },
-    { refetchOnWindowFocus: false }
-  );
-};
+export const useKubernetesClusters = () =>
+  useQuery<KubernetesClusterList>('kubernetesClusters', () => getKubernetesClustersFn())

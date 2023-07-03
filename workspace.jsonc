@@ -43,6 +43,7 @@
         "@mui/icons-material": "^5.11.16",
         "@teambit/eslint-config-bit-react": "~0.0.367",
         "@typescript-eslint/eslint-plugin": "5.35.1",
+        "axios": "^1.4.0",
         "css-mediaquery": "^0.1.2",
         "eslint-import-resolver-node": "0.3.6",
         "eslint-plugin-import": "2.22.1",
@@ -53,7 +54,10 @@
         "react-hook-form": "^7.44.3",
         "zod": "^3.21.4",
         "material-react-table": "^1.12.1",
-        "react-query": "^3.39.3"
+        "notistack": "^3.0.1",
+        "react-hook-form": "^7.44.3",
+        "react-query": "^3.39.3",
+        "zod": "^3.21.4"
       },
       "peerDependencies": {
         "@emotion/react": "^11.11.0",
