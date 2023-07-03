@@ -48,7 +48,13 @@ export const Settings = () => {
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="nav tabs">
+        <Tabs
+          value={value}
+          variant="scrollable"
+          allowScrollButtonsMobile
+          onChange={handleChange}
+          aria-label="nav tabs"
+        >
           <LinkTab
             label={Messages.defaultConfigurations}
             href="/defaultConfigurations"

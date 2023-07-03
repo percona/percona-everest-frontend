@@ -370,6 +370,11 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
           '.MuiTabs-indicator': {
             height: '3px',
           },
+          '.MuiTabScrollButton-root': {
+            '&.Mui-disabled':{
+              opacity: 0.1,
+            }
+          },
         },
       },
     },
