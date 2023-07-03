@@ -371,9 +371,9 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
             height: '3px',
           },
           '.MuiTabScrollButton-root': {
-            '&.Mui-disabled':{
+            '&.Mui-disabled': {
               opacity: 0.1,
-            }
+            },
           },
         },
       },
