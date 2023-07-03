@@ -68,7 +68,8 @@ const DrawerContent = ({ open }: { open: boolean }) => {
             text={text}
             key={to}
           />
-        ))}´
+        ))}
+        ´
       </List>
     </>
   );

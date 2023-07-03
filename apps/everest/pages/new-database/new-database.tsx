@@ -68,11 +68,14 @@ export const NewDatabasePage = () => {
   const onSubmit: SubmitHandler<DbWizardType> = (data) => {
     /* eslint-disable no-console */
     console.log(data);
-    addDbCluster({ dbPayload: data, id }, {
-      onSuccess: () => {
-        setFormSubmitted(true)
+    addDbCluster(
+      { dbPayload: data, id },
+      {
+        onSuccess: () => {
+          setFormSubmitted(true);
+        },
       }
-    });
+    );
   };
 
   const handleNext: React.MouseEventHandler<HTMLButtonElement> = async () => {
@@ -133,5 +136,5 @@ export const NewDatabasePage = () => {
         </form>
       </FormProvider>
     </>
-  )
+  );
 };
