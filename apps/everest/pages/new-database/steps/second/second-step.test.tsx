@@ -5,10 +5,10 @@ import { TestWrapper } from '../../../../utils/test';
 import { SecondStep } from './second-step';
 import {
   NumberOfNodes,
-  ResourcesFields,
   ResourceSize,
 } from './second-step.types';
 import { DEFAULT_SIZES } from './second-step.const';
+import { DbWizardFormFields } from '../../new-database.types';
 
 jest.unmock('react-native');
 
@@ -23,11 +23,11 @@ const FormProviderWrapper = ({
 }: FormProviderWrapperProps) => {
   const methods = useForm({
     defaultValues: {
-      [ResourcesFields.numberOfNodes]: NumberOfNodes.oneNode,
-      [ResourcesFields.resourceSizePerNode]: ResourceSize.small,
-      [ResourcesFields.cpu]: DEFAULT_SIZES.small.cpu,
-      [ResourcesFields.disk]: DEFAULT_SIZES.small.disk,
-      [ResourcesFields.memory]: DEFAULT_SIZES.small.memory,
+      [DbWizardFormFields.numberOfNodes]: NumberOfNodes.oneNode,
+      [DbWizardFormFields.resourceSizePerNode]: ResourceSize.small,
+      [DbWizardFormFields.cpu]: DEFAULT_SIZES.small.cpu,
+      [DbWizardFormFields.disk]: DEFAULT_SIZES.small.disk,
+      [DbWizardFormFields.memory]: DEFAULT_SIZES.small.memory,
     },
   });
 
@@ -57,11 +57,11 @@ describe('Second Step', () => {
 
     expect(handleSubmitMock).toHaveBeenCalledWith(
       expect.objectContaining({
-        [ResourcesFields.cpu]: 1,
-        [ResourcesFields.disk]: 25,
-        [ResourcesFields.memory]: 2,
-        [ResourcesFields.numberOfNodes]: '1',
-        [ResourcesFields.resourceSizePerNode]: 'small',
+        [DbWizardFormFields.cpu]: 1,
+        [DbWizardFormFields.disk]: 25,
+        [DbWizardFormFields.memory]: 2,
+        [DbWizardFormFields.numberOfNodes]: '1',
+        [DbWizardFormFields.resourceSizePerNode]: 'small',
       }),
       expect.anything()
     );
@@ -76,26 +76,26 @@ describe('Second Step', () => {
     );
 
     expect(screen.getByTestId('cpu-input').querySelector('input')).toHaveValue(
-      DEFAULT_SIZES[ResourceSize.small][ResourcesFields.cpu]
+      DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.cpu]
     );
     expect(
       screen.getByTestId('memory-input').querySelector('input')
-    ).toHaveValue(DEFAULT_SIZES[ResourceSize.small][ResourcesFields.memory]);
+    ).toHaveValue(DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.memory]);
     expect(screen.getByTestId('disk-input').querySelector('input')).toHaveValue(
-      DEFAULT_SIZES[ResourceSize.small][ResourcesFields.disk]
+      DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.disk]
     );
 
     const mediumButton = screen.getByTestId('toggle-button-medium');
     await waitFor(() => fireEvent.click(mediumButton));
 
     expect(screen.getByTestId('cpu-input').querySelector('input')).toHaveValue(
-      DEFAULT_SIZES[ResourceSize.medium][ResourcesFields.cpu]
+      DEFAULT_SIZES[ResourceSize.medium][DbWizardFormFields.cpu]
     );
     expect(
       screen.getByTestId('memory-input').querySelector('input')
-    ).toHaveValue(DEFAULT_SIZES[ResourceSize.medium][ResourcesFields.memory]);
+    ).toHaveValue(DEFAULT_SIZES[ResourceSize.medium][DbWizardFormFields.memory]);
     expect(screen.getByTestId('disk-input').querySelector('input')).toHaveValue(
-      DEFAULT_SIZES[ResourceSize.medium][ResourcesFields.disk]
+      DEFAULT_SIZES[ResourceSize.medium][DbWizardFormFields.disk]
     );
   });
 
@@ -113,7 +113,7 @@ describe('Second Step', () => {
     const cpu = screen.getByTestId('cpu-input').querySelector('input');
 
     expect(cpu).toHaveValue(
-      DEFAULT_SIZES[ResourceSize.small][ResourcesFields.cpu]
+      DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.cpu]
     );
 
     await waitFor(() => fireEvent.change(cpu, { target: { value: 5 } }));
@@ -138,7 +138,7 @@ describe('Second Step', () => {
 
     const cpu = screen.getByTestId('cpu-input').querySelector('input');
     expect(cpu).toHaveValue(
-      DEFAULT_SIZES[ResourceSize.small][ResourcesFields.cpu]
+      DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.cpu]
     );
     expect(
       screen.queryByTestId('resources-exceeding-alert')
