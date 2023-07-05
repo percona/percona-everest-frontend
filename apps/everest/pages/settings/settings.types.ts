@@ -1,4 +1,4 @@
-export const enum SettingsTabs {
+export enum SettingsTabs {
   defaultConfigurations = 'default-configurations',
   storageLocations = 'storage-locations',
   monitoringEndpoints = 'monitoring-endpoints',
