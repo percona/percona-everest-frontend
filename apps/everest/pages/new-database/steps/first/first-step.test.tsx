@@ -3,8 +3,8 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { TestWrapper } from '../../../../utils/test';
-import { BasicInformationFields } from './first-step.types';
 import { FirstStep } from './first-step';
+import { DbWizardFormFields } from '../../new-database.types';
 
 jest.unmock('react-native');
 
@@ -22,11 +22,11 @@ const FormProviderWrapper = ({
 }: FormProviderWrapperProps) => {
   const methods = useForm({
     defaultValues: {
-      [BasicInformationFields.dbType]: DbType.Postresql,
-      [BasicInformationFields.dbName]: '',
-      [BasicInformationFields.k8sNamespace]: '',
-      [BasicInformationFields.dbEnvironment]: '',
-      [BasicInformationFields.dbVersion]: '',
+      [DbWizardFormFields.dbType]: DbType.Postresql,
+      [DbWizardFormFields.dbName]: '',
+      [DbWizardFormFields.k8sNamespace]: '',
+      [DbWizardFormFields.dbEnvironment]: '',
+      [DbWizardFormFields.dbVersion]: '',
     },
   });
 
