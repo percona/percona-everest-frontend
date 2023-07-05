@@ -1,11 +1,3 @@
-export enum ResourcesFields {
-  cpu = 'cpu',
-  memory = 'memory',
-  disk = 'disk',
-  numberOfNodes = 'numberOfNodes',
-  resourceSizePerNode = 'resourceSizePerNode',
-}
-
 export enum ResourceSize {
   small = 'small',
   medium = 'medium',
