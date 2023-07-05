@@ -21,12 +21,9 @@ function useRouteMatch(patterns: readonly string[]) {
 
 export const Settings = () => {
   const routeMatch = useRouteMatch([
-    `/settings/${SettingsTabs.defaultConfigurations}`,
-    `/settings/${SettingsTabs.storageLocations}`,
-    `/settings/${SettingsTabs.monitoringEndpoints}`,
-    `/settings/${SettingsTabs.k8sClusters}`,
+    `/settings/:tabs`,
   ]);
-  const currentTab = routeMatch?.pattern?.path;
+  const currentTab = routeMatch?.params?.tabs;
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -39,26 +36,26 @@ export const Settings = () => {
         >
           <Tab
             label={Messages.defaultConfigurations}
-            value={`/settings/${SettingsTabs.defaultConfigurations}`}
-            to={`/settings/${SettingsTabs.defaultConfigurations}`}
+            value={SettingsTabs.defaultConfigurations}
+            to={SettingsTabs.defaultConfigurations}
             component={Link}
           />
           <Tab
             label={Messages.storageLocations}
-            value={`/settings/${SettingsTabs.storageLocations}`}
-            to={`/settings/${SettingsTabs.storageLocations}`}
+            value={SettingsTabs.storageLocations}
+            to={SettingsTabs.storageLocations}
             component={Link}
           />
           <Tab
             label={Messages.monitoringEndpoints}
-            value={`/settings/${SettingsTabs.monitoringEndpoints}`}
-            to={`/settings/${SettingsTabs.monitoringEndpoints}`}
+            value={SettingsTabs.monitoringEndpoints}
+            to={SettingsTabs.monitoringEndpoints}
             component={Link}
           />
           <Tab
             label={Messages.k8sClusters}
-            value={`/settings/${SettingsTabs.k8sClusters}`}
-            to={`/settings/${SettingsTabs.k8sClusters}`}
+            value={SettingsTabs.k8sClusters}
+            to={SettingsTabs.k8sClusters}
             component={Link}
           />
         </Tabs>
