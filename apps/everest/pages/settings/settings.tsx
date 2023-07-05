@@ -1,70 +1,66 @@
 import { Box, Tab, Tabs } from '@mui/material';
-import React, { useEffect } from 'react';
-import { useNavigate, useLocation, Outlet } from 'react-router-dom';
+import React from 'react';
+import { useLocation, Outlet, Link, matchPath } from 'react-router-dom';
 
-import { SettingsTabs, settingsTabsMui } from './settings.types';
+import { SettingsTabs } from './settings.types';
 import { Messages } from './settings.messages';
 
-interface LinkTabProps {
-  label: string;
-  href: string;
-}
+function useRouteMatch(patterns: readonly string[]) {
+  const { pathname } = useLocation();
 
-function LinkTab(props: LinkTabProps) {
-  const navigate = useNavigate();
-
-  return (
-    <Tab
-      component="a"
-      onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        event.preventDefault();
-        navigate(`/settings${props.href}`);
-      }}
-      {...props}
-    />
-  );
-}
-export const Settings = () => {
-  const location = useLocation();
-  const locationPathArray = location.pathname.split('/');
-  const urlLocation = locationPathArray[
-    locationPathArray.length - 1
-  ] as SettingsTabs;
-
-  const [value, setValue] = React.useState(settingsTabsMui[urlLocation]);
-
-  // it is necessary for the correct installation of the first tab when clicking on the settings panel on the left
-  // again, since returning to settings/default is a return without reloading
-  useEffect(() => {
-    if (value !== settingsTabsMui[urlLocation]) {
-      setValue(settingsTabsMui[urlLocation]);
+  for (let i = 0; i < patterns.length; i += 1) {
+    const pattern = patterns[i];
+    const possibleMatch = matchPath(pattern, pathname);
+    if (possibleMatch !== null) {
+      return possibleMatch;
     }
-  }, [urlLocation]);
+  }
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
+  return null;
+}
+
+export const Settings = () => {
+  const routeMatch = useRouteMatch([
+    `/settings/${SettingsTabs.defaultConfigurations}`,
+    `/settings/${SettingsTabs.storageLocations}`,
+    `/settings/${SettingsTabs.monitoringEndpoints}`,
+    `/settings/${SettingsTabs.k8sClusters}`,
+  ]);
+  const currentTab = routeMatch?.pattern?.path;
 
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
-          value={value}
+          value={currentTab}
           variant="scrollable"
           allowScrollButtonsMobile
-          onChange={handleChange}
           aria-label="nav tabs"
         >
-          <LinkTab
+          <Tab
             label={Messages.defaultConfigurations}
-            href="/defaultConfigurations"
+            value={`/settings/${SettingsTabs.defaultConfigurations}`}
+            to={`/settings/${SettingsTabs.defaultConfigurations}`}
+            component={Link}
           />
-          <LinkTab label={Messages.storageLocations} href="/storageLocations" />
-          <LinkTab
+          <Tab
+            label={Messages.storageLocations}
+            value={`/settings/${SettingsTabs.storageLocations}`}
+            to={`/settings/${SettingsTabs.storageLocations}`}
+            component={Link}
+          />
+          <Tab
             label={Messages.monitoringEndpoints}
-            href="/monitoringEndpoints"
+            value={`/settings/${SettingsTabs.monitoringEndpoints}`}
+            to={`/settings/${SettingsTabs.monitoringEndpoints}`}
+            component={Link}
           />
-          <LinkTab label={Messages.k8sClusters} href="/k8sClusters" />
+          <Tab
+            label={Messages.k8sClusters}
+            value={`/settings/${SettingsTabs.k8sClusters}`}
+            to={`/settings/${SettingsTabs.k8sClusters}`}
+            component={Link}
+          />
         </Tabs>
       </Box>
       <Outlet />
