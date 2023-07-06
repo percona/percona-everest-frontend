@@ -17,8 +17,8 @@ import { DbWizardFormFields } from '../../new-database.types';
 
 export const ThirdStep = () => {
   const { control, watch } = useFormContext();
-  const backupsEnabled: boolean = watch('backupsEnabled');
-  const pitrEnabled: boolean = watch('pitrEnabled');
+  const backupsEnabled: boolean = watch(DbWizardFormFields.backupsEnabled);
+  const pitrEnabled: boolean = watch(DbWizardFormFields.pitrEnabled);
   const fetchedStorageValues = Object.values(StorageLocation);
 
   return (
