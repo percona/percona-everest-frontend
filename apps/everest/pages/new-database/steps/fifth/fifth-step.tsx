@@ -3,16 +3,16 @@ import {
   FormGroup,
   FormControlLabel,
   Switch,
-  TextField,
 } from '@mui/material';
 import React from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { Messages } from './fifth-step.messages';
 import { DbWizardFormFields } from '../../new-database.types';
+import { TextInput } from '@percona/ui-lib.form.inputs.text';
 
 export const FifthStep = () => {
   const { control, watch } = useFormContext();
-  const monitoring = watch('monitoring');
+  const monitoring = watch(DbWizardFormFields.monitoring);
 
   return (
     <>
@@ -33,30 +33,11 @@ export const FifthStep = () => {
           }
         />
         {monitoring && (
-          <>
-            <Typography variant="h6" sx={{ mt: 5 }}>
-              {Messages.endpointName}
-            </Typography>
-            <Controller
-              control={control}
-              name={DbWizardFormFields.endpoint}
-              rules={{
-                required: true,
-              }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  {...field}
-                  variant="outlined"
-                  placeholder={Messages.endpointPlaceholder}
-                  error={error !== undefined}
-                  helperText={error ? Messages.endpointError : ''}
-                  inputProps={{
-                    'data-testid': 'text-endpoint',
-                  }}
-                />
-              )}
-            />
-          </>
+          <TextInput
+            name={DbWizardFormFields.endpoint}
+            control={control}
+            label={Messages.endpointName}
+          />
         )}
       </FormGroup>
     </>

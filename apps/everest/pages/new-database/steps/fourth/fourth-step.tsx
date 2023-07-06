@@ -4,7 +4,6 @@ import {
   IconButton,
   InputAdornment,
   Switch,
-  TextField,
   Typography,
 } from '@mui/material';
 import React from 'react';
@@ -15,10 +14,11 @@ import { Messages } from './fourth-step.messages';
 
 import { IP_RANGE_PATTERN } from './fourth-step.constants';
 import { DbWizardFormFields } from '../../new-database.types';
+import { TextInput } from '@percona/ui-lib.form.inputs.text';
 
 export const FourthStep = () => {
   const { control, setValue, watch } = useFormContext();
-  const externalAccess = watch('externalAccess');
+  const externalAccess = watch(DbWizardFormFields.externalAccess);
 
   return (
     <>
@@ -53,45 +53,29 @@ export const FourthStep = () => {
                 />
               }
             />
-            <Typography variant="h6" sx={{ mt: 5 }}>
-              {Messages.sourceRange}
-            </Typography>
-            <Controller
-              control={control}
+            <TextInput
               name={DbWizardFormFields.sourceRange}
-              rules={{
-                required: true,
-                pattern: IP_RANGE_PATTERN,
+              control={control}
+              label={Messages.sourceRange}
+              textFieldProps={{
+                placeholder: Messages.sourceRangePlaceholder,
+                InputProps: {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        data-testid="delete-button"
+                        onClick={() =>
+                          setValue('sourceRange', '', {
+                            shouldValidate: true,
+                          })
+                        }
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }
               }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  {...field}
-                  variant="outlined"
-                  placeholder={Messages.sourceRangePlaceholder}
-                  error={error !== undefined}
-                  helperText={error ? Messages.sourceRangeError : ''}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          data-testid="delete-button"
-                          onClick={() =>
-                            setValue('sourceRange', '', {
-                              shouldValidate: true,
-                            })
-                          }
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  // eslint-disable-next-line react/jsx-no-duplicate-props
-                  inputProps={{
-                    'data-testid': 'text-source-range',
-                  }}
-                />
-              )}
             />
           </>
         )}

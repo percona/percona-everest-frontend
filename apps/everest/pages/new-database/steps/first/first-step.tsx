@@ -4,12 +4,12 @@ import {
   MenuItem,
   Skeleton,
   Select,
-  TextField,
   ToggleButtonGroup,
   Typography,
 } from '@mui/material';
 
 import { DbToggleCard, DbType } from '@percona/ui-lib.db-toggle-card';
+import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Messages } from './first-step.messages';
 import { generateShortUID } from './utils';
@@ -97,24 +97,13 @@ export const FirstStep = () => {
             )}
           />
         )}
-        <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
-          {Messages.labels.dbName}
-        </Typography>
-        <Controller
+        <TextInput
           control={control}
           name={DbWizardFormFields.dbName}
-          render={({ field, fieldState: { error } }) => (
-            <TextField
-              {...field}
-              variant="outlined"
-              placeholder={Messages.placeholders.dbName}
-              error={error !== undefined}
-              helperText={error ? error.message : ''}
-              inputProps={{
-                'data-testid': 'text-dbName',
-              }}
-            />
-          )}
+          label={Messages.labels.dbName}
+          textFieldProps={{
+            placeholder: Messages.placeholders.dbName
+          }}
         />
         {/* <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
           {Messages.labels.k8sNamespace}
