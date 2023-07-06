@@ -1,18 +1,16 @@
 import {
-  FormControlLabel,
   FormGroup,
   IconButton,
   InputAdornment,
-  Switch,
   Typography,
 } from '@mui/material';
 import React from 'react';
 
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Controller, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
+import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
 import { Messages } from './fourth-step.messages';
 
-import { IP_RANGE_PATTERN } from './fourth-step.constants';
 import { DbWizardFormFields } from '../../new-database.types';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 
@@ -25,33 +23,17 @@ export const FourthStep = () => {
       <Typography variant="h5">{Messages.externalAccess}</Typography>
       <Typography variant="subtitle2">{Messages.caption}</Typography>
       <FormGroup sx={{ mt: 2 }}>
-        <FormControlLabel
+        <SwitchInput
+          control={control}
           label={Messages.enableExternalAccess}
-          data-testid="switch-external-access"
-          control={
-            <Controller
-              control={control}
-              name={DbWizardFormFields.externalAccess}
-              render={({ field }) => (
-                <Switch {...field} checked={field.value} />
-              )}
-            />
-          }
+          name={DbWizardFormFields.externalAccess}
         />
         {externalAccess && (
           <>
-            <FormControlLabel
+            <SwitchInput
+              control={control}
               label={Messages.internetFacing}
-              data-testid="switch-internet-facing"
-              control={
-                <Controller
-                  control={control}
-                  name={DbWizardFormFields.internetFacing}
-                  render={({ field }) => (
-                    <Switch {...field} checked={field.value} />
-                  )}
-                />
-              }
+              name={DbWizardFormFields.internetFacing}
             />
             <TextInput
               name={DbWizardFormFields.sourceRange}

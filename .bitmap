@@ -28,6 +28,19 @@
         "mainFile": "index.ts",
         "rootDir": "apps/everest"
     },
+    "form/inputs/switch": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui-lib",
+        "mainFile": "index.ts",
+        "rootDir": "ui/form/inputs/switch",
+        "config": {
+            "teambit.envs/envs": {
+                "env": "percona.envs/percona-react-env"
+            },
+            "percona.envs/percona-react-env": {}
+        }
+    },
     "form/inputs/text": {
         "scope": "",
         "version": "",
