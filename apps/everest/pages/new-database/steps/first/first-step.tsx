@@ -4,12 +4,12 @@ import {
   MenuItem,
   Skeleton,
   Select,
-  ToggleButtonGroup,
   Typography,
 } from '@mui/material';
 
 import { DbToggleCard, DbType } from '@percona/ui-lib.db-toggle-card';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
+import { ToggleButtonGroupInput } from '@percona/ui-lib.form.inputs.toggle-button-group';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Messages } from './first-step.messages';
 import { generateShortUID } from './utils';
@@ -70,32 +70,13 @@ export const FirstStep = () => {
           // This is roughly the height of the buttons
           <Skeleton height={57} variant="rectangular" />
         ) : (
-          <Controller
+          <ToggleButtonGroupInput
             name={DbWizardFormFields.dbType}
-            control={control}
-            render={({ field }) => (
-              <ToggleButtonGroup
-                {...field}
-                fullWidth
-                exclusive
-                sx={{ marginTop: 1 }}
-                onChange={(
-                  event: React.MouseEvent<HTMLElement> | any,
-                  value: DbType
-                ) => {
-                  if (value !== null) {
-                    /* eslint-disable no-param-reassign */
-                    event.target.value = value;
-                    field.onChange(event);
-                  }
-                }}
-              >
-                {dbEngines.map(({ type }) => (
-                  <DbToggleCard key={type} value={dbEngineToDbType(type)} />
-                ))}
-              </ToggleButtonGroup>
-            )}
-          />
+            control={control}>
+            {dbEngines.map(({ type }) => (
+              <DbToggleCard key={type} value={dbEngineToDbType(type)} />
+            ))}
+          </ToggleButtonGroupInput>
         )}
         <TextInput
           control={control}
