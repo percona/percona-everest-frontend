@@ -92,5 +92,7 @@
   "percona.ui-lib/db-toggle-card": {},
   "percona.ui-lib/icons/everest": {},
   "percona.ui-lib/toggle-card": {},
-  "percona.apps/everest": {}
+  "percona.apps/everest": {},
+  "percona.ui-lib/labeled-content": {},
+  "percona.ui-lib/form/inputs/text": {}
 }
