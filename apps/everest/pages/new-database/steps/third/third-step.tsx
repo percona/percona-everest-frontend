@@ -7,12 +7,12 @@ import {
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
+import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { PitrEnabledSection } from './pitrSection/pitr-enabled-section';
 import { Messages } from './third-step.messages';
 import { StorageLocation } from './third-step.types';
 import { TimeSelection } from './timeSelection/time-selection';
 import { DbWizardFormFields } from '../../new-database.types';
-import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 
 export const ThirdStep = () => {
   const { control, watch } = useFormContext();

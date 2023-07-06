@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
 import { ToggleCard } from '@percona/ui-lib.toggle-card';
+import { ToggleButtonGroupInput } from '@percona/ui-lib.form.inputs.toggle-button-group';
 import { Messages } from './second-step.messages';
 import { ResourcesDetail } from '../../../../components/resources-detail';
 import {
@@ -22,7 +23,6 @@ import {
 import { ResourcesLegend } from './resources-legend/resources-legend';
 import { DEFAULT_SIZES } from './second-step.const';
 import { DbWizardFormFields } from '../../new-database.types';
-import { ToggleButtonGroupInput } from '@percona/ui-lib.form.inputs.toggle-button-group';
 
 export const SecondStep = () => {
   const { control, watch, setValue } = useFormContext();

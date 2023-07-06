@@ -1,4 +1,4 @@
-import { SelectProps, TextFieldProps } from "@mui/material";
+import { SelectProps } from "@mui/material";
 import { LabeledContentProps } from "@percona/ui-lib.labeled-content";
 import { Control, FieldValues } from "react-hook-form";
 

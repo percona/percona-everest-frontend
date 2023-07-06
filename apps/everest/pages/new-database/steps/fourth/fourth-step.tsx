@@ -9,10 +9,10 @@ import React from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useFormContext } from 'react-hook-form';
 import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
+import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { Messages } from './fourth-step.messages';
 
 import { DbWizardFormFields } from '../../new-database.types';
-import { TextInput } from '@percona/ui-lib.form.inputs.text';
 
 export const FourthStep = () => {
   const { control, setValue, watch } = useFormContext();

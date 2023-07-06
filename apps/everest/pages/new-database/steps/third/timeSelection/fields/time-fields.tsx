@@ -1,11 +1,11 @@
 import { Box, MenuItem, Typography } from '@mui/material';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { HOURS_AM_PM, MINUTES } from '../../third-step.constants';
 import { Messages } from '../../third-step.messages';
 import { AmPM } from '../../third-step.types';
 import { addZeroToSingleDigit } from '../../third-step.utils';
-import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 
 export const TimeFields = () => {
   const { control } = useFormContext();

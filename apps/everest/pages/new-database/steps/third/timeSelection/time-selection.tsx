@@ -1,6 +1,7 @@
 import { Alert, Box, MenuItem, OutlinedInput, TextField } from '@mui/material';
 import React, { useMemo } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { Messages } from '../third-step.messages';
 import { TimeValue } from '../third-step.types';
 import { getTimeText } from '../third-step.utils';
@@ -8,7 +9,6 @@ import { HoursField } from './fields/hours-field';
 import { MonthsField } from './fields/months-field';
 import { TimeFields } from './fields/time-fields';
 import { WeeksField } from './fields/weeks-field';
-import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 
 export const TimeSelection = () => {
   const { control, watch } = useFormContext();

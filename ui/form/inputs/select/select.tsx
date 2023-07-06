@@ -1,8 +1,8 @@
 import React from 'react';
 import { Controller } from 'react-hook-form';
 import { Select } from '@mui/material';
-import { SelectInputProps } from './select.types';
 import { LabeledContent } from '@percona/ui-lib.labeled-content';
+import { SelectInputProps } from './select.types';
 
 
 
