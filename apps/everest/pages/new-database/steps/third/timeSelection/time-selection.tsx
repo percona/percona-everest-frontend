@@ -8,6 +8,7 @@ import { HoursField } from './fields/hours-field';
 import { MonthsField } from './fields/months-field';
 import { TimeFields } from './fields/time-fields';
 import { WeeksField } from './fields/weeks-field';
+import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 
 export const TimeSelection = () => {
   const { control, watch } = useFormContext();
@@ -69,26 +70,19 @@ export const TimeSelection = () => {
             />
           )}
         />
-        <Controller
-          control={control}
+        <SelectInput
           name="selectTime"
-          render={({ field }) => (
-            <TextField
-              {...field}
-              sx={{ minWidth: '120px' }}
-              select
-              inputProps={{
-                'data-testid': 'select-time-value',
-              }}
-            >
-              {Object.values(TimeValue).map((value) => (
+          control={control}
+          selectFieldProps={{
+            sx:{ minWidth: '120px' }
+          }}
+        >
+          {Object.values(TimeValue).map((value) => (
                 <MenuItem key={value} value={value}>
                   {value}
                 </MenuItem>
               ))}
-            </TextField>
-          )}
-        />
+        </SelectInput>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
           {selectedTime === TimeValue.hours && <HoursField />}
           {selectedTime === TimeValue.weeks && <WeeksField />}

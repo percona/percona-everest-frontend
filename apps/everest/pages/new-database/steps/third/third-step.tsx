@@ -1,18 +1,18 @@
 import {
   Box,
   MenuItem,
-  TextField,
   Typography,
 } from '@mui/material';
 
 import React from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
 import { PitrEnabledSection } from './pitrSection/pitr-enabled-section';
 import { Messages } from './third-step.messages';
 import { StorageLocation } from './third-step.types';
 import { TimeSelection } from './timeSelection/time-selection';
 import { DbWizardFormFields } from '../../new-database.types';
+import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 
 export const ThirdStep = () => {
   const { control, watch } = useFormContext();
@@ -35,38 +35,17 @@ export const ThirdStep = () => {
             {Messages.repeatsEvery}
           </Typography>
           <TimeSelection />
-          <Box
-            sx={{
-              paddingTop: 3,
-              paddingBottom: 3,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 1,
-            }}
+          <SelectInput
+            name={DbWizardFormFields.storageLocation}
+            control={control}
+            label={Messages.storageLocation}
           >
-            <Typography variant="sectionHeading">
-              {Messages.storageLocation}
-            </Typography>
-            <Controller
-              control={control}
-              name={DbWizardFormFields.storageLocation}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  select
-                  inputProps={{
-                    'data-testid': 'select-storage-location',
-                  }}
-                >
-                  {fetchedStorageValues.map((value) => (
-                    <MenuItem key={value} value={value}>
-                      {value}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              )}
-            />
-          </Box>
+            {fetchedStorageValues.map((value) => (
+              <MenuItem key={value} value={value}>
+                {value}
+              </MenuItem>
+            ))}
+          </SelectInput>
           <Typography variant="h6">{Messages.pitr}</Typography>
           <Typography variant="caption">{Messages.captionPitr}</Typography>
           <SwitchInput

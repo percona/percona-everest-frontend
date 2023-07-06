@@ -3,14 +3,14 @@ import {
   FormGroup,
   MenuItem,
   Skeleton,
-  Select,
   Typography,
 } from '@mui/material';
 
 import { DbToggleCard, DbType } from '@percona/ui-lib.db-toggle-card';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { ToggleButtonGroupInput } from '@percona/ui-lib.form.inputs.toggle-button-group';
-import { Controller, useFormContext } from 'react-hook-form';
+import { SelectInput } from '@percona/ui-lib.form.inputs.select';
+import { useFormContext } from 'react-hook-form';
 import { Messages } from './first-step.messages';
 import { generateShortUID } from './utils';
 import { useDbEngines } from '../../../../hooks/db-engines/useDbEngines';
@@ -132,30 +132,18 @@ export const FirstStep = () => {
             </Select>
           )}
         /> */}
-        <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
-          {Messages.labels.dbVersion}
-        </Typography>
-        <Controller
+        <SelectInput
           control={control}
           name={DbWizardFormFields.dbVersion}
-          render={({ field, fieldState: { error } }) => (
-            <Select
-              {...field}
-              variant="outlined"
-              error={error !== undefined}
-              inputProps={{
-                'data-testid': 'text-dbVersion',
-              }}
-            >
-              {/* TODO Replace with API call afterwards */}
-              {dbVersions.map((version) => (
-                <MenuItem value={version} key={version}>
-                  {version}
-                </MenuItem>
-              ))}
-            </Select>
-          )}
-        />
+          label={Messages.labels.dbVersion}
+        >
+          {/* TODO Replace with API call afterwards */}
+          {dbVersions.map((version) => (
+            <MenuItem value={version} key={version}>
+              {version}
+            </MenuItem>
+          ))}
+        </SelectInput>
       </FormGroup>
     </>
   );

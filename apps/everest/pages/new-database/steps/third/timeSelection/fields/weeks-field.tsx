@@ -1,34 +1,28 @@
-import { MenuItem, TextField, Typography } from '@mui/material';
+import { MenuItem, Typography } from '@mui/material';
 import React from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { Messages } from '../../third-step.messages';
 import { WeekDays } from '../../third-step.types';
+import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 
 export const WeeksField = () => {
   const { control } = useFormContext();
   return (
     <>
       <Typography variant="sectionHeading">{Messages.on}</Typography>
-      <Controller
-        control={control}
+      <SelectInput
         name="weekDay"
-        render={({ field }) => (
-          <TextField
-            {...field}
-            sx={{ minWidth: '120px' }}
-            select
-            inputProps={{
-              'data-testid': 'select-week-day',
-            }}
-          >
-            {Object.values(WeekDays).map((value) => (
-              <MenuItem key={value} value={value}>
-                {value}
-              </MenuItem>
-            ))}
-          </TextField>
-        )}
-      />
+        control={control}
+        selectFieldProps={{
+          sx: { minWidth: '120px' }
+        }}
+      >
+        {Object.values(WeekDays).map((value) => (
+          <MenuItem key={value} value={value}>
+            {value}
+          </MenuItem>
+        ))}
+      </SelectInput>
     </>
   );
 };
