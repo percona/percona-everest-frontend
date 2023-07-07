@@ -129,6 +129,19 @@
         "mainFile": "index.ts",
         "rootDir": "ui/stepper"
     },
+    "string": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.utils",
+        "mainFile": "index.ts",
+        "rootDir": "utils/string",
+        "config": {
+            "teambit.envs/envs": {
+                "env": "percona.envs/percona-react-env"
+            },
+            "percona.envs/percona-react-env": {}
+        }
+    },
     "theme-context-provider": {
         "scope": "percona.design",
         "version": "0.0.2",

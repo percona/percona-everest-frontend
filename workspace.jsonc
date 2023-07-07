@@ -96,5 +96,6 @@
   "percona.ui-lib/labeled-content": {},
   "percona.ui-lib/form/inputs/text": {},
   "percona.ui-lib/form/inputs/switch": {},
-  "percona.ui-lib/form/inputs/select": {}
+  "percona.ui-lib/form/inputs/select": {},
+  "percona.utils/string": {}
 }
