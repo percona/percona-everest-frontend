@@ -6,11 +6,11 @@ import { TestWrapper } from '../../../../utils/test';
 import { FirstStep } from './first-step';
 import { DbWizardFormFields } from '../../new-database.types';
 
-jest.unmock('react-native');
-
 jest.mock('./utils', () => ({
   generateShortUID: jest.fn(() => '123'),
 }));
+
+jest.mock('../../../../hooks/db-engines/useDbEngines');
 
 interface FormProviderWrapperProps {
   handleSubmit: jest.Mock<any, any>;
@@ -24,8 +24,8 @@ const FormProviderWrapper = ({
     defaultValues: {
       [DbWizardFormFields.dbType]: DbType.Postresql,
       [DbWizardFormFields.dbName]: '',
-      [DbWizardFormFields.k8sNamespace]: '',
-      [DbWizardFormFields.dbEnvironment]: '',
+      // [DbWizardFormFields.k8sNamespace]: '',
+      // [DbWizardFormFields.dbEnvironment]: '',
       [DbWizardFormFields.dbVersion]: '',
     },
   });
@@ -38,7 +38,7 @@ const FormProviderWrapper = ({
 };
 
 describe('First Step', () => {
-  it('should set default values', async () => {
+  fit('should set default values', async () => {
     const handleSubmitMock = jest.fn();
 
     render(

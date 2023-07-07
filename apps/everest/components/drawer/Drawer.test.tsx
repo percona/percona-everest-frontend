@@ -1,7 +1,16 @@
 import React from 'react';
 import { screen, render, fireEvent } from '@testing-library/react';
-import { BarAndDrawer } from '../../app';
 import { TestWrapper, resizeScreenSize } from '../../utils/test';
+import { AppBar } from '../app-bar/AppBar';
+import { Drawer } from './Drawer';
+import { DrawerContextProvider } from '../../contexts/drawer/drawer.context';
+
+const BarAndDrawer = () => (
+  <DrawerContextProvider>
+    <AppBar />
+    <Drawer />
+  </DrawerContextProvider>
+);
 
 describe('Drawer', () => {
   it('should show desktop drawer when screen is "lg" or bigger', () => {
