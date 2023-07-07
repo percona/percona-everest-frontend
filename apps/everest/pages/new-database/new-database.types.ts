@@ -8,12 +8,12 @@ import {
   ResourcesFields,
   ResourceSize,
 } from './steps/second/second-step.types';
+import { StorageLocation } from './steps/third/third-step.types';
 import {
   AmPM,
-  StorageLocation,
   TimeValue,
   WeekDays,
-} from './steps/third/third-step.types';
+} from '../../components/time-selection/time-selection.types';
 
 // .passthrough tells Zod to not drop unrecognized keys
 // this is needed because we parse step by step

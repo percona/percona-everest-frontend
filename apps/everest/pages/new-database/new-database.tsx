@@ -15,15 +15,15 @@ import {
   ResourcesFields,
   ResourceSize,
 } from './steps/second/second-step.types';
-import {
-  AmPM,
-  StorageLocation,
-  TimeValue,
-  WeekDays,
-} from './steps/third/third-step.types';
+import { StorageLocation } from './steps/third/third-step.types';
 import { SixthStep } from './steps/sixth/sixth-step';
 import { useCreateDbCluster } from '../../hooks/db-cluster/useDbCluster';
 import { useSelectedKubernetesCluster } from '../../hooks/kubernetesClusters/useSelectedKubernetesCluster';
+import {
+  AmPM,
+  TimeValue,
+  WeekDays,
+} from '../../components/time-selection/time-selection.types';
 
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);

@@ -12,7 +12,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { PitrEnabledSection } from './pitrSection/pitr-enabled-section';
 import { Messages } from './third-step.messages';
 import { StorageLocation } from './third-step.types';
-import { TimeSelection } from './timeSelection/time-selection';
+import { TimeSelection } from '../../../../components/time-selection/time-selection';
 
 export const ThirdStep = () => {
   const { control, watch } = useFormContext();
