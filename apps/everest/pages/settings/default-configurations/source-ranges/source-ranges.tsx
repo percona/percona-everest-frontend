@@ -58,10 +58,8 @@ export const SourceRanges = ({ methods }: SourceRangesProps) => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton data-testid="delete-button">
-                  <DeleteIcon
-                    onClick={() => (index > 0 ? remove(index) : update(0, ''))}
-                  />
+                <IconButton data-testid="delete-button" onClick={() => (index > 0 ? remove(index) : update(0, ''))}>
+                  <DeleteIcon />
                 </IconButton>
               </InputAdornment>
             ),
