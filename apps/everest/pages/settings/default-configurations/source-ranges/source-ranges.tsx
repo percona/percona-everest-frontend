@@ -42,8 +42,8 @@ export const SourceRanges = ({ methods }: SourceRangesProps) => {
       </Button>
       {defaultFields.map((field, index) => (
         <TextField
-          {...field}
-          key={field.id}
+          id={field.id}
+          key={`${field.sourceRange}_${index}`}
           name={`${DefaultConfigurationsFields.sourceRanges}.${index}.sourceRange`}
           {...register(
             `${DefaultConfigurationsFields.sourceRanges}.${index}.sourceRange`
@@ -58,7 +58,14 @@ export const SourceRanges = ({ methods }: SourceRangesProps) => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton data-testid="delete-button" onClick={() => (index > 0 ? remove(index) : update(0, ''))}>
+                <IconButton
+                  data-testid="delete-button"
+                  onClick={() =>
+                    fields.length === 1 && index === 0
+                      ? update(0, { sourceRange: '' })
+                      : remove(index)
+                  }
+                >
                   <DeleteIcon />
                 </IconButton>
               </InputAdornment>
@@ -66,7 +73,7 @@ export const SourceRanges = ({ methods }: SourceRangesProps) => {
           }}
           // eslint-disable-next-line react/jsx-no-duplicate-props
           inputProps={{
-            'data-testid': 'text-source-range',
+            'data-testid': `text-source-range-${index}`,
           }}
         />
       ))}
