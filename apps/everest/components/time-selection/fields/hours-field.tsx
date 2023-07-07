@@ -1,27 +1,30 @@
 import { MenuItem, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { Messages } from '../../third-step.messages';
-import { WeekDays } from '../../third-step.types';
+import { MINUTES } from '../time-selection.constants';
+import { Messages } from '../time-selection.messages';
 
-export const WeeksField = () => {
+export const HoursField = () => {
   const { control } = useFormContext();
+
   return (
     <>
-      <Typography variant="sectionHeading">{Messages.on}</Typography>
+      <Typography sx={{ whiteSpace: 'pre' }} variant="sectionHeading">
+        {Messages.onMinute}
+      </Typography>
       <Controller
         control={control}
-        name="weekDay"
+        name="minuteHour"
         render={({ field }) => (
           <TextField
             {...field}
-            sx={{ minWidth: '120px' }}
+            sx={{ minWidth: '80px' }}
             select
             inputProps={{
-              'data-testid': 'select-week-day',
+              'data-testid': 'select-minute-in-hour',
             }}
           >
-            {Object.values(WeekDays).map((value) => (
+            {MINUTES.map((value) => (
               <MenuItem key={value} value={value}>
                 {value}
               </MenuItem>

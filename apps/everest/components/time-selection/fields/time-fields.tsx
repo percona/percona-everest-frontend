@@ -1,10 +1,10 @@
 import { Box, MenuItem, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { HOURS_AM_PM, MINUTES } from '../../third-step.constants';
-import { Messages } from '../../third-step.messages';
-import { AmPM } from '../../third-step.types';
-import { addZeroToSingleDigit } from '../../third-step.utils';
+import { HOURS_AM_PM, MINUTES } from '../time-selection.constants';
+import { AmPM } from '../time-selection.types';
+import { addZeroToSingleDigit } from '../time-selection.utils';
+import { Messages } from '../time-selection.messages';
 
 export const TimeFields = () => {
   const { control } = useFormContext();

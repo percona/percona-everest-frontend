@@ -1,15 +1,25 @@
-import { Alert, Box, MenuItem, OutlinedInput, TextField } from '@mui/material';
+import {
+  Alert,
+  Box,
+  MenuItem,
+  OutlinedInput,
+  TextField,
+} from '@mui/material';
 import React, { useMemo } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { Messages } from '../third-step.messages';
-import { TimeValue } from '../third-step.types';
-import { getTimeText } from '../third-step.utils';
+import { Messages } from './time-selection.messages';
+import { TimeSelectionProps, TimeValue } from './time-selection.types';
+import { getTimeText } from './time-selection.utils';
 import { HoursField } from './fields/hours-field';
 import { MonthsField } from './fields/months-field';
 import { TimeFields } from './fields/time-fields';
 import { WeeksField } from './fields/weeks-field';
 
-export const TimeSelection = () => {
+export const TimeSelection = ({
+  hideInfoAlert,
+  sx,
+  sxTimeFields,
+}: TimeSelectionProps) => {
   const { control, watch } = useFormContext();
   const selectedTime: TimeValue = watch('selectTime');
   const timeNumbers: number = watch('timeNumbers');
@@ -34,11 +44,16 @@ export const TimeSelection = () => {
       ),
     [selectedTime, timeNumbers, minuteHour, hour, minute, amPm, weekDay, onDay]
   );
-
   return (
     <>
       <Box
-        sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 2 }}
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          gap: 2,
+          ...sx,
+        }}
       >
         <Controller
           control={control}
@@ -95,6 +110,7 @@ export const TimeSelection = () => {
             alignItems: 'center',
             gap: 2,
             flexWrap: 'wrap',
+            ...sxTimeFields,
           }}
         >
           {selectedTime === TimeValue.hours && <HoursField />}
@@ -105,7 +121,9 @@ export const TimeSelection = () => {
             selectedTime === TimeValue.months) && <TimeFields />}
         </Box>
       </Box>
-      <Alert severity="info">{Messages.infoText(timeInfoText)}</Alert>
+      {!hideInfoAlert && (
+        <Alert severity="info">{Messages.infoText(timeInfoText)}</Alert>
+      )}
     </>
   );
 };
