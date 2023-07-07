@@ -12,8 +12,7 @@ import React from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Messages } from './fourth-step.messages';
-
-import { IP_RANGE_PATTERN } from './fourth-step.constants';
+import { IP_RANGE_PATTERN } from "../../../settings/default-configurations/source-ranges/source-range.constants";
 
 export const FourthStep = () => {
   const { control, setValue, watch } = useFormContext();
