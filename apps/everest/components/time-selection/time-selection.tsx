@@ -1,10 +1,4 @@
-import {
-  Alert,
-  Box,
-  MenuItem,
-  OutlinedInput,
-  TextField,
-} from '@mui/material';
+import { Alert, Box, MenuItem, OutlinedInput, TextField } from '@mui/material';
 import React, { useMemo } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Messages } from './time-selection.messages';

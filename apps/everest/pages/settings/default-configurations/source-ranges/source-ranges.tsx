@@ -6,6 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { DefaultConfigurationsFields } from '../default-configurations.types';
 import { Messages } from './source-ranges.messages';
 import { SourceRangesProps } from './source-ranges.types';
+
 export const SourceRanges = ({ methods }: SourceRangesProps) => {
   const {
     control,
@@ -13,15 +14,15 @@ export const SourceRanges = ({ methods }: SourceRangesProps) => {
     register,
   } = methods;
   const { fields, append, remove, update } = useFieldArray({
-    control: control,
+    control,
     name: DefaultConfigurationsFields.sourceRanges,
   });
 
-  const defaultFields = fields.length? fields: [""];
+  const defaultFields = fields.length ? fields : [''];
   const errorMessage = (index) => {
-      const message = errors?.[DefaultConfigurationsFields.sourceRanges]?.[index]?.sourceRange;
-      debugger;
-      return message?.message ? message?.message : '';
+    const message =
+      errors?.[DefaultConfigurationsFields.sourceRanges]?.[index]?.sourceRange;
+    return message?.message ? message?.message : '';
   };
 
   return (

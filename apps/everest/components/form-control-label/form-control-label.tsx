@@ -5,6 +5,7 @@ import {
 } from '@mui/material';
 import { FormControlLabelProps } from './form-control-label.types';
 import { Label } from './label/label';
+
 export const FormControlLabel = ({
   labelHeader,
   labelMessage,
@@ -19,9 +20,7 @@ export const FormControlLabel = ({
   return (
     <MuiFormControlLabel
       label={
-        label ? (
-          label
-        ) : labelHeader || labelMessage ? (
+        label || (labelHeader || labelMessage ? (
           <Label
             sx={sxLabel}
             labelHeader={labelHeader}
@@ -29,7 +28,7 @@ export const FormControlLabel = ({
           />
         ) : (
           <></>
-        )
+        ))
       }
       sx={{
         alignItems: 'flex-start',

@@ -1,7 +1,5 @@
 import { UseFormSetValue, FieldValues } from 'react-hook-form';
-import {
-  ResourceSize,
-} from './second-step.types';
+import { ResourceSize } from './second-step.types';
 import { DEFAULT_SIZES } from './second-step.const';
 import { DbWizardFormFields } from '../../new-database.types';
 

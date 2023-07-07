@@ -5,7 +5,7 @@ import {
   WeekDays,
 } from '../../../components/time-selection/time-selection.types';
 import { IP_RANGE_PATTERN } from './source-ranges/source-range.constants';
-import {Messages} from "./default-configurations.messages";
+import { Messages } from './default-configurations.messages';
 
 export enum DefaultConfigurationsFields {
   monitoring = 'monitoring',
@@ -35,30 +35,39 @@ export const defaultConfigurationsSchema = z
     [DefaultConfigurationsFields.amPm]: z.nativeEnum(AmPM),
     [DefaultConfigurationsFields.weekDay]: z.nativeEnum(WeekDays),
     [DefaultConfigurationsFields.onDay]: z.number(),
-    [DefaultConfigurationsFields.sourceRanges]: z.array(
-      z.object({ sourceRange: z.string() })
-    ).optional(),
+    [DefaultConfigurationsFields.sourceRanges]: z
+      .array(z.object({ sourceRange: z.string() }))
+      .optional(),
   })
-  .passthrough().superRefine((schema, ctx) => {
-        if (schema.externalAccess) {
-            schema.sourceRanges.forEach(({sourceRange}, index) => {
-                if (!sourceRange) {
-                    ctx.addIssue({
-                        code: z.ZodIssueCode.custom,
-                        message: Messages.sourceRangeRequiredError,
-                        path: [DefaultConfigurationsFields.sourceRanges, index, "sourceRange"],
-                    });
-                }
-                if (!sourceRange.match(IP_RANGE_PATTERN)){
-                    ctx.addIssue({
-                        code: z.ZodIssueCode.custom,
-                        message: Messages.sourceRangeInvalidIPError,
-                        path: [DefaultConfigurationsFields.sourceRanges, index, "sourceRange"],
-                    });
-                }
-            });
+  .passthrough()
+  .superRefine((schema, ctx) => {
+    if (schema.externalAccess) {
+      schema.sourceRanges.forEach(({ sourceRange }, index) => {
+        if (!sourceRange) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: Messages.sourceRangeRequiredError,
+            path: [
+              DefaultConfigurationsFields.sourceRanges,
+              index,
+              'sourceRange',
+            ],
+          });
         }
-});
+        if (!sourceRange.match(IP_RANGE_PATTERN)) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: Messages.sourceRangeInvalidIPError,
+            path: [
+              DefaultConfigurationsFields.sourceRanges,
+              index,
+              'sourceRange',
+            ],
+          });
+        }
+      });
+    }
+  });
 
 export type DefaultConfigurationsType = z.infer<
   typeof defaultConfigurationsSchema

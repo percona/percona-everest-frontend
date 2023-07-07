@@ -12,10 +12,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { ToggleCard } from '@percona/ui-lib.toggle-card';
 import { Messages } from './second-step.messages';
 import { ResourcesDetail } from '../../../../components/resources-detail';
-import {
-  NumberOfNodes,
-  ResourceSize,
-} from './second-step.types';
+import { NumberOfNodes, ResourceSize } from './second-step.types';
 import {
   checkSwitchToCustom,
   humanizeResourceSizeMap,
@@ -68,7 +65,10 @@ export const SecondStep = () => {
   useEffect(() => {
     if (resourceSizePerNode && resourceSizePerNode !== ResourceSize.custom) {
       setValue(DbWizardFormFields.cpu, DEFAULT_SIZES[resourceSizePerNode].cpu);
-      setValue(DbWizardFormFields.disk, DEFAULT_SIZES[resourceSizePerNode].disk);
+      setValue(
+        DbWizardFormFields.disk,
+        DEFAULT_SIZES[resourceSizePerNode].disk
+      );
       setValue(
         DbWizardFormFields.memory,
         DEFAULT_SIZES[resourceSizePerNode].memory

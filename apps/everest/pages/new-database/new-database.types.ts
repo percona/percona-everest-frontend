@@ -2,10 +2,7 @@ import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { z } from 'zod';
 import { IP_REGEX } from './new-database.constants';
 import { Messages as FirstStepMessages } from './steps/first/first-step.messages';
-import {
-  NumberOfNodes,
-  ResourceSize,
-} from './steps/second/second-step.types';
+import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
 import { StorageLocation } from './steps/third/third-step.types';
 import {
   AmPM,
@@ -40,7 +37,7 @@ export enum DbWizardFormFields {
   internetFacing = 'internetFacing',
   sourceRange = 'sourceRange',
   monitoring = 'monitoring',
-  endpoint = 'endpoint'
+  endpoint = 'endpoint',
 }
 
 // .passthrough tells Zod to not drop unrecognized keys

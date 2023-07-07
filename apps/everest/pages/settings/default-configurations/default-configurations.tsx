@@ -29,6 +29,7 @@ import {
 } from '../../../components/time-selection/time-selection.types';
 import { OutlinedFormControlLabelWrapper } from '../../../components/outlined-form-control-label-wrapper/outlined-form-control-label-wrapper';
 import { SourceRanges } from './source-ranges/source-ranges';
+
 export const DefaultConfigurations = () => {
   const theme = useTheme();
   const isLaptop = useMediaQuery(theme.breakpoints.down('lg'));
@@ -37,7 +38,7 @@ export const DefaultConfigurations = () => {
     mode: 'onChange',
     resolver: zodResolver(defaultConfigurationsSchema),
     defaultValues: {
-      //TODO get from api =>
+      // TODO get from api =>
       [DefaultConfigurationsFields.monitoring]: false,
       [DefaultConfigurationsFields.backupsEnabled]: false,
       [DefaultConfigurationsFields.externalAccess]: false,

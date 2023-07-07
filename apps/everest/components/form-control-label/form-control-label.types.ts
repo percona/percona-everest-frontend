@@ -3,6 +3,7 @@ import {
   SxProps,
   Theme,
 } from '@mui/material';
+
 export interface FormControlLabelProps
   extends Omit<MuiFormControlLabelProps, 'label'> {
   labelHeader?: string;

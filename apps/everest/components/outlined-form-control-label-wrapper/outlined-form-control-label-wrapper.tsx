@@ -41,7 +41,7 @@ export const OutlinedFormControlLabelWrapper = ({
     </Box>
   ) : (
     <Box sx={{ ...boxSx }}>
-      <FormControlLabel outlined={true} {...props} />
+      <FormControlLabel outlined {...props} />
     </Box>
   );
 };
