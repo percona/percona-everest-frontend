@@ -12,10 +12,17 @@ export const SourceRanges = ({ methods }: SourceRangesProps) => {
     formState: { errors },
     register,
   } = methods;
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, update } = useFieldArray({
     control: control,
     name: DefaultConfigurationsFields.sourceRanges,
   });
+
+  const defaultFields = fields.length? fields: [""];
+  const errorMessage = (index) => {
+      const message = errors?.[DefaultConfigurationsFields.sourceRanges]?.[index]?.sourceRange;
+      debugger;
+      return message?.message ? message?.message : '';
+  };
 
   return (
     <>
@@ -32,7 +39,7 @@ export const SourceRanges = ({ methods }: SourceRangesProps) => {
       >
         {Messages.addNew}
       </Button>
-      {fields.map((field, index) => (
+      {defaultFields.map((field, index) => (
         <TextField
           {...field}
           key={field.id}
@@ -46,20 +53,13 @@ export const SourceRanges = ({ methods }: SourceRangesProps) => {
             errors?.[DefaultConfigurationsFields.sourceRanges]?.[index]
               ?.sourceRange !== undefined
           }
-          helperText={
-            errors?.[DefaultConfigurationsFields.sourceRanges]?.[index]
-              ?.sourceRange
-              ? Messages.sourceRangeError
-              : ''
-          }
+          helperText={errorMessage(index)}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton data-testid="delete-button">
                   <DeleteIcon
-                    onClick={() => {
-                      remove(index);
-                    }}
+                    onClick={() => (index > 0 ? remove(index) : update(0, ''))}
                   />
                 </IconButton>
               </InputAdornment>
