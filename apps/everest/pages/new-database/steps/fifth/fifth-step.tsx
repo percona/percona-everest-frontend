@@ -8,6 +8,7 @@ import {
 import React from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { Messages } from './fifth-step.messages';
+import { DbWizardFormFields } from '../../new-database.types';
 
 export const FifthStep = () => {
   const { control, watch } = useFormContext();
@@ -24,7 +25,7 @@ export const FifthStep = () => {
           control={
             <Controller
               control={control}
-              name="monitoring"
+              name={DbWizardFormFields.monitoring}
               render={({ field }) => (
                 <Switch {...field} checked={field.value} />
               )}
@@ -38,7 +39,7 @@ export const FifthStep = () => {
             </Typography>
             <Controller
               control={control}
-              name="endpoint"
+              name={DbWizardFormFields.endpoint}
               rules={{
                 required: true,
               }}

@@ -12,6 +12,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { PitrEnabledSection } from './pitrSection/pitr-enabled-section';
 import { Messages } from './third-step.messages';
 import { StorageLocation } from './third-step.types';
+import { DbWizardFormFields } from '../../new-database.types';
 import { TimeSelection } from '../../../../components/time-selection/time-selection';
 
 export const ThirdStep = () => {
@@ -30,7 +31,7 @@ export const ThirdStep = () => {
         control={
           <Controller
             control={control}
-            name="backupsEnabled"
+            name={DbWizardFormFields.backupsEnabled}
             render={({ field }) => <Switch {...field} checked={field.value} />}
           />
         }
@@ -55,7 +56,7 @@ export const ThirdStep = () => {
             </Typography>
             <Controller
               control={control}
-              name="storageLocation"
+              name={DbWizardFormFields.storageLocation}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -81,7 +82,7 @@ export const ThirdStep = () => {
             control={
               <Controller
                 control={control}
-                name="pitrEnabled"
+                name={DbWizardFormFields.pitrEnabled}
                 render={({ field }) => (
                   <Switch {...field} checked={field.value} />
                 )}

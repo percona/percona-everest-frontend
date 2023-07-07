@@ -44,6 +44,7 @@ export const TimeSelection = ({
       ),
     [selectedTime, timeNumbers, minuteHour, hour, minute, amPm, weekDay, onDay]
   );
+
   return (
     <>
       <Box

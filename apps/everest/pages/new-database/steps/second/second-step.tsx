@@ -14,7 +14,6 @@ import { Messages } from './second-step.messages';
 import { ResourcesDetail } from '../../../../components/resources-detail';
 import {
   NumberOfNodes,
-  ResourcesFields,
   ResourceSize,
 } from './second-step.types';
 import {
@@ -23,6 +22,7 @@ import {
 } from './second-step.utils';
 import { ResourcesLegend } from './resources-legend/resources-legend';
 import { DEFAULT_SIZES } from './second-step.const';
+import { DbWizardFormFields } from '../../new-database.types';
 
 export const SecondStep = () => {
   const { control, watch, setValue } = useFormContext();
@@ -44,11 +44,11 @@ export const SecondStep = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const resourceSizePerNode: ResourceSize = watch(
-    ResourcesFields.resourceSizePerNode
+    DbWizardFormFields.resourceSizePerNode
   );
-  const cpu = watch(ResourcesFields.cpu);
-  const memory = watch(ResourcesFields.memory);
-  const disk = watch(ResourcesFields.disk);
+  const cpu = watch(DbWizardFormFields.cpu);
+  const memory = watch(DbWizardFormFields.memory);
+  const disk = watch(DbWizardFormFields.disk);
 
   const cpuCapacityExceeded = cpu > totalSizes.cpu;
   const memoryCapacityExceeded = memory > totalSizes.memory;
@@ -67,10 +67,10 @@ export const SecondStep = () => {
 
   useEffect(() => {
     if (resourceSizePerNode && resourceSizePerNode !== ResourceSize.custom) {
-      setValue(ResourcesFields.cpu, DEFAULT_SIZES[resourceSizePerNode].cpu);
-      setValue(ResourcesFields.disk, DEFAULT_SIZES[resourceSizePerNode].disk);
+      setValue(DbWizardFormFields.cpu, DEFAULT_SIZES[resourceSizePerNode].cpu);
+      setValue(DbWizardFormFields.disk, DEFAULT_SIZES[resourceSizePerNode].disk);
       setValue(
-        ResourcesFields.memory,
+        DbWizardFormFields.memory,
         DEFAULT_SIZES[resourceSizePerNode].memory
       );
     }
@@ -85,7 +85,7 @@ export const SecondStep = () => {
           {Messages.labels.numberOfNodes}
         </Typography>
         <Controller
-          name={ResourcesFields.numberOfNodes}
+          name={DbWizardFormFields.numberOfNodes}
           control={control}
           render={({ field }) => (
             <ToggleButtonGroup
@@ -136,7 +136,7 @@ export const SecondStep = () => {
           {Messages.labels.resourceSizePerNode}
         </Typography>
         <Controller
-          name={ResourcesFields.resourceSizePerNode}
+          name={DbWizardFormFields.resourceSizePerNode}
           control={control}
           render={({ field }) => (
             <ToggleButtonGroup
@@ -202,9 +202,9 @@ export const SecondStep = () => {
             total={totalSizes.cpu}
             inputValue={cpu}
             setInputValue={(value: number) => {
-              setValue(ResourcesFields.cpu, value);
+              setValue(DbWizardFormFields.cpu, value);
               checkSwitchToCustom(
-                ResourcesFields.cpu,
+                DbWizardFormFields.cpu,
                 value,
                 resourceSizePerNode,
                 setValue
@@ -219,9 +219,9 @@ export const SecondStep = () => {
             total={totalSizes.memory}
             inputValue={memory}
             setInputValue={(value: number) => {
-              setValue(ResourcesFields.memory, value);
+              setValue(DbWizardFormFields.memory, value);
               checkSwitchToCustom(
-                ResourcesFields.memory,
+                DbWizardFormFields.memory,
                 value,
                 resourceSizePerNode,
                 setValue
@@ -236,9 +236,9 @@ export const SecondStep = () => {
             total={totalSizes.disk}
             inputValue={disk}
             setInputValue={(value: number) => {
-              setValue(ResourcesFields.disk, value);
+              setValue(DbWizardFormFields.disk, value);
               checkSwitchToCustom(
-                ResourcesFields.memory,
+                DbWizardFormFields.memory,
                 value,
                 resourceSizePerNode,
                 setValue

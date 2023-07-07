@@ -1,6 +1,9 @@
 import { UseFormSetValue, FieldValues } from 'react-hook-form';
-import { ResourcesFields, ResourceSize } from './second-step.types';
+import {
+  ResourceSize,
+} from './second-step.types';
 import { DEFAULT_SIZES } from './second-step.const';
+import { DbWizardFormFields } from '../../new-database.types';
 
 const humanizedResourceSizeMap: Record<ResourceSize, string> = {
   [ResourceSize.small]: 'Small',
@@ -14,9 +17,9 @@ export const humanizeResourceSizeMap = (type: ResourceSize): string =>
 
 export const isCustom = (
   typeOfField:
-    | ResourcesFields.cpu
-    | ResourcesFields.disk
-    | ResourcesFields.memory,
+    | DbWizardFormFields.cpu
+    | DbWizardFormFields.disk
+    | DbWizardFormFields.memory,
   value: number,
   currentLabel: ResourceSize
 ) => {
@@ -27,9 +30,9 @@ export const isCustom = (
 
 export const checkSwitchToCustom = (
   fieldName:
-    | ResourcesFields.disk
-    | ResourcesFields.cpu
-    | ResourcesFields.memory,
+    | DbWizardFormFields.disk
+    | DbWizardFormFields.cpu
+    | DbWizardFormFields.memory,
   value: number,
   resourceSizePerNode: ResourceSize,
   setValue: UseFormSetValue<FieldValues>
@@ -38,7 +41,7 @@ export const checkSwitchToCustom = (
     resourceSizePerNode !== ResourceSize.custom &&
     isCustom(fieldName, value, resourceSizePerNode)
   ) {
-    setValue(ResourcesFields.resourceSizePerNode, ResourceSize.custom);
+    setValue(DbWizardFormFields.resourceSizePerNode, ResourceSize.custom);
   }
 };
 

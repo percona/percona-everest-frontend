@@ -1,8 +1,8 @@
-export const enum SettingsTabs {
-  defaultConfigurations = 'defaultConfigurations',
-  storageLocations = 'storageLocations',
-  monitoringEndpoints = 'monitoringEndpoints',
-  k8sClusters = 'k8sClusters',
+export enum SettingsTabs {
+  defaultConfigurations = 'default-configurations',
+  storageLocations = 'storage-locations',
+  monitoringEndpoints = 'monitoring-endpoints',
+  k8sClusters = 'k8s-clusters',
 }
 
 export const settingsTabsMui: Record<SettingsTabs, number> = {
