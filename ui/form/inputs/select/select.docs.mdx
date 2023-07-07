@@ -1,18 +1,19 @@
 ---
-description: A Select component.
+description: RHF Controller + MUI Select component.
 ---
 
-import { Select } from './select';
-
-A component that does something special and renders text in a div.
+A wrapper around RHF Controller and MUI Select with an optional label
 
 ### Component usage
 ```js
-<Select>Hello world!</Select>
-```
+  const { control } = useFormContext();
 
-### Render hello world!
-
-```js live
-<Select>Hello world!</Select>
+  <SelectInput name='company' label='Company' control={control}>
+    <MenuItem value='Percona'>
+      Percona
+    </MenuItem>
+    <MenuItem value='Percona'>
+      Other
+    </MenuItem>
+  </SelectInput>
 ```

@@ -1,18 +1,19 @@
 ---
-description: A Text component.
+description: RHF Controller + MUI TextField component.
 ---
 
-import { Text } from './text';
-
-A component that does something special and renders text in a div.
+A wrapper around RHF Controller and MUI TextField with an optional label
 
 ### Component usage
 ```js
-<Text>Hello world!</Text>
-```
+  const { control } = useFormContext();
 
-### Render hello world!
-
-```js live
-<Text>Hello world!</Text>
+  <TextInput
+    control={control}
+    name='name'
+    label='Name'
+    textFieldProps={{
+      placeholder: 'Insert your name'
+    }}
+  />
 ```

@@ -1,9 +1,9 @@
 import { ToggleButtonGroupProps } from "@mui/material";
 import { LabeledContentProps } from "@percona/ui.labeled-content";
-import { FieldValues, Control } from "react-hook-form";
+import { Control } from "react-hook-form";
 
-export type ToggleButtonGroupInputProps<T extends FieldValues = FieldValues> = {
-  control?: Control<T>;
+export type ToggleButtonGroupInputProps = {
+  control?: Control<any>;
   name: string;
   label?: string;
   labelProps?: LabeledContentProps;

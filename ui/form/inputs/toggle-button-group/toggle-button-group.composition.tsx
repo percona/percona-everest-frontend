@@ -1,8 +1,27 @@
 import React from 'react';
-import { ToggleButtonGroup } from './toggle-button-group';
+import { ToggleButtonGroupInput } from './toggle-button-group';
+import { FormProvider, useForm } from 'react-hook-form';
+import { ToggleCard } from '@percona/ui-lib.toggle-card';
 
 export const BasicToggleButtonGroup = () => {
+  const methods = useForm();
+
   return (
-    <ToggleButtonGroup>hello world!</ToggleButtonGroup>
+    <FormProvider {...methods}>
+      <ToggleButtonGroupInput
+        name='numberOfNodes'
+        control={methods.control}>
+        <ToggleCard
+          value='1'
+        >
+          One node
+        </ToggleCard>
+        <ToggleCard
+          value='twl'
+        >
+          Two nodes
+        </ToggleCard>
+      </ToggleButtonGroupInput>
+    </FormProvider>
   );
 }

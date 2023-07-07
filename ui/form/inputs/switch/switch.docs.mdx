@@ -1,18 +1,16 @@
 ---
-description: A Switch component.
+description: RHF Controller + MUI Switch component.
 ---
 
-import { Switch } from './switch';
-
-A component that does something special and renders text in a div.
+A wrapper around RHF Controller and MUI Switch
 
 ### Component usage
 ```js
-<Switch>Hello world!</Switch>
-```
+  const { control } = useFormContext();
 
-### Render hello world!
-
-```js live
-<Switch>Hello world!</Switch>
+  <SwitchInput
+    control={control}
+    label='Backups'
+    name='backupsEnabled'
+  />
 ```

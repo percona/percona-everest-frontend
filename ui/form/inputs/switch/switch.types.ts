@@ -1,7 +1,7 @@
-import { Control, FieldValues } from "react-hook-form";
+import { Control } from "react-hook-form";
 
-export type SwitchInputProps<T extends FieldValues = FieldValues> = {
-  control?: Control<T>;
+export type SwitchInputProps = {
+  control?: Control<any>;
   name: string;
   label: string;
 };

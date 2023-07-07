@@ -1,18 +1,25 @@
 ---
-description: A ToggleButtonGroup component.
+description: RHF Controller + Percona ToggleButtonGroup component.
 ---
 
-import { ToggleButtonGroup } from './toggle-button-group';
-
-A component that does something special and renders text in a div.
+A wrapper around RHF Controller and Percona ToggleButtonGroup
 
 ### Component usage
 ```js
-<ToggleButtonGroup>Hello world!</ToggleButtonGroup>
-```
+  const { control } = useFormContext();
 
-### Render hello world!
-
-```js live
-<ToggleButtonGroup>Hello world!</ToggleButtonGroup>
+  <ToggleButtonGroupInput
+    name='numberOfNodes'
+    control={methods.control}>
+    <ToggleCard
+      value='1'
+    >
+      One node
+    </ToggleCard>
+    <ToggleCard
+      value='twl'
+    >
+      Two nodes
+    </ToggleCard>
+  </ToggleButtonGroupInput>
 ```
