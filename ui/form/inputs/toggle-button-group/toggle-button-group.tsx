@@ -1,6 +1,7 @@
 import React from 'react';
 import { ToggleButtonGroup } from '@mui/material';
 import { LabeledContent } from '@percona/ui-lib.labeled-content';
+import { kebabize } from '@percona/utils.string';
 import { Controller } from 'react-hook-form';
 import { ToggleButtonGroupInputProps } from './toggle-button-group.types';
 
@@ -20,7 +21,7 @@ export const ToggleButtonGroupInput = ({
         {...field}
         fullWidth
         exclusive
-        data-testd={`toggle-button-group-input-${name}`}
+        data-testd={`toggle-button-group-input-${kebabize(name)}`}
         onChange={(
           event: React.MouseEvent<HTMLElement> | any,
           value: any

@@ -2,9 +2,8 @@ import React from 'react';
 import { Controller } from 'react-hook-form';
 import { Select } from '@mui/material';
 import { LabeledContent } from '@percona/ui-lib.labeled-content';
+import { kebabize } from '@percona/utils.string';
 import { SelectInputProps } from './select.types';
-
-
 
 export const SelectInput = ({ name, control, label, labelProps, selectFieldProps, children }: SelectInputProps) => {
   const content = <Controller
@@ -16,7 +15,7 @@ export const SelectInput = ({ name, control, label, labelProps, selectFieldProps
         variant="outlined"
         error={error !== undefined}
         inputProps={{
-          'data-testid': `select-input-${name}`,
+          'data-testid': `select-input-${kebabize(name)}`,
           ...selectFieldProps?.inputProps
         }}
         {...selectFieldProps}

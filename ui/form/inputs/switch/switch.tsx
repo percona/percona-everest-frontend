@@ -1,11 +1,13 @@
 import React from 'react';
 import { Controller } from 'react-hook-form';
 import { FormControlLabel, Switch } from '@mui/material';
+import { kebabize } from '@percona/utils.string';
 import { SwitchInputProps } from './switch.types';
 
 export const SwitchInput = ({ name, control, label }: SwitchInputProps) => (
   <FormControlLabel
     label={label}
+    data-testid={`switch-input-${kebabize(name)}`}
     control={
       <Controller
         name={name}

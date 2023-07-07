@@ -26,11 +26,11 @@ describe('FourthStep', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByTestId('switch-external-access')).toBeInTheDocument();
+    expect(screen.getByTestId('switch-input-external-access')).toBeInTheDocument();
     expect(
-      screen.queryByTestId('switch-internet-facing')
+      screen.queryByTestId('switch-input-internet-facing')
     ).not.toBeInTheDocument();
-    expect(screen.queryByTestId('text-source-range')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('text-input-source-range')).not.toBeInTheDocument();
   });
 
   it('should render remaining fields when external access is on', () => {
@@ -42,11 +42,11 @@ describe('FourthStep', () => {
       </TestWrapper>
     );
 
-    fireEvent.click(screen.getByTestId('switch-external-access'));
+    fireEvent.click(screen.getByTestId('switch-input-external-access'));
 
-    expect(screen.getByTestId('switch-external-access')).toBeInTheDocument();
-    expect(screen.getByTestId('switch-internet-facing')).toBeInTheDocument();
-    expect(screen.getByTestId('text-source-range')).toBeInTheDocument();
+    expect(screen.getByTestId('switch-input-external-access')).toBeInTheDocument();
+    expect(screen.getByTestId('switch-input-internet-facing')).toBeInTheDocument();
+    expect(screen.getByTestId('text-input-source-range')).toBeInTheDocument();
   });
 
   it('should delete text when clicking the trash icon', async () => {
@@ -58,9 +58,9 @@ describe('FourthStep', () => {
       </TestWrapper>
     );
 
-    fireEvent.click(screen.getByTestId('switch-external-access'));
+    fireEvent.click(screen.getByTestId('switch-input-external-access'));
 
-    const input = screen.getByTestId('text-source-range');
+    const input = screen.getByTestId('text-input-source-range');
     fireEvent.change(input, { target: { value: 'test' } });
 
     expect(input.getAttribute('value')).toBe('test');

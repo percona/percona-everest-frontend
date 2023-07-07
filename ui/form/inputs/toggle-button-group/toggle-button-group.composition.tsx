@@ -17,7 +17,7 @@ export const BasicToggleButtonGroup = () => {
           One node
         </ToggleCard>
         <ToggleCard
-          value='twl'
+          value='two'
         >
           Two nodes
         </ToggleCard>

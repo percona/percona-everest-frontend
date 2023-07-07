@@ -50,7 +50,7 @@ export const TimeSelection = () => {
               sx={{ width: '80px' }}
               type="number"
               inputProps={{
-                'data-testid': 'select-time-numbers',
+                'data-testid': 'select-input-time-numbers',
               }}
               onChange={(e) => {
                 const v = e.target.value;
