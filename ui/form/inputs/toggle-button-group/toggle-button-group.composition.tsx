@@ -1,7 +1,7 @@
 import React from 'react';
-import { ToggleButtonGroupInput } from './toggle-button-group';
 import { FormProvider, useForm } from 'react-hook-form';
 import { ToggleCard } from '@percona/ui-lib.toggle-card';
+import { ToggleButtonGroupInput } from './toggle-button-group';
 
 export const BasicToggleButtonGroup = () => {
   const methods = useForm();

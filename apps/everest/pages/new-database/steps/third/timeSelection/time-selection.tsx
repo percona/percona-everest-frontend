@@ -1,4 +1,4 @@
-import { Alert, Box, MenuItem, OutlinedInput, TextField } from '@mui/material';
+import { Alert, Box, MenuItem, OutlinedInput } from '@mui/material';
 import React, { useMemo } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { SelectInput } from '@percona/ui-lib.form.inputs.select';

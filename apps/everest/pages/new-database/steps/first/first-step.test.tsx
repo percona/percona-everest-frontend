@@ -38,7 +38,7 @@ const FormProviderWrapper = ({
 };
 
 describe('First Step', () => {
-  fit('should set default values', async () => {
+  it('should set default values', async () => {
     const handleSubmitMock = jest.fn();
 
     render(

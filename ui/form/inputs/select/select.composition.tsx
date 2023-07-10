@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { SelectInput } from './select';
 import { MenuItem } from '@mui/material';
+import { SelectInput } from './select';
 
 export const BasicSelect = () => {
   const methods = useForm({ defaultValues: { company: 'percona' } });

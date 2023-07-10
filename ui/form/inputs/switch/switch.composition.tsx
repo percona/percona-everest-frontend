@@ -1,6 +1,6 @@
 import React from 'react';
-import { SwitchInput } from './switch';
 import { FieldValues, FormProvider, useForm } from 'react-hook-form';
+import { SwitchInput } from './switch';
 
 interface FormValues extends FieldValues {
   backupsEnabled: boolean;
