@@ -109,7 +109,7 @@ export const NewDatabasePage = () => {
       </Stepper>
       <FormProvider {...methods}>
         <Stack direction={isDesktop ? 'row' : 'column'}>
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <form style={{ flexGrow: 1 }} onSubmit={methods.handleSubmit(onSubmit)}>
             <Box>{React.createElement(steps[activeStep])}</Box>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
               <Button

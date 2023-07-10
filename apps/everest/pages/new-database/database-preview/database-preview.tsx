@@ -4,6 +4,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { DatabasePreviewProps } from './database-preview.types';
 import { DbWizardType } from '../new-database.types';
 import { previewSections } from './sections';
+import { Messages } from './database.preview.messages';
 
 export const DatabasePreview = ({ activeStep, nrSteps, sx, ...stackProps }: DatabasePreviewProps) => {
   const { getValues } = useFormContext<DbWizardType>();
@@ -25,12 +26,8 @@ export const DatabasePreview = ({ activeStep, nrSteps, sx, ...stackProps }: Data
 
   return (
     <Stack sx={{ pr: 2, pl: 2, ...sx }} {...stackProps}>
-      <Typography
-        fontStyle='italic'
-        color='text.secondary'
-        fontSize='12px'
-      >
-        Database Preview
+      <Typography variant='overline'>
+        {Messages.title}
       </Typography>
       <Stack sx={{ pt: 1, pb: 1 }}>
         {previewSections.map((Section, idx) => (

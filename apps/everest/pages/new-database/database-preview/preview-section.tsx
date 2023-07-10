@@ -4,11 +4,16 @@ import { PreviewContentTextProps, PreviewSectionProps } from './database-preview
 
 export const PreviewSection = ({ title, children, active = false, sx, ...stackProps }: PreviewSectionProps) => (
   <Stack sx={{ mt: active ? 1.5 : 0, ...sx }} {...stackProps}>
-    <Typography fontWeight='bold' fontSize='12px' color={active ? 'text.primary' : 'text.secondary'}>{title}</Typography>
+    <Typography
+      variant='sectionHeading'
+      color={active ? 'text.primary' : 'text.disabled'}
+    >
+      {title}
+    </Typography>
     {active && children}
   </Stack>
 );
 
 export const PreviewContentText = ({ text }: PreviewContentTextProps) => (
-  <Typography fontSize='13px' color='text.secondary'>{text}</Typography>
+  <Typography variant='caption' color='text.secondary'>{text}</Typography>
 )
