@@ -11,9 +11,9 @@ export const EverestApp = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        refetchOnWindowFocus: false
-      }
-    }
+        refetchOnWindowFocus: false,
+      },
+    },
   });
 
   return (

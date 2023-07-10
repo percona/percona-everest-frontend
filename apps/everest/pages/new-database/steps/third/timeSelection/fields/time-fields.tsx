@@ -11,14 +11,16 @@ export const TimeFields = () => {
   const { control } = useFormContext();
 
   return (
-    <Box sx={(theme) => ({
-      display: 'flex',
-      alignItems: 'center',
-      gap: 2,
-      [theme.breakpoints.down('sm')]: {
-        flexBasis: '100%'
-      },
-    })}>
+    <Box
+      sx={(theme) => ({
+        display: 'flex',
+        alignItems: 'center',
+        gap: 2,
+        [theme.breakpoints.down('sm')]: {
+          flexBasis: '100%',
+        },
+      })}
+    >
       <Typography variant="sectionHeading">{Messages.at}</Typography>
       <SelectInput
         name="hour"

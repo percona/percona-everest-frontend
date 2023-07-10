@@ -1,8 +1,6 @@
 import { Messages } from './third-step.messages';
 import { TimeValue } from './third-step.types';
 
-
-
 export const addZeroToSingleDigit = (value: number) => {
   return value.toString().padStart(2, '0');
 };

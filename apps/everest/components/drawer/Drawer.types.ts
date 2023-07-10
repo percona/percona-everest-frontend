@@ -9,4 +9,4 @@ export type EverestRoute = {
   to: string;
   text: string;
   icon: React.ElementType;
-}
+};

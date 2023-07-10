@@ -83,7 +83,12 @@ export const TimeSelection = () => {
                 </MenuItem>
               ))}
         </SelectInput>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+          flexWrap: 'wrap'
+        }}>
           {selectedTime === TimeValue.hours && <HoursField />}
           {selectedTime === TimeValue.weeks && <WeeksField />}
           {selectedTime === TimeValue.months && <MonthsField />}
