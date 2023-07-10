@@ -7,7 +7,7 @@ export const PreviewSectionFour = ({ externalAccess, active }: SectionProps) => 
   return (
     <>
       <PreviewSection title={Messages.preview.externalAccess} active={active}>
-        <PreviewContentText text={!!externalAccess ? 'Enabled' : 'Disabled'} />
+        <PreviewContentText text={externalAccess ? 'Enabled' : 'Disabled'} />
       </PreviewSection>
     </>
   );

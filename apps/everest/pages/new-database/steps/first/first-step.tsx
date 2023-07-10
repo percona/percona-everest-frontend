@@ -12,15 +12,16 @@ import {
 import { DbToggleCard, DbType } from '@percona/ui-lib.db-toggle-card';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Messages } from './first-step.messages';
-import { BasicInformationFields } from './first-step.types';
 import { generateShortUID } from './utils';
 import { useDbEngines } from '../../../../hooks/db-engines/useDbEngines';
 import { dbEngineToDbType } from '../../../../utils/db';
 import { DB_VERSIONS } from './first-step.constants';
+import { DbWizardFormFields } from '../../new-database.types';
 
 export const FirstStep = () => {
   const { control, watch, setValue } = useFormContext();
-  const { data: dbEngines = [], isFetching: dbEnginesFetching } = useDbEngines();
+  const { data: dbEngines = [], isFetching: dbEnginesFetching } =
+    useDbEngines();
 
   // TODO change to api request's result
   // const k8sNamespacesOptions = [
@@ -44,7 +45,7 @@ export const FirstStep = () => {
   //   },
   // ];
 
-  const dbType: DbType = watch(BasicInformationFields.dbType);
+  const dbType: DbType = watch(DbWizardFormFields.dbType);
   const [dbVersions, setDbVersions] = useState(DB_VERSIONS[dbType]);
 
   useEffect(() => {
@@ -53,8 +54,8 @@ export const FirstStep = () => {
     }
     const newVersions = DB_VERSIONS[dbType];
 
-    setValue(BasicInformationFields.dbName, `${dbType}-${generateShortUID()}`);
-    setValue(BasicInformationFields.dbVersion, newVersions[0]);
+    setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`);
+    setValue(DbWizardFormFields.dbVersion, newVersions[0]);
     setDbVersions(newVersions);
   }, [dbType]);
 
@@ -71,7 +72,7 @@ export const FirstStep = () => {
           <Skeleton height={57} variant="rectangular" />
         ) : (
           <Controller
-            name={BasicInformationFields.dbType}
+            name={DbWizardFormFields.dbType}
             control={control}
             render={({ field }) => (
               <ToggleButtonGroup
@@ -102,7 +103,7 @@ export const FirstStep = () => {
         </Typography>
         <Controller
           control={control}
-          name={BasicInformationFields.dbName}
+          name={DbWizardFormFields.dbName}
           render={({ field, fieldState: { error } }) => (
             <TextField
               {...field}
@@ -121,7 +122,7 @@ export const FirstStep = () => {
         </Typography>
         <Controller
           control={control}
-          name={BasicInformationFields.k8sNamespace}
+          name={DbWizardFormFields.k8sNamespace}
           render={({ field, fieldState: { error } }) => (
             <Select
               {...field}
@@ -144,7 +145,7 @@ export const FirstStep = () => {
         </Typography>
         <Controller
           control={control}
-          name={BasicInformationFields.dbEnvironment}
+          name={DbWizardFormFields.dbEnvironment}
           render={({ field, fieldState: { error } }) => (
             <Select
               {...field}
@@ -167,7 +168,7 @@ export const FirstStep = () => {
         </Typography>
         <Controller
           control={control}
-          name={BasicInformationFields.dbVersion}
+          name={DbWizardFormFields.dbVersion}
           render={({ field, fieldState: { error } }) => (
             <Select
               {...field}

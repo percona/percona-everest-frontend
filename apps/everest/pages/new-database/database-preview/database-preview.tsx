@@ -25,9 +25,17 @@ export const DatabasePreview = ({ activeStep, nrSteps, sx, ...stackProps }: Data
 
   return (
     <Stack sx={{ pr: 2, pl: 2, ...sx }} {...stackProps}>
-      <Typography fontStyle='italic' color='text.secondary' fontSize='12px'>Database Preview</Typography>
+      <Typography
+        fontStyle='italic'
+        color='text.secondary'
+        fontSize='12px'
+      >
+        Database Preview
+      </Typography>
       <Stack sx={{ pt: 1, pb: 1 }}>
         {previewSections.map((Section, idx) => (
+          // The array is static, we can disable the rule
+          // eslint-disable-next-line react/no-array-index-key
           <React.Fragment key={`section-${idx}`}>
             <Section {...values} active={longestAchievedStep > idx - 1} />
             {!finalStepAchieved && longestAchievedStep === idx && <Divider sx={{ mt: 1.5, mb: 1 }} />}

@@ -1,7 +1,7 @@
 import React from "react";
+import { Stack } from "@mui/material";
 import { PreviewSection, PreviewContentText } from "../preview-section";
 import { SectionProps } from "./section.types";
-import { Stack } from "@mui/material";
 import { Messages } from "../database.preview.messages";
 
 export const PreviewSectionTwo = ({ numberOfNodes, cpu, disk, memory, active }: SectionProps) => {

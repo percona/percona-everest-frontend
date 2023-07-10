@@ -7,7 +7,7 @@ export const PreviewSectionFive = ({ monitoring, active }: SectionProps) => {
   return (
     <>
       <PreviewSection title={Messages.preview.monitoring} active={active}>
-        <PreviewContentText text={!!monitoring ? 'Enabled' : 'Disabled'} />
+        <PreviewContentText text={monitoring ? 'Enabled' : 'Disabled'} />
       </PreviewSection>
     </>
   );

@@ -1,4 +1,4 @@
-import { DbType } from "@percona/ui-lib.db-toggle-card";
+import { DbType } from '@percona/ui-lib.db-toggle-card';
 
 export const DB_VERSIONS: Record<DbType, string[]> = {
   [DbType.Mysql]: [
@@ -9,11 +9,11 @@ export const DB_VERSIONS: Record<DbType, string[]> = {
   [DbType.Mongo]: [
     'percona/percona-server-mongodb:5.0.7-6',
     'percona/percona-server-mongodb:5.0.4-3',
-    'percona/percona-server-mongodb:5.0.2-1'
+    'percona/percona-server-mongodb:5.0.2-1',
   ],
   [DbType.Postresql]: [
     'percona/percona-postgresql-operator:1.4.0-ppg14-postgres-ha',
     'percona/percona-postgresql-operator:1.4.0-ppg13-postgres-ha',
     'percona/percona-postgresql-operator:1.4.0-ppg12-postgres-ha',
-  ]
-}
+  ],
+};

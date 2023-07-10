@@ -1,7 +1,6 @@
-import React from "react";
 import { DbType } from "@percona/ui-lib.db-toggle-card";
-import { DbEngineType } from "../types/dbEngines.types";
 import { MongoIcon, MySqlIcon, PostgreSqlIcon } from "@percona/ui-lib.icons.db";
+import { DbEngineType } from "../types/dbEngines.types";
 
 export const dbEngineToDbType = (dbEngine: DbEngineType): DbType => {
   switch (dbEngine) {

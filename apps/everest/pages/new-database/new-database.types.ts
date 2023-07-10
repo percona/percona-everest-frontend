@@ -2,10 +2,8 @@ import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { z } from 'zod';
 import { IP_REGEX } from './new-database.constants';
 import { Messages as FirstStepMessages } from './steps/first/first-step.messages';
-import { BasicInformationFields } from './steps/first/first-step.types';
 import {
   NumberOfNodes,
-  ResourcesFields,
   ResourceSize,
 } from './steps/second/second-step.types';
 import {
@@ -15,29 +13,59 @@ import {
   WeekDays,
 } from './steps/third/third-step.types';
 
+export enum DbWizardFormFields {
+  dbName = 'dbName',
+  dbType = 'dbType',
+  k8sNamespace = 'k8sNamespace',
+  dbEnvironment = 'dbEnvironment',
+  dbVersion = 'dbVersion',
+  cpu = 'cpu',
+  memory = 'memory',
+  disk = 'disk',
+  numberOfNodes = 'numberOfNodes',
+  resourceSizePerNode = 'resourceSizePerNode',
+  backupsEnabled = 'backupsEnable',
+  pitrEnabled = 'pitrEnabled',
+  pitrTime = 'pitrTime',
+  storageLocation = 'storageLocation',
+  timeNumbers = 'timeNumbers',
+  selectTime = 'selectTime',
+  minute = 'minute',
+  minuteHour = 'minuteHour',
+  hour = 'hour',
+  amPm = 'amPm',
+  weekDay = 'weekDay',
+  onDay = 'onDay',
+  externalAccess = 'externalAccess',
+  internetFacing = 'internetFacing',
+  sourceRange = 'sourceRange',
+  monitoring = 'monitoring',
+  endpoint = 'endpoint'
+}
+
 // .passthrough tells Zod to not drop unrecognized keys
 // this is needed because we parse step by step
 // so, by default, Zod would leave behind the keys from previous steps
 const stepOneSchema = z
   .object({
-    [BasicInformationFields.dbType]: z.nativeEnum(DbType),
-    [BasicInformationFields.dbName]: z
+    [DbWizardFormFields.dbType]: z.nativeEnum(DbType),
+    [DbWizardFormFields.dbName]: z
       .string()
       .max(255, FirstStepMessages.errors.dbName)
       .nonempty(`The ${FirstStepMessages.labels.dbName} field is required`),
-    // [BasicInformationFields.k8sNamespace]: z.string().nonempty(),
-    // [BasicInformationFields.dbEnvironment]: z.string().nonempty(),
-    [BasicInformationFields.dbVersion]: z.string().nonempty(),
+    // [DbWizardFormFields.k8sNamespace]: z.string().nonempty(),
+    // [DbWizardFormFields.dbEnvironment]: z.string().nonempty(),
+    [DbWizardFormFields.dbVersion]: z.string().nonempty(),
   })
   .passthrough();
 
 const stepTwoSchema = z
   .object({
-    [ResourcesFields.cpu]: z.number(),
-    [ResourcesFields.memory]: z.number(),
-    [ResourcesFields.disk]: z.number(),
-    [ResourcesFields.resourceSizePerNode]: z.nativeEnum(ResourceSize),
-    [ResourcesFields.numberOfNodes]: z.nativeEnum(NumberOfNodes),
+    [DbWizardFormFields.cpu]: z.number(),
+    [DbWizardFormFields.memory]: z.number(),
+    [DbWizardFormFields.disk]: z.number(),
+    [DbWizardFormFields.resourceSizePerNode]: z.nativeEnum(ResourceSize),
+    [DbWizardFormFields.numberOfNodes]: z.nativeEnum(NumberOfNodes),
   })
   .passthrough();
 

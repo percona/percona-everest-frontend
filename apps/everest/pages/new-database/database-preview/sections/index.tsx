@@ -6,4 +6,10 @@ import { PreviewSectionTwo } from "./section-two";
 
 export { PreviewSectionOne, PreviewSectionTwo, PreviewSectionThree, PreviewSectionFour, PreviewSectionFive };
 
-export const previewSections = [PreviewSectionOne, PreviewSectionTwo, PreviewSectionThree, PreviewSectionFour, PreviewSectionFive];
+export const previewSections = [
+  PreviewSectionOne,
+  PreviewSectionTwo,
+  PreviewSectionThree,
+  PreviewSectionFour,
+  PreviewSectionFive,
+];
