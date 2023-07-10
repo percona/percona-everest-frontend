@@ -18,7 +18,7 @@ export type EngineToolPayload = {
   description: string;
   imagePath: string;
   imageHash: string;
-  status: string;
+  status: DbEngineToolStatus;
 }
 
 export type GetDbEnginesPayload = {
