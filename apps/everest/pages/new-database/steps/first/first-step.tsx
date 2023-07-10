@@ -23,6 +23,8 @@ export const FirstStep = () => {
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
 
+  console.log(dbEngines);
+
   // TODO change to api request's result
   // const k8sNamespacesOptions = [
   //   {
