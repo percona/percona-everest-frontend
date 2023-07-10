@@ -23,3 +23,14 @@ export const dbTypeToIcon = (dbType: DbType) => {
       return PostgreSqlIcon;
   }
 }
+
+export const beautifyDbTypeName = (dbType: DbType): string => {
+  switch (dbType) {
+    case DbType.Mongo:
+      return 'MongoDB';
+    case DbType.Mysql:
+      return 'MySQL';
+    default:
+      return 'PostgreSQL';
+  }
+}

@@ -1,7 +1,7 @@
 export const Messages = {
   title: 'Database Preview',
   preview: {
-    version: 'VERSION',
+    basic: 'Basic Information',
     numberOfNodes: 'NUMBER OF NODES',
     resourceSize: 'RESOURCE SIZE',
     backups: 'BACKUPS',
