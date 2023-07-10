@@ -74,21 +74,23 @@ export const TimeSelection = () => {
           name="selectTime"
           control={control}
           selectFieldProps={{
-            sx:{ minWidth: '120px' }
+            sx: { minWidth: '120px' },
           }}
         >
           {Object.values(TimeValue).map((value) => (
-                <MenuItem key={value} value={value}>
-                  {value}
-                </MenuItem>
-              ))}
+            <MenuItem key={value} value={value}>
+              {value}
+            </MenuItem>
+          ))}
         </SelectInput>
-        <Box sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 2,
-          flexWrap: 'wrap'
-        }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+            flexWrap: 'wrap',
+          }}
+        >
           {selectedTime === TimeValue.hours && <HoursField />}
           {selectedTime === TimeValue.weeks && <WeeksField />}
           {selectedTime === TimeValue.months && <MonthsField />}

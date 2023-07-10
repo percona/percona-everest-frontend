@@ -14,7 +14,7 @@ export const MonthsField = () => {
         name="onDay"
         control={control}
         selectFieldProps={{
-          sx: { minWidth: '80px' }
+          sx: { minWidth: '80px' },
         }}
       >
         {DAYS_MONTH.map((value) => (

@@ -1,9 +1,6 @@
-import {
-  Typography,
-  FormGroup,
-} from '@mui/material';
+import { Typography, FormGroup } from '@mui/material';
 import React from 'react';
-import { useFormContext  } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { Messages } from './fifth-step.messages';

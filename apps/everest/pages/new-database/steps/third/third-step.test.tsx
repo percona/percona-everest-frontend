@@ -34,17 +34,27 @@ describe('ThirdStep', () => {
         </FormProviderWrapper>
       </TestWrapper>
     );
-    expect(screen.getByTestId('select-input-storage-location')).toBeInTheDocument();
-    expect(screen.getByTestId('switch-input-backups-enabled')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('select-input-storage-location')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId('switch-input-backups-enabled')
+    ).toBeInTheDocument();
 
     fireEvent.click(screen.getByTestId('switch-input-backups-enabled'));
     expect(
       screen.queryByTestId('select-input-storage-location')
     ).not.toBeInTheDocument();
-    expect(screen.queryByTestId('switch-input-pitr-enabled')).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('switch-input-pitr-enabled')
+    ).not.toBeInTheDocument();
     expect(screen.queryByTestId('pitr-time-minutes')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('select-input-time-numbers')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('select-input-select-time')).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('select-input-time-numbers')
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('select-input-select-time')
+    ).not.toBeInTheDocument();
   });
 
   it('should render everything when backups are enabled', () => {
@@ -56,8 +66,12 @@ describe('ThirdStep', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByTestId('switch-input-backups-enabled')).toBeInTheDocument();
-    expect(screen.getByTestId('select-input-storage-location')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('switch-input-backups-enabled')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId('select-input-storage-location')
+    ).toBeInTheDocument();
     expect(screen.getByTestId('switch-input-pitr-enabled')).toBeInTheDocument();
     expect(screen.getByTestId('pitr-time-minutes')).toBeInTheDocument();
     expect(screen.getByTestId('select-input-time-numbers')).toBeInTheDocument();
@@ -73,7 +87,9 @@ describe('ThirdStep', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByTestId('switch-input-backups-enabled')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('switch-input-backups-enabled')
+    ).toBeInTheDocument();
     expect(screen.getByTestId('switch-input-pitr-enabled')).toBeInTheDocument();
     expect(screen.getByTestId('pitr-time-minutes')).toBeInTheDocument();
   });
@@ -87,7 +103,9 @@ describe('ThirdStep', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByTestId('switch-input-backups-enabled')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('switch-input-backups-enabled')
+    ).toBeInTheDocument();
     expect(screen.getByTestId('switch-input-pitr-enabled')).toBeInTheDocument();
     expect(screen.getByTestId('pitr-time-minutes')).toBeInTheDocument();
 
@@ -104,8 +122,12 @@ describe('ThirdStep', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByTestId('switch-input-backups-enabled')).toBeInTheDocument();
-    expect(screen.queryByTestId('select-input-time-numbers')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('switch-input-backups-enabled')
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByTestId('select-input-time-numbers')
+    ).toBeInTheDocument();
     const selectTimeValue = screen.getByTestId('select-input-select-time');
     expect(selectTimeValue).toBeInTheDocument();
 
@@ -129,7 +151,9 @@ describe('ThirdStep', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByTestId('switch-input-backups-enabled')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('switch-input-backups-enabled')
+    ).toBeInTheDocument();
     expect(screen.getByTestId('select-input-time-numbers')).toBeInTheDocument();
     const selectTimeValue = screen.getByTestId('select-input-select-time');
     expect(selectTimeValue).toBeInTheDocument();
@@ -145,7 +169,9 @@ describe('ThirdStep', () => {
     expect(
       screen.queryByTestId('select-input-minute-hour')
     ).not.toBeInTheDocument();
-    expect(screen.queryByTestId('select-input-week-day')).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('select-input-week-day')
+    ).not.toBeInTheDocument();
     expect(screen.queryByTestId('select-input-on-day')).not.toBeInTheDocument();
   });
 
@@ -158,7 +184,9 @@ describe('ThirdStep', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByTestId('switch-input-backups-enabled')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('switch-input-backups-enabled')
+    ).toBeInTheDocument();
     expect(screen.getByTestId('select-input-time-numbers')).toBeInTheDocument();
     const selectTimeValue = screen.getByTestId('select-input-select-time');
     expect(selectTimeValue).toBeInTheDocument();
@@ -187,7 +215,9 @@ describe('ThirdStep', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByTestId('switch-input-backups-enabled')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('switch-input-backups-enabled')
+    ).toBeInTheDocument();
     expect(screen.getByTestId('select-input-time-numbers')).toBeInTheDocument();
     const selectTimeValue = screen.getByTestId('select-input-select-time');
     expect(selectTimeValue).toBeInTheDocument();
@@ -204,6 +234,8 @@ describe('ThirdStep', () => {
     expect(
       screen.queryByTestId('select-input-minute-hour')
     ).not.toBeInTheDocument();
-    expect(screen.queryByTestId('select-input-week-day')).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('select-input-week-day')
+    ).not.toBeInTheDocument();
   });
 });

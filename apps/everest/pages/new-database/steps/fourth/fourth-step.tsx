@@ -56,7 +56,7 @@ export const FourthStep = () => {
                       </IconButton>
                     </InputAdornment>
                   ),
-                }
+                },
               }}
             />
           </>

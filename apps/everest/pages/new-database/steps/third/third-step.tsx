@@ -1,8 +1,4 @@
-import {
-  Box,
-  MenuItem,
-  Typography,
-} from '@mui/material';
+import { Box, MenuItem, Typography } from '@mui/material';
 
 import React from 'react';
 import { useFormContext } from 'react-hook-form';

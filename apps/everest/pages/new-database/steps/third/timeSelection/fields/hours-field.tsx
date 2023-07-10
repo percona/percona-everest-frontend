@@ -15,7 +15,7 @@ export const HoursField = () => {
         name="minuteHour"
         control={control}
         selectFieldProps={{
-          sx: { minWidth: '80px' }
+          sx: { minWidth: '80px' },
         }}
       >
         {MINUTES.map((value) => (
