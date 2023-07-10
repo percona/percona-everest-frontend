@@ -20,8 +20,7 @@ export const FormControlLabel = ({
   return (
     <MuiFormControlLabel
       label={
-        label ||
-        (labelHeader || labelMessage ? (
+        label || (labelHeader || labelMessage ? (
           <Label
             sx={sxLabel}
             labelHeader={labelHeader}

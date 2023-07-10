@@ -28,6 +28,7 @@ export const OutlinedFormControlLabelWrapper = ({
         }),
         ...boxSx,
       }}
+      data-testid="outlined-form-control-label-wrapper"
     >
       <FormControlLabel
         sx={{ ...(isLaptop && { pb: 2 }) }}
@@ -36,6 +37,7 @@ export const OutlinedFormControlLabelWrapper = ({
           ...(isMobile && { minWidth: 'none' }),
         }}
         {...props}
+        data-testid="form-control-label"
       />
       {children}
     </Box>

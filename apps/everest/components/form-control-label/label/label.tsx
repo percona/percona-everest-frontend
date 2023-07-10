@@ -6,10 +6,14 @@ export const Label = ({ labelHeader, labelMessage, sx }: LabelProps) => {
   return (
     <Box sx={{ ml: 1, ...sx }}>
       {labelHeader && (
-        <Typography variant="subtitle2">{labelHeader}</Typography>
+        <Typography data-testid="label-header" variant="subtitle2">
+          {labelHeader}
+        </Typography>
       )}
       {labelMessage && (
-        <Typography variant="caption">{labelMessage}</Typography>
+        <Typography data-testid="label-message" variant="caption">
+          {labelMessage}
+        </Typography>
       )}
     </Box>
   );

@@ -43,7 +43,7 @@ export const SourceRanges = ({ methods }: SourceRangesProps) => {
       {defaultFields.map((field, index) => (
         <TextField
           id={field.id}
-          key={`${field.sourceRange}_${index}`}
+          key={`${field.sourceRange}_${field.id}`}
           name={`${DefaultConfigurationsFields.sourceRanges}.${index}.sourceRange`}
           {...register(
             `${DefaultConfigurationsFields.sourceRanges}.${index}.sourceRange`

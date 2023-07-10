@@ -74,20 +74,29 @@ export const DefaultConfigurations = () => {
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Typography sx={{ my: 2, mx: 1 }} variant="body1">
+            <Typography
+              data-testid="default-configurations-info"
+              sx={{ my: 2, mx: 1 }}
+              variant="body1"
+            >
               {Messages.pageDescription}
             </Typography>
             <FormControlLabel
               labelHeader={Messages.monitoring}
               labelMessage={Messages.monitoringMessage}
               outlined
+              data-testid="monitoring-control"
               sx={{ mb: 2 }}
               control={
                 <Controller
                   control={methods.control}
                   name={DefaultConfigurationsFields.monitoring}
                   render={({ field }) => (
-                    <Switch {...field} checked={field.value} />
+                    <Switch
+                      data-testid="monitoring-control-checkbox"
+                      {...field}
+                      checked={field.value}
+                    />
                   )}
                 />
               }
@@ -96,12 +105,17 @@ export const DefaultConfigurations = () => {
               labelHeader={Messages.backups}
               labelMessage={Messages.backupsMessage}
               boxSx={{ mb: 2 }}
+              data-testid="backup-control"
               control={
                 <Controller
                   control={methods.control}
                   name={DefaultConfigurationsFields.backupsEnabled}
                   render={({ field }) => (
-                    <Switch {...field} checked={field.value} />
+                    <Switch
+                      data-testid="backup-control-checkbox"
+                      {...field}
+                      checked={field.value}
+                    />
                   )}
                 />
               }
@@ -148,12 +162,17 @@ export const DefaultConfigurations = () => {
               labelHeader={Messages.externalAccess}
               labelMessage={Messages.externalAccessMessage}
               boxSx={{ mb: 2 }}
+              data-testid="external-access-control"
               control={
                 <Controller
                   control={methods.control}
                   name={DefaultConfigurationsFields.externalAccess}
                   render={({ field }) => (
-                    <Switch {...field} checked={field.value} />
+                    <Switch
+                      data-testid="external-access-control-checkbox"
+                      {...field}
+                      checked={field.value}
+                    />
                   )}
                 />
               }
@@ -173,6 +192,7 @@ export const DefaultConfigurations = () => {
                       flex: '1 1 auto',
                     }),
                   }}
+                  data-testid="source-ranges"
                 >
                   <SourceRanges methods={methods} />
                 </Box>
