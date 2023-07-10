@@ -1,4 +1,4 @@
-import { ListItemProps } from "@mui/material";
+import { ListItemProps } from '@mui/material';
 
 export type NavItemProps = {
   open: boolean;

@@ -1,7 +1,7 @@
 export enum DbEngineType {
   PSMDB = 'psmdb',
   PXC = 'pxc',
-  PG = 'pg'
+  PG = 'pg',
 }
 
 export enum DbEngineStatus {
@@ -11,17 +11,17 @@ export enum DbEngineStatus {
 export type GetDbEnginesPayload = {
   items: Array<{
     spec: {
-      type: DbEngineType
-    },
+      type: DbEngineType;
+    };
     status: {
-      status: DbEngineStatus,
-      version: string
-    }
-  }>
-}
+      status: DbEngineStatus;
+      version: string;
+    };
+  }>;
+};
 
 export type DbEngine = {
-  type: DbEngineType,
-  status: DbEngineStatus,
-  version: string
-}
+  type: DbEngineType;
+  status: DbEngineStatus;
+  version: string;
+};

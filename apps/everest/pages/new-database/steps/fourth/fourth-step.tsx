@@ -14,6 +14,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { Messages } from './fourth-step.messages';
 
 import { IP_RANGE_PATTERN } from './fourth-step.constants';
+import { DbWizardFormFields } from '../../new-database.types';
 
 export const FourthStep = () => {
   const { control, setValue, watch } = useFormContext();
@@ -30,7 +31,7 @@ export const FourthStep = () => {
           control={
             <Controller
               control={control}
-              name="externalAccess"
+              name={DbWizardFormFields.externalAccess}
               render={({ field }) => (
                 <Switch {...field} checked={field.value} />
               )}
@@ -45,7 +46,7 @@ export const FourthStep = () => {
               control={
                 <Controller
                   control={control}
-                  name="internetFacing"
+                  name={DbWizardFormFields.internetFacing}
                   render={({ field }) => (
                     <Switch {...field} checked={field.value} />
                   )}
@@ -57,7 +58,7 @@ export const FourthStep = () => {
             </Typography>
             <Controller
               control={control}
-              name="sourceRange"
+              name={DbWizardFormFields.sourceRange}
               rules={{
                 required: true,
                 pattern: IP_RANGE_PATTERN,
