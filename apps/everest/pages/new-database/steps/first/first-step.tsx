@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  FormGroup,
-  MenuItem,
-  Skeleton,
-  Typography,
-} from '@mui/material';
+import { FormGroup, MenuItem, Skeleton, Typography } from '@mui/material';
 
 import { DbToggleCard, DbType } from '@percona/ui-lib.db-toggle-card';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
@@ -73,7 +68,8 @@ export const FirstStep = () => {
         ) : (
           <ToggleButtonGroupInput
             name={DbWizardFormFields.dbType}
-            control={control}>
+            control={control}
+          >
             {dbEngines.map(({ type }) => (
               <DbToggleCard key={type} value={dbEngineToDbType(type)} />
             ))}
@@ -84,7 +80,7 @@ export const FirstStep = () => {
           name={DbWizardFormFields.dbName}
           label={Messages.labels.dbName}
           textFieldProps={{
-            placeholder: Messages.placeholders.dbName
+            placeholder: Messages.placeholders.dbName,
           }}
         />
         {/* <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>

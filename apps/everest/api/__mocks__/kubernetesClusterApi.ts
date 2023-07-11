@@ -1,8 +1,11 @@
-import { KubernetesClusterList } from "../../types/kubernetes.types";
+import { KubernetesClusterList } from '../../types/kubernetes.types';
 
-export const getKubernetesClustersFn = async (): Promise<KubernetesClusterList> => {
-  return [{
-    id: 'cluster_one',
-    name: 'Cluster one'
-  }];
-};
+export const getKubernetesClustersFn =
+  async (): Promise<KubernetesClusterList> => {
+    return [
+      {
+        id: 'cluster_one',
+        name: 'Cluster one',
+      },
+    ];
+  };

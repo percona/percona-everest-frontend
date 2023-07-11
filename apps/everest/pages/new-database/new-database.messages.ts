@@ -4,13 +4,13 @@ export const Messages = {
   createDatabase: 'Create database',
   errors: {
     sourceRange: {
-      invalid: 'Invalid IP address range'
+      invalid: 'Invalid IP address range',
     },
     endpoint: {
-      invalid: 'Invalid URL'
+      invalid: 'Invalid URL',
     },
     dbName: {
-      tooLong: 'The database name is too long'
+      tooLong: 'The database name is too long',
     },
-  }
+  },
 };

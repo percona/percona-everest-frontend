@@ -14,7 +14,7 @@ export const WeeksField = () => {
         name="weekDay"
         control={control}
         selectFieldProps={{
-          sx: { minWidth: '120px' }
+          sx: { minWidth: '120px' },
         }}
       >
         {Object.values(WeekDays).map((value) => (

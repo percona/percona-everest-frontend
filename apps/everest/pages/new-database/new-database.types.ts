@@ -1,10 +1,7 @@
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { z } from 'zod';
 import { IP_REGEX } from './new-database.constants';
-import {
-  NumberOfNodes,
-  ResourceSize,
-} from './steps/second/second-step.types';
+import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
 import {
   AmPM,
   StorageLocation,
@@ -40,7 +37,7 @@ export enum DbWizardFormFields {
   internetFacing = 'internetFacing',
   sourceRange = 'sourceRange',
   monitoring = 'monitoring',
-  endpoint = 'endpoint'
+  endpoint = 'endpoint',
 }
 
 // .passthrough tells Zod to not drop unrecognized keys
@@ -108,7 +105,7 @@ const stepFourSchema = z
           code: z.ZodIssueCode.invalid_string,
           validation: 'ip',
           path: ['sourceRange'],
-          message: Messages.errors.sourceRange.invalid
+          message: Messages.errors.sourceRange.invalid,
         });
       }
     }
@@ -129,7 +126,7 @@ const stepFiveSchema = z
           code: z.ZodIssueCode.invalid_string,
           validation: 'url',
           path: ['endpoint'],
-          message: Messages.errors.endpoint.invalid
+          message: Messages.errors.endpoint.invalid,
         });
       }
     }

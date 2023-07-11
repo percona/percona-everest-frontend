@@ -26,11 +26,15 @@ describe('FourthStep', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByTestId('switch-input-external-access')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('switch-input-external-access')
+    ).toBeInTheDocument();
     expect(
       screen.queryByTestId('switch-input-internet-facing')
     ).not.toBeInTheDocument();
-    expect(screen.queryByTestId('text-input-source-range')).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('text-input-source-range')
+    ).not.toBeInTheDocument();
   });
 
   it('should render remaining fields when external access is on', () => {
@@ -44,8 +48,12 @@ describe('FourthStep', () => {
 
     fireEvent.click(screen.getByTestId('switch-input-external-access'));
 
-    expect(screen.getByTestId('switch-input-external-access')).toBeInTheDocument();
-    expect(screen.getByTestId('switch-input-internet-facing')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('switch-input-external-access')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId('switch-input-internet-facing')
+    ).toBeInTheDocument();
     expect(screen.getByTestId('text-input-source-range')).toBeInTheDocument();
   });
 

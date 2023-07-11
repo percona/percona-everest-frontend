@@ -26,7 +26,7 @@ export const TimeFields = () => {
         name="hour"
         control={control}
         selectFieldProps={{
-          sx: { minWidth: '80px' }
+          sx: { minWidth: '80px' },
         }}
       >
         {HOURS_AM_PM.map((value) => (
@@ -39,7 +39,7 @@ export const TimeFields = () => {
         name="minute"
         control={control}
         selectFieldProps={{
-          sx: { minWidth: '80px' }
+          sx: { minWidth: '80px' },
         }}
       >
         {MINUTES.map((value) => (
@@ -52,7 +52,7 @@ export const TimeFields = () => {
         name="amPm"
         control={control}
         selectFieldProps={{
-          sx: { minWidth: '80px' }
+          sx: { minWidth: '80px' },
         }}
       >
         <MenuItem value={AmPM.AM}>{Messages.am}</MenuItem>

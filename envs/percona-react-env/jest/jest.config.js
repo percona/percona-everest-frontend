@@ -11,7 +11,7 @@ const reactJestConfig = require('@teambit/react/jest/jest.config');
 module.exports = {
   ...reactJestConfig,
   moduleNameMapper: {
-    "axios": "axios/dist/node/axios.cjs"
+    axios: 'axios/dist/node/axios.cjs',
   },
   // transformIgnorePatterns: [
   //   '^.+\.module\.(css|sass|scss)$',
