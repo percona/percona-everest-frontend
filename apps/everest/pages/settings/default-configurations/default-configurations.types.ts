@@ -35,9 +35,9 @@ export const defaultConfigurationsSchema = z
     [DefaultConfigurationsFields.amPm]: z.nativeEnum(AmPM),
     [DefaultConfigurationsFields.weekDay]: z.nativeEnum(WeekDays),
     [DefaultConfigurationsFields.onDay]: z.number(),
-    [DefaultConfigurationsFields.sourceRanges]: z
-      .array(z.object({ sourceRange: z.string() }))
-      .optional(),
+    [DefaultConfigurationsFields.sourceRanges]: z.array(
+      z.object({ sourceRange: z.string() }).optional()
+    ),
   })
   .passthrough()
   .superRefine((schema, ctx) => {

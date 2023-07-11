@@ -15,7 +15,7 @@ const FormProviderWrapper = ({
 }: FormProviderWrapperProps) => {
   const methods = useForm({
     defaultValues: {
-      'testEnabled': true,
+      testEnabled: true,
     },
   });
 

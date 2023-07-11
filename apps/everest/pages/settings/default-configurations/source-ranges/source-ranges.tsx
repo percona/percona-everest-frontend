@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, TextField, IconButton, InputAdornment } from '@mui/material';
-import { useFieldArray } from 'react-hook-form';
+import { useFieldArray, Controller } from 'react-hook-form';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import { DefaultConfigurationsFields } from '../default-configurations.types';
@@ -11,9 +11,9 @@ export const SourceRanges = ({ methods }: SourceRangesProps) => {
   const {
     control,
     formState: { errors },
-    register,
+    setValue,
   } = methods;
-  const { fields, append, remove, update } = useFieldArray({
+  const { fields, append, remove} = useFieldArray({
     control,
     name: DefaultConfigurationsFields.sourceRanges,
   });
@@ -40,41 +40,48 @@ export const SourceRanges = ({ methods }: SourceRangesProps) => {
       >
         {Messages.addNew}
       </Button>
-      {defaultFields.map((field, index) => (
-        <TextField
-          id={field.id}
-          key={`${field.sourceRange}_${field.id}`}
+      {defaultFields.map((sourceRange, index) => (
+        <Controller
+          control={control}
           name={`${DefaultConfigurationsFields.sourceRanges}.${index}.sourceRange`}
-          {...register(
-            `${DefaultConfigurationsFields.sourceRanges}.${index}.sourceRange`
+          key={`${sourceRange.sourceRange}_${sourceRange.id}`}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              id={sourceRange.id}
+              variant="outlined"
+              placeholder={Messages.sourceRangePlaceholder}
+              error={
+                errors?.[DefaultConfigurationsFields.sourceRanges]?.[index]
+                  ?.sourceRange !== undefined
+              }
+              helperText={errorMessage(index)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      data-testid="delete-button"
+                      onClick={() => {
+                        return fields.length === 1 && index === 0
+                          ? setValue(
+                              `${DefaultConfigurationsFields.sourceRanges}.${index}.sourceRange`,
+                              '',
+                              { shouldValidate: true }
+                            )
+                          : remove(index);
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              // eslint-disable-next-line react/jsx-no-duplicate-props
+              inputProps={{
+                'data-testid': `text-source-range-${index}`,
+              }}
+            />
           )}
-          variant="outlined"
-          placeholder={Messages.sourceRangePlaceholder}
-          error={
-            errors?.[DefaultConfigurationsFields.sourceRanges]?.[index]
-              ?.sourceRange !== undefined
-          }
-          helperText={errorMessage(index)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  data-testid="delete-button"
-                  onClick={() =>
-                    fields.length === 1 && index === 0
-                      ? update(0, { sourceRange: '' })
-                      : remove(index)
-                  }
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          // eslint-disable-next-line react/jsx-no-duplicate-props
-          inputProps={{
-            'data-testid': `text-source-range-${index}`,
-          }}
         />
       ))}
     </>
