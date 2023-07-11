@@ -14,9 +14,9 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { Messages } from './first-step.messages';
 import { generateShortUID } from './utils';
 import { useDbEngines } from '../../../../hooks/db-engines/useDbEngines';
-import { dbEngineToDbType } from '../../../../utils/db';
-import { DB_VERSIONS } from './first-step.constants';
+import { dbEngineToDbType, dbTypeToDbEngine } from '../../../../utils/db';
 import { DbWizardFormFields } from '../../new-database.types';
+import { DbEngineToolStatus } from '../../../../types/dbEngines.types';
 
 export const FirstStep = () => {
   const { control, watch, setValue } = useFormContext();
@@ -46,18 +46,31 @@ export const FirstStep = () => {
   // ];
 
   const dbType: DbType = watch(DbWizardFormFields.dbType);
-  const [dbVersions, setDbVersions] = useState(DB_VERSIONS[dbType]);
+  const dbEngine = dbTypeToDbEngine(dbType);
+  const [dbVersions, setDbVersions] = useState(dbEngines.find((engine) => engine.type === dbEngine));
 
   useEffect(() => {
     if (!dbType) {
       return;
     }
-    const newVersions = DB_VERSIONS[dbType];
+
+    const newVersions = dbEngines.find((engine) => engine.type === dbEngine);
+
+    // Safety check
+    if (!newVersions || !newVersions.availableVersions.backup.length) {
+      return;
+    }
+
+    const recommendedVersion =
+      newVersions.availableVersions.backup.find((version) => version.status === DbEngineToolStatus.RECOMMENDED);
 
     setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`);
-    setValue(DbWizardFormFields.dbVersion, newVersions[0]);
+    setValue(
+      DbWizardFormFields.dbVersion,
+      recommendedVersion ? recommendedVersion.imagePath : newVersions.availableVersions.backup[0].imagePath,
+    );
     setDbVersions(newVersions);
-  }, [dbType]);
+  }, [dbType, dbEngines]);
 
   return (
     <>
@@ -178,10 +191,9 @@ export const FirstStep = () => {
                 'data-testid': 'text-dbVersion',
               }}
             >
-              {/* TODO Replace with API call afterwards */}
-              {dbVersions.map((version) => (
-                <MenuItem value={version} key={version}>
-                  {version}
+              {dbVersions?.availableVersions.backup.map((version) => (
+                <MenuItem value={version.imagePath} key={version.imagePath}>
+                  {version.imagePath}
                 </MenuItem>
               ))}
             </Select>
