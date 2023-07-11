@@ -6,6 +6,7 @@ import { PreviewContentTextProps, PreviewSectionProps } from './database-preview
 export const PreviewSection = ({
   title,
   order,
+  onEditClick,
   children,
   hasBeenReached = false,
   active = false,
@@ -52,6 +53,7 @@ export const PreviewSection = ({
               position: 'absolute',
               top: (theme) => theme.spacing(-1)
             }}
+            onClick={onEditClick}
           >
             <EditOutlinedIcon
               fontSize='small'

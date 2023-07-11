@@ -6,7 +6,7 @@ import { DbWizardType } from '../new-database.types';
 import { previewSections } from './sections';
 import { Messages } from './database.preview.messages';
 
-export const DatabasePreview = ({ activeStep, nrSteps, sx, ...stackProps }: DatabasePreviewProps) => {
+export const DatabasePreview = ({ activeStep, nrSteps, onSectionEdit, sx, ...stackProps }: DatabasePreviewProps) => {
   const { getValues } = useFormContext<DbWizardType>();
   const [longestAchievedStep, setLongestAchievedStep] = useState(activeStep);
   const finalStepAchieved = longestAchievedStep === nrSteps - 1
@@ -16,6 +16,8 @@ export const DatabasePreview = ({ activeStep, nrSteps, sx, ...stackProps }: Data
       setLongestAchievedStep(activeStep);
     }
   }, [activeStep]);
+
+  const handleSectionEdit = (order: number) => onSectionEdit(order);
 
   // Under normal circumstances, useWatch should return the right values
   // But the initial setValue are not taking effect
@@ -34,7 +36,12 @@ export const DatabasePreview = ({ activeStep, nrSteps, sx, ...stackProps }: Data
           // The array is static, we can disable the rule
           // eslint-disable-next-line react/no-array-index-key
           <React.Fragment key={`section-${idx}`}>
-            <Section {...values} hasBeenReached={longestAchievedStep > idx - 1} active={activeStep === idx} />
+            <Section
+              {...values}
+              hasBeenReached={longestAchievedStep > idx - 1}
+              active={activeStep === idx}
+              onSectionEdit={handleSectionEdit}
+            />
             {!finalStepAchieved && longestAchievedStep === idx && <Divider sx={{ mt: 1.5, mb: 1 }} />}
           </React.Fragment>
         ))}

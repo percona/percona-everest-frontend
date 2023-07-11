@@ -98,6 +98,8 @@ export const NewDatabasePage = () => {
     }
   };
 
+  const handleSectionEdit = (order: number) => setActiveStep(order - 1);
+
   return formSubmitted ? (
     <SixthStep />
   ) : (
@@ -152,6 +154,7 @@ export const NewDatabasePage = () => {
           <DatabasePreview
             activeStep={activeStep}
             nrSteps={steps.length}
+            onSectionEdit={handleSectionEdit}
             sx={{
               flex: '0 0 25%',
               ...(!isDesktop && {
