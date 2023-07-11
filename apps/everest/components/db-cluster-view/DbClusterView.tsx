@@ -1,10 +1,16 @@
 import { Box, MenuItem, Stack, Typography } from '@mui/material';
 import {
+  MongoLeafIcon,
+  MySqlDolphinIcon,
+  PostgreSqlElephantIcon,
+} from '@percona/ui-lib.icons.db';
+import { ErrorIcon } from '@percona/ui-lib.status';
+import {
   MaterialReactTable,
   type MRT_ColumnDef,
   type MRT_TableInstance,
 } from 'material-react-table';
-import React, { ReactNode, useMemo, useRef } from 'react';
+import React, { ReactNode, useCallback, useMemo, useRef } from 'react';
 import { DbCluster } from '../../hooks/db-clusters/dbCluster.type';
 import { useDbClusters } from '../../hooks/db-clusters/useDbClusters';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
@@ -25,6 +31,19 @@ export const DbClusterView = ({
     })
     .flat() as DbCluster[];
 
+  const iconProvider = useCallback((dbType: string) => {
+    switch (dbType) {
+      case 'pxc':
+        return <MySqlDolphinIcon />;
+      case 'psmdb':
+        return <MongoLeafIcon />;
+      case 'postgresql':
+        return <PostgreSqlElephantIcon />;
+      default:
+        return null;
+    }
+  }, []);
+
   const columns = useMemo<MRT_ColumnDef<DbCluster>[]>(
     () => [
       {
@@ -41,9 +60,16 @@ export const DbClusterView = ({
         id: 'technology',
         Cell: ({ cell, row }) => {
           return (
-            <span>
-              {row.original?.dbTypeIcon} {row.original?.dbVersion}
-            </span>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyItems: 'center',
+                gap: 1,
+              }}
+            >
+              {iconProvider(row.original?.dbTypeIcon)} {row.original?.dbVersion}
+            </Box>
           );
         },
       },
@@ -61,7 +87,7 @@ export const DbClusterView = ({
   return (
     <Stack direction="column" alignItems="center">
       <Typography variant="h5">Databases</Typography>
-
+      <ErrorIcon size="large" />
       <Box sx={{ width: '100%' }}>
         <MaterialReactTable
           muiTableProps={{
