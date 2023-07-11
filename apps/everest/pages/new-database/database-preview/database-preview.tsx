@@ -34,7 +34,7 @@ export const DatabasePreview = ({ activeStep, nrSteps, sx, ...stackProps }: Data
           // The array is static, we can disable the rule
           // eslint-disable-next-line react/no-array-index-key
           <React.Fragment key={`section-${idx}`}>
-            <Section {...values} active={longestAchievedStep > idx - 1} />
+            <Section {...values} hasBeenReached={longestAchievedStep > idx - 1} active={activeStep === idx} />
             {!finalStepAchieved && longestAchievedStep === idx && <Divider sx={{ mt: 1.5, mb: 1 }} />}
           </React.Fragment>
         ))}

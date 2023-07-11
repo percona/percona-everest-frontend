@@ -2,26 +2,45 @@ import React from 'react';
 import { Stack, Typography } from "@mui/material";
 import { PreviewContentTextProps, PreviewSectionProps } from './database-preview.types';
 
-export const PreviewSection = ({ title, children, active = false, sx, ...stackProps }: PreviewSectionProps) => (
+export const PreviewSection = ({
+  title,
+  order,
+  children,
+  hasBeenReached = false,
+  active = false,
+  sx,
+  ...stackProps
+}: PreviewSectionProps) => (
   <Stack
     sx={{
-      padding: 1,
+      pl: 3,
+      pt: 1,
+      pb: 1,
+      pr: 1,
+      ...(!hasBeenReached && !active && {
+        pt: 0,
+        pb: 0,
+      }),
       ...(active && {
-        mt: 1.5,
         backgroundColor: 'action.hover',
-        pl: 3,
       }),
       ...sx,
     }}
     {...stackProps}
   >
     <Typography
-      variant='sectionHeading'
-      color={active ? 'text.primary' : 'text.disabled'}
+      variant={hasBeenReached ? 'sectionHeading' : 'caption'}
+      color={hasBeenReached ? 'text.primary' : 'text.disabled'}
+      sx={{
+        '&::before': {
+          content: `"${order}. "`,
+          ml: -2,
+        }
+      }}
     >
       {title}
     </Typography>
-    {active && children}
+    {hasBeenReached && children}
   </Stack>
 );
 

@@ -3,10 +3,10 @@ import { PreviewSection, PreviewContentText } from "../preview-section";
 import { SectionProps } from "./section.types";
 import { Messages } from "../database.preview.messages";
 
-export const PreviewSectionFive = ({ monitoring, active }: SectionProps) => {
+export const PreviewSectionFive = ({ monitoring, active, hasBeenReached }: SectionProps) => {
   return (
     <>
-      <PreviewSection title={Messages.preview.monitoring} active={active}>
+      <PreviewSection order={5} title={Messages.preview.monitoring} active={active} hasBeenReached={hasBeenReached}>
         <PreviewContentText text={monitoring ? 'Enabled' : 'Disabled'} />
       </PreviewSection>
     </>

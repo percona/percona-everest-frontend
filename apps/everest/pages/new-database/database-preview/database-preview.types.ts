@@ -7,8 +7,10 @@ export type DatabasePreviewProps = {
 
 export type PreviewSectionProps  = {
   title: string;
+  order: number;
   children: React.ReactNode;
   active?: boolean;
+  hasBeenReached?: boolean;
 } & StackProps;
 
 export type PreviewContentTextProps = {

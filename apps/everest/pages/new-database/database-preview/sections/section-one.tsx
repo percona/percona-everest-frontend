@@ -4,9 +4,9 @@ import { beautifyDbTypeName } from "../../../../utils/db";
 import { SectionProps } from "./section.types";
 import { Messages } from "../database.preview.messages";
 
-export const PreviewSectionOne = ({ dbName, dbVersion, dbType }: SectionProps) => {
+export const PreviewSectionOne = ({ dbName, dbVersion, dbType, active }: SectionProps) => {
   return (
-    <PreviewSection title={Messages.preview.basic} active>
+    <PreviewSection order={1} title={Messages.preview.basic} active={active} hasBeenReached sx={{ mt: 2 }}>
       <PreviewContentText text={`Type: ${beautifyDbTypeName(dbType)}`} />
       <PreviewContentText text={`Name: ${dbName}`} />
       <PreviewContentText text={`Version: ${dbVersion}`} />
