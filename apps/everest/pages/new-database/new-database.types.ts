@@ -24,7 +24,7 @@ export enum DbWizardFormFields {
   disk = 'disk',
   numberOfNodes = 'numberOfNodes',
   resourceSizePerNode = 'resourceSizePerNode',
-  backupsEnabled = 'backupsEnable',
+  backupsEnabled = 'backupsEnabled',
   pitrEnabled = 'pitrEnabled',
   pitrTime = 'pitrTime',
   storageLocation = 'storageLocation',

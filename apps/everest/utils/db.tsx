@@ -13,6 +13,17 @@ export const dbEngineToDbType = (dbEngine: DbEngineType): DbType => {
   }
 }
 
+export const dbTypeToDbEngine = (dbType: DbType): DbEngineType => {
+  switch (dbType) {
+    case DbType.Mongo:
+      return DbEngineType.PSMDB;
+    case DbType.Mysql:
+      return DbEngineType.PXC;
+    default:
+      return DbEngineType.POSTGRESQL;
+  }
+}
+
 export const dbTypeToIcon = (dbType: DbType) => {
   switch (dbType) {
     case DbType.Mongo:

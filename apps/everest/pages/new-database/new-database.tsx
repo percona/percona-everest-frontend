@@ -69,6 +69,7 @@ export const NewDatabasePage = () => {
 
   const onSubmit: SubmitHandler<DbWizardType> = (data) => {
     /* eslint-disable no-console */
+    // TODO based on data.dbType, get the engine from context and the desired proxy version, if needed
     console.log(data);
     addDbCluster(
       { dbPayload: data, id },
