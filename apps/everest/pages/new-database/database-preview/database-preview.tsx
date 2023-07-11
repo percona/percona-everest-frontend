@@ -29,7 +29,7 @@ export const DatabasePreview = ({ activeStep, nrSteps, sx, ...stackProps }: Data
       <Typography variant='overline'>
         {Messages.title}
       </Typography>
-      <Stack sx={{ pt: 1, pb: 1 }}>
+      <Stack>
         {previewSections.map((Section, idx) => (
           // The array is static, we can disable the rule
           // eslint-disable-next-line react/no-array-index-key
