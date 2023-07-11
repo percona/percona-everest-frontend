@@ -13,7 +13,12 @@ export const getDbEnginesFn = async (): Promise<GetDbEnginesPayload> => {
         },
         status: {
           status: DbEngineStatus.INSTALLED,
-          version: '1.0.0,',
+          availableVersions: {
+            backup: {},
+            engine: {},
+            proxy: {},
+          },
+          operatorVersion: '1.0.0,',
         },
       },
       {
@@ -22,7 +27,12 @@ export const getDbEnginesFn = async (): Promise<GetDbEnginesPayload> => {
         },
         status: {
           status: DbEngineStatus.INSTALLED,
-          version: '1.0.0,',
+          availableVersions: {
+            backup: {},
+            engine: {},
+            proxy: {},
+          },
+          operatorVersion: '1.0.0,',
         },
       },
     ],
