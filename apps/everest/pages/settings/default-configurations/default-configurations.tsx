@@ -153,7 +153,6 @@ export const DefaultConfigurations = () => {
                       flexWrap: 'nowrap',
                       ...(isLaptop && { flexWrap: 'wrap' }),
                     }}
-                    hideInfoAlert
                   />
                 </Box>
               )}

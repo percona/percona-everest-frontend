@@ -13,7 +13,7 @@ export const SourceRanges = ({ methods }: SourceRangesProps) => {
     formState: { errors },
     setValue,
   } = methods;
-  const { fields, append, remove} = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control,
     name: DefaultConfigurationsFields.sourceRanges,
   });

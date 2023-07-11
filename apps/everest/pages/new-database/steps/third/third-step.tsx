@@ -17,8 +17,8 @@ import { TimeSelection } from '../../../../components/time-selection/time-select
 
 export const ThirdStep = () => {
   const { control, watch } = useFormContext();
-  const backupsEnabled: boolean = watch('backupsEnabled');
-  const pitrEnabled: boolean = watch('pitrEnabled');
+  const backupsEnabled: boolean = watch(DbWizardFormFields.backupsEnabled);
+  const pitrEnabled: boolean = watch(DbWizardFormFields.pitrEnabled);
   const fetchedStorageValues = Object.values(StorageLocation);
 
   return (
@@ -41,7 +41,7 @@ export const ThirdStep = () => {
           <Typography variant="sectionHeading">
             {Messages.repeatsEvery}
           </Typography>
-          <TimeSelection />
+          <TimeSelection showInfoAlert />
           <Box
             sx={{
               paddingTop: 3,

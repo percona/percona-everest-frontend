@@ -23,7 +23,7 @@ export enum TimeValue {
 }
 
 export interface TimeSelectionProps {
-  hideInfoAlert?: boolean;
+  showInfoAlert?: boolean;
   sx?: SxProps<Theme>;
   sxTimeFields?: SxProps<Theme>;
 }

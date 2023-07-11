@@ -10,7 +10,7 @@ import { TimeFields } from './fields/time-fields';
 import { WeeksField } from './fields/weeks-field';
 
 export const TimeSelection = ({
-  hideInfoAlert,
+  showInfoAlert,
   sx,
   sxTimeFields,
 }: TimeSelectionProps) => {
@@ -116,7 +116,7 @@ export const TimeSelection = ({
             selectedTime === TimeValue.months) && <TimeFields />}
         </Box>
       </Box>
-      {!hideInfoAlert && (
+      {showInfoAlert && (
         <Alert severity="info">{Messages.infoText(timeInfoText)}</Alert>
       )}
     </>
