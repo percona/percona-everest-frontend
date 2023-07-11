@@ -5,5 +5,4 @@ export const Messages = {
   monitoringEnabled: 'Monitoring enabled',
   endpointName: 'Monitoring endpoint URL',
   endpointPlaceholder: 'URL',
-  endpointError: 'Invalid URL',
 };

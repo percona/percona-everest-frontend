@@ -11,7 +11,4 @@ export const Messages = {
   placeholders: {
     dbName: 'E.g. postgresql-123',
   },
-  errors: {
-    dbName: 'The database name is too long',
-  },
 };

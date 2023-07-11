@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import {
-  FormGroup,
-  MenuItem,
-  Skeleton,
-  Select,
-  TextField,
-  ToggleButtonGroup,
-  Typography,
-} from '@mui/material';
+import { FormGroup, MenuItem, Skeleton, Typography } from '@mui/material';
 
 import { DbToggleCard, DbType } from '@percona/ui-lib.db-toggle-card';
-import { Controller, useFormContext } from 'react-hook-form';
+import { TextInput } from '@percona/ui-lib.form.inputs.text';
+import { ToggleButtonGroupInput } from '@percona/ui-lib.form.inputs.toggle-button-group';
+import { SelectInput } from '@percona/ui-lib.form.inputs.select';
+import { useFormContext } from 'react-hook-form';
 import { Messages } from './first-step.messages';
 import { generateShortUID } from './utils';
 import { useDbEngines } from '../../../../hooks/db-engines/useDbEngines';
@@ -77,6 +72,7 @@ export const FirstStep = () => {
       <Typography variant="h5">{Messages.pageTitle}</Typography>
       <Typography variant="subtitle2">{Messages.pageDescription}</Typography>
       <FormGroup sx={{ mt: 2 }}>
+        {/* @ts-ignore */}
         <Typography variant="sectionHeading" sx={{ mt: 1, mb: 0.5 }}>
           {Messages.labels.dbType}
         </Typography>
@@ -84,51 +80,22 @@ export const FirstStep = () => {
           // This is roughly the height of the buttons
           <Skeleton height={57} variant="rectangular" />
         ) : (
-          <Controller
+          <ToggleButtonGroupInput
             name={DbWizardFormFields.dbType}
             control={control}
-            render={({ field }) => (
-              <ToggleButtonGroup
-                {...field}
-                fullWidth
-                exclusive
-                sx={{ marginTop: 1 }}
-                onChange={(
-                  event: React.MouseEvent<HTMLElement> | any,
-                  value: DbType
-                ) => {
-                  if (value !== null) {
-                    /* eslint-disable no-param-reassign */
-                    event.target.value = value;
-                    field.onChange(event);
-                  }
-                }}
-              >
-                {dbEngines.map(({ type }) => (
-                  <DbToggleCard key={type} value={dbEngineToDbType(type)} />
-                ))}
-              </ToggleButtonGroup>
-            )}
-          />
+          >
+            {dbEngines.map(({ type }) => (
+              <DbToggleCard key={type} value={dbEngineToDbType(type)} />
+            ))}
+          </ToggleButtonGroupInput>
         )}
-        <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
-          {Messages.labels.dbName}
-        </Typography>
-        <Controller
+        <TextInput
           control={control}
           name={DbWizardFormFields.dbName}
-          render={({ field, fieldState: { error } }) => (
-            <TextField
-              {...field}
-              variant="outlined"
-              placeholder={Messages.placeholders.dbName}
-              error={error !== undefined}
-              helperText={error ? error.message : ''}
-              inputProps={{
-                'data-testid': 'text-dbName',
-              }}
-            />
-          )}
+          label={Messages.labels.dbName}
+          textFieldProps={{
+            placeholder: Messages.placeholders.dbName,
+          }}
         />
         {/* <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
           {Messages.labels.k8sNamespace}
@@ -176,29 +143,17 @@ export const FirstStep = () => {
             </Select>
           )}
         /> */}
-        <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
-          {Messages.labels.dbVersion}
-        </Typography>
-        <Controller
+        <SelectInput
           control={control}
           name={DbWizardFormFields.dbVersion}
-          render={({ field, fieldState: { error } }) => (
-            <Select
-              {...field}
-              variant="outlined"
-              error={error !== undefined}
-              inputProps={{
-                'data-testid': 'text-dbVersion',
-              }}
-            >
-              {dbVersions?.availableVersions.backup.map((version) => (
-                <MenuItem value={version.imagePath} key={version.imagePath}>
-                  {version.imagePath}
-                </MenuItem>
-              ))}
-            </Select>
-          )}
-        />
+          label={Messages.labels.dbVersion}
+        >
+          {dbVersions?.availableVersions.backup.map((version) => (
+            <MenuItem value={version.imagePath} key={version.imagePath}>
+              {version.imagePath}
+            </MenuItem>
+          ))}
+        </SelectInput>
       </FormGroup>
     </>
   );

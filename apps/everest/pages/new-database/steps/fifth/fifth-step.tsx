@@ -1,62 +1,31 @@
-import {
-  Typography,
-  FormGroup,
-  FormControlLabel,
-  Switch,
-  TextField,
-} from '@mui/material';
+import { Typography, FormGroup } from '@mui/material';
 import React from 'react';
-import { useFormContext, Controller } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
+import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
+import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { Messages } from './fifth-step.messages';
 import { DbWizardFormFields } from '../../new-database.types';
 
 export const FifthStep = () => {
   const { control, watch } = useFormContext();
-  const monitoring = watch('monitoring');
+  const monitoring = watch(DbWizardFormFields.monitoring);
 
   return (
     <>
       <Typography variant="h5">{Messages.monitoring}</Typography>
       <Typography variant="subtitle2">{Messages.caption}</Typography>
       <FormGroup sx={{ mt: 2 }}>
-        <FormControlLabel
+        <SwitchInput
+          control={control}
           label={Messages.monitoringEnabled}
-          data-testid="switch-monitoring"
-          control={
-            <Controller
-              control={control}
-              name={DbWizardFormFields.monitoring}
-              render={({ field }) => (
-                <Switch {...field} checked={field.value} />
-              )}
-            />
-          }
+          name={DbWizardFormFields.monitoring}
         />
         {monitoring && (
-          <>
-            <Typography variant="h6" sx={{ mt: 5 }}>
-              {Messages.endpointName}
-            </Typography>
-            <Controller
-              control={control}
-              name={DbWizardFormFields.endpoint}
-              rules={{
-                required: true,
-              }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  {...field}
-                  variant="outlined"
-                  placeholder={Messages.endpointPlaceholder}
-                  error={error !== undefined}
-                  helperText={error ? Messages.endpointError : ''}
-                  inputProps={{
-                    'data-testid': 'text-endpoint',
-                  }}
-                />
-              )}
-            />
-          </>
+          <TextInput
+            name={DbWizardFormFields.endpoint}
+            control={control}
+            label={Messages.endpointName}
+          />
         )}
       </FormGroup>
     </>

@@ -10,5 +10,4 @@ export const Messages = {
   sourceRange: 'Source Range',
   sourceRangePlaceholder:
     'Please insert the single IP address or range using netmask',
-  sourceRangeError: 'Invalid IP address range',
 };
