@@ -5,7 +5,15 @@ import { LabeledContent } from '@percona/ui-lib.labeled-content';
 import { kebabize } from '@percona/utils.string';
 import { SelectInputProps } from './select.types';
 
-export const SelectInput = ({ name, control, label, labelProps, selectFieldProps, children }: SelectInputProps) => {
+export const SelectInput = ({
+  name,
+  control,
+  label,
+  controllerProps,
+  labelProps,
+  selectFieldProps,
+  children,
+}: SelectInputProps) => {
   const content = <Controller
     name={name}
     control={control}
@@ -23,6 +31,7 @@ export const SelectInput = ({ name, control, label, labelProps, selectFieldProps
         {children}
       </Select>
     )}
+    {...controllerProps}
   />
 
   return label ? (

@@ -1,9 +1,10 @@
 import { TextFieldProps } from "@mui/material";
 import { LabeledContentProps } from "@percona/ui.labeled-content";
-import { Control } from "react-hook-form";
+import { Control, UseControllerProps } from "react-hook-form";
 
 export type TextInputProps = {
   control?: Control<any>;
+  controllerProps?: UseControllerProps;
   name: string;
   label?: string;
   labelProps?: LabeledContentProps;

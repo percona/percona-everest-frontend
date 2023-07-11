@@ -9,6 +9,7 @@ export const ToggleButtonGroupInput = ({
   control,
   name,
   label,
+  controllerProps,
   labelProps,
   toggleButtonGroupProps,
   children,
@@ -37,6 +38,7 @@ export const ToggleButtonGroupInput = ({
         {children}
       </ToggleButtonGroup>
     )}
+    {...controllerProps}
   />
 
   return label ? (

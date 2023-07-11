@@ -5,7 +5,14 @@ import { kebabize } from '@percona/utils.string';
 import { Controller } from 'react-hook-form';
 import { TextInputProps } from './text.types';
 
-export const TextInput = ({ control, name, label, labelProps, textFieldProps }: TextInputProps) => {
+export const TextInput = ({
+  control,
+  name,
+  label,
+  controllerProps,
+  labelProps,
+  textFieldProps,
+}: TextInputProps) => {
   const content = <Controller
     name={name}
     control={control}
@@ -22,6 +29,7 @@ export const TextInput = ({ control, name, label, labelProps, textFieldProps }: 
         {...textFieldProps}
       />
     )}
+    {...controllerProps}
   />
 
   return label ? (
