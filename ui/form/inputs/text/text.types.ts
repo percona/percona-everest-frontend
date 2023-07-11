@@ -1,5 +1,5 @@
 import { TextFieldProps } from "@mui/material";
-import { LabeledContentProps } from "@percona/ui.labeled-content";
+import { LabeledContentProps } from "@percona/ui-lib.labeled-content";
 import { Control, UseControllerProps } from "react-hook-form";
 
 export type TextInputProps = {
