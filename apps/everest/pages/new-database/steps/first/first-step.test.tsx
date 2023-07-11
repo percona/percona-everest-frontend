@@ -23,7 +23,7 @@ const FormProviderWrapper = ({
   const methods = useForm({
     defaultValues: {
       [DbWizardFormFields.dbType]: DbType.Postresql,
-      [DbWizardFormFields.dbName]: '',
+      [DbWizardFormFields.dbName]: 'postgresql-123',
       // [DbWizardFormFields.k8sNamespace]: '',
       // [DbWizardFormFields.dbEnvironment]: '',
       [DbWizardFormFields.dbVersion]: '',

@@ -10,6 +10,7 @@ export const HoursField = () => {
 
   return (
     <>
+      {/* @ts-ignore */}
       <Typography variant="sectionHeading">{Messages.onMinute}</Typography>
       <SelectInput
         name="minuteHour"

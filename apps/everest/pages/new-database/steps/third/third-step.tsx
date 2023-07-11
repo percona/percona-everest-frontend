@@ -27,6 +27,7 @@ export const ThirdStep = () => {
       />
       {backupsEnabled && (
         <>
+          {/* @ts-ignore */}
           <Typography variant="sectionHeading">
             {Messages.repeatsEvery}
           </Typography>

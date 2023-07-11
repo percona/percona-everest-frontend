@@ -72,6 +72,7 @@ export const FirstStep = () => {
       <Typography variant="h5">{Messages.pageTitle}</Typography>
       <Typography variant="subtitle2">{Messages.pageDescription}</Typography>
       <FormGroup sx={{ mt: 2 }}>
+        {/* @ts-ignore */}
         <Typography variant="sectionHeading" sx={{ mt: 1, mb: 0.5 }}>
           {Messages.labels.dbType}
         </Typography>
