@@ -4,7 +4,13 @@ import { FormControlLabel, Switch } from '@mui/material';
 import { kebabize } from '@percona/utils.string';
 import { SwitchInputProps } from './switch.types';
 
-export const SwitchInput = ({ name, control, label, controllerProps }: SwitchInputProps) => (
+export const SwitchInput = ({
+  name,
+  control,
+  label,
+  controllerProps,
+  formControlLabelProps,
+}: SwitchInputProps) => (
   <FormControlLabel
     label={label}
     data-testid={`switch-input-${kebabize(name)}`}
@@ -18,5 +24,6 @@ export const SwitchInput = ({ name, control, label, controllerProps }: SwitchInp
         {...controllerProps}
       />
     }
+    {...formControlLabelProps}
   />
 );
