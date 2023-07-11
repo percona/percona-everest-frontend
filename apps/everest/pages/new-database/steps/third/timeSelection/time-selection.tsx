@@ -1,6 +1,7 @@
-import { Alert, Box, MenuItem, OutlinedInput, TextField } from '@mui/material';
+import { Alert, Box, MenuItem, OutlinedInput } from '@mui/material';
 import React, { useMemo } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { Messages } from '../third-step.messages';
 import { TimeValue } from '../third-step.types';
 import { getTimeText } from '../third-step.utils';
@@ -49,7 +50,7 @@ export const TimeSelection = () => {
               sx={{ width: '80px' }}
               type="number"
               inputProps={{
-                'data-testid': 'select-time-numbers',
+                'data-testid': 'select-input-time-numbers',
               }}
               onChange={(e) => {
                 const v = e.target.value;
@@ -69,26 +70,19 @@ export const TimeSelection = () => {
             />
           )}
         />
-        <Controller
-          control={control}
+        <SelectInput
           name="selectTime"
-          render={({ field }) => (
-            <TextField
-              {...field}
-              sx={{ minWidth: '120px' }}
-              select
-              inputProps={{
-                'data-testid': 'select-time-value',
-              }}
-            >
-              {Object.values(TimeValue).map((value) => (
-                <MenuItem key={value} value={value}>
-                  {value}
-                </MenuItem>
-              ))}
-            </TextField>
-          )}
-        />
+          control={control}
+          selectFieldProps={{
+            sx: { minWidth: '120px' },
+          }}
+        >
+          {Object.values(TimeValue).map((value) => (
+            <MenuItem key={value} value={value}>
+              {value}
+            </MenuItem>
+          ))}
+        </SelectInput>
         <Box
           sx={{
             display: 'flex',

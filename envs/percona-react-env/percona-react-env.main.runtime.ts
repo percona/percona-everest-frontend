@@ -38,7 +38,7 @@ export class PerconaReactEnvMain {
 
       // react.useTypescript(tsModifiers),  // note: this cannot be used in conjunction with react.overrideCompiler
       // react.useWebpack(webpackModifiers),
-      // react.overrideJestConfig(require.resolve('./jest/jest.config')),
+      react.overrideJestConfig(require.resolve('./jest/jest.config')),
 
       /**
        * override the ESLint default config here then check your files for lint errors

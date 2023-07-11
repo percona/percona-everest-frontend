@@ -3,19 +3,16 @@ import {
   Alert,
   Box,
   FormGroup,
-  ToggleButtonGroup,
   Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { Controller, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { ToggleCard } from '@percona/ui-lib.toggle-card';
+import { ToggleButtonGroupInput } from '@percona/ui-lib.form.inputs.toggle-button-group';
 import { Messages } from './second-step.messages';
 import { ResourcesDetail } from '../../../../components/resources-detail';
-import {
-  NumberOfNodes,
-  ResourceSize,
-} from './second-step.types';
+import { NumberOfNodes, ResourceSize } from './second-step.types';
 import {
   checkSwitchToCustom,
   humanizeResourceSizeMap,
@@ -68,7 +65,10 @@ export const SecondStep = () => {
   useEffect(() => {
     if (resourceSizePerNode && resourceSizePerNode !== ResourceSize.custom) {
       setValue(DbWizardFormFields.cpu, DEFAULT_SIZES[resourceSizePerNode].cpu);
-      setValue(DbWizardFormFields.disk, DEFAULT_SIZES[resourceSizePerNode].disk);
+      setValue(
+        DbWizardFormFields.disk,
+        DEFAULT_SIZES[resourceSizePerNode].disk
+      );
       setValue(
         DbWizardFormFields.memory,
         DEFAULT_SIZES[resourceSizePerNode].memory
@@ -81,109 +81,66 @@ export const SecondStep = () => {
       <Typography variant="h5">{Messages.pageTitle}</Typography>
       <Typography variant="subtitle2">{Messages.pageDescription}</Typography>
       <FormGroup sx={{ mt: 2 }}>
-        <Typography variant="sectionHeading" sx={{ mt: 1, mb: 0.5 }}>
-          {Messages.labels.numberOfNodes}
-        </Typography>
-        <Controller
+        <ToggleButtonGroupInput
           name={DbWizardFormFields.numberOfNodes}
           control={control}
-          render={({ field }) => (
-            <ToggleButtonGroup
-              {...field}
-              fullWidth
-              exclusive
-              sx={{ marginTop: 1 }}
-              data-testd="number-of-nodes-toggle-button-group"
-              onChange={(
-                event: React.MouseEvent<HTMLElement> | any,
-                value: NumberOfNodes
-              ) => {
-                if (value !== null) {
-                  /* eslint-disable no-param-reassign */
-                  event.target.value = value;
-                  field.onChange(event);
-                }
-              }}
-            >
-              <ToggleCard
-                value={NumberOfNodes.oneNode}
-                data-testid="toggle-button-one-node"
-              >
-                {Messages.labels.standalone}
-              </ToggleCard>
-              <ToggleCard
-                value={NumberOfNodes.twoNodes}
-                data-testid="toggle-button-two-nodes"
-                sx={{
-                  '&.MuiButtonBase-root': {
-                    wordWrap: 'break-word',
-                    whiteSpace: 'pre-wrap',
-                  },
-                }}
-              >
-                {Messages.labels.sourceReplica}
-              </ToggleCard>
-              <ToggleCard
-                value={NumberOfNodes.threeNodes}
-                data-testid="toggle-button-three-nodes"
-              >
-                {Messages.labels.sourceReplicaReplica}
-              </ToggleCard>
-            </ToggleButtonGroup>
-          )}
-        />
-        <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
-          {Messages.labels.resourceSizePerNode}
-        </Typography>
-        <Controller
+          label={Messages.labels.numberOfNodes}
+        >
+          <ToggleCard
+            value={NumberOfNodes.oneNode}
+            data-testid="toggle-button-one-node"
+          >
+            {Messages.labels.standalone}
+          </ToggleCard>
+          <ToggleCard
+            value={NumberOfNodes.twoNodes}
+            data-testid="toggle-button-two-nodes"
+            sx={{
+              '&.MuiButtonBase-root': {
+                wordWrap: 'break-word',
+                whiteSpace: 'pre-wrap',
+              },
+            }}
+          >
+            {Messages.labels.sourceReplica}
+          </ToggleCard>
+          <ToggleCard
+            value={NumberOfNodes.threeNodes}
+            data-testid="toggle-button-three-nodes"
+          >
+            {Messages.labels.sourceReplicaReplica}
+          </ToggleCard>
+        </ToggleButtonGroupInput>
+        <ToggleButtonGroupInput
           name={DbWizardFormFields.resourceSizePerNode}
           control={control}
-          render={({ field }) => (
-            <ToggleButtonGroup
-              {...field}
-              fullWidth
-              exclusive
-              sx={{ marginTop: 1 }}
-              data-testd="resource-size-per-node-toggle-button-group"
-              onChange={(
-                event: React.MouseEvent<HTMLElement> | any,
-                value: ResourceSize
-              ) => {
-                if (value !== null) {
-                  /* eslint-disable no-param-reassign */
-                  event.target.value = value;
-                  field.onChange(event);
-                }
-              }}
-            >
-              <ToggleCard
-                value={ResourceSize.small}
-                data-testid="toggle-button-small"
-              >
-                {humanizeResourceSizeMap(ResourceSize.small)}
-              </ToggleCard>
-              <ToggleCard
-                value={ResourceSize.medium}
-                data-testid="toggle-button-medium"
-              >
-                {humanizeResourceSizeMap(ResourceSize.medium)}
-              </ToggleCard>
-              <ToggleCard
-                value={ResourceSize.large}
-                data-testid="toggle-button-large"
-              >
-                {humanizeResourceSizeMap(ResourceSize.large)}
-              </ToggleCard>
-              <ToggleCard
-                value={ResourceSize.custom}
-                data-testid="toggle-button-custom"
-              >
-                {humanizeResourceSizeMap(ResourceSize.custom)}
-              </ToggleCard>
-            </ToggleButtonGroup>
-          )}
-        />
-
+          label={Messages.labels.resourceSizePerNode}
+        >
+          <ToggleCard
+            value={ResourceSize.small}
+            data-testid="toggle-button-small"
+          >
+            {humanizeResourceSizeMap(ResourceSize.small)}
+          </ToggleCard>
+          <ToggleCard
+            value={ResourceSize.medium}
+            data-testid="toggle-button-medium"
+          >
+            {humanizeResourceSizeMap(ResourceSize.medium)}
+          </ToggleCard>
+          <ToggleCard
+            value={ResourceSize.large}
+            data-testid="toggle-button-large"
+          >
+            {humanizeResourceSizeMap(ResourceSize.large)}
+          </ToggleCard>
+          <ToggleCard
+            value={ResourceSize.custom}
+            data-testid="toggle-button-custom"
+          >
+            {humanizeResourceSizeMap(ResourceSize.custom)}
+          </ToggleCard>
+        </ToggleButtonGroupInput>
         <Box
           sx={{ display: 'flex', flexDirection: 'column', mt: 4, gap: 1 }}
           data-testid="resources-box"

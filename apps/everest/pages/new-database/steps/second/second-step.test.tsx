@@ -3,14 +3,9 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { TestWrapper } from '../../../../utils/test';
 import { SecondStep } from './second-step';
-import {
-  NumberOfNodes,
-  ResourceSize,
-} from './second-step.types';
+import { NumberOfNodes, ResourceSize } from './second-step.types';
 import { DEFAULT_SIZES } from './second-step.const';
 import { DbWizardFormFields } from '../../new-database.types';
-
-jest.unmock('react-native');
 
 interface FormProviderWrapperProps {
   handleSubmit: jest.Mock<any, any>;
@@ -93,7 +88,9 @@ describe('Second Step', () => {
     );
     expect(
       screen.getByTestId('memory-input').querySelector('input')
-    ).toHaveValue(DEFAULT_SIZES[ResourceSize.medium][DbWizardFormFields.memory]);
+    ).toHaveValue(
+      DEFAULT_SIZES[ResourceSize.medium][DbWizardFormFields.memory]
+    );
     expect(screen.getByTestId('disk-input').querySelector('input')).toHaveValue(
       DEFAULT_SIZES[ResourceSize.medium][DbWizardFormFields.disk]
     );
