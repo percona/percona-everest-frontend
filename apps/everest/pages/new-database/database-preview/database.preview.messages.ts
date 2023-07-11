@@ -1,10 +1,10 @@
 export const Messages = {
   title: 'Database Preview',
-  preview: {
-    basic: 'Basic Information',
-    resourceSize: 'Resources',
-    backups: 'Backups',
-    externalAccess:'External Access',
-    monitoring: 'Monitoring',
-  }
+  preview: [
+    'Basic Information',
+    'Resources',
+    'Backups',
+    'External Access',
+    'Monitoring',
+  ]
 };
