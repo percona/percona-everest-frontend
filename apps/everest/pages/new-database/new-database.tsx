@@ -15,14 +15,16 @@ import { steps } from './steps';
 import { DEFAULT_SIZES } from './steps/second/second-step.const';
 import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
 import { StorageLocation } from './steps/third/third-step.types';
-import { SixthStep } from './steps/sixth/sixth-step';
-import { useCreateDbCluster } from '../../hooks/db-cluster/useDbCluster';
-import { useSelectedKubernetesCluster } from '../../hooks/kubernetesClusters/useSelectedKubernetesCluster';
 import {
   AmPM,
   TimeValue,
   WeekDays,
 } from '../../components/time-selection/time-selection.types';
+
+import { SixthStep } from './steps/sixth/sixth-step';
+import { useCreateDbCluster } from '../../hooks/db-cluster/useDbCluster';
+import { useSelectedKubernetesCluster } from '../../hooks/kubernetesClusters/useSelectedKubernetesCluster';
+
 
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -66,6 +68,7 @@ export const NewDatabasePage = () => {
 
   const onSubmit: SubmitHandler<DbWizardType> = (data) => {
     /* eslint-disable no-console */
+    // TODO based on data.dbType, get the engine from context and the desired proxy version, if needed
     console.log(data);
     addDbCluster(
       { dbPayload: data, id },

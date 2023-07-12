@@ -159,9 +159,9 @@ export const VerticalStepperWithConnectors = () => {
 
 export const HorizontalStepperWithConnectors = () => {
   const steps = [
-    { label: 'Step title' },
-    { label: 'Step title' },
-    { label: 'Step title' },
+    { label: 'Step 1 title' },
+    { label: 'Step 2 title' },
+    { label: 'Step 3 title' },
   ];
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());

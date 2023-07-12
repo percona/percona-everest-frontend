@@ -34,17 +34,27 @@ describe('ThirdStep', () => {
         </FormProviderWrapper>
       </TestWrapper>
     );
-    expect(screen.getByTestId('select-storage-location')).toBeInTheDocument();
-    expect(screen.getByTestId('switch-backups-enabled')).toBeInTheDocument();
-
-    fireEvent.click(screen.getByTestId('switch-backups-enabled'));
     expect(
-      screen.queryByTestId('select-storage-location')
+      screen.getByTestId('select-input-storage-location')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId('switch-input-backups-enabled')
+    ).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId('switch-input-backups-enabled'));
+    expect(
+      screen.queryByTestId('select-input-storage-location')
     ).not.toBeInTheDocument();
-    expect(screen.queryByTestId('switch-pitr-enabled')).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('switch-input-pitr-enabled')
+    ).not.toBeInTheDocument();
     expect(screen.queryByTestId('pitr-time-minutes')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('select-time-numbers')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('select-time-value')).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('select-input-time-numbers')
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('select-input-select-time')
+    ).not.toBeInTheDocument();
   });
 
   it('should render everything when backups are enabled', () => {
@@ -56,12 +66,16 @@ describe('ThirdStep', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByTestId('switch-backups-enabled')).toBeInTheDocument();
-    expect(screen.getByTestId('select-storage-location')).toBeInTheDocument();
-    expect(screen.getByTestId('switch-pitr-enabled')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('switch-input-backups-enabled')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId('select-input-storage-location')
+    ).toBeInTheDocument();
+    expect(screen.getByTestId('switch-input-pitr-enabled')).toBeInTheDocument();
     expect(screen.getByTestId('pitr-time-minutes')).toBeInTheDocument();
-    expect(screen.getByTestId('select-time-numbers')).toBeInTheDocument();
-    expect(screen.getByTestId('select-time-value')).toBeInTheDocument();
+    expect(screen.getByTestId('select-input-time-numbers')).toBeInTheDocument();
+    expect(screen.getByTestId('select-input-select-time')).toBeInTheDocument();
   });
 
   it('should render pitr related fields when pitr is enabled', () => {
@@ -73,8 +87,10 @@ describe('ThirdStep', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByTestId('switch-backups-enabled')).toBeInTheDocument();
-    expect(screen.getByTestId('switch-pitr-enabled')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('switch-input-backups-enabled')
+    ).toBeInTheDocument();
+    expect(screen.getByTestId('switch-input-pitr-enabled')).toBeInTheDocument();
     expect(screen.getByTestId('pitr-time-minutes')).toBeInTheDocument();
   });
 
@@ -87,11 +103,13 @@ describe('ThirdStep', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByTestId('switch-backups-enabled')).toBeInTheDocument();
-    expect(screen.getByTestId('switch-pitr-enabled')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('switch-input-backups-enabled')
+    ).toBeInTheDocument();
+    expect(screen.getByTestId('switch-input-pitr-enabled')).toBeInTheDocument();
     expect(screen.getByTestId('pitr-time-minutes')).toBeInTheDocument();
 
-    fireEvent.click(screen.getByTestId('switch-pitr-enabled'));
+    fireEvent.click(screen.getByTestId('switch-input-pitr-enabled'));
     expect(screen.queryByTestId('pitr-time-minutes')).not.toBeInTheDocument();
   });
 
@@ -104,20 +122,24 @@ describe('ThirdStep', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByTestId('switch-backups-enabled')).toBeInTheDocument();
-    expect(screen.queryByTestId('select-time-numbers')).toBeInTheDocument();
-    const selectTimeValue = screen.getByTestId('select-time-value');
+    expect(
+      screen.getByTestId('switch-input-backups-enabled')
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByTestId('select-input-time-numbers')
+    ).toBeInTheDocument();
+    const selectTimeValue = screen.getByTestId('select-input-select-time');
     expect(selectTimeValue).toBeInTheDocument();
 
     fireEvent.change(selectTimeValue, { target: { value: 'hours' } });
 
     expect(selectTimeValue.getAttribute('value')).toBe('hours');
-    expect(screen.getByTestId('select-minute-in-hour')).toBeInTheDocument();
+    expect(screen.getByTestId('select-input-minute-hour')).toBeInTheDocument();
 
-    expect(screen.queryByTestId('select-day-in-month')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('select-hour')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('select-minute')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('select-am-pm')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('select-input-on-day')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('select-input-hour')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('select-input-minute')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('select-input-am-pm')).not.toBeInTheDocument();
   });
 
   it('should render days related field when clicked on days field', () => {
@@ -129,24 +151,28 @@ describe('ThirdStep', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByTestId('switch-backups-enabled')).toBeInTheDocument();
-    expect(screen.getByTestId('select-time-numbers')).toBeInTheDocument();
-    const selectTimeValue = screen.getByTestId('select-time-value');
+    expect(
+      screen.getByTestId('switch-input-backups-enabled')
+    ).toBeInTheDocument();
+    expect(screen.getByTestId('select-input-time-numbers')).toBeInTheDocument();
+    const selectTimeValue = screen.getByTestId('select-input-select-time');
     expect(selectTimeValue).toBeInTheDocument();
 
     fireEvent.change(selectTimeValue, { target: { value: 'days' } });
 
     expect(selectTimeValue.getAttribute('value')).toBe('days');
 
-    expect(screen.getByTestId('select-hour')).toBeInTheDocument();
-    expect(screen.getByTestId('select-minute')).toBeInTheDocument();
-    expect(screen.getByTestId('select-am-pm')).toBeInTheDocument();
+    expect(screen.getByTestId('select-input-hour')).toBeInTheDocument();
+    expect(screen.getByTestId('select-input-minute')).toBeInTheDocument();
+    expect(screen.getByTestId('select-input-am-pm')).toBeInTheDocument();
 
     expect(
-      screen.queryByTestId('select-minute-in-hour')
+      screen.queryByTestId('select-input-minute-hour')
     ).not.toBeInTheDocument();
-    expect(screen.queryByTestId('select-week-day')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('select-day-in-month')).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('select-input-week-day')
+    ).not.toBeInTheDocument();
+    expect(screen.queryByTestId('select-input-on-day')).not.toBeInTheDocument();
   });
 
   it('should render weeks related field when clicked on weeks field', () => {
@@ -158,24 +184,26 @@ describe('ThirdStep', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByTestId('switch-backups-enabled')).toBeInTheDocument();
-    expect(screen.getByTestId('select-time-numbers')).toBeInTheDocument();
-    const selectTimeValue = screen.getByTestId('select-time-value');
+    expect(
+      screen.getByTestId('switch-input-backups-enabled')
+    ).toBeInTheDocument();
+    expect(screen.getByTestId('select-input-time-numbers')).toBeInTheDocument();
+    const selectTimeValue = screen.getByTestId('select-input-select-time');
     expect(selectTimeValue).toBeInTheDocument();
 
     fireEvent.change(selectTimeValue, { target: { value: 'weeks' } });
 
     expect(selectTimeValue.getAttribute('value')).toBe('weeks');
 
-    expect(screen.getByTestId('select-week-day')).toBeInTheDocument();
-    expect(screen.getByTestId('select-hour')).toBeInTheDocument();
-    expect(screen.getByTestId('select-minute')).toBeInTheDocument();
-    expect(screen.getByTestId('select-am-pm')).toBeInTheDocument();
+    expect(screen.getByTestId('select-input-week-day')).toBeInTheDocument();
+    expect(screen.getByTestId('select-input-hour')).toBeInTheDocument();
+    expect(screen.getByTestId('select-input-minute')).toBeInTheDocument();
+    expect(screen.getByTestId('select-input-am-pm')).toBeInTheDocument();
 
     expect(
-      screen.queryByTestId('select-minute-in-hour')
+      screen.queryByTestId('select-input-minute-hour')
     ).not.toBeInTheDocument();
-    expect(screen.queryByTestId('select-day-in-month')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('select-input-on-day')).not.toBeInTheDocument();
   });
 
   it('should render months related field when clicked on months field', () => {
@@ -187,23 +215,27 @@ describe('ThirdStep', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByTestId('switch-backups-enabled')).toBeInTheDocument();
-    expect(screen.getByTestId('select-time-numbers')).toBeInTheDocument();
-    const selectTimeValue = screen.getByTestId('select-time-value');
+    expect(
+      screen.getByTestId('switch-input-backups-enabled')
+    ).toBeInTheDocument();
+    expect(screen.getByTestId('select-input-time-numbers')).toBeInTheDocument();
+    const selectTimeValue = screen.getByTestId('select-input-select-time');
     expect(selectTimeValue).toBeInTheDocument();
 
     fireEvent.change(selectTimeValue, { target: { value: 'months' } });
 
     expect(selectTimeValue.getAttribute('value')).toBe('months');
 
-    expect(screen.getByTestId('select-day-in-month')).toBeInTheDocument();
-    expect(screen.getByTestId('select-hour')).toBeInTheDocument();
-    expect(screen.getByTestId('select-minute')).toBeInTheDocument();
-    expect(screen.getByTestId('select-am-pm')).toBeInTheDocument();
+    expect(screen.getByTestId('select-input-on-day')).toBeInTheDocument();
+    expect(screen.getByTestId('select-input-hour')).toBeInTheDocument();
+    expect(screen.getByTestId('select-input-minute')).toBeInTheDocument();
+    expect(screen.getByTestId('select-input-am-pm')).toBeInTheDocument();
 
     expect(
-      screen.queryByTestId('select-minute-in-hour')
+      screen.queryByTestId('select-input-minute-hour')
     ).not.toBeInTheDocument();
-    expect(screen.queryByTestId('select-week-day')).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('select-input-week-day')
+    ).not.toBeInTheDocument();
   });
 });

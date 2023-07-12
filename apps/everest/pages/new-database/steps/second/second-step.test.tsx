@@ -7,8 +7,6 @@ import { NumberOfNodes, ResourceSize } from './second-step.types';
 import { DEFAULT_SIZES } from './second-step.const';
 import { DbWizardFormFields } from '../../new-database.types';
 
-jest.unmock('react-native');
-
 interface FormProviderWrapperProps {
   handleSubmit: jest.Mock<any, any>;
   children: ReactNode;

@@ -1,14 +1,14 @@
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { z } from 'zod';
 import { IP_REGEX } from './new-database.constants';
-import { Messages as FirstStepMessages } from './steps/first/first-step.messages';
 import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
 import { StorageLocation } from './steps/third/third-step.types';
 import {
-  AmPM,
-  TimeValue,
-  WeekDays,
+    AmPM,
+    TimeValue,
+    WeekDays,
 } from '../../components/time-selection/time-selection.types';
+import { Messages } from './new-database.messages';
 
 export enum DbWizardFormFields {
   dbName = 'dbName',
@@ -21,7 +21,7 @@ export enum DbWizardFormFields {
   disk = 'disk',
   numberOfNodes = 'numberOfNodes',
   resourceSizePerNode = 'resourceSizePerNode',
-  backupsEnabled = 'backupsEnable',
+  backupsEnabled = 'backupsEnabled',
   pitrEnabled = 'pitrEnabled',
   pitrTime = 'pitrTime',
   storageLocation = 'storageLocation',
@@ -48,8 +48,8 @@ const stepOneSchema = z
     [DbWizardFormFields.dbType]: z.nativeEnum(DbType),
     [DbWizardFormFields.dbName]: z
       .string()
-      .max(255, FirstStepMessages.errors.dbName)
-      .nonempty(`The ${FirstStepMessages.labels.dbName} field is required`),
+      .max(255, Messages.errors.dbName.tooLong)
+      .nonempty(),
     // [DbWizardFormFields.k8sNamespace]: z.string().nonempty(),
     // [DbWizardFormFields.dbEnvironment]: z.string().nonempty(),
     [DbWizardFormFields.dbVersion]: z.string().nonempty(),
@@ -105,6 +105,7 @@ const stepFourSchema = z
           code: z.ZodIssueCode.invalid_string,
           validation: 'ip',
           path: ['sourceRange'],
+          message: Messages.errors.sourceRange.invalid,
         });
       }
     }
@@ -125,6 +126,7 @@ const stepFiveSchema = z
           code: z.ZodIssueCode.invalid_string,
           validation: 'url',
           path: ['endpoint'],
+          message: Messages.errors.endpoint.invalid,
         });
       }
     }

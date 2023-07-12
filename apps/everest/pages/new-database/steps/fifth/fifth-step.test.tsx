@@ -22,8 +22,8 @@ describe('FourthStep', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByTestId('switch-monitoring')).toBeInTheDocument();
-    expect(screen.queryByTestId('text-endpoint')).not.toBeInTheDocument();
+    expect(screen.getByTestId('switch-input-monitoring')).toBeInTheDocument();
+    expect(screen.queryByTestId('text-input-endpoint')).not.toBeInTheDocument();
   });
 
   it('should render remaining fields when monitoring is on', () => {
@@ -35,9 +35,9 @@ describe('FourthStep', () => {
       </TestWrapper>
     );
 
-    fireEvent.click(screen.getByTestId('switch-monitoring'));
+    fireEvent.click(screen.getByTestId('switch-input-monitoring'));
 
-    expect(screen.getByTestId('switch-monitoring')).toBeInTheDocument();
-    expect(screen.getByTestId('text-endpoint')).toBeInTheDocument();
+    expect(screen.getByTestId('switch-input-monitoring')).toBeInTheDocument();
+    expect(screen.getByTestId('text-input-endpoint')).toBeInTheDocument();
   });
 });
