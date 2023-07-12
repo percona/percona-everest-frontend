@@ -25,7 +25,6 @@ import { SixthStep } from './steps/sixth/sixth-step';
 import { useCreateDbCluster } from '../../hooks/db-cluster/useDbCluster';
 import { useSelectedKubernetesCluster } from '../../hooks/kubernetesClusters/useSelectedKubernetesCluster';
 
-
 export const NewDatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [formSubmitted, setFormSubmitted] = useState(false);

@@ -4,31 +4,24 @@ import {
   Typography,
   Box,
   Button,
-  Switch,
   useTheme,
   useMediaQuery,
 } from '@mui/material';
-import {
-  SubmitHandler,
-  useForm,
-  Controller,
-  FormProvider,
-} from 'react-hook-form';
+import { SubmitHandler, useForm, FormProvider } from 'react-hook-form';
 import { Messages } from './default-configurations.messages';
 import {
   DefaultConfigurationsFields,
   defaultConfigurationsSchema,
   DefaultConfigurationsType,
 } from './default-configurations.types';
-import { FormControlLabel } from '../../../components/form-control-label/form-control-label';
 import { TimeSelection } from '../../../components/time-selection/time-selection';
 import {
   AmPM,
   TimeValue,
   WeekDays,
 } from '../../../components/time-selection/time-selection.types';
-import { OutlinedFormControlLabelWrapper } from '../../../components/outlined-form-control-label-wrapper/outlined-form-control-label-wrapper';
 import { SourceRanges } from './source-ranges/source-ranges';
+import { SwitchOutlinedBox } from '../../../components/switch-outlined-box/switch-oulined-box';
 
 export const DefaultConfigurations = () => {
   const theme = useTheme();
@@ -76,74 +69,42 @@ export const DefaultConfigurations = () => {
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Typography
               data-testid="default-configurations-info"
-              sx={{ my: 2, mx: 1 }}
+              sx={{ mt: 2, mx: 1 }}
               variant="body1"
             >
               {Messages.pageDescription}
             </Typography>
-            <FormControlLabel
+
+            <SwitchOutlinedBox
+              name={DefaultConfigurationsFields.monitoring}
+              control={methods.control}
               labelHeader={Messages.monitoring}
-              labelMessage={Messages.monitoringMessage}
-              outlined
-              data-testid="monitoring-control"
-              sx={{ mb: 2 }}
-              control={
-                <Controller
-                  control={methods.control}
-                  name={DefaultConfigurationsFields.monitoring}
-                  render={({ field }) => (
-                    <Switch
-                      data-testid="monitoring-control-checkbox"
-                      {...field}
-                      checked={field.value}
-                    />
-                  )}
-                />
-              }
+              labelDescription={Messages.monitoringMessage}
             />
-            <OutlinedFormControlLabelWrapper
+            <SwitchOutlinedBox
+              name={DefaultConfigurationsFields.backupsEnabled}
+              control={methods.control}
               labelHeader={Messages.backups}
-              labelMessage={Messages.backupsMessage}
-              boxSx={{ mb: 2 }}
-              data-testid="backup-control"
-              control={
-                <Controller
-                  control={methods.control}
-                  name={DefaultConfigurationsFields.backupsEnabled}
-                  render={({ field }) => (
-                    <Switch
-                      data-testid="backup-control-checkbox"
-                      {...field}
-                      checked={field.value}
-                    />
-                  )}
-                />
-              }
+              labelDescription={Messages.backupsMessage}
+              switchOutlinedBoxChildrenSx={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 2,
+                ...(isLaptop && {
+                  justifyContent: 'start',
+                  pl: '55px',
+                  flexWrap: 'wrap',
+                }),
+              }}
             >
               {backupsEnabled && (
-                <Box
-                  sx={{
-                    display: 'inline-flex',
-                    width: '100%',
-                    alignItems: 'center',
-                    gap: 2,
-                    px: 2,
-                    justifyContent: 'end',
-                    ...(isLaptop && {
-                      justifyContent: 'start',
-                      pl: '65px',
-                      flexWrap: 'wrap',
-                    }),
-                  }}
-                >
-                  <Box>
-                    <Typography
-                      sx={{ whiteSpace: 'pre' }}
-                      variant="sectionHeading"
-                    >
-                      {Messages.repeatsEvery}
-                    </Typography>
-                  </Box>
+                <>
+                  <Typography
+                    sx={{ whiteSpace: 'pre' }}
+                    variant="sectionHeading"
+                  >
+                    {Messages.repeatsEvery}
+                  </Typography>
                   <TimeSelection
                     sx={{
                       flexWrap: 'nowrap',
@@ -154,55 +115,36 @@ export const DefaultConfigurations = () => {
                       ...(isLaptop && { flexWrap: 'wrap' }),
                     }}
                   />
-                </Box>
+                </>
               )}
-            </OutlinedFormControlLabelWrapper>
-            <OutlinedFormControlLabelWrapper
+            </SwitchOutlinedBox>
+            <SwitchOutlinedBox
+              name={DefaultConfigurationsFields.externalAccess}
+              control={methods.control}
               labelHeader={Messages.externalAccess}
-              labelMessage={Messages.externalAccessMessage}
-              boxSx={{ mb: 2 }}
-              data-testid="external-access-control"
-              control={
-                <Controller
-                  control={methods.control}
-                  name={DefaultConfigurationsFields.externalAccess}
-                  render={({ field }) => (
-                    <Switch
-                      data-testid="external-access-control-checkbox"
-                      {...field}
-                      checked={field.value}
-                    />
-                  )}
-                />
-              }
+              labelDescription={Messages.externalAccessMessage}
+              switchOutlinedBoxChildrenSx={{
+                flexDirection: 'column',
+                display: 'flex',
+                gap: 1,
+                justifyContent: 'end',
+                ...(isLaptop && {
+                  justifyContent: 'start',
+                  pl: '55px',
+                  flexWrap: 'wrap',
+                  flex: '1 1 auto',
+                }),
+              }}
             >
-              {externalAccess && (
-                <Box
-                  sx={{
-                    flexDirection: 'column',
-                    display: 'flex',
-                    p: 2,
-                    gap: 1,
-                    justifyContent: 'end',
-                    ...(isLaptop && {
-                      justifyContent: 'start',
-                      pl: '65px',
-                      flexWrap: 'wrap',
-                      flex: '1 1 auto',
-                    }),
-                  }}
-                  data-testid="source-ranges"
-                >
-                  <SourceRanges methods={methods} />
-                </Box>
-              )}
-            </OutlinedFormControlLabelWrapper>
+              {externalAccess && <SourceRanges methods={methods} />}
+            </SwitchOutlinedBox>
             <Box
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'flex-end',
                 gap: 1,
+                mt: 2,
               }}
             >
               <Button onClick={() => {}} variant="text">

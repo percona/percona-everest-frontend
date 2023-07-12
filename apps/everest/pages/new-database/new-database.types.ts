@@ -4,9 +4,9 @@ import { IP_REGEX } from './new-database.constants';
 import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
 import { StorageLocation } from './steps/third/third-step.types';
 import {
-    AmPM,
-    TimeValue,
-    WeekDays,
+  AmPM,
+  TimeValue,
+  WeekDays,
 } from '../../components/time-selection/time-selection.types';
 import { Messages } from './new-database.messages';
 

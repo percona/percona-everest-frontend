@@ -10,7 +10,9 @@ export const HoursField = () => {
 
   return (
     <>
-      <Typography sx={{ whiteSpace: 'pre' }} variant="sectionHeading">{Messages.onMinute}</Typography>
+      <Typography sx={{ whiteSpace: 'pre' }} variant="sectionHeading">
+        {Messages.onMinute}
+      </Typography>
       <SelectInput
         name="minuteHour"
         control={control}
