@@ -1,5 +1,5 @@
 export const Messages = {
-  title: 'Database Preview',
+  title: 'Database Summary',
   preview: [
     'Basic Information',
     'Resources',
