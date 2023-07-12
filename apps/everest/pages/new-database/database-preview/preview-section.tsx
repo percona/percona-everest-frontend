@@ -54,7 +54,7 @@ export const PreviewSection = ({
             // Absolute position to avoid the button's padding from interfering with the spacing
             sx={{
               position: 'absolute',
-              top: (theme) => theme.spacing(-1)
+              top: theme.spacing(-1)
             }}
             onClick={onEditClick}
           >

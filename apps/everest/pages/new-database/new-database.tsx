@@ -32,7 +32,6 @@ export const NewDatabasePage = () => {
   const currentValidationSchema = dbWizardSchema[activeStep];
   const { mutate: addDbCluster } = useCreateDbCluster();
   const { id } = useSelectedKubernetesCluster();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
 
   const methods = useForm<DbWizardType>({
