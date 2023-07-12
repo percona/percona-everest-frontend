@@ -13,7 +13,6 @@ import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { Messages } from './fourth-step.messages';
 
 import { DbWizardFormFields } from '../../new-database.types';
-import { IP_RANGE_PATTERN } from '../../../settings/default-configurations/source-ranges/source-range.constants';
 
 export const FourthStep = () => {
   const { control, setValue, watch } = useFormContext();
