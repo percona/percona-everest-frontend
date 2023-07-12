@@ -50,7 +50,7 @@ export const SwitchOutlinedBox = ({
         }),
         ...switchOutlinedBoxSx,
       }}
-      data-testid={`${name}-switch-outlined-box`}
+      data-testid={`switch-outlined-box-${name}`}
     >
       <SwitchInput
         control={control}

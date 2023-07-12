@@ -46,7 +46,7 @@ export const defaultConfigurationsSchema = z
         if (!sourceRange) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
-            message: Messages.sourceRangeRequiredError,
+            message: Messages.errors.required,
             path: [
               DefaultConfigurationsFields.sourceRanges,
               index,
@@ -57,7 +57,7 @@ export const defaultConfigurationsSchema = z
         if (!sourceRange.match(IP_RANGE_PATTERN)) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
-            message: Messages.sourceRangeInvalidIPError,
+            message: Messages.errors.invalidIP,
             path: [
               DefaultConfigurationsFields.sourceRanges,
               index,

@@ -13,8 +13,10 @@ export const Messages = {
   externalAccessMessage:
     'Enable external access by default for databases that should be reachable outside the network cluster.',
   repeatsEvery: 'Repeats every',
-  sourceRangeInvalidIPError: 'Invalid IP address range',
-  sourceRangeRequiredError: 'Required field',
   sourceRangePlaceholder: '181.170.213.40/32',
   addNew: 'Add new',
+  errors: {
+    invalidIP: 'Invalid IP address range',
+    required: 'Required field',
+  }
 };

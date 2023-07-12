@@ -14,19 +14,13 @@ describe('Default Configurations', () => {
     expect(screen.getByTestId('default-configurations-info')).toHaveTextContent(
       Messages.pageDescription
     );
-    expect(screen.getByTestId('monitoring-control')).toBeInTheDocument();
     expect(
-      screen.getByTestId('monitoring-control-checkbox').querySelector('input')
+      screen.getByTestId('switch-input-monitoring').querySelector('input')
     ).not.toBeChecked();
-    expect(screen.getByTestId('backup-control')).toBeInTheDocument();
     expect(
-      screen.getByTestId('backup-control-checkbox').querySelector('input')
-    ).not.toBeChecked();
-    expect(screen.getByTestId('external-access-control')).toBeInTheDocument();
-    expect(
-      screen
-        .getByTestId('external-access-control-checkbox')
-        .querySelector('input')
+        screen.getByTestId('switch-input-backups-enabled').querySelector('input')
+    ).not.toBeChecked();expect(
+        screen.getByTestId('switch-input-external-access').querySelector('input')
     ).not.toBeChecked();
   });
 });
