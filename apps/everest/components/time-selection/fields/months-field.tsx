@@ -9,6 +9,7 @@ export const MonthsField = () => {
   const { control } = useFormContext();
   return (
     <>
+      {/* @ts-ignore */}
       <Typography variant="sectionHeading">{Messages.onDay}</Typography>
       <SelectInput
         name="onDay"

@@ -8,6 +8,7 @@ export const PitrEnabledSection = () => {
   const { control } = useFormContext();
   return (
     <>
+      {/* @ts-ignore */}
       <Typography variant="sectionHeading">
         {Messages.pitrCreateHeader}
       </Typography>

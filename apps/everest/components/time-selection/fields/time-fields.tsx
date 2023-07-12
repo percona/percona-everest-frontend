@@ -21,6 +21,7 @@ export const TimeFields = () => {
         },
       })}
     >
+      {/* @ts-ignore */}
       <Typography variant="sectionHeading">{Messages.at}</Typography>
       <SelectInput
         name="hour"

@@ -23,6 +23,7 @@ export const ToggleCard = ({ children, sx, ...props }: ToggleCardProps) => {
         '&.Mui-selected': {
           outlineStyle: 'solid',
           outlineWidth: '2px',
+          // @ts-ignore
           outlineColor: theme.palette.action.outlinedBorder,
           backgroundColor: 'background.default',
         },

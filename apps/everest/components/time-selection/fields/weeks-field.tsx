@@ -9,6 +9,7 @@ export const WeeksField = () => {
   const { control } = useFormContext();
   return (
     <>
+      {/* @ts-ignore */}
       <Typography variant="sectionHeading">{Messages.on}</Typography>
       <SelectInput
         name="weekDay"
