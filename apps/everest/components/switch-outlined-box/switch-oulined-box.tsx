@@ -12,7 +12,8 @@ const switchOutlinedBoxStyles = (theme) => ({
   borderRadius: '4px',
   display: 'flex',
   justifyContent: 'space-between',
-  alignItems: 'baseline',
+  alignItems: 'flex-start',
+  gap: 2,
   p: 2,
   mt: 2,
 });
@@ -66,7 +67,7 @@ export const SwitchOutlinedBox = ({
       />
       <Box
         data-testid={`${kebabize(name)}-switch-outlined-child-box`}
-        sx={{mt: 2, ...switchOutlinedBoxChildrenSx }}
+        sx={{ ...switchOutlinedBoxChildrenSx }}
       >
         {children}
       </Box>
