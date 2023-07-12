@@ -18,5 +18,5 @@ export const Messages = {
   errors: {
     invalidIP: 'Invalid IP address range',
     required: 'Required field',
-  }
+  },
 };

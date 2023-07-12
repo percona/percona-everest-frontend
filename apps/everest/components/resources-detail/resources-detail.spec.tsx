@@ -9,7 +9,7 @@ const ResourcesDetailWrapper = () => {
   return (
     <ThemeContextProvider themeOptions={everestThemeOptions}>
       <ResourcesDetail
-        dataTestId='cpu'
+        dataTestId="cpu"
         value={1}
         total={10}
         inputValue={inputValue}
