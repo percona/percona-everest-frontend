@@ -11,14 +11,13 @@ export const SourceRanges = ({ methods }: SourceRangesProps) => {
   const {
     control,
     formState: { errors },
-    setValue,
   } = methods;
   const { fields, append, remove } = useFieldArray({
     control,
     name: DefaultConfigurationsFields.sourceRanges,
   });
 
-  const defaultFields = fields.length ? fields : [''];
+  const defaultFields = fields.length ? fields : [];
   const errorMessage = (index) => {
     const message =
       errors?.[DefaultConfigurationsFields.sourceRanges]?.[index]?.sourceRange;
@@ -61,15 +60,7 @@ export const SourceRanges = ({ methods }: SourceRangesProps) => {
                   <InputAdornment position="end">
                     <IconButton
                       data-testid="delete-button"
-                      onClick={() => {
-                        return fields.length === 1 && index === 0
-                          ? setValue(
-                              `${DefaultConfigurationsFields.sourceRanges}.${index}.sourceRange`,
-                              '',
-                              { shouldValidate: true }
-                            )
-                          : remove(index);
-                      }}
+                      onClick={() => remove(index)}
                     >
                       <DeleteIcon />
                     </IconButton>

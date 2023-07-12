@@ -28,7 +28,7 @@ export const DefaultConfigurations = () => {
   const isLaptop = useMediaQuery(theme.breakpoints.down('lg'));
 
   const methods = useForm<DefaultConfigurationsType>({
-    mode: 'all',
+    mode: 'onChange',
     resolver: zodResolver(defaultConfigurationsSchema),
     defaultValues: {
       // TODO get from api =>
