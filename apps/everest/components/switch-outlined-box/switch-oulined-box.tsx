@@ -67,7 +67,7 @@ export const SwitchOutlinedBox = ({
       />
       <Box
         data-testid={`${kebabize(name)}-switch-outlined-child-box`}
-        sx={{ ...switchOutlinedBoxChildrenSx }}
+        sx={{ alignSelf: 'center', ...switchOutlinedBoxChildrenSx }}
       >
         {children}
       </Box>
