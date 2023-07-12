@@ -4,7 +4,7 @@ import {
   MySqlDolphinIcon,
   PostgreSqlElephantIcon,
 } from '@percona/ui-lib.icons.db';
-import { ErrorIcon } from '@percona/ui-lib.status';
+import { ErrorIcon } from '@percona/ui-lib.icons.status';
 import {
   MaterialReactTable,
   type MRT_ColumnDef,
@@ -87,14 +87,9 @@ export const DbClusterView = ({
   return (
     <Stack direction="column" alignItems="center">
       <Typography variant="h5">Databases</Typography>
-      <ErrorIcon size="large" />
       <Box sx={{ width: '100%' }}>
         <MaterialReactTable
-          muiTableProps={{
-            sx: {
-              tableLayout: 'fixed',
-            },
-          }}
+          layoutMode="grid"
           tableInstanceRef={tableInstanceRef}
           columns={columns}
           data={combinedData}
@@ -105,12 +100,24 @@ export const DbClusterView = ({
           enableRowActions
           positionActionsColumn="last"
           positionExpandColumn="last"
+          muiTopToolbarProps={{
+            sx: {
+              '& .MuiBox-root': {
+                flexDirection: 'row-reverse',
+              },
+            },
+          }}
           displayColumnDefOptions={{
             'mrt-row-actions': {
-              maxSize: 50,
+              size: 30,
+              header: '',
+              muiTableBodyCellProps: { sx: { flex: 'none', width: '60px' } },
+              muiTableHeadCellProps: { sx: { flex: 'none', width: '60px' } },
             },
             'mrt-row-expand': {
-              maxSize: 50,
+              size: 40,
+              muiTableBodyCellProps: { sx: { flex: 'none', width: '60px' } },
+              muiTableHeadCellProps: { sx: { flex: 'none', width: '60px' } },
             },
           }}
           renderRowActionMenuItems={({ closeMenu, row }) => [
