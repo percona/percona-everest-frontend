@@ -1,1 +1,8 @@
-export { ErrorIcon, WarningIcon, PendingIcon } from './status';
+export {
+  ErrorIcon,
+  PausedIcon,
+  PendingIcon,
+  SuccessIcon,
+  UknownIcon,
+  WarningIcon,
+} from './status';

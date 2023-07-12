@@ -1,54 +1,41 @@
-import { Box, MenuItem, Stack, Typography } from '@mui/material';
-import {
-  MongoLeafIcon,
-  MySqlDolphinIcon,
-  PostgreSqlElephantIcon,
-} from '@percona/ui-lib.icons.db';
-import { ErrorIcon } from '@percona/ui-lib.icons.status';
+import { Box, MenuItem, Stack } from '@mui/material';
 import {
   MaterialReactTable,
   type MRT_ColumnDef,
   type MRT_TableInstance,
 } from 'material-react-table';
-import React, { ReactNode, useCallback, useMemo, useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { DbCluster } from '../../hooks/db-clusters/dbCluster.type';
 import { useDbClusters } from '../../hooks/db-clusters/useDbClusters';
+import { DbClusterViewProps } from './dbClusterView.type';
+import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
+import { StatusProvider } from './statusProvider/StatusProvider';
 
-export const DbClusterView = ({
-  customHeader,
-}: {
-  customHeader: ReactNode;
-}) => {
+export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
   const tableInstanceRef = useRef<MRT_TableInstance<DbCluster>>(null);
-  const dbClusters = useDbClusters();
-
-  const loading = dbClusters.every((cluster) => cluster.isLoading);
-
-  let combinedData = dbClusters
-    .map((cluster) => {
-      return cluster?.data ?? [];
-    })
-    .flat() as DbCluster[];
-
-  const iconProvider = useCallback((dbType: string) => {
-    switch (dbType) {
-      case 'pxc':
-        return <MySqlDolphinIcon />;
-      case 'psmdb':
-        return <MongoLeafIcon />;
-      case 'postgresql':
-        return <PostgreSqlElephantIcon />;
-      default:
-        return null;
-    }
-  }, []);
+  const { combinedData, loadingAllClusters, errorInSomeClusters } =
+    useDbClusters();
 
   const columns = useMemo<MRT_ColumnDef<DbCluster>[]>(
     () => [
       {
         accessorKey: 'status',
         header: 'Status',
+        Cell: ({ cell, row }) => {
+          return (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyItems: 'center',
+                gap: 1,
+              }}
+            >
+              <StatusProvider status={row.original?.status} />
+            </Box>
+          );
+        },
       },
       {
         accessorKey: 'databaseName',
@@ -68,7 +55,8 @@ export const DbClusterView = ({
                 gap: 1,
               }}
             >
-              {iconProvider(row.original?.dbTypeIcon)} {row.original?.dbVersion}
+              <DbTypeIconProvider dbType={row.original?.dbTypeIcon} />
+              {row.original?.dbVersion}
             </Box>
           );
         },
@@ -86,9 +74,9 @@ export const DbClusterView = ({
   );
   return (
     <Stack direction="column" alignItems="center">
-      <Typography variant="h5">Databases</Typography>
       <Box sx={{ width: '100%' }}>
         <MaterialReactTable
+          state={{ isLoading: loadingAllClusters }}
           layoutMode="grid"
           tableInstanceRef={tableInstanceRef}
           columns={columns}

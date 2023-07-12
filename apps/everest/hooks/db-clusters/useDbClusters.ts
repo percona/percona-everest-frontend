@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { useQueries } from 'react-query';
 import { K8Context } from '../../contexts/kubernetes/kubernetes.context';
+import { KubernetesCluster } from '../../types/kubernetes.types';
 import { DbCluster, DbClusterRaw, DbTypeIcon } from './dbCluster.type';
 
 export const useDbClusters = () => {
@@ -29,13 +30,23 @@ export const useDbClusters = () => {
       { enabled: clusters?.data }
     )
   );
-  console.log(userQueries);
-  return userQueries;
+
+  const loadingAllClusters = userQueries.every((cluster) => cluster.isLoading);
+
+  const errorInSomeClusters = userQueries.some((cluster) => cluster.error);
+
+  const combinedData = userQueries
+    .map((cluster) => {
+      return cluster?.data ?? [];
+    })
+    .flat() as DbCluster[];
+
+  return { combinedData, loadingAllClusters, errorInSomeClusters };
 };
 
 const mapRawDataToDbClusterModel = (
   items: DbClusterRaw[],
-  cluster: any
+  cluster: KubernetesCluster
 ): DbCluster[] => {
   return items.map((item) => ({
     status: item.status.status,

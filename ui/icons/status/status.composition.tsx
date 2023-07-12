@@ -2,7 +2,14 @@ import { Grid } from '@mui/material';
 import { CompositionViewer } from '@percona/design.composition-viewer';
 import { everestThemeOptions } from '@percona/design.themes.everest';
 import React from 'react';
-import { ErrorIcon, PendingIcon, WarningIcon } from './status';
+import {
+  ErrorIcon,
+  PausedIcon,
+  PendingIcon,
+  SuccessIcon,
+  UknownIcon,
+  WarningIcon,
+} from './status';
 
 export const BasicStatus = () => {
   return (
@@ -25,6 +32,24 @@ export const BasicStatus = () => {
         </Grid>
         <Grid item>
           <PendingIcon size="small" />
+        </Grid>
+        <Grid item>
+          <SuccessIcon size="large" />
+        </Grid>
+        <Grid item>
+          <SuccessIcon size="small" />
+        </Grid>
+        <Grid item>
+          <UknownIcon size="large" />
+        </Grid>
+        <Grid item>
+          <UknownIcon size="small" />
+        </Grid>
+        <Grid item>
+          <PausedIcon size="large" />
+        </Grid>
+        <Grid item>
+          <PausedIcon size="small" />
         </Grid>
       </Grid>
     </CompositionViewer>
