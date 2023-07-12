@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Divider, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { DatabasePreviewProps } from './database-preview.types';
 import { DbWizardType } from '../new-database.types';
@@ -10,7 +10,6 @@ import { PreviewSection } from './preview-section';
 export const DatabasePreview = ({ activeStep, nrSteps, onSectionEdit, sx, ...stackProps }: DatabasePreviewProps) => {
   const { getValues } = useFormContext<DbWizardType>();
   const [longestAchievedStep, setLongestAchievedStep] = useState(activeStep);
-  const finalStepAchieved = longestAchievedStep === nrSteps - 1
 
   useEffect(() => {
     if (activeStep > longestAchievedStep) {
@@ -47,7 +46,6 @@ export const DatabasePreview = ({ activeStep, nrSteps, onSectionEdit, sx, ...sta
             >
               <Section {...values} />
             </PreviewSection>
-            {!finalStepAchieved && longestAchievedStep === idx && <Divider sx={{ mt: 1.5, mb: 1 }} />}
           </React.Fragment>
         ))}
       </Stack>

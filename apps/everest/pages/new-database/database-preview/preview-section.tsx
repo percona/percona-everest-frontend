@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconButton, Stack, Typography } from "@mui/material";
+import { IconButton, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { PreviewContentTextProps, PreviewSectionProps } from './database-preview.types';
 
@@ -13,7 +13,9 @@ export const PreviewSection = ({
   sx,
   ...stackProps
 }: PreviewSectionProps) => {
+  const theme = useTheme();
   const showEdit = !active && hasBeenReached;
+  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
 
   return (
     <Stack
@@ -26,8 +28,9 @@ export const PreviewSection = ({
           pt: 0,
           pb: 0,
         }),
-        ...(active && {
+        ...(active && isDesktop && {
           backgroundColor: 'action.hover',
+          mb: 1.5,
         }),
         ...sx,
       }}

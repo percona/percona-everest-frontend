@@ -1,9 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Box, Button, Divider, Stack, Step, StepLabel, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Button, Divider, Drawer, Stack, Step, StepLabel, Toolbar, useMediaQuery, useTheme } from '@mui/material';
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { Stepper } from '@percona/ui-lib.stepper';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Messages } from './new-database.messages';
 import {
@@ -100,6 +100,20 @@ export const NewDatabasePage = () => {
 
   const handleSectionEdit = (order: number) => setActiveStep(order - 1);
 
+  const PreviewContent = useMemo(() => (
+    <DatabasePreview
+      activeStep={activeStep}
+      nrSteps={steps.length}
+      onSectionEdit={handleSectionEdit}
+      sx={{
+        mt: 2,
+        ...(!isDesktop && {
+          padding: 0
+        }),
+      }}
+    />
+  ), [activeStep, isDesktop]);
+
   return formSubmitted ? (
     <SixthStep />
   ) : (
@@ -141,27 +155,43 @@ export const NewDatabasePage = () => {
               )}
             </Box>
           </form>
-          {(isMobile || isDesktop) && (
-            <Divider
-              orientation={isDesktop ? 'vertical' : 'horizontal'}
-              flexItem
-              sx={{
-                ml: isMobile ? 0 : 5,
-                mb: isMobile ? 1.5 : 0
-              }}
-            />
-          )}
-          <DatabasePreview
-            activeStep={activeStep}
-            nrSteps={steps.length}
-            onSectionEdit={handleSectionEdit}
-            sx={{
-              flex: '0 0 25%',
-              ...(!isDesktop && {
-                padding: 0
-              })
-            }}
-          />
+          {
+            isDesktop ? (
+              <Drawer
+                variant='permanent'
+                anchor='right'
+                sx={{
+                  width: '25%',
+                  flexShrink: 0,
+                  ml: 3,
+                  [`& .MuiDrawer-paper`]: {
+                    width: '25%',
+                    boxSizing: 'border-box',
+                  },
+                }}
+              >
+                <Toolbar />
+                {PreviewContent}
+              </Drawer>
+            ) : (
+              <>
+                <Divider
+                  orientation='horizontal'
+                  flexItem
+                  sx={{
+                    // This is a little tweak
+                    // We make the divider longer, adding the main padding value
+                    // Then, to make it begin before the main padding, we add a negative margin
+                    // This way, the divider will cross the whole section
+                    width: `calc(100% + ${theme.spacing(4 * 2)})`,
+                    ml: -4,
+                    mt: 6
+                  }}
+                />
+                {PreviewContent}
+              </>
+            )
+          }
         </Stack>
       </FormProvider>
     </>
