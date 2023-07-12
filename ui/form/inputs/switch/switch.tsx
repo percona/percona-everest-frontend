@@ -11,7 +11,6 @@ export const SwitchInput = ({
   controllerProps,
   formControlLabelProps,
 }: SwitchInputProps) => {
-    debugger;
     return (
         <FormControlLabel
             label={label} // formControlLabelProps.label?

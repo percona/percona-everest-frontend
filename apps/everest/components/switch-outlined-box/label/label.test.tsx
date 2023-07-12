@@ -4,7 +4,9 @@ import { Label } from './label';
 
 describe('Label with header and description for form control label component', () => {
   it('should show label header and label message', async () => {
-    render(<Label labelHeader="test Header" labelDescription="testDescription" />);
+    render(
+      <Label labelHeader="test Header" labelDescription="testDescription" />
+    );
     expect(screen.getByTestId('label-header')).toBeInTheDocument();
     expect(screen.getByTestId('label-message')).toBeInTheDocument();
   });
