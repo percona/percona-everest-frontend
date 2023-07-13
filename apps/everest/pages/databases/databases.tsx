@@ -12,7 +12,7 @@ export const DatabasesPage = () => {
           startIcon={<AddIcon />}
           component={Link}
           to="/databases/new"
-          variant="outlined"
+          variant="contained"
         >
           Create Database
         </Button>

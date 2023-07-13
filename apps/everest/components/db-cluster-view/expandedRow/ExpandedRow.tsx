@@ -2,6 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { MRT_Row } from 'material-react-table';
 import React from 'react';
 import { DbCluster } from '../../../hooks/db-clusters/dbCluster.type';
+import { Messages } from '../dbClusterView.messages';
 import { LabelValue } from './LabelValue';
 
 export const ExpandedRow = ({ row }: { row: MRT_Row<DbCluster> }) => {
@@ -19,7 +20,7 @@ export const ExpandedRow = ({ row }: { row: MRT_Row<DbCluster> }) => {
           variant="subtitle2"
           sx={{ fontWeight: 'bold', paddingBottom: 1 }}
         >
-          Connection
+          {Messages.expandedRow.connection}
         </Typography>
         <LabelValue label="Host" value="bla" />
         <LabelValue label="Port" value="bla" />
@@ -31,7 +32,7 @@ export const ExpandedRow = ({ row }: { row: MRT_Row<DbCluster> }) => {
           variant="subtitle2"
           sx={{ fontWeight: 'bold', paddingBottom: 1 }}
         >
-          Db Cluster parameters
+          {Messages.expandedRow.dbClusterParams}
         </Typography>
         <LabelValue label="K8s Cluster Name" value="bla" />
         <LabelValue label="CPU" value="bla" />

@@ -1,10 +1,6 @@
 import { Box, MenuItem, Stack } from '@mui/material';
-import {
-  MaterialReactTable,
-  type MRT_ColumnDef,
-  type MRT_TableInstance,
-} from 'material-react-table';
-import React, { useMemo, useRef } from 'react';
+import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table';
+import React, { useMemo } from 'react';
 import { DbCluster } from '../../hooks/db-clusters/dbCluster.type';
 import { useDbClusters } from '../../hooks/db-clusters/useDbClusters';
 import { DbClusterViewProps } from './dbClusterView.type';
@@ -13,7 +9,6 @@ import { ExpandedRow } from './expandedRow/ExpandedRow';
 import { StatusProvider } from './statusProvider/StatusProvider';
 
 export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
-  const tableInstanceRef = useRef<MRT_TableInstance<DbCluster>>(null);
   const { combinedData, loadingAllClusters, errorInSomeClusters } =
     useDbClusters();
 
@@ -78,7 +73,6 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
         <MaterialReactTable
           state={{ isLoading: loadingAllClusters }}
           layoutMode="grid"
-          tableInstanceRef={tableInstanceRef}
           columns={columns}
           data={combinedData}
           enablePagination={combinedData.length > 10}
@@ -88,6 +82,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
           enableRowActions
           positionActionsColumn="last"
           positionExpandColumn="last"
+          muiTablePaperProps={{ elevation: 0 }}
           muiTopToolbarProps={{
             sx: {
               '& .MuiBox-root': {

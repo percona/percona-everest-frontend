@@ -7,6 +7,7 @@ import {
 } from '@percona/ui-lib.icons.status';
 import React from 'react';
 import { DbClusterStatus } from '../../../hooks/db-clusters/dbCluster.type';
+import { Messages } from '../dbClusterView.messages';
 import { StatusProviderProps } from '../dbClusterView.type';
 
 export const StatusProvider = ({ status }: StatusProviderProps) => {
@@ -15,49 +16,49 @@ export const StatusProvider = ({ status }: StatusProviderProps) => {
       return (
         <>
           <SuccessIcon />
-          Up
+          {Messages.statusProvider.up}
         </>
       );
     case DbClusterStatus.error:
       return (
         <>
           <ErrorIcon />
-          Down
+          {Messages.statusProvider.down}
         </>
       );
     case DbClusterStatus.initializing:
       return (
         <>
           <PendingIcon />
-          Initializing
+          {Messages.statusProvider.initializing}
         </>
       );
     case DbClusterStatus.pausing:
       return (
         <>
           <PendingIcon />
-          Pausing
+          {Messages.statusProvider.pausing}
         </>
       );
     case DbClusterStatus.stopping:
       return (
         <>
           <PendingIcon />
-          Stopping
+          {Messages.statusProvider.stopping}
         </>
       );
     case DbClusterStatus.paused:
       return (
         <>
           <PausedIcon />
-          Paused
+          {Messages.statusProvider.paused}
         </>
       );
     case DbClusterStatus.unknown:
       return (
         <>
           <UknownIcon />
-          Unknown
+          {Messages.statusProvider.unknown}
         </>
       );
     default:
