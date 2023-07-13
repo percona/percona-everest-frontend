@@ -1,15 +1,16 @@
 import React from 'react';
 import { screen, render, fireEvent, waitFor } from '@testing-library/react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { DbWizardType } from '../new-database.types';
 import { DB_WIZARD_DEFAULTS } from '../new-database.constants';
 import { TestWrapper } from '../../../utils/test';
 import { DatabasePreview } from './database-preview';
-import { DbType } from '@percona/ui-lib.db-toggle-card';
 
 const FormProviderWrapper = ({
   children,
-  values
+  values = {}
+  // eslint-disable-next-line react/require-default-props
 }: { children: React.ReactNode; values?: Partial<DbWizardType> }) => {
   const methods = useForm<DbWizardType>({
     defaultValues: { ...DB_WIZARD_DEFAULTS, ...values },
@@ -85,7 +86,7 @@ describe('DatabasePreview', () => {
     const FormConsumer = () => {
       const { setValue } = useFormContext();
 
-      return <button type='button' data-testid="change-db-name" onClick={() => setValue('dbName', 'myNewDB')} />
+      return <button aria-label='Change DB name' type='button' data-testid="change-db-name" onClick={() => setValue('dbName', 'myNewDB')} />
     }
 
     render(
