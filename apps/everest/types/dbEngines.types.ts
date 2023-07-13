@@ -6,12 +6,12 @@ export enum DbEngineType {
 
 export enum DbEngineStatus {
   INSTALLED = 'installed',
-  NOT_INSTALLED = 'not installed'
+  NOT_INSTALLED = 'not installed',
 }
 
 export enum DbEngineToolStatus {
   AVAILABLE = 'available',
-  RECOMMENDED = 'recommended'
+  RECOMMENDED = 'recommended',
 }
 
 export type EngineToolPayload = {
@@ -19,7 +19,7 @@ export type EngineToolPayload = {
   imagePath: string;
   imageHash: string;
   status: DbEngineToolStatus;
-}
+};
 
 export type GetDbEnginesPayload = {
   items: Array<{
@@ -50,5 +50,5 @@ export type DbEngine = {
     backup: DbEngineTool[];
     engine: DbEngineTool[];
     proxy: DbEngineTool[];
-  }
+  };
 };

@@ -10,20 +10,22 @@ export const SwitchInput = ({
   label,
   controllerProps,
   formControlLabelProps,
-}: SwitchInputProps) => (
-  <FormControlLabel
-    label={label}
-    data-testid={`switch-input-${kebabize(name)}`}
-    control={
-      <Controller
-        name={name}
-        control={control}
-        render={({ field }) => (
-          <Switch {...field} checked={field.value} />
-        )}
-        {...controllerProps}
-      />
-    }
-    {...formControlLabelProps}
-  />
-);
+}: SwitchInputProps) => {
+    return (
+        <FormControlLabel
+            label={label}
+            data-testid={`switch-input-${kebabize(name)}-label`}
+            control={
+                <Controller
+                    name={name}
+                    control={control}
+                    render={({ field }) => (
+                        <Switch {...field} checked={field.value} />
+                    )}
+                    {...controllerProps}
+                />
+            }
+            {...formControlLabelProps}
+        />
+    );
+}

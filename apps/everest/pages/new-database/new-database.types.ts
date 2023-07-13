@@ -1,12 +1,12 @@
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { z } from 'zod';
 import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
+import { StorageLocation } from './steps/third/third-step.types';
 import {
   AmPM,
-  StorageLocation,
   TimeValue,
   WeekDays,
-} from './steps/third/third-step.types';
+} from '../../components/time-selection/time-selection.types';
 import { Messages } from './new-database.messages';
 import { IP_REGEX } from '../../constants';
 

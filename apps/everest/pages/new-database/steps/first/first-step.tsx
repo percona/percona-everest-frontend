@@ -42,7 +42,9 @@ export const FirstStep = () => {
 
   const dbType: DbType = watch(DbWizardFormFields.dbType);
   const dbEngine = dbTypeToDbEngine(dbType);
-  const [dbVersions, setDbVersions] = useState(dbEngines.find((engine) => engine.type === dbEngine));
+  const [dbVersions, setDbVersions] = useState(
+    dbEngines.find((engine) => engine.type === dbEngine)
+  );
 
   useEffect(() => {
     if (!dbType) {
@@ -61,12 +63,15 @@ export const FirstStep = () => {
       return;
     }
 
-    const recommendedVersion =
-      newVersions.availableVersions.backup.find((version) => version.status === DbEngineToolStatus.RECOMMENDED);
+    const recommendedVersion = newVersions.availableVersions.backup.find(
+      (version) => version.status === DbEngineToolStatus.RECOMMENDED
+    );
 
     setValue(
       DbWizardFormFields.dbVersion,
-      recommendedVersion ? recommendedVersion.imagePath : newVersions.availableVersions.backup[0].imagePath,
+      recommendedVersion
+        ? recommendedVersion.imagePath
+        : newVersions.availableVersions.backup[0].imagePath
     );
     setDbVersions(newVersions);
   }, [dbType, dbEngines]);
