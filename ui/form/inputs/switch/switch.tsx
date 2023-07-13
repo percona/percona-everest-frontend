@@ -13,7 +13,7 @@ export const SwitchInput = ({
 }: SwitchInputProps) => {
     return (
         <FormControlLabel
-            label={label} // formControlLabelProps.label?
+            label={label}
             data-testid={`switch-input-${kebabize(name)}-label`}
             control={
                 <Controller
