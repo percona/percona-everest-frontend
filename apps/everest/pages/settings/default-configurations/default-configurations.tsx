@@ -2,12 +2,17 @@ import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Typography,
-  Box,
+  Stack,
   Button,
   useTheme,
   useMediaQuery,
 } from '@mui/material';
-import { SubmitHandler, useForm, FormProvider } from 'react-hook-form';
+import {
+  SubmitHandler,
+  useForm,
+  FormProvider,
+  useWatch,
+} from 'react-hook-form';
 import { Messages } from './default-configurations.messages';
 import {
   DefaultConfigurationsFields,
@@ -50,12 +55,13 @@ export const DefaultConfigurations = () => {
     },
   });
 
-  const backupsEnabled: boolean = methods.watch(
-    DefaultConfigurationsFields.backupsEnabled
-  );
-  const externalAccess: boolean = methods.watch(
-    DefaultConfigurationsFields.externalAccess
-  );
+  const [backupsEnabled, externalAccess] = useWatch({
+    control: methods.control,
+    name: [
+      DefaultConfigurationsFields.backupsEnabled,
+      DefaultConfigurationsFields.externalAccess,
+    ],
+  });
 
   const onSubmit: SubmitHandler<DefaultConfigurationsType> = (data) => {
     /* eslint-disable no-console */
@@ -66,7 +72,7 @@ export const DefaultConfigurations = () => {
     <div>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Stack>
             <Typography
               data-testid="default-configurations-info"
               sx={{ mt: 2, mx: 1 }}
@@ -86,7 +92,7 @@ export const DefaultConfigurations = () => {
               control={methods.control}
               labelHeader={Messages.backups}
               labelDescription={Messages.backupsMessage}
-              switchOutlinedBoxChildrenSx={{
+              childrenSx={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 2,
@@ -123,7 +129,7 @@ export const DefaultConfigurations = () => {
               control={methods.control}
               labelHeader={Messages.externalAccess}
               labelDescription={Messages.externalAccessMessage}
-              switchOutlinedBoxChildrenSx={{
+              childrenSx={{
                 flexDirection: 'column',
                 display: 'flex',
                 gap: 1,
@@ -138,15 +144,7 @@ export const DefaultConfigurations = () => {
             >
               {externalAccess && <SourceRanges methods={methods} />}
             </SwitchOutlinedBox>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'flex-end',
-                gap: 1,
-                mt: 2,
-              }}
-            >
+            <Stack direction="row" justifyContent="flex-end" mt={2} gap={1}>
               <Button onClick={() => {}} variant="text">
                 {Messages.cancel}
               </Button>
@@ -156,8 +154,8 @@ export const DefaultConfigurations = () => {
               >
                 {Messages.save}
               </Button>
-            </Box>
-          </Box>
+            </Stack>
+          </Stack>
         </form>
       </FormProvider>
     </div>

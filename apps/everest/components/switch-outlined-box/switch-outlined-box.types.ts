@@ -10,6 +10,6 @@ export type SwitchOutlinedBoxProps = {
   labelHeader?: string;
   labelDescription?: string;
   children?: React.ReactNode;
-  switchOutlinedBoxSx?: SxProps<Theme>;
-  switchOutlinedBoxChildrenSx?: SxProps<Theme>;
+  rootSx?: SxProps<Theme>;
+  childrenSx?: SxProps<Theme>;
 };

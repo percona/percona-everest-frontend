@@ -26,20 +26,18 @@ export const SwitchOutlinedBox = ({
   labelHeader,
   labelDescription,
   children,
-  switchOutlinedBoxSx,
-  switchOutlinedBoxChildrenSx,
+  rootSx,
+  childrenSx,
 }: SwitchOutlinedBoxProps) => {
   const theme = useTheme();
   const isLaptop = useMediaQuery(theme.breakpoints.down('lg'));
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const labelComponent =
-    label ||
-    (labelHeader || labelDescription ? (
-      <Label labelHeader={labelHeader} labelDescription={labelDescription} />
-    ) : (
-      <></>
-    ));
+  const labelComponent = label || (labelHeader || labelDescription ? (
+    <Label labelHeader={labelHeader} labelDescription={labelDescription} />
+  ) : (
+    <></>
+  ));
 
   return children ? (
     <Box
@@ -48,7 +46,7 @@ export const SwitchOutlinedBox = ({
         ...(isLaptop && {
           flexWrap: 'wrap',
         }),
-        ...switchOutlinedBoxSx,
+        ...rootSx,
       }}
       data-testid={`switch-outlined-box-${name}`}
     >
@@ -67,14 +65,14 @@ export const SwitchOutlinedBox = ({
       />
       <Box
         data-testid={`${kebabize(name)}-switch-outlined-child-box`}
-        sx={{ alignSelf: 'center', ...switchOutlinedBoxChildrenSx }}
+        sx={{ alignSelf: 'center', ...childrenSx }}
       >
         {children}
       </Box>
     </Box>
   ) : (
     <Box
-      sx={{ ...switchOutlinedBoxStyles(theme), ...switchOutlinedBoxSx }}
+      sx={{ ...switchOutlinedBoxStyles(theme), ...rootSx }}
       data-testid={`${kebabize(name)}-switch-outlined-box`}
     >
       <SwitchInput
