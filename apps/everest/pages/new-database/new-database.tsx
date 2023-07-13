@@ -1,29 +1,20 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Box, Button, Divider, Drawer, Stack, Step, StepLabel, Toolbar, useMediaQuery, useTheme } from '@mui/material';
-import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { Stepper } from '@percona/ui-lib.stepper';
 import React, { useMemo, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Messages } from './new-database.messages';
 import {
-  DbWizardFormFields,
   dbWizardSchema,
   DbWizardType,
 } from './new-database.types';
 import { steps } from './steps';
-import { DEFAULT_SIZES } from './steps/second/second-step.const';
-import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
-import {
-  AmPM,
-  StorageLocation,
-  TimeValue,
-  WeekDays,
-} from './steps/third/third-step.types';
 import { SixthStep } from './steps/sixth/sixth-step';
 import { useCreateDbCluster } from '../../hooks/db-cluster/useDbCluster';
 import { useSelectedKubernetesCluster } from '../../hooks/kubernetesClusters/useSelectedKubernetesCluster';
 import { DatabasePreview } from './database-preview/database-preview';
+import { DB_WIZARD_DEFAULTS } from './new-database.constants';
 
 export const NewDatabasePage = () => {
   const theme = useTheme();
@@ -37,33 +28,7 @@ export const NewDatabasePage = () => {
   const methods = useForm<DbWizardType>({
     mode: 'onChange',
     resolver: zodResolver(currentValidationSchema),
-    defaultValues: {
-      [DbWizardFormFields.backupsEnabled]: true,
-      [DbWizardFormFields.pitrEnabled]: true,
-      [DbWizardFormFields.pitrTime]: '60',
-      [DbWizardFormFields.storageLocation]: StorageLocation.S3,
-      [DbWizardFormFields.timeNumbers]: '1',
-      [DbWizardFormFields.selectTime]: TimeValue.hours,
-      [DbWizardFormFields.minute]: 0,
-      [DbWizardFormFields.minuteHour]: 0,
-      [DbWizardFormFields.hour]: 12,
-      [DbWizardFormFields.amPm]: AmPM.AM,
-      [DbWizardFormFields.weekDay]: WeekDays.Mo,
-      [DbWizardFormFields.onDay]: 1,
-      [DbWizardFormFields.dbType]: DbType.Mysql,
-      [DbWizardFormFields.dbName]: '',
-      [DbWizardFormFields.dbVersion]: '',
-      [DbWizardFormFields.externalAccess]: false,
-      [DbWizardFormFields.internetFacing]: true,
-      [DbWizardFormFields.sourceRange]: '',
-      [DbWizardFormFields.monitoring]: false,
-      [DbWizardFormFields.endpoint]: '',
-      [DbWizardFormFields.numberOfNodes]: NumberOfNodes.oneNode,
-      [DbWizardFormFields.resourceSizePerNode]: ResourceSize.small,
-      [DbWizardFormFields.cpu]: DEFAULT_SIZES.small.cpu,
-      [DbWizardFormFields.disk]: DEFAULT_SIZES.small.disk,
-      [DbWizardFormFields.memory]: DEFAULT_SIZES.small.memory,
-    },
+    defaultValues: DB_WIZARD_DEFAULTS,
   });
   const firstStep = activeStep === 0;
 
@@ -102,7 +67,6 @@ export const NewDatabasePage = () => {
   const PreviewContent = useMemo(() => (
     <DatabasePreview
       activeStep={activeStep}
-      nrSteps={steps.length}
       onSectionEdit={handleSectionEdit}
       sx={{
         mt: 2,

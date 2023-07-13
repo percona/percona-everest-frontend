@@ -2,8 +2,7 @@ import { StackProps } from "@mui/material";
 
 export type DatabasePreviewProps = {
   activeStep: number;
-  nrSteps: number;
-  onSectionEdit: (order: number) => void;
+  onSectionEdit?: (order: number) => void;
 } & StackProps;
 
 export type PreviewSectionProps  = {

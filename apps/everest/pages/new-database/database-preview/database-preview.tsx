@@ -7,7 +7,7 @@ import { previewSections } from './sections';
 import { Messages } from './database.preview.messages';
 import { PreviewSection } from './preview-section';
 
-export const DatabasePreview = ({ activeStep, nrSteps, onSectionEdit, sx, ...stackProps }: DatabasePreviewProps) => {
+export const DatabasePreview = ({ activeStep, onSectionEdit = () => {}, sx, ...stackProps }: DatabasePreviewProps) => {
   const { getValues } = useFormContext<DbWizardType>();
   const [longestAchievedStep, setLongestAchievedStep] = useState(activeStep);
 
@@ -33,7 +33,7 @@ export const DatabasePreview = ({ activeStep, nrSteps, onSectionEdit, sx, ...sta
         {previewSections.map((Section, idx) => (
           // The array is static, we can disable the rule
           // eslint-disable-next-line react/no-array-index-key
-          <React.Fragment key={`section-${idx}`}>
+          <React.Fragment key={`section-${idx + 1}`}>
             <PreviewSection
               order={idx + 1}
               title={Messages.preview[idx]}
