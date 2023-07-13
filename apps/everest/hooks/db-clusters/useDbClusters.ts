@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { useQueries } from 'react-query';
+import { getDbClusters } from '../../api/dbClusterApi';
 import { K8Context } from '../../contexts/kubernetes/kubernetes.context';
 import { KubernetesCluster } from '../../types/kubernetes.types';
 import { DbCluster, DbClusterRaw, DbTypeIcon } from './dbCluster.type';
@@ -13,15 +14,7 @@ export const useDbClusters = () => {
         return {
           queryKey: ['dbClusters', cluster.id],
           queryFn: async () => {
-            const result = await fetch(
-              `/v1/kubernetes/${cluster.id}/database-clusters`
-            );
-
-            if (!result.ok) {
-              throw new Error();
-            }
-
-            const { items = [] } = await result.json();
+            const { items = [] } = await getDbClusters(cluster.id);
 
             return mapRawDataToDbClusterModel(items, cluster);
           },

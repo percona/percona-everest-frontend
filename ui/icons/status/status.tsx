@@ -54,7 +54,7 @@ const ErrorIconLight = ({ iconWidth, props }: IconsProps) => (
       height="19"
       rx="9.5"
       stroke="#B10810"
-      stroke-opacity="0.2"
+      strokeOpacity="0.2"
     />
   </SvgIcon>
 );
@@ -117,7 +117,7 @@ const WarningIconLight = ({ iconWidth, props }: IconsProps) => (
       height="19"
       rx="9.5"
       stroke="#856E00"
-      stroke-opacity="0.2"
+      strokeOpacity="0.2"
     />
   </SvgIcon>
 );
@@ -180,7 +180,7 @@ const PendingIconLight = ({ iconWidth, props }: IconsProps) => (
       height="19"
       rx="9.5"
       stroke="#856E00"
-      stroke-opacity="0.2"
+      strokeOpacity="0.2"
     />
   </SvgIcon>
 );
@@ -243,7 +243,7 @@ const SuccessIconLight = ({ iconWidth, props }: IconsProps) => (
       height="19"
       rx="9.5"
       stroke="#00745B"
-      stroke-opacity="0.2"
+      strokeOpacity="0.2"
     />
   </SvgIcon>
 );
@@ -307,7 +307,7 @@ const UnknownIconLight = ({ iconWidth, props }: IconsProps) => (
       height="19"
       rx="9.5"
       stroke="black"
-      stroke-opacity="0.05"
+      strokeOpacity="0.05"
     />
   </SvgIcon>
 );
@@ -372,7 +372,7 @@ const PausedIconLight = ({ iconWidth, props }: IconsProps) => (
       height="19"
       rx="9.5"
       stroke="black"
-      stroke-opacity="0.05"
+      strokeOpacity="0.05"
     />
   </SvgIcon>
 );

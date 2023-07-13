@@ -8,6 +8,10 @@ export interface DbClusterRaw {
   };
 }
 
+export interface DatabaseClusterList {
+  items: DbClusterRaw[];
+}
+
 export interface DbCluster {
   status: DbClusterStatus;
   dbTypeIcon: DbTypeIcon;

@@ -1,5 +1,6 @@
-import { api } from './api';
+import { DatabaseClusterList, DbClusterRaw } from '../hooks/db-clusters/dbCluster.type';
 import { DbWizardType } from '../pages/new-database/new-database.types';
+import { api } from './api';
 
 export const createDbClusterFn = async (
   formData: DbWizardType,
@@ -10,5 +11,12 @@ export const createDbClusterFn = async (
     formData
   );
 
+  return response.data;
+};
+
+export const getDbClusters = async (clusterId: string) => {
+  const response = await api.get<DatabaseClusterList>(
+    `kubernetes/${clusterId}/database-clusters`
+  );
   return response.data;
 };
