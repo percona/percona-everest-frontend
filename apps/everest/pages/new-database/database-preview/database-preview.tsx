@@ -37,7 +37,7 @@ export const DatabasePreview = ({ activeStep, onSectionEdit = () => {}, sx, ...s
             <PreviewSection
               order={idx + 1}
               title={Messages.preview[idx]}
-              hasBeenReached={longestAchievedStep > idx - 1}
+              hasBeenReached={longestAchievedStep >= idx}
               active={activeStep === idx}
               onEditClick={() => onSectionEdit(idx + 1)}
               sx={{

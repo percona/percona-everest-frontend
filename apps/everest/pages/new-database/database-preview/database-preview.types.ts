@@ -1,6 +1,7 @@
 import { StackProps } from "@mui/material";
 
 export type DatabasePreviewProps = {
+  // zero indexed
   activeStep: number;
   onSectionEdit?: (order: number) => void;
 } & StackProps;
