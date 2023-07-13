@@ -19,6 +19,7 @@ export const PreviewSection = ({
 
   return (
     <Stack
+      data-testid={`section-${order}`}
       sx={{
         pl: 3,
         pt: 1,
@@ -42,13 +43,10 @@ export const PreviewSection = ({
         color={hasBeenReached ? 'text.primary' : 'text.disabled'}
         sx={{
           position: 'relative',
-          '&::before': {
-            content: `"${order}. "`,
-            ml: -2,
-          },
+          ml: -2,
         }}
       >
-        {title}
+        {`${order}. ${title}`}
         {showEdit && (
           <IconButton
             // Absolute position to avoid the button's padding from interfering with the spacing
@@ -64,6 +62,7 @@ export const PreviewSection = ({
               sx={{
                 verticalAlign: 'text-bottom',
               }}
+              data-testid={`edit-section-${order}`}
             />
           </IconButton>
         )}
