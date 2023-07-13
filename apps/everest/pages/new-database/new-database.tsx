@@ -14,12 +14,13 @@ import {
 import { steps } from './steps';
 import { DEFAULT_SIZES } from './steps/second/second-step.const';
 import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
+import { StorageLocation } from './steps/third/third-step.types';
 import {
   AmPM,
-  StorageLocation,
   TimeValue,
   WeekDays,
-} from './steps/third/third-step.types';
+} from '../../components/time-selection/time-selection.types';
+
 import { SixthStep } from './steps/sixth/sixth-step';
 import { useCreateDbCluster } from '../../hooks/db-cluster/useDbCluster';
 import { useSelectedKubernetesCluster } from '../../hooks/kubernetesClusters/useSelectedKubernetesCluster';

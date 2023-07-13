@@ -7,8 +7,8 @@ import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { PitrEnabledSection } from './pitrSection/pitr-enabled-section';
 import { Messages } from './third-step.messages';
 import { StorageLocation } from './third-step.types';
-import { TimeSelection } from './timeSelection/time-selection';
 import { DbWizardFormFields } from '../../new-database.types';
+import { TimeSelection } from '../../../../components/time-selection/time-selection';
 
 export const ThirdStep = () => {
   const { control, watch } = useFormContext();
@@ -31,7 +31,7 @@ export const ThirdStep = () => {
           <Typography variant="sectionHeading">
             {Messages.repeatsEvery}
           </Typography>
-          <TimeSelection />
+          <TimeSelection showInfoAlert />
           <SelectInput
             name={DbWizardFormFields.storageLocation}
             control={control}

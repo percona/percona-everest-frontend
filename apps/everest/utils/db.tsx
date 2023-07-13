@@ -21,4 +21,4 @@ export const dbTypeToDbEngine = (dbType: DbType): DbEngineType => {
     default:
       return DbEngineType.POSTGRESQL;
   }
-}
+};

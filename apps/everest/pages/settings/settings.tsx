@@ -22,6 +22,7 @@ export const Settings = () => {
           {Object.keys(SettingsTabs).map((item) => (
             <Tab
               label={Messages[item]}
+              key={SettingsTabs[item]}
               value={SettingsTabs[item]}
               to={SettingsTabs[item]}
               component={Link}
