@@ -1,5 +1,6 @@
 import { Box, MenuItem, Stack } from '@mui/material';
-import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table';
+import { Table } from '@percona/ui-lib.table';
+import { type MRT_ColumnDef } from 'material-react-table';
 import React, { useMemo } from 'react';
 import { DbCluster } from '../../hooks/db-clusters/dbCluster.type';
 import { useDbClusters } from '../../hooks/db-clusters/useDbClusters';
@@ -70,49 +71,26 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
   return (
     <Stack direction="column" alignItems="center">
       <Box sx={{ width: '100%' }}>
-        <MaterialReactTable
-          state={{ isLoading: loadingAllClusters }}
-          layoutMode="grid"
+        <Table
           columns={columns}
           data={combinedData}
-          enablePagination={combinedData.length > 10}
-          enableBottomToolbar={combinedData.length > 10}
-          enableDensityToggle={false}
-          enableFullScreenToggle={false}
           enableRowActions
-          positionActionsColumn="last"
-          positionExpandColumn="last"
-          muiTablePaperProps={{ elevation: 0 }}
-          muiTopToolbarProps={{
-            sx: {
-              '& .MuiBox-root': {
-                flexDirection: 'row-reverse',
-              },
-            },
-          }}
-          displayColumnDefOptions={{
-            'mrt-row-actions': {
-              size: 30,
-              header: '',
-              muiTableBodyCellProps: { sx: { flex: 'none', width: '60px' } },
-              muiTableHeadCellProps: { sx: { flex: 'none', width: '60px' } },
-            },
-            'mrt-row-expand': {
-              size: 40,
-              muiTableBodyCellProps: { sx: { flex: 'none', width: '60px' } },
-              muiTableHeadCellProps: { sx: { flex: 'none', width: '60px' } },
-            },
-          }}
-          renderRowActionMenuItems={({ closeMenu, row }) => [
-            <MenuItem key={0} onClick={() => {}} sx={{ m: 0 }}>
+          renderRowActionMenuItems={({ closeMenu, table, row }) => [
+            <MenuItem
+              key={0}
+              onClick={() => {
+                table.setEditingRow(row);
+              }}
+              sx={{ m: 0 }}
+            >
               Edit
             </MenuItem>,
             <MenuItem key={1} onClick={() => {}} sx={{ m: 0 }}>
               Delete
             </MenuItem>,
           ]}
-          renderTopToolbarCustomActions={() => customHeader}
           renderDetailPanel={({ row }) => <ExpandedRow row={row} />}
+          renderTopToolbarCustomActions={() => customHeader}
         />
       </Box>
     </Stack>

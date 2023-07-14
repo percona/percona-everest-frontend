@@ -77,6 +77,19 @@
         "mainFile": "index.ts",
         "rootDir": "ui/stepper"
     },
+    "table": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui-lib",
+        "mainFile": "index.ts",
+        "rootDir": "ui/table",
+        "config": {
+            "teambit.envs/envs": {
+                "env": "percona.envs/percona-react-env"
+            },
+            "percona.envs/percona-react-env": {}
+        }
+    },
     "theme-context-provider": {
         "scope": "percona.design",
         "version": "0.0.2",
