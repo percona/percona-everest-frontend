@@ -1,7 +1,6 @@
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { z } from 'zod';
 import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
-import { StorageLocation } from './steps/third/third-step.types';
 import {
   AmPM,
   TimeValue,
@@ -71,7 +70,7 @@ const stepThreeSchema = z
     backupsEnabled: z.boolean(),
     pitrEnabled: z.boolean(),
     pitrTime: z.string(),
-    storageLocation: z.nativeEnum(StorageLocation),
+    storageLocation: z.string().nonempty(),
     timeNumbers: z.string(),
     selectTime: z.nativeEnum(TimeValue),
     minuteHour: z.number(),

@@ -5,15 +5,15 @@ import { useFormContext } from 'react-hook-form';
 import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
 import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { Messages } from './third-step.messages';
-import { StorageLocation } from './third-step.types';
 import { DbWizardFormFields } from '../../new-database.types';
 import { TimeSelection } from '../../../../components/time-selection/time-selection';
+import { StorageType } from '../../../../types/backupStorages.types';
 
 export const ThirdStep = () => {
   const { control, watch } = useFormContext();
   const backupsEnabled: boolean = watch(DbWizardFormFields.backupsEnabled);
   // const pitrEnabled: boolean = watch(DbWizardFormFields.pitrEnabled);
-  const fetchedStorageValues = Object.values(StorageLocation);
+  const fetchedStorageValues = Object.values(StorageType);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
