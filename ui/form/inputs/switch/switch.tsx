@@ -20,7 +20,7 @@ export const SwitchInput = ({
                     name={name}
                     control={control}
                     render={({ field }) => (
-                        <Switch {...field} checked={field.value} />
+                        <Switch {...field} checked={field.value} data-testid={`switch-input-${kebabize(name)}`} />
                     )}
                     {...controllerProps}
                 />
