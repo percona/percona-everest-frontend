@@ -1,97 +1,63 @@
 import {
-  FormControlLabel,
   FormGroup,
   IconButton,
   InputAdornment,
-  Switch,
-  TextField,
   Typography,
 } from '@mui/material';
 import React from 'react';
 
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Controller, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
+import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
+import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { Messages } from './fourth-step.messages';
 
-import { IP_RANGE_PATTERN } from './fourth-step.constants';
 import { DbWizardFormFields } from '../../new-database.types';
 
 export const FourthStep = () => {
   const { control, setValue, watch } = useFormContext();
-  const externalAccess = watch('externalAccess');
+  const externalAccess = watch(DbWizardFormFields.externalAccess);
 
   return (
     <>
       <Typography variant="h5">{Messages.externalAccess}</Typography>
       <Typography variant="subtitle2">{Messages.caption}</Typography>
       <FormGroup sx={{ mt: 2 }}>
-        <FormControlLabel
+        <SwitchInput
+          control={control}
           label={Messages.enableExternalAccess}
-          data-testid="switch-external-access"
-          control={
-            <Controller
-              control={control}
-              name={DbWizardFormFields.externalAccess}
-              render={({ field }) => (
-                <Switch {...field} checked={field.value} />
-              )}
-            />
-          }
+          name={DbWizardFormFields.externalAccess}
         />
         {externalAccess && (
           <>
-            <FormControlLabel
-              label={Messages.internetFacing}
-              data-testid="switch-internet-facing"
-              control={
-                <Controller
-                  control={control}
-                  name={DbWizardFormFields.internetFacing}
-                  render={({ field }) => (
-                    <Switch {...field} checked={field.value} />
-                  )}
-                />
-              }
-            />
-            <Typography variant="h6" sx={{ mt: 5 }}>
-              {Messages.sourceRange}
-            </Typography>
-            <Controller
+            <SwitchInput
               control={control}
+              label={Messages.internetFacing}
+              name={DbWizardFormFields.internetFacing}
+            />
+            <TextInput
               name={DbWizardFormFields.sourceRange}
-              rules={{
-                required: true,
-                pattern: IP_RANGE_PATTERN,
+              control={control}
+              label={Messages.sourceRange}
+              textFieldProps={{
+                placeholder: Messages.sourceRangePlaceholder,
+                InputProps: {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        data-testid="delete-button"
+                        onClick={() =>
+                          setValue('sourceRange', '', {
+                            shouldValidate: true,
+                          })
+                        }
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                },
               }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  {...field}
-                  variant="outlined"
-                  placeholder={Messages.sourceRangePlaceholder}
-                  error={error !== undefined}
-                  helperText={error ? Messages.sourceRangeError : ''}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          data-testid="delete-button"
-                          onClick={() =>
-                            setValue('sourceRange', '', {
-                              shouldValidate: true,
-                            })
-                          }
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  // eslint-disable-next-line react/jsx-no-duplicate-props
-                  inputProps={{
-                    'data-testid': 'text-source-range',
-                  }}
-                />
-              )}
             />
           </>
         )}

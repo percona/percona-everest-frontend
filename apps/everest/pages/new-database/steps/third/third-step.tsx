@@ -1,93 +1,54 @@
-import {
-  Box,
-  FormControlLabel,
-  MenuItem,
-  Switch,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, MenuItem, Typography } from '@mui/material';
 
 import React from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
+import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
+import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { PitrEnabledSection } from './pitrSection/pitr-enabled-section';
 import { Messages } from './third-step.messages';
 import { StorageLocation } from './third-step.types';
-import { TimeSelection } from './timeSelection/time-selection';
 import { DbWizardFormFields } from '../../new-database.types';
+import { TimeSelection } from '../../../../components/time-selection/time-selection';
 
 export const ThirdStep = () => {
   const { control, watch } = useFormContext();
-  const backupsEnabled: boolean = watch('backupsEnabled');
-  const pitrEnabled: boolean = watch('pitrEnabled');
+  const backupsEnabled: boolean = watch(DbWizardFormFields.backupsEnabled);
+  const pitrEnabled: boolean = watch(DbWizardFormFields.pitrEnabled);
   const fetchedStorageValues = Object.values(StorageLocation);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
       <Typography variant="h6">{Messages.backups}</Typography>
       <Typography variant="caption">{Messages.captionBackups}</Typography>
-      <FormControlLabel
+      <SwitchInput
+        control={control}
         label={Messages.enableBackups}
-        data-testid="switch-backups-enabled"
-        control={
-          <Controller
-            control={control}
-            name={DbWizardFormFields.backupsEnabled}
-            render={({ field }) => <Switch {...field} checked={field.value} />}
-          />
-        }
+        name={DbWizardFormFields.backupsEnabled}
       />
       {backupsEnabled && (
         <>
+          {/* @ts-ignore */}
           <Typography variant="sectionHeading">
             {Messages.repeatsEvery}
           </Typography>
-          <TimeSelection />
-          <Box
-            sx={{
-              paddingTop: 3,
-              paddingBottom: 3,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 1,
-            }}
+          <TimeSelection showInfoAlert />
+          <SelectInput
+            name={DbWizardFormFields.storageLocation}
+            control={control}
+            label={Messages.storageLocation}
           >
-            <Typography variant="sectionHeading">
-              {Messages.storageLocation}
-            </Typography>
-            <Controller
-              control={control}
-              name={DbWizardFormFields.storageLocation}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  select
-                  inputProps={{
-                    'data-testid': 'select-storage-location',
-                  }}
-                >
-                  {fetchedStorageValues.map((value) => (
-                    <MenuItem key={value} value={value}>
-                      {value}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              )}
-            />
-          </Box>
+            {fetchedStorageValues.map((value) => (
+              <MenuItem key={value} value={value}>
+                {value}
+              </MenuItem>
+            ))}
+          </SelectInput>
           <Typography variant="h6">{Messages.pitr}</Typography>
           <Typography variant="caption">{Messages.captionPitr}</Typography>
-          <FormControlLabel
+          <SwitchInput
+            control={control}
             label={Messages.enablePitr}
-            data-testid="switch-pitr-enabled"
-            control={
-              <Controller
-                control={control}
-                name={DbWizardFormFields.pitrEnabled}
-                render={({ field }) => (
-                  <Switch {...field} checked={field.value} />
-                )}
-              />
-            }
+            name={DbWizardFormFields.pitrEnabled}
           />
           {pitrEnabled && <PitrEnabledSection />}
         </>

@@ -2,11 +2,13 @@ import { InputAdornment, OutlinedInput, Typography } from '@mui/material';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Messages } from '../third-step.messages';
+import { Messages as TimeSelectionMessages } from '../../../../../components/time-selection/time-selection.messages';
 
 export const PitrEnabledSection = () => {
   const { control } = useFormContext();
   return (
     <>
+      {/* @ts-ignore */}
       <Typography variant="sectionHeading">
         {Messages.pitrCreateHeader}
       </Typography>
@@ -34,7 +36,9 @@ export const PitrEnabledSection = () => {
               }
             }}
             endAdornment={
-              <InputAdornment position="end">{Messages.minutes}</InputAdornment>
+              <InputAdornment position="end">
+                {TimeSelectionMessages.minutes}
+              </InputAdornment>
             }
             inputProps={{
               'data-testid': 'pitr-time-minutes',

@@ -169,12 +169,14 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
       },
     },
     subtitle1: {
-      fontWeight: 500,
+      fontWeight: 600,
       fontSize: '19px',
+      lineHeight: '1',
     },
     subtitle2: {
-      fontWeight: 500,
+      fontWeight: 600,
       fontSize: '16px',
+      lineHeight: '1',
     },
     overline: {
       fontWeight: 800,

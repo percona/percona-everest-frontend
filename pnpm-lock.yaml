@@ -122,21 +122,31 @@ importers:
 
   envs/percona-react-env: {}
 
-  ui/db-toggle-card: {}
+  ui-lib/db-toggle-card: {}
 
-  ui/icons/db: {}
+  ui-lib/form/inputs/select: {}
 
-  ui/icons/everest: {}
+  ui-lib/form/inputs/switch: {}
 
-  ui/icons/status: {}
+  ui-lib/form/inputs/text: {}
 
-  ui/input: {}
+  ui-lib/form/inputs/toggle-button-group: {}
 
-  ui/progress-bar: {}
+  ui-lib/icons/db: {}
 
-  ui/stepper: {}
+  ui-lib/icons/everest: {}
 
-  ui/toggle-card: {}
+  ui-lib/input: {}
+
+  ui-lib/labeled-content: {}
+
+  ui-lib/progress-bar: {}
+
+  ui-lib/stepper: {}
+
+  ui-lib/toggle-card: {}
+
+  utils/string: {}
 
 packages:
 
