@@ -6,12 +6,14 @@ A wrapper around MUI's AutoComplete and RHF's controller. MUI's TextField is use
 
 ### Component usage
 ```js
+const methods = useForm({ defaultValues: { person: '' } });
+
 <AutoCompleteInput
-  name={DbWizardFormFields.storageLocation}
-  control={control}
-  label={Messages.storageLocation}
+  name="person"
+  control={methods.control}
+  label="Person"
   loading={isFetching}
-  options={backupStorages}
+  options={[{ name: 'John', age: 20 }, { name: 'Ana', age: 22 }]}
   autoCompleteProps={{
     isOptionEqualToValue: (option, value) => option.id === value.id,
     getOptionLabel: (option) => typeof option === 'string' ? option : option.name,

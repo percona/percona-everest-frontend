@@ -2,8 +2,8 @@ import React from 'react';
 import { Controller } from 'react-hook-form';
 import { LabeledContent } from '@percona/ui-lib.labeled-content';
 import { kebabize } from '@percona/utils.string';
-import { AutoCompleteInputProps } from './auto-complete.types';
 import { Autocomplete, TextField, CircularProgress } from '@mui/material';
+import { AutoCompleteInputProps } from './auto-complete.types';
 
 export function AutoCompleteInput<T>({
   name,
@@ -40,13 +40,14 @@ export function AutoCompleteInput<T>({
                 ...params.inputProps,
                 ...textFieldProps?.inputProps
               }}
+              // eslint-disable-next-line react/jsx-no-duplicate-props
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
-                  <React.Fragment>
+                  <>
                     {loading ? <CircularProgress color="inherit" size={20} /> : null}
                     {params.InputProps.endAdornment}
-                  </React.Fragment>
+                  </>
                 ),
               }}
               {...textFieldProps}

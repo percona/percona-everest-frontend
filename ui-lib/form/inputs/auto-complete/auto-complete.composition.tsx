@@ -1,9 +1,9 @@
 import React from 'react';
-import { AutoCompleteInput } from './auto-complete';
 import { FormProvider, useForm } from 'react-hook-form';
+import { AutoCompleteInput } from './auto-complete';
 
 export const BasicAutoComplete = () => {
-  const methods = useForm({ defaultValues: { company: 'percona' } });
+  const methods = useForm({ defaultValues: { person: '' } });
 
   return (
     <FormProvider {...methods}>
