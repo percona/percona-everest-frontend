@@ -27,7 +27,7 @@ export const BasicTable = () => {
       columns={columns}
       data={data}
       enableRowActions
-      renderRowActionMenuItems={({ closeMenu, table, row }) => [
+      renderRowActionMenuItems={({ table, row }) => [
         <MenuItem
           key={0}
           onClick={() => {

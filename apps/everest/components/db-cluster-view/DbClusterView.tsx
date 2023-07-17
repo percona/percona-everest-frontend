@@ -10,15 +10,14 @@ import { ExpandedRow } from './expandedRow/ExpandedRow';
 import { StatusProvider } from './statusProvider/StatusProvider';
 
 export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
-  const { combinedData, loadingAllClusters, errorInSomeClusters } =
-    useDbClusters();
+  const { combinedData, loadingAllClusters } = useDbClusters();
 
   const columns = useMemo<MRT_ColumnDef<DbCluster>[]>(
     () => [
       {
         accessorKey: 'status',
         header: 'Status',
-        Cell: ({ cell, row }) => {
+        Cell: ({ row }) => {
           return (
             <Box
               sx={{
@@ -41,7 +40,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
         accessorFn: (row) => row.dbTypeIcon + '_' + row.dbVersion,
         header: 'Technology',
         id: 'technology',
-        Cell: ({ cell, row }) => {
+        Cell: ({ row }) => {
           return (
             <Box
               sx={{
@@ -72,10 +71,11 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
     <Stack direction="column" alignItems="center">
       <Box sx={{ width: '100%' }}>
         <Table
+          state={{ isLoading: loadingAllClusters }}
           columns={columns}
           data={combinedData}
           enableRowActions
-          renderRowActionMenuItems={({ closeMenu, table, row }) => [
+          renderRowActionMenuItems={({ table, row }) => [
             <MenuItem
               key={0}
               onClick={() => {

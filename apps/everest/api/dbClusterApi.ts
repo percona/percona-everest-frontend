@@ -1,4 +1,4 @@
-import { DatabaseClusterList, DbClusterRaw } from '../hooks/db-clusters/dbCluster.type';
+import { DatabaseClusterList } from '../hooks/db-clusters/dbCluster.type';
 import { DbWizardType } from '../pages/new-database/new-database.types';
 import { api } from './api';
 
