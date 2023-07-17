@@ -97,7 +97,7 @@
         "version": "",
         "defaultScope": "percona.ui-lib",
         "mainFile": "index.ts",
-        "rootDir": "ui/icons/status",
+        "rootDir": "ui-lib/icons/status",
         "config": {
             "teambit.envs/envs": {
                 "env": "percona.envs/percona-react-env"
@@ -160,7 +160,7 @@
         "version": "",
         "defaultScope": "percona.ui-lib",
         "mainFile": "index.ts",
-        "rootDir": "ui/table",
+        "rootDir": "ui-lib/table",
         "config": {
             "teambit.envs/envs": {
                 "env": "percona.envs/percona-react-env"

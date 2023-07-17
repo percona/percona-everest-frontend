@@ -146,6 +146,10 @@ importers:
 
   ui-lib/toggle-card: {}
 
+  ui/icons/status: {}
+
+  ui/table: {}
+
   utils/string: {}
 
 packages:
