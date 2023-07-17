@@ -68,9 +68,25 @@ const stepTwoSchema = z
 const stepThreeSchema = z
   .object({
     backupsEnabled: z.boolean(),
-    pitrEnabled: z.boolean(),
-    pitrTime: z.string(),
-    storageLocation: z.string().nonempty(),
+    // pitrEnabled: z.boolean(),
+    // pitrTime: z.string(),
+    storageLocation:
+      z.string()
+        .or(
+          z.object({
+            id: z.string(),
+            name: z.string(),
+          })
+        )
+        .nullish()
+        .superRefine((input, ctx) => {
+          if (!input || typeof input === 'string' || !input.id || !input.name) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: Messages.errors.storageLocation.invalid,
+            });
+          }
+        }),
     timeNumbers: z.string(),
     selectTime: z.nativeEnum(TimeValue),
     minuteHour: z.number(),
@@ -80,7 +96,7 @@ const stepThreeSchema = z
     weekDay: z.nativeEnum(WeekDays),
     onDay: z.number(),
   })
-  .passthrough();
+  .passthrough()
 
 const stepFourSchema = z
   .object({
