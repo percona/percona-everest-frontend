@@ -1,6 +1,6 @@
-import { Alert, Box, MenuItem, OutlinedInput } from '@mui/material';
+import { Alert, Box, MenuItem } from '@mui/material';
 import React, { useMemo } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { Messages } from './time-selection.messages';
 import { TimeSelectionProps, TimeValue } from './time-selection.types';
@@ -51,35 +51,6 @@ export const TimeSelection = ({
           ...sx,
         }}
       >
-        <Controller
-          control={control}
-          name="timeNumbers"
-          render={({ field }) => (
-            <OutlinedInput
-              {...field}
-              sx={{ width: '80px' }}
-              type="number"
-              inputProps={{
-                'data-testid': 'select-input-time-numbers',
-              }}
-              onChange={(e) => {
-                const v = e.target.value;
-                if (v !== '' && Number(v) < 1) {
-                  field.onChange('1');
-                } else {
-                  field.onChange(v);
-                }
-              }}
-              onBlur={(e) => {
-                field.onBlur();
-                const v = e.target.value;
-                if (v === '') {
-                  field.onChange('1');
-                }
-              }}
-            />
-          )}
-        />
         <SelectInput
           name="selectTime"
           control={control}

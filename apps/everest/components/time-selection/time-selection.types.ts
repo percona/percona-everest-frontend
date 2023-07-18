@@ -10,16 +10,18 @@ export enum WeekDays {
   Su = 'Sunday',
 }
 
+export const weekDaysPlural = (day: WeekDays) => `${day}s`;
+
 export enum AmPM {
   AM = 'AM',
   PM = 'PM',
 }
 
 export enum TimeValue {
-  hours = 'hours',
-  days = 'days',
-  weeks = 'weeks',
-  months = 'months',
+  hours = 'Hourly',
+  days = 'Daily',
+  weeks = 'Weekly',
+  months = 'Monthly',
 }
 
 export interface TimeSelectionProps {
