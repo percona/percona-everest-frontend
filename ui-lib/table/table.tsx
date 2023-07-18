@@ -20,13 +20,14 @@ export function Table<T extends Record<string, any>>(
       enableFullScreenToggle={false}
       positionActionsColumn="last"
       positionExpandColumn="last"
-      muiTablePaperProps={{ elevation: 0 }}
+      muiTablePaperProps={{ elevation: 0, ...props.muiTablePaperProps }}
       muiTopToolbarProps={{
         sx: {
           '& .MuiBox-root': {
             flexDirection: 'row-reverse',
           },
         },
+        ...props.muiTopToolbarProps,
       }}
       displayColumnDefOptions={{
         'mrt-row-actions': {
@@ -40,6 +41,7 @@ export function Table<T extends Record<string, any>>(
           muiTableBodyCellProps: { sx: { flex: 'none', width: '60px' } },
           muiTableHeadCellProps: { sx: { flex: 'none', width: '60px' } },
         },
+        ...props.displayColumnDefOptions,
       }}
     />
   );
