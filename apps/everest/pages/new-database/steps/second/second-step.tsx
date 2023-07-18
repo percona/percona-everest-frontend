@@ -51,13 +51,16 @@ export const SecondStep = () => {
   const memoryCapacityExceeded = memory > totalSizes.memory;
   const diskCapacityExceeded = disk > totalSizes.disk;
 
-  const alertLabels = [];
+  const alertLabels: string[] = [];
+
   if (cpuCapacityExceeded) {
     alertLabels.push(Messages.labels.cpu);
   }
+
   if (memoryCapacityExceeded) {
     alertLabels.push(Messages.labels.memory);
   }
+
   if (diskCapacityExceeded) {
     alertLabels.push(Messages.labels.disk);
   }

@@ -1,67 +1,35 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Box, Button, Step, StepLabel } from '@mui/material';
-import { DbType } from '@percona/ui-lib.db-toggle-card';
+import { Box, Button, Divider, Drawer, Stack, Step, StepLabel, Toolbar, useMediaQuery, useTheme } from '@mui/material';
 import { Stepper } from '@percona/ui-lib.stepper';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Messages } from './new-database.messages';
 import {
-  DbWizardFormFields,
   dbWizardSchema,
   DbWizardType,
 } from './new-database.types';
 import { steps } from './steps';
-import { DEFAULT_SIZES } from './steps/second/second-step.const';
-import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
-import { StorageLocation } from './steps/third/third-step.types';
-import {
-  AmPM,
-  TimeValue,
-  WeekDays,
-} from '../../components/time-selection/time-selection.types';
 
 import { SixthStep } from './steps/sixth/sixth-step';
 import { useCreateDbCluster } from '../../hooks/db-cluster/useDbCluster';
 import { useSelectedKubernetesCluster } from '../../hooks/kubernetesClusters/useSelectedKubernetesCluster';
+import { DatabasePreview } from './database-preview/database-preview';
+import { DB_WIZARD_DEFAULTS } from './new-database.constants';
 
 export const NewDatabasePage = () => {
+  const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const currentValidationSchema = dbWizardSchema[activeStep];
   const { mutate: addDbCluster } = useCreateDbCluster();
   const { id } = useSelectedKubernetesCluster();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
 
   const methods = useForm<DbWizardType>({
     mode: 'onChange',
     resolver: zodResolver(currentValidationSchema),
-    defaultValues: {
-      [DbWizardFormFields.backupsEnabled]: true,
-      [DbWizardFormFields.pitrEnabled]: true,
-      [DbWizardFormFields.pitrTime]: '60',
-      [DbWizardFormFields.storageLocation]: StorageLocation.S3,
-      [DbWizardFormFields.timeNumbers]: '1',
-      [DbWizardFormFields.selectTime]: TimeValue.hours,
-      [DbWizardFormFields.minute]: 0,
-      [DbWizardFormFields.minuteHour]: 0,
-      [DbWizardFormFields.hour]: 12,
-      [DbWizardFormFields.amPm]: AmPM.AM,
-      [DbWizardFormFields.weekDay]: WeekDays.Mo,
-      [DbWizardFormFields.onDay]: 1,
-      [DbWizardFormFields.dbType]: DbType.Mysql,
-      [DbWizardFormFields.dbName]: '',
-      [DbWizardFormFields.dbVersion]: '',
-      [DbWizardFormFields.externalAccess]: false,
-      [DbWizardFormFields.internetFacing]: true,
-      [DbWizardFormFields.sourceRange]: '',
-      [DbWizardFormFields.monitoring]: false,
-      [DbWizardFormFields.endpoint]: '',
-      [DbWizardFormFields.numberOfNodes]: NumberOfNodes.oneNode,
-      [DbWizardFormFields.resourceSizePerNode]: ResourceSize.small,
-      [DbWizardFormFields.cpu]: DEFAULT_SIZES.small.cpu,
-      [DbWizardFormFields.disk]: DEFAULT_SIZES.small.disk,
-      [DbWizardFormFields.memory]: DEFAULT_SIZES.small.memory,
-    },
+    defaultValues: DB_WIZARD_DEFAULTS,
   });
   const firstStep = activeStep === 0;
 
@@ -95,6 +63,21 @@ export const NewDatabasePage = () => {
     }
   };
 
+  const handleSectionEdit = (order: number) => setActiveStep(order - 1);
+
+  const PreviewContent = useMemo(() => (
+    <DatabasePreview
+      activeStep={activeStep}
+      onSectionEdit={handleSectionEdit}
+      sx={{
+        mt: 2,
+        ...(!isDesktop && {
+          padding: 0
+        }),
+      }}
+    />
+  ), [activeStep, isDesktop]);
+
   return formSubmitted ? (
     <SixthStep />
   ) : (
@@ -107,34 +90,73 @@ export const NewDatabasePage = () => {
         ))}
       </Stepper>
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <Box>{React.createElement(steps[activeStep])}</Box>
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
-            <Button
-              type="button"
-              startIcon={<ArrowBackIcon />}
-              variant="text"
-              disabled={firstStep}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
-              {Messages.previous}
-            </Button>
-            <Box sx={{ flex: '1 1 auto' }} />
-            {activeStep === steps.length - 1 ? (
+        <Stack direction={isDesktop ? 'row' : 'column'}>
+          <form style={{ flexGrow: 1 }} onSubmit={methods.handleSubmit(onSubmit)}>
+            <Box>{React.createElement(steps[activeStep])}</Box>
+            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
               <Button
-                onClick={methods.handleSubmit(onSubmit)}
-                variant="contained"
+                type="button"
+                startIcon={<ArrowBackIcon />}
+                variant="text"
+                disabled={firstStep}
+                onClick={handleBack}
+                sx={{ mr: 1 }}
               >
-                {Messages.createDatabase}
+                {Messages.previous}
               </Button>
+              <Box sx={{ flex: '1 1 auto' }} />
+              {activeStep === steps.length - 1 ? (
+                <Button
+                  onClick={methods.handleSubmit(onSubmit)}
+                  variant="contained"
+                >
+                  {Messages.createDatabase}
+                </Button>
+              ) : (
+                <Button onClick={handleNext} variant="contained">
+                  {Messages.continue}
+                </Button>
+              )}
+            </Box>
+          </form>
+          {
+            isDesktop ? (
+              <Drawer
+                variant='permanent'
+                anchor='right'
+                sx={{
+                  width: '25%',
+                  flexShrink: 0,
+                  ml: 3,
+                  [`& .MuiDrawer-paper`]: {
+                    width: '25%',
+                    boxSizing: 'border-box',
+                  },
+                }}
+              >
+                <Toolbar />
+                {PreviewContent}
+              </Drawer>
             ) : (
-              <Button onClick={handleNext} variant="contained">
-                {Messages.continue}
-              </Button>
-            )}
-          </Box>
-        </form>
+              <>
+                <Divider
+                  orientation='horizontal'
+                  flexItem
+                  sx={{
+                    // This is a little tweak
+                    // We make the divider longer, adding the main padding value
+                    // Then, to make it begin before the main padding, we add a negative margin
+                    // This way, the divider will cross the whole section
+                    width: `calc(100% + ${theme.spacing(4 * 2)})`,
+                    ml: -4,
+                    mt: 6
+                  }}
+                />
+                {PreviewContent}
+              </>
+            )
+          }
+        </Stack>
       </FormProvider>
     </>
   );
