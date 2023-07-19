@@ -37,7 +37,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
         header: 'Database name',
       },
       {
-        accessorFn: (row) => row.dbTypeIcon + '_' + row.dbVersion,
+        accessorFn: (row) => row.dbType + '_' + row.dbVersion,
         header: 'Technology',
         id: 'technology',
         Cell: ({ row }) => {
@@ -50,7 +50,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
                 gap: 1,
               }}
             >
-              <DbTypeIconProvider dbType={row.original?.dbTypeIcon} />
+              <DbTypeIconProvider dbType={row.original?.dbType} />
               {row.original?.dbVersion}
             </Box>
           );

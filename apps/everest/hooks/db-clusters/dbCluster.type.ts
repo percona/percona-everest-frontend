@@ -1,11 +1,32 @@
 export interface DbClusterRaw {
-  status: { status: DbClusterStatus };
+  status: { status: DbClusterStatus; hostname: string };
   metadata: { name: string };
   spec: {
-    databaseType: DbTypeIcon;
-    databaseImage: string;
-    backups?: { enabled: boolean };
+    proxy: {
+      expose: {
+        type: ProxyExposeType;
+      };
+    };
+    backup: {
+      enabled: boolean;
+    };
+    engine: {
+      type: DbType;
+      version: string;
+      resources: {
+        cpu: string;
+        memory: string;
+      };
+      storage: {
+        size: string;
+      };
+    };
   };
+}
+
+export enum ProxyExposeType {
+  internal = 'internal',
+  external = 'external',
 }
 
 export interface DatabaseClusterList {
@@ -14,14 +35,19 @@ export interface DatabaseClusterList {
 
 export interface DbCluster {
   status: DbClusterStatus;
-  dbTypeIcon: DbTypeIcon;
-  dbVersion: string | null;
+  dbType: DbType;
+  dbVersion: string;
   backupsEnabled: boolean;
   kubernetesCluster: string;
   databaseName: string;
+  cpu: string;
+  memory: string;
+  storage: string;
+  hostName: string;
+  exposetype: ProxyExposeType
 }
 
-export enum DbTypeIcon {
+export enum DbType {
   pxc = 'pxc',
   psmdb = 'psmdb',
   postgresql = 'postgresql',
