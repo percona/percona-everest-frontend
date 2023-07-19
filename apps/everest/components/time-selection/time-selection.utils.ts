@@ -8,7 +8,6 @@ export const addZeroToSingleDigit = (value: number) => {
 export const getTimeText = (
   selectedTime: TimeValue,
   timeNumbers: number,
-  minuteHour: number,
   hour: number,
   minute: number,
   amPm: string,
@@ -26,5 +25,5 @@ export const getTimeText = (
   if (selectedTime === TimeValue.months) {
     return `${timeNumbers} ${Messages.getTimeText.months} ${onDay} ${Messages.at} ${hour}:${minuteWithZero}${amPm}.`;
   }
-  return `${timeNumbers} ${Messages.getTimeText.hours} ${minuteHour}.`;
+  return `${timeNumbers} ${Messages.getTimeText.hours} ${minute}.`;
 };

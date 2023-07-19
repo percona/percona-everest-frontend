@@ -1,13 +1,13 @@
 import { Theme, SxProps } from '@mui/material';
 
 export enum WeekDays {
-  Mo = 'Monday',
-  Tu = 'Tuesday',
-  We = 'Wednesday',
-  Th = 'Thursday',
-  Fr = 'Friday',
-  Sa = 'Saturday',
-  Su = 'Sunday',
+  Mon = 'Monday',
+  Tue = 'Tuesday',
+  Wed = 'Wednesday',
+  Thu = 'Thursday',
+  Fri = 'Friday',
+  Sat = 'Saturday',
+  Sun = 'Sunday',
 }
 
 export const weekDaysPlural = (day: WeekDays) => `${day}s`;
@@ -18,12 +18,17 @@ export enum AmPM {
 }
 
 export enum TimeValue {
-  hours = 'Hourly',
-  days = 'Daily',
-  weeks = 'Weekly',
-  months = 'Monthly',
+  hours = 'hour',
+  days = 'day',
+  weeks = 'week',
+  months = 'month',
 }
-
+export const timeValueHumanized: Record<TimeValue, string> = {
+  [TimeValue.hours]: 'Hourly',
+  [TimeValue.days]: 'Daily',
+  [TimeValue.weeks]: 'Weekly',
+  [TimeValue.months]: 'Monthly',
+}
 export interface TimeSelectionProps {
   showInfoAlert?: boolean;
   sx?: SxProps<Theme>;

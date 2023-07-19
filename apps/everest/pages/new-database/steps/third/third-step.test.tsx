@@ -14,7 +14,6 @@ const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
       timeNumbers: '1',
       selectTime: 'hours',
       minute: 0,
-      minuteHour: 0,
       hour: 12,
       amPm: 'AM',
       weekDay: 'Monday',
