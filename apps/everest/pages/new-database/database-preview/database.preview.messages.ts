@@ -6,5 +6,5 @@ export const Messages = {
     'Backups',
     'External Access',
     'Monitoring',
-  ],
+  ]
 };
