@@ -1,13 +1,19 @@
 export type PeriodType = 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute';
 
-export type CronType = 'period' | 'months' | 'month-days' | 'week-days' | 'hours' | 'minutes';
+export type CronType =
+  | 'period'
+  | 'months'
+  | 'month-days'
+  | 'week-days'
+  | 'hours'
+  | 'minutes';
 
 export interface Unit {
-    type: CronType;
-    min: number;
-    max: number;
-    total: number;
-    alt?: string[];
+  type: CronType;
+  min: number;
+  max: number;
+  total: number;
+  alt?: string[];
 }
 
 export type LeadingZeroType = 'month-days' | 'hours' | 'minutes';

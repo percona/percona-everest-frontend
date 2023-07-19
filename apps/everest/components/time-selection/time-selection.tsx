@@ -3,7 +3,11 @@ import React, { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { Messages } from './time-selection.messages';
-import {TimeSelectionProps, TimeValue, timeValueHumanized} from './time-selection.types';
+import {
+  TimeSelectionProps,
+  TimeValue,
+  timeValueHumanized,
+} from './time-selection.types';
 import { getTimeText } from './time-selection.utils';
 import { HoursField } from './fields/hours-field';
 import { MonthsField } from './fields/months-field';

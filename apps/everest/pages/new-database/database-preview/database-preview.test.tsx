@@ -9,9 +9,12 @@ import { DatabasePreview } from './database-preview';
 
 const FormProviderWrapper = ({
   children,
-  values = {}
-  // eslint-disable-next-line react/require-default-props
-}: { children: React.ReactNode; values?: Partial<DbWizardType> }) => {
+  values = {},
+}: // eslint-disable-next-line react/require-default-props
+{
+  children: React.ReactNode;
+  values?: Partial<DbWizardType>;
+}) => {
   const methods = useForm<DbWizardType>({
     defaultValues: { ...DB_WIZARD_DEFAULTS, ...values },
   });
@@ -33,16 +36,19 @@ describe('DatabasePreview', () => {
       </FormProviderWrapper>
     );
 
-    expect(screen.getAllByTestId(/^section-*/, { exact: false })).toHaveLength(5);
+    expect(screen.getAllByTestId(/^section-*/, { exact: false })).toHaveLength(
+      5
+    );
   });
 
   it('should show values from form', () => {
     render(
-      <FormProviderWrapper values={{
-        dbName: 'myDB',
-        dbType: DbType.Mysql,
-        dbVersion: '1.0.0',
-      }}
+      <FormProviderWrapper
+        values={{
+          dbName: 'myDB',
+          dbType: DbType.Mysql,
+          dbVersion: '1.0.0',
+        }}
       >
         <TestWrapper>
           <DatabasePreview activeStep={0} />
@@ -55,17 +61,17 @@ describe('DatabasePreview', () => {
     expect(screen.getByText('Version: 1.0.0')).toBeInTheDocument();
 
     expect(screen.queryByText('Number of nodes: 1')).not.toBeInTheDocument();
-
   });
 
   it('should show values from previous steps', () => {
     render(
-      <FormProviderWrapper values={{
-        dbName: 'myDB',
-        dbType: DbType.Mysql,
-        dbVersion: '1.0.0',
-        disk: 30,
-      }}
+      <FormProviderWrapper
+        values={{
+          dbName: 'myDB',
+          dbType: DbType.Mysql,
+          dbVersion: '1.0.0',
+          disk: 30,
+        }}
       >
         <TestWrapper>
           <DatabasePreview activeStep={1} />
@@ -86,16 +92,24 @@ describe('DatabasePreview', () => {
     const FormConsumer = () => {
       const { setValue } = useFormContext();
 
-      return <button aria-label='Change DB name' type='button' data-testid="change-db-name" onClick={() => setValue('dbName', 'myNewDB')} />
-    }
+      return (
+        <button
+          aria-label="Change DB name"
+          type="button"
+          data-testid="change-db-name"
+          onClick={() => setValue('dbName', 'myNewDB')}
+        />
+      );
+    };
 
     render(
-      <FormProviderWrapper values={{
-        dbName: 'myDB',
-        dbType: DbType.Mysql,
-        dbVersion: '1.0.0',
-        disk: 30,
-      }}
+      <FormProviderWrapper
+        values={{
+          dbName: 'myDB',
+          dbType: DbType.Mysql,
+          dbVersion: '1.0.0',
+          disk: 30,
+        }}
       >
         <TestWrapper>
           <FormConsumer />
@@ -108,9 +122,10 @@ describe('DatabasePreview', () => {
 
     fireEvent.click(screen.getByTestId('change-db-name'));
 
-    await waitFor(() => expect(screen.getByText('Name: myNewDB')).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByText('Name: myNewDB')).toBeInTheDocument()
+    );
 
     expect(screen.queryByText('Name: myDB')).not.toBeInTheDocument();
-
   });
 });

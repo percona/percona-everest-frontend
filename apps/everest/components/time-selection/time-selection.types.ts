@@ -28,7 +28,7 @@ export const timeValueHumanized: Record<TimeValue, string> = {
   [TimeValue.days]: 'Daily',
   [TimeValue.weeks]: 'Weekly',
   [TimeValue.months]: 'Monthly',
-}
+};
 export interface TimeSelectionProps {
   showInfoAlert?: boolean;
   sx?: SxProps<Theme>;
