@@ -1,15 +1,15 @@
 import React from 'react';
+import cronstrue from 'cronstrue';
 import { PreviewContentText } from '../preview-section';
 import { SectionProps } from './section.types';
-import { getCronStringFromValues } from '../../../../components/time-selection/utils/cron';
+import { getCronStringFromValues } from '../../../../components/time-selection/cron/cron';
 import {
   AmPM,
   TimeValue,
   WeekDays,
 } from '../../../../components/time-selection/time-selection.types';
-import { WEEKDAYS } from '../../../../components/time-selection/utils/cron.constants';
+import { WEEKDAYS } from '../../../../components/time-selection/cron/cron.constants';
 import { getEnumKeyByEnumValue } from '../../../../utils/enums';
-import cronstrue from 'cronstrue';
 
 export const PreviewSectionThree = ({
   onDay,

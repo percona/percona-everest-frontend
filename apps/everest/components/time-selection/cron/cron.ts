@@ -50,11 +50,11 @@ const outOfRange = (values: number[], unit: Unit) => {
 
   if (first < unit.min) {
     return first;
-  } else if (last > unit.max) {
+  } if (last > unit.max) {
     return last;
   }
 
-  return;
+  
 };
 
 const isFull = (values: number[], unit: Unit) =>
@@ -69,7 +69,7 @@ const getStep = (values: number[]) => {
     }
   }
 
-  return;
+  
 };
 
 const isInterval = (values: number[], step: number) => {
@@ -256,7 +256,7 @@ const parseStep = (step: string, unit: Unit) => {
     return parsedStep;
   }
 
-  return;
+  
 };
 
 const range = (start: number, end: number) => {
@@ -280,7 +280,7 @@ const parseRange = (rangeStr: string, context: string, unit: Unit) => {
     }
 
     return [value];
-  } else if (subparts.length === 2) {
+  } if (subparts.length === 2) {
     const minValue = parseInt(subparts[0], 10);
     const maxValue = parseInt(subparts[1], 10);
 
@@ -291,9 +291,9 @@ const parseRange = (rangeStr: string, context: string, unit: Unit) => {
     }
 
     return range(minValue, maxValue);
-  } else {
+  } 
     throw new Error(`Invalid value "${rangeStr}" for ${unit.type}`);
-  }
+  
 };
 
 const applyInterval = (values: number[], step?: number) => {
@@ -351,7 +351,7 @@ const parsePartString = (str: string, unit: Unit) => {
 
   if (intervalValues.length === unit.total) {
     return [];
-  } else if (intervalValues.length === 0) {
+  } if (intervalValues.length === 0) {
     throw new Error(`Empty interval value "${str}" for ${unit.type}`);
   }
 
@@ -373,13 +373,13 @@ export const parseCronString = (str: string) => {
 export const getPeriodFromCronparts = (cronParts: number[][]): PeriodType => {
   if (cronParts[3].length > 0) {
     return 'year';
-  } else if (cronParts[2].length > 0) {
+  } if (cronParts[2].length > 0) {
     return 'month';
-  } else if (cronParts[4].length > 0) {
+  } if (cronParts[4].length > 0) {
     return 'week';
-  } else if (cronParts[1].length > 0) {
+  } if (cronParts[1].length > 0) {
     return 'day';
-  } else if (cronParts[0].length > 0) {
+  } if (cronParts[0].length > 0) {
     return 'hour';
   }
   return 'minute';

@@ -106,7 +106,7 @@ export const DefaultConfigurations = () => {
                 <>
                   <Typography
                     sx={{ whiteSpace: 'pre' }}
-                    /*@ts-ignore*/
+                    /* @ts-ignore */
                     variant="sectionHeading"
                   >
                     {Messages.repeatsEvery}
