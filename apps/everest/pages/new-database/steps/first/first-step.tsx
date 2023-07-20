@@ -14,7 +14,7 @@ import { DbWizardFormFields } from '../../new-database.types';
 import { DbEngineToolStatus } from '../../../../types/dbEngines.types';
 
 export const FirstStep = () => {
-  const { control, watch, setValue } = useFormContext();
+  const { control, watch, setValue, getValues } = useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
 
@@ -50,6 +50,11 @@ export const FirstStep = () => {
     if (!dbType) {
       return;
     }
+    const dbName = getValues(DbWizardFormFields.dbName);
+
+    if (!dbName) {
+      setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`, { shouldValidate: true });
+    }
 
     const newVersions = dbEngines.find((engine) => engine.type === dbEngine);
 
@@ -62,7 +67,6 @@ export const FirstStep = () => {
       (version) => version.status === DbEngineToolStatus.RECOMMENDED
     );
 
-    setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`);
     setValue(
       DbWizardFormFields.dbVersion,
       recommendedVersion
