@@ -7,12 +7,13 @@ import { DB_WIZARD_DEFAULTS } from '../new-database.constants';
 import { TestWrapper } from '../../../utils/test';
 import { DatabasePreview } from './database-preview';
 
+
 const FormProviderWrapper = ({
   children,
   values = {},
-}: // eslint-disable-next-line react/require-default-props
-{
+}: {
   children: React.ReactNode;
+  // eslint-disable-next-line react/require-default-props
   values?: Partial<DbWizardType>;
 }) => {
   const methods = useForm<DbWizardType>({

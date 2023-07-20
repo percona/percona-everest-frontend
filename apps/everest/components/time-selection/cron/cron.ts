@@ -1,37 +1,11 @@
 import { UNITS } from './cron.constants';
 import { PeriodType, Unit, LeadingZero, ClockFormat } from './cron.types';
 
-export const getCronStringFromValues = (
-  period: PeriodType,
-  months?: number[],
-  monthDays?: number[],
-  weekDays?: number[],
-  hours?: number[],
-  minutes?: number[],
-  humanizeValue?: boolean
-) => {
-  const newMonths = period === 'year' && months ? months : [];
-  const newMonthDays =
-    (period === 'year' || period === 'month') && monthDays ? monthDays : [];
-  const newWeekDays =
-    (period === 'year' || period === 'month' || period === 'week') && weekDays
-      ? weekDays
-      : [];
-  const newHours =
-    period !== 'minute' && period !== 'hour' && hours ? hours : [];
-  const newMinutes = period !== 'minute' && minutes ? minutes : [];
-  const parsedArray = parseCronArray(
-    [newMinutes, newHours, newMonthDays, newMonths, newWeekDays],
-    humanizeValue
-  );
-
-  return parsedArray.join(' ');
-};
-
 const dateSort = (a: number, b: number) => a - b;
 
 const fixSunday = (values: number[], unit: Unit) => {
   if (unit.type === 'week-days') {
+    // eslint-disable-next-line no-param-reassign
     values = values.map((value) => {
       if (value === 7) {
         return 0;
@@ -50,11 +24,11 @@ const outOfRange = (values: number[], unit: Unit) => {
 
   if (first < unit.min) {
     return first;
-  } if (last > unit.max) {
+  }
+  if (last > unit.max) {
     return last;
   }
-
-  
+  return undefined;
 };
 
 const isFull = (values: number[], unit: Unit) =>
@@ -69,19 +43,15 @@ const getStep = (values: number[]) => {
     }
   }
 
-  
+  return undefined;
 };
 
 const isInterval = (values: number[], step: number) => {
-  for (let i = 1; i < values.length; i++) {
-    const prev = values[i - 1];
-    const value = values[i];
-
-    if (value - prev !== step) {
-      return false;
-    }
-  }
-
+  values.forEach((item, index) => {
+    const prev = values[index - 1];
+    const value = values[index];
+    return value - prev === step;
+  });
   return true;
 };
 
@@ -235,33 +205,33 @@ const parseCronArray = (cronArr: number[][], humanize?: boolean) => {
 };
 
 const replaceAlternatives = (str: string, min: number, alt?: string[]) => {
+  let newStr;
   if (alt) {
-    str = str.toUpperCase();
-
-    for (let i = 0; i < alt.length; i++) {
-      str = str.replace(alt[i], `${i + min}`);
-    }
+    newStr = str.toUpperCase();
+    alt.forEach((item, index) => {
+      newStr = newStr.replace(alt[index], `${index + min}`);
+    });
   }
-  return str;
+  return newStr;
 };
 
 const parseStep = (step: string, unit: Unit) => {
   if (typeof step !== 'undefined') {
     const parsedStep = parseInt(step, 10);
 
-    if (isNaN(parsedStep) || parsedStep < 1) {
+    if (Number.isNaN(parsedStep) || parsedStep < 1) {
       throw new Error(`Invalid interval step value "${step}" for ${unit.type}`);
     }
 
     return parsedStep;
   }
-
-  
+  return undefined;
 };
 
 const range = (start: number, end: number) => {
   const array: number[] = [];
 
+  /* eslint-disable-next-line no-plusplus */
   for (let i = start; i <= end; i++) {
     array.push(i);
   }
@@ -275,12 +245,13 @@ const parseRange = (rangeStr: string, context: string, unit: Unit) => {
   if (subparts.length === 1) {
     const value = parseInt(subparts[0], 10);
 
-    if (isNaN(value)) {
+    if (Number.isNaN(value)) {
       throw new Error(`Invalid value "${context}" for ${unit.type}`);
     }
 
     return [value];
-  } if (subparts.length === 2) {
+  }
+  if (subparts.length === 2) {
     const minValue = parseInt(subparts[0], 10);
     const maxValue = parseInt(subparts[1], 10);
 
@@ -291,15 +262,15 @@ const parseRange = (rangeStr: string, context: string, unit: Unit) => {
     }
 
     return range(minValue, maxValue);
-  } 
-    throw new Error(`Invalid value "${rangeStr}" for ${unit.type}`);
-  
+  }
+  throw new Error(`Invalid value "${rangeStr}" for ${unit.type}`);
 };
 
 const applyInterval = (values: number[], step?: number) => {
   if (step) {
     const minVal = values[0];
 
+    // eslint-disable-next-line no-param-reassign
     values = values.filter((value) => {
       return value % step === minVal % step || value === minVal;
     });
@@ -330,8 +301,8 @@ const parsePartString = (str: string, unit: Unit) => {
         fixSunday(
           rangeString
             .split(',')
-            .map((range) => {
-              return parseRange(range, str, unit);
+            .map((rangeItem) => {
+              return parseRange(rangeItem, str, unit);
             })
             .flat(),
           unit
@@ -351,7 +322,8 @@ const parsePartString = (str: string, unit: Unit) => {
 
   if (intervalValues.length === unit.total) {
     return [];
-  } if (intervalValues.length === 0) {
+  }
+  if (intervalValues.length === 0) {
     throw new Error(`Empty interval value "${str}" for ${unit.type}`);
   }
 
@@ -373,14 +345,45 @@ export const parseCronString = (str: string) => {
 export const getPeriodFromCronparts = (cronParts: number[][]): PeriodType => {
   if (cronParts[3].length > 0) {
     return 'year';
-  } if (cronParts[2].length > 0) {
+  }
+  if (cronParts[2].length > 0) {
     return 'month';
-  } if (cronParts[4].length > 0) {
+  }
+  if (cronParts[4].length > 0) {
     return 'week';
-  } if (cronParts[1].length > 0) {
+  }
+  if (cronParts[1].length > 0) {
     return 'day';
-  } if (cronParts[0].length > 0) {
+  }
+  if (cronParts[0].length > 0) {
     return 'hour';
   }
   return 'minute';
+};
+
+export const getCronStringFromValues = (
+  period: PeriodType,
+  months?: number[],
+  monthDays?: number[],
+  weekDays?: number[],
+  hours?: number[],
+  minutes?: number[],
+  humanizeValue?: boolean
+) => {
+  const newMonths = period === 'year' && months ? months : [];
+  const newMonthDays =
+    (period === 'year' || period === 'month') && monthDays ? monthDays : [];
+  const newWeekDays =
+    (period === 'year' || period === 'month' || period === 'week') && weekDays
+      ? weekDays
+      : [];
+  const newHours =
+    period !== 'minute' && period !== 'hour' && hours ? hours : [];
+  const newMinutes = period !== 'minute' && minutes ? minutes : [];
+  const parsedArray = parseCronArray(
+    [newMinutes, newHours, newMonthDays, newMonths, newWeekDays],
+    humanizeValue
+  );
+
+  return parsedArray.join(' ');
 };
