@@ -4,15 +4,26 @@ description: A Table component.
 
 import { Table } from './table';
 
-A component that does something special and renders text in a div.
+Wrapper around MaterialReactTable adding custom design.
 
 ### Component usage
 ```js
-<Table>Hello world!</Table>
+const data: Person[] = [{ firstName: 'Filip', lastName: 'Jones' }];
+
+const columns = useMemo<MRT_ColumnDef<Person>[]>(
+() => [
+    {
+    accessorKey: 'firstName',
+    header: 'First Name',
+    },
+    { accessorKey: 'lastName', header: 'Last Name' },
+],
+[]
+);
+  
+<Table
+    columns={columns}
+    data={data}
+/>
 ```
 
-### Render hello world!
-
-```js live
-<Table>Hello world!</Table>
-```

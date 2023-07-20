@@ -1,3 +1,5 @@
+import { DbEngineType } from '../../types/dbEngines.types';
+
 export interface DbClusterRaw {
   status: { status: DbClusterStatus; hostname: string };
   metadata: { name: string };
@@ -11,7 +13,7 @@ export interface DbClusterRaw {
       enabled: boolean;
     };
     engine: {
-      type: DbType;
+      type: DbEngineType;
       version: string;
       resources: {
         cpu: string;
@@ -35,7 +37,7 @@ export interface DatabaseClusterList {
 
 export interface DbCluster {
   status: DbClusterStatus;
-  dbType: DbType;
+  dbType: DbEngineType;
   dbVersion: string;
   backupsEnabled: boolean;
   kubernetesCluster: string;
@@ -44,13 +46,7 @@ export interface DbCluster {
   memory: string;
   storage: string;
   hostName: string;
-  exposetype: ProxyExposeType
-}
-
-export enum DbType {
-  pxc = 'pxc',
-  psmdb = 'psmdb',
-  postgresql = 'postgresql',
+  exposetype: ProxyExposeType;
 }
 
 export enum DbClusterStatus {

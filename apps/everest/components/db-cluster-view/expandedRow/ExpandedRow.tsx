@@ -41,14 +41,19 @@ export const ExpandedRow = ({ row }: { row: MRT_Row<DbCluster> }) => {
         >
           {Messages.expandedRow.dbClusterParams}
         </Typography>
-        <LabelValue label="K8s Cluster Name" value={kubernetesCluster} />
-        <LabelValue label="CPU" value={cpu} />
-        <LabelValue label="Memory" value={memory} />
-        <LabelValue label="Disk" value={storage} />
         <LabelValue
-          label="External Access"
+          label={Messages.expandedRow.k8sCluster}
+          value={kubernetesCluster}
+        />
+        <LabelValue label={Messages.expandedRow.cpu} value={cpu} />
+        <LabelValue label={Messages.expandedRow.memory} value={memory} />
+        <LabelValue label={Messages.expandedRow.disk} value={storage} />
+        <LabelValue
+          label={Messages.expandedRow.externalAccess}
           value={
-            exposetype === ProxyExposeType.external ? 'Enabled' : 'Disabled'
+            exposetype === ProxyExposeType.external
+              ? Messages.expandedRow.enabled
+              : Messages.expandedRow.disabled
           }
         />
       </Box>

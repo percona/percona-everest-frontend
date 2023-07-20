@@ -151,10 +151,23 @@ const WarningIconDark = ({ iconWidth, props }: IconsProps) => (
 
 const PendingIconLight = ({ iconWidth, props }: IconsProps) => (
   <SvgIcon
-    sx={{ color: 'transparent', height: '100%', width: iconWidth }}
+    sx={{
+      color: 'transparent',
+      height: '100%',
+      width: iconWidth,
+    }}
     viewBox="0 0 20 20"
     {...props}
   >
+    <animateTransform
+      attributeName="transform"
+      attributeType="XML"
+      type="rotate"
+      from="0"
+      to="360"
+      dur="2s"
+      repeatCount="indefinite"
+    />
     <rect width="20" height="20" rx="10" fill="#FFF2B2" />
     <mask
       id="mask0_12760_77845"
@@ -191,6 +204,15 @@ const PendingIconDark = ({ iconWidth, props }: IconsProps) => (
     viewBox="0 0 20 20"
     {...props}
   >
+    <animateTransform
+      attributeName="transform"
+      attributeType="XML"
+      type="rotate"
+      from="0"
+      to="360"
+      dur="2s"
+      repeatCount="indefinite"
+    />
     <rect width="20" height="20" rx="10" fill="#F5CC00" />
     <mask
       id="mask0_12760_77851"
