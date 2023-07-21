@@ -2,12 +2,6 @@ import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { DbWizardFormFields } from './new-database.types';
 import { DEFAULT_SIZES } from './steps/second/second-step.const';
 import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
-import {
-  AmPM,
-  TimeValue,
-  WeekDays,
-} from '../../components/time-selection/time-selection.types';
-import { StorageType } from '../../types/backupStorages.types';
 
 export const DB_WIZARD_DEFAULTS = {
   // [DbWizardFormFields.backupsEnabled]: true,
