@@ -37,7 +37,6 @@ const formValuesToPayloadMapping = (
         resources: {
           cpu: dbPayload.cpu,
           memory: dbPayload.memory,
-          // disk: dbPayload.disk, // TODO BE hasn't such value
         },
         storage: {
           size: dbPayload.disk,
