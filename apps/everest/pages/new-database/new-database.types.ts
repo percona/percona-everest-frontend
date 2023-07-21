@@ -33,7 +33,7 @@ export enum DbWizardFormFields {
   weekDay = 'weekDay',
   onDay = 'onDay',
   externalAccess = 'externalAccess',
-  // internetFacing = 'internetFacing',
+  internetFacing = 'internetFacing',
   sourceRange = 'sourceRange',
   monitoring = 'monitoring',
   endpoint = 'endpoint',
@@ -101,7 +101,7 @@ const stepThreeSchema = z
 const stepFourSchema = z
   .object({
     externalAccess: z.boolean(),
-    internetFacing: z.boolean(),
+    // internetFacing: z.boolean(),
     sourceRange: z.string().optional(),
   })
   .passthrough()
@@ -151,14 +151,14 @@ const stepFiveSchema = z
 export const dbWizardSchema = [
   stepOneSchema,
   stepTwoSchema,
-  stepThreeSchema,
+  // stepThreeSchema,
   stepFourSchema,
   stepFiveSchema,
 ];
 
 const superset = stepOneSchema
   .and(stepTwoSchema)
-  .and(stepThreeSchema)
+  // .and(stepThreeSchema)
   .and(stepFourSchema)
   .and(stepFiveSchema);
 

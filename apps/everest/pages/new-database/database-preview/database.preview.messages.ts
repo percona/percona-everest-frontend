@@ -3,7 +3,7 @@ export const Messages = {
   preview: [
     'Basic Information',
     'Resources',
-    'Backups',
+    // 'Backups',
     'External Access',
     'Monitoring',
   ]

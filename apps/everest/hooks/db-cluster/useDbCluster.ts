@@ -11,25 +11,25 @@ const formValuesToPayloadMapping = (
   dbPayload: DbWizardType
 ): CreateDBClusterPayload => {
   const dbClusterPayload: CreateDBClusterPayload = {
-    apiVersion: '', // TODO set ApiVersion
+    apiVersion: 'everest.percona.com/v1alpha1',
     kind: 'DatabaseCluster',
     metadata: {
       name: dbPayload.dbName,
     },
     spec: {
-      backup: {
-        enabled: dbPayload.backupsEnabled,
-        ...(dbPayload.backupsEnabled && {
-          schedules: [
-            {
-              enabled: true,
-              name: '',
-              objectStorageName: '',
-              schedule: '', // TODO CRON Expression
-            },
-          ], // TODO Array of schedules?
-        }),
-      },
+      // backup: {
+      //   enabled: dbPayload.backupsEnabled,
+      //   ...(dbPayload.backupsEnabled && {
+      //     schedules: [
+      //       {
+      //         enabled: true,
+      //         name: '',
+      //         objectStorageName: '',
+      //         schedule: '', // TODO CRON Expression
+      //       },
+      //     ],
+      //   }),
+      // },
       engine: {
         type: dbPayload.dbType,
         version: dbPayload.dbVersion,
@@ -42,10 +42,27 @@ const formValuesToPayloadMapping = (
           size: dbPayload.disk,
         },
       },
-      dataSource: {
-        backupName: '', // TODO StorageLocation id?
-        objectStorageName: '', // TODO StorageLocation name?
+      // dataSource: {
+      //   backupName: '', // TODO StorageLocation id?
+      //   objectStorageName: '', // TODO StorageLocation name?
+      // },
+      monitoring: {
+        enabled: dbPayload.monitoring,
+        ...(!!dbPayload.monitoring && {
+          pmm: {
+            publicAddress: dbPayload.endpoint || '',
+          }
+        })
       },
+      proxy: {
+        replicas: +dbPayload.numberOfNodes,
+        expose: {
+          type: dbPayload.externalAccess ? 'external' : 'internal',
+          ...(!!dbPayload.externalAccess && dbPayload.sourceRange && {
+            ipSourceRanges: [dbPayload.sourceRange],
+          })
+        }
+      }
     },
   };
 

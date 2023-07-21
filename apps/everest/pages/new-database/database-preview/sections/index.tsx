@@ -9,7 +9,6 @@ export { PreviewSectionOne, PreviewSectionTwo, PreviewSectionThree, PreviewSecti
 export const previewSections = [
   PreviewSectionOne,
   PreviewSectionTwo,
-  PreviewSectionThree,
   PreviewSectionFour,
   PreviewSectionFive,
 ];

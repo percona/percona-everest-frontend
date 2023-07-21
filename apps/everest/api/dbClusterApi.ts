@@ -34,10 +34,27 @@ interface Engine {
   type: string;
   version?: string;
 }
+
+interface Monitoring {
+  enabled: boolean;
+  pmm?: {
+    publicAddress: string;
+  }
+}
+
+interface Proxy {
+  replicas: number;
+  expose: {
+    type: 'internal' | 'external',
+    ipSourceRanges?: string[],
+  }
+}
 interface Spec {
   backup?: Backup;
   dataSource?: DataSource;
   engine: Engine;
+  monitoring: Monitoring;
+  proxy: Proxy;
 }
 export interface CreateDBClusterPayload {
   apiVersion: string;
