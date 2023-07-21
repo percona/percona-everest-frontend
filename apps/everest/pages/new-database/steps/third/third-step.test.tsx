@@ -8,8 +8,8 @@ const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
   const methods = useForm({
     defaultValues: {
       backupsEnabled: true,
-      pitrEnabled: true,
-      pitrTime: '60',
+      // pitrEnabled: true,
+      // pitrTime: '60',
       storageLocation: 'S3',
       timeNumbers: '1',
       selectTime: 'hours',
@@ -44,10 +44,10 @@ describe('ThirdStep', () => {
     expect(
       screen.queryByTestId('select-input-storage-location')
     ).not.toBeInTheDocument();
-    expect(
-      screen.queryByTestId('switch-input-pitr-enabled')
-    ).not.toBeInTheDocument();
-    expect(screen.queryByTestId('pitr-time-minutes')).not.toBeInTheDocument();
+    // expect(
+    //   screen.queryByTestId('switch-input-pitr-enabled')
+    // ).not.toBeInTheDocument();
+    // expect(screen.queryByTestId('pitr-time-minutes')).not.toBeInTheDocument();
     expect(
       screen.queryByTestId('select-input-time-numbers')
     ).not.toBeInTheDocument();
@@ -71,46 +71,46 @@ describe('ThirdStep', () => {
     expect(
       screen.getByTestId('select-input-storage-location')
     ).toBeInTheDocument();
-    expect(screen.getByTestId('switch-input-pitr-enabled')).toBeInTheDocument();
-    expect(screen.getByTestId('pitr-time-minutes')).toBeInTheDocument();
+    // expect(screen.getByTestId('switch-input-pitr-enabled')).toBeInTheDocument();
+    // expect(screen.getByTestId('pitr-time-minutes')).toBeInTheDocument();
     expect(screen.getByTestId('select-input-time-numbers')).toBeInTheDocument();
     expect(screen.getByTestId('select-input-select-time')).toBeInTheDocument();
   });
 
-  it('should render pitr related fields when pitr is enabled', () => {
-    render(
-      <TestWrapper>
-        <FormProviderWrapper>
-          <ThirdStep />
-        </FormProviderWrapper>
-      </TestWrapper>
-    );
+  // it('should render pitr related fields when pitr is enabled', () => {
+  //   render(
+  //     <TestWrapper>
+  //       <FormProviderWrapper>
+  //         <ThirdStep />
+  //       </FormProviderWrapper>
+  //     </TestWrapper>
+  //   );
 
-    expect(
-      screen.getByTestId('switch-input-backups-enabled')
-    ).toBeInTheDocument();
-    expect(screen.getByTestId('switch-input-pitr-enabled')).toBeInTheDocument();
-    expect(screen.getByTestId('pitr-time-minutes')).toBeInTheDocument();
-  });
+  //   expect(
+  //     screen.getByTestId('switch-input-backups-enabled')
+  //   ).toBeInTheDocument();
+  //   expect(screen.getByTestId('switch-input-pitr-enabled')).toBeInTheDocument();
+  //   expect(screen.getByTestId('pitr-time-minutes')).toBeInTheDocument();
+  // });
 
-  it('should render not pitr related fields when pitr is disabled', () => {
-    render(
-      <TestWrapper>
-        <FormProviderWrapper>
-          <ThirdStep />
-        </FormProviderWrapper>
-      </TestWrapper>
-    );
+  // it('should render not pitr related fields when pitr is disabled', () => {
+  //   render(
+  //     <TestWrapper>
+  //       <FormProviderWrapper>
+  //         <ThirdStep />
+  //       </FormProviderWrapper>
+  //     </TestWrapper>
+  //   );
 
-    expect(
-      screen.getByTestId('switch-input-backups-enabled')
-    ).toBeInTheDocument();
-    expect(screen.getByTestId('switch-input-pitr-enabled')).toBeInTheDocument();
-    expect(screen.getByTestId('pitr-time-minutes')).toBeInTheDocument();
+  //   expect(
+  //     screen.getByTestId('switch-input-backups-enabled')
+  //   ).toBeInTheDocument();
+  //   expect(screen.getByTestId('switch-input-pitr-enabled')).toBeInTheDocument();
+  //   expect(screen.getByTestId('pitr-time-minutes')).toBeInTheDocument();
 
-    fireEvent.click(screen.getByTestId('switch-input-pitr-enabled'));
-    expect(screen.queryByTestId('pitr-time-minutes')).not.toBeInTheDocument();
-  });
+  //   fireEvent.click(screen.getByTestId('switch-input-pitr-enabled'));
+  //   expect(screen.queryByTestId('pitr-time-minutes')).not.toBeInTheDocument();
+  // });
 
   it('should render hours related field when clicked on hours field', () => {
     render(

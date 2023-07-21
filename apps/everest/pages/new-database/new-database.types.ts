@@ -1,12 +1,6 @@
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { z } from 'zod';
 import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
-import { StorageLocation } from './steps/third/third-step.types';
-import {
-  AmPM,
-  TimeValue,
-  WeekDays,
-} from '../../components/time-selection/time-selection.types';
 import { Messages } from './new-database.messages';
 import { IP_REGEX } from '../../constants';
 
@@ -65,26 +59,43 @@ const stepTwoSchema = z
   })
   .passthrough();
 
-const stepThreeSchema = z
-  .object({
-    backupsEnabled: z.boolean(),
-    pitrEnabled: z.boolean(),
-    pitrTime: z.string(),
-    storageLocation: z.nativeEnum(StorageLocation),
-    timeNumbers: z.string(),
-    selectTime: z.nativeEnum(TimeValue),
-    minute: z.number(),
-    hour: z.number(),
-    amPm: z.nativeEnum(AmPM),
-    weekDay: z.nativeEnum(WeekDays),
-    onDay: z.number(),
-  })
-  .passthrough();
+// const stepThreeSchema = z
+//   .object({
+//     backupsEnabled: z.boolean(),
+//     // pitrEnabled: z.boolean(),
+//     // pitrTime: z.string(),
+//     storageLocation:
+//       z.string()
+//         .or(
+//           z.object({
+//             id: z.string(),
+//             name: z.string(),
+//           })
+//         )
+//         .nullish()
+//         .superRefine((input, ctx) => {
+//           if (!input || typeof input === 'string' || !input.id || !input.name) {
+//             ctx.addIssue({
+//               code: z.ZodIssueCode.custom,
+//               message: Messages.errors.storageLocation.invalid,
+//             });
+//           }
+//         }),
+//     timeNumbers: z.string(),
+//     selectTime: z.nativeEnum(TimeValue),
+//     minuteHour: z.number(),
+//     minute: z.number(),
+//     hour: z.number(),
+//     amPm: z.nativeEnum(AmPM),
+//     weekDay: z.nativeEnum(WeekDays),
+//     onDay: z.number(),
+//   })
+//   .passthrough()
 
 const stepFourSchema = z
   .object({
     externalAccess: z.boolean(),
-    internetFacing: z.boolean(),
+    // internetFacing: z.boolean(),
     sourceRange: z.string().optional(),
   })
   .passthrough()
@@ -134,14 +145,14 @@ const stepFiveSchema = z
 export const dbWizardSchema = [
   stepOneSchema,
   stepTwoSchema,
-  stepThreeSchema,
+  // stepThreeSchema,
   stepFourSchema,
   stepFiveSchema,
 ];
 
 const superset = stepOneSchema
   .and(stepTwoSchema)
-  .and(stepThreeSchema)
+  // .and(stepThreeSchema)
   .and(stepFourSchema)
   .and(stepFiveSchema);
 

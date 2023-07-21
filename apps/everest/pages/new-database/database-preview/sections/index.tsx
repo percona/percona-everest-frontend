@@ -15,7 +15,6 @@ export {
 export const previewSections = [
   PreviewSectionOne,
   PreviewSectionTwo,
-  PreviewSectionThree,
   PreviewSectionFour,
   PreviewSectionFive,
 ];
