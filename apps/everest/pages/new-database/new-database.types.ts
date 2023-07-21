@@ -33,7 +33,7 @@ export enum DbWizardFormFields {
   weekDay = 'weekDay',
   onDay = 'onDay',
   externalAccess = 'externalAccess',
-  internetFacing = 'internetFacing',
+  // internetFacing = 'internetFacing',
   sourceRange = 'sourceRange',
   monitoring = 'monitoring',
   endpoint = 'endpoint',

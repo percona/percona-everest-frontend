@@ -25,7 +25,7 @@ export const DB_WIZARD_DEFAULTS = {
   [DbWizardFormFields.dbName]: '',
   [DbWizardFormFields.dbVersion]: '',
   [DbWizardFormFields.externalAccess]: false,
-  [DbWizardFormFields.internetFacing]: true,
+  // [DbWizardFormFields.internetFacing]: true,
   [DbWizardFormFields.sourceRange]: '',
   [DbWizardFormFields.monitoring]: false,
   [DbWizardFormFields.endpoint]: '',
