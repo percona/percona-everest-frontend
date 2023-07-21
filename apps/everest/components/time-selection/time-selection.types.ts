@@ -1,13 +1,13 @@
 import { Theme, SxProps } from '@mui/material';
 
 export enum WeekDays {
-  Mon = 'Monday',
-  Tue = 'Tuesday',
-  Wed = 'Wednesday',
-  Thu = 'Thursday',
-  Fri = 'Friday',
-  Sat = 'Saturday',
-  Sun = 'Sunday',
+  Mo = 'Monday',
+  Tu = 'Tuesday',
+  We = 'Wednesday',
+  Th = 'Thursday',
+  Fr = 'Friday',
+  Sa = 'Saturday',
+  Su = 'Sunday',
 }
 
 export const weekDaysPlural = (day: WeekDays) => `${day}s`;
@@ -34,3 +34,12 @@ export interface TimeSelectionProps {
   sx?: SxProps<Theme>;
   sxTimeFields?: SxProps<Theme>;
 }
+
+export type TimeProps = {
+  selectTime: TimeValue;
+  minute: number;
+  hour: number;
+  amPm: string;
+  onDay: number;
+  weekDay: WeekDays;
+};

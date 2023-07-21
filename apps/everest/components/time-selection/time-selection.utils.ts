@@ -1,5 +1,6 @@
+import { CronTime } from 'cron-time-generator';
 import { Messages } from './time-selection.messages';
-import { TimeValue } from './time-selection.types';
+import { AmPM, TimeProps, TimeValue } from './time-selection.types';
 
 export const addZeroToSingleDigit = (value: number) => {
   return value.toString().padStart(2, '0');
@@ -26,4 +27,21 @@ export const getTimeText = (
     return `${timeNumbers} ${Messages.getTimeText.months} ${onDay} ${Messages.at} ${hour}:${minuteWithZero}${amPm}.`;
   }
   return `${timeNumbers} ${Messages.getTimeText.hours} ${minute}.`;
+};
+
+const getCronExpressionFromFormValues = (timeProps: TimeProps): string => {
+  const { minute, hour, amPm, onDay, weekDay, selectTime } = timeProps;
+  const hour24 = amPm === AmPM.PM ? (hour === 12 ? 0 : hour + 12) : hour;
+  switch (selectTime) {
+    case TimeValue.hours:
+      return CronTime.everyHourAt(minute);
+    case TimeValue.days:
+      return CronTime.everyDayAt(hour24, minute);
+    case TimeValue.weeks:
+      return CronTime.onSpecificDaysAt([weekDay], hour24, minute);
+    case TimeValue.months:
+      return CronTime.everyMonthOn(onDay, hour24, minute);
+    default:
+      return CronTime.everyHourAt(5);
+  }
 };

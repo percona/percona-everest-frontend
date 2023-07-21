@@ -19,7 +19,7 @@ export const DB_WIZARD_DEFAULTS = {
   [DbWizardFormFields.minute]: 0,
   [DbWizardFormFields.hour]: 12,
   [DbWizardFormFields.amPm]: AmPM.AM,
-  [DbWizardFormFields.weekDay]: WeekDays.Mon,
+  [DbWizardFormFields.weekDay]: WeekDays.Mo,
   [DbWizardFormFields.onDay]: 1,
   [DbWizardFormFields.dbType]: DbType.Mysql,
   [DbWizardFormFields.dbName]: '',

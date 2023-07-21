@@ -44,7 +44,7 @@
         "@teambit/eslint-config-bit-react": "~0.0.367",
         "@typescript-eslint/eslint-plugin": "5.35.1",
         "axios": "^1.4.0",
-        "cronstrue": "^2.28.0",
+        "cron-time-generator": "^2.0.0",
         "css-mediaquery": "^0.1.2",
         "eslint-import-resolver-node": "0.3.6",
         "eslint-plugin-import": "2.22.1",

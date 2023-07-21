@@ -42,9 +42,9 @@ importers:
       core-js:
         specifier: ^3.0.0
         version: registry.npmjs.org/core-js@3.30.2
-      cronstrue:
-        specifier: ^2.28.0
-        version: registry.npmjs.org/cronstrue@2.28.0
+      cron-time-generator:
+        specifier: ^2.0.0
+        version: registry.npmjs.org/cron-time-generator@2.0.0
       css-mediaquery:
         specifier: ^0.1.2
         version: registry.npmjs.org/css-mediaquery@0.1.2
@@ -2033,11 +2033,10 @@ packages:
       yaml: registry.npmjs.org/yaml@1.10.2
     dev: false
 
-  registry.npmjs.org/cronstrue@2.28.0:
-    resolution: {integrity: sha512-yByAR5on9i/p26djiSve4l29/AJkjCFDgopq+3gUVrQh2xgb3KKScofwkpf5XcRhuWAX0u0EuEK2nltB5hV1jQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/cronstrue/-/cronstrue-2.28.0.tgz}
-    name: cronstrue
-    version: 2.28.0
-    hasBin: true
+  registry.npmjs.org/cron-time-generator@2.0.0:
+    resolution: {integrity: sha512-s38Fzmh7C6MgFT+EzgYcMNmm5iMivN9o8CzUTmrxmMtoqOf4dUW6AeulTzGRLAnIOyWF8Ho+uh7lZRSyaH6ttA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/cron-time-generator/-/cron-time-generator-2.0.0.tgz}
+    name: cron-time-generator
+    version: 2.0.0
     dev: false
 
   registry.npmjs.org/css-mediaquery@0.1.2:

@@ -45,7 +45,7 @@ export const DefaultConfigurations = () => {
       [DefaultConfigurationsFields.minute]: 0,
       [DefaultConfigurationsFields.hour]: 12,
       [DefaultConfigurationsFields.amPm]: AmPM.AM,
-      [DefaultConfigurationsFields.weekDay]: WeekDays.Mon,
+      [DefaultConfigurationsFields.weekDay]: WeekDays.Mo,
       [DefaultConfigurationsFields.onDay]: 1,
       [DefaultConfigurationsFields.sourceRanges]: [
         { sourceRange: '181.170.213.40/32' },
