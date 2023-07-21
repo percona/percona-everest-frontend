@@ -24,7 +24,7 @@ import { DbWizardFormFields } from '../../new-database.types';
 export const SecondStep = () => {
   const { control, watch, setValue } = useFormContext();
 
-  // TODO should be set from api
+  // TODO should be set from api https://jira.percona.com/browse/EVEREST-172
   const totalSizes = {
     cpu: 32,
     memory: 40,
