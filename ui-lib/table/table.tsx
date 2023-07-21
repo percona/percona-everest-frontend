@@ -7,7 +7,13 @@ import React from 'react';
 export function Table<T extends Record<string, any>>(
   props: MaterialReactTableProps<T>
 ) {
-  const { data, columns } = props;
+  const {
+    data,
+    columns,
+    muiTablePaperProps,
+    muiTopToolbarProps,
+    displayColumnDefOptions,
+  } = props;
   return (
     <MaterialReactTable
       {...props}
@@ -20,14 +26,14 @@ export function Table<T extends Record<string, any>>(
       enableFullScreenToggle={false}
       positionActionsColumn="last"
       positionExpandColumn="last"
-      muiTablePaperProps={{ elevation: 0, ...props.muiTablePaperProps }}
+      muiTablePaperProps={{ elevation: 0, ...muiTablePaperProps }}
       muiTopToolbarProps={{
         sx: {
           '& .MuiBox-root': {
             flexDirection: 'row-reverse',
           },
         },
-        ...props.muiTopToolbarProps,
+        ...muiTopToolbarProps,
       }}
       displayColumnDefOptions={{
         'mrt-row-actions': {
@@ -41,7 +47,7 @@ export function Table<T extends Record<string, any>>(
           muiTableBodyCellProps: { sx: { flex: 'none', width: '60px' } },
           muiTableHeadCellProps: { sx: { flex: 'none', width: '60px' } },
         },
-        ...props.displayColumnDefOptions,
+        ...displayColumnDefOptions,
       }}
     />
   );
