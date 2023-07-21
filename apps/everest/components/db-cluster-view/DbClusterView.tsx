@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   BorderColor,
   DeleteOutline,
@@ -80,8 +81,8 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
             columns={columns}
             data={combinedData}
             enableRowActions
-            renderRowActionMenuItems={({ table, row }) => [
-              //TODO: finish when design is ready
+            renderRowActionMenuItems={() => [
+              // TODO: finish when design is ready
               <MenuItem
                 onClick={() => {}}
                 sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}

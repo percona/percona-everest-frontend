@@ -5,6 +5,25 @@ import { K8Context } from '../../contexts/kubernetes/kubernetes.context';
 import { KubernetesCluster } from '../../types/kubernetes.types';
 import { DbCluster, DbClusterRaw } from './dbCluster.type';
 
+const mapRawDataToDbClusterModel = (
+  items: DbClusterRaw[],
+  cluster: KubernetesCluster
+): DbCluster[] => {
+  return items.map((item) => ({
+    status: item.status.status,
+    dbType: item.spec.engine.type,
+    dbVersion: item.spec.engine.version,
+    backupsEnabled: item.spec.backup.enabled,
+    databaseName: item.metadata.name,
+    kubernetesCluster: cluster.name,
+    cpu: item.spec.engine.resources.cpu,
+    memory: item.spec.engine.resources.memory,
+    storage: item.spec.engine.storage.size,
+    hostName: item.status.hostname,
+    exposetype: item.spec.proxy.expose.type,
+  }));
+};
+
 export const useDbClusters = () => {
   const { clusters } = useContext(K8Context);
   const clusterData = clusters?.data ?? [];
@@ -35,23 +54,4 @@ export const useDbClusters = () => {
     .flat() as DbCluster[];
 
   return { combinedData, loadingAllClusters, errorInSomeClusters };
-};
-
-const mapRawDataToDbClusterModel = (
-  items: DbClusterRaw[],
-  cluster: KubernetesCluster
-): DbCluster[] => {
-  return items.map((item) => ({
-    status: item.status.status,
-    dbType: item.spec.engine.type,
-    dbVersion: item.spec.engine.version,
-    backupsEnabled: item.spec.backup.enabled,
-    databaseName: item.metadata.name,
-    kubernetesCluster: cluster.name,
-    cpu: item.spec.engine.resources.cpu,
-    memory: item.spec.engine.resources.memory,
-    storage: item.spec.engine.storage.size,
-    hostName: item.status.hostname,
-    exposetype: item.spec.proxy.expose.type,
-  }));
 };

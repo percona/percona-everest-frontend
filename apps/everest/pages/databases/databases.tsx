@@ -4,6 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { DbClusterView } from '../../components/db-cluster-view/DbClusterView';
 import { Messages } from './databases.messages';
+
 export const DatabasesPage = () => {
   return (
     <DbClusterView
