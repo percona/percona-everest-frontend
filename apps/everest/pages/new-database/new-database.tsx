@@ -13,7 +13,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { Stepper } from '@percona/ui-lib.stepper';
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Messages } from './new-database.messages';
 import { dbWizardSchema, DbWizardType } from './new-database.types';

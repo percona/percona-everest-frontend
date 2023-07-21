@@ -11,7 +11,7 @@ const formValuesToPayloadMapping = (
   dbPayload: DbWizardType
 ): CreateDBClusterPayload => {
   const dbClusterPayload: CreateDBClusterPayload = {
-    apiVersion: '', //TODO set ApiVersion
+    apiVersion: '', // TODO set ApiVersion
     kind: 'DatabaseCluster',
     metadata: {
       name: dbPayload.dbName,
@@ -25,9 +25,9 @@ const formValuesToPayloadMapping = (
               enabled: true,
               name: '',
               objectStorageName: '',
-              schedule: '', //TODO CRON Expression
+              schedule: '', // TODO CRON Expression
             },
-          ], //TODO Array of schedules?
+          ], // TODO Array of schedules?
         }),
       },
       engine: {
@@ -43,8 +43,8 @@ const formValuesToPayloadMapping = (
         },
       },
       dataSource: {
-        backupName: '', //TODO StorageLocation id?
-        objectStorageName: '', //TODO StorageLocation name?
+        backupName: '', // TODO StorageLocation id?
+        objectStorageName: '', // TODO StorageLocation name?
       },
     },
   };

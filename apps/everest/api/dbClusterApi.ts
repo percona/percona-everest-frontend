@@ -41,7 +41,7 @@ interface Spec {
 }
 export interface CreateDBClusterPayload {
   apiVersion: string;
-  kind: 'DatabaseCluster'; //enum?
+  kind: 'DatabaseCluster'; // enum?
   metadata: {
     name: string;
   };
