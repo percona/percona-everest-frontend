@@ -77,24 +77,28 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
           renderRowActionMenuItems={() => [
             // TODO: finish when design is ready
             <MenuItem
+              key={0}
               onClick={() => {}}
               sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
             >
               <BorderColor fontSize="small" /> {Messages.menuItems.edit}
             </MenuItem>,
             <MenuItem
+              key={1}
               onClick={() => {}}
               sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
             >
               <DeleteOutline /> {Messages.menuItems.delete}
             </MenuItem>,
             <MenuItem
+              key={2}
               onClick={() => {}}
               sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
             >
               <RestartAlt /> {Messages.menuItems.restart}
             </MenuItem>,
             <MenuItem
+              key={3}
               onClick={() => {}}
               sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
             >
