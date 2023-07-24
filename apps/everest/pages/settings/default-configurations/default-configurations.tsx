@@ -37,6 +37,7 @@ export const DefaultConfigurations = () => {
     resolver: zodResolver(defaultConfigurationsSchema),
     defaultValues: {
       // TODO get from api =>
+      // TODO CRON for api should be used as getCronExpressionFromFormValues({selectTime, minute, hour, amPm, onDay, weekDay})
       [DefaultConfigurationsFields.monitoring]: false,
       [DefaultConfigurationsFields.backupsEnabled]: false,
       [DefaultConfigurationsFields.externalAccess]: false,
