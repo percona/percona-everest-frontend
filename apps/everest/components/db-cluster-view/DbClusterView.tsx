@@ -5,7 +5,7 @@ import {
   PauseCircleOutline,
   RestartAlt,
 } from '@mui/icons-material';
-import { Alert, Box, MenuItem, Stack } from '@mui/material';
+import { Box, MenuItem, Stack } from '@mui/material';
 import { Table } from '@percona/ui-lib.table';
 import { type MRT_ColumnDef } from 'material-react-table';
 import React, { useMemo } from 'react';
@@ -68,50 +68,42 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
   return (
     <Stack direction="column" alignItems="center">
       <Box sx={{ width: '100%' }}>
-        {!combinedData.length && !loadingAllClusters ? (
-          <Stack direction="column" alignItems="end" gap={1}>
-            <Box>{customHeader}</Box>
-            <Alert severity="info" sx={{ width: '100%' }}>
-              {Messages.dbCluster.noData}
-            </Alert>
-          </Stack>
-        ) : (
-          <Table
-            state={{ isLoading: loadingAllClusters }}
-            columns={columns}
-            data={combinedData}
-            enableRowActions
-            renderRowActionMenuItems={() => [
-              // TODO: finish when design is ready
-              <MenuItem
-                onClick={() => {}}
-                sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
-              >
-                <BorderColor fontSize="small" /> {Messages.menuItems.edit}
-              </MenuItem>,
-              <MenuItem
-                onClick={() => {}}
-                sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
-              >
-                <DeleteOutline /> {Messages.menuItems.delete}
-              </MenuItem>,
-              <MenuItem
-                onClick={() => {}}
-                sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
-              >
-                <RestartAlt /> {Messages.menuItems.restart}
-              </MenuItem>,
-              <MenuItem
-                onClick={() => {}}
-                sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
-              >
-                <PauseCircleOutline /> {Messages.menuItems.suspend}
-              </MenuItem>,
-            ]}
-            renderDetailPanel={({ row }) => <ExpandedRow row={row} />}
-            renderTopToolbarCustomActions={() => customHeader}
-          />
-        )}
+        <Table
+          noDataMessage={Messages.dbCluster.noData}
+          state={{ isLoading: loadingAllClusters }}
+          columns={columns}
+          data={combinedData}
+          enableRowActions
+          renderRowActionMenuItems={() => [
+            // TODO: finish when design is ready
+            <MenuItem
+              onClick={() => {}}
+              sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
+            >
+              <BorderColor fontSize="small" /> {Messages.menuItems.edit}
+            </MenuItem>,
+            <MenuItem
+              onClick={() => {}}
+              sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
+            >
+              <DeleteOutline /> {Messages.menuItems.delete}
+            </MenuItem>,
+            <MenuItem
+              onClick={() => {}}
+              sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
+            >
+              <RestartAlt /> {Messages.menuItems.restart}
+            </MenuItem>,
+            <MenuItem
+              onClick={() => {}}
+              sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
+            >
+              <PauseCircleOutline /> {Messages.menuItems.suspend}
+            </MenuItem>,
+          ]}
+          renderDetailPanel={({ row }) => <ExpandedRow row={row} />}
+          renderTopToolbarCustomActions={() => customHeader}
+        />
       </Box>
     </Stack>
   );
