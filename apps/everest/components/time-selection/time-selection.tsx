@@ -59,7 +59,7 @@ export const TimeSelection = ({
           }}
         >
           {Object.values(TimeValue).map((value) => (
-            <MenuItem key={timeValueHumanized[value]} value={value}>
+            <MenuItem key={value} value={value}>
               {timeValueHumanized[value]}
             </MenuItem>
           ))}
