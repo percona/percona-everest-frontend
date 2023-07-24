@@ -21,7 +21,6 @@ export const TimeSelection = ({
 }: TimeSelectionProps) => {
   const { control, watch } = useFormContext();
   const selectedTime: TimeValue = watch('selectTime');
-  const timeNumbers: number = watch('timeNumbers');
   const minute: number = watch('minute');
   const hour: number = watch('hour');
   const amPm: string = watch('amPm');
@@ -30,16 +29,15 @@ export const TimeSelection = ({
 
   const timeInfoText = useMemo(
     () =>
-      getTimeText(
+      showInfoAlert ? getTimeText(
         selectedTime,
-        timeNumbers,
         hour,
         minute,
         amPm,
         weekDay,
         onDay
-      ),
-    [selectedTime, timeNumbers, hour, minute, amPm, weekDay, onDay]
+      ): '',
+    [selectedTime, hour, minute, amPm, weekDay, onDay, showInfoAlert]
   );
 
   return (

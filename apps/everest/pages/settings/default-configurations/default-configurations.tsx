@@ -41,7 +41,6 @@ export const DefaultConfigurations = () => {
       [DefaultConfigurationsFields.monitoring]: false,
       [DefaultConfigurationsFields.backupsEnabled]: false,
       [DefaultConfigurationsFields.externalAccess]: false,
-      [DefaultConfigurationsFields.timeNumbers]: '1',
       [DefaultConfigurationsFields.selectTime]: TimeValue.hours,
       [DefaultConfigurationsFields.minute]: 0,
       [DefaultConfigurationsFields.hour]: 12,

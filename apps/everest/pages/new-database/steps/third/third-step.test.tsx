@@ -11,7 +11,6 @@ const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
       // pitrEnabled: true,
       // pitrTime: '60',
       storageLocation: 'S3',
-      timeNumbers: '1',
       selectTime: 'hours',
       minute: 0,
       hour: 12,

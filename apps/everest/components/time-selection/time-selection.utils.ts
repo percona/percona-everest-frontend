@@ -8,7 +8,6 @@ export const addZeroToSingleDigit = (value: number) => {
 
 export const getTimeText = (
   selectedTime: TimeValue,
-  timeNumbers: number,
   hour: number,
   minute: number,
   amPm: string,
@@ -18,15 +17,15 @@ export const getTimeText = (
   const minuteWithZero = addZeroToSingleDigit(minute);
 
   if (selectedTime === TimeValue.days) {
-    return `${timeNumbers} ${Messages.getTimeText.days} ${hour}:${minuteWithZero}${amPm}.`;
+    return `${Messages.getTimeText.days} ${hour}:${minuteWithZero}${amPm}.`;
   }
   if (selectedTime === TimeValue.weeks) {
-    return `${timeNumbers} ${Messages.getTimeText.weeks} ${weekDay}, ${Messages.at} ${hour}:${minuteWithZero}${amPm}.`;
+    return `${Messages.getTimeText.weeks} ${weekDay}, ${Messages.at} ${hour}:${minuteWithZero}${amPm}.`;
   }
   if (selectedTime === TimeValue.months) {
-    return `${timeNumbers} ${Messages.getTimeText.months} ${onDay} ${Messages.at} ${hour}:${minuteWithZero}${amPm}.`;
+    return `${Messages.getTimeText.months} ${onDay} ${Messages.at} ${hour}:${minuteWithZero}${amPm}.`;
   }
-  return `${timeNumbers} ${Messages.getTimeText.hours} ${minute}.`;
+  return `${Messages.getTimeText.hours} ${minute}.`;
 };
 
 // export const getCronExpressionFromFormValues = (timeProps: TimeProps): string => {
