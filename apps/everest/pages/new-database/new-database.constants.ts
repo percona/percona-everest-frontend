@@ -8,7 +8,6 @@ export const DB_WIZARD_DEFAULTS = {
   // [DbWizardFormFields.pitrEnabled]: true,
   // [DbWizardFormFields.pitrTime]: '60',
   // [DbWizardFormFields.storageLocation]: StorageType.S3, // TODO api
-  // [DbWizardFormFields.timeNumbers]: '1',
   // [DbWizardFormFields.selectTime]: TimeValue.hours,
   // [DbWizardFormFields.minute]: 0,
   // [DbWizardFormFields.hour]: 12,

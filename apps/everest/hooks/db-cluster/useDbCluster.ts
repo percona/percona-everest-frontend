@@ -4,12 +4,17 @@ import {
   createDbClusterFn,
   CreateDBClusterPayload,
 } from '../../api/dbClusterApi';
+// import {getCronExpressionFromFormValues} from "../../components/time-selection/time-selection.utils";
+// import {TimeValue, WeekDays} from "../../components/time-selection/time-selection.types";
 
 type CreateDbClusterArgType = { dbPayload: DbWizardType; id: string };
 
 const formValuesToPayloadMapping = (
   dbPayload: DbWizardType
 ): CreateDBClusterPayload => {
+  // const { selectTime, minute, hour, amPm, onDay, weekDay } = dbPayload;
+  // const backupSchedule = getCronExpressionFromFormValues({selectTime, minute, hour, amPm, onDay, weekDay});
+
   const dbClusterPayload: CreateDBClusterPayload = {
     apiVersion: 'everest.percona.com/v1alpha1',
     kind: 'DatabaseCluster',
@@ -25,7 +30,7 @@ const formValuesToPayloadMapping = (
       //         enabled: true,
       //         name: '',
       //         objectStorageName: '',
-      //         schedule: '', // TODO CRON Expression
+      //         schedule: backupSchedule, // TODO CRON Expression
       //       },
       //     ],
       //   }),

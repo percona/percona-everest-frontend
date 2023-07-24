@@ -1,6 +1,6 @@
-import React from "react";
-import { PreviewContentText } from "../preview-section";
-import { SectionProps } from "./section.types";
+import React from 'react';
+import { PreviewContentText } from '../preview-section';
+import { SectionProps } from './section.types';
 
 export const PreviewSectionTwo = ({
   numberOfNodes,
@@ -14,4 +14,4 @@ export const PreviewSectionTwo = ({
     <PreviewContentText text={`Memory: ${memory} GB`} />
     <PreviewContentText text={`Disk: ${disk} GB`} />
   </>
-)
+);

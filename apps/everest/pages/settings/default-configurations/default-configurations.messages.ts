@@ -12,7 +12,7 @@ export const Messages = {
   externalAccess: 'External Access',
   externalAccessMessage:
     'Enable external access by default for databases that should be reachable outside the network cluster.',
-  repeatsEvery: 'Repeats every',
+  repeatsEvery: 'Repeats',
   sourceRangePlaceholder: '181.170.213.40/32',
   addNew: 'Add new',
   errors: {
