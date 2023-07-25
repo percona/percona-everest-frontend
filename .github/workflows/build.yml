@@ -12,10 +12,10 @@ jobs:
     steps:
       - name: Trigger dispatch in the main branch
         env:
-          GITHUB_API_TOKEN: ${{ secrets.GITHUB_API_TOKEN }}
+          EVEREST_GITHUB_API: ${{ secrets.EVEREST_GITHUB_API }}
         run: |
           curl -X POST https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/build.yml/dispatches \
             -H 'Accept: application/vnd.github+json' \
-            -H 'Authorization: Bearer ${GITHUB_API_TOKEN}' \
+            -H 'Authorization: Bearer ${EVEREST_GITHUB_API}' \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             --data '{"ref": "main"}' --fail-with-body
