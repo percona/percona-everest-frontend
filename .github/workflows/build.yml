@@ -14,7 +14,7 @@ jobs:
         env:
           ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         run: |
-          curl -XPOST https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/.github.com/workflows/build.yml/dispatches \
+          curl -XPOST https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/build.yml/dispatches \
             -H 'Accept: application/vnd.github+json' \
             -H "Content-Type: application/json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
