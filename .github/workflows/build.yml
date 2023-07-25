@@ -17,4 +17,4 @@ jobs:
           curl -X POST https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/build.yml/dispatches \
             -H 'Accept: application/vnd.github.v3+json' \
             -H 'Authorization: token ${ROBOT_TOKEN}' \
-            --data '{"ref": "main"}'
+            --data '{"ref": "main"}' --fail-with-body
