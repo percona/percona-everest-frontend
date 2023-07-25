@@ -1,12 +1,6 @@
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { z } from 'zod';
 import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
-import { StorageLocation } from './steps/third/third-step.types';
-import {
-  AmPM,
-  TimeValue,
-  WeekDays,
-} from '../../components/time-selection/time-selection.types';
 import { Messages } from './new-database.messages';
 import { IP_REGEX } from '../../constants';
 
@@ -25,10 +19,8 @@ export enum DbWizardFormFields {
   pitrEnabled = 'pitrEnabled',
   pitrTime = 'pitrTime',
   storageLocation = 'storageLocation',
-  timeNumbers = 'timeNumbers',
-  selectTime = 'selectTime',
+  selectedTime = 'selectedTime',
   minute = 'minute',
-  minuteHour = 'minuteHour',
   hour = 'hour',
   amPm = 'amPm',
   weekDay = 'weekDay',
@@ -66,27 +58,43 @@ const stepTwoSchema = z
   })
   .passthrough();
 
-const stepThreeSchema = z
-  .object({
-    backupsEnabled: z.boolean(),
-    pitrEnabled: z.boolean(),
-    pitrTime: z.string(),
-    storageLocation: z.nativeEnum(StorageLocation),
-    timeNumbers: z.string(),
-    selectTime: z.nativeEnum(TimeValue),
-    minuteHour: z.number(),
-    minute: z.number(),
-    hour: z.number(),
-    amPm: z.nativeEnum(AmPM),
-    weekDay: z.nativeEnum(WeekDays),
-    onDay: z.number(),
-  })
-  .passthrough();
+// TODO re-add third step after API is ready for backups
+// const stepThreeSchema = z
+//   .object({
+//     backupsEnabled: z.boolean(),
+//     // pitrEnabled: z.boolean(),
+//     // pitrTime: z.string(),
+//     storageLocation:
+//       z.string()
+//         .or(
+//           z.object({
+//             id: z.string(),
+//             name: z.string(),
+//           })
+//         )
+//         .nullish()
+//         .superRefine((input, ctx) => {
+//           if (!input || typeof input === 'string' || !input.id || !input.name) {
+//             ctx.addIssue({
+//               code: z.ZodIssueCode.custom,
+//               message: Messages.errors.storageLocation.invalid,
+//             });
+//           }
+//         }),
+//     selectedTime: z.nativeEnum(TimeValue),
+//     minuteHour: z.number().optional(),
+//     minute: z.number().optional(),
+//     hour: z.number().optional(),
+//     amPm: z.nativeEnum(AmPM).optional(),
+//     weekDay: z.nativeEnum(WeekDays).optional(),
+//     onDay: z.number().optional(),
+//   })
+//   .passthrough()
 
 const stepFourSchema = z
   .object({
     externalAccess: z.boolean(),
-    internetFacing: z.boolean(),
+    // internetFacing: z.boolean(),
     sourceRange: z.string().optional(),
   })
   .passthrough()
@@ -111,40 +119,42 @@ const stepFourSchema = z
     }
   });
 
-const stepFiveSchema = z
-  .object({
-    monitoring: z.boolean(),
-    endpoint: z.string().optional(),
-  })
-  .passthrough()
-  .superRefine((input, ctx) => {
-    if (input.monitoring) {
-      const { success } = z.string().url().nonempty().safeParse(input.endpoint);
+// TODO re-add step after API is ready for monitoring
+// const stepFiveSchema = z
+//   .object({
+//     monitoring: z.boolean(),
+//     endpoint: z.string().optional(),
+//   })
+//   .passthrough()
+//   .superRefine((input, ctx) => {
+//     if (input.monitoring) {
+//       const { success } = z.string().url().nonempty().safeParse(input.endpoint);
 
-      if (!success) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.invalid_string,
-          validation: 'url',
-          path: ['endpoint'],
-          message: Messages.errors.endpoint.invalid,
-        });
-      }
-    }
-  });
+//       if (!success) {
+//         ctx.addIssue({
+//           code: z.ZodIssueCode.invalid_string,
+//           validation: 'url',
+//           path: ['endpoint'],
+//           message: Messages.errors.endpoint.invalid,
+//         });
+//       }
+//     }
+//   });
 
 // Each position of the array is the validation schema for a given step
+// TODO re-add steps after API is ready
 export const dbWizardSchema = [
   stepOneSchema,
   stepTwoSchema,
-  stepThreeSchema,
+  // stepThreeSchema,
   stepFourSchema,
-  stepFiveSchema,
+  // stepFiveSchema,
 ];
 
 const superset = stepOneSchema
   .and(stepTwoSchema)
-  .and(stepThreeSchema)
+  // .and(stepThreeSchema)
   .and(stepFourSchema)
-  .and(stepFiveSchema);
+  // .and(stepFiveSchema);
 
 export type DbWizardType = z.infer<typeof superset>;

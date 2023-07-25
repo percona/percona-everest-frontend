@@ -1,4 +1,4 @@
-import { StackProps } from "@mui/material";
+import { StackProps } from '@mui/material';
 
 export type DatabasePreviewProps = {
   // zero indexed
@@ -6,7 +6,7 @@ export type DatabasePreviewProps = {
   onSectionEdit?: (order: number) => void;
 } & StackProps;
 
-export type PreviewSectionProps  = {
+export type PreviewSectionProps = {
   title: string;
   order: number;
   children: React.ReactNode;
@@ -17,4 +17,4 @@ export type PreviewSectionProps  = {
 
 export type PreviewContentTextProps = {
   text: string;
-}
+};
