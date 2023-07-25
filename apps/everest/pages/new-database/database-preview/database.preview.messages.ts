@@ -6,7 +6,7 @@ import {
 import { addZeroToSingleDigit } from '../../../components/time-selection/time-selection.utils';
 import { SectionProps } from './sections/section.types';
 
-// TODO re-add third step after API is ready for backups
+// TODO re-add steps after API is ready
 export const Messages = {
   title: 'Database Summary',
   preview: [
@@ -14,7 +14,7 @@ export const Messages = {
     'Resources',
     // 'Backups',
     'External Access',
-    'Monitoring',
+    // 'Monitoring',
   ],
 };
 
