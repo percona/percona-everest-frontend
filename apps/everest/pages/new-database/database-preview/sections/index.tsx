@@ -12,7 +12,7 @@ export {
   PreviewSectionFive,
 };
 
-//TODO re-add steps after API is ready
+// TODO re-add steps after API is ready
 export const previewSections = [
   PreviewSectionOne,
   PreviewSectionTwo,
