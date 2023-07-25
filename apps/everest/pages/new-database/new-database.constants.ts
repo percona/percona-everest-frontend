@@ -3,11 +3,12 @@ import { DbWizardFormFields } from './new-database.types';
 import { DEFAULT_SIZES } from './steps/second/second-step.const';
 import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
 
+// TODO re-add third step after API is ready for backups
 export const DB_WIZARD_DEFAULTS = {
   // [DbWizardFormFields.backupsEnabled]: true,
   // [DbWizardFormFields.pitrEnabled]: true,
   // [DbWizardFormFields.pitrTime]: '60',
-  // [DbWizardFormFields.storageLocation]: StorageType.S3, // TODO api
+  // [DbWizardFormFields.storageLocation]: '',
   // [DbWizardFormFields.selectedTime]: TimeValue.hours,
   // [DbWizardFormFields.minute]: 0,
   // [DbWizardFormFields.hour]: 12,

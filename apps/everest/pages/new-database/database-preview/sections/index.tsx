@@ -12,9 +12,11 @@ export {
   PreviewSectionFive,
 };
 
+//TODO re-add third step after API is ready for backups
 export const previewSections = [
   PreviewSectionOne,
   PreviewSectionTwo,
+  // PreviewSectionThree,
   PreviewSectionFour,
   PreviewSectionFive,
 ];

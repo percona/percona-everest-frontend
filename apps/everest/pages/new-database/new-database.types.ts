@@ -58,6 +58,7 @@ const stepTwoSchema = z
   })
   .passthrough();
 
+// TODO re-add third step after API is ready for backups
 // const stepThreeSchema = z
 //   .object({
 //     backupsEnabled: z.boolean(),
@@ -81,12 +82,12 @@ const stepTwoSchema = z
 //           }
 //         }),
 //     selectedTime: z.nativeEnum(TimeValue),
-//     minuteHour: z.number(),
-//     minute: z.number(),
-//     hour: z.number(),
-//     amPm: z.nativeEnum(AmPM),
-//     weekDay: z.nativeEnum(WeekDays),
-//     onDay: z.number(),
+//     minuteHour: z.number().optional(),
+//     minute: z.number().optional(),
+//     hour: z.number().optional(),
+//     amPm: z.nativeEnum(AmPM).optional(),
+//     weekDay: z.nativeEnum(WeekDays).optional(),
+//     onDay: z.number().optional(),
 //   })
 //   .passthrough()
 
@@ -140,6 +141,7 @@ const stepFiveSchema = z
   });
 
 // Each position of the array is the validation schema for a given step
+// TODO re-add third step after API is ready for backups
 export const dbWizardSchema = [
   stepOneSchema,
   stepTwoSchema,
