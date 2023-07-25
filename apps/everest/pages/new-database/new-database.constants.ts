@@ -3,12 +3,13 @@ import { DbWizardFormFields } from './new-database.types';
 import { DEFAULT_SIZES } from './steps/second/second-step.const';
 import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
 
+// TODO re-add steps after API is ready
 export const DB_WIZARD_DEFAULTS = {
   // [DbWizardFormFields.backupsEnabled]: true,
   // [DbWizardFormFields.pitrEnabled]: true,
   // [DbWizardFormFields.pitrTime]: '60',
-  // [DbWizardFormFields.storageLocation]: StorageType.S3, // TODO api
-  // [DbWizardFormFields.selectTime]: TimeValue.hours,
+  // [DbWizardFormFields.storageLocation]: '',
+  // [DbWizardFormFields.selectedTime]: TimeValue.hours,
   // [DbWizardFormFields.minute]: 0,
   // [DbWizardFormFields.hour]: 12,
   // [DbWizardFormFields.amPm]: AmPM.AM,
@@ -21,7 +22,7 @@ export const DB_WIZARD_DEFAULTS = {
   // [DbWizardFormFields.internetFacing]: true,
   [DbWizardFormFields.sourceRange]: '',
   [DbWizardFormFields.monitoring]: false,
-  [DbWizardFormFields.endpoint]: '',
+  // [DbWizardFormFields.endpoint]: '',
   [DbWizardFormFields.numberOfNodes]: NumberOfNodes.oneNode,
   [DbWizardFormFields.resourceSizePerNode]: ResourceSize.small,
   [DbWizardFormFields.cpu]: DEFAULT_SIZES.small.cpu,

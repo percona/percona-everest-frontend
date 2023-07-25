@@ -29,9 +29,9 @@ export const getTimeText = (
 };
 
 // export const getCronExpressionFromFormValues = (timeProps: TimeProps): string => {
-//   const { minute, hour, amPm, onDay, weekDay, selectTime } = timeProps;
+//   const { minute, hour, amPm, onDay, weekDay, selectedTime } = timeProps;
 //   const hour24 = amPm === AmPM.PM ? (hour === 12 ? 0 : hour + 12) : hour;
-//   switch (selectTime) {
+//   switch (selectedTime) {
 //     case TimeValue.hours:
 //       return CronTime.everyHourAt(minute);
 //     case TimeValue.days:

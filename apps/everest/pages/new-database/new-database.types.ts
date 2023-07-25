@@ -19,7 +19,7 @@ export enum DbWizardFormFields {
   pitrEnabled = 'pitrEnabled',
   pitrTime = 'pitrTime',
   storageLocation = 'storageLocation',
-  selectTime = 'selectTime',
+  selectedTime = 'selectedTime',
   minute = 'minute',
   hour = 'hour',
   amPm = 'amPm',
@@ -58,6 +58,7 @@ const stepTwoSchema = z
   })
   .passthrough();
 
+// TODO re-add third step after API is ready for backups
 // const stepThreeSchema = z
 //   .object({
 //     backupsEnabled: z.boolean(),
@@ -80,13 +81,13 @@ const stepTwoSchema = z
 //             });
 //           }
 //         }),
-//     selectTime: z.nativeEnum(TimeValue),
-//     minuteHour: z.number(),
-//     minute: z.number(),
-//     hour: z.number(),
-//     amPm: z.nativeEnum(AmPM),
-//     weekDay: z.nativeEnum(WeekDays),
-//     onDay: z.number(),
+//     selectedTime: z.nativeEnum(TimeValue),
+//     minuteHour: z.number().optional(),
+//     minute: z.number().optional(),
+//     hour: z.number().optional(),
+//     amPm: z.nativeEnum(AmPM).optional(),
+//     weekDay: z.nativeEnum(WeekDays).optional(),
+//     onDay: z.number().optional(),
 //   })
 //   .passthrough()
 
@@ -118,40 +119,42 @@ const stepFourSchema = z
     }
   });
 
-const stepFiveSchema = z
-  .object({
-    monitoring: z.boolean(),
-    endpoint: z.string().optional(),
-  })
-  .passthrough()
-  .superRefine((input, ctx) => {
-    if (input.monitoring) {
-      const { success } = z.string().url().nonempty().safeParse(input.endpoint);
+// TODO re-add step after API is ready for monitoring
+// const stepFiveSchema = z
+//   .object({
+//     monitoring: z.boolean(),
+//     endpoint: z.string().optional(),
+//   })
+//   .passthrough()
+//   .superRefine((input, ctx) => {
+//     if (input.monitoring) {
+//       const { success } = z.string().url().nonempty().safeParse(input.endpoint);
 
-      if (!success) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.invalid_string,
-          validation: 'url',
-          path: ['endpoint'],
-          message: Messages.errors.endpoint.invalid,
-        });
-      }
-    }
-  });
+//       if (!success) {
+//         ctx.addIssue({
+//           code: z.ZodIssueCode.invalid_string,
+//           validation: 'url',
+//           path: ['endpoint'],
+//           message: Messages.errors.endpoint.invalid,
+//         });
+//       }
+//     }
+//   });
 
 // Each position of the array is the validation schema for a given step
+// TODO re-add steps after API is ready
 export const dbWizardSchema = [
   stepOneSchema,
   stepTwoSchema,
   // stepThreeSchema,
   stepFourSchema,
-  stepFiveSchema,
+  // stepFiveSchema,
 ];
 
 const superset = stepOneSchema
   .and(stepTwoSchema)
   // .and(stepThreeSchema)
   .and(stepFourSchema)
-  .and(stepFiveSchema);
+  // .and(stepFiveSchema);
 
 export type DbWizardType = z.infer<typeof superset>;

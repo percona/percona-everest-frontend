@@ -12,11 +12,6 @@ interface Backup {
   schedules?: Array<Schedule>;
 }
 
-interface DataSource {
-  backupName: string;
-  objectStorageName: string;
-}
-
 interface Resources {
   cpu: number;
   memory: number;
@@ -35,13 +30,6 @@ interface Engine {
   version?: string;
 }
 
-interface Monitoring {
-  enabled: boolean;
-  pmm?: {
-    publicAddress: string;
-  }
-}
-
 interface Proxy {
   replicas: number;
   expose: {
@@ -51,9 +39,7 @@ interface Proxy {
 }
 interface Spec {
   backup?: Backup;
-  dataSource?: DataSource;
   engine: Engine;
-  monitoring: Monitoring;
   proxy: Proxy;
 }
 export interface CreateDBClusterPayload {

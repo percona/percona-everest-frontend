@@ -178,7 +178,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
     subtitle2: {
       fontWeight: 600,
       fontSize: '16px',
-      lineHeight: '1',
+      lineHeight: '22px',
     },
     overline: {
       fontWeight: 800,

@@ -6,6 +6,7 @@ import {
 import { addZeroToSingleDigit } from '../../../components/time-selection/time-selection.utils';
 import { SectionProps } from './sections/section.types';
 
+// TODO re-add steps after API is ready
 export const Messages = {
   title: 'Database Summary',
   preview: [
@@ -13,7 +14,7 @@ export const Messages = {
     'Resources',
     // 'Backups',
     'External Access',
-    'Monitoring',
+    // 'Monitoring',
   ],
 };
 
@@ -35,7 +36,7 @@ export const getTimeSelectionPreviewMessage = (sectionProps: SectionProps) => {
     case TimeValue.weeks:
       return `${
         timeValueHumanized[selectedTime]
-      } on ${weekDay.toLowerCase()}s at ${hour}:${minuteWithZero} ${amPm}`;
+      } on ${weekDay}s at ${hour}:${minuteWithZero} ${amPm}`;
     case TimeValue.months:
       return `${timeValueHumanized[selectedTime]} on day ${onDay} at ${hour}:${minuteWithZero} ${amPm}`;
     default:

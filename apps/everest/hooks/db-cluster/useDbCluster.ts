@@ -12,9 +12,10 @@ type CreateDbClusterArgType = { dbPayload: DbWizardType; id: string };
 const formValuesToPayloadMapping = (
   dbPayload: DbWizardType
 ): CreateDBClusterPayload => {
-  // const { selectTime, minute, hour, amPm, onDay, weekDay } = dbPayload;
-  // const backupSchedule = getCronExpressionFromFormValues({selectTime, minute, hour, amPm, onDay, weekDay});
+  // const { selectedTime, minute, hour, amPm, onDay, weekDay } = dbPayload;
+  // const backupSchedule = getCronExpressionFromFormValues({selectedTime, minute, hour, amPm, onDay, weekDay});
 
+  // TODO re-add payload after API is ready
   const dbClusterPayload: CreateDBClusterPayload = {
     apiVersion: 'everest.percona.com/v1alpha1',
     kind: 'DatabaseCluster',
@@ -47,18 +48,14 @@ const formValuesToPayloadMapping = (
           size: dbPayload.disk,
         },
       },
-      // dataSource: {
-      //   backupName: '', // TODO StorageLocation id?
-      //   objectStorageName: '', // TODO StorageLocation name?
+      // monitoring: {
+      //   enabled: dbPayload.monitoring,
+      //   ...(!!dbPayload.monitoring && {
+      //     pmm: {
+      //       publicAddress: dbPayload.endpoint || '',
+      //     }
+      //   })
       // },
-      monitoring: {
-        enabled: dbPayload.monitoring,
-        ...(!!dbPayload.monitoring && {
-          pmm: {
-            publicAddress: dbPayload.endpoint || '',
-          }
-        })
-      },
       proxy: {
         replicas: +dbPayload.numberOfNodes,
         expose: {
