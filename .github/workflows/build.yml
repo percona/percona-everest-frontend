@@ -17,5 +17,6 @@ jobs:
           curl -XPOST https://api.github.com/repos/percona/percona-everest-backend/dispatches \
             -H 'Accept: application/vnd.github.everest-preview+json' \
             -H "Content-Type: application/json" \
-            -u "${EVEREST_GITHUB_TOKEN}" \
+            -H "Authorization: Bearer ${EVEREST_GITHUB_TOKEN}" \
+                                                              #-u "${EVEREST_GITHUB_TOKEN}" \
             --data '{"event_type": "build_dev_latest"}' --fail-with-body
