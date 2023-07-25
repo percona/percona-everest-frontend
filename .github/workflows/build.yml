@@ -15,6 +15,6 @@ jobs:
           ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         run: |
           curl -X POST https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/build.yml/dispatches \
-            -H 'Accept: application/vnd.github.everest-preview+json' \
-            -u ${ROBOT_TOKEN } \
+            -H 'Accept: application/vnd.github.v3+json' \
+            -H 'Authorization: token ${ROBOT_TOKEN}' \
             --data '{"ref": "main"}'
