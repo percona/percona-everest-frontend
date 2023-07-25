@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger dispatch in the main branch
+        uses: percona-platform/gh-action-fork-benc-uk-workflow-dispatch@v1
         with:
           workflow: E2E
           token: ${{ secrets.ROBOT_TOKEN }}
