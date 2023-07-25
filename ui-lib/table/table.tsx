@@ -19,6 +19,8 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
     noDataMessage,
   } = props;
 
+  const iconsOpacity = 0.5;
+
   const stopPropagation = (e: Event) => {
     e.stopPropagation();
   };
@@ -86,19 +88,19 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
           data.length ? (
             <KeyboardDoubleArrowDownIcon {...props} />
           ) : (
-            <KeyboardDoubleArrowDownIcon sx={{ opacity: '50%' }} />
+            <KeyboardDoubleArrowDownIcon sx={{ opacity: iconsOpacity }} />
           ),
         SearchIcon: () => (
-          <SearchIcon sx={{ opacity: !data.length ? '50%' : '100%' }} />
+          <SearchIcon sx={{ opacity: !data.length ? iconsOpacity : 1 }} />
         ),
         FilterListIcon: () => (
-          <FilterListIcon sx={{ opacity: !data.length ? '50%' : '100%' }} />
+          <FilterListIcon sx={{ opacity: !data.length ? iconsOpacity : 1 }} />
         ),
         ViewColumnIcon: () => (
-          <ViewColumnIcon sx={{ opacity: !data.length ? '50%' : '100%' }} />
+          <ViewColumnIcon sx={{ opacity: !data.length ? iconsOpacity : 1 }} />
         ),
         MoreVertIcon: () => (
-          <MoreVertIcon sx={{ opacity: !data.length ? '50%' : '100%' }} />
+          <MoreVertIcon sx={{ opacity: !data.length ? iconsOpacity : 1 }} />
         ),
       }}
       positionActionsColumn="last"
