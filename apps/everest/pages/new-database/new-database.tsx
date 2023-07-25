@@ -115,6 +115,7 @@ export const NewDatabasePage = () => {
                 disabled={firstStep}
                 onClick={handleBack}
                 sx={{ mr: 1 }}
+                data-testid="db-wizard-previous-button"
               >
                 {Messages.previous}
               </Button>
@@ -123,11 +124,12 @@ export const NewDatabasePage = () => {
                 <Button
                   onClick={methods.handleSubmit(onSubmit)}
                   variant="contained"
+                  data-testid="db-wizard-submit-button"
                 >
                   {Messages.createDatabase}
                 </Button>
               ) : (
-                <Button onClick={handleNext} variant="contained">
+                <Button onClick={handleNext} variant="contained" data-testid="db-wizard-continue-button">
                   {Messages.continue}
                 </Button>
               )}
