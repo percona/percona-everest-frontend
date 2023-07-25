@@ -18,7 +18,7 @@ export function Input({
       }}
       inputProps={{
         min: 0,
-        'data-testid': dataTestId
+        'data-testid': dataTestId,
       }}
       type="number"
       value={value ? value.toString() : value} // solve the leading zero problem from mui (https://github.com/mui/material-ui/issues/8380)
