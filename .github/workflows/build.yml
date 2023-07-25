@@ -12,11 +12,11 @@ jobs:
     steps:
       - name: Trigger dispatch in the main branch
         env:
-          EVEREST_GITHUB_TOKEN: ${{ secrets.EVEREST_GITHUB_TOKEN }}
+          ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         run: |
           curl -XPOST https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/build.yml/dispatches \
             -H 'Accept: application/vnd.github.everest-preview+json' \
             -H "Content-Type: application/json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            -u "${EVEREST_GITHUB_TOKEN}" \
+            -u "${ROBOT_TOKEN}" \
             --data '{"ref": "main"}' --fail-with-body
