@@ -1,3 +1,3 @@
 export const Messages = {
-    createDatabase: 'Create Database'
-}
+  createDatabase: 'Create Database',
+};

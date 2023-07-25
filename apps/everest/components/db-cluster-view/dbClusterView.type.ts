@@ -5,9 +5,9 @@ export interface DbClusterViewProps {
   customHeader: ReactNode;
 }
 export interface DbTypeIconProviderProps {
-    dbType: string;
-  }
+  dbType: string;
+}
 
-  export interface StatusProviderProps {
-    status: DbClusterStatus;
-  }
+export interface StatusProviderProps {
+  status: DbClusterStatus;
+}

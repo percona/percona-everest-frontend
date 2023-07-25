@@ -136,6 +136,8 @@ importers:
 
   ui-lib/icons/everest: {}
 
+  ui-lib/icons/status: {}
+
   ui-lib/input: {}
 
   ui-lib/labeled-content: {}
@@ -144,11 +146,9 @@ importers:
 
   ui-lib/stepper: {}
 
+  ui-lib/table: {}
+
   ui-lib/toggle-card: {}
-
-  ui/icons/status: {}
-
-  ui/table: {}
 
   utils/string: {}
 

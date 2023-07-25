@@ -1,4 +1,4 @@
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+/* eslint-disable react/prop-types */
 import FilterListIcon from '@mui/icons-material/FilterList';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -7,6 +7,7 @@ import ViewColumnIcon from '@mui/icons-material/ViewColumn';
 import { Alert } from '@mui/material';
 import { MaterialReactTable } from 'material-react-table';
 import React, { useEffect } from 'react';
+import { ICONS_OPACITY } from './table.constants';
 import { TableProps } from './table.types';
 
 export function Table<T extends Record<string, any>>(props: TableProps<T>) {
@@ -18,8 +19,6 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
     displayColumnDefOptions,
     noDataMessage,
   } = props;
-
-  const iconsOpacity = 0.5;
 
   const stopPropagation = (e: Event) => {
     e.stopPropagation();
@@ -60,7 +59,6 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
 
   return (
     <MaterialReactTable
-      {...props}
       renderEmptyRowsFallback={() => (
         <Alert
           severity="info"
@@ -75,32 +73,29 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
         </Alert>
       )}
       layoutMode="grid"
-      columns={columns}
-      data={data}
       enablePagination={data.length > 10}
       enableBottomToolbar={data.length > 10}
       enableDensityToggle={false}
       enableFullScreenToggle={false}
       enableSorting={!!data.length}
       icons={{
-        ExpandMoreIcon: (props) => <ExpandMoreIcon {...props} />,
-        KeyboardDoubleArrowDownIcon: (props) =>
+        KeyboardDoubleArrowDownIcon: (propsIcon) =>
           data.length ? (
-            <KeyboardDoubleArrowDownIcon {...props} />
+            <KeyboardDoubleArrowDownIcon {...propsIcon} />
           ) : (
-            <KeyboardDoubleArrowDownIcon sx={{ opacity: iconsOpacity }} />
+            <KeyboardDoubleArrowDownIcon sx={{ opacity: ICONS_OPACITY }} />
           ),
         SearchIcon: () => (
-          <SearchIcon sx={{ opacity: !data.length ? iconsOpacity : 1 }} />
+          <SearchIcon sx={{ opacity: !data.length ? ICONS_OPACITY : 1 }} />
         ),
         FilterListIcon: () => (
-          <FilterListIcon sx={{ opacity: !data.length ? iconsOpacity : 1 }} />
+          <FilterListIcon sx={{ opacity: !data.length ? ICONS_OPACITY : 1 }} />
         ),
         ViewColumnIcon: () => (
-          <ViewColumnIcon sx={{ opacity: !data.length ? iconsOpacity : 1 }} />
+          <ViewColumnIcon sx={{ opacity: !data.length ? ICONS_OPACITY : 1 }} />
         ),
         MoreVertIcon: () => (
-          <MoreVertIcon sx={{ opacity: !data.length ? iconsOpacity : 1 }} />
+          <MoreVertIcon sx={{ opacity: !data.length ? ICONS_OPACITY : 1 }} />
         ),
       }}
       positionActionsColumn="last"
@@ -138,6 +133,9 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
         },
         ...displayColumnDefOptions,
       }}
+      {...props}
+      columns={columns}
+      data={data}
     />
   );
 }
