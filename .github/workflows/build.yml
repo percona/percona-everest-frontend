@@ -11,8 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger dispatch in the main branch
+        env:
+          ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         run: |
-          curl -X POST https://api.github.com/repos/percona/percona-everest-backend/dispatches \
+          curl -X POST https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/build.yml/dispatches \
             -H 'Accept: application/vnd.github.everest-preview+json' \
-            -u ${{ secrets.ROBOT_TOKEN }} \
-            --data '{"event_type": "build_dev_latest"}'
+            -u ${ROBOT_TOKEN } \
+            --data '{"ref": "main"}'
