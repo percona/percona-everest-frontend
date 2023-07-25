@@ -14,7 +14,7 @@ jobs:
         env:
           EVEREST_GITHUB_TOKEN: ${{ secrets.EVEREST_GITHUB_TOKEN }}
         run: |
-          curl -X POST https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/5643486872/dispatches \
+          curl -X POST https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/.github/workflows/build.yml/dispatches \
             -H 'Accept: application/vnd.github.v3+json' \
             -H 'Authorization: Bearer ${EVEREST_GITHUB_TOKEN}' \
             -H "X-GitHub-Api-Version: 2022-11-28" \
