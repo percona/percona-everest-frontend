@@ -14,13 +14,8 @@ jobs:
         env:
           ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         run: |
-          curl -XGET https://api.github.com/repos/percona/percona-everest-backend/actions/workflows \
-            -H 'Accept: application/vnd.github+json' \
+          curl -XPOST https://api.github.com/repos/percona/percona-everest-backend/dispatches \
+            -H 'Accept: application/vnd.github.everest-preview+json' \
             -H "Content-Type: application/json" \
             -u "${ROBOT_TOKEN}" \
-          curl -XPOST https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/build.yml/dispatches \
-            -H 'Accept: application/vnd.github+json' \
-            -H "Content-Type: application/json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            -u "${ROBOT_TOKEN}" \
-            --data '{"ref": "main"}' --fail-with-body
+            --data '{"event_type": "build_dev_latest"}' --fail-with-body
