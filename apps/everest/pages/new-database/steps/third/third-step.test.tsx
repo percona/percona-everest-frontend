@@ -11,7 +11,7 @@ const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
       // pitrEnabled: true,
       // pitrTime: '60',
       storageLocation: 'S3',
-      selectTime: 'hours',
+      selectedTime: 'hours',
       minute: 0,
       hour: 12,
       amPm: 'AM',
@@ -126,7 +126,7 @@ describe('ThirdStep', () => {
     expect(
       screen.queryByTestId('select-input-time-numbers')
     ).toBeInTheDocument();
-    const selectTimeValue = screen.getByTestId('select-input-select-time');
+    const selectTimeValue = screen.getByTestId('select-input-selected-time');
     expect(selectTimeValue).toBeInTheDocument();
 
     fireEvent.change(selectTimeValue, { target: { value: 'hours' } });

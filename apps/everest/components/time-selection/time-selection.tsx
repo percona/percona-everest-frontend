@@ -20,7 +20,7 @@ export const TimeSelection = ({
   sxTimeFields,
 }: TimeSelectionProps) => {
   const { control, watch } = useFormContext();
-  const selectedTime: TimeValue = watch('selectTime');
+  const selectedTime: TimeValue = watch('selectedTime');
   const minute: number = watch('minute');
   const hour: number = watch('hour');
   const amPm: string = watch('amPm');
@@ -52,7 +52,7 @@ export const TimeSelection = ({
         }}
       >
         <SelectInput
-          name="selectTime"
+          name="selectedTime"
           control={control}
           selectFieldProps={{
             sx: { minWidth: '120px' },

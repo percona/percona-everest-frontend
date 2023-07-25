@@ -36,7 +36,7 @@ export interface TimeSelectionProps {
 }
 
 export type TimeProps = {
-  selectTime: TimeValue;
+  selectedTime: TimeValue;
   minute: number;
   hour: number;
   amPm: string;

@@ -19,7 +19,7 @@ export enum DbWizardFormFields {
   pitrEnabled = 'pitrEnabled',
   pitrTime = 'pitrTime',
   storageLocation = 'storageLocation',
-  selectTime = 'selectTime',
+  selectedTime = 'selectedTime',
   minute = 'minute',
   hour = 'hour',
   amPm = 'amPm',
@@ -80,7 +80,7 @@ const stepTwoSchema = z
 //             });
 //           }
 //         }),
-//     selectTime: z.nativeEnum(TimeValue),
+//     selectedTime: z.nativeEnum(TimeValue),
 //     minuteHour: z.number(),
 //     minute: z.number(),
 //     hour: z.number(),
