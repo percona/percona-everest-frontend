@@ -11,9 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger dispatch in the main branch
-        uses: percona-platform/gh-action-fork-benc-uk-workflow-dispatch@v1
-        with:
-          workflow: E2E
-          token: ${{ secrets.ROBOT_TOKEN }}
-          repo: percona/percona-everest-backend
-
+        run: |
+          curl -X POST https://api.github.com/repos/percona/percona-everest-backend/dispatches \
+            -H 'Accept: application/vnd.github.everest-preview+json' \
+            -u ${{ secrets.ROBOT_TOKEN }} \
+            --data '{"event_type": "build_dev_latest"}'
