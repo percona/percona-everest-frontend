@@ -122,6 +122,8 @@ importers:
 
   envs/percona-react-env: {}
 
+  ui-lib/card: {}
+
   ui-lib/db-toggle-card: {}
 
   ui-lib/form/inputs/select: {}

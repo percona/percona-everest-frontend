@@ -9,6 +9,19 @@
  */
 
 {
+    "card": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui-lib",
+        "mainFile": "index.ts",
+        "rootDir": "ui-lib/card",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
     "composition-viewer": {
         "scope": "percona.design",
         "version": "0.0.2",

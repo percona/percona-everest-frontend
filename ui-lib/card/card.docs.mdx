@@ -1,0 +1,32 @@
+---
+description: A Card component.
+---
+
+import { Card } from './card';
+
+This component is customized mui card with array of button props to work with actions
+
+### Component usage
+
+```js
+<Card
+    title="Card with actions"
+    content="Card with headline, content text as string and actions"
+    cardActions={[
+        { variant: 'contained', text: 'Send feedback', size: 'small' },
+        { variant: 'text', text: 'Cancel', size: 'small' },
+    ]}
+/>
+
+<Card
+    content={
+        <Box sx={{ backgroundColor: '#FFAADD' }}>
+            <p>Custom content as React Node</p>
+            <IconButton>
+                <Cached/>
+            </IconButton>
+        </Box>
+    }
+    title="Custom Content"
+/>
+```
