@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { CreateDBClusterPayload } from '../../api/dbClusterApi';
+import { GetDbClusterPayload } from '../../types/dbCluster.types';
 
 let kubernetesId;
 
@@ -39,16 +39,16 @@ test('Cluster creation', async ({ page, request }) => {
 
   expect(response.ok()).toBeTruthy();
   // TODO replace with correct payload typings from GET DB Clusters
-  const { items: clusters }: { items: CreateDBClusterPayload[] } = (await response.json());
+  const { items: clusters }: GetDbClusterPayload = (await response.json());
 
   const addedCluster = clusters.find((cluster) => cluster.metadata.name === clusterName);
 
   expect(addedCluster).not.toBeUndefined();
-  expect(addedCluster?.spec.engine.type).toBe('mongodb');
+  expect(addedCluster?.spec.engine.type).toBe('psmdb');
   expect(addedCluster?.spec.engine.replicas).toBe(2);
-  expect(addedCluster?.spec.engine.resources?.cpu).toBe(8);
-  expect(addedCluster?.spec.engine.resources?.memory).toBe(32);
-  expect(addedCluster?.spec.engine.storage.size).toBe(150);
+  expect(addedCluster?.spec.engine.resources?.cpu.toString()).toBe("8");
+  expect(addedCluster?.spec.engine.resources?.memory.toString()).toBe("32");
+  expect(addedCluster?.spec.engine.storage.size.toString()).toBe("150");
   expect(addedCluster?.spec.proxy.expose.type).toBe('external');
   expect(addedCluster?.spec.proxy.replicas).toBe(2);
   expect(addedCluster?.spec.proxy.expose.ipSourceRanges).toEqual(['192.168.1.1']);
