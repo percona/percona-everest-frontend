@@ -3,25 +3,33 @@ import { useQueries } from 'react-query';
 import { getDbClusters } from '../../api/dbClusterApi';
 import { K8Context } from '../../contexts/kubernetes/kubernetes.context';
 import { KubernetesCluster } from '../../types/kubernetes.types';
-import { DbCluster, DbClusterRaw } from './dbCluster.type';
+import { DbCluster, DbClusterRaw, DbClusterStatus } from './dbCluster.type';
 
 const mapRawDataToDbClusterModel = (
   items: DbClusterRaw[],
   cluster: KubernetesCluster
 ): DbCluster[] => {
-  return items.map((item) => ({
-    status: item.status.status,
-    dbType: item.spec.engine.type,
-    dbVersion: item.spec.engine.version,
-    backupsEnabled: item.spec.backup.enabled,
-    databaseName: item.metadata.name,
-    kubernetesCluster: cluster.name,
-    cpu: item.spec.engine.resources.cpu,
-    memory: item.spec.engine.resources.memory,
-    storage: item.spec.engine.storage.size,
-    hostName: item.status.hostname,
-    exposetype: item.spec.proxy.expose.type,
-  }));
+  return items.flatMap((item) => {
+    try {
+      return {
+        status: item.status ? item.status.status : DbClusterStatus.unknown,
+        dbType: item.spec.engine.type,
+        dbVersion: item.spec.engine.version,
+        backupsEnabled: !!item.spec.backup?.enabled,
+        databaseName: item.metadata.name,
+        kubernetesCluster: cluster.name,
+        cpu: item.spec.engine.resources.cpu,
+        memory: item.spec.engine.resources.memory,
+        storage: item.spec.engine.storage.size,
+        hostName: item.status ? item.status.hostname : '',
+        exposetype: item.spec.proxy.expose.type,
+      }
+    } catch {
+      // Better safe than sorry
+      // If anything breaks because a field's missing, just remove the element from the results
+      return [];
+    }
+  });
 };
 
 export const useDbClusters = () => {
