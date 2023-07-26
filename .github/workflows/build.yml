@@ -11,10 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger dispatch in the main branch
-        env:
-          ROBOT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           curl -XPOST https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/build.yml/dispatches \
-            -H 'Accept: application/vnd.github.v3+json' \
+            -H 'Accept: application/vnd.github+json' \
             -H 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-            --data '{"ref": "main"}' --fail-with-body
+            --data '{"inputs": {}, "ref": "main"}' --fail-with-body
