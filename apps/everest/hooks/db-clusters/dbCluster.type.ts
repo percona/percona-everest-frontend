@@ -1,7 +1,7 @@
 import { DbEngineType } from '../../types/dbEngines.types';
 
 export interface DbClusterRaw {
-  status: { status: DbClusterStatus; hostname: string };
+  status?: { status: DbClusterStatus; hostname: string };
   metadata: { name: string };
   spec: {
     proxy: {
@@ -9,7 +9,7 @@ export interface DbClusterRaw {
         type: ProxyExposeType;
       };
     };
-    backup: {
+    backup?: {
       enabled: boolean;
     };
     engine: {
