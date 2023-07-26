@@ -41,6 +41,7 @@
       "dependencies": {
         "@hookform/resolvers": "^3.1.0",
         "@mui/icons-material": "^5.11.16",
+        "@playwright/test": "^1.36.1",
         "@teambit/eslint-config-bit-react": "~0.0.367",
         "@typescript-eslint/eslint-plugin": "5.35.1",
         "axios": "^1.4.0",

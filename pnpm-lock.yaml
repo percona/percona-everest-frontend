@@ -28,6 +28,9 @@ importers:
       '@mui/utils':
         specifier: ^5.13.1
         version: registry.npmjs.org/@mui/utils@5.13.1(react@17.0.2)
+      '@playwright/test':
+        specifier: ^1.36.1
+        version: registry.npmjs.org/@playwright/test@1.36.1
       '@teambit/eslint-config-bit-react':
         specifier: ~0.0.367
         version: registry.npmjs.org/@teambit/eslint-config-bit-react@0.0.367(@teambit/legacy@node_modules+@teambit+legacy)(eslint-plugin-import@2.22.1)(eslint-plugin-jsx-a11y@6.4.1)(eslint-plugin-react@7.25.1)(react-dom@17.0.2)(react@17.0.2)
@@ -952,6 +955,19 @@ packages:
       fastq: registry.npmjs.org/fastq@1.15.0
     dev: false
 
+  registry.npmjs.org/@playwright/test@1.36.1:
+    resolution: {integrity: sha512-YK7yGWK0N3C2QInPU6iaf/L3N95dlGdbsezLya4n0ZCh3IL7VgPGxC6Gnznh9ApWdOmkJeleT2kMTcWPRZvzqg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/@playwright/test/-/test-1.36.1.tgz}
+    name: '@playwright/test'
+    version: 1.36.1
+    engines: {node: '>=16'}
+    hasBin: true
+    dependencies:
+      '@types/node': registry.npmjs.org/@types/node@12.20.4
+      playwright-core: registry.npmjs.org/playwright-core@1.36.1
+    optionalDependencies:
+      fsevents: registry.npmjs.org/fsevents@2.3.2
+    dev: false
+
   registry.npmjs.org/@popperjs/core@2.11.7:
     resolution: {integrity: sha512-Cr4OjIkipTtcXKjAsm8agyleBuDHvxzeBoa1v543lbv1YaIwQjESsVcmjiWiPEbC1FIeHOG/Op9kdCmAmiS3Kw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/@popperjs/core/-/core-2.11.7.tgz}
     name: '@popperjs/core'
@@ -1157,7 +1173,6 @@ packages:
     resolution: {integrity: sha512-xRCgeE0Q4pT5UZ189TJ3SpYuX/QGl6QIAOAIeDSbAVAd2gX1NxSZup4jNVK7cxIeP8KDSbJgcckun495isP1jQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/@types/node/-/node-12.20.4.tgz}
     name: '@types/node'
     version: 12.20.4
-    dev: true
 
   registry.npmjs.org/@types/parse-json@4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/@types/parse-json/-/parse-json-4.0.0.tgz}
@@ -2730,6 +2745,16 @@ packages:
     version: 1.0.0
     dev: false
 
+  registry.npmjs.org/fsevents@2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz}
+    name: fsevents
+    version: 2.3.2
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
   registry.npmjs.org/function-bind@1.1.1:
     resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/function-bind/-/function-bind-1.1.1.tgz}
     name: function-bind
@@ -3821,6 +3846,14 @@ packages:
     name: pify
     version: 2.3.0
     engines: {node: '>=0.10.0'}
+    dev: false
+
+  registry.npmjs.org/playwright-core@1.36.1:
+    resolution: {integrity: sha512-7+tmPuMcEW4xeCL9cp9KxmYpQYHKkyjwoXRnoeTowaeNat8PoBMk/HwCYhqkH2fRkshfKEOiVus/IhID2Pg8kg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/playwright-core/-/playwright-core-1.36.1.tgz}
+    name: playwright-core
+    version: 1.36.1
+    engines: {node: '>=16'}
+    hasBin: true
     dev: false
 
   registry.npmjs.org/pretty-format@26.6.2:

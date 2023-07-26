@@ -22,7 +22,7 @@ export const ToggleButtonGroupInput = ({
         {...field}
         fullWidth
         exclusive
-        data-testd={`toggle-button-group-input-${kebabize(name)}`}
+        data-testid={`toggle-button-group-input-${kebabize(name)}`}
         onChange={(
           event: React.MouseEvent<HTMLElement> | any,
           value: any
