@@ -1,8 +1,8 @@
 import { api } from './api';
-import { CreateDBClusterPayload } from '../types/dbCluster.types';
+import { DbCluster, GetDbClusterPayload } from '../types/dbCluster.types';
 
 export const createDbClusterFn = async (
-  data: CreateDBClusterPayload,
+  data: DbCluster,
   clusterId: string
 ) => {
   const response = await api.post(
@@ -10,5 +10,12 @@ export const createDbClusterFn = async (
     data
   );
 
+  return response.data;
+};
+
+export const getDbClusters = async (clusterId: string) => {
+  const response = await api.get<GetDbClusterPayload>(
+    `kubernetes/${clusterId}/database-clusters`
+  );
   return response.data;
 };

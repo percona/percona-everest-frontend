@@ -1,1 +1,8 @@
-export { MySqlIcon, MongoIcon, PostgreSqlIcon } from './db';
+export {
+  MongoIcon,
+  MongoLeafIcon,
+  MySqlDolphinIcon,
+  MySqlIcon,
+  PostgreSqlElephantIcon,
+  PostgreSqlIcon,
+} from './db';
