@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Trigger dispatch in the main branch
         run: |
+          curl -XGET https://api.github.com/repos/percona/percona-everest-backend/actions/workflows \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'Authorization: Bearer ${{ secrets.EVEREST_GITHUB_TOKEN }}' \
           curl -XPOST https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/build.yml/dispatches \
             -H 'Accept: application/vnd.github+json' \
             -H 'Authorization: Bearer ${{ secrets.EVEREST_GITHUB_TOKEN }}' \
