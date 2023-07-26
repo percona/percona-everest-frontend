@@ -19,7 +19,7 @@ permissions:
 
 jobs:
   tests:
-    name: UI Integration Tests
+    name: UI Tests
     runs-on: ubuntu-20.04
     env:
       # no `-mod=readonly` to test PRs made by @dependabot;
@@ -86,6 +86,14 @@ jobs:
         uses: actions/checkout@v3
         with:
           path: ./percona-everest-frontend
+          
+      - name: Checkout CLI repo
+        uses: percona-platform/checkout@v3
+        with:
+          repository: percona/percona-everest-cli
+          ref: 'main'
+          path: percona-everest-cli
+          token: $ROBOT_TOKEN
 
       - name: Checkout backend repo
         uses: percona-platform/checkout@v3
@@ -93,14 +101,6 @@ jobs:
           repository: percona/percona-everest-backend
           ref: 'main'
           path: percona-everest-backend
-          token: $ROBOT_TOKEN
-
-      - name: Checkout CLI repo
-        uses: percona-platform/checkout@v3
-        with:
-          repository: percona/percona-everest-cli
-          ref: 'main'
-          path: percona-everest-cli
           token: $ROBOT_TOKEN
 
       - name: Run Everest backend
@@ -115,7 +115,7 @@ jobs:
 
       - name: Run Provisioning
         run: |
-          cd percona-everest-cli
+          cd ${GITHUB_WORKSPACE}/percona-everest-cli
           go run cmd/everest/main.go install operators --backup.enable=false --everest.endpoint=http://127.0.0.1:8081 --monitoring.enable=false --name=minikube --operator.mongodb=true --operator.postgresql=true --operator.xtradb-cluster=true --skip-wizard --namespace test-everest
 
       - name: Build Everest
