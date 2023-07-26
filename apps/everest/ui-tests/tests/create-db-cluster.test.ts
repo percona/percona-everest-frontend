@@ -43,6 +43,9 @@ test('Cluster creation', async ({ page, request }) => {
 
   const addedCluster = clusters.find((cluster) => cluster.metadata.name === clusterName);
 
+  const deleteResponse = await request.delete(`/v1/kubernetes/${kubernetesId}/database-clusters/${addedCluster?.metadata.name}`);
+  expect(deleteResponse.ok()).toBeTruthy();
+
   expect(addedCluster).not.toBeUndefined();
   expect(addedCluster?.spec.engine.type).toBe('psmdb');
   expect(addedCluster?.spec.engine.replicas).toBe(2);
@@ -52,7 +55,4 @@ test('Cluster creation', async ({ page, request }) => {
   expect(addedCluster?.spec.proxy.expose.type).toBe('external');
   expect(addedCluster?.spec.proxy.replicas).toBe(2);
   expect(addedCluster?.spec.proxy.expose.ipSourceRanges).toEqual(['192.168.1.1']);
-
-  const deleteResponse = await request.delete(`/v1/kubernetes/${kubernetesId}/database-clusters/${addedCluster?.metadata.name}`);
-  expect(deleteResponse.ok()).toBeTruthy();
 });
