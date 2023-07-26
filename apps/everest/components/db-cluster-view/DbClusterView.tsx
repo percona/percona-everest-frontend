@@ -59,7 +59,9 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
       {
         accessorKey: 'backupsEnabled',
         header: 'Backups',
-        Cell: ({ cell }) => cell.getValue() ? 'Enabled' : 'Disabled',
+        filterVariant: 'checkbox',
+        accessorFn: (row) => (row.backupsEnabled ? 'true' : 'false'),
+        Cell: ({ cell }) => cell.getValue() === 'true' ? 'Enabled' : 'Disabled',
       },
       {
         accessorKey: 'kubernetesCluster',
