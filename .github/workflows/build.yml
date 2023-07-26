@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger dispatch in main branch
-        uses: .github/actions/dispatch-action
+        uses: ./.github/actions/dispatch-action
         with:
           workflow: Build
           token: ${{ secrets.EVEREST_GITHUB_TOKEN }}
