@@ -1,9 +1,8 @@
 import { UseMutationOptions, useMutation } from 'react-query';
-import { DbWizardType } from '../../pages/new-database/new-database.types';
-import {
-  createDbClusterFn,
-  CreateDBClusterPayload,
-} from '../../api/dbClusterApi';
+import { DbWizardType } from '../../../pages/new-database/new-database.types';
+import { DbCluster, ProxyExposeType } from '../../../types/dbCluster.types';
+import { dbTypeToDbEngine } from '../../../utils/db';
+import { createDbClusterFn } from '../../../api/dbClusterApi';
 // import {getCronExpressionFromFormValues} from "../../components/time-selection/time-selection.utils";
 // import {TimeValue, WeekDays} from "../../components/time-selection/time-selection.types";
 
@@ -11,12 +10,12 @@ type CreateDbClusterArgType = { dbPayload: DbWizardType; id: string };
 
 const formValuesToPayloadMapping = (
   dbPayload: DbWizardType
-): CreateDBClusterPayload => {
+): DbCluster => {
   // const { selectedTime, minute, hour, amPm, onDay, weekDay } = dbPayload;
   // const backupSchedule = getCronExpressionFromFormValues({selectedTime, minute, hour, amPm, onDay, weekDay});
 
   // TODO re-add payload after API is ready
-  const dbClusterPayload: CreateDBClusterPayload = {
+  const dbClusterPayload: DbCluster = {
     apiVersion: 'everest.percona.com/v1alpha1',
     kind: 'DatabaseCluster',
     metadata: {
@@ -37,7 +36,7 @@ const formValuesToPayloadMapping = (
       //   }),
       // },
       engine: {
-        type: dbPayload.dbType,
+        type: dbTypeToDbEngine(dbPayload.dbType),
         version: dbPayload.dbVersion,
         replicas: +dbPayload.numberOfNodes,
         resources: {
@@ -59,7 +58,7 @@ const formValuesToPayloadMapping = (
       proxy: {
         replicas: +dbPayload.numberOfNodes,
         expose: {
-          type: dbPayload.externalAccess ? 'external' : 'internal',
+          type: dbPayload.externalAccess ? ProxyExposeType.external : ProxyExposeType.internal,
           ...(!!dbPayload.externalAccess && dbPayload.sourceRange && {
             ipSourceRanges: [dbPayload.sourceRange],
           })

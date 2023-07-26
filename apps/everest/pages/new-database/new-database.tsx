@@ -20,8 +20,8 @@ import { dbWizardSchema, DbWizardType } from './new-database.types';
 import { steps } from './steps';
 
 import { SixthStep } from './steps/sixth/sixth-step';
-import { useCreateDbCluster } from '../../hooks/db-cluster/useDbCluster';
-import { useSelectedKubernetesCluster } from '../../hooks/kubernetesClusters/useSelectedKubernetesCluster';
+import { useCreateDbCluster } from '../../hooks/api/db-cluster/useDbCluster';
+import { useSelectedKubernetesCluster } from '../../hooks/api/kubernetesClusters/useSelectedKubernetesCluster';
 import { DatabasePreview } from './database-preview/database-preview';
 import { DB_WIZARD_DEFAULTS } from './new-database.constants';
 
@@ -42,9 +42,6 @@ export const NewDatabasePage = () => {
   const firstStep = activeStep === 0;
 
   const onSubmit: SubmitHandler<DbWizardType> = (data) => {
-    /* eslint-disable no-console */
-    // TODO based on data.dbType, get the engine from context and the desired proxy version, if needed
-    console.log(data);
     addDbCluster(
       { dbPayload: data, id },
       {

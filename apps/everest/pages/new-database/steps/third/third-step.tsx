@@ -6,7 +6,7 @@ import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
 import { Messages } from './third-step.messages';
 import { DbWizardFormFields } from '../../new-database.types';
 import { TimeSelection } from '../../../../components/time-selection/time-selection';
-import { useBackupStorages } from '../../../../hooks/backup-storages/useBackupStorages';
+import { useBackupStorages } from '../../../../hooks/api/backup-storages/useBackupStorages';
 
 export const ThirdStep = () => {
   const { control, watch } = useFormContext();
