@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Trigger dispatch in the main branch
         env:
-          ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
+          ROBOT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           curl -XPOST https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/build.yml/dispatches \
             -H 'Accept: application/vnd.github.v3+json' \
