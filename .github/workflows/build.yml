@@ -18,8 +18,8 @@ jobs:
         with:
           script: |
             github.rest.actions.createWorkflowDispatch({
-              owner: percona,
-              repo: percona-everest-backend,
+              owner: 'percona',
+              repo: 'percona-everest-backend',
               workflow_id: 'build.yml',
               ref: 'main',
             })
