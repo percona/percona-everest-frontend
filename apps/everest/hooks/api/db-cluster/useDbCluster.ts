@@ -1,9 +1,9 @@
 import { UseMutationOptions, useMutation } from 'react-query';
-import { DbWizardType } from '../../pages/new-database/new-database.types';
+import { DbWizardType } from '../../../pages/new-database/new-database.types';
 import {
   createDbClusterFn,
   CreateDBClusterPayload,
-} from '../../api/dbClusterApi';
+} from '../../../api/dbClusterApi';
 // import {getCronExpressionFromFormValues} from "../../components/time-selection/time-selection.utils";
 // import {TimeValue, WeekDays} from "../../components/time-selection/time-selection.types";
 

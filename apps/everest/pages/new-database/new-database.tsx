@@ -20,8 +20,8 @@ import { dbWizardSchema, DbWizardType } from './new-database.types';
 import { steps } from './steps';
 
 import { SixthStep } from './steps/sixth/sixth-step';
-import { useCreateDbCluster } from '../../hooks/db-cluster/useDbCluster';
-import { useSelectedKubernetesCluster } from '../../hooks/kubernetesClusters/useSelectedKubernetesCluster';
+import { useCreateDbCluster } from '../../hooks/api/db-cluster/useDbCluster';
+import { useSelectedKubernetesCluster } from '../../hooks/api/kubernetesClusters/useSelectedKubernetesCluster';
 import { DatabasePreview } from './database-preview/database-preview';
 import { DB_WIZARD_DEFAULTS } from './new-database.constants';
 
