@@ -4,6 +4,7 @@ import { Table } from '@percona/ui-lib.table';
 import { type MRT_Cell, type MRT_ColumnDef } from 'material-react-table';
 import React, { useCallback, useMemo, useState } from 'react';
 import { LabelValue } from '../../../components/db-cluster-view/expandedRow/LabelValue';
+import { CreateEditModalStorage } from './createEditModal/createEditModalStorage';
 
 interface StorageLocation {
   name: string;
@@ -128,74 +129,77 @@ export const StorageLocations = () => {
     []
   );
   return (
-    <Table
-      state={{
-        columnVisibility: {
-          description: false,
-          endpoint: false,
-          accessKey: false,
-          secretKey: false,
-        },
-      }}
-      columns={columns}
-      data={data}
-      enableRowActions
-      renderRowActionMenuItems={({ table, row }) => [
-        <MenuItem
-          key={0}
-          onClick={() => {
-            table.setEditingRow(row);
-          }}
-          sx={{ m: 0, display: 'flex', gap: 1 }}
-        >
-          <Edit /> Edit
-        </MenuItem>,
-        <MenuItem
-          key={1}
-          onClick={() => {}}
-          sx={{ m: 0, display: 'flex', gap: 1 }}
-        >
-          <Delete />
-          Delete
-        </MenuItem>,
-        <MenuItem
-          key={2}
-          onClick={() => {}}
-          sx={{ m: 0, display: 'flex', gap: 1 }}
-        >
-          <AutoAwesome /> Set as default
-        </MenuItem>,
-      ]}
-      onEditingRowSave={() => {}}
-      renderDetailPanel={({ row }) => (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'start',
-            alignItems: 'start',
-            gap: '50px',
-          }}
-        >
-          <Box>
-            <LabelValue label="Endpoit" value={row.original.endpoint} />
-            {row.original.description && (
-              <LabelValue
-                label="Description"
-                value={row.original.description}
-              />
-            )}
+    <>
+      <Table
+        state={{
+          columnVisibility: {
+            description: false,
+            endpoint: false,
+            accessKey: false,
+            secretKey: false,
+          },
+        }}
+        columns={columns}
+        data={data}
+        enableRowActions
+        renderRowActionMenuItems={({ table, row }) => [
+          <MenuItem
+            key={0}
+            onClick={() => {
+              table.setEditingRow(row);
+            }}
+            sx={{ m: 0, display: 'flex', gap: 1 }}
+          >
+            <Edit /> Edit
+          </MenuItem>,
+          <MenuItem
+            key={1}
+            onClick={() => {}}
+            sx={{ m: 0, display: 'flex', gap: 1 }}
+          >
+            <Delete />
+            Delete
+          </MenuItem>,
+          <MenuItem
+            key={2}
+            onClick={() => {}}
+            sx={{ m: 0, display: 'flex', gap: 1 }}
+          >
+            <AutoAwesome /> Set as default
+          </MenuItem>,
+        ]}
+        onEditingRowSave={() => {}}
+        renderDetailPanel={({ row }) => (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'start',
+              alignItems: 'start',
+              gap: '50px',
+            }}
+          >
+            <Box>
+              <LabelValue label="Endpoit" value={row.original.endpoint} />
+              {row.original.description && (
+                <LabelValue
+                  label="Description"
+                  value={row.original.description}
+                />
+              )}
+            </Box>
+            <Box>
+              <LabelValue label="Access key" value={row.original.accessKey} />
+              <LabelValue label="Secret key" value={row.original.secretKey} />
+            </Box>
           </Box>
-          <Box>
-            <LabelValue label="Access key" value={row.original.accessKey} />
-            <LabelValue label="Secret key" value={row.original.secretKey} />
-          </Box>
-        </Box>
-      )}
-      renderTopToolbarCustomActions={() => (
-        <Button size="small" startIcon={<Add />} variant="outlined">
-          Add storage location
-        </Button>
-      )}
-    />
+        )}
+        renderTopToolbarCustomActions={() => (
+          <Button size="small" startIcon={<Add />} variant="outlined">
+            Add storage location
+          </Button>
+        )}
+      />
+      <CreateEditModalStorage />
+    </>
   );
 };
