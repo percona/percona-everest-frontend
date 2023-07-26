@@ -24,7 +24,7 @@ import { DbWizardFormFields } from '../../new-database.types';
 export const SecondStep = () => {
   const { control, watch, setValue } = useFormContext();
 
-  // TODO should be set from api
+  // TODO should be set from api https://jira.percona.com/browse/EVEREST-172
   const totalSizes = {
     cpu: 32,
     memory: 40,
@@ -51,13 +51,16 @@ export const SecondStep = () => {
   const memoryCapacityExceeded = memory > totalSizes.memory;
   const diskCapacityExceeded = disk > totalSizes.disk;
 
-  const alertLabels = [];
+  const alertLabels: string[] = [];
+
   if (cpuCapacityExceeded) {
     alertLabels.push(Messages.labels.cpu);
   }
+
   if (memoryCapacityExceeded) {
     alertLabels.push(Messages.labels.memory);
   }
+
   if (diskCapacityExceeded) {
     alertLabels.push(Messages.labels.disk);
   }

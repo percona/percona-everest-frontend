@@ -1,2 +1,31 @@
-export const IP_REGEX =
-  /^([0-9]{1,3}\.){3}[0-9]{1,3}(\/([0-9]|[1-2][0-9]|3[0-2]))?$/;
+import { DbType } from '@percona/ui-lib.db-toggle-card';
+import { DbWizardFormFields } from './new-database.types';
+import { DEFAULT_SIZES } from './steps/second/second-step.const';
+import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
+
+// TODO re-add steps after API is ready
+export const DB_WIZARD_DEFAULTS = {
+  // [DbWizardFormFields.backupsEnabled]: true,
+  // [DbWizardFormFields.pitrEnabled]: true,
+  // [DbWizardFormFields.pitrTime]: '60',
+  // [DbWizardFormFields.storageLocation]: '',
+  // [DbWizardFormFields.selectedTime]: TimeValue.hours,
+  // [DbWizardFormFields.minute]: 0,
+  // [DbWizardFormFields.hour]: 12,
+  // [DbWizardFormFields.amPm]: AmPM.AM,
+  // [DbWizardFormFields.weekDay]: WeekDays.Mo,
+  // [DbWizardFormFields.onDay]: 1,
+  [DbWizardFormFields.dbType]: DbType.Mysql,
+  [DbWizardFormFields.dbName]: '',
+  [DbWizardFormFields.dbVersion]: '',
+  [DbWizardFormFields.externalAccess]: false,
+  // [DbWizardFormFields.internetFacing]: true,
+  [DbWizardFormFields.sourceRange]: '',
+  [DbWizardFormFields.monitoring]: false,
+  // [DbWizardFormFields.endpoint]: '',
+  [DbWizardFormFields.numberOfNodes]: NumberOfNodes.oneNode,
+  [DbWizardFormFields.resourceSizePerNode]: ResourceSize.small,
+  [DbWizardFormFields.cpu]: DEFAULT_SIZES.small.cpu,
+  [DbWizardFormFields.disk]: DEFAULT_SIZES.small.disk,
+  [DbWizardFormFields.memory]: DEFAULT_SIZES.small.memory,
+};

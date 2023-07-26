@@ -33,11 +33,13 @@ export const SwitchOutlinedBox = ({
   const isLaptop = useMediaQuery(theme.breakpoints.down('lg'));
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const labelComponent = label || (labelHeader || labelDescription ? (
-    <Label labelHeader={labelHeader} labelDescription={labelDescription} />
-  ) : (
-    <></>
-  ));
+  const labelComponent =
+    label ||
+    (labelHeader || labelDescription ? (
+      <Label labelHeader={labelHeader} labelDescription={labelDescription} />
+    ) : (
+      <></>
+    ));
 
   return children ? (
     <Box

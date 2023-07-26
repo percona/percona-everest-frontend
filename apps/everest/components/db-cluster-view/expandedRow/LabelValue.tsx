@@ -11,7 +11,7 @@ export const LabelValue = ({
   return (
     <Box sx={{ display: 'flex' }}>
       <Box sx={{ width: '140px', fontWeight: 'bold' }}>{label}</Box>
-      <Box sx={{ width: '200px' }}>{value}</Box>
+      <Box sx={{ minWidth: '200px' }}>{value}</Box>
     </Box>
   );
 };

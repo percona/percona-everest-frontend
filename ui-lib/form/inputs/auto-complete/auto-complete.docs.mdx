@@ -1,0 +1,22 @@
+---
+description: AutoCompleteInput component.
+---
+
+A wrapper around MUI's AutoComplete and RHF's controller. MUI's TextField is used for renderInput method.
+
+### Component usage
+```js
+const methods = useForm({ defaultValues: { person: '' } });
+
+<AutoCompleteInput
+  name="person"
+  control={methods.control}
+  label="Person"
+  loading={isFetching}
+  options={[{ name: 'John', age: 20 }, { name: 'Ana', age: 22 }]}
+  autoCompleteProps={{
+    isOptionEqualToValue: (option, value) => option.id === value.id,
+    getOptionLabel: (option) => typeof option === 'string' ? option : option.name,
+  }}
+/>
+```

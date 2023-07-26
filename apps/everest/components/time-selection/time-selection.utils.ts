@@ -1,3 +1,4 @@
+// import { CronTime } from 'cron-time-generator';
 import { Messages } from './time-selection.messages';
 import { TimeValue } from './time-selection.types';
 
@@ -7,8 +8,6 @@ export const addZeroToSingleDigit = (value: number) => {
 
 export const getTimeText = (
   selectedTime: TimeValue,
-  timeNumbers: number,
-  minuteHour: number,
   hour: number,
   minute: number,
   amPm: string,
@@ -18,13 +17,30 @@ export const getTimeText = (
   const minuteWithZero = addZeroToSingleDigit(minute);
 
   if (selectedTime === TimeValue.days) {
-    return `${timeNumbers} ${Messages.getTimeText.days} ${hour}:${minuteWithZero}${amPm}.`;
+    return `${Messages.getTimeText.days} ${hour}:${minuteWithZero}${amPm}.`;
   }
   if (selectedTime === TimeValue.weeks) {
-    return `${timeNumbers} ${Messages.getTimeText.weeks} ${weekDay}, ${Messages.at} ${hour}:${minuteWithZero}${amPm}.`;
+    return `${Messages.getTimeText.weeks} ${weekDay}, ${Messages.at} ${hour}:${minuteWithZero}${amPm}.`;
   }
   if (selectedTime === TimeValue.months) {
-    return `${timeNumbers} ${Messages.getTimeText.months} ${onDay} ${Messages.at} ${hour}:${minuteWithZero}${amPm}.`;
+    return `${Messages.getTimeText.months} ${onDay} ${Messages.at} ${hour}:${minuteWithZero}${amPm}.`;
   }
-  return `${timeNumbers} ${Messages.getTimeText.hours} ${minuteHour}.`;
+  return `${Messages.getTimeText.hours} ${minute}.`;
 };
+
+// export const getCronExpressionFromFormValues = (timeProps: TimeProps): string => {
+//   const { minute, hour, amPm, onDay, weekDay, selectedTime } = timeProps;
+//   const hour24 = amPm === AmPM.PM ? (hour === 12 ? 0 : hour + 12) : hour;
+//   switch (selectedTime) {
+//     case TimeValue.hours:
+//       return CronTime.everyHourAt(minute);
+//     case TimeValue.days:
+//       return CronTime.everyDayAt(hour24, minute);
+//     case TimeValue.weeks:
+//       return CronTime.onSpecificDaysAt([weekDay], hour24, minute);
+//     case TimeValue.months:
+//       return CronTime.everyMonthOn(onDay, hour24, minute);
+//     default:
+//       return CronTime.everyHourAt(5);
+//   }
+// };

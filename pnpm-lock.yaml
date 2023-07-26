@@ -43,6 +43,9 @@ importers:
       core-js:
         specifier: ^3.0.0
         version: registry.npmjs.org/core-js@3.30.2
+      cron-time-generator:
+        specifier: ^2.0.0
+        version: registry.npmjs.org/cron-time-generator@2.0.0
       css-mediaquery:
         specifier: ^0.1.2
         version: registry.npmjs.org/css-mediaquery@0.1.2
@@ -123,6 +126,8 @@ importers:
   envs/percona-react-env: {}
 
   ui-lib/db-toggle-card: {}
+
+  ui-lib/form/inputs/auto-complete: {}
 
   ui-lib/form/inputs/select: {}
 
@@ -1993,6 +1998,12 @@ packages:
       parse-json: registry.npmjs.org/parse-json@5.2.0
       path-type: registry.npmjs.org/path-type@4.0.0
       yaml: registry.npmjs.org/yaml@1.10.2
+    dev: false
+
+  registry.npmjs.org/cron-time-generator@2.0.0:
+    resolution: {integrity: sha512-s38Fzmh7C6MgFT+EzgYcMNmm5iMivN9o8CzUTmrxmMtoqOf4dUW6AeulTzGRLAnIOyWF8Ho+uh7lZRSyaH6ttA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/cron-time-generator/-/cron-time-generator-2.0.0.tgz}
+    name: cron-time-generator
+    version: 2.0.0
     dev: false
 
   registry.npmjs.org/css-mediaquery@0.1.2:
