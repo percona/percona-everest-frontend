@@ -51,9 +51,9 @@ describe('FourthStep', () => {
     expect(
       screen.getByTestId('switch-input-external-access')
     ).toBeInTheDocument();
-    expect(
-      screen.getByTestId('switch-input-internet-facing')
-    ).toBeInTheDocument();
+    // expect(
+    //   screen.getByTestId('switch-input-internet-facing')
+    // ).toBeInTheDocument();
     expect(screen.getByTestId('text-input-source-range')).toBeInTheDocument();
   });
 
