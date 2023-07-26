@@ -22,7 +22,7 @@ jobs:
           ref: PMM-7-test
           inputs: |
             {
-              "repo": "${{ github.repository }}",
+              "repo": "${{ github.repository }}"
             }
 
       - name: Get workflow
