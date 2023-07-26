@@ -13,6 +13,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Trigger with gh script
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.actions.createWorkflowDispatch({
+              owner: percona,
+              repo: percona-everest-backend,
+              workflow_id: 'build.yml',
+              ref: 'main',
+            })
+
       - name: Trigger dispatch using action
         uses: ./.github/actions/dispatch-action
         with:
