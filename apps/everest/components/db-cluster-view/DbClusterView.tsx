@@ -5,7 +5,7 @@ import {
   PauseCircleOutline,
   RestartAlt,
 } from '@mui/icons-material';
-import { Box, MenuItem, Stack } from '@mui/material';
+import { Box, MenuItem, Stack, capitalize } from '@mui/material';
 import { Table } from '@percona/ui-lib.table';
 import { type MRT_ColumnDef } from 'material-react-table';
 import React, { useMemo } from 'react';
@@ -16,6 +16,8 @@ import { DbClusterViewProps } from './dbClusterView.type';
 import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
 import { StatusProvider } from './statusProvider/StatusProvider';
+import { DbClusterStatus } from '../../types/dbCluster.types';
+import { beautifyDbClusterStatus } from './DbClusterView.utils';
 
 export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
   const { combinedData, loadingAllClusters } = useDbClusters();
@@ -24,7 +26,10 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
     () => [
       {
         accessorKey: 'status',
+        accessorFn: ({ status }) => beautifyDbClusterStatus(status),
         header: 'Status',
+        filterVariant: 'multi-select',
+        filterSelectOptions: Object.values(DbClusterStatus).map((status) => beautifyDbClusterStatus(status)),
         Cell: ({ row }) => (
           <Stack
             direction="row"
