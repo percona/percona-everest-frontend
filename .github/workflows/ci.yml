@@ -1,0 +1,131 @@
+---
+name: CI
+on:
+  schedule:
+    - cron: "0 12 * * 0"
+  push:
+    branches:
+      - main
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+*
+  pull_request:
+
+permissions:
+  contents: read
+  packages: write
+  checks: write
+  pull-requests: write
+  repository-projects: read
+
+jobs:
+  tests:
+    name: UI Integration Tests
+    runs-on: ubuntu-20.04
+    env:
+      # no `-mod=readonly` to test PRs made by @dependabot;
+      # `git diff --exit-code` step below still checks what we need
+      GOPRIVATE: github.com/percona,github.com/percona/everest-operator
+      PERCONA_VERSION_SERVICE_URL: https://check-dev.percona.com/versions/v1
+      ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
+      BIT_TOKEN: ${{ secrets.BIT_TOKEN }}
+    strategy:
+      matrix:
+        node-version: [16.x]
+        go-version: [1.20.x]
+    steps:
+      - name: Run with Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Bit Version Manager 
+        run: npm i -g @teambit/bvm
+
+      - name: Install latest Bit version 
+        run: bvm install
+
+      - name: add bvm bin folder to path
+        run: echo "$HOME/bin" >> $GITHUB_PATH
+
+      - name: Set up bit config
+        run: bit config set user.token $BIT_TOKEN
+
+      - name: Set up Go release
+        uses: percona-platform/setup-go@v4
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Set GO_VERSION environment variable
+        run: |
+          go version
+          echo "GO_VERSION=$(go version)" >> $GITHUB_ENV
+
+      - name: Enable Go modules cache
+        uses: percona-platform/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ matrix.os }}-go-${{ matrix.go-version }}-modules-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ matrix.os }}-go-${{ matrix.go-version }}-modules-
+
+      - name: Enable Go build cache
+        uses: percona-platform/cache@v3
+        with:
+          path: ~/.cache/go-build
+          key: ${{ matrix.os }}-go-${{ matrix.go-version }}-build-${{ github.ref }}-${{ hashFiles('**') }}
+          restore-keys: |
+            ${{ matrix.os }}-go-${{ matrix.go-version }}-build-${{ github.ref }}-
+            ${{ matrix.os }}-go-${{ matrix.go-version }}-build-
+
+      - name: Checkout FE code
+        uses: actions/checkout@v3
+        with:
+          path: ./percona-everest-frontend
+
+      - name: Checkout backend repo
+        uses: percona-platform/checkout@v3
+        with:
+          repository: percona/percona-everest-backend
+          ref: 'main'
+          path: percona-everest-backend
+          ssh-key: $ROBOT_TOKEN
+
+      - name: Checkout CLI repo
+        uses: percona-platform/checkout@v3
+        with:
+          repository: percona/percona-everest-cli
+          ref: 'main'
+          path: percona-everest-cli
+          ssh-key: $ROBOT_TOKEN
+
+      - name: Run Everest backend
+        run: |
+          cd ${GITHUB_WORKSPACE}/percona-everest-backend
+          make init
+          make local-env-up
+          make run-debug &
+
+      - name: Create KIND cluster
+        uses: helm/kind-action@v1.8.0
+
+      - name: Configure git for private modules
+        env:
+          ROBOT_TOKEN: $ROBOT_TOKEN
+        run: git config --global url."https://percona-platform-robot:${ROBOT_TOKEN}@github.com".insteadOf "https://github.com"
+
+      - name: Run Provisioning
+        run: |
+          cd percona-everest-cli
+          go run cmd/everest/main.go install operators --backup.enable=false --everest.endpoint=http://127.0.0.1:8081 --monitoring.enable=false --name=minikube --operator.mongodb=true --operator.postgresql=true --operator.xtradb-cluster=true --skip-wizard --namespace test-everest
+
+      - name: Build Everest
+        run: |
+          cd ${GITHUB_WORKSPACE}/percona-everest-frontend
+          bit build everest
+
+      - name: Run integration tests
+        run: |
+          bit install
+          bit run everest &
+          cd apps/everest/ui-tests
+          npx playwright test
