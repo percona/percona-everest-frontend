@@ -16,7 +16,7 @@ jobs:
       - name: Trigger dispatch using action
         uses: ./.github/actions/dispatch-action
         with:
-          workflow: Build
+          workflow: 62945358
           token: ${{ secrets.EVEREST_GITHUB_TOKEN }}
           repo: percona/percona-everest-backend
           ref: PMM-7-test
