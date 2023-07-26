@@ -121,11 +121,11 @@ jobs:
       - name: Build Everest
         run: |
           cd ${GITHUB_WORKSPACE}/percona-everest-frontend
+          bit install
           bit build everest
 
       - name: Run integration tests
         run: |
-          bit install
           bit run everest &
           cd apps/everest/ui-tests
           npx playwright test
