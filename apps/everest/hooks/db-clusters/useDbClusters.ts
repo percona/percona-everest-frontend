@@ -11,7 +11,7 @@ const mapRawDataToDbClusterModel = (
 ): DbCluster[] => {
   return items.flatMap((item) => {
     try {
-      return {
+      return [{
         status: item.status ? item.status.status : DbClusterStatus.unknown,
         dbType: item.spec.engine.type,
         dbVersion: item.spec.engine.version,
@@ -23,7 +23,7 @@ const mapRawDataToDbClusterModel = (
         storage: item.spec.engine.storage.size,
         hostName: item.status ? item.status.hostname : '',
         exposetype: item.spec.proxy.expose.type,
-      }
+      }]
     } catch {
       // Better safe than sorry
       // If anything breaks because a field's missing, just remove the element from the results
