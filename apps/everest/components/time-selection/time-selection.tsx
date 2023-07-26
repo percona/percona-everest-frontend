@@ -1,9 +1,13 @@
-import { Alert, Box, MenuItem, OutlinedInput } from '@mui/material';
+import { Alert, Box, MenuItem } from '@mui/material';
 import React, { useMemo } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { Messages } from './time-selection.messages';
-import { TimeSelectionProps, TimeValue } from './time-selection.types';
+import {
+  TimeSelectionProps,
+  TimeValue,
+  timeValueHumanized,
+} from './time-selection.types';
 import { getTimeText } from './time-selection.utils';
 import { HoursField } from './fields/hours-field';
 import { MonthsField } from './fields/months-field';
@@ -16,9 +20,7 @@ export const TimeSelection = ({
   sxTimeFields,
 }: TimeSelectionProps) => {
   const { control, watch } = useFormContext();
-  const selectedTime: TimeValue = watch('selectTime');
-  const timeNumbers: number = watch('timeNumbers');
-  const minuteHour: number = watch('minuteHour');
+  const selectedTime: TimeValue = watch('selectedTime');
   const minute: number = watch('minute');
   const hour: number = watch('hour');
   const amPm: string = watch('amPm');
@@ -27,17 +29,15 @@ export const TimeSelection = ({
 
   const timeInfoText = useMemo(
     () =>
-      getTimeText(
+      showInfoAlert ? getTimeText(
         selectedTime,
-        timeNumbers,
-        minuteHour,
         hour,
         minute,
         amPm,
         weekDay,
         onDay
-      ),
-    [selectedTime, timeNumbers, minuteHour, hour, minute, amPm, weekDay, onDay]
+      ): '',
+    [selectedTime, hour, minute, amPm, weekDay, onDay, showInfoAlert]
   );
 
   return (
@@ -51,37 +51,8 @@ export const TimeSelection = ({
           ...sx,
         }}
       >
-        <Controller
-          control={control}
-          name="timeNumbers"
-          render={({ field }) => (
-            <OutlinedInput
-              {...field}
-              sx={{ width: '80px' }}
-              type="number"
-              inputProps={{
-                'data-testid': 'select-input-time-numbers',
-              }}
-              onChange={(e) => {
-                const v = e.target.value;
-                if (v !== '' && Number(v) < 1) {
-                  field.onChange('1');
-                } else {
-                  field.onChange(v);
-                }
-              }}
-              onBlur={(e) => {
-                field.onBlur();
-                const v = e.target.value;
-                if (v === '') {
-                  field.onChange('1');
-                }
-              }}
-            />
-          )}
-        />
         <SelectInput
-          name="selectTime"
+          name="selectedTime"
           control={control}
           selectFieldProps={{
             sx: { minWidth: '120px' },
@@ -89,7 +60,7 @@ export const TimeSelection = ({
         >
           {Object.values(TimeValue).map((value) => (
             <MenuItem key={value} value={value}>
-              {value}
+              {timeValueHumanized[value]}
             </MenuItem>
           ))}
         </SelectInput>

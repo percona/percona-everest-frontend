@@ -12,5 +12,8 @@ export const Messages = {
     dbName: {
       tooLong: 'The database name is too long',
     },
+    storageLocation: {
+      invalid: 'Invalid storage location',
+    }
   },
 };

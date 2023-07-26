@@ -41,6 +41,19 @@
         "mainFile": "index.ts",
         "rootDir": "apps/everest"
     },
+    "form/inputs/auto-complete": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui-lib",
+        "mainFile": "index.ts",
+        "rootDir": "ui-lib/form/inputs/auto-complete",
+        "config": {
+            "teambit.envs/envs": {
+                "env": "percona.envs/percona-react-env"
+            },
+            "percona.envs/percona-react-env": {}
+        }
+    },
     "form/inputs/select": {
         "scope": "",
         "version": "",
@@ -105,6 +118,19 @@
         "mainFile": "index.ts",
         "rootDir": "ui-lib/icons/everest"
     },
+    "icons/status": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui-lib",
+        "mainFile": "index.ts",
+        "rootDir": "ui-lib/icons/status",
+        "config": {
+            "teambit.envs/envs": {
+                "env": "percona.envs/percona-react-env"
+            },
+            "percona.envs/percona-react-env": {}
+        }
+    },
     "input": {
         "scope": "percona.ui-lib",
         "version": "0.0.1",
@@ -148,6 +174,19 @@
         "defaultScope": "percona.utils",
         "mainFile": "index.ts",
         "rootDir": "utils/string",
+        "config": {
+            "teambit.envs/envs": {
+                "env": "percona.envs/percona-react-env"
+            },
+            "percona.envs/percona-react-env": {}
+        }
+    },
+    "table": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui-lib",
+        "mainFile": "index.ts",
+        "rootDir": "ui-lib/table",
         "config": {
             "teambit.envs/envs": {
                 "env": "percona.envs/percona-react-env"

@@ -7,7 +7,12 @@ import { previewSections } from './sections';
 import { Messages } from './database.preview.messages';
 import { PreviewSection } from './preview-section';
 
-export const DatabasePreview = ({ activeStep, onSectionEdit = () => {}, sx, ...stackProps }: DatabasePreviewProps) => {
+export const DatabasePreview = ({
+  activeStep,
+  onSectionEdit = () => {},
+  sx,
+  ...stackProps
+}: DatabasePreviewProps) => {
   const { getValues } = useFormContext<DbWizardType>();
   const [longestAchievedStep, setLongestAchievedStep] = useState(activeStep);
 
@@ -26,9 +31,7 @@ export const DatabasePreview = ({ activeStep, onSectionEdit = () => {}, sx, ...s
 
   return (
     <Stack sx={{ pr: 2, pl: 2, ...sx }} {...stackProps}>
-      <Typography variant='overline'>
-        {Messages.title}
-      </Typography>
+      <Typography variant="overline">{Messages.title}</Typography>
       <Stack>
         {previewSections.map((Section, idx) => (
           // The array is static, we can disable the rule
@@ -41,7 +44,7 @@ export const DatabasePreview = ({ activeStep, onSectionEdit = () => {}, sx, ...s
               active={activeStep === idx}
               onEditClick={() => onSectionEdit(idx + 1)}
               sx={{
-                mt: idx === 0 ? 2 : 0
+                mt: idx === 0 ? 2 : 0,
               }}
             >
               <Section {...values} />
@@ -51,4 +54,4 @@ export const DatabasePreview = ({ activeStep, onSectionEdit = () => {}, sx, ...s
       </Stack>
     </Stack>
   );
-}
+};

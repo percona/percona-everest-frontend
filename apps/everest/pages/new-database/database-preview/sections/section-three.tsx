@@ -1,6 +1,10 @@
-import React from "react";
-import { PreviewContentText } from "../preview-section";
+import React from 'react';
+import { PreviewContentText } from '../preview-section';
+import { SectionProps } from './section.types';
+import { getTimeSelectionPreviewMessage } from '../database.preview.messages';
 
-export const PreviewSectionThree = () => (
-  <PreviewContentText text='Daily at 1 AM' />
-)
+export const PreviewSectionThree = (sectionProps: SectionProps) => {
+  return (
+    <PreviewContentText text={getTimeSelectionPreviewMessage(sectionProps)} />
+  );
+};

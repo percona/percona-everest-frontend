@@ -30,11 +30,11 @@ export const FourthStep = () => {
         />
         {externalAccess && (
           <>
-            <SwitchInput
+            {/* <SwitchInput
               control={control}
               label={Messages.internetFacing}
               name={DbWizardFormFields.internetFacing}
-            />
+            /> */}
             <TextInput
               name={DbWizardFormFields.sourceRange}
               control={control}

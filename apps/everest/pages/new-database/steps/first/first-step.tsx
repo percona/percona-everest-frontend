@@ -53,7 +53,9 @@ export const FirstStep = () => {
     const dbName = getValues(DbWizardFormFields.dbName);
 
     if (!dbName) {
-      setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`, { shouldValidate: true });
+      setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`, {
+        shouldValidate: true,
+      });
     }
 
     const newVersions = dbEngines.find((engine) => engine.type === dbEngine);

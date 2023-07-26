@@ -13,7 +13,7 @@ export const HoursField = () => {
       {/* @ts-ignore */}
       <Typography variant="sectionHeading">{Messages.onMinute}</Typography>
       <SelectInput
-        name="minuteHour"
+        name="minute"
         control={control}
         selectFieldProps={{
           sx: { minWidth: '80px' },
