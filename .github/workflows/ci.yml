@@ -38,6 +38,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Configure git for private modules
+        env:
+          ROBOT_TOKEN: $ROBOT_TOKEN
+        run: git config --global url."https://percona-platform-robot:${ROBOT_TOKEN}@github.com".insteadOf "https://github.com"
+
       - name: Install Bit Version Manager 
         run: npm i -g @teambit/bvm
 
@@ -107,11 +112,6 @@ jobs:
 
       - name: Create KIND cluster
         uses: helm/kind-action@v1.8.0
-
-      - name: Configure git for private modules
-        env:
-          ROBOT_TOKEN: $ROBOT_TOKEN
-        run: git config --global url."https://percona-platform-robot:${ROBOT_TOKEN}@github.com".insteadOf "https://github.com"
 
       - name: Run Provisioning
         run: |
