@@ -1,3 +1,4 @@
+import { DatabaseClusterList } from '../hooks/db-clusters/dbCluster.type';
 import { api } from './api';
 
 interface Schedule {
@@ -33,9 +34,9 @@ interface Engine {
 interface Proxy {
   replicas: number;
   expose: {
-    type: 'internal' | 'external',
-    ipSourceRanges?: string[],
-  }
+    type: 'internal' | 'external';
+    ipSourceRanges?: string[];
+  };
 }
 interface Spec {
   backup?: Backup;
@@ -60,5 +61,12 @@ export const createDbClusterFn = async (
     data
   );
 
+  return response.data;
+};
+
+export const getDbClusters = async (clusterId: string) => {
+  const response = await api.get<DatabaseClusterList>(
+    `kubernetes/${clusterId}/database-clusters`
+  );
   return response.data;
 };
