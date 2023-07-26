@@ -20,10 +20,9 @@ jobs:
     
       - name: Trigger dispatch in percona-platform
         run: |
-          curl -XPOST -v https://api.github.com/repos/percona-platform/cicd/actions/workflows/ci.yml/dispatches \
+          curl -XGET https://api.github.com/repos/percona-platform/cicd/actions/workflows \
             -H 'Accept: application/vnd.github+json' \
             -H 'Authorization: token ${{ secrets.EVEREST_GITHUB_TOKEN }}' \
-            --data '{"inputs": { "repo": "${{ github.repository }}" }, "ref": "main"}' --fail-with-body
       - name: Trigger dispatch in the main branch
         run: |
           curl -XPOST -v https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/62945358/dispatches \
