@@ -1,4 +1,4 @@
-import { StorageType } from "../../../types/backupStorages.types";
+import { StorageType } from "../../../../types/backupStorages.types";
 
 export const useBackupStorages = () => ({
   data: [{

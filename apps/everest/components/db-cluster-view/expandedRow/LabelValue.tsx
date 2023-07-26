@@ -6,7 +6,7 @@ export const LabelValue = ({
   value,
 }: {
   label: string;
-  value: string;
+  value: string | number;
 }) => {
   return (
     <Box sx={{ display: 'flex' }}>

@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
 import { KubernetesContextType } from './kubernetes.context.types';
-import { useKubernetesClusters } from '../../hooks/kubernetesClusters/useKubernetesClusters';
+import { useKubernetesClusters } from '../../hooks/api/kubernetesClusters/useKubernetesClusters';
 
 export const K8Context = createContext<KubernetesContextType>({});
 

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, UseMutationOptions } from "react-query"
-import { createBackupStorageFn, getBackupStoragesFn } from "../../api/backupStorage"
-import { BackupStorage, CreateBackupStoragePayload, GetBackupStoragesPayload } from "../../types/backupStorages.types"
+import { createBackupStorageFn, getBackupStoragesFn } from "../../../api/backupStorage"
+import { BackupStorage, CreateBackupStoragePayload, GetBackupStoragesPayload } from "../../../types/backupStorages.types"
 
 export const useBackupStorages = () => {
   return useQuery<GetBackupStoragesPayload, unknown, BackupStorage[]>('backupStorages', () => getBackupStoragesFn())
