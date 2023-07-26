@@ -24,6 +24,7 @@ export const BasicTable = () => {
 
   return (
     <Table
+      noDataMessage='No data'
       columns={columns}
       data={data}
       enableRowActions
