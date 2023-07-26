@@ -1,17 +1,17 @@
-import { DbType } from "@percona/ui-lib.db-toggle-card";
-import { MongoIcon, MySqlIcon, PostgreSqlIcon } from "@percona/ui-lib.icons.db";
-import { DbEngineType } from "../types/dbEngines.types";
+import { DbType } from '@percona/ui-lib.db-toggle-card';
+import { MongoIcon, MySqlIcon, PostgreSqlIcon } from '@percona/ui-lib.icons.db';
+import { DbEngineType } from '../types/dbEngines.types';
 
 export const dbEngineToDbType = (dbEngine: DbEngineType): DbType => {
   switch (dbEngine) {
     case DbEngineType.PSMDB:
-      return DbType.Mongo
+      return DbType.Mongo;
     case DbEngineType.PXC:
       return DbType.Mysql;
     default:
       return DbType.Postresql;
   }
-}
+};
 
 export const dbTypeToDbEngine = (dbType: DbType): DbEngineType => {
   switch (dbType) {
@@ -22,7 +22,7 @@ export const dbTypeToDbEngine = (dbType: DbType): DbEngineType => {
     default:
       return DbEngineType.POSTGRESQL;
   }
-}
+};
 
 export const dbTypeToIcon = (dbType: DbType) => {
   switch (dbType) {
@@ -33,7 +33,7 @@ export const dbTypeToIcon = (dbType: DbType) => {
     default:
       return PostgreSqlIcon;
   }
-}
+};
 
 export const beautifyDbTypeName = (dbType: DbType): string => {
   switch (dbType) {
@@ -44,4 +44,4 @@ export const beautifyDbTypeName = (dbType: DbType): string => {
     default:
       return 'PostgreSQL';
   }
-}
+};

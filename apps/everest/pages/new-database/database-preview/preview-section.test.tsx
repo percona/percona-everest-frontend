@@ -7,7 +7,9 @@ describe('PreviewSection', () => {
   it('should show order number and title', () => {
     render(
       <TestWrapper>
-        <PreviewSection title='My title' order={2}>Some text</PreviewSection>
+        <PreviewSection title="My title" order={2}>
+          Some text
+        </PreviewSection>
       </TestWrapper>
     );
 
@@ -17,7 +19,9 @@ describe('PreviewSection', () => {
   it('should not show content by default', () => {
     render(
       <TestWrapper>
-        <PreviewSection title='My title' order={2}>Some text</PreviewSection>
+        <PreviewSection title="My title" order={2}>
+          Some text
+        </PreviewSection>
       </TestWrapper>
     );
 
@@ -27,7 +31,9 @@ describe('PreviewSection', () => {
   it('should not show edit icon by default', () => {
     render(
       <TestWrapper>
-        <PreviewSection title='My title' order={2}>Some text</PreviewSection>
+        <PreviewSection title="My title" order={2}>
+          Some text
+        </PreviewSection>
       </TestWrapper>
     );
 
@@ -37,7 +43,9 @@ describe('PreviewSection', () => {
   it('should show content only when hasBeenReach is true', () => {
     render(
       <TestWrapper>
-        <PreviewSection title='My title' order={2} hasBeenReached>Some text</PreviewSection>
+        <PreviewSection title="My title" order={2} hasBeenReached>
+          Some text
+        </PreviewSection>
       </TestWrapper>
     );
 
@@ -47,7 +55,9 @@ describe('PreviewSection', () => {
   it('should show edit icon when it has been reached, but not active', () => {
     render(
       <TestWrapper>
-        <PreviewSection title='My title' order={2} hasBeenReached>Some text</PreviewSection>
+        <PreviewSection title="My title" order={2} hasBeenReached>
+          Some text
+        </PreviewSection>
       </TestWrapper>
     );
 
@@ -57,7 +67,9 @@ describe('PreviewSection', () => {
   it('should not show edit icon when active', () => {
     render(
       <TestWrapper>
-        <PreviewSection title='My title' order={2} hasBeenReached active>Some text</PreviewSection>
+        <PreviewSection title="My title" order={2} hasBeenReached active>
+          Some text
+        </PreviewSection>
       </TestWrapper>
     );
 
@@ -69,7 +81,14 @@ describe('PreviewSection', () => {
 
     render(
       <TestWrapper>
-        <PreviewSection onEditClick={cb} title='My title' order={2} hasBeenReached>Some text</PreviewSection>
+        <PreviewSection
+          onEditClick={cb}
+          title="My title"
+          order={2}
+          hasBeenReached
+        >
+          Some text
+        </PreviewSection>
       </TestWrapper>
     );
 

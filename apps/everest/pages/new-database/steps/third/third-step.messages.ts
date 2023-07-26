@@ -4,7 +4,7 @@ export const Messages = {
     'Specify how often you want to run backup jobs for your database.',
   enableBackups: 'Enable backups',
   storageLocation: 'Storage location',
-  repeatsEvery: 'Repeats every',
+  repeatsEvery: 'Repeats',
   enablePitr: 'Enable PITR',
   pitr: 'Point-in-time Recovery (PITR)',
   captionPitr:

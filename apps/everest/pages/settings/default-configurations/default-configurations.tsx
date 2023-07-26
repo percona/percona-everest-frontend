@@ -37,13 +37,12 @@ export const DefaultConfigurations = () => {
     resolver: zodResolver(defaultConfigurationsSchema),
     defaultValues: {
       // TODO get from api =>
+      // TODO CRON for api should be used as getCronExpressionFromFormValues({selectedTime, minute, hour, amPm, onDay, weekDay})
       [DefaultConfigurationsFields.monitoring]: false,
       [DefaultConfigurationsFields.backupsEnabled]: false,
       [DefaultConfigurationsFields.externalAccess]: false,
-      [DefaultConfigurationsFields.timeNumbers]: '1',
-      [DefaultConfigurationsFields.selectTime]: TimeValue.hours,
+      [DefaultConfigurationsFields.selectedTime]: TimeValue.hours,
       [DefaultConfigurationsFields.minute]: 0,
-      [DefaultConfigurationsFields.minuteHour]: 0,
       [DefaultConfigurationsFields.hour]: 12,
       [DefaultConfigurationsFields.amPm]: AmPM.AM,
       [DefaultConfigurationsFields.weekDay]: WeekDays.Mo,
@@ -107,6 +106,7 @@ export const DefaultConfigurations = () => {
                 <>
                   <Typography
                     sx={{ whiteSpace: 'pre' }}
+                    /* @ts-ignore */
                     variant="sectionHeading"
                   >
                     {Messages.repeatsEvery}
