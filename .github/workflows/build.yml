@@ -10,16 +10,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger
+      - name: Get workflow
         run: |
           curl -L \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.EVEREST_GITHUB_TOKEN }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/62945358 --fail-with-body
+            
       - name: Trigger dispatch in the main branch
         run: |
-          curl -X POST -v https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/62945358/dispatches \
+          curl -XPOST -v https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/62945358/dispatches \
             -H 'Accept: application/vnd.github+json' \
             -H 'Authorization: token ${{ secrets.EVEREST_GITHUB_TOKEN }}' \
             --data '{"inputs": { "repo": "${{ github.repository }}" }, "ref": "PMM-7-test"}' --fail-with-body
