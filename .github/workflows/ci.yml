@@ -80,6 +80,12 @@ jobs:
           bit install --recurring-install
           bit build everest
 
+      - name: Run Everest
+        run: |
+          cd ${GITHUB_WORKSPACE}/percona-everest-frontend
+          bit run everest &
+          sleep 30s
+
       - name: Set up Go release
         uses: percona-platform/setup-go@v4
         with:
@@ -124,7 +130,5 @@ jobs:
 
       - name: Run integration tests
         run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-frontend
-          bit run everest
-          cd apps/everest/ui-tests
+          cd ${GITHUB_WORKSPACE}/percona-everest-frontend/apps/everest/ui-tests
           npx playwright test
