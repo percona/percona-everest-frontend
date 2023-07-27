@@ -61,11 +61,11 @@ export const FirstStep = () => {
     const newVersions = dbEngines.find((engine) => engine.type === dbEngine);
 
     // Safety check
-    if (!newVersions || !newVersions.availableVersions.backup.length) {
+    if (!newVersions || !newVersions.availableVersions.engine.length) {
       return;
     }
 
-    const recommendedVersion = newVersions.availableVersions.backup.find(
+    const recommendedVersion = newVersions.availableVersions.engine.find(
       (version) => version.status === DbEngineToolStatus.RECOMMENDED
     );
 
@@ -73,7 +73,7 @@ export const FirstStep = () => {
       DbWizardFormFields.dbVersion,
       recommendedVersion
         ? recommendedVersion.version
-        : newVersions.availableVersions.backup[0].version
+        : newVersions.availableVersions.engine[0].version
     );
     setDbVersions(newVersions);
   }, [dbType, dbEngines]);
@@ -159,7 +159,7 @@ export const FirstStep = () => {
           name={DbWizardFormFields.dbVersion}
           label={Messages.labels.dbVersion}
         >
-          {dbVersions?.availableVersions.backup.map((version) => (
+          {dbVersions?.availableVersions.engine.map((version) => (
             <MenuItem value={version.version} key={version.version}>
               {version.version}
             </MenuItem>
