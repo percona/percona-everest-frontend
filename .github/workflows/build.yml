@@ -1,7 +1,6 @@
 name: Build and push dev-latest image
 
 on:
-  pull_request:
   push:
     branches:
       - main
@@ -15,4 +14,4 @@ jobs:
           curl -XPOST -v https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/62945358/dispatches \
             -H 'Accept: application/vnd.github.v3+json' \
             -H 'Authorization: token ${{ secrets.ROBOT_TOKEN }}' \
-            --data '{"inputs": { "start": "true" }, "ref": "main"}' --fail-with-body
+            --data '{"ref": "main"}' --fail-with-body
