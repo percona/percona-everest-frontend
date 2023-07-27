@@ -28,7 +28,7 @@ jobs:
         uses: ./.github/actions/dispatch-action
         with:
           workflow: 62945358
-          token: ${{ secrets.EVEREST_GITHUB_TOKEN }}
+          token: ${{ secrets.ROBOT_TOKEN }}
           repo: percona/percona-everest-backend
           ref: PMM-7-test
           inputs: |
