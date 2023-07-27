@@ -24,7 +24,7 @@ jobs:
     env:
       # no `-mod=readonly` to test PRs made by @dependabot;
       # `git diff --exit-code` step below still checks what we need
-      GOPRIVATE: github.com/percona,github.com/percona/everest-operator
+      GOPRIVATE: github.com/percona,github.com/percona/percona-everest-backend,github.com/percona/percona-everest-cli,github.com/percona/everest-operator
       PERCONA_VERSION_SERVICE_URL: https://check-dev.percona.com/versions/v1
       ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
       BIT_TOKEN: ${{ secrets.BIT_TOKEN }}
@@ -42,6 +42,34 @@ jobs:
         env:
           ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         run: git config --global url."https://percona-platform-robot:${ROBOT_TOKEN}@github.com".insteadOf "https://github.com"
+
+      - name: Checkout FE code
+        uses: actions/checkout@v3
+        with:
+          path: ./percona-everest-frontend
+          
+      - name: Checkout CLI repo
+        uses: percona-platform/checkout@v3
+        with:
+          repository: percona/percona-everest-cli
+          ref: 'main'
+          path: percona-everest-cli
+          token: ${{ secrets.ROBOT_TOKEN }}
+
+      - name: Checkout backend repo
+        uses: percona-platform/checkout@v3
+        with:
+          repository: percona/percona-everest-backend
+          ref: 'main'
+          path: percona-everest-backend
+          token: $ROBOT_TOKEN
+
+      - name: Run Everest backend
+        run: |
+          cd ${GITHUB_WORKSPACE}/percona-everest-backend
+          make init
+          make local-env-up
+          make run-debug &
 
       - name: Install Bit Version Manager 
         run: npm i -g @teambit/bvm
@@ -81,34 +109,6 @@ jobs:
           restore-keys: |
             ${{ matrix.os }}-go-${{ matrix.go-version }}-build-${{ github.ref }}-
             ${{ matrix.os }}-go-${{ matrix.go-version }}-build-
-
-      - name: Checkout FE code
-        uses: actions/checkout@v3
-        with:
-          path: ./percona-everest-frontend
-          
-      - name: Checkout CLI repo
-        uses: percona-platform/checkout@v3
-        with:
-          repository: percona/percona-everest-cli
-          ref: 'main'
-          path: percona-everest-cli
-          token: $ROBOT_TOKEN
-
-      - name: Checkout backend repo
-        uses: percona-platform/checkout@v3
-        with:
-          repository: percona/percona-everest-backend
-          ref: 'main'
-          path: percona-everest-backend
-          token: $ROBOT_TOKEN
-
-      - name: Run Everest backend
-        run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-backend
-          make init
-          make local-env-up
-          make run-debug &
 
       - name: Create KIND cluster
         uses: helm/kind-action@v1.8.0
