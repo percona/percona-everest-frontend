@@ -5,7 +5,7 @@ import { TestWrapper } from '../../../../utils/test';
 import { ThirdStep } from './third-step';
 import { TimeValue } from '../../../../components/time-selection/time-selection.types';
 
-jest.mock('../../../../hooks/backup-storages/useBackupStorages');
+jest.mock('../../../../hooks/api/backup-storages/useBackupStorages');
 
 const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
   const methods = useForm({

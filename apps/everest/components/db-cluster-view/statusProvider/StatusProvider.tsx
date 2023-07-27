@@ -6,62 +6,27 @@ import {
   UknownIcon,
 } from '@percona/ui-lib.icons.status';
 import React from 'react';
-import { DbClusterStatus } from '../../../hooks/db-clusters/dbCluster.type';
-import { Messages } from '../dbClusterView.messages';
+import { SvgIconProps } from '@mui/material';
 import { StatusProviderProps } from '../dbClusterView.type';
+import { DbClusterStatus } from '../../../types/dbCluster.types';
+import { beautifyDbClusterStatus } from '../DbClusterView.utils';
+
+const DB_CLUSTER_STATUS_TO_STATUS_PROVIDER: Record<DbClusterStatus, (props: SvgIconProps) => React.JSX.Element> = {
+  [DbClusterStatus.ready]: SuccessIcon,
+  [DbClusterStatus.error]: ErrorIcon,
+  [DbClusterStatus.initializing]: PendingIcon,
+  [DbClusterStatus.pausing]: PendingIcon,
+  [DbClusterStatus.paused]: PausedIcon,
+  [DbClusterStatus.stopping]: PendingIcon,
+  [DbClusterStatus.unknown]: UknownIcon,
+}
 
 export const StatusProvider = ({ status }: StatusProviderProps) => {
-  switch (status) {
-    case DbClusterStatus.ready:
-      return (
-        <>
-          <SuccessIcon />
-          {Messages.statusProvider.up}
-        </>
-      );
-    case DbClusterStatus.error:
-      return (
-        <>
-          <ErrorIcon />
-          {Messages.statusProvider.down}
-        </>
-      );
-    case DbClusterStatus.initializing:
-      return (
-        <>
-          <PendingIcon />
-          {Messages.statusProvider.initializing}
-        </>
-      );
-    case DbClusterStatus.pausing:
-      return (
-        <>
-          <PendingIcon />
-          {Messages.statusProvider.pausing}
-        </>
-      );
-    case DbClusterStatus.stopping:
-      return (
-        <>
-          <PendingIcon />
-          {Messages.statusProvider.stopping}
-        </>
-      );
-    case DbClusterStatus.paused:
-      return (
-        <>
-          <PausedIcon />
-          {Messages.statusProvider.paused}
-        </>
-      );
-    case DbClusterStatus.unknown:
-      return (
-        <>
-          <UknownIcon />
-          {Messages.statusProvider.unknown}
-        </>
-      );
-    default:
-      return null;
-  }
-};
+  const MappedIcon = DB_CLUSTER_STATUS_TO_STATUS_PROVIDER[status] || null;
+  return (
+    <>
+      <MappedIcon />
+      {beautifyDbClusterStatus(status)}
+    </>
+  );
+}
