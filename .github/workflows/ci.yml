@@ -32,8 +32,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          path: ./percona-everest-frontend
 
       - uses: pnpm/action-setup@v2
         with:
@@ -44,7 +42,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-          cache-dependency-path: ${GITHUB_WORKSPACE}/percona-everest-frontend
 
       - name: Install Bit
         run: make install-bit
@@ -70,6 +67,7 @@ jobs:
           file_pattern: ':(exclude)pnpm-lock.yaml'
   tests:
     name: Tests
+    needs: lint
     runs-on: ubuntu-20.04
     if: "!contains(github.event.head_commit.message, '--skip-ci')"
     env:
@@ -110,6 +108,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
+          cache-dependency-path: ${GITHUB_WORKSPACE}/percona-everest-frontend
 
       - name: Configure git for private modules
         env:
