@@ -67,7 +67,6 @@ jobs:
           file_pattern: ':(exclude)pnpm-lock.yaml'
   tests:
     name: Tests
-    needs: lint
     runs-on: ubuntu-20.04
     if: "!contains(github.event.head_commit.message, '--skip-ci')"
     env:
@@ -108,7 +107,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-          cache-dependency-path: ${GITHUB_WORKSPACE}/percona-everest-frontend
+          cache-dependency-path: ${GITHUB_WORKSPACE}/percona-everest-frontend/pnpm-lock.yaml
 
       - name: Configure git for private modules
         env:
