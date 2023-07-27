@@ -1,7 +1,6 @@
 name: Build and push dev-latest image
 
 on:
-  pull_request:
   push:
     branches:
       - main
@@ -10,48 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-          #- name: Trigger with gh script
-          #  uses: actions/github-script@v6
-          #  with:
-          #    script: |
-          #      github.rest.actions.createWorkflowDispatch({
-          #        owner: 'percona',
-          #        repo: 'percona-everest-backend',
-          #        workflow_id: 'build.yml',
-          #        ref: 'main',
-          #      })
-
-          #- name: Trigger dispatch using action
-          #  uses: ./.github/actions/dispatch-action
-          #  with:
-          #    workflow: 62945358
-          #    token: ${{ secrets.EVEREST_GITHUB_TOKEN }}
-          #    repo: percona/percona-everest-backend
-          #    ref: PMM-7-test
-          #    inputs: |
-          #      {
-          #        "repo": "${{ github.repository }}"
-          #      }
-
-      - name: Get workflow
-        run: |
-          curl -L \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.EVEREST_GITHUB_TOKEN }}" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/62945358 --fail-with-body
-
-      - name: Trigger dispatch in percona-platform
-        run: |
-          curl -XGET https://api.github.com/repos/percona-platform/cicd/actions/workflows \
-            -H 'Accept: application/vnd.github+json' \
-            -H 'Authorization: token ${{ secrets.EVEREST_GITHUB_TOKEN }}' \
       - name: Trigger dispatch in the main branch
         run: |
           curl -XPOST -v https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/62945358/dispatches \
             -H 'Accept: application/vnd.github+json' \
             -H 'Authorization: token ${{ secrets.EVEREST_GITHUB_TOKEN }}' \
-            --data '{"inputs": { "start": "true" }, "ref": "PMM-7-test"}' --fail-with-body
+            --data '{"inputs": { "start": "true" }, "ref": "main"}' --fail-with-body
