@@ -32,6 +32,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          path: ./percona-everest-frontend
 
       - uses: pnpm/action-setup@v2
         with:
@@ -42,7 +44,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-          cache-dependency-path: '.'
+          cache-dependency-path: ${GITHUB_WORKSPACE}/percona-everest-frontend
 
       - name: Install Bit
         run: make install-bit
