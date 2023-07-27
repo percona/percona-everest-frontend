@@ -62,7 +62,7 @@ jobs:
           repository: percona/percona-everest-backend
           ref: 'main'
           path: percona-everest-backend
-          token: $ROBOT_TOKEN
+          token: ${{ secrets.ROBOT_TOKEN }}
 
       - name: Run Everest backend
         run: |
