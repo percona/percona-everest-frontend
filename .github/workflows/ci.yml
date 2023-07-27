@@ -33,11 +33,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run with Node 16
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Use Node
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Install Bit
         run: make install-bit
@@ -73,17 +77,6 @@ jobs:
         node-version: [16.x]
         go-version: [1.20.x]
     steps:
-      - name: Run with Node 16
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-
-      - name: Configure git for private modules
-        env:
-          ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
-        run: git config --global url."https://percona-platform-robot:${ROBOT_TOKEN}@github.com".insteadOf "https://github.com"
-
       - name: Checkout FE code
         uses: actions/checkout@v3
         with:
@@ -104,6 +97,21 @@ jobs:
           ref: 'main'
           path: percona-everest-backend
           token: ${{ secrets.ROBOT_TOKEN }}
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Run with Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Configure git for private modules
+        env:
+          ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
+        run: git config --global url."https://percona-platform-robot:${ROBOT_TOKEN}@github.com".insteadOf "https://github.com"
 
       - name: Install Bit
         run: |
