@@ -54,4 +54,4 @@ jobs:
           curl -XPOST -v https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/62945358/dispatches \
             -H 'Accept: application/vnd.github+json' \
             -H 'Authorization: token ${{ secrets.EVEREST_GITHUB_TOKEN }}' \
-            --data '{"inputs": { "repo": "${{ github.repository }}" }, "ref": "PMM-7-test"}' --fail-with-body
+            --data '{"inputs": { "start": "true" }, "ref": "PMM-7-test"}' --fail-with-body
