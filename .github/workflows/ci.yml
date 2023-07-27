@@ -125,6 +125,6 @@ jobs:
       - name: Run integration tests
         run: |
           cd ${GITHUB_WORKSPACE}/percona-everest-frontend
-          bit run everest &
+          bit run everest
           cd apps/everest/ui-tests
           npx playwright test
