@@ -3,16 +3,22 @@ import {
   MySqlDolphinIcon,
   PostgreSqlElephantIcon,
 } from '@percona/ui-lib.icons.db';
+import { DbType } from '@percona/ui-lib.db-toggle-card';
 import React from 'react';
 import { DbTypeIconProviderProps } from '../dbClusterView.type';
+import { DbEngineType } from '../../../types/dbEngines.types';
 
 export const DbTypeIconProvider = ({ dbType }: DbTypeIconProviderProps) => {
+  // In case users sent db type instead of engine
   switch (dbType) {
-    case 'pxc':
+    case DbEngineType.PXC:
+    case DbType.Mysql:
       return <MySqlDolphinIcon />;
-    case 'psmdb':
+    case DbEngineType.PSMDB:
+    case DbType.Mongo:
       return <MongoLeafIcon />;
-    case 'postgresql':
+    case DbEngineType.POSTGRESQL:
+    case DbType.Postresql:
       return <PostgreSqlElephantIcon />;
     default:
       return null;

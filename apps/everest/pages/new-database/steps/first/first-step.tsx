@@ -8,7 +8,7 @@ import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { useFormContext } from 'react-hook-form';
 import { Messages } from './first-step.messages';
 import { generateShortUID } from './utils';
-import { useDbEngines } from '../../../../hooks/db-engines/useDbEngines';
+import { useDbEngines } from '../../../../hooks/api/db-engines/useDbEngines';
 import { dbEngineToDbType, dbTypeToDbEngine } from '../../../../utils/db';
 import { DbWizardFormFields } from '../../new-database.types';
 import { DbEngineToolStatus } from '../../../../types/dbEngines.types';
@@ -72,8 +72,8 @@ export const FirstStep = () => {
     setValue(
       DbWizardFormFields.dbVersion,
       recommendedVersion
-        ? recommendedVersion.imagePath
-        : newVersions.availableVersions.backup[0].imagePath
+        ? recommendedVersion.version
+        : newVersions.availableVersions.backup[0].version
     );
     setDbVersions(newVersions);
   }, [dbType, dbEngines]);
@@ -160,8 +160,8 @@ export const FirstStep = () => {
           label={Messages.labels.dbVersion}
         >
           {dbVersions?.availableVersions.backup.map((version) => (
-            <MenuItem value={version.imagePath} key={version.imagePath}>
-              {version.imagePath}
+            <MenuItem value={version.version} key={version.version}>
+              {version.version}
             </MenuItem>
           ))}
         </SelectInput>

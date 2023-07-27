@@ -20,8 +20,8 @@ import { dbWizardSchema, DbWizardType } from './new-database.types';
 import { steps } from './steps';
 
 import { SixthStep } from './steps/sixth/sixth-step';
-import { useCreateDbCluster } from '../../hooks/db-cluster/useDbCluster';
-import { useSelectedKubernetesCluster } from '../../hooks/kubernetesClusters/useSelectedKubernetesCluster';
+import { useCreateDbCluster } from '../../hooks/api/db-cluster/useDbCluster';
+import { useSelectedKubernetesCluster } from '../../hooks/api/kubernetesClusters/useSelectedKubernetesCluster';
 import { DatabasePreview } from './database-preview/database-preview';
 import { DB_WIZARD_DEFAULTS } from './new-database.constants';
 
@@ -42,9 +42,6 @@ export const NewDatabasePage = () => {
   const firstStep = activeStep === 0;
 
   const onSubmit: SubmitHandler<DbWizardType> = (data) => {
-    /* eslint-disable no-console */
-    // TODO based on data.dbType, get the engine from context and the desired proxy version, if needed
-    console.log(data);
     addDbCluster(
       { dbPayload: data, id },
       {
@@ -115,6 +112,7 @@ export const NewDatabasePage = () => {
                 disabled={firstStep}
                 onClick={handleBack}
                 sx={{ mr: 1 }}
+                data-testid="db-wizard-previous-button"
               >
                 {Messages.previous}
               </Button>
@@ -123,11 +121,12 @@ export const NewDatabasePage = () => {
                 <Button
                   onClick={methods.handleSubmit(onSubmit)}
                   variant="contained"
+                  data-testid="db-wizard-submit-button"
                 >
                   {Messages.createDatabase}
                 </Button>
               ) : (
-                <Button onClick={handleNext} variant="contained">
+                <Button onClick={handleNext} variant="contained" data-testid="db-wizard-continue-button">
                   {Messages.continue}
                 </Button>
               )}

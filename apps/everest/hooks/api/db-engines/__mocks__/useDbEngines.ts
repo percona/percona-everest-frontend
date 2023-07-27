@@ -3,7 +3,7 @@ import {
   DbEngineStatus,
   DbEngineToolStatus,
   DbEngineType,
-} from '../../../types/dbEngines.types';
+} from '../../../../types/dbEngines.types';
 
 export const useDbEngines = (): { isFetching: boolean; data: DbEngine[] } => ({
   data: [

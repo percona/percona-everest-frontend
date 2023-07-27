@@ -1,59 +1,8 @@
-import { DatabaseClusterList } from '../hooks/db-clusters/dbCluster.type';
 import { api } from './api';
-
-interface Schedule {
-  enabled: boolean;
-  name: string;
-  objectStorageName: string;
-  retentionCopies?: number;
-  schedule: string;
-}
-interface Backup {
-  enabled: boolean;
-  schedules?: Array<Schedule>;
-}
-
-interface Resources {
-  cpu: number;
-  memory: number;
-}
-
-interface Storage {
-  class?: string;
-  size: number;
-}
-
-interface Engine {
-  replicas: number;
-  resources?: Resources;
-  storage: Storage;
-  type: string;
-  version?: string;
-}
-
-interface Proxy {
-  replicas: number;
-  expose: {
-    type: 'internal' | 'external';
-    ipSourceRanges?: string[];
-  };
-}
-interface Spec {
-  backup?: Backup;
-  engine: Engine;
-  proxy: Proxy;
-}
-export interface CreateDBClusterPayload {
-  apiVersion: string;
-  kind: 'DatabaseCluster';
-  metadata: {
-    name: string;
-  };
-  spec: Spec;
-}
+import { DbCluster, GetDbClusterPayload } from '../types/dbCluster.types';
 
 export const createDbClusterFn = async (
-  data: CreateDBClusterPayload,
+  data: DbCluster,
   clusterId: string
 ) => {
   const response = await api.post(
@@ -65,7 +14,7 @@ export const createDbClusterFn = async (
 };
 
 export const getDbClusters = async (clusterId: string) => {
-  const response = await api.get<DatabaseClusterList>(
+  const response = await api.get<GetDbClusterPayload>(
     `kubernetes/${clusterId}/database-clusters`
   );
   return response.data;

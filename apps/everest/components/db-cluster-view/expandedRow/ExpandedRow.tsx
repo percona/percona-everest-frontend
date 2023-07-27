@@ -2,13 +2,13 @@ import { Box, Typography } from '@mui/material';
 import { MRT_Row } from 'material-react-table';
 import React from 'react';
 import {
-  DbCluster,
-  ProxyExposeType,
-} from '../../../hooks/db-clusters/dbCluster.type';
+  DbClusterTableElement,
+} from '../../../hooks/api/db-clusters/dbCluster.type';
+import { ProxyExposeType } from '../../../types/dbCluster.types';
 import { Messages } from '../dbClusterView.messages';
 import { LabelValue } from './LabelValue';
 
-export const ExpandedRow = ({ row }: { row: MRT_Row<DbCluster> }) => {
+export const ExpandedRow = ({ row }: { row: MRT_Row<DbClusterTableElement> }) => {
   const { cpu, kubernetesCluster, memory, storage, exposetype } = row.original;
   return (
     <Box

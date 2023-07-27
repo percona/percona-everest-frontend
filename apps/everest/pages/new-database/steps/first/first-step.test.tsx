@@ -10,7 +10,7 @@ jest.mock('./utils', () => ({
   generateShortUID: jest.fn(() => '123'),
 }));
 
-jest.mock('../../../../hooks/db-engines/useDbEngines');
+jest.mock('../../../../hooks/api/db-engines/useDbEngines');
 
 interface FormProviderWrapperProps {
   handleSubmit: jest.Mock<any, any>;
