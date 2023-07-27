@@ -72,8 +72,8 @@ export const FirstStep = () => {
     setValue(
       DbWizardFormFields.dbVersion,
       recommendedVersion
-        ? recommendedVersion.imagePath
-        : newVersions.availableVersions.backup[0].imagePath
+        ? recommendedVersion.version
+        : newVersions.availableVersions.backup[0].version
     );
     setDbVersions(newVersions);
   }, [dbType, dbEngines]);
@@ -160,8 +160,8 @@ export const FirstStep = () => {
           label={Messages.labels.dbVersion}
         >
           {dbVersions?.availableVersions.backup.map((version) => (
-            <MenuItem value={version.imagePath} key={version.imagePath}>
-              {version.imagePath}
+            <MenuItem value={version.version} key={version.version}>
+              {version.version}
             </MenuItem>
           ))}
         </SelectInput>
