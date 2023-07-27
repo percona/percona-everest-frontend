@@ -1,7 +1,6 @@
 name: Build and push dev-latest image
 
 on:
-  pull_request:
   push:
     branches:
       - main
