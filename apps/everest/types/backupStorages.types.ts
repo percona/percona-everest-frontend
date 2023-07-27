@@ -10,15 +10,15 @@ export type BaseBackupStorageFields = {
   bucketName: string;
   region: string;
   url?: string;
-}
+};
 
 export type BackupStorage = BaseBackupStorageFields & {
   id: string;
-}
+};
 
 export type GetBackupStoragesPayload = BackupStorage[];
 
 export type CreateBackupStoragePayload = BaseBackupStorageFields & {
   accessKey: string;
   secretKey: string;
-}
+};

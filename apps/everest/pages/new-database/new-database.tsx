@@ -126,7 +126,11 @@ export const NewDatabasePage = () => {
                   {Messages.createDatabase}
                 </Button>
               ) : (
-                <Button onClick={handleNext} variant="contained" data-testid="db-wizard-continue-button">
+                <Button
+                  onClick={handleNext}
+                  variant="contained"
+                  data-testid="db-wizard-continue-button"
+                >
                   {Messages.continue}
                 </Button>
               )}
