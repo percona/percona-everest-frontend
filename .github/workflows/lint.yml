@@ -37,7 +37,7 @@ jobs:
         run: bit config set user.token $BIT_TOKEN
 
       - name: Install dependencies
-        run: make install
+        run: make init
 
       - name: Run linter 
         run: make lint
