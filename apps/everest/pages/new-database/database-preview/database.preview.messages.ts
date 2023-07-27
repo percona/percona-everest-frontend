@@ -19,14 +19,7 @@ export const Messages = {
 };
 
 export const getTimeSelectionPreviewMessage = (sectionProps: SectionProps) => {
-  const {
-    minute,
-    hour,
-    amPm,
-    onDay,
-    weekDay,
-    selectedTime,
-  } = sectionProps;
+  const { minute, hour, amPm, onDay, weekDay, selectedTime } = sectionProps;
   // TODO switch these lines after backup is supported and Zod schema is complete
   // const minuteWithZero = addZeroToSingleDigit(minute);
   const minuteWithZero = addZeroToSingleDigit(0);
@@ -36,9 +29,7 @@ export const getTimeSelectionPreviewMessage = (sectionProps: SectionProps) => {
     case TimeValue.days:
       return `${timeValueHumanized[selectedTime]} at ${hour}:${minuteWithZero} ${amPm}`;
     case TimeValue.weeks:
-      return `${
-        timeValueHumanized[selectedTime]
-      } on ${weekDay}s at ${hour}:${minuteWithZero} ${amPm}`;
+      return `${timeValueHumanized[selectedTime]} on ${weekDay}s at ${hour}:${minuteWithZero} ${amPm}`;
     case TimeValue.months:
       return `${timeValueHumanized[selectedTime]} on day ${onDay} at ${hour}:${minuteWithZero} ${amPm}`;
     default:

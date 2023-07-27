@@ -4,7 +4,10 @@ import { getDbClusters } from '../../../api/dbClusterApi';
 import { K8Context } from '../../../contexts/kubernetes/kubernetes.context';
 import { KubernetesCluster } from '../../../types/kubernetes.types';
 import { DbClusterTableElement } from './dbCluster.type';
-import { DbClusterStatus, GetDbClusterPayload } from '../../../types/dbCluster.types';
+import {
+  DbClusterStatus,
+  GetDbClusterPayload,
+} from '../../../types/dbCluster.types';
 
 const mapRawDataToDbClusterModel = (
   payload: GetDbClusterPayload,
@@ -24,7 +27,7 @@ const mapRawDataToDbClusterModel = (
         storage: item.spec.engine.storage.size,
         hostName: item.status ? item.status.hostname : '',
         exposetype: item.spec.proxy.expose.type,
-      }
+      };
 
       return [newElement];
     } catch {

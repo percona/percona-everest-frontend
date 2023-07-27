@@ -13,7 +13,7 @@ module.exports = {
   moduleNameMapper: {
     axios: 'axios/dist/node/axios.cjs',
   },
-  testPathIgnorePatterns: ['.*.e2e.(js|ts)x?']
+  testPathIgnorePatterns: ['.*.e2e.(js|ts)x?'],
   // transformIgnorePatterns: [
   //   '^.+\.module\.(css|sass|scss)$',
   //   // generateNodeModulesPattern({ packages: packagesToExclude }),

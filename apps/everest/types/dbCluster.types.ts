@@ -1,4 +1,4 @@
-import { DbEngineType } from "./dbEngines.types";
+import { DbEngineType } from './dbEngines.types';
 
 export enum ProxyExposeType {
   internal = 'internal',
@@ -48,9 +48,9 @@ interface Engine {
 interface Proxy {
   replicas: number;
   expose: {
-    type: ProxyExposeType,
-    ipSourceRanges?: string[],
-  }
+    type: ProxyExposeType;
+    ipSourceRanges?: string[];
+  };
 }
 
 export interface Spec {
@@ -74,7 +74,9 @@ export interface DbCluster {
 }
 
 export type GetDbClusterPayload = {
-  items: Array<DbCluster & {
-    status?: StatusSpec;
-  }>
-}
+  items: Array<
+    DbCluster & {
+      status?: StatusSpec;
+    }
+  >;
+};

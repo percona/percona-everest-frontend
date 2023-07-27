@@ -73,9 +73,9 @@ describe('Second Step', () => {
     expect(screen.getByTestId('cpu-input')).toHaveValue(
       DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.cpu]
     );
-    expect(
-      screen.getByTestId('memory-input')
-    ).toHaveValue(DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.memory]);
+    expect(screen.getByTestId('memory-input')).toHaveValue(
+      DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.memory]
+    );
     expect(screen.getByTestId('disk-input')).toHaveValue(
       DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.disk]
     );
@@ -86,9 +86,7 @@ describe('Second Step', () => {
     expect(screen.getByTestId('cpu-input')).toHaveValue(
       DEFAULT_SIZES[ResourceSize.medium][DbWizardFormFields.cpu]
     );
-    expect(
-      screen.getByTestId('memory-input')
-    ).toHaveValue(
+    expect(screen.getByTestId('memory-input')).toHaveValue(
       DEFAULT_SIZES[ResourceSize.medium][DbWizardFormFields.memory]
     );
     expect(screen.getByTestId('disk-input')).toHaveValue(

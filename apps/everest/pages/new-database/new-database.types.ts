@@ -154,7 +154,7 @@ export const dbWizardSchema = [
 const superset = stepOneSchema
   .and(stepTwoSchema)
   // .and(stepThreeSchema)
-  .and(stepFourSchema)
-  // .and(stepFiveSchema);
+  .and(stepFourSchema);
+// .and(stepFiveSchema);
 
 export type DbWizardType = z.infer<typeof superset>;
