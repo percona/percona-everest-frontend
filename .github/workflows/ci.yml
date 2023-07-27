@@ -19,14 +19,12 @@ permissions:
 
 jobs:
   tests:
-    name: UI Tests
+    name: Tests
     runs-on: ubuntu-20.04
     env:
       # no `-mod=readonly` to test PRs made by @dependabot;
       # `git diff --exit-code` step below still checks what we need
       GOPRIVATE: github.com/percona,github.com/percona/percona-everest-backend,github.com/percona/percona-everest-cli,github.com/percona/everest-operator
-      PERCONA_VERSION_SERVICE_URL: https://check-dev.percona.com/versions/v1
-      ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
       BIT_TOKEN: ${{ secrets.BIT_TOKEN }}
     strategy:
       matrix:
@@ -64,13 +62,6 @@ jobs:
           path: percona-everest-backend
           token: ${{ secrets.ROBOT_TOKEN }}
 
-      - name: Run Everest backend
-        run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-backend
-          make init
-          make local-env-up
-          make run-debug &
-
       - name: Install Bit Version Manager 
         run: npm i -g @teambit/bvm
 
@@ -82,6 +73,12 @@ jobs:
 
       - name: Set up bit config
         run: bit config set user.token $BIT_TOKEN
+
+      - name: Build Everest
+        run: |
+          cd ${GITHUB_WORKSPACE}/percona-everest-frontend
+          bit install --recurring-install
+          bit build everest
 
       - name: Set up Go release
         uses: percona-platform/setup-go@v4
@@ -110,6 +107,13 @@ jobs:
             ${{ matrix.os }}-go-${{ matrix.go-version }}-build-${{ github.ref }}-
             ${{ matrix.os }}-go-${{ matrix.go-version }}-build-
 
+      - name: Run Everest backend
+        run: |
+          cd ${GITHUB_WORKSPACE}/percona-everest-backend
+          make init
+          make local-env-up
+          make run-debug &
+
       - name: Create KIND cluster
         uses: helm/kind-action@v1.8.0
 
@@ -117,12 +121,6 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}/percona-everest-cli
           go run cmd/everest/main.go install operators --backup.enable=false --everest.endpoint=http://127.0.0.1:8081 --monitoring.enable=false --name=minikube --operator.mongodb=true --operator.postgresql=true --operator.xtradb-cluster=true --skip-wizard --namespace test-everest
-
-      - name: Build Everest
-        run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-frontend
-          bit install
-          bit build everest
 
       - name: Run integration tests
         run: |
