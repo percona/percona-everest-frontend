@@ -27,11 +27,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install Bit Version Manager 
-        run: npm i -g @teambit/bvm
-
-      - name: Install latest Bit version 
-        run: bvm install
+      - name: Install Bit
+        run: make install-bit
 
       - name: add bvm bin folder to path
         run: echo "$HOME/bin" >> $GITHUB_PATH
@@ -40,15 +37,15 @@ jobs:
         run: bit config set user.token $BIT_TOKEN
 
       - name: Install dependencies
-        run: bit install
+        run: make install
 
       - name: Run linter 
-        run: bit lint
+        run: make lint
 
       - name: Run formatter
-        run: bit format
+        run: make format
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "chore: format files. --skip-ci"
+          commit_message: "chore: format files [--skip-ci]"
           file_pattern: ':(exclude)pnpm-lock.yaml'

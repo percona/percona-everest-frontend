@@ -21,9 +21,8 @@ jobs:
   tests:
     name: Tests
     runs-on: ubuntu-20.04
+    if: "!contains(github.event.head_commit.message, '--skip-ci')"
     env:
-      # no `-mod=readonly` to test PRs made by @dependabot;
-      # `git diff --exit-code` step below still checks what we need
       GOPRIVATE: github.com/percona,github.com/percona/percona-everest-backend,github.com/percona/percona-everest-cli,github.com/percona/everest-operator
       BIT_TOKEN: ${{ secrets.BIT_TOKEN }}
     strategy:
@@ -62,11 +61,10 @@ jobs:
           path: percona-everest-backend
           token: ${{ secrets.ROBOT_TOKEN }}
 
-      - name: Install Bit Version Manager 
-        run: npm i -g @teambit/bvm
-
-      - name: Install latest Bit version 
-        run: bvm install
+      - name: Install Bit
+        run: |
+          cd ${GITHUB_WORKSPACE}/percona-everest-frontend
+          make install-bit
 
       - name: add bvm bin folder to path
         run: echo "$HOME/bin" >> $GITHUB_PATH
@@ -77,13 +75,14 @@ jobs:
       - name: Build Everest
         run: |
           cd ${GITHUB_WORKSPACE}/percona-everest-frontend
-          bit install --recurring-install
-          bit build everest
+          make init
+          cd apps/everest
+          make build
 
       - name: Run Everest
         run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-frontend
-          bit run everest &
+          cd ${GITHUB_WORKSPACE}/percona-everest-frontend/apps/everest
+          make run &
           sleep 30s
 
       - name: Set up Go release
@@ -130,5 +129,5 @@ jobs:
 
       - name: Run integration tests
         run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-frontend/apps/everest/ui-tests
-          npx playwright test
+          cd ${GITHUB_WORKSPACE}/percona-everest-frontend/apps/everest
+          make test-ui
