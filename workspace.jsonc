@@ -41,9 +41,11 @@
       "dependencies": {
         "@hookform/resolvers": "^3.1.0",
         "@mui/icons-material": "^5.11.16",
+        "@playwright/test": "^1.36.1",
         "@teambit/eslint-config-bit-react": "~0.0.367",
         "@typescript-eslint/eslint-plugin": "5.35.1",
         "axios": "^1.4.0",
+        "cron-time-generator": "^2.0.0",
         "css-mediaquery": "^0.1.2",
         "eslint-import-resolver-node": "0.3.6",
         "eslint-plugin-import": "2.22.1",
@@ -51,11 +53,11 @@
         "eslint-plugin-jsx-a11y": "6.4.1",
         "eslint-plugin-mdx": "1.15.0",
         "eslint-plugin-react": "7.25.1",
-        "react-hook-form": "^7.44.3",
-        "zod": "^3.21.4",
-        "material-react-table": "^1.12.1",
+        "material-react-table": "^1.14.0",
         "notistack": "^3.0.1",
-        "react-query": "^3.39.3"
+        "react-hook-form": "^7.44.3",
+        "react-query": "^3.39.3",
+        "zod": "^3.21.4"
       },
       "peerDependencies": {
         "@emotion/react": "^11.11.0",
@@ -97,5 +99,6 @@
   "percona.ui-lib/form/inputs/text": {},
   "percona.ui-lib/form/inputs/switch": {},
   "percona.ui-lib/form/inputs/select": {},
-  "percona.utils/string": {}
+  "percona.utils/string": {},
+  "percona.ui-lib/form/inputs/auto-complete": {}
 }

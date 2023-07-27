@@ -1,19 +1,27 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Box, Button, Divider, Drawer, Stack, Step, StepLabel, Toolbar, useMediaQuery, useTheme } from '@mui/material';
+import {
+  Box,
+  Button,
+  Divider,
+  Drawer,
+  Stack,
+  Step,
+  StepLabel,
+  Toolbar,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import { Stepper } from '@percona/ui-lib.stepper';
 import React, { useMemo, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Messages } from './new-database.messages';
-import {
-  dbWizardSchema,
-  DbWizardType,
-} from './new-database.types';
+import { dbWizardSchema, DbWizardType } from './new-database.types';
 import { steps } from './steps';
 
 import { SixthStep } from './steps/sixth/sixth-step';
-import { useCreateDbCluster } from '../../hooks/db-cluster/useDbCluster';
-import { useSelectedKubernetesCluster } from '../../hooks/kubernetesClusters/useSelectedKubernetesCluster';
+import { useCreateDbCluster } from '../../hooks/api/db-cluster/useDbCluster';
+import { useSelectedKubernetesCluster } from '../../hooks/api/kubernetesClusters/useSelectedKubernetesCluster';
 import { DatabasePreview } from './database-preview/database-preview';
 import { DB_WIZARD_DEFAULTS } from './new-database.constants';
 
@@ -34,9 +42,6 @@ export const NewDatabasePage = () => {
   const firstStep = activeStep === 0;
 
   const onSubmit: SubmitHandler<DbWizardType> = (data) => {
-    /* eslint-disable no-console */
-    // TODO based on data.dbType, get the engine from context and the desired proxy version, if needed
-    console.log(data);
     addDbCluster(
       { dbPayload: data, id },
       {
@@ -65,18 +70,21 @@ export const NewDatabasePage = () => {
 
   const handleSectionEdit = (order: number) => setActiveStep(order - 1);
 
-  const PreviewContent = useMemo(() => (
-    <DatabasePreview
-      activeStep={activeStep}
-      onSectionEdit={handleSectionEdit}
-      sx={{
-        mt: 2,
-        ...(!isDesktop && {
-          padding: 0
-        }),
-      }}
-    />
-  ), [activeStep, isDesktop]);
+  const PreviewContent = useMemo(
+    () => (
+      <DatabasePreview
+        activeStep={activeStep}
+        onSectionEdit={handleSectionEdit}
+        sx={{
+          mt: 2,
+          ...(!isDesktop && {
+            padding: 0,
+          }),
+        }}
+      />
+    ),
+    [activeStep, isDesktop]
+  );
 
   return formSubmitted ? (
     <SixthStep />
@@ -91,7 +99,10 @@ export const NewDatabasePage = () => {
       </Stepper>
       <FormProvider {...methods}>
         <Stack direction={isDesktop ? 'row' : 'column'}>
-          <form style={{ flexGrow: 1 }} onSubmit={methods.handleSubmit(onSubmit)}>
+          <form
+            style={{ flexGrow: 1 }}
+            onSubmit={methods.handleSubmit(onSubmit)}
+          >
             <Box>{React.createElement(steps[activeStep])}</Box>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
               <Button
@@ -101,6 +112,7 @@ export const NewDatabasePage = () => {
                 disabled={firstStep}
                 onClick={handleBack}
                 sx={{ mr: 1 }}
+                data-testid="db-wizard-previous-button"
               >
                 {Messages.previous}
               </Button>
@@ -109,53 +121,52 @@ export const NewDatabasePage = () => {
                 <Button
                   onClick={methods.handleSubmit(onSubmit)}
                   variant="contained"
+                  data-testid="db-wizard-submit-button"
                 >
                   {Messages.createDatabase}
                 </Button>
               ) : (
-                <Button onClick={handleNext} variant="contained">
+                <Button onClick={handleNext} variant="contained" data-testid="db-wizard-continue-button">
                   {Messages.continue}
                 </Button>
               )}
             </Box>
           </form>
-          {
-            isDesktop ? (
-              <Drawer
-                variant='permanent'
-                anchor='right'
-                sx={{
+          {isDesktop ? (
+            <Drawer
+              variant="permanent"
+              anchor="right"
+              sx={{
+                width: '25%',
+                flexShrink: 0,
+                ml: 3,
+                [`& .MuiDrawer-paper`]: {
                   width: '25%',
-                  flexShrink: 0,
-                  ml: 3,
-                  [`& .MuiDrawer-paper`]: {
-                    width: '25%',
-                    boxSizing: 'border-box',
-                  },
+                  boxSizing: 'border-box',
+                },
+              }}
+            >
+              <Toolbar />
+              {PreviewContent}
+            </Drawer>
+          ) : (
+            <>
+              <Divider
+                orientation="horizontal"
+                flexItem
+                sx={{
+                  // This is a little tweak
+                  // We make the divider longer, adding the main padding value
+                  // Then, to make it begin before the main padding, we add a negative margin
+                  // This way, the divider will cross the whole section
+                  width: `calc(100% + ${theme.spacing(4 * 2)})`,
+                  ml: -4,
+                  mt: 6,
                 }}
-              >
-                <Toolbar />
-                {PreviewContent}
-              </Drawer>
-            ) : (
-              <>
-                <Divider
-                  orientation='horizontal'
-                  flexItem
-                  sx={{
-                    // This is a little tweak
-                    // We make the divider longer, adding the main padding value
-                    // Then, to make it begin before the main padding, we add a negative margin
-                    // This way, the divider will cross the whole section
-                    width: `calc(100% + ${theme.spacing(4 * 2)})`,
-                    ml: -4,
-                    mt: 6
-                  }}
-                />
-                {PreviewContent}
-              </>
-            )
-          }
+              />
+              {PreviewContent}
+            </>
+          )}
         </Stack>
       </FormProvider>
     </>

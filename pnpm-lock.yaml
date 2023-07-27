@@ -28,6 +28,9 @@ importers:
       '@mui/utils':
         specifier: ^5.13.1
         version: registry.npmjs.org/@mui/utils@5.13.1(react@17.0.2)
+      '@playwright/test':
+        specifier: ^1.36.1
+        version: registry.npmjs.org/@playwright/test@1.36.1
       '@teambit/eslint-config-bit-react':
         specifier: ~0.0.367
         version: registry.npmjs.org/@teambit/eslint-config-bit-react@0.0.367(@teambit/legacy@node_modules+@teambit+legacy)(eslint-plugin-import@2.22.1)(eslint-plugin-jsx-a11y@6.4.1)(eslint-plugin-react@7.25.1)(react-dom@17.0.2)(react@17.0.2)
@@ -43,6 +46,9 @@ importers:
       core-js:
         specifier: ^3.0.0
         version: registry.npmjs.org/core-js@3.30.2
+      cron-time-generator:
+        specifier: ^2.0.0
+        version: registry.npmjs.org/cron-time-generator@2.0.0
       css-mediaquery:
         specifier: ^0.1.2
         version: registry.npmjs.org/css-mediaquery@0.1.2
@@ -65,8 +71,8 @@ importers:
         specifier: 7.25.1
         version: registry.npmjs.org/eslint-plugin-react@7.25.1
       material-react-table:
-        specifier: ^1.12.1
-        version: registry.npmjs.org/material-react-table@1.12.1(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@mui/icons-material@5.11.16)(@mui/material@5.13.1)(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^1.14.0
+        version: registry.npmjs.org/material-react-table@1.14.0(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@mui/icons-material@5.11.16)(@mui/material@5.13.1)(react-dom@17.0.2)(react@17.0.2)
       notistack:
         specifier: ^3.0.1
         version: registry.npmjs.org/notistack@3.0.1(react-dom@17.0.2)(react@17.0.2)
@@ -124,6 +130,8 @@ importers:
 
   ui-lib/db-toggle-card: {}
 
+  ui-lib/form/inputs/auto-complete: {}
+
   ui-lib/form/inputs/select: {}
 
   ui-lib/form/inputs/switch: {}
@@ -136,6 +144,8 @@ importers:
 
   ui-lib/icons/everest: {}
 
+  ui-lib/icons/status: {}
+
   ui-lib/input: {}
 
   ui-lib/labeled-content: {}
@@ -143,6 +153,8 @@ importers:
   ui-lib/progress-bar: {}
 
   ui-lib/stepper: {}
+
+  ui-lib/table: {}
 
   ui-lib/toggle-card: {}
 
@@ -943,6 +955,19 @@ packages:
       fastq: registry.npmjs.org/fastq@1.15.0
     dev: false
 
+  registry.npmjs.org/@playwright/test@1.36.1:
+    resolution: {integrity: sha512-YK7yGWK0N3C2QInPU6iaf/L3N95dlGdbsezLya4n0ZCh3IL7VgPGxC6Gnznh9ApWdOmkJeleT2kMTcWPRZvzqg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/@playwright/test/-/test-1.36.1.tgz}
+    name: '@playwright/test'
+    version: 1.36.1
+    engines: {node: '>=16'}
+    hasBin: true
+    dependencies:
+      '@types/node': registry.npmjs.org/@types/node@12.20.4
+      playwright-core: registry.npmjs.org/playwright-core@1.36.1
+    optionalDependencies:
+      fsevents: registry.npmjs.org/fsevents@2.3.2
+    dev: false
+
   registry.npmjs.org/@popperjs/core@2.11.7:
     resolution: {integrity: sha512-Cr4OjIkipTtcXKjAsm8agyleBuDHvxzeBoa1v543lbv1YaIwQjESsVcmjiWiPEbC1FIeHOG/Op9kdCmAmiS3Kw==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/@popperjs/core/-/core-2.11.7.tgz}
     name: '@popperjs/core'
@@ -1148,7 +1173,6 @@ packages:
     resolution: {integrity: sha512-xRCgeE0Q4pT5UZ189TJ3SpYuX/QGl6QIAOAIeDSbAVAd2gX1NxSZup4jNVK7cxIeP8KDSbJgcckun495isP1jQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/@types/node/-/node-12.20.4.tgz}
     name: '@types/node'
     version: 12.20.4
-    dev: true
 
   registry.npmjs.org/@types/parse-json@4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/@types/parse-json/-/parse-json-4.0.0.tgz}
@@ -1991,6 +2015,12 @@ packages:
       yaml: registry.npmjs.org/yaml@1.10.2
     dev: false
 
+  registry.npmjs.org/cron-time-generator@2.0.0:
+    resolution: {integrity: sha512-s38Fzmh7C6MgFT+EzgYcMNmm5iMivN9o8CzUTmrxmMtoqOf4dUW6AeulTzGRLAnIOyWF8Ho+uh7lZRSyaH6ttA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/cron-time-generator/-/cron-time-generator-2.0.0.tgz}
+    name: cron-time-generator
+    version: 2.0.0
+    dev: false
+
   registry.npmjs.org/css-mediaquery@0.1.2:
     resolution: {integrity: sha512-COtn4EROW5dBGlE/4PiKnh6rZpAPxDeFLaEEwt4i10jpDMFt2EhQGS79QmmrO+iKCHv0PU/HrOWEhijFd1x99Q==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/css-mediaquery/-/css-mediaquery-0.1.2.tgz}
     name: css-mediaquery
@@ -2715,6 +2745,16 @@ packages:
     version: 1.0.0
     dev: false
 
+  registry.npmjs.org/fsevents@2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz}
+    name: fsevents
+    version: 2.3.2
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
   registry.npmjs.org/function-bind@1.1.1:
     resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/function-bind/-/function-bind-1.1.1.tgz}
     name: function-bind
@@ -3410,11 +3450,11 @@ packages:
       remove-accents: registry.npmjs.org/remove-accents@0.4.2
     dev: false
 
-  registry.npmjs.org/material-react-table@1.12.1(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@mui/icons-material@5.11.16)(@mui/material@5.13.1)(react-dom@17.0.2)(react@17.0.2):
-    resolution: {integrity: sha512-sGEYts4Zj3eiFHe4rQ48VxQCaJgoNZCsk/A8mJ1hsApya8NlWQercnnXoLzVec4sUP6MwWaonEWBiOssLHdfMA==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/material-react-table/-/material-react-table-1.12.1.tgz}
-    id: registry.npmjs.org/material-react-table/1.12.1
+  registry.npmjs.org/material-react-table@1.14.0(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@mui/icons-material@5.11.16)(@mui/material@5.13.1)(react-dom@17.0.2)(react@17.0.2):
+    resolution: {integrity: sha512-DMajcZwsduHfT/pfp9BiSX4qSXvj6I4fGlg6UiD7x3Ubj1EY004UK83AQIU+s8ZIC+uXObHX3OL/MiMw+qjNJg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/material-react-table/-/material-react-table-1.14.0.tgz}
+    id: registry.npmjs.org/material-react-table/1.14.0
     name: material-react-table
-    version: 1.12.1
+    version: 1.14.0
     engines: {node: '>=14'}
     peerDependencies:
       '@emotion/react': '*'
@@ -3806,6 +3846,14 @@ packages:
     name: pify
     version: 2.3.0
     engines: {node: '>=0.10.0'}
+    dev: false
+
+  registry.npmjs.org/playwright-core@1.36.1:
+    resolution: {integrity: sha512-7+tmPuMcEW4xeCL9cp9KxmYpQYHKkyjwoXRnoeTowaeNat8PoBMk/HwCYhqkH2fRkshfKEOiVus/IhID2Pg8kg==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/playwright-core/-/playwright-core-1.36.1.tgz}
+    name: playwright-core
+    version: 1.36.1
+    engines: {node: '>=16'}
+    hasBin: true
     dev: false
 
   registry.npmjs.org/pretty-format@26.6.2:

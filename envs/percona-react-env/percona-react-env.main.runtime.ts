@@ -50,6 +50,7 @@ export class PerconaReactEnvMain {
         transformers: [
           (config) => {
             config.setRule('no-nested-ternary', ['off']);
+            config.setRule('jest/no-done-callback', ['off']);
             return config;
           },
         ],

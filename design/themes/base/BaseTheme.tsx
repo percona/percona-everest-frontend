@@ -36,10 +36,8 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
             contrastText: '#FFFFFF',
           },
           warning: {
-            light: '#F0B336',
-            main: '#D8A02C',
-            dark: '#AA7F26',
-            contrastText: '#000000',
+            main: '#FFF2B2',
+            contrastText: '#856E00',
           },
           info: {
             light: '#127AE8',
@@ -178,7 +176,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
     subtitle2: {
       fontWeight: 600,
       fontSize: '16px',
-      lineHeight: '1',
+      lineHeight: '22px',
     },
     overline: {
       fontWeight: 800,

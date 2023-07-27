@@ -1,23 +1,24 @@
-import React from 'react';
-import { Stack, Typography, Button } from '@mui/material';
-
 import AddIcon from '@mui/icons-material/Add';
+import { Button } from '@mui/material';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { DbClusterView } from '../../components/db-cluster-view/DbClusterView';
+import { Messages } from './databases.messages';
 
 export const DatabasesPage = () => {
   return (
-    <Stack direction="row" alignItems="center">
-      <Typography variant="h5">Databases</Typography>
-      <Button
-        size="small"
-        sx={{ marginLeft: 'auto' }}
-        startIcon={<AddIcon />}
-        component={Link}
-        to="/databases/new"
-        variant="outlined"
-      >
-        Create Database
-      </Button>
-    </Stack>
+    <DbClusterView
+      customHeader={
+        <Button
+          size="small"
+          startIcon={<AddIcon />}
+          component={Link}
+          to="/databases/new"
+          variant="contained"
+        >
+          {Messages.createDatabase}
+        </Button>
+      }
+    />
   );
 };

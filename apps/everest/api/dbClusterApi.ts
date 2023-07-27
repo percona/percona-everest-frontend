@@ -1,14 +1,21 @@
 import { api } from './api';
-import { DbWizardType } from '../pages/new-database/new-database.types';
+import { DbCluster, GetDbClusterPayload } from '../types/dbCluster.types';
 
 export const createDbClusterFn = async (
-  formData: DbWizardType,
+  data: DbCluster,
   clusterId: string
 ) => {
   const response = await api.post(
     `kubernetes/${clusterId}/database-clusters`,
-    formData
+    data
   );
 
+  return response.data;
+};
+
+export const getDbClusters = async (clusterId: string) => {
+  const response = await api.get<GetDbClusterPayload>(
+    `kubernetes/${clusterId}/database-clusters`
+  );
   return response.data;
 };

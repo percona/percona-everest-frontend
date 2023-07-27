@@ -16,12 +16,14 @@ export function Input({
           textAlign: 'center',
         },
       }}
-      inputProps={{ min: 0 }}
+      inputProps={{
+        min: 0,
+        'data-testid': dataTestId,
+      }}
       type="number"
       value={value ? value.toString() : value} // solve the leading zero problem from mui (https://github.com/mui/material-ui/issues/8380)
       onChange={(e) => setValue(Number(e.target.value))}
       endAdornment={<InputAdornment position="end">{units}</InputAdornment>}
-      data-testid={dataTestId}
       {...props}
     />
   );
