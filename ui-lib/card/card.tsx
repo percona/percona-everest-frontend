@@ -16,7 +16,7 @@ import {
 import { kebabize } from '@percona/utils.string';
 
 export interface CardProps extends Omit<MuiCardProps, 'content'> {
-  content: string | ReactNode;
+  content: ReactNode;
   dataTestId: string;
   cardActions?: ActionProps[];
   cardActionsProps?: CardActionsProps;
@@ -39,11 +39,13 @@ export function Card({
   contentWrapperProps,
   cardActionsProps,
   dataTestId,
+  ...props
 }: CardProps) {
   return (
     <MuiCard
       data-testId={`${dataTestId}-card`}
       sx={{ width: '320px', height: 'fit-content', ...sx }}
+      {...props}
     >
       <CardContent
         data-testId={`${dataTestId}-card-content`}
