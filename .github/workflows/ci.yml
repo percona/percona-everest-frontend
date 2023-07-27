@@ -42,6 +42,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
+          cache-dependency-path: '.'
 
       - name: Install Bit
         run: make install-bit
