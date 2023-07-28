@@ -20,7 +20,7 @@ permissions:
 jobs:
   lint:
     name: ESLint & format
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     if: "!contains(github.event.head_commit.message, '--skip-ci')"
     env:
       BIT_TOKEN: ${{ secrets.BIT_TOKEN }}
@@ -102,12 +102,12 @@ jobs:
         with:
           version: 8
 
-      - name: Run with Node 16
+      - name: Use Node
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-          cache-dependency-path: ${GITHUB_WORKSPACE}/percona-everest-frontend/pnpm-lock.yaml
+          cache-dependency-path: '**/pnpm-lock.yaml'
 
       - name: Configure git for private modules
         env:
