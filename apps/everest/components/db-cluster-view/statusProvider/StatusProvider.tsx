@@ -25,7 +25,8 @@ const DB_CLUSTER_STATUS_TO_STATUS_PROVIDER: Record<
 };
 
 export const StatusProvider = ({ status }: StatusProviderProps) => {
-  const MappedIcon = DB_CLUSTER_STATUS_TO_STATUS_PROVIDER[status] || null;
+  const MappedIcon = DB_CLUSTER_STATUS_TO_STATUS_PROVIDER[status] || UknownIcon;
+
   return (
     <>
       <MappedIcon />
