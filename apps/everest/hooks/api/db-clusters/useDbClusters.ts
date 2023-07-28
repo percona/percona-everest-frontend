@@ -16,7 +16,7 @@ const mapRawDataToDbClusterModel = (
   return (payload.items || []).flatMap((item) => {
     try {
       const newElement: DbClusterTableElement = {
-        status: item.status && Object.keys(item.status).length ? item.status.status : DbClusterStatus.unknown,
+        status: item.status && item.status.status ? item.status.status : DbClusterStatus.unknown,
         dbType: item.spec.engine.type,
         dbVersion: item.spec.engine.version || '',
         backupsEnabled: !!item.spec.backup?.enabled,
