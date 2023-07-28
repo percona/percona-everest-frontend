@@ -8,9 +8,7 @@ import { createDbClusterFn } from '../../../api/dbClusterApi';
 
 type CreateDbClusterArgType = { dbPayload: DbWizardType; id: string };
 
-const formValuesToPayloadMapping = (
-  dbPayload: DbWizardType
-): DbCluster => {
+const formValuesToPayloadMapping = (dbPayload: DbWizardType): DbCluster => {
   // const { selectedTime, minute, hour, amPm, onDay, weekDay } = dbPayload;
   // const backupSchedule = getCronExpressionFromFormValues({selectedTime, minute, hour, amPm, onDay, weekDay});
 
@@ -58,12 +56,15 @@ const formValuesToPayloadMapping = (
       proxy: {
         replicas: +dbPayload.numberOfNodes,
         expose: {
-          type: dbPayload.externalAccess ? ProxyExposeType.external : ProxyExposeType.internal,
-          ...(!!dbPayload.externalAccess && dbPayload.sourceRange && {
-            ipSourceRanges: [dbPayload.sourceRange],
-          })
-        }
-      }
+          type: dbPayload.externalAccess
+            ? ProxyExposeType.external
+            : ProxyExposeType.internal,
+          ...(!!dbPayload.externalAccess &&
+            dbPayload.sourceRange && {
+              ipSourceRanges: [dbPayload.sourceRange],
+            }),
+        },
+      },
     },
   };
 

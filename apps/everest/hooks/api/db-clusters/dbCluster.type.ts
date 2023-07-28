@@ -1,4 +1,7 @@
-import { DbClusterStatus, ProxyExposeType } from '../../../types/dbCluster.types';
+import {
+  DbClusterStatus,
+  ProxyExposeType,
+} from '../../../types/dbCluster.types';
 import { DbEngineType } from '../../../types/dbEngines.types';
 
 export interface DbClusterTableElement {
