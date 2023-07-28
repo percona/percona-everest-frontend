@@ -38,7 +38,8 @@ export const ThirdStep = () => {
             options={backupStorages}
             autoCompleteProps={{
               isOptionEqualToValue: (option, value) => option.id === value.id,
-              getOptionLabel: (option) => typeof option === 'string' ? option : option.name,
+              getOptionLabel: (option) =>
+                typeof option === 'string' ? option : option.name,
             }}
           />
           {/* <Typography variant="h6">{Messages.pitr}</Typography>

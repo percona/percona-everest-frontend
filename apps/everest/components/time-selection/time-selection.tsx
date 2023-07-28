@@ -29,14 +29,9 @@ export const TimeSelection = ({
 
   const timeInfoText = useMemo(
     () =>
-      showInfoAlert ? getTimeText(
-        selectedTime,
-        hour,
-        minute,
-        amPm,
-        weekDay,
-        onDay
-      ): '',
+      showInfoAlert
+        ? getTimeText(selectedTime, hour, minute, amPm, weekDay, onDay)
+        : '',
     [selectedTime, hour, minute, amPm, weekDay, onDay, showInfoAlert]
   );
 
