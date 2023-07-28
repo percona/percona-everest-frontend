@@ -1,31 +1,23 @@
 import { Add, AutoAwesome, Delete, Edit } from '@mui/icons-material';
 import { Box, Button, MenuItem } from '@mui/material';
 import { Table } from '@percona/ui-lib.table';
-import { type MRT_Cell, type MRT_ColumnDef } from 'material-react-table';
-import React, { useCallback, useMemo, useState } from 'react';
+import { type MRT_ColumnDef } from 'material-react-table';
+import React, { useMemo, useState } from 'react';
 import { LabelValue } from '../../../components/db-cluster-view/expandedRow/LabelValue';
 import { CreateEditModalStorage } from './createEditModal/createEditModalStorage';
-
-interface StorageLocation {
-  name: string;
-  type: string;
-  bucketName: string;
-  description?: string;
-  endpoint: string;
-  accessKey: string;
-  secretKey: string;
-}
+import {
+  StorageLocationType,
+  StorageLocationTypes,
+} from './storage-locations.types';
 
 export const StorageLocations = () => {
-  const [validationErrors, setValidationErrors] = useState<{
-    [cellId: string]: string;
-  }>({});
-
-  console.log(validationErrors);
+  const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
+  const [selectedStorageLocation, setSelectedStorageLocation] =
+    useState<StorageLocationType>();
   const data = [
     {
       name: 'S3',
-      type: 'Amazon S3',
+      type: StorageLocationTypes.s3,
       bucketName: 'dev-backups-storage',
       description: 'Description',
       endpoint: 'endpoint',
@@ -34,103 +26,72 @@ export const StorageLocations = () => {
     },
   ];
 
-  const getCommonEditTextFieldProps = useCallback(
-    (
-      cell: MRT_Cell<StorageLocation>
-    ): MRT_ColumnDef<StorageLocation>['muiTableBodyCellEditTextFieldProps'] => {
-      return {
-        variant: 'outlined',
-        error: !!validationErrors[cell.id],
-        helperText: validationErrors[cell.id],
-        onChange: (event) => {
-          const isValid = validateRequired(event.target.value);
-          console.log(event.target.value, isValid);
-          if (!isValid) {
-            setValidationErrors({
-              ...validationErrors,
-              [cell.id]: `${cell.column.columnDef.header} is required`,
-            });
-          } else {
-            delete validationErrors[cell.id];
-            setValidationErrors({
-              ...validationErrors,
-            });
-          }
-        },
-      };
-    },
-    [validationErrors]
-  );
-
-  const validateRequired = (value: string) => !!value.length;
-
-  const columns = useMemo<MRT_ColumnDef<StorageLocation>[]>(
+  const columns = useMemo<MRT_ColumnDef<StorageLocationType>[]>(
     () => [
       {
         accessorKey: 'name',
         header: 'Name',
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-          required: true,
-        }),
       },
       {
         accessorKey: 'type',
         header: 'Type',
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-          required: true,
-        }),
       },
       {
         accessorKey: 'bucketName',
         header: 'Bucket Name',
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-        }),
       },
       {
         accessorKey: 'description',
         header: 'Description',
         enableHiding: false,
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-          required: false,
-        }),
       },
       {
         accessorKey: 'endpoint',
         header: 'Endpoint',
         enableHiding: false,
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-          required: true,
-        }),
       },
       {
         accessorKey: 'accessKey',
         header: 'Access Key',
         enableHiding: false,
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-          required: true,
-        }),
       },
       {
         accessorKey: 'secretKey',
         header: 'Secret Key',
         enableHiding: false,
-        muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-          ...getCommonEditTextFieldProps(cell),
-          required: true,
-        }),
       },
     ],
     []
   );
+  const handleOpenCreateModal = () => {
+    setSelectedStorageLocation(undefined);
+    setOpenCreateEditModal(true);
+  };
+
+  const handleOpenEditModal = (
+    selectedStorageLocation: StorageLocationType
+  ) => {
+    setSelectedStorageLocation(selectedStorageLocation);
+    setOpenCreateEditModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedStorageLocation(undefined);
+    setOpenCreateEditModal(false);
+  };
+
+  const handleSubmit = (isEdit: boolean, data: StorageLocationType) => {
+    console.log(data);
+    if (isEdit) {
+      console.log('edit submit');
+      return;
+    }
+    console.log('create submit');
+  };
   return (
     <>
       <Table
+        noDataMessage="No storage locations set"
         state={{
           columnVisibility: {
             description: false,
@@ -145,9 +106,7 @@ export const StorageLocations = () => {
         renderRowActionMenuItems={({ table, row }) => [
           <MenuItem
             key={0}
-            onClick={() => {
-              table.setEditingRow(row);
-            }}
+            onClick={() => handleOpenEditModal(row.original)}
             sx={{ m: 0, display: 'flex', gap: 1 }}
           >
             <Edit /> Edit
@@ -194,12 +153,24 @@ export const StorageLocations = () => {
           </Box>
         )}
         renderTopToolbarCustomActions={() => (
-          <Button size="small" startIcon={<Add />} variant="outlined">
+          <Button
+            size="small"
+            startIcon={<Add />}
+            variant="outlined"
+            onClick={() => handleOpenCreateModal()}
+          >
             Add storage location
           </Button>
         )}
       />
-      <CreateEditModalStorage />
+      {openCreateEditModal && (
+        <CreateEditModalStorage
+          open={openCreateEditModal}
+          handleCloseModal={handleCloseModal}
+          handleSubmitModal={handleSubmit}
+          selectedStorageLocation={selectedStorageLocation}
+        />
+      )}
     </>
   );
 };
