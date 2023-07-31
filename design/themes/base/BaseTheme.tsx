@@ -394,6 +394,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
       styleOverrides: {
         root: {
           padding: BaseTheme.spacing(2),
+          paddingTop: `${BaseTheme.spacing(2)} !important`,
         },
       },
     },
