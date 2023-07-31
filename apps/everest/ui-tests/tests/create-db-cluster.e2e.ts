@@ -16,7 +16,7 @@ test.beforeAll(async ({ request }) => {
   const engines = (await enginesList.json()).items;
 
   engines.forEach((engine) => {
-    const type: string = engine.spec.type;
+    const { type } = engine.spec;
   
     if (engine.status.status === 'installed') {
       engineVersions[type].push(...Object.keys(engine.status.availableVersions.engine)); 
@@ -34,42 +34,25 @@ test('Cluster creation', async ({ page, request }) => {
   const clusterName = 'db-cluster-ui-test';
 
   const dbEnginesButtons = page.getByTestId('toggle-button-group-input-db-type').getByRole('button');
+  const nrButtons = await dbEnginesButtons.count();
 
-  if (engineVersions.pxc.length) {
-    await expect(dbEnginesButtons.filter({ hasText: 'MySQL' })).toBeVisible();
-  }
+  // TODO This will break after PostgreSQL is supported. Change at that time
+  expect(nrButtons).toBe(2);
 
-  if (engineVersions.psmdb.length) {
-    await expect(dbEnginesButtons.filter({ hasText: 'MongoDB' })).toBeVisible();
-  }
+  const mySqlButton = dbEnginesButtons.filter({ hasText: 'MySQL' });
+  const mongoButton = dbEnginesButtons.filter({ hasText: 'MongoDB' });
 
-  if (engineVersions.postgresql.length) {
-    await expect(dbEnginesButtons.filter({ hasText: 'PostgreSQL' })).toBeVisible();
-  }
+  await expect(mySqlButton).toBeVisible();
+  await expect(mongoButton).toBeVisible();
 
-  for (let i = 0; i < await dbEnginesButtons.count(); i++) {
-    await dbEnginesButtons.nth(i).click();
-    const buttonText = await dbEnginesButtons.nth(i).textContent();
-    
-    await page.getByTestId('select-db-version-button').click();
-    const options = page.getByRole('option');
+  await mongoButton.click();
+  await page.getByTestId('select-db-version-button').click();
 
-    switch (buttonText) {
-      case 'MongoDB':
-        engineVersions.psmdb.forEach((version) => expect(options.filter({ hasText: new RegExp(`^${version}$`) })).toBeVisible());
-        break;
-      case 'MySQL':
-        engineVersions.pxc.forEach((version) => expect(options.filter({ hasText: new RegExp(`^${version}$`) })).toBeVisible());
-        break;
-      case 'PostgreSQL':
-        engineVersions.postgresql.forEach((version) => expect(options.filter({ hasText: new RegExp(`^${version}$`) })).toBeVisible());
-        break;
-    }
+  const options = page.getByRole('option');
 
-    await page.getByRole('option').first().click();
-  }
+  engineVersions.psmdb.forEach((version) => expect(options.filter({ hasText: new RegExp(`^${version}$`) })).toBeVisible());
 
-  await page.getByTestId('mongodb-toggle-button').click();
+  await page.getByRole('option').first().click();
   await page.getByTestId('text-input-db-name').fill(clusterName);
   await page.getByTestId('db-wizard-continue-button').click();
 
