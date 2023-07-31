@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
 import { FormGroup, MenuItem, Skeleton, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 
 import { DbToggleCard, DbType } from '@percona/ui-lib.db-toggle-card';
 import { SelectInput } from '@percona/ui-lib.form.inputs.select';
@@ -51,10 +51,9 @@ export const FirstStep = () => {
     if (!dbType) {
       return;
     }
-    const dbName = getValues(DbWizardFormFields.dbName);
     const { isTouched } = getFieldState(DbWizardFormFields.dbName);
 
-    if (!isTouched || !dbName) {
+    if (!isTouched) {
       setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`, {
         shouldValidate: true,
       });
