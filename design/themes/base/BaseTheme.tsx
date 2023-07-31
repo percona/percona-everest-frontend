@@ -383,6 +383,11 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
         component: 'h5',
         variant: 'h5',
       },
+      styleOverrides: {
+        root: {
+          padding: BaseTheme.spacing(2),
+        },
+      }
     },
     MuiDialogContent: {
       styleOverrides: {
