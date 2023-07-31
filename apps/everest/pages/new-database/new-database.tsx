@@ -113,7 +113,7 @@ export const NewDatabasePage = () => {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus variant="outlined" onClick={() => setModalIsOpen(false)}>
+          <Button autoFocus variant="text" onClick={() => setModalIsOpen(false)}>
             {Messages.dialog.reject}
           </Button>
           <Button variant="contained" onClick={handleCancel}>
