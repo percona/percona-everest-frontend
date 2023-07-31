@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { IconButton, DialogTitle as MuiDialogTitle } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, Typography } from '@mui/material';
 import { CompositionViewer } from '@percona/design.composition-viewer';
-import { DialogTitle } from './dialog-title';
 import { baseThemeOptions } from '@percona/design.themes.base';
+import { DialogTitle } from './dialog-title';
 
 export const BasicDialogTitle = () => {
   const [open, setOpen] = useState(false);

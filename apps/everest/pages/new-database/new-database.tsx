@@ -8,7 +8,6 @@ import {
   DialogContent,
   Divider,
   Drawer,
-  IconButton,
   Stack,
   Step,
   StepLabel,
