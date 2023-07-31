@@ -378,5 +378,25 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
         },
       },
     },
+    MuiDialogTitle: {
+      defaultProps: {
+        component: 'h5',
+        variant: 'h5',
+      },
+    },
+    MuiDialogContent: {
+      styleOverrides: {
+        root: {
+          padding: BaseTheme.spacing(2),
+        },
+      },
+    },
+    MuiDialogActions: {
+      styleOverrides: {
+        root: {
+          padding: BaseTheme.spacing(2),
+        },
+      },
+    }
   },
 });
