@@ -2,10 +2,26 @@ import { test, expect } from '@playwright/test';
 import { GetDbClusterPayload } from '../../types/dbCluster.types';
 
 let kubernetesId;
+const engineVersions = {
+  pxc: [],
+  psmdb: [],
+  postgresql: [],
+};
 
 test.beforeAll(async ({ request }) => {
   const kubernetesList = await request.get('/v1/kubernetes');
   kubernetesId = (await kubernetesList.json())[0].id;
+
+  const enginesList = await request.get(`/v1/kubernetes/${kubernetesId}/database-engines`);
+  const engines = (await enginesList.json()).items;
+
+  engines.forEach((engine) => {
+    const type: string = engine.spec.type;
+  
+    if (engine.status.status === 'installed') {
+      engineVersions[type].push(...Object.keys(engine.status.availableVersions.engine)); 
+    }
+  });
 });
 
 test.beforeEach(async ({ page }) => {
@@ -16,6 +32,42 @@ test.beforeEach(async ({ page }) => {
 
 test('Cluster creation', async ({ page, request }) => {
   const clusterName = 'db-cluster-ui-test';
+
+  const dbEnginesButtons = page.getByTestId('toggle-button-group-input-db-type').getByRole('button');
+
+  if (engineVersions.pxc.length) {
+    await expect(dbEnginesButtons.filter({ hasText: 'MySQL' })).toBeVisible();
+  }
+
+  if (engineVersions.psmdb.length) {
+    await expect(dbEnginesButtons.filter({ hasText: 'MongoDB' })).toBeVisible();
+  }
+
+  if (engineVersions.postgresql.length) {
+    await expect(dbEnginesButtons.filter({ hasText: 'PostgreSQL' })).toBeVisible();
+  }
+
+  for (let i = 0; i < await dbEnginesButtons.count(); i++) {
+    await dbEnginesButtons.nth(i).click();
+    const buttonText = await dbEnginesButtons.nth(i).textContent();
+    
+    await page.getByTestId('select-db-version-button').click();
+    const options = page.getByRole('option');
+
+    switch (buttonText) {
+      case 'MongoDB':
+        engineVersions.psmdb.forEach((version) => expect(options.filter({ hasText: new RegExp(`^${version}$`) })).toBeVisible());
+        break;
+      case 'MySQL':
+        engineVersions.pxc.forEach((version) => expect(options.filter({ hasText: new RegExp(`^${version}$`) })).toBeVisible());
+        break;
+      case 'PostgreSQL':
+        engineVersions.postgresql.forEach((version) => expect(options.filter({ hasText: new RegExp(`^${version}$`) })).toBeVisible());
+        break;
+    }
+
+    await page.getByRole('option').first().click();
+  }
 
   await page.getByTestId('mongodb-toggle-button').click();
   await page.getByTestId('text-input-db-name').fill(clusterName);
