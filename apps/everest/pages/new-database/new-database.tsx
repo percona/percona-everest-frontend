@@ -107,7 +107,7 @@ export const NewDatabasePage = () => {
         <DialogTitle onClose={() => setModalIsOpen(false)}>
           {Messages.dialog.title}
         </DialogTitle>
-        <DialogContent dividers>
+        <DialogContent>
           <Typography>
             {Messages.dialog.content}
           </Typography>
