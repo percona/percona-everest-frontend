@@ -138,9 +138,10 @@ describe('Second Step', () => {
     expect(
       screen.queryByTestId('resources-exceeding-alert')
     ).not.toBeInTheDocument();
+
     const maxCPU = screen
-      .queryByTestId('cpu-progress-bar')
-      .getAttribute('aria-valuemax');
+      .getByTestId('cpu-progress-bar')
+      .getAttribute('aria-valuemax') || '';
 
     await waitFor(() =>
       fireEvent.change(cpu, { target: { value: +maxCPU + 1 } })
