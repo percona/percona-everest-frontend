@@ -4,7 +4,11 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import { DialogTitleProps } from './dialog-title.types';
 
-export const DialogTitle = ({ onClose, children, ...props }: DialogTitleProps) => (
+export const DialogTitle = ({
+  onClose,
+  children,
+  ...props
+}: DialogTitleProps) => (
   <MuiDialogTitle {...props}>
     {children}
     {onClose ? (

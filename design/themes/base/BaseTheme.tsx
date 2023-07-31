@@ -388,7 +388,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
         root: {
           padding: BaseTheme.spacing(2),
         },
-      }
+      },
     },
     MuiDialogContent: {
       styleOverrides: {
@@ -404,6 +404,6 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
           padding: BaseTheme.spacing(2),
         },
       },
-    }
+    },
   },
 });
