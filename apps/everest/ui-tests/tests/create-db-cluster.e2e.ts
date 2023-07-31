@@ -36,8 +36,7 @@ test('Cluster creation', async ({ page, request }) => {
   const dbEnginesButtons = page.getByTestId('toggle-button-group-input-db-type').getByRole('button');
   const nrButtons = await dbEnginesButtons.count();
 
-  // TODO This will break after PostgreSQL is supported. Change at that time
-  expect(nrButtons).toBe(2);
+  expect(nrButtons).toBe(3);
 
   const mySqlButton = dbEnginesButtons.filter({ hasText: 'MySQL' });
   const mongoButton = dbEnginesButtons.filter({ hasText: 'MongoDB' });
