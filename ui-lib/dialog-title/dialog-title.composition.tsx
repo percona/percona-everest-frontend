@@ -1,31 +1,35 @@
 import React, { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, Typography } from '@mui/material';
+import { CompositionViewer } from '@percona/design.composition-viewer';
 import { DialogTitle } from './dialog-title';
+import { baseThemeOptions } from '@percona/design.themes.base';
 
 export const BasicDialogTitle = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <>
+    <CompositionViewer themeOptions={baseThemeOptions}>
       <Button variant="outlined" onClick={() => setOpen(true)}>
         Open dialog
       </Button>
       <Dialog open={open}>
-        <DialogTitle onClick={() => setOpen(false)}>Modal Title</DialogTitle>
+        <DialogTitle onClose={() => setOpen(false)}>Modal Title</DialogTitle>
+        <DialogContent>
+          <Typography>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus variant="text" onClick={() => setOpen(false)}>
+            Cancel
+          </Button>
+          <Button variant="contained">
+            Accept
+          </Button>
+        </DialogActions>
       </Dialog>
-      <DialogContent dividers>
-        <Typography>
-          Lorem ipsum
-        </Typography>
-      </DialogContent>
-      <DialogActions>
-        <Button autoFocus variant="outlined" onClick={() => setOpen(false)}>
-          Cancel
-        </Button>
-        <Button variant="contained">
-          Accept
-        </Button>
-      </DialogActions>
-    </>
+    </CompositionViewer>
   );
 }
