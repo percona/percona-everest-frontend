@@ -4,29 +4,22 @@ import { Table } from '@percona/ui-lib.table';
 import { type MRT_ColumnDef } from 'material-react-table';
 import React, { useMemo, useState } from 'react';
 import { LabelValue } from '../../../components/db-cluster-view/expandedRow/LabelValue';
-import { CreateEditModalStorage } from './createEditModal/createEditModalStorage';
 import {
-  StorageLocationType,
-  StorageLocationTypes,
-} from './storage-locations.types';
+  useBackupStorages,
+  useCreateBackupStorage,
+} from '../../../hooks/backup-storages/useBackupStorages';
+import { BackupStorage } from '../../../types/backupStorages.types';
+import { CreateEditModalStorage } from './createEditModal/createEditModalStorage';
 
 export const StorageLocations = () => {
+  const { mutate: createBackupStorage } = useCreateBackupStorage();
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
   const [selectedStorageLocation, setSelectedStorageLocation] =
-    useState<StorageLocationType>();
-  const data = [
-    {
-      name: 'S3',
-      type: StorageLocationTypes.s3,
-      bucketName: 'dev-backups-storage',
-      description: 'Description',
-      endpoint: 'endpoint',
-      accessKey: 'access key',
-      secretKey: 'secret key',
-    },
-  ];
+    useState<BackupStorage>();
 
-  const columns = useMemo<MRT_ColumnDef<StorageLocationType>[]>(
+  const { data = [], isFetching } = useBackupStorages();
+
+  const columns = useMemo<MRT_ColumnDef<BackupStorage>[]>(
     () => [
       {
         accessorKey: 'name',
@@ -46,20 +39,21 @@ export const StorageLocations = () => {
         enableHiding: false,
       },
       {
-        accessorKey: 'endpoint',
+        accessorKey: 'url',
         header: 'Endpoint',
         enableHiding: false,
       },
-      {
-        accessorKey: 'accessKey',
-        header: 'Access Key',
-        enableHiding: false,
-      },
-      {
-        accessorKey: 'secretKey',
-        header: 'Secret Key',
-        enableHiding: false,
-      },
+      //TODO: uncomment when endpoint is ready
+      // {
+      //   accessorKey: 'accessKey',
+      //   header: 'Access Key',
+      //   enableHiding: false,
+      // },
+      // {
+      //   accessorKey: 'secretKey',
+      //   header: 'Secret Key',
+      //   enableHiding: false,
+      // },
     ],
     []
   );
@@ -68,9 +62,7 @@ export const StorageLocations = () => {
     setOpenCreateEditModal(true);
   };
 
-  const handleOpenEditModal = (
-    selectedStorageLocation: StorageLocationType
-  ) => {
+  const handleOpenEditModal = (selectedStorageLocation: BackupStorage) => {
     setSelectedStorageLocation(selectedStorageLocation);
     setOpenCreateEditModal(true);
   };
@@ -80,13 +72,14 @@ export const StorageLocations = () => {
     setOpenCreateEditModal(false);
   };
 
-  const handleSubmit = (isEdit: boolean, data: StorageLocationType) => {
+  const handleSubmit = (isEdit: boolean, data: BackupStorage) => {
     console.log(data);
     if (isEdit) {
       console.log('edit submit');
-      return;
+    } else {
+      createBackupStorage(data);
     }
-    console.log('create submit');
+    handleCloseModal();
   };
   return (
     <>
@@ -95,10 +88,11 @@ export const StorageLocations = () => {
         state={{
           columnVisibility: {
             description: false,
-            endpoint: false,
+            url: false,
             accessKey: false,
             secretKey: false,
           },
+          isLoading: isFetching,
         }}
         columns={columns}
         data={data}
@@ -138,7 +132,9 @@ export const StorageLocations = () => {
             }}
           >
             <Box>
-              <LabelValue label="Endpoit" value={row.original.endpoint} />
+              {row.original.url && (
+                <LabelValue label="Endpoit" value={row.original.url} />
+              )}
               {row.original.description && (
                 <LabelValue
                   label="Description"
@@ -146,10 +142,11 @@ export const StorageLocations = () => {
                 />
               )}
             </Box>
+            {/* TODO: uncomment when endpoint is ready
             <Box>
               <LabelValue label="Access key" value={row.original.accessKey} />
               <LabelValue label="Secret key" value={row.original.secretKey} />
-            </Box>
+            </Box>  */}
           </Box>
         )}
         renderTopToolbarCustomActions={() => (

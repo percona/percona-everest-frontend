@@ -12,18 +12,20 @@ import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
+  BackupStorage,
+  StorageType,
+} from '../../../../types/backupStorages.types';
+import {
   StorageLocationsFields,
   storageLocationsSchema,
-  StorageLocationType,
-  StorageLocationTypes,
 } from '../storage-locations.types';
 import { DialogTitle } from './DialogTitle';
 
 interface CreateEditModalStorageProps {
   open: boolean;
   handleCloseModal: () => void;
-  handleSubmitModal: (isEdit: boolean, data: StorageLocationType) => void;
-  selectedStorageLocation?: StorageLocationType;
+  handleSubmitModal: (isEdit: boolean, data: BackupStorage) => void;
+  selectedStorageLocation?: BackupStorage;
 }
 
 export const CreateEditModalStorage = ({
@@ -34,33 +36,42 @@ export const CreateEditModalStorage = ({
 }: CreateEditModalStorageProps) => {
   const isEditMode = !!selectedStorageLocation;
 
-  const { control, handleSubmit } = useForm<StorageLocationType>({
+  const { control, handleSubmit } = useForm<BackupStorage>({
     mode: 'onChange',
-    resolver: zodResolver(storageLocationsSchema),
+    resolver: zodResolver(
+      storageLocationsSchema.refine((obj) => {
+        const { accessKey, secretKey, ...rest } = obj;
+        if (isEditMode) {
+          return { ...rest };
+        } else {
+          return obj;
+        }
+      })
+    ),
     defaultValues: {
       [StorageLocationsFields.name]: selectedStorageLocation
-        ? selectedStorageLocation[StorageLocationsFields.name]
+        ? selectedStorageLocation.name
+        : '',
+      [StorageLocationsFields.type]: StorageType.S3,
+      [StorageLocationsFields.url]: selectedStorageLocation
+        ? selectedStorageLocation.url
+        : '',
+      [StorageLocationsFields.description]: selectedStorageLocation
+        ? selectedStorageLocation.description
+        : '',
+      [StorageLocationsFields.accessKey]: selectedStorageLocation
+        ? selectedStorageLocation.accessKey
         : '',
       [StorageLocationsFields.secretKey]: selectedStorageLocation
         ? selectedStorageLocation[StorageLocationsFields.secretKey]
         : '',
-      [StorageLocationsFields.type]: StorageLocationTypes.s3,
-      [StorageLocationsFields.endpoint]: selectedStorageLocation
-        ? selectedStorageLocation[StorageLocationsFields.endpoint]
-        : '',
-      [StorageLocationsFields.description]: selectedStorageLocation
-        ? selectedStorageLocation[StorageLocationsFields.description]
-        : '',
-      [StorageLocationsFields.accessKey]: selectedStorageLocation
-        ? selectedStorageLocation[StorageLocationsFields.accessKey]
-        : '',
       [StorageLocationsFields.bucketName]: selectedStorageLocation
-        ? selectedStorageLocation[StorageLocationsFields.bucketName]
+        ? selectedStorageLocation.bucketName
         : '',
     },
   });
 
-  const onSubmit: SubmitHandler<StorageLocationType> = (data) => {
+  const onSubmit: SubmitHandler<BackupStorage> = (data) => {
     handleSubmitModal(isEditMode, data);
   };
 
@@ -70,7 +81,7 @@ export const CreateEditModalStorage = ({
         id={'storage-dialog-title'}
         onClose={() => handleCloseModal()}
       >
-        {isEditMode ? 'Edit' : 'Add'} Storage Location
+        {isEditMode ? 'Edit' : 'Add'} Backups storages
       </DialogTitle>
       <DialogContent sx={{ width: '480px' }}>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -85,15 +96,12 @@ export const CreateEditModalStorage = ({
               name={StorageLocationsFields.type}
               label="Type"
               control={control}
+              selectFieldProps={{ disabled: isEditMode }}
               isRequired
             >
-              <MenuItem value={StorageLocationTypes.s3}>Amazon S3</MenuItem>
-              <MenuItem value={StorageLocationTypes.gcs}>
-                Google Cloud Storage
-              </MenuItem>
-              <MenuItem value={StorageLocationTypes.azure}>
-                Azure Cloud Storage
-              </MenuItem>
+              <MenuItem value={StorageType.S3}>Amazon S3</MenuItem>
+              <MenuItem value={StorageType.GCS}>Google Cloud Storage</MenuItem>
+              <MenuItem value={StorageType.AZURE}>Azure Cloud Storage</MenuItem>
             </SelectInput>
             <TextInput
               name={StorageLocationsFields.bucketName}
@@ -101,23 +109,32 @@ export const CreateEditModalStorage = ({
               label={'Bucket Name'}
             />
             <TextInput
-              name={StorageLocationsFields.accessKey}
+              name={StorageLocationsFields.description}
               control={control}
-              label="Access Key"
-              isRequired
+              label="Description"
             />
             <TextInput
-              name={StorageLocationsFields.secretKey}
-              control={control}
-              label="Secret Key"
-              isRequired
-            />
-            <TextInput
-              name={StorageLocationsFields.endpoint}
+              name={StorageLocationsFields.url}
               control={control}
               label="Endpoit"
               isRequired
             />
+            {!isEditMode && (
+              <>
+                <TextInput
+                  name={StorageLocationsFields.accessKey}
+                  control={control}
+                  label="Access Key"
+                  isRequired
+                />
+                <TextInput
+                  name={StorageLocationsFields.secretKey}
+                  control={control}
+                  label="Secret Key"
+                  isRequired
+                />
+              </>
+            )}
           </FormGroup>
         </form>
       </DialogContent>

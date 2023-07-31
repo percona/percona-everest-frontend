@@ -1,38 +1,26 @@
 import { z } from 'zod';
+import { StorageType } from '../../../types/backupStorages.types';
 
 export enum StorageLocationsFields {
   name = 'name',
   type = 'type',
   bucketName = 'bucketName',
   description = 'description',
-  endpoint = 'endpoint',
+  region = 'region',
+  url = 'url',
   accessKey = 'accessKey',
   secretKey = 'secretKey',
 }
 
-export enum StorageLocationTypes {
-  s3 = 's3',
-  azure = 'azure',
-  gcs = 'gcs',
-}
-
 export const storageLocationsSchema = z
   .object({
-    [StorageLocationsFields.name]: z.string().min(1, 'Name is required'),
-    [StorageLocationsFields.type]: z.nativeEnum(StorageLocationTypes),
-    [StorageLocationsFields.bucketName]: z
-      .string()
-      .min(1, 'Bucket name is required'),
+    [StorageLocationsFields.name]: z.string().nonempty(),
+    [StorageLocationsFields.type]: z.nativeEnum(StorageType),
+    [StorageLocationsFields.bucketName]: z.string().nonempty(),
     [StorageLocationsFields.description]: z.string().optional(),
-    [StorageLocationsFields.endpoint]: z
-      .string()
-      .min(1, 'Endpoint is required'),
-    [StorageLocationsFields.accessKey]: z
-      .string()
-      .min(1, 'Access key is required'),
-    [StorageLocationsFields.secretKey]: z
-      .string()
-      .min(1, 'Secret key is required'),
+    [StorageLocationsFields.url]: z.string().nonempty(),
+    [StorageLocationsFields.accessKey]: z.string().nonempty(),
+    [StorageLocationsFields.secretKey]: z.string().nonempty(),
   })
   .passthrough();
 
