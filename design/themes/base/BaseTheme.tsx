@@ -152,6 +152,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
     },
     h5: {
       fontWeight: 600,
+      lineHeight: '22.5px',
       [BaseTheme.breakpoints.down('sm')]: {
         fontSize: '20px',
       },
