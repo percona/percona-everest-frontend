@@ -14,8 +14,7 @@ import { Messages } from './first-step.messages';
 import { generateShortUID } from './utils';
 
 export const FirstStep = () => {
-  const { control, watch, setValue, getValues, getFieldState } =
-    useFormContext();
+  const { control, watch, setValue, getFieldState } = useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
 
