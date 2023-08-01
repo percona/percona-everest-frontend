@@ -12,7 +12,7 @@ import {
   useEditBackupStorage,
 } from '../../../hooks/backup-storages/useBackupStorages';
 import { BackupStorage } from '../../../types/backupStorages.types';
-import { CreateEditModalStorage } from './createEditModal/createEditModalStorage';
+import { CreateEditModalStorage } from './createEditModal/create-edit-modal';
 import { Messages } from './storage-locations.messages';
 
 export const StorageLocations = () => {
