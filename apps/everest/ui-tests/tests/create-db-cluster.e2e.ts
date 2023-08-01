@@ -98,8 +98,8 @@ test('Cluster creation', async ({ page, request }) => {
   expect(addedCluster?.spec.engine.type).toBe('psmdb');
   expect(addedCluster?.spec.engine.replicas).toBe(2);
   expect(addedCluster?.spec.engine.resources?.cpu.toString()).toBe('8');
-  expect(addedCluster?.spec.engine.resources?.memory.toString()).toBe('32');
-  expect(addedCluster?.spec.engine.storage.size.toString()).toBe('150');
+  expect(addedCluster?.spec.engine.resources?.memory.toString()).toBe('32G');
+  expect(addedCluster?.spec.engine.storage.size.toString()).toBe('150G');
   expect(addedCluster?.spec.proxy.expose.type).toBe('external');
   expect(addedCluster?.spec.proxy.replicas).toBe(2);
   expect(addedCluster?.spec.proxy.expose.ipSourceRanges).toEqual([
