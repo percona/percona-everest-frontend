@@ -39,10 +39,10 @@ const formValuesToPayloadMapping = (dbPayload: DbWizardType): DbCluster => {
         replicas: +dbPayload.numberOfNodes,
         resources: {
           cpu: dbPayload.cpu,
-          memory: dbPayload.memory,
+          memory: `${dbPayload.memory}G`,
         },
         storage: {
-          size: dbPayload.disk,
+          size: `${dbPayload.disk}G`,
         },
       },
       // monitoring: {
