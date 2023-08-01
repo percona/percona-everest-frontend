@@ -1,24 +1,32 @@
-import { Add, AutoAwesome, Delete, Edit } from '@mui/icons-material';
+import { Add, Delete, Edit } from '@mui/icons-material';
 import { Box, Button, MenuItem } from '@mui/material';
 import { Table } from '@percona/ui-lib.table';
 import { type MRT_ColumnDef } from 'material-react-table';
 import React, { useMemo, useState } from 'react';
+import { useQueryClient } from 'react-query';
 import { LabelValue } from '../../../components/db-cluster-view/expandedRow/LabelValue';
 import {
   useBackupStorages,
   useCreateBackupStorage,
+  useDeleteBackupStorage,
+  useEditBackupStorage,
 } from '../../../hooks/backup-storages/useBackupStorages';
 import { BackupStorage } from '../../../types/backupStorages.types';
 import { CreateEditModalStorage } from './createEditModal/createEditModalStorage';
 
 export const StorageLocations = () => {
+  const queryClient = useQueryClient();
+
+  const { data = [], isFetching } = useBackupStorages();
   const { mutate: createBackupStorage } = useCreateBackupStorage();
+  const { mutate: editBackupStorage } = useEditBackupStorage();
+  const { mutate: deleteBackupStorage } = useDeleteBackupStorage();
+
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
   const [selectedStorageLocation, setSelectedStorageLocation] =
     useState<BackupStorage>();
 
-  const { data = [], isFetching } = useBackupStorages();
-
+  console.log(data);
   const columns = useMemo<MRT_ColumnDef<BackupStorage>[]>(
     () => [
       {
@@ -43,17 +51,6 @@ export const StorageLocations = () => {
         header: 'Endpoint',
         enableHiding: false,
       },
-      //TODO: uncomment when endpoint is ready
-      // {
-      //   accessorKey: 'accessKey',
-      //   header: 'Access Key',
-      //   enableHiding: false,
-      // },
-      // {
-      //   accessorKey: 'secretKey',
-      //   header: 'Secret Key',
-      //   enableHiding: false,
-      // },
     ],
     []
   );
@@ -73,13 +70,48 @@ export const StorageLocations = () => {
   };
 
   const handleSubmit = (isEdit: boolean, data: BackupStorage) => {
-    console.log(data);
     if (isEdit) {
-      console.log('edit submit');
+      editBackupStorage(data, {
+        onSuccess: (updatedBackupStorage: BackupStorage) => {
+          queryClient.setQueryData(
+            ['backupStorages'],
+            (oldData?: BackupStorage[]) => {
+              return (oldData || []).map((value) =>
+                value.id === updatedBackupStorage.id
+                  ? updatedBackupStorage
+                  : value
+              );
+            }
+          );
+        },
+      });
     } else {
-      createBackupStorage(data);
+      createBackupStorage(data, {
+        onSuccess: (createdBackupStorage: BackupStorage) => {
+          queryClient.setQueryData(
+            ['backupStorages'],
+            (oldData?: BackupStorage[]) => {
+              return [createdBackupStorage, ...(oldData || [])];
+            }
+          );
+        },
+      });
     }
     handleCloseModal();
+  };
+
+  const handleDeleteBackup = (backupStorageId: string) => {
+    deleteBackupStorage(backupStorageId, {
+      onSuccess: (_, variables) => {
+        console.log(variables);
+        queryClient.setQueryData(
+          ['backupStorages'],
+          (oldData?: BackupStorage[]) => {
+            return (oldData || []).filter((value) => value.id !== variables);
+          }
+        );
+      },
+    });
   };
   return (
     <>
@@ -107,19 +139,20 @@ export const StorageLocations = () => {
           </MenuItem>,
           <MenuItem
             key={1}
-            onClick={() => {}}
+            onClick={() => handleDeleteBackup(row.original.id!)}
             sx={{ m: 0, display: 'flex', gap: 1 }}
           >
             <Delete />
             Delete
           </MenuItem>,
-          <MenuItem
-            key={2}
-            onClick={() => {}}
-            sx={{ m: 0, display: 'flex', gap: 1 }}
-          >
-            <AutoAwesome /> Set as default
-          </MenuItem>,
+          // TODO: uncomment when api is ready
+          // <MenuItem
+          //   key={2}
+          //   onClick={() => {}}
+          //   sx={{ m: 0, display: 'flex', gap: 1 }}
+          // >
+          //   <AutoAwesome /> Set as default
+          // </MenuItem>,
         ]}
         onEditingRowSave={() => {}}
         renderDetailPanel={({ row }) => (

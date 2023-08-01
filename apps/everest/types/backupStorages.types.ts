@@ -16,7 +16,7 @@ export type BaseBackupStorageFields = {
 };
 
 export type BackupStorage = BaseBackupStorageFields & {
-  id: string;
+  id?: string;
 };
 
 export type GetBackupStoragesPayload = BackupStorage[];

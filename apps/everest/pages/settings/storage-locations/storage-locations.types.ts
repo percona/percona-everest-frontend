@@ -18,7 +18,8 @@ export const storageLocationsSchema = z
     [StorageLocationsFields.type]: z.nativeEnum(StorageType),
     [StorageLocationsFields.bucketName]: z.string().nonempty(),
     [StorageLocationsFields.description]: z.string().optional(),
-    [StorageLocationsFields.url]: z.string().nonempty(),
+    [StorageLocationsFields.url]: z.string().nonempty().url(),
+    [StorageLocationsFields.region]: z.string().nonempty(),
     [StorageLocationsFields.accessKey]: z.string().nonempty(),
     [StorageLocationsFields.secretKey]: z.string().nonempty(),
   })

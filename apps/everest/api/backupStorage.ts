@@ -15,3 +15,15 @@ export const createBackupStorageFn = async (formData: BackupStorage) => {
 
   return response.data;
 };
+
+export const editBackupStorageFn = async (formData: BackupStorage) => {
+  const response = await api.patch(`backup-storages/${formData.id}`, formData);
+
+  return response.data;
+};
+
+export const deleteBackupStorageFn = async (backupStorageId: string) => {
+  const response = await api.delete(`backup-storages/${backupStorageId}`);
+
+  return response.data;
+};

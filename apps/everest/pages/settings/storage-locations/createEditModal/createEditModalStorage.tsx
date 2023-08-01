@@ -39,13 +39,9 @@ export const CreateEditModalStorage = ({
   const { control, handleSubmit } = useForm<BackupStorage>({
     mode: 'onChange',
     resolver: zodResolver(
-      storageLocationsSchema.refine((obj) => {
-        const { accessKey, secretKey, ...rest } = obj;
-        if (isEditMode) {
-          return { ...rest };
-        } else {
-          return obj;
-        }
+      storageLocationsSchema.omit({
+        accessKey: isEditMode ? true : undefined,
+        secretKey: isEditMode ? true : undefined,
       })
     ),
     defaultValues: {
@@ -58,6 +54,9 @@ export const CreateEditModalStorage = ({
         : '',
       [StorageLocationsFields.description]: selectedStorageLocation
         ? selectedStorageLocation.description
+        : '',
+      [StorageLocationsFields.region]: selectedStorageLocation
+        ? selectedStorageLocation.region
         : '',
       [StorageLocationsFields.accessKey]: selectedStorageLocation
         ? selectedStorageLocation.accessKey
@@ -72,7 +71,7 @@ export const CreateEditModalStorage = ({
   });
 
   const onSubmit: SubmitHandler<BackupStorage> = (data) => {
-    handleSubmitModal(isEditMode, data);
+    handleSubmitModal(isEditMode, { ...data, id: selectedStorageLocation?.id });
   };
 
   return (
@@ -107,6 +106,13 @@ export const CreateEditModalStorage = ({
               name={StorageLocationsFields.bucketName}
               control={control}
               label={'Bucket Name'}
+              isRequired
+            />
+            <TextInput
+              name={StorageLocationsFields.region}
+              control={control}
+              label={'Region'}
+              isRequired
             />
             <TextInput
               name={StorageLocationsFields.description}
@@ -116,7 +122,7 @@ export const CreateEditModalStorage = ({
             <TextInput
               name={StorageLocationsFields.url}
               control={control}
-              label="Endpoit"
+              label="Endpoint"
               isRequired
             />
             {!isEditMode && (
