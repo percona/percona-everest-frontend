@@ -13,6 +13,7 @@ import {
 } from '../../../hooks/backup-storages/useBackupStorages';
 import { BackupStorage } from '../../../types/backupStorages.types';
 import { CreateEditModalStorage } from './createEditModal/createEditModalStorage';
+import { Messages } from './storage-locations.messages';
 
 export const StorageLocations = () => {
   const queryClient = useQueryClient();
@@ -26,29 +27,28 @@ export const StorageLocations = () => {
   const [selectedStorageLocation, setSelectedStorageLocation] =
     useState<BackupStorage>();
 
-  console.log(data);
   const columns = useMemo<MRT_ColumnDef<BackupStorage>[]>(
     () => [
       {
         accessorKey: 'name',
-        header: 'Name',
+        header: Messages.name,
       },
       {
         accessorKey: 'type',
-        header: 'Type',
+        header: Messages.type,
       },
       {
         accessorKey: 'bucketName',
-        header: 'Bucket Name',
+        header: Messages.bucketName,
       },
       {
         accessorKey: 'description',
-        header: 'Description',
+        header: Messages.description,
         enableHiding: false,
       },
       {
         accessorKey: 'url',
-        header: 'Endpoint',
+        header: Messages.url,
         enableHiding: false,
       },
     ],
@@ -135,7 +135,7 @@ export const StorageLocations = () => {
             onClick={() => handleOpenEditModal(row.original)}
             sx={{ m: 0, display: 'flex', gap: 1 }}
           >
-            <Edit /> Edit
+            <Edit /> {Messages.edit}
           </MenuItem>,
           <MenuItem
             key={1}
@@ -143,7 +143,7 @@ export const StorageLocations = () => {
             sx={{ m: 0, display: 'flex', gap: 1 }}
           >
             <Delete />
-            Delete
+            {Messages.delete}
           </MenuItem>,
           // TODO: uncomment when api is ready
           // <MenuItem
@@ -154,7 +154,6 @@ export const StorageLocations = () => {
           //   <AutoAwesome /> Set as default
           // </MenuItem>,
         ]}
-        onEditingRowSave={() => {}}
         renderDetailPanel={({ row }) => (
           <Box
             sx={{
@@ -166,11 +165,11 @@ export const StorageLocations = () => {
           >
             <Box>
               {row.original.url && (
-                <LabelValue label="Endpoit" value={row.original.url} />
+                <LabelValue label={Messages.url} value={row.original.url} />
               )}
               {row.original.description && (
                 <LabelValue
-                  label="Description"
+                  label={Messages.description}
                   value={row.original.description}
                 />
               )}
@@ -189,7 +188,7 @@ export const StorageLocations = () => {
             variant="outlined"
             onClick={() => handleOpenCreateModal()}
           >
-            Add storage location
+            {Messages.addStorageLocationButton}
           </Button>
         )}
       />

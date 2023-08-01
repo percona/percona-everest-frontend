@@ -15,6 +15,7 @@ import {
   BackupStorage,
   StorageType,
 } from '../../../../types/backupStorages.types';
+import { Messages } from '../storage-locations.messages';
 import {
   StorageLocationsFields,
   storageLocationsSchema,
@@ -80,7 +81,7 @@ export const CreateEditModalStorage = ({
         id={'storage-dialog-title'}
         onClose={() => handleCloseModal()}
       >
-        {isEditMode ? 'Edit' : 'Add'} Backups storages
+        {Messages.createEditModal.addEditModal(isEditMode)}
       </DialogTitle>
       <DialogContent sx={{ width: '480px' }}>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -88,41 +89,41 @@ export const CreateEditModalStorage = ({
             <TextInput
               name={StorageLocationsFields.name}
               control={control}
-              label="Name"
+              label={Messages.name}
               isRequired
             />
             <SelectInput
               name={StorageLocationsFields.type}
-              label="Type"
+              label={Messages.type}
               control={control}
               selectFieldProps={{ disabled: isEditMode }}
               isRequired
             >
-              <MenuItem value={StorageType.S3}>Amazon S3</MenuItem>
-              <MenuItem value={StorageType.GCS}>Google Cloud Storage</MenuItem>
-              <MenuItem value={StorageType.AZURE}>Azure Cloud Storage</MenuItem>
+              <MenuItem value={StorageType.S3}>{Messages.s3}</MenuItem>
+              <MenuItem value={StorageType.GCS}>{Messages.gcs}</MenuItem>
+              <MenuItem value={StorageType.AZURE}>{Messages.azure}</MenuItem>
             </SelectInput>
             <TextInput
               name={StorageLocationsFields.bucketName}
               control={control}
-              label={'Bucket Name'}
+              label={Messages.bucketName}
               isRequired
             />
             <TextInput
               name={StorageLocationsFields.region}
               control={control}
-              label={'Region'}
+              label={Messages.region}
               isRequired
             />
             <TextInput
               name={StorageLocationsFields.description}
               control={control}
-              label="Description"
+              label={Messages.description}
             />
             <TextInput
               name={StorageLocationsFields.url}
               control={control}
-              label="Endpoint"
+              label={Messages.url}
               isRequired
             />
             {!isEditMode && (
@@ -130,13 +131,13 @@ export const CreateEditModalStorage = ({
                 <TextInput
                   name={StorageLocationsFields.accessKey}
                   control={control}
-                  label="Access Key"
+                  label={Messages.accessKey}
                   isRequired
                 />
                 <TextInput
                   name={StorageLocationsFields.secretKey}
                   control={control}
-                  label="Secret Key"
+                  label={Messages.secretKey}
                   isRequired
                 />
               </>
@@ -145,9 +146,11 @@ export const CreateEditModalStorage = ({
         </form>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => handleCloseModal()}>Cancel</Button>
+        <Button onClick={() => handleCloseModal()}>
+          {Messages.createEditModal.cancel}
+        </Button>
         <Button variant="contained" onClick={handleSubmit(onSubmit)}>
-          {isEditMode ? 'Edit' : 'Add'}
+          {Messages.createEditModal.addEditButton(isEditMode)}
         </Button>
       </DialogActions>
     </Dialog>
