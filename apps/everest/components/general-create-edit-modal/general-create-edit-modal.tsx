@@ -7,30 +7,10 @@ import {
 } from '@mui/material';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { ReactNode } from 'react';
-import {
-  DeepPartial,
-  FieldValues,
-  FormProvider,
-  SubmitHandler,
-  useForm,
-  ValidationMode,
-} from 'react-hook-form';
-import { ZodObject, ZodRawShape } from 'zod';
-import { DialogTitle } from './dialog-title';
-
-interface GeneralCreateEditModalProps<T extends FieldValues> {
-  isOpen: boolean;
-  closeModal: () => void;
-  headerMessage: string;
-  schema: ZodObject<ZodRawShape>;
-  defaultValues?: DeepPartial<T>;
-  onSubmit: SubmitHandler<T>;
-  children: ReactNode;
-  cancelMessage?: string;
-  submitMessage: string;
-  validationMode?: keyof ValidationMode;
-}
+import React from 'react';
+import { FieldValues, FormProvider, useForm } from 'react-hook-form';
+import { DialogTitle } from './dialog-title/dialog-title';
+import { GeneralCreateEditModalProps } from './general-create-edit-modal.types';
 
 export const GeneralCreateEditModal = <T extends FieldValues>({
   isOpen,

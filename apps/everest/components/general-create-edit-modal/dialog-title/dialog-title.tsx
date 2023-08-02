@@ -1,12 +1,7 @@
 import CloseIcon from '@mui/icons-material/Close';
 import { DialogTitle as DialogTitleMaterial, IconButton } from '@mui/material';
 import React from 'react';
-
-export interface DialogTitleProps {
-  id: string;
-  children?: React.ReactNode;
-  onClose: () => void;
-}
+import { DialogTitleProps } from '../general-create-edit-modal.types';
 
 export const DialogTitle = (props: DialogTitleProps) => {
   const { children, onClose, ...other } = props;

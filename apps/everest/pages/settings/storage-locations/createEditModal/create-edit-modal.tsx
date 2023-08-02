@@ -4,15 +4,14 @@ import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import React from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { GeneralCreateEditModal } from '../../../../components/general-create-edit-modal/general-create-edit-modal';
-import { StorageType } from '../../../../types/backupStorages.types';
+import { BackupStorage } from '../../../../types/backupStorages.types';
 import { Messages } from '../storage-locations.messages';
-import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  BackupStorageType,
   storageLocationDefaultValues,
   storageLocationEditValues,
   StorageLocationsFields,
   storageLocationsSchema,
+  StorageType,
 } from '../storage-locations.types';
 import { CreateEditModalStorageProps } from './create-edit-modal.types';
 
@@ -29,7 +28,11 @@ export const CreateEditModalStorage = ({
     secretKey: isEditMode ? true : undefined,
   });
 
-  const onSubmit: SubmitHandler<BackupStorageType> = (data) => {
+  const defaultValues = selectedStorageLocation
+    ? storageLocationEditValues(selectedStorageLocation)
+    : storageLocationDefaultValues;
+
+  const onSubmit: SubmitHandler<BackupStorage> = (data) => {
     handleSubmitModal(isEditMode, { ...data, id: selectedStorageLocation?.id });
   };
 
@@ -41,11 +44,7 @@ export const CreateEditModalStorage = ({
       onSubmit={onSubmit}
       submitMessage={Messages.createEditModal.addEditButton(isEditMode)}
       schema={schema}
-      defaultValues={
-        selectedStorageLocation
-          ? storageLocationEditValues(selectedStorageLocation)
-          : storageLocationDefaultValues
-      }
+      defaultValues={defaultValues}
     >
       <TextInput
         name={StorageLocationsFields.name}
