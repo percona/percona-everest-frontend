@@ -10,9 +10,11 @@ import {
   GetBackupStoragesPayload,
 } from '../../types/backupStorages.types';
 
+export const BACKUP_STORAGES_QUERY_KEY = 'backupStorages';
+
 export const useBackupStorages = () => {
   return useQuery<GetBackupStoragesPayload, unknown, BackupStorage[]>(
-    'backupStorages',
+    BACKUP_STORAGES_QUERY_KEY,
     () => getBackupStoragesFn()
   );
 };

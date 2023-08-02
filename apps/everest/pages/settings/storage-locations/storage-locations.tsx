@@ -6,6 +6,7 @@ import React, { useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { LabelValue } from '../../../components/db-cluster-view/expandedRow/LabelValue';
 import {
+  BACKUP_STORAGES_QUERY_KEY,
   useBackupStorages,
   useCreateBackupStorage,
   useDeleteBackupStorage,
@@ -14,6 +15,11 @@ import {
 import { BackupStorage } from '../../../types/backupStorages.types';
 import { CreateEditModalStorage } from './createEditModal/create-edit-modal';
 import { Messages } from './storage-locations.messages';
+import {
+  updateDataAfterCreate,
+  updateDataAfterDelete,
+  updateDataAfterEdit,
+} from './storage-locations.utils';
 
 export const StorageLocations = () => {
   const queryClient = useQueryClient();
@@ -70,48 +76,25 @@ export const StorageLocations = () => {
   };
 
   const handleSubmit = (isEdit: boolean, data: BackupStorage) => {
-    if (isEdit) {
-      editBackupStorage(data, {
-        onSuccess: (updatedBackupStorage: BackupStorage) => {
-          queryClient.setQueryData(
-            ['backupStorages'],
-            (oldData?: BackupStorage[]) => {
-              return (oldData || []).map((value) =>
-                value.id === updatedBackupStorage.id
-                  ? updatedBackupStorage
-                  : value
-              );
-            }
-          );
-        },
-      });
-    } else {
-      createBackupStorage(data, {
-        onSuccess: (createdBackupStorage: BackupStorage) => {
-          queryClient.setQueryData(
-            ['backupStorages'],
-            (oldData?: BackupStorage[]) => {
-              return [createdBackupStorage, ...(oldData || [])];
-            }
-          );
-        },
-      });
-    }
+    isEdit ? handleEditBackup(data) : handleCreateBackup(data);
     handleCloseModal();
+  };
+
+  const handleEditBackup = (data: BackupStorage) => {
+    editBackupStorage(data, {
+      onSuccess: updateDataAfterEdit(queryClient, BACKUP_STORAGES_QUERY_KEY),
+    });
+  };
+
+  const handleCreateBackup = (data: BackupStorage) => {
+    createBackupStorage(data, {
+      onSuccess: updateDataAfterCreate(queryClient, BACKUP_STORAGES_QUERY_KEY),
+    });
   };
 
   const handleDeleteBackup = (backupStorageId: string) => {
     deleteBackupStorage(backupStorageId, {
-      onSuccess: (_, backupStorageId) => {
-        queryClient.setQueryData(
-          ['backupStorages'],
-          (oldData?: BackupStorage[]) => {
-            return (oldData || []).filter(
-              (value) => value.id !== backupStorageId
-            );
-          }
-        );
-      },
+      onSuccess: updateDataAfterDelete(queryClient, BACKUP_STORAGES_QUERY_KEY),
     });
   };
   return (
@@ -192,7 +175,6 @@ export const StorageLocations = () => {
             </Box>  */}
           </Box>
         )}
-
       />
       {openCreateEditModal && (
         <CreateEditModalStorage
