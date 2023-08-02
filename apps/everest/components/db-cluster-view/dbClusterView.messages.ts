@@ -10,7 +10,7 @@ export const Messages = {
   },
   expandedRow: {
     connection: 'Connection',
-    dbClusterParams: 'Db Cluster parameters',
+    dbClusterParams: 'DB Cluster parameters',
     k8sCluster: 'K8s Cluster Name',
     cpu: 'CPU',
     memory: 'Memory',
