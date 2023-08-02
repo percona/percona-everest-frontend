@@ -7,15 +7,15 @@ import {
 import React from 'react';
 
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useFormContext } from 'react-hook-form';
 import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
+import { useFormContext } from 'react-hook-form';
 import { Messages } from './fourth-step.messages';
 
 import { DbWizardFormFields } from '../../new-database.types';
 
 export const FourthStep = () => {
-  const { control, setValue, watch } = useFormContext();
+  const { setValue, watch } = useFormContext();
   const externalAccess = watch(DbWizardFormFields.externalAccess);
 
   return (
@@ -24,20 +24,17 @@ export const FourthStep = () => {
       <Typography variant="subtitle2">{Messages.caption}</Typography>
       <FormGroup sx={{ mt: 2 }}>
         <SwitchInput
-          control={control}
           label={Messages.enableExternalAccess}
           name={DbWizardFormFields.externalAccess}
         />
         {externalAccess && (
           <>
             {/* <SwitchInput
-              control={control}
               label={Messages.internetFacing}
               name={DbWizardFormFields.internetFacing}
             /> */}
             <TextInput
               name={DbWizardFormFields.sourceRange}
-              control={control}
               label={Messages.sourceRange}
               textFieldProps={{
                 placeholder: Messages.sourceRangePlaceholder,

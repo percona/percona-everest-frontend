@@ -1,7 +1,11 @@
 import { Alert, Box, MenuItem } from '@mui/material';
+import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import React, { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { SelectInput } from '@percona/ui-lib.form.inputs.select';
+import { HoursField } from './fields/hours-field';
+import { MonthsField } from './fields/months-field';
+import { TimeFields } from './fields/time-fields';
+import { WeeksField } from './fields/weeks-field';
 import { Messages } from './time-selection.messages';
 import {
   TimeSelectionProps,
@@ -9,17 +13,13 @@ import {
   timeValueHumanized,
 } from './time-selection.types';
 import { getTimeText } from './time-selection.utils';
-import { HoursField } from './fields/hours-field';
-import { MonthsField } from './fields/months-field';
-import { TimeFields } from './fields/time-fields';
-import { WeeksField } from './fields/weeks-field';
 
 export const TimeSelection = ({
   showInfoAlert,
   sx,
   sxTimeFields,
 }: TimeSelectionProps) => {
-  const { control, watch } = useFormContext();
+  const { watch } = useFormContext();
   const selectedTime: TimeValue = watch('selectedTime');
   const minute: number = watch('minute');
   const hour: number = watch('hour');
@@ -48,7 +48,6 @@ export const TimeSelection = ({
       >
         <SelectInput
           name="selectedTime"
-          control={control}
           selectFieldProps={{
             sx: { minWidth: '120px' },
           }}
