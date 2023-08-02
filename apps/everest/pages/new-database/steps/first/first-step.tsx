@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
 import { FormGroup, MenuItem, Skeleton, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 
 import { DbToggleCard, DbType } from '@percona/ui-lib.db-toggle-card';
+import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { ToggleButtonGroupInput } from '@percona/ui-lib.form.inputs.toggle-button-group';
-import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { useFormContext } from 'react-hook-form';
-import { Messages } from './first-step.messages';
-import { generateShortUID } from './utils';
 import { useDbEngines } from '../../../../hooks/api/db-engines/useDbEngines';
+import { DbEngineToolStatus } from '../../../../types/dbEngines.types';
 import { dbEngineToDbType, dbTypeToDbEngine } from '../../../../utils/db';
 import { DbWizardFormFields } from '../../new-database.types';
-import { DbEngineToolStatus } from '../../../../types/dbEngines.types';
+import { Messages } from './first-step.messages';
+import { generateShortUID } from './utils';
 
 export const FirstStep = () => {
-  const { control, watch, setValue, getValues } = useFormContext();
+  const { control, watch, setValue, getFieldState } = useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
 
@@ -50,9 +50,9 @@ export const FirstStep = () => {
     if (!dbType) {
       return;
     }
-    const dbName = getValues(DbWizardFormFields.dbName);
+    const { isTouched } = getFieldState(DbWizardFormFields.dbName);
 
-    if (!dbName) {
+    if (!isTouched) {
       setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`, {
         shouldValidate: true,
       });
