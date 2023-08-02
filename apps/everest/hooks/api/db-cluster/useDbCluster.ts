@@ -1,8 +1,9 @@
-import { UseMutationOptions, useMutation } from 'react-query';
+import { UseMutationOptions, UseQueryOptions, useMutation, useQuery } from 'react-query';
 import { DbWizardType } from '../../../pages/new-database/new-database.types';
-import { DbCluster, ProxyExposeType } from '../../../types/dbCluster.types';
+import { ClusterCredentials, DbCluster, GetDbClusterCredentialsPayload, ProxyExposeType } from '../../../types/dbCluster.types';
 import { dbTypeToDbEngine } from '../../../utils/db';
-import { createDbClusterFn } from '../../../api/dbClusterApi';
+import { createDbClusterFn, getDbClusterCredentialsFn } from '../../../api/dbClusterApi';
+import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
 // import {getCronExpressionFromFormValues} from "../../components/time-selection/time-selection.utils";
 // import {TimeValue, WeekDays} from "../../components/time-selection/time-selection.types";
 
@@ -80,3 +81,16 @@ export const useCreateDbCluster = (
     { ...options }
   );
 };
+
+export const useDbClusterCredentials = (
+    dbClusterName: string,
+    options?: UseQueryOptions<ClusterCredentials>,
+  ) => {
+  const { id } = useSelectedKubernetesCluster();
+
+  return useQuery<GetDbClusterCredentialsPayload, unknown, ClusterCredentials>(
+    `cluster-credentials-${name}`,
+    () => getDbClusterCredentialsFn(id, dbClusterName),
+    {...options},
+  );
+}

@@ -1,8 +1,9 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Skeleton, Typography } from '@mui/material';
 import { MRT_Row } from 'material-react-table';
 import React from 'react';
 import { DbClusterTableElement } from '../../../hooks/api/db-clusters/dbCluster.type';
 import { ProxyExposeType } from '../../../types/dbCluster.types';
+import { useDbClusterCredentials } from '../../../hooks/api/db-cluster/useDbCluster';
 import { Messages } from '../dbClusterView.messages';
 import { LabelValue } from './LabelValue';
 
@@ -11,7 +12,10 @@ export const ExpandedRow = ({
 }: {
   row: MRT_Row<DbClusterTableElement>;
 }) => {
-  const { cpu, kubernetesCluster, memory, storage, exposetype } = row.original;
+  const { cpu, kubernetesCluster, memory, storage, exposetype, databaseName, hostName, port } = row.original;
+  const isExpanded = row.getIsExpanded();
+  const { isLoading, isFetching, data } = useDbClusterCredentials(databaseName, { enabled: !!isExpanded });
+
   return (
     <Box
       sx={{
@@ -21,7 +25,6 @@ export const ExpandedRow = ({
         gap: '50px',
       }}
     >
-      {/* TODO: add ones endpoint for getting those values is created
       <Box>
         <Typography
           variant="subtitle2"
@@ -29,13 +32,22 @@ export const ExpandedRow = ({
         >
           {Messages.expandedRow.connection}
         </Typography>
-
-        <LabelValue label="Host" value={hostName} />
-        <LabelValue label="Port" value="bla" />
-        <LabelValue label="Username" value="bla" />
-        <LabelValue label="Password" value="bla" /> 
+        <LabelValue label="Host" value={hostName || ''} />
+        <LabelValue label="Port" value={port || ''} />
+        {isLoading || isFetching ?
+          (
+            <>
+              <Skeleton width="300px" />
+              <Skeleton width="300px" />
+            </>
+          ) : (
+            <>
+              <LabelValue label="Username" value={data?.username || ''} />
+              <LabelValue label="Password" value={data?.password || ''} />
+            </>
+          )}
       </Box>
-      */}
+
       <Box>
         <Typography
           variant="subtitle2"
