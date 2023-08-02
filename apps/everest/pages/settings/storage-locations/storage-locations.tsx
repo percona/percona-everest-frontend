@@ -11,7 +11,7 @@ import {
   useCreateBackupStorage,
   useDeleteBackupStorage,
   useEditBackupStorage,
-} from '../../../hooks/backup-storages/useBackupStorages';
+} from '../../../hooks/api/backup-storages/useBackupStorages';
 import { BackupStorage } from '../../../types/backupStorages.types';
 import { CreateEditModalStorage } from './createEditModal/create-edit-modal';
 import { Messages } from './storage-locations.messages';

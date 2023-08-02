@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
 import { FormGroup, MenuItem, Skeleton, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 
 import { DbToggleCard, DbType } from '@percona/ui-lib.db-toggle-card';
+import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { ToggleButtonGroupInput } from '@percona/ui-lib.form.inputs.toggle-button-group';
-import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { useFormContext } from 'react-hook-form';
-import { Messages } from './first-step.messages';
-import { generateShortUID } from './utils';
-import { useDbEngines } from '../../../../hooks/db-engines/useDbEngines';
+import { useDbEngines } from '../../../../hooks/api/db-engines/useDbEngines';
+import { DbEngineToolStatus } from '../../../../types/dbEngines.types';
 import { dbEngineToDbType, dbTypeToDbEngine } from '../../../../utils/db';
 import { DbWizardFormFields } from '../../new-database.types';
-import { DbEngineToolStatus } from '../../../../types/dbEngines.types';
+import { Messages } from './first-step.messages';
+import { generateShortUID } from './utils';
 
 export const FirstStep = () => {
-  const { control, watch, setValue, getValues } = useFormContext();
+  const { control, watch, setValue, getFieldState } = useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
 
@@ -50,9 +50,9 @@ export const FirstStep = () => {
     if (!dbType) {
       return;
     }
-    const dbName = getValues(DbWizardFormFields.dbName);
+    const { isTouched } = getFieldState(DbWizardFormFields.dbName);
 
-    if (!dbName) {
+    if (!isTouched) {
       setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`, {
         shouldValidate: true,
       });
@@ -61,19 +61,19 @@ export const FirstStep = () => {
     const newVersions = dbEngines.find((engine) => engine.type === dbEngine);
 
     // Safety check
-    if (!newVersions || !newVersions.availableVersions.backup.length) {
+    if (!newVersions || !newVersions.availableVersions.engine.length) {
       return;
     }
 
-    const recommendedVersion = newVersions.availableVersions.backup.find(
+    const recommendedVersion = newVersions.availableVersions.engine.find(
       (version) => version.status === DbEngineToolStatus.RECOMMENDED
     );
 
     setValue(
       DbWizardFormFields.dbVersion,
       recommendedVersion
-        ? recommendedVersion.imagePath
-        : newVersions.availableVersions.backup[0].imagePath
+        ? recommendedVersion.version
+        : newVersions.availableVersions.engine[0].version
     );
     setDbVersions(newVersions);
   }, [dbType, dbEngines]);
@@ -159,9 +159,9 @@ export const FirstStep = () => {
           name={DbWizardFormFields.dbVersion}
           label={Messages.labels.dbVersion}
         >
-          {dbVersions?.availableVersions.backup.map((version) => (
-            <MenuItem value={version.imagePath} key={version.imagePath}>
-              {version.imagePath}
+          {dbVersions?.availableVersions.engine.map((version) => (
+            <MenuItem value={version.version} key={version.version}>
+              {version.version}
             </MenuItem>
           ))}
         </SelectInput>

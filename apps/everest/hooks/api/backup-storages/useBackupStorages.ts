@@ -4,8 +4,11 @@ import {
   deleteBackupStorageFn,
   editBackupStorageFn,
   getBackupStoragesFn,
-} from '../../api/backupStorage';
-import { BackupStorage, GetBackupStoragesPayload } from '../../types/backupStorages.types';
+} from '../../../api/backupStorage';
+import {
+  BackupStorage,
+  GetBackupStoragesPayload,
+} from '../../../types/backupStorages.types';
 
 export const BACKUP_STORAGES_QUERY_KEY = 'backupStorages';
 

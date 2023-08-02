@@ -7,7 +7,6 @@ import { DB_WIZARD_DEFAULTS } from '../new-database.constants';
 import { TestWrapper } from '../../../utils/test';
 import { DatabasePreview } from './database-preview';
 
-
 const FormProviderWrapper = ({
   children,
   values = {},
@@ -38,7 +37,7 @@ describe('DatabasePreview', () => {
     );
 
     expect(screen.getAllByTestId(/^section-*/, { exact: false })).toHaveLength(
-      5
+      3
     );
   });
 

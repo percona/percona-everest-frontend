@@ -1,0 +1,17 @@
+name: Build and push dev-latest image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger dispatch in the main branch
+        run: |
+          curl -XPOST -v https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/62945358/dispatches \
+            -H 'Accept: application/vnd.github.v3+json' \
+            -H 'Authorization: token ${{ secrets.ROBOT_TOKEN }}' \
+            --data '{"ref": "main"}' --fail-with-body

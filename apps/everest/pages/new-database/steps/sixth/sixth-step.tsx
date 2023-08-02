@@ -22,6 +22,7 @@ export const SixthStep = () => {
         to="/databases"
         size="small"
         sx={{ mt: 4 }}
+        data-testid="db-wizard-goto-db-clusters"
       >
         {Messages.goToList}
       </Button>

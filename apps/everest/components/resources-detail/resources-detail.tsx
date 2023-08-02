@@ -47,7 +47,7 @@ export function ResourcesDetail({
           value={inputValue}
           setValue={setInputValue}
           units={units}
-          data-testid={`${dataTestId}-input`}
+          dataTestId={`${dataTestId}-input`}
         />
       </Box>
       {isMobile ? (

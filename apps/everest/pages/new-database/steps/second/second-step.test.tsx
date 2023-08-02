@@ -70,28 +70,26 @@ describe('Second Step', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByTestId('cpu-input').querySelector('input')).toHaveValue(
+    expect(screen.getByTestId('cpu-input')).toHaveValue(
       DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.cpu]
     );
-    expect(
-      screen.getByTestId('memory-input').querySelector('input')
-    ).toHaveValue(DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.memory]);
-    expect(screen.getByTestId('disk-input').querySelector('input')).toHaveValue(
+    expect(screen.getByTestId('memory-input')).toHaveValue(
+      DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.memory]
+    );
+    expect(screen.getByTestId('disk-input')).toHaveValue(
       DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.disk]
     );
 
     const mediumButton = screen.getByTestId('toggle-button-medium');
     await waitFor(() => fireEvent.click(mediumButton));
 
-    expect(screen.getByTestId('cpu-input').querySelector('input')).toHaveValue(
+    expect(screen.getByTestId('cpu-input')).toHaveValue(
       DEFAULT_SIZES[ResourceSize.medium][DbWizardFormFields.cpu]
     );
-    expect(
-      screen.getByTestId('memory-input').querySelector('input')
-    ).toHaveValue(
+    expect(screen.getByTestId('memory-input')).toHaveValue(
       DEFAULT_SIZES[ResourceSize.medium][DbWizardFormFields.memory]
     );
-    expect(screen.getByTestId('disk-input').querySelector('input')).toHaveValue(
+    expect(screen.getByTestId('disk-input')).toHaveValue(
       DEFAULT_SIZES[ResourceSize.medium][DbWizardFormFields.disk]
     );
   });
@@ -107,7 +105,7 @@ describe('Second Step', () => {
         </FormProviderWrapper>
       </TestWrapper>
     );
-    const cpu = screen.getByTestId('cpu-input').querySelector('input');
+    const cpu = screen.getByTestId('cpu-input');
 
     expect(cpu).toHaveValue(
       DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.cpu]
@@ -133,16 +131,17 @@ describe('Second Step', () => {
       </TestWrapper>
     );
 
-    const cpu = screen.getByTestId('cpu-input').querySelector('input');
+    const cpu = screen.getByTestId('cpu-input');
     expect(cpu).toHaveValue(
       DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.cpu]
     );
     expect(
       screen.queryByTestId('resources-exceeding-alert')
     ).not.toBeInTheDocument();
+
     const maxCPU = screen
-      .queryByTestId('cpu-progress-bar')
-      .getAttribute('aria-valuemax');
+      .getByTestId('cpu-progress-bar')
+      .getAttribute('aria-valuemax') || '';
 
     await waitFor(() =>
       fireEvent.change(cpu, { target: { value: +maxCPU + 1 } })

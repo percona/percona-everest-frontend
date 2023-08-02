@@ -6,7 +6,7 @@ import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
 import { Messages } from './third-step.messages';
 import { DbWizardFormFields } from '../../new-database.types';
 import { TimeSelection } from '../../../../components/time-selection/time-selection';
-import { useBackupStorages } from '../../../../hooks/backup-storages/useBackupStorages';
+import { useBackupStorages } from '../../../../hooks/api/backup-storages/useBackupStorages';
 
 export const ThirdStep = () => {
   const { control, watch } = useFormContext();
@@ -38,7 +38,8 @@ export const ThirdStep = () => {
             options={backupStorages}
             autoCompleteProps={{
               isOptionEqualToValue: (option, value) => option.id === value.id,
-              getOptionLabel: (option) => typeof option === 'string' ? option : option.name,
+              getOptionLabel: (option) =>
+                typeof option === 'string' ? option : option.name,
             }}
           />
           {/* <Typography variant="h6">{Messages.pitr}</Typography>

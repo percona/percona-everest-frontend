@@ -112,9 +112,22 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
       displayColumnDefOptions={{
         'mrt-row-actions': {
           size: 30,
-          header: '',
-          muiTableBodyCellProps: { sx: { flex: 'none', width: '60px' } },
-          muiTableHeadCellProps: { sx: { flex: 'none', width: '60px' } },
+          muiTableBodyCellProps: {
+            sx: {
+              flex: 'none',
+              width: '60px',
+            }
+          },
+          muiTableHeadCellProps: {
+            sx: {
+              flex: 'none',
+              width: '60px',
+              // We could simply set "mrt-row-actions.header" to ""
+              // However, MRT takes that string and shows it in the show/hide columns menu
+              // By doing this, we still have "Actions" in that menu, but no text (i.e. transparent) in the header cell
+              color: 'transparent',
+            }
+          },
         },
         'mrt-row-expand': {
           size: 40,
