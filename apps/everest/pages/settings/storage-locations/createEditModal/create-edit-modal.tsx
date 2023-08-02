@@ -1,7 +1,7 @@
 import { MenuItem } from '@mui/material';
 import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { GeneralCreateEditModal } from '../../../../components/general-create-edit-modal/general-create-edit-modal';
 import { BackupStorage } from '../../../../types/backupStorages.types';
@@ -23,14 +23,24 @@ export const CreateEditModalStorage = ({
 }: CreateEditModalStorageProps) => {
   const isEditMode = !!selectedStorageLocation;
 
-  const schema = storageLocationsSchema.omit({
-    accessKey: isEditMode ? true : undefined,
-    secretKey: isEditMode ? true : undefined,
-  });
+  const schema = useMemo(
+    () =>
+      isEditMode
+        ? storageLocationsSchema.omit({
+            accessKey: true,
+            secretKey: true,
+          })
+        : storageLocationsSchema,
+    [isEditMode]
+  );
 
-  const defaultValues = selectedStorageLocation
-    ? storageLocationEditValues(selectedStorageLocation)
-    : storageLocationDefaultValues;
+  const defaultValues = useMemo(
+    () =>
+      selectedStorageLocation
+        ? storageLocationEditValues(selectedStorageLocation)
+        : storageLocationDefaultValues,
+    [selectedStorageLocation]
+  );
 
   const onSubmit: SubmitHandler<BackupStorage> = (data) => {
     handleSubmitModal(isEditMode, { ...data, id: selectedStorageLocation?.id });
