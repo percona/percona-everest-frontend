@@ -1,7 +1,7 @@
 import {
-  BackupStorage,
+  BackupStorageType,
   GetBackupStoragesPayload,
-} from '../types/backupStorages.types';
+} from '../pages/settings/storage-locations/storage-locations.types';
 import { api } from './api';
 
 export const getBackupStoragesFn = async () => {
@@ -10,13 +10,13 @@ export const getBackupStoragesFn = async () => {
   return response.data;
 };
 
-export const createBackupStorageFn = async (formData: BackupStorage) => {
+export const createBackupStorageFn = async (formData: BackupStorageType) => {
   const response = await api.post('backup-storages', formData);
 
   return response.data;
 };
 
-export const editBackupStorageFn = async (formData: BackupStorage) => {
+export const editBackupStorageFn = async (formData: BackupStorageType) => {
   const response = await api.patch(`backup-storages/${formData.id}`, formData);
 
   return response.data;

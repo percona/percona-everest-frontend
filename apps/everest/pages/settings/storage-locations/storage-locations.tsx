@@ -12,9 +12,9 @@ import {
   useDeleteBackupStorage,
   useEditBackupStorage,
 } from '../../../hooks/backup-storages/useBackupStorages';
-import { BackupStorage } from '../../../types/backupStorages.types';
 import { CreateEditModalStorage } from './createEditModal/create-edit-modal';
 import { Messages } from './storage-locations.messages';
+import { BackupStorageType } from './storage-locations.types';
 import {
   updateDataAfterCreate,
   updateDataAfterDelete,
@@ -31,9 +31,9 @@ export const StorageLocations = () => {
 
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
   const [selectedStorageLocation, setSelectedStorageLocation] =
-    useState<BackupStorage>();
+    useState<BackupStorageType>();
 
-  const columns = useMemo<MRT_ColumnDef<BackupStorage>[]>(
+  const columns = useMemo<MRT_ColumnDef<BackupStorageType>[]>(
     () => [
       {
         accessorKey: 'name',
@@ -65,7 +65,7 @@ export const StorageLocations = () => {
     setOpenCreateEditModal(true);
   };
 
-  const handleOpenEditModal = (selectedStorageLocation: BackupStorage) => {
+  const handleOpenEditModal = (selectedStorageLocation: BackupStorageType) => {
     setSelectedStorageLocation(selectedStorageLocation);
     setOpenCreateEditModal(true);
   };
@@ -75,18 +75,18 @@ export const StorageLocations = () => {
     setOpenCreateEditModal(false);
   };
 
-  const handleSubmit = (isEdit: boolean, data: BackupStorage) => {
+  const handleSubmit = (isEdit: boolean, data: BackupStorageType) => {
     isEdit ? handleEditBackup(data) : handleCreateBackup(data);
     handleCloseModal();
   };
 
-  const handleEditBackup = (data: BackupStorage) => {
+  const handleEditBackup = (data: BackupStorageType) => {
     editBackupStorage(data, {
       onSuccess: updateDataAfterEdit(queryClient, BACKUP_STORAGES_QUERY_KEY),
     });
   };
 
-  const handleCreateBackup = (data: BackupStorage) => {
+  const handleCreateBackup = (data: BackupStorageType) => {
     createBackupStorage(data, {
       onSuccess: updateDataAfterCreate(queryClient, BACKUP_STORAGES_QUERY_KEY),
     });

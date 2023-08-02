@@ -5,33 +5,30 @@ import {
   editBackupStorageFn,
   getBackupStoragesFn,
 } from '../../api/backupStorage';
-import {
-  BackupStorage,
-  GetBackupStoragesPayload,
-} from '../../types/backupStorages.types';
+import { BackupStorageType, GetBackupStoragesPayload } from '../../pages/settings/storage-locations/storage-locations.types';
 
 export const BACKUP_STORAGES_QUERY_KEY = 'backupStorages';
 
 export const useBackupStorages = () => {
-  return useQuery<GetBackupStoragesPayload, unknown, BackupStorage[]>(
+  return useQuery<GetBackupStoragesPayload, unknown, BackupStorageType[]>(
     BACKUP_STORAGES_QUERY_KEY,
     () => getBackupStoragesFn()
   );
 };
 
 export const useCreateBackupStorage = (
-  options?: UseMutationOptions<any, unknown, BackupStorage, unknown>
+  options?: UseMutationOptions<any, unknown, BackupStorageType, unknown>
 ) => {
   return useMutation(
-    (payload: BackupStorage) => createBackupStorageFn(payload),
+    (payload: BackupStorageType) => createBackupStorageFn(payload),
     { ...options }
   );
 };
 
 export const useEditBackupStorage = (
-  options?: UseMutationOptions<any, unknown, BackupStorage, unknown>
+  options?: UseMutationOptions<any, unknown, BackupStorageType, unknown>
 ) => {
-  return useMutation((payload: BackupStorage) => editBackupStorageFn(payload), {
+  return useMutation((payload: BackupStorageType) => editBackupStorageFn(payload), {
     ...options,
   });
 };

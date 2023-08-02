@@ -1,8 +1,5 @@
 import { z } from 'zod';
-import {
-  BackupStorage,
-  StorageType,
-} from '../../../types/backupStorages.types';
+import { StorageType } from '../../../types/backupStorages.types';
 
 export enum StorageLocationsFields {
   name = 'name',
@@ -27,7 +24,7 @@ export const storageLocationDefaultValues = {
 };
 
 export const storageLocationEditValues = (
-  selectedStorageLocationForEdit: BackupStorage
+  selectedStorageLocationForEdit: BackupStorageType
 ) => ({
   [StorageLocationsFields.name]: selectedStorageLocationForEdit.name,
   [StorageLocationsFields.type]: StorageType.S3,
@@ -54,4 +51,8 @@ export const storageLocationsSchema = z
   })
   .passthrough();
 
-export type StorageLocationType = z.infer<typeof storageLocationsSchema>;
+export type BackupStorageType = z.infer<typeof storageLocationsSchema> & {
+  id?: string;
+};
+
+export type GetBackupStoragesPayload = BackupStorageType[];

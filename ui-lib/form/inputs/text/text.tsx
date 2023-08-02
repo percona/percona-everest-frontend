@@ -2,7 +2,7 @@ import { TextField } from '@mui/material';
 import { LabeledContent } from '@percona/ui-lib.labeled-content';
 import { kebabize } from '@percona/utils.string';
 import React from 'react';
-import { Controller } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { TextInputProps } from './text.types';
 
 export const TextInput = ({
@@ -14,10 +14,11 @@ export const TextInput = ({
   textFieldProps,
   isRequired = false,
 }: TextInputProps) => {
+  const { control: contextControl } = useFormContext();
   const content = (
     <Controller
       name={name}
-      control={control}
+      control={control ?? contextControl}
       render={({ field, fieldState: { error } }) => (
         <TextField
           {...field}

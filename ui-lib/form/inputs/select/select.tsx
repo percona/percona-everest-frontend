@@ -2,7 +2,7 @@ import { Select } from '@mui/material';
 import { LabeledContent } from '@percona/ui-lib.labeled-content';
 import { kebabize } from '@percona/utils.string';
 import React from 'react';
-import { Controller } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { SelectInputProps } from './select.types';
 
 export const SelectInput = ({
@@ -15,10 +15,11 @@ export const SelectInput = ({
   children,
   isRequired = false,
 }: SelectInputProps) => {
+  const { control: contextControl } = useFormContext();
   const content = (
     <Controller
       name={name}
-      control={control}
+      control={control ?? contextControl}
       render={({ field, fieldState: { error } }) => (
         <Select
           {...field}

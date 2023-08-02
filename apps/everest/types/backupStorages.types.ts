@@ -15,13 +15,8 @@ export type BaseBackupStorageFields = {
   secretKey?: string;
 };
 
-export type BackupStorage = BaseBackupStorageFields & {
-  id?: string;
-};
-
-export type GetBackupStoragesPayload = BackupStorage[];
-
-// export type CreateBackupStoragePayload = BaseBackupStorageFields & {
-//   accessKey: string;
-//   secretKey: string;
+// export type BackupStorage = BaseBackupStorageFields & {
+//   id?: string;
 // };
+
+// export type GetBackupStoragesPayload = BackupStorage[];

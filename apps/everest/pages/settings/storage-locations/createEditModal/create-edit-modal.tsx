@@ -1,16 +1,14 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { MenuItem } from '@mui/material';
 import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import React from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler } from 'react-hook-form';
 import { GeneralCreateEditModal } from '../../../../components/general-create-edit-modal/general-create-edit-modal';
-import {
-  BackupStorage,
-  StorageType,
-} from '../../../../types/backupStorages.types';
+import { StorageType } from '../../../../types/backupStorages.types';
 import { Messages } from '../storage-locations.messages';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
+  BackupStorageType,
   storageLocationDefaultValues,
   storageLocationEditValues,
   StorageLocationsFields,
@@ -26,20 +24,12 @@ export const CreateEditModalStorage = ({
 }: CreateEditModalStorageProps) => {
   const isEditMode = !!selectedStorageLocation;
 
-  const { control, handleSubmit } = useForm<BackupStorage>({
-    mode: 'onChange',
-    resolver: zodResolver(
-      storageLocationsSchema.omit({
-        accessKey: isEditMode ? true : undefined,
-        secretKey: isEditMode ? true : undefined,
-      })
-    ),
-    defaultValues: selectedStorageLocation
-      ? storageLocationEditValues(selectedStorageLocation)
-      : storageLocationDefaultValues,
+  const schema = storageLocationsSchema.omit({
+    accessKey: isEditMode ? true : undefined,
+    secretKey: isEditMode ? true : undefined,
   });
 
-  const onSubmit: SubmitHandler<BackupStorage> = (data) => {
+  const onSubmit: SubmitHandler<BackupStorageType> = (data) => {
     handleSubmitModal(isEditMode, { ...data, id: selectedStorageLocation?.id });
   };
 
@@ -48,20 +38,23 @@ export const CreateEditModalStorage = ({
       isOpen={open}
       closeModal={handleCloseModal}
       headerMessage={Messages.createEditModal.addEditModal(isEditMode)}
-      handleSubmit={handleSubmit}
       onSubmit={onSubmit}
       submitMessage={Messages.createEditModal.addEditButton(isEditMode)}
+      schema={schema}
+      defaultValues={
+        selectedStorageLocation
+          ? storageLocationEditValues(selectedStorageLocation)
+          : storageLocationDefaultValues
+      }
     >
       <TextInput
         name={StorageLocationsFields.name}
-        control={control}
         label={Messages.name}
         isRequired
       />
       <SelectInput
         name={StorageLocationsFields.type}
         label={Messages.type}
-        control={control}
         selectFieldProps={{ disabled: isEditMode }}
         isRequired
       >
@@ -71,24 +64,20 @@ export const CreateEditModalStorage = ({
       </SelectInput>
       <TextInput
         name={StorageLocationsFields.bucketName}
-        control={control}
         label={Messages.bucketName}
         isRequired
       />
       <TextInput
         name={StorageLocationsFields.region}
-        control={control}
         label={Messages.region}
         isRequired
       />
       <TextInput
         name={StorageLocationsFields.description}
-        control={control}
         label={Messages.description}
       />
       <TextInput
         name={StorageLocationsFields.url}
-        control={control}
         label={Messages.url}
         isRequired
       />
@@ -96,13 +85,11 @@ export const CreateEditModalStorage = ({
         <>
           <TextInput
             name={StorageLocationsFields.accessKey}
-            control={control}
             label={Messages.accessKey}
             isRequired
           />
           <TextInput
             name={StorageLocationsFields.secretKey}
-            control={control}
             label={Messages.secretKey}
             isRequired
           />
