@@ -1,5 +1,5 @@
-import React from 'react';
 import { Box, useTheme } from '@mui/material';
+import React from 'react';
 import { ColoredLabel } from '../colored-label/colored-label';
 import { Messages } from './resources-legend.messages';
 

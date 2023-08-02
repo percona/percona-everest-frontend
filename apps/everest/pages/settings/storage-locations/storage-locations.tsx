@@ -13,13 +13,13 @@ import {
   useEditBackupStorage,
 } from '../../../hooks/api/backup-storages/useBackupStorages';
 import { BackupStorage } from '../../../types/backupStorages.types';
-import { CreateEditModalStorage } from './createEditModal/create-edit-modal';
-import { Messages } from './storage-locations.messages';
 import {
   updateDataAfterCreate,
   updateDataAfterDelete,
   updateDataAfterEdit,
-} from './storage-locations.utils';
+} from '../../../utils/generalOptimisticDataUpdate';
+import { CreateEditModalStorage } from './createEditModal/create-edit-modal';
+import { Messages } from './storage-locations.messages';
 
 export const StorageLocations = () => {
   const queryClient = useQueryClient();
