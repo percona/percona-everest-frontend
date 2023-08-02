@@ -11,16 +11,12 @@ import {
 } from '../../../../types/backupStorages.types';
 import { Messages } from '../storage-locations.messages';
 import {
+  storageLocationDefaultValues,
+  storageLocationEditValues,
   StorageLocationsFields,
   storageLocationsSchema,
 } from '../storage-locations.types';
-
-interface CreateEditModalStorageProps {
-  open: boolean;
-  handleCloseModal: () => void;
-  handleSubmitModal: (isEdit: boolean, data: BackupStorage) => void;
-  selectedStorageLocation?: BackupStorage;
-}
+import { CreateEditModalStorageProps } from './create-edit-modal.types';
 
 export const CreateEditModalStorage = ({
   open,
@@ -38,30 +34,9 @@ export const CreateEditModalStorage = ({
         secretKey: isEditMode ? true : undefined,
       })
     ),
-    defaultValues: {
-      [StorageLocationsFields.name]: selectedStorageLocation
-        ? selectedStorageLocation.name
-        : '',
-      [StorageLocationsFields.type]: StorageType.S3,
-      [StorageLocationsFields.url]: selectedStorageLocation
-        ? selectedStorageLocation.url
-        : '',
-      [StorageLocationsFields.description]: selectedStorageLocation
-        ? selectedStorageLocation.description
-        : '',
-      [StorageLocationsFields.region]: selectedStorageLocation
-        ? selectedStorageLocation.region
-        : '',
-      [StorageLocationsFields.accessKey]: selectedStorageLocation
-        ? selectedStorageLocation.accessKey
-        : '',
-      [StorageLocationsFields.secretKey]: selectedStorageLocation
-        ? selectedStorageLocation[StorageLocationsFields.secretKey]
-        : '',
-      [StorageLocationsFields.bucketName]: selectedStorageLocation
-        ? selectedStorageLocation.bucketName
-        : '',
-    },
+    defaultValues: selectedStorageLocation
+      ? storageLocationEditValues(selectedStorageLocation)
+      : storageLocationDefaultValues,
   });
 
   const onSubmit: SubmitHandler<BackupStorage> = (data) => {

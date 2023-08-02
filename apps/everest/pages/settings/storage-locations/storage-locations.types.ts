@@ -1,5 +1,8 @@
 import { z } from 'zod';
-import { StorageType } from '../../../types/backupStorages.types';
+import {
+  BackupStorage,
+  StorageType,
+} from '../../../types/backupStorages.types';
 
 export enum StorageLocationsFields {
   name = 'name',
@@ -11,6 +14,32 @@ export enum StorageLocationsFields {
   accessKey = 'accessKey',
   secretKey = 'secretKey',
 }
+
+export const storageLocationDefaultValues = {
+  [StorageLocationsFields.name]: '',
+  [StorageLocationsFields.type]: StorageType.S3,
+  [StorageLocationsFields.url]: '',
+  [StorageLocationsFields.description]: '',
+  [StorageLocationsFields.region]: '',
+  [StorageLocationsFields.accessKey]: '',
+  [StorageLocationsFields.secretKey]: '',
+  [StorageLocationsFields.bucketName]: '',
+};
+
+export const storageLocationEditValues = (
+  selectedStorageLocationForEdit: BackupStorage
+) => ({
+  [StorageLocationsFields.name]: selectedStorageLocationForEdit.name,
+  [StorageLocationsFields.type]: StorageType.S3,
+  [StorageLocationsFields.url]: selectedStorageLocationForEdit.url,
+  [StorageLocationsFields.description]:
+    selectedStorageLocationForEdit.description,
+  [StorageLocationsFields.region]: selectedStorageLocationForEdit.region,
+  [StorageLocationsFields.accessKey]: selectedStorageLocationForEdit.accessKey,
+  [StorageLocationsFields.secretKey]: selectedStorageLocationForEdit.secretKey,
+  [StorageLocationsFields.bucketName]:
+    selectedStorageLocationForEdit.bucketName,
+});
 
 export const storageLocationsSchema = z
   .object({

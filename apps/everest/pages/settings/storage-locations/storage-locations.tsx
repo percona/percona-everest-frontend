@@ -102,12 +102,13 @@ export const StorageLocations = () => {
 
   const handleDeleteBackup = (backupStorageId: string) => {
     deleteBackupStorage(backupStorageId, {
-      onSuccess: (_, variables) => {
-        console.log(variables);
+      onSuccess: (_, backupStorageId) => {
         queryClient.setQueryData(
           ['backupStorages'],
           (oldData?: BackupStorage[]) => {
-            return (oldData || []).filter((value) => value.id !== variables);
+            return (oldData || []).filter(
+              (value) => value.id !== backupStorageId
+            );
           }
         );
       },
@@ -116,7 +117,7 @@ export const StorageLocations = () => {
   return (
     <>
       <Table
-        noDataMessage="No storage locations set"
+        noDataMessage="No backups storages"
         state={{
           columnVisibility: {
             description: false,
@@ -128,8 +129,18 @@ export const StorageLocations = () => {
         }}
         columns={columns}
         data={data}
+        renderTopToolbarCustomActions={() => (
+          <Button
+            size="small"
+            startIcon={<Add />}
+            variant="outlined"
+            onClick={() => handleOpenCreateModal()}
+          >
+            {Messages.addStorageLocationButton}
+          </Button>
+        )}
         enableRowActions
-        renderRowActionMenuItems={({ table, row }) => [
+        renderRowActionMenuItems={({ row }) => [
           <MenuItem
             key={0}
             onClick={() => handleOpenEditModal(row.original)}
@@ -181,16 +192,7 @@ export const StorageLocations = () => {
             </Box>  */}
           </Box>
         )}
-        renderTopToolbarCustomActions={() => (
-          <Button
-            size="small"
-            startIcon={<Add />}
-            variant="outlined"
-            onClick={() => handleOpenCreateModal()}
-          >
-            {Messages.addStorageLocationButton}
-          </Button>
-        )}
+
       />
       {openCreateEditModal && (
         <CreateEditModalStorage
