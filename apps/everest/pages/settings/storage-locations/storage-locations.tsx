@@ -24,7 +24,7 @@ import { Messages } from './storage-locations.messages';
 export const StorageLocations = () => {
   const queryClient = useQueryClient();
 
-  const { data = [], isFetching } = useBackupStorages();
+  const { data: backupStorages = [], isFetching } = useBackupStorages();
   const { mutate: createBackupStorage } = useCreateBackupStorage();
   const { mutate: editBackupStorage } = useEditBackupStorage();
   const { mutate: deleteBackupStorage } = useDeleteBackupStorage();
@@ -65,19 +65,14 @@ export const StorageLocations = () => {
     setOpenCreateEditModal(true);
   };
 
-  const handleOpenEditModal = (selectedStorageLocation: BackupStorage) => {
-    setSelectedStorageLocation(selectedStorageLocation);
+  const handleOpenEditModal = (storageLocation: BackupStorage) => {
+    setSelectedStorageLocation(storageLocation);
     setOpenCreateEditModal(true);
   };
 
   const handleCloseModal = () => {
     setSelectedStorageLocation(undefined);
     setOpenCreateEditModal(false);
-  };
-
-  const handleSubmit = (isEdit: boolean, data: BackupStorage) => {
-    isEdit ? handleEditBackup(data) : handleCreateBackup(data);
-    handleCloseModal();
   };
 
   const handleEditBackup = (data: BackupStorage) => {
@@ -90,6 +85,15 @@ export const StorageLocations = () => {
     createBackupStorage(data, {
       onSuccess: updateDataAfterCreate(queryClient, BACKUP_STORAGES_QUERY_KEY),
     });
+  };
+
+  const handleSubmit = (isEdit: boolean, data: BackupStorage) => {
+    if (isEdit) {
+      handleEditBackup(data);
+    } else {
+      handleCreateBackup(data);
+    }
+    handleCloseModal();
   };
 
   const handleDeleteBackup = (backupStorageId: string) => {
@@ -111,7 +115,7 @@ export const StorageLocations = () => {
           isLoading: isFetching,
         }}
         columns={columns}
-        data={data}
+        data={backupStorages}
         renderTopToolbarCustomActions={() => (
           <Button
             size="small"
