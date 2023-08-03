@@ -14,7 +14,14 @@ export const ExpandedRow = ({
 }) => {
   const { cpu, kubernetesCluster, memory, storage, exposetype, databaseName, hostName, port } = row.original;
   const isExpanded = row.getIsExpanded();
-  const { isLoading, isFetching, data } = useDbClusterCredentials(databaseName, { enabled: !!isExpanded });
+  const { isLoading, isFetching, data } = useDbClusterCredentials(
+    databaseName,
+    {
+      enabled: !!isExpanded,
+      staleTime: 10 * (60 * 1000),
+      cacheTime: 15 * (60 * 1000),
+    }
+  );
 
   return (
     <Box
