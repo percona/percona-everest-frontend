@@ -8,12 +8,13 @@ import {
 } from 'react-hook-form';
 import { ZodObject, ZodRawShape } from 'zod';
 
+export type AsyncDefaultValues<T> = (payload?: unknown) => Promise<T>;
 export interface GeneralCreateEditModalProps<T extends FieldValues> {
   isOpen: boolean;
   closeModal: () => void;
   headerMessage: string;
   schema: ZodObject<ZodRawShape>;
-  defaultValues?: DeepPartial<T>;
+  defaultValues?: DeepPartial<T> | AsyncDefaultValues<T>;
   onSubmit: SubmitHandler<T>;
   children: ReactNode;
   cancelMessage?: string;
@@ -22,7 +23,7 @@ export interface GeneralCreateEditModalProps<T extends FieldValues> {
 }
 
 export interface DialogTitleProps {
-    id: string;
-    children?: React.ReactNode;
-    onClose: () => void;
-  }
+  id: string;
+  children?: React.ReactNode;
+  onClose: () => void;
+}
