@@ -32,7 +32,7 @@ export const GeneralCreateEditModal = <T extends FieldValues>({
 
   return (
     <Dialog open={isOpen} onClose={closeModal}>
-      <DialogTitle id={'dialog-title'} onClose={closeModal}>
+      <DialogTitle id="dialog-title" onClose={closeModal}>
         {headerMessage}
       </DialogTitle>
       <DialogContent sx={{ width: '480px' }}>
