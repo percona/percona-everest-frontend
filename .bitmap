@@ -35,6 +35,19 @@
         "mainFile": "index.ts",
         "rootDir": "ui-lib/db-toggle-card"
     },
+    "dialog-title": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui-lib",
+        "mainFile": "index.ts",
+        "rootDir": "ui-lib/dialog-title",
+        "config": {
+            "teambit.envs/envs": {
+                "env": "percona.envs/percona-react-env"
+            },
+            "percona.envs/percona-react-env": {}
+        }
+    },
     "everest": {
         "scope": "percona.apps",
         "version": "0.0.1",

@@ -3,18 +3,24 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
   Divider,
   Drawer,
   Stack,
   Step,
   StepLabel,
   Toolbar,
+  Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
 import { Stepper } from '@percona/ui-lib.stepper';
+import { DialogTitle } from '@percona/ui-lib.dialog-title';
 import React, { useMemo, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { Messages } from './new-database.messages';
 import { dbWizardSchema, DbWizardType } from './new-database.types';
 import { steps } from './steps';
@@ -29,10 +35,12 @@ export const NewDatabasePage = () => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [closeModalIsOpen, setModalIsOpen] = useState(false);
   const currentValidationSchema = dbWizardSchema[activeStep];
   const { mutate: addDbCluster } = useCreateDbCluster();
   const { id } = useSelectedKubernetesCluster();
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
+  const navigate = useNavigate();
 
   const methods = useForm<DbWizardType>({
     mode: 'onChange',
@@ -70,6 +78,10 @@ export const NewDatabasePage = () => {
 
   const handleSectionEdit = (order: number) => setActiveStep(order - 1);
 
+  const handleCancel = () => {
+    navigate('/databases');
+  }
+
   const PreviewContent = useMemo(
     () => (
       <DatabasePreview
@@ -90,6 +102,24 @@ export const NewDatabasePage = () => {
     <SixthStep />
   ) : (
     <>
+      <Dialog open={closeModalIsOpen}>
+        <DialogTitle onClose={() => setModalIsOpen(false)}>
+          {Messages.dialog.title}
+        </DialogTitle>
+        <DialogContent>
+          <Typography>
+            {Messages.dialog.content}
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus variant="text" onClick={() => setModalIsOpen(false)}>
+            {Messages.dialog.reject}
+          </Button>
+          <Button variant="contained" onClick={handleCancel}>
+            {Messages.dialog.accept}
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Stepper noConnector activeStep={activeStep} sx={{ marginBottom: 4 }}>
         {steps.map((_, idx) => (
           <Step key={`step-${idx + 1}`}>
@@ -117,6 +147,14 @@ export const NewDatabasePage = () => {
                 {Messages.previous}
               </Button>
               <Box sx={{ flex: '1 1 auto' }} />
+              <Button
+                variant="outlined"
+                data-testid="db-wizard-cancel-button"
+                sx={{ mr: 1 }}
+                onClick={() => setModalIsOpen(true)}
+              >
+                {Messages.cancel}
+              </Button>
               {activeStep === steps.length - 1 ? (
                 <Button
                   onClick={methods.handleSubmit(onSubmit)}
