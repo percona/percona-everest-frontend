@@ -12,7 +12,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { StorageType } from '../../../../types/backupStorages.types';
+
+import { StorageType } from '../../../../pages/settings/storage-locations/storage-locations.types';
 
 export const useBackupStorages = () => ({
   data: [
