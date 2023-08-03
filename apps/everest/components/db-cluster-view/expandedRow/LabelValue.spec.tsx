@@ -25,7 +25,7 @@ describe('LabelValue', () => {
   });
 
   it('should show correctly', () => {
-    render(<LabelValue label="My Label" value={"Value 1"} />);
+    render(<LabelValue label="My Label" value="Value 1" />);
     expect(screen.queryByText('My Label')).toBeInTheDocument();
     expect(screen.queryByText('Value 1')).toBeInTheDocument();
   });
