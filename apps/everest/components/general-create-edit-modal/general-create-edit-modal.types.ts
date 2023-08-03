@@ -7,6 +7,7 @@ import {
   ValidationMode,
 } from 'react-hook-form';
 import { ZodObject, ZodRawShape } from 'zod';
+
 export interface GeneralCreateEditModalProps<T extends FieldValues> {
   isOpen: boolean;
   closeModal: () => void;

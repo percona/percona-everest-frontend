@@ -27,7 +27,7 @@ export const GeneralCreateEditModal = <T extends FieldValues>({
   const methods = useForm<T>({
     mode: validationMode,
     resolver: zodResolver(schema),
-    defaultValues: defaultValues,
+    defaultValues,
   });
 
   return (
