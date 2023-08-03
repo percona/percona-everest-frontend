@@ -56,7 +56,6 @@ interface Engine {
   resources?: Resources;
   storage: Storage;
   type: DbEngineType;
-  userSecretsName: string;
   version?: string;
 }
 

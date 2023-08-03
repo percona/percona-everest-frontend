@@ -59,7 +59,6 @@ const formValuesToPayloadMapping = (dbPayload: DbWizardType): DbCluster => {
         storage: {
           size: `${dbPayload.disk}G`,
         },
-        userSecretsName: `dbaas-cluster-${dbPayload.dbName}`,
       },
       // monitoring: {
       //   enabled: dbPayload.monitoring,
