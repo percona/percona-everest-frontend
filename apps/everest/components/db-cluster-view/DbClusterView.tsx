@@ -115,6 +115,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
           ]}
           renderDetailPanel={({ row }) => <ExpandedRow row={row} />}
           renderTopToolbarCustomActions={() => customHeader}
+          hideExpandAllIcon
         />
       </Box>
     </Stack>
