@@ -106,3 +106,30 @@ test('Cluster creation', async ({ page, request }) => {
     '192.168.1.1',
   ]);
 });
+
+test('Cancel wizard', async ({ page }) => {
+  await page.getByTestId('mongodb-toggle-button').click();
+  await page.getByTestId('text-input-db-name').fill('new-cluster');
+  await page.getByTestId('db-wizard-continue-button').click();
+
+  await expect(
+    page.getByRole('heading', {
+      name: 'Configure the resources your new database will have access to.',
+    })
+  ).toBeVisible();
+
+  await page.getByTestId('toggle-button-two-nodes').click();
+  await page.getByTestId('toggle-button-large').click();
+  await page.getByTestId('disk-input').fill('150');
+  await page.getByTestId('db-wizard-continue-button').click();
+
+  await expect(
+    page.getByRole('heading', { name: 'External Access' })
+  ).toBeVisible();
+
+  await page.getByTestId('db-wizard-cancel-button').click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await page.getByText('Yes, cancel').click();
+
+  await expect(page).toHaveURL('/databases');
+});

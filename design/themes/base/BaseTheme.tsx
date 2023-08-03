@@ -152,6 +152,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
     },
     h5: {
       fontWeight: 600,
+      lineHeight: '22.5px',
       [BaseTheme.breakpoints.down('sm')]: {
         fontSize: '20px',
       },
@@ -375,6 +376,32 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
               opacity: 0.1,
             },
           },
+        },
+      },
+    },
+    MuiDialogTitle: {
+      defaultProps: {
+        component: 'h5',
+        variant: 'h5',
+      },
+      styleOverrides: {
+        root: {
+          padding: BaseTheme.spacing(2),
+        },
+      },
+    },
+    MuiDialogContent: {
+      styleOverrides: {
+        root: {
+          padding: BaseTheme.spacing(2),
+          paddingTop: `${BaseTheme.spacing(2)} !important`,
+        },
+      },
+    },
+    MuiDialogActions: {
+      styleOverrides: {
+        root: {
+          padding: BaseTheme.spacing(2),
         },
       },
     },
