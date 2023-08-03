@@ -104,7 +104,7 @@ export const useDbClusterCredentials = (
   const { id } = useSelectedKubernetesCluster();
 
   return useQuery<GetDbClusterCredentialsPayload, unknown, ClusterCredentials>(
-    `cluster-credentials-${name}`,
+    `cluster-credentials-${dbClusterName}`,
     () => getDbClusterCredentialsFn(id, dbClusterName),
     {...options},
   );
