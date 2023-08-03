@@ -39,8 +39,8 @@ export const ExpandedRow = ({
         >
           {Messages.expandedRow.connection}
         </Typography>
-        <LabelValue label="Host" value={hostName || ''} />
-        <LabelValue label="Port" value={port || ''} />
+        <LabelValue label="Host" value={hostName} />
+        <LabelValue label="Port" value={port} />
         {isLoading || isFetching ?
           (
             <>
@@ -49,8 +49,8 @@ export const ExpandedRow = ({
             </>
           ) : (
             <>
-              <LabelValue label="Username" value={data?.username || ''} />
-              <LabelValue label="Password" value={data?.password || ''} />
+              <LabelValue label="Username" value={data?.username} />
+              <LabelValue label="Password" value={data?.password} />
             </>
           )}
       </Box>
