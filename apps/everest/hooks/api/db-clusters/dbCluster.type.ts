@@ -29,5 +29,6 @@ export interface DbClusterTableElement {
   memory: string | number;
   storage: string | number;
   hostName: string;
+  port?: number;
   exposetype: ProxyExposeType;
 }

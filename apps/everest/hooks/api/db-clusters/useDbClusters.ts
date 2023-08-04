@@ -41,6 +41,7 @@ const mapRawDataToDbClusterModel = (
         storage: item.spec.engine.storage.size,
         hostName: item.status ? item.status.hostname : '',
         exposetype: item.spec.proxy.expose.type,
+        port: item.status?.port,
       };
 
       return [newElement];

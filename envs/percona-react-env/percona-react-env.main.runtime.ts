@@ -65,6 +65,7 @@ export class PerconaReactEnvMain {
           (config) => {
             config.setRule('no-nested-ternary', ['off']);
             config.setRule('jest/no-done-callback', ['off']);
+            config.setRule('react/require-default-props', ['off']);
             return config;
           },
         ],

@@ -18,6 +18,7 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
     muiTopToolbarProps,
     displayColumnDefOptions,
     noDataMessage,
+    hideExpandAllIcon,
   } = props;
 
   const stopPropagation = (e: Event) => {
@@ -105,6 +106,8 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
         sx: {
           '& .MuiBox-root': {
             flexDirection: 'row-reverse',
+            // @ts-ignore
+            ...muiTopToolbarProps?.sx,
           },
         },
         ...muiTopToolbarProps,
@@ -116,7 +119,10 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
             sx: {
               flex: 'none',
               width: '60px',
-            }
+              // @ts-ignore
+              ...displayColumnDefOptions?.['mrt-row-actions']?.muiTableBodyCellProps?.sx,
+            },
+            ...displayColumnDefOptions?.['mrt-row-actions']?.muiTableBodyCellProps,
           },
           muiTableHeadCellProps: {
             sx: {
@@ -126,8 +132,12 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
               // However, MRT takes that string and shows it in the show/hide columns menu
               // By doing this, we still have "Actions" in that menu, but no text (i.e. transparent) in the header cell
               color: 'transparent',
-            }
+              // @ts-ignore
+              ...displayColumnDefOptions?.['mrt-row-actions']?.muiTableHeadCellProps?.sx,
+            },
+            ...displayColumnDefOptions?.['mrt-row-actions']?.muiTableHeadCellProps,
           },
+          ...displayColumnDefOptions?.['mrt-row-actions'],
         },
         'mrt-row-expand': {
           size: 40,
@@ -135,14 +145,26 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
             sx: {
               flex: 'none',
               width: '60px',
+              // @ts-ignore
+              ...displayColumnDefOptions?.['mrt-row-expand']?.muiTableBodyCellProps?.sx,
             },
+            ...displayColumnDefOptions?.['mrt-row-expand']?.muiTableBodyCellProps,
           },
           muiTableHeadCellProps: {
             sx: {
               flex: 'none',
               width: '60px',
+              ...(!!hideExpandAllIcon && {
+                '& button': {
+                  display: 'none',
+                },
+              }),
+              // @ts-ignore
+              ...displayColumnDefOptions?.['mrt-row-expand']?.muiTableHeadCellProps?.sx,
             },
+            ...displayColumnDefOptions?.['mrt-row-expand']?.muiTableHeadCellProps,
           },
+          ...displayColumnDefOptions?.['mrt-row-expand'],
         },
         ...displayColumnDefOptions,
       }}
