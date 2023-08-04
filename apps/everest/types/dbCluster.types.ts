@@ -76,6 +76,7 @@ export interface Spec {
 export interface StatusSpec {
   status: DbClusterStatus;
   hostname: string;
+  port: number;
 }
 
 export interface DbCluster {
@@ -94,3 +95,10 @@ export type GetDbClusterPayload = {
     }
   >;
 };
+
+export type ClusterCredentials = {
+  username: string;
+  password: string;
+}
+
+export type GetDbClusterCredentialsPayload = ClusterCredentials;

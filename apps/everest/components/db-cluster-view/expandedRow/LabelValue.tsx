@@ -6,12 +6,12 @@ export const LabelValue = ({
   value,
 }: {
   label: string;
-  value: string | number;
+  value?: string | number;
 }) => {
-  return (
+  return value?.toString().length ? (
     <Box sx={{ display: 'flex' }}>
       <Box sx={{ width: '140px', fontWeight: 'bold' }}>{label}</Box>
       <Box sx={{ minWidth: '200px' }}>{value}</Box>
     </Box>
-  );
+  ) : null;
 };
