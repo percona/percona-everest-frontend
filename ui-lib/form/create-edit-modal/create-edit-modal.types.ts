@@ -1,20 +1,15 @@
 import { ReactNode } from 'react';
 
-import {
-  DefaultValues,
-  FieldValues,
-  SubmitHandler,
-  ValidationMode,
-} from 'react-hook-form';
+import { DefaultValues, FieldValues, ValidationMode } from 'react-hook-form';
 import { ZodObject, ZodRawShape } from 'zod';
 
-export interface GeneralCreateEditModalProps<T extends FieldValues> {
+export interface CreateEditModalProps<T extends FieldValues> {
   isOpen: boolean;
   closeModal: () => void;
   headerMessage: string;
   schema: ZodObject<ZodRawShape>;
   defaultValues?: DefaultValues<T>;
-  onSubmit: SubmitHandler<T>;
+  onSubmit: (data: T) => void;
   children: ReactNode;
   cancelMessage?: string;
   submitMessage: string;

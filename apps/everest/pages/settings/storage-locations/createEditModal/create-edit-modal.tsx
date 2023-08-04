@@ -1,9 +1,9 @@
 import { MenuItem } from '@mui/material';
+import { CreateEditModal } from '@percona/ui-lib.form.create-edit-modal';
 import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import React, { useMemo } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import { GeneralCreateEditModal } from '../../../../components/general-create-edit-modal/general-create-edit-modal';
 import { BackupStorage } from '../../../../types/backupStorages.types';
 import { Messages } from '../storage-locations.messages';
 import {
@@ -47,7 +47,7 @@ export const CreateEditModalStorage = ({
   };
 
   return (
-    <GeneralCreateEditModal
+    <CreateEditModal
       isOpen={open}
       closeModal={handleCloseModal}
       headerMessage={Messages.createEditModal.addEditModal(isEditMode)}
@@ -60,6 +60,7 @@ export const CreateEditModalStorage = ({
         name={StorageLocationsFields.name}
         label={Messages.name}
         isRequired
+        labelProps={{ sx: { mt: 0 } }}
       />
       <SelectInput
         name={StorageLocationsFields.type}
@@ -104,6 +105,6 @@ export const CreateEditModalStorage = ({
           />
         </>
       )}
-    </GeneralCreateEditModal>
+    </CreateEditModal>
   );
 };

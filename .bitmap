@@ -54,6 +54,19 @@
         "mainFile": "index.ts",
         "rootDir": "apps/everest"
     },
+    "form/create-edit-modal": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui-lib",
+        "mainFile": "index.ts",
+        "rootDir": "ui-lib/form/create-edit-modal",
+        "config": {
+            "teambit.react/react": {},
+            "teambit.envs/envs": {
+                "env": "teambit.react/react"
+            }
+        }
+    },
     "form/inputs/auto-complete": {
         "scope": "",
         "version": "",
