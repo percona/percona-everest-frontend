@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 // percona-everest-frontend
 // Copyright (C) 2023 Percona LLC
 //
