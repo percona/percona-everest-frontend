@@ -18,3 +18,9 @@ import { BackupStorageType } from '../pages/settings/storage-locations/storage-l
 export type BackupStorage = BackupStorageType;
 
 export type GetBackupStoragesPayload = BackupStorageType[];
+
+export enum StorageType {
+  S3 = 's3',
+  AZURE = 'azure',
+  GCS = 'gcs',
+}

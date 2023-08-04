@@ -20,14 +20,16 @@ const schema = z
 
 type DataType = z.infer<typeof schema>;
 
-export const Wrapper = () => {
+const Wrapper = () => {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const onSubmit = (data: DataType) => {};
+  const onSubmit = (data: DataType) => {
+    alert(data);
+  };
 
   return (
     <div>

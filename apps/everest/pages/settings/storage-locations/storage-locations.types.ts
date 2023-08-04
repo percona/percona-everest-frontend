@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { StorageType } from '../../../types/backupStorages.types';
 
 export enum StorageLocationsFields {
   name = 'name',
@@ -9,12 +10,6 @@ export enum StorageLocationsFields {
   url = 'url',
   accessKey = 'accessKey',
   secretKey = 'secretKey',
-}
-
-export enum StorageType {
-  S3 = 's3',
-  AZURE = 'azure',
-  GCS = 'gcs',
 }
 
 export const storageLocationDefaultValues = {

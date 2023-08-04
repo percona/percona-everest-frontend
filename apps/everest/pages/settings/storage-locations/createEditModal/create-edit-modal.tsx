@@ -4,14 +4,16 @@ import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import React, { useMemo } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import { BackupStorage } from '../../../../types/backupStorages.types';
+import {
+  BackupStorage,
+  StorageType,
+} from '../../../../types/backupStorages.types';
 import { Messages } from '../storage-locations.messages';
 import {
   storageLocationDefaultValues,
   storageLocationEditValues,
   StorageLocationsFields,
   storageLocationsSchema,
-  StorageType,
 } from '../storage-locations.types';
 import { CreateEditModalStorageProps } from './create-edit-modal.types';
 
@@ -22,7 +24,7 @@ export const CreateEditModalStorage = ({
   selectedStorageLocation,
 }: CreateEditModalStorageProps) => {
   const isEditMode = !!selectedStorageLocation;
-
+  console.log('rendered');
   const schema = useMemo(
     () =>
       isEditMode
