@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { Main } from './components/main/Main';
 import { DrawerContextProvider } from './contexts/drawer/drawer.context';
 import { K8ContextProvider } from './contexts/kubernetes/kubernetes.context';
+
 export const EverestApp = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
