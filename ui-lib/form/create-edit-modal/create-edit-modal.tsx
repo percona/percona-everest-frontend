@@ -42,9 +42,7 @@ export const CreateEditModal = <T extends FieldValues>({
 
   return (
     <Dialog open={isOpen} onClose={closeModal}>
-      <DialogTitle id="dialog-title" onClose={closeModal}>
-        {headerMessage}
-      </DialogTitle>
+      <DialogTitle onClose={closeModal}>{headerMessage}</DialogTitle>
       <DialogContent sx={{ width: '480px' }}>
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(handleSubmit)}>

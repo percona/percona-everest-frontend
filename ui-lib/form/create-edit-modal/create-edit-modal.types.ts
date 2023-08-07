@@ -15,9 +15,3 @@ export interface CreateEditModalProps<T extends FieldValues> {
   submitMessage: string;
   validationMode?: keyof ValidationMode;
 }
-
-export interface DialogTitleProps {
-  id: string;
-  children?: React.ReactNode;
-  onClose: () => void;
-}

@@ -24,7 +24,7 @@ export const CreateEditModalStorage = ({
   selectedStorageLocation,
 }: CreateEditModalStorageProps) => {
   const isEditMode = !!selectedStorageLocation;
-  console.log('rendered');
+
   const schema = useMemo(
     () =>
       isEditMode

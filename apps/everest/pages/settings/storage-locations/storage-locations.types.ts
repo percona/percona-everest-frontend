@@ -39,18 +39,16 @@ export const storageLocationEditValues = (
     selectedStorageLocationForEdit.bucketName,
 });
 
-export const storageLocationsSchema = z
-  .object({
-    [StorageLocationsFields.name]: z.string().nonempty(),
-    [StorageLocationsFields.type]: z.nativeEnum(StorageType),
-    [StorageLocationsFields.bucketName]: z.string().nonempty(),
-    [StorageLocationsFields.description]: z.string().optional(),
-    [StorageLocationsFields.url]: z.string().nonempty().url(),
-    [StorageLocationsFields.region]: z.string().nonempty(),
-    [StorageLocationsFields.accessKey]: z.string().nonempty(),
-    [StorageLocationsFields.secretKey]: z.string().nonempty(),
-  })
-  .passthrough();
+export const storageLocationsSchema = z.object({
+  [StorageLocationsFields.name]: z.string().nonempty(),
+  [StorageLocationsFields.type]: z.nativeEnum(StorageType),
+  [StorageLocationsFields.bucketName]: z.string().nonempty(),
+  [StorageLocationsFields.description]: z.string().optional(),
+  [StorageLocationsFields.url]: z.string().nonempty().url(),
+  [StorageLocationsFields.region]: z.string().nonempty(),
+  [StorageLocationsFields.accessKey]: z.string().nonempty(),
+  [StorageLocationsFields.secretKey]: z.string().nonempty(),
+});
 
 export type BackupStorageType = z.infer<typeof storageLocationsSchema> & {
   id?: string;

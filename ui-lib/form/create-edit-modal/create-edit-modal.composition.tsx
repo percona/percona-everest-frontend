@@ -12,11 +12,9 @@ const defaultValues = {
   [DataFields.name]: '',
 };
 
-const schema = z
-  .object({
-    [DataFields.name]: z.string().nonempty(),
-  })
-  .passthrough();
+const schema = z.object({
+  [DataFields.name]: z.string().nonempty(),
+});
 
 type DataType = z.infer<typeof schema>;
 

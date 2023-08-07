@@ -12,7 +12,10 @@ import {
   useDeleteBackupStorage,
   useEditBackupStorage,
 } from '../../../hooks/api/backup-storages/useBackupStorages';
-import { BackupStorage } from '../../../types/backupStorages.types';
+import {
+  BackupStorage,
+  StorageType,
+} from '../../../types/backupStorages.types';
 import {
   updateDataAfterCreate,
   updateDataAfterDelete,
@@ -20,6 +23,8 @@ import {
 } from '../../../utils/generalOptimisticDataUpdate';
 import { CreateEditModalStorage } from './createEditModal/create-edit-modal';
 import { Messages } from './storage-locations.messages';
+import { StorageLocationsFields } from './storage-locations.types';
+import { convertStoragesType } from './storage-locations.utils';
 
 export const StorageLocations = () => {
   const queryClient = useQueryClient();
@@ -36,24 +41,25 @@ export const StorageLocations = () => {
   const columns = useMemo<MRT_ColumnDef<BackupStorage>[]>(
     () => [
       {
-        accessorKey: 'name',
+        accessorKey: StorageLocationsFields.name,
         header: Messages.name,
       },
       {
-        accessorKey: 'type',
+        accessorKey: StorageLocationsFields.type,
         header: Messages.type,
+        Cell: ({ cell }) => convertStoragesType(cell.getValue<StorageType>()),
       },
       {
-        accessorKey: 'bucketName',
+        accessorKey: StorageLocationsFields.bucketName,
         header: Messages.bucketName,
       },
       {
-        accessorKey: 'description',
+        accessorKey: StorageLocationsFields.description,
         header: Messages.description,
         enableHiding: false,
       },
       {
-        accessorKey: 'url',
+        accessorKey: StorageLocationsFields.url,
         header: Messages.url,
         enableHiding: false,
       },
@@ -105,6 +111,7 @@ export const StorageLocations = () => {
     <>
       <Table
         noDataMessage="No backups storages"
+        hideExpandAllIcon
         state={{
           columnVisibility: {
             description: false,
@@ -121,7 +128,7 @@ export const StorageLocations = () => {
             size="small"
             startIcon={<Add />}
             variant="outlined"
-            onClick={() => handleOpenCreateModal()}
+            onClick={handleOpenCreateModal}
           >
             {Messages.addStorageLocationButton}
           </Button>
@@ -162,15 +169,11 @@ export const StorageLocations = () => {
             }}
           >
             <Box>
-              {row.original.url && (
-                <LabelValue label={Messages.url} value={row.original.url} />
-              )}
-              {row.original.description && (
-                <LabelValue
-                  label={Messages.description}
-                  value={row.original.description}
-                />
-              )}
+              <LabelValue label={Messages.url} value={row.original.url} />
+              <LabelValue
+                label={Messages.description}
+                value={row.original.description}
+              />
             </Box>
             {/* TODO: uncomment when endpoint is ready
             <Box>
