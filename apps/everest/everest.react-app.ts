@@ -56,11 +56,23 @@ const proxyModifier = (configMutator) => {
   return configMutator;
 };
 
+const outputModifier = (configMutator) => {
+  if (configMutator.raw.mode === 'production') {
+    configMutator.merge({
+      output: {
+        filename: 'static/[name].[chunkhash].js'
+      },
+    });
+  }
+
+  return configMutator;
+}
+
 export const EverestApp: ReactAppOptions = {
   name: 'everest',
   entry: [require.resolve('./everest.app-root')],
   favicon: require.resolve('./favicon.ico'),
-  webpackTransformers: [titleAndFaviconModifier, proxyModifier],
+  webpackTransformers: [titleAndFaviconModifier, proxyModifier, outputModifier],
 };
 
 export default EverestApp;
