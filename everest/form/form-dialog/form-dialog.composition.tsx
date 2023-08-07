@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import React, { useState } from 'react';
 import { z } from 'zod';
-import { CreateEditModal } from './create-edit-modal';
+import { FormDialog } from './form-dialog';
 
 enum DataFields {
   name = 'name',
@@ -18,7 +18,7 @@ const schema = z.object({
 
 type DataType = z.infer<typeof schema>;
 
-export const BasicCreateEditModal = () => {
+export const BasicFormDialog = () => {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -32,7 +32,7 @@ export const BasicCreateEditModal = () => {
   return (
     <>
       <Button onClick={() => setOpen(true)}>Open Modal</Button>
-      <CreateEditModal
+      <FormDialog
         isOpen={open}
         closeModal={handleClose}
         headerMessage="Add name"
@@ -42,7 +42,7 @@ export const BasicCreateEditModal = () => {
         defaultValues={defaultValues}
       >
         <TextInput name={DataFields.name} label="Name" isRequired />
-      </CreateEditModal>
+      </FormDialog>
     </>
   );
 };

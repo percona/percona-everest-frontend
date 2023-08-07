@@ -15,9 +15,9 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
-import { CreateEditModalProps } from './create-edit-modal.types';
+import { FormDialogProps } from './form-dialog.types';
 
-export const CreateEditModal = <T extends FieldValues>({
+export const FormDialog = <T extends FieldValues>({
   isOpen,
   closeModal,
   headerMessage,
@@ -28,7 +28,7 @@ export const CreateEditModal = <T extends FieldValues>({
   cancelMessage = 'Cancel',
   submitMessage,
   validationMode = 'onChange',
-}: CreateEditModalProps<T>) => {
+}: FormDialogProps<T>) => {
   const methods = useForm<T>({
     mode: validationMode,
     resolver: zodResolver(schema),

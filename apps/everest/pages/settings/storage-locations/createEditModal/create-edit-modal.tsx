@@ -1,5 +1,5 @@
 import { MenuItem } from '@mui/material';
-import { CreateEditModal } from '@percona/ui-lib.form.create-edit-modal';
+import { FormDialog } from '@percona/everest.form.form-dialog';
 import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import React, { useMemo } from 'react';
@@ -49,7 +49,7 @@ export const CreateEditModalStorage = ({
   };
 
   return (
-    <CreateEditModal
+    <FormDialog
       isOpen={open}
       closeModal={handleCloseModal}
       headerMessage={Messages.createEditModal.addEditModal(isEditMode)}
@@ -107,6 +107,6 @@ export const CreateEditModalStorage = ({
           />
         </>
       )}
-    </CreateEditModal>
+    </FormDialog>
   );
 };

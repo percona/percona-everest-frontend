@@ -3,7 +3,7 @@ import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { fireEvent, render, screen } from '@testing-library/react';
 import React, { useState } from 'react';
 import { z } from 'zod';
-import { CreateEditModal } from './create-edit-modal';
+import { FormDialog } from './form-dialog';
 
 enum DataFields {
   name = 'name',
@@ -33,7 +33,7 @@ const Wrapper = () => {
   return (
     <div>
       <Button onClick={() => setOpen(true)}>Open Modal</Button>
-      <CreateEditModal
+      <FormDialog
         isOpen={open}
         closeModal={handleClose}
         headerMessage="Add name"
@@ -43,7 +43,7 @@ const Wrapper = () => {
         defaultValues={defaultValues}
       >
         <TextInput name={DataFields.name} label="Name" isRequired />
-      </CreateEditModal>
+      </FormDialog>
     </div>
   );
 };

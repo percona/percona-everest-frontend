@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { DefaultValues, FieldValues, ValidationMode } from 'react-hook-form';
 import { ZodObject, ZodRawShape } from 'zod';
 
-export interface CreateEditModalProps<T extends FieldValues> {
+export interface FormDialogProps<T extends FieldValues> {
   isOpen: boolean;
   closeModal: () => void;
   headerMessage: string;

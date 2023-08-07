@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { ToggleButtonGroup } from '@mui/material';
 import { ThemeContextProvider } from '@percona/design.theme-context-provider';
 import { everestThemeOptions } from '@percona/design.themes.everest';
-import { ToggleButtonGroup } from '@mui/material';
+import React, { useState } from 'react';
 import { DbToggleCard } from './db-toggle-card';
 import { DbType } from './db-toggle-card.types';
 
