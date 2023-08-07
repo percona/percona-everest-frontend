@@ -21,7 +21,6 @@ jobs:
   lint:
     name: ESLint & format
     runs-on: ubuntu-20.04
-    if: "!contains(github.event.head_commit.message, '--skip-ci')"
     env:
       BIT_TOKEN: ${{ secrets.BIT_TOKEN }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -63,12 +62,11 @@ jobs:
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "chore: format files [--skip-ci]"
+          commit_message: "chore: format files"
           file_pattern: ':(exclude)pnpm-lock.yaml'
   tests:
     name: Tests
     runs-on: ubuntu-20.04
-    if: "!contains(github.event.head_commit.message, '--skip-ci')"
     env:
       GOPRIVATE: github.com/percona,github.com/percona/percona-everest-backend,github.com/percona/percona-everest-cli,github.com/percona/everest-operator
       BIT_TOKEN: ${{ secrets.BIT_TOKEN }}
