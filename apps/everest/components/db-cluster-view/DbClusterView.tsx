@@ -9,6 +9,7 @@ import { Box, MenuItem, Stack } from '@mui/material';
 import { Table } from '@percona/ui-lib.table';
 import { type MRT_ColumnDef } from 'material-react-table';
 import React, { useMemo } from 'react';
+import { Link } from "react-router-dom";
 import { DbClusterTableElement } from '../../hooks/api/db-clusters/dbCluster.type';
 import { useDbClusters } from '../../hooks/api/db-clusters/useDbClusters';
 import { Messages } from './dbClusterView.messages';
@@ -19,9 +20,12 @@ import { StatusProvider } from './statusProvider/StatusProvider';
 import { DbClusterStatus } from '../../types/dbCluster.types';
 import { beautifyDbClusterStatus } from './DbClusterView.utils';
 import { DbEngineType } from '../../types/dbEngines.types';
+import { useSelectedDBCluster } from "../../hooks/db-cluster/useSelectedDBCluster";
+
 
 export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
   const { combinedData, loadingAllClusters } = useDbClusters();
+  const { setSelectedDBClusterName } = useSelectedDBCluster();
 
   const columns = useMemo<MRT_ColumnDef<DbClusterTableElement>[]>(
     () => [
@@ -86,10 +90,15 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
           columns={columns}
           data={combinedData}
           enableRowActions
-          renderRowActionMenuItems={() => [
+          renderRowActionMenuItems={({ row }) => [
             // TODO: finish when design is ready
             <MenuItem
               key={0}
+              component={Link}
+              to="/databases/edit"
+              onClick={()=> {
+                  setSelectedDBClusterName(row.original.databaseName);
+              }}
               sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
             >
               <BorderColor fontSize="small" /> {Messages.menuItems.edit}

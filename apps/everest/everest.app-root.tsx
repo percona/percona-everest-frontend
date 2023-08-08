@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import { EverestApp } from './app';
 import { DatabasesPage } from './pages/databases/databases';
-import { NewDatabasePage } from './pages/new-database/new-database';
+import { DatabasePage } from './pages/database-form/database-form';
 import { Settings } from './pages/settings/settings';
 import { DefaultConfigurations } from './pages/settings/default-configurations/default-configurations';
 import { StorageLocations } from './pages/settings/storage-locations/storage-locations';
@@ -26,7 +26,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'databases/new',
-        element: <NewDatabasePage />,
+        element: <DatabasePage />,
+      },
+      {
+        path: 'databases/edit',
+        element: <DatabasePage />,
       },
       {
         index: true,

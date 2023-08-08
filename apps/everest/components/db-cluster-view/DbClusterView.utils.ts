@@ -1,5 +1,5 @@
-import { DbClusterStatus } from "../../types/dbCluster.types";
-import { Messages } from "./dbClusterView.messages";
+import { DbClusterStatus } from '../../types/dbCluster.types';
+import { Messages } from './dbClusterView.messages';
 
 const DB_CLUSTER_STATUS_HUMANIFIED: Record<DbClusterStatus, string> = {
   [DbClusterStatus.ready]: Messages.statusProvider.up,
@@ -11,4 +11,5 @@ const DB_CLUSTER_STATUS_HUMANIFIED: Record<DbClusterStatus, string> = {
   [DbClusterStatus.unknown]: Messages.statusProvider.unknown,
 };
 
-export const beautifyDbClusterStatus = (status: DbClusterStatus): string => DB_CLUSTER_STATUS_HUMANIFIED[status] || Messages.statusProvider.unknown;
+export const beautifyDbClusterStatus = (status: DbClusterStatus): string =>
+  DB_CLUSTER_STATUS_HUMANIFIED[status] || Messages.statusProvider.unknown;

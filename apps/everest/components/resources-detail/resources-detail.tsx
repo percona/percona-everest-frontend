@@ -7,14 +7,17 @@ import { ResourcesDetailProps } from './resources-detail.types';
 export function ResourcesDetail({
   label,
   labelProgressBar,
-  units,
   value,
   total,
-  inputValue,
-  setInputValue,
-  dataTestId,
+  inputProps,
 }: ResourcesDetailProps) {
   const theme = useTheme();
+  const {
+    value: inputValue,
+    units,
+    setValue: setInputValue,
+    dataTestId,
+  } = inputProps;
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const labelProcessBarDefault = `Using ${inputValue} ${units} (${Math.floor(
@@ -44,6 +47,7 @@ export function ResourcesDetail({
       </Box>
       <Box sx={{ maxWidth: '150px', minWidth: '100px' }}>
         <Input
+          {...inputProps}
           value={inputValue}
           setValue={setInputValue}
           units={units}

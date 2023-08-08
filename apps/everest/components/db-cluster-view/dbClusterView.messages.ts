@@ -26,6 +26,6 @@ export const Messages = {
     suspend: 'Suspend',
   },
   dbCluster: {
-    noData: "You don't have any databases yet. Create one to get started."
-  }
+    noData: "You don't have any db-cluster yet. Create one to get started.",
+  },
 };
