@@ -112,17 +112,9 @@ const stepFourSchema = z
     sourceRange: z.string().optional(),
   })
   .passthrough()
-  .superRefine((input, ctx) => {
-    if (input.externalAccess) {
-      if (!input.sourceRange) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.too_small,
-          minimum: 1,
-          inclusive: true,
-          type: 'string',
-          path: ['sourceRange'],
-        });
-      } else if (IP_REGEX.exec(input.sourceRange) === null) {
+  .superRefine(({ externalAccess, sourceRange }, ctx) => {
+    if (externalAccess) {
+      if (sourceRange && IP_REGEX.exec(sourceRange) === null) {
         ctx.addIssue({
           code: z.ZodIssueCode.invalid_string,
           validation: 'ip',
