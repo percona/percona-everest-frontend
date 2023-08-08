@@ -55,7 +55,9 @@ export const DatabasePage = () => {
   });
 
   useEffect(() => {
-    methods.reset(defaultValues);
+    if (mode === 'edit') {
+      methods.reset(defaultValues);
+    }
   }, [defaultValues]);
 
   const firstStep = activeStep === 0;

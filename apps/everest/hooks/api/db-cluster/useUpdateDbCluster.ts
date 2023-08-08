@@ -18,7 +18,7 @@ const formValuesToPayloadOverrides = (
   // const { selectedTime, minute, hour, amPm, onDay, weekDay } = dbPayload;
   // const backupSchedule = getCronExpressionFromFormValues({selectedTime, minute, hour, amPm, onDay, weekDay});
 
-  return ({
+  return {
     apiVersion: 'everest.percona.com/v1alpha1',
     kind: 'DatabaseCluster',
     metadata: dbCluster.metadata,
@@ -75,7 +75,7 @@ const formValuesToPayloadOverrides = (
         },
       },
     },
-  });
+  };
 };
 
 export const useUpdateDbCluster = (

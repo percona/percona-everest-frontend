@@ -13,7 +13,7 @@ const formValuesToPayloadMapping = (dbPayload: DbWizardType): DbCluster => {
   // const backupSchedule = getCronExpressionFromFormValues({selectedTime, minute, hour, amPm, onDay, weekDay});
 
   // TODO re-add payload after API is ready
-  return ({
+  return {
     apiVersion: 'everest.percona.com/v1alpha1',
     kind: 'DatabaseCluster',
     metadata: {
@@ -66,7 +66,7 @@ const formValuesToPayloadMapping = (dbPayload: DbWizardType): DbCluster => {
         },
       },
     },
-  });
+  };
 };
 
 export const useCreateDbCluster = (

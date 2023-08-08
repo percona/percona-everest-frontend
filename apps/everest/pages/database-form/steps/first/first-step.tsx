@@ -69,7 +69,7 @@ export const FirstStep = () => {
       return;
     }
 
-    if (!dbVersion) {
+    if ((mode === 'edit' && !dbVersion) || mode === 'new') {
       const recommendedVersion = newVersions.availableVersions.engine.find(
         (version) => version.status === DbEngineToolStatus.RECOMMENDED
       );
@@ -82,7 +82,7 @@ export const FirstStep = () => {
       );
     }
     setDbVersions(newVersions);
-  }, [dbType, dbEngines, dbVersion]);
+  }, [dbType, dbEngines]);
 
   return (
     <>
