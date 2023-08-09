@@ -132,6 +132,8 @@ importers:
 
   ui-lib/db-toggle-card: {}
 
+  ui-lib/dialog-title: {}
+
   ui-lib/form/inputs/auto-complete: {}
 
   ui-lib/form/inputs/select: {}
