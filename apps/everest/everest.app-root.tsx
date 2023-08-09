@@ -8,12 +8,6 @@ import {
 import { EverestApp } from './app';
 import { DatabasesPage } from './pages/databases/databases';
 import { NewDatabasePage } from './pages/new-database/new-database';
-import { Settings } from './pages/settings/settings';
-import { DefaultConfigurations } from './pages/settings/default-configurations/default-configurations';
-import { StorageLocations } from './pages/settings/storage-locations/storage-locations';
-import { MonitoringEndpoints } from './pages/settings/monitoring-endpoints/monitoring-endpoints';
-import { K8sClusters } from './pages/settings/k8s-clusters/k8s-clusters';
-import { SettingsTabs } from './pages/settings/settings.types';
 
 const router = createBrowserRouter([
   {
@@ -32,29 +26,33 @@ const router = createBrowserRouter([
         index: true,
         element: <Navigate to="/databases" replace />,
       },
-      {
-        path: 'settings',
-        element: <Settings />,
-        children: [
-          {
-            path: SettingsTabs.defaultConfigurations,
-            element: <DefaultConfigurations />,
-          },
-          {
-            path: SettingsTabs.storageLocations,
-            element: <StorageLocations />,
-          },
-          {
-            path: SettingsTabs.monitoringEndpoints,
-            element: <MonitoringEndpoints />,
-          },
-          {
-            path: SettingsTabs.k8sClusters,
-            element: <K8sClusters />,
-          },
-        ],
-      },
+      // {
+      //   path: 'settings',
+      //   element: <Settings />,
+      //   children: [
+      //     {
+      //       path: SettingsTabs.defaultConfigurations,
+      //       element: <DefaultConfigurations />,
+      //     },
+      //     {
+      //       path: SettingsTabs.storageLocations,
+      //       element: <StorageLocations />,
+      //     },
+      //     {
+      //       path: SettingsTabs.monitoringEndpoints,
+      //       element: <MonitoringEndpoints />,
+      //     },
+      //     {
+      //       path: SettingsTabs.k8sClusters,
+      //       element: <K8sClusters />,
+      //     },
+      //   ],
+      // },
     ],
+  },
+  {
+    path: '*',
+    element: <Navigate to="/" replace />
   },
 ]);
 

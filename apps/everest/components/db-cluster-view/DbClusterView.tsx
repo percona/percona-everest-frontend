@@ -1,11 +1,5 @@
 /* eslint-disable react/prop-types */
-import {
-  BorderColor,
-  DeleteOutline,
-  PauseCircleOutline,
-  RestartAlt,
-} from '@mui/icons-material';
-import { Box, MenuItem, Stack } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import { Table } from '@percona/ui-lib.table';
 import { type MRT_ColumnDef } from 'material-react-table';
 import React, { useMemo } from 'react';

@@ -13,9 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import StorageIcon from '@mui/icons-material/Storage';
-import SettingsIcon from '@mui/icons-material/Settings';
 import { EverestRoute } from './Drawer.types';
-import { SettingsTabs } from '../../pages/settings/settings.types';
 
 export const DRAWER_WIDTH = 200;
 
@@ -25,9 +23,10 @@ export const ROUTES: EverestRoute[] = [
     icon: StorageIcon,
     text: 'Databases',
   },
-  {
-    to: `settings/${SettingsTabs.defaultConfigurations}`,
-    icon: SettingsIcon,
-    text: 'Settings',
-  },
+  // TODO enable when Settings are connected to API
+  // {
+  //   to: `settings/${SettingsTabs.defaultConfigurations}`,
+  //   icon: SettingsIcon,
+  //   text: 'Settings',
+  // },
 ];
