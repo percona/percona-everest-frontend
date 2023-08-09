@@ -85,34 +85,35 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
           state={{ isLoading: loadingAllClusters }}
           columns={columns}
           data={combinedData}
-          enableRowActions
-          renderRowActionMenuItems={() => [
-            // TODO: finish when design is ready
-            <MenuItem
-              key={0}
-              sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
-            >
-              <BorderColor fontSize="small" /> {Messages.menuItems.edit}
-            </MenuItem>,
-            <MenuItem
-              key={1}
-              sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
-            >
-              <DeleteOutline /> {Messages.menuItems.delete}
-            </MenuItem>,
-            <MenuItem
-              key={2}
-              sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
-            >
-              <RestartAlt /> {Messages.menuItems.restart}
-            </MenuItem>,
-            <MenuItem
-              key={3}
-              sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
-            >
-              <PauseCircleOutline /> {Messages.menuItems.suspend}
-            </MenuItem>,
-          ]}
+          // TODO enable afterwards
+          // enableRowActions
+          // renderRowActionMenuItems={() => [
+          //   // TODO: finish when design is ready
+          //   <MenuItem
+          //     key={0}
+          //     sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
+          //   >
+          //     <BorderColor fontSize="small" /> {Messages.menuItems.edit}
+          //   </MenuItem>,
+          //   <MenuItem
+          //     key={1}
+          //     sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
+          //   >
+          //     <DeleteOutline /> {Messages.menuItems.delete}
+          //   </MenuItem>,
+          //   <MenuItem
+          //     key={2}
+          //     sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
+          //   >
+          //     <RestartAlt /> {Messages.menuItems.restart}
+          //   </MenuItem>,
+          //   <MenuItem
+          //     key={3}
+          //     sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
+          //   >
+          //     <PauseCircleOutline /> {Messages.menuItems.suspend}
+          //   </MenuItem>,
+          // ]}
           renderDetailPanel={({ row }) => <ExpandedRow row={row} />}
           renderTopToolbarCustomActions={() => customHeader}
           hideExpandAllIcon
