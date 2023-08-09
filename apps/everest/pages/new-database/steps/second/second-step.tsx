@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import {
   Alert,
   Box,
@@ -7,22 +6,23 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useFormContext } from 'react-hook-form';
-import { ToggleCard } from '@percona/ui-lib.toggle-card';
 import { ToggleButtonGroupInput } from '@percona/ui-lib.form.inputs.toggle-button-group';
-import { Messages } from './second-step.messages';
+import { ToggleCard } from '@percona/ui-lib.toggle-card';
+import React, { useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { ResourcesDetail } from '../../../../components/resources-detail';
+import { DbWizardFormFields } from '../../new-database.types';
+import { ResourcesLegend } from './resources-legend/resources-legend';
+import { DEFAULT_SIZES } from './second-step.const';
+import { Messages } from './second-step.messages';
 import { NumberOfNodes, ResourceSize } from './second-step.types';
 import {
   checkSwitchToCustom,
   humanizeResourceSizeMap,
 } from './second-step.utils';
-import { ResourcesLegend } from './resources-legend/resources-legend';
-import { DEFAULT_SIZES } from './second-step.const';
-import { DbWizardFormFields } from '../../new-database.types';
 
 export const SecondStep = () => {
-  const { control, watch, setValue } = useFormContext();
+  const { watch, setValue } = useFormContext();
 
   // TODO should be set from api https://jira.percona.com/browse/EVEREST-172
   const totalSizes = {
@@ -86,7 +86,6 @@ export const SecondStep = () => {
       <FormGroup sx={{ mt: 2 }}>
         <ToggleButtonGroupInput
           name={DbWizardFormFields.numberOfNodes}
-          control={control}
           label={Messages.labels.numberOfNodes}
         >
           <ToggleCard
@@ -116,7 +115,6 @@ export const SecondStep = () => {
         </ToggleButtonGroupInput>
         <ToggleButtonGroupInput
           name={DbWizardFormFields.resourceSizePerNode}
-          control={control}
           label={Messages.labels.resourceSizePerNode}
         >
           <ToggleCard
