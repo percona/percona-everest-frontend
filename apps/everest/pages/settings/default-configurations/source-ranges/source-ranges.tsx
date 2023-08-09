@@ -1,9 +1,9 @@
-import React from 'react';
-import { Button, IconButton, InputAdornment } from '@mui/material';
-import { useFieldArray } from 'react-hook-form';
-import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Button, IconButton, InputAdornment } from '@mui/material';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
+import React from 'react';
+import { useFieldArray } from 'react-hook-form';
 import { DefaultConfigurationsFields } from '../default-configurations.types';
 import { Messages } from './source-ranges.messages';
 import { SourceRangesProps } from './source-ranges.types';

@@ -14,7 +14,7 @@
 // limitations under the License.
 export const Messages = {
   defaultConfigurations: 'Default configurations',
-  storageLocations: 'Storage locations',
+  storageLocations: 'Backups storages',
   monitoringEndpoints: 'Monitoring endpoints',
   k8sClusters: 'Kubernetes clusters',
 };
