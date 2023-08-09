@@ -84,10 +84,11 @@ export const CreateEditModalStorage = ({
         label={Messages.region}
         isRequired
       />
+      {/* TODO: uncomment when api is ready
       <TextInput
         name={StorageLocationsFields.description}
         label={Messages.description}
-      />
+      /> */}
       <TextInput
         name={StorageLocationsFields.url}
         label={Messages.url}

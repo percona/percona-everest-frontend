@@ -128,13 +128,13 @@ importers:
 
   envs/percona-react-env: {}
 
+  everest/form/form-dialog: {}
+
   ui-lib/card: {}
 
   ui-lib/db-toggle-card: {}
 
   ui-lib/dialog-title: {}
-
-  ui-lib/form/create-edit-modal: {}
 
   ui-lib/form/inputs/auto-complete: {}
 
