@@ -3,8 +3,9 @@ import { ThemeContextProvider } from '@percona/design.theme-context-provider';
 import { everestThemeOptions } from '@percona/design.themes.everest';
 import { SnackbarProvider } from 'notistack';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { K8ContextProvider } from './contexts/kubernetes/kubernetes.context';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { DrawerContextProvider } from './contexts/drawer/drawer.context';
+import { K8ContextProvider } from './contexts/kubernetes/kubernetes.context';
 import { Main } from './components/main/Main';
 import { DBClusterContextProvider } from './contexts/db-cluster/db-cluster.context';
 
@@ -29,6 +30,7 @@ export const EverestApp = () => {
             </ThemeContextProvider>
           </DBClusterContextProvider>
         </K8ContextProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </SnackbarProvider>
   );

@@ -22,6 +22,7 @@ export const SelectInput = ({
         {...field}
         variant="outlined"
         error={error !== undefined}
+        data-testid={`select-${kebabize(name)}-button`}
         inputProps={{
           'data-testid': `select-input-${kebabize(name)}`,
           ...selectFieldProps?.inputProps

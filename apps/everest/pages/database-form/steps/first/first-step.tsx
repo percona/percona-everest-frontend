@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react';
 import { FormGroup, MenuItem, Skeleton, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 
 import { DbToggleCard, DbType } from '@percona/ui-lib.db-toggle-card';
+import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { ToggleButtonGroupInput } from '@percona/ui-lib.form.inputs.toggle-button-group';
-import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { useFormContext } from 'react-hook-form';
-import { Messages } from './first-step.messages';
-import { generateShortUID } from './utils';
 import { useDbEngines } from '../../../../hooks/api/db-engines/useDbEngines';
+import { DbEngineToolStatus } from '../../../../types/dbEngines.types';
 import { dbEngineToDbType, dbTypeToDbEngine } from '../../../../utils/db';
 import { DbWizardFormFields } from '../../database-form.types';
-import { DbEngineToolStatus } from '../../../../types/dbEngines.types';
+import { Messages } from './first-step.messages';
+import { generateShortUID } from './utils';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 
 export const FirstStep = () => {
-  const { control, watch, setValue, getValues } = useFormContext();
+  const { control, watch, setValue, getFieldState } = useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
   const mode = useDatabasePageMode();
@@ -53,11 +53,10 @@ export const FirstStep = () => {
     if (!dbType) {
       return;
     }
-    const dbName = getValues(DbWizardFormFields.dbName);
+    const { isTouched } = getFieldState(DbWizardFormFields.dbName);
 
-    if (!dbName) {
-      const value = `${dbType}-${generateShortUID()}`;
-      setValue(DbWizardFormFields.dbName, value, {
+    if (!isTouched) {
+      setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`, {
         shouldValidate: true,
       });
     }
@@ -170,13 +169,11 @@ export const FirstStep = () => {
           name={DbWizardFormFields.dbVersion}
           label={Messages.labels.dbVersion}
         >
-          {dbVersions?.availableVersions.engine.map((version) => {
-            return (
-              <MenuItem value={version.version} key={version.version}>
-                {version.version}
-              </MenuItem>
-            );
-          })}
+          {dbVersions?.availableVersions.engine.map((version) => (
+            <MenuItem value={version.version} key={version.version}>
+              {version.version}
+            </MenuItem>
+          ))}
         </SelectInput>
       </FormGroup>
     </>
