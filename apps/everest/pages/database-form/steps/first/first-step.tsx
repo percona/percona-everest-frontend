@@ -15,7 +15,7 @@ import { generateShortUID } from './utils';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 
 export const FirstStep = () => {
-  const { control, watch, setValue, getFieldState } = useFormContext();
+  const { watch, setValue, getFieldState } = useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
   const mode = useDatabasePageMode();
@@ -96,10 +96,7 @@ export const FirstStep = () => {
           // This is roughly the height of the buttons
           <Skeleton height={57} variant="rectangular" />
         ) : (
-          <ToggleButtonGroupInput
-            name={DbWizardFormFields.dbType}
-            control={control}
-          >
+          <ToggleButtonGroupInput name={DbWizardFormFields.dbType}>
             {dbEngines.map(({ type }) => (
               <DbToggleCard
                 key={type}
@@ -110,7 +107,6 @@ export const FirstStep = () => {
           </ToggleButtonGroupInput>
         )}
         <TextInput
-          control={control}
           name={DbWizardFormFields.dbName}
           label={Messages.labels.dbName}
           textFieldProps={{
@@ -165,7 +161,6 @@ export const FirstStep = () => {
           )}
         /> */}
         <SelectInput
-          control={control}
           name={DbWizardFormFields.dbVersion}
           label={Messages.labels.dbVersion}
         >

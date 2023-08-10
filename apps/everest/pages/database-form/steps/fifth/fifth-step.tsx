@@ -1,13 +1,13 @@
-import { Typography, FormGroup } from '@mui/material';
-import React from 'react';
-import { useFormContext } from 'react-hook-form';
+import { FormGroup, Typography } from '@mui/material';
 import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
-import { Messages } from './fifth-step.messages';
+import React from 'react';
+import { useFormContext } from 'react-hook-form';
 import { DbWizardFormFields } from '../../database-form.types';
+import { Messages } from './fifth-step.messages';
 
 export const FifthStep = () => {
-  const { control, watch } = useFormContext();
+  const { watch } = useFormContext();
   const monitoring = watch(DbWizardFormFields.monitoring);
 
   return (
@@ -16,14 +16,12 @@ export const FifthStep = () => {
       <Typography variant="subtitle2">{Messages.caption}</Typography>
       <FormGroup sx={{ mt: 2 }}>
         <SwitchInput
-          control={control}
           label={Messages.monitoringEnabled}
           name={DbWizardFormFields.monitoring}
         />
         {monitoring && (
           <TextInput
             name={DbWizardFormFields.endpoint}
-            control={control}
             label={Messages.endpointName}
           />
         )}

@@ -24,4 +24,5 @@ export type SelectInputProps = {
   labelProps?: LabeledContentProps;
   selectFieldProps?: SelectProps;
   children?: React.ReactNode;
+  isRequired?: boolean;
 };

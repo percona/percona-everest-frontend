@@ -1,12 +1,12 @@
-import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { useFormContext } from 'react-hook-form';
-import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
 import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
-import { Messages } from './third-step.messages';
-import { DbWizardFormFields } from '../../database-form.types';
+import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
+import React from 'react';
+import { useFormContext } from 'react-hook-form';
 import { TimeSelection } from '../../../../components/time-selection/time-selection';
 import { useBackupStorages } from '../../../../hooks/api/backup-storages/useBackupStorages';
+import { DbWizardFormFields } from '../../database-form.types';
+import { Messages } from './third-step.messages';
 
 export const ThirdStep = () => {
   const { control, watch } = useFormContext();
@@ -32,7 +32,6 @@ export const ThirdStep = () => {
           <TimeSelection showInfoAlert />
           <AutoCompleteInput
             name={DbWizardFormFields.storageLocation}
-            control={control}
             label={Messages.storageLocation}
             loading={isFetching}
             options={backupStorages}
@@ -45,7 +44,6 @@ export const ThirdStep = () => {
           {/* <Typography variant="h6">{Messages.pitr}</Typography>
           <Typography variant="caption">{Messages.captionPitr}</Typography>
           <SwitchInput
-            control={control}
             label={Messages.enablePitr}
             name={DbWizardFormFields.pitrEnabled}
           /> */}

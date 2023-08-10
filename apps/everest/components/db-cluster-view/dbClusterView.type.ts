@@ -12,10 +12,11 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { ReactNode } from 'react';
+
 import { DbType } from '@percona/ui-lib.db-toggle-card';
-import { DbEngineType } from '../../types/dbEngines.types';
+import { ReactNode } from 'react';
 import { DbClusterStatus } from '../../types/dbCluster.types';
+import { DbEngineType } from '../../types/dbEngines.types';
 
 export interface DbClusterViewProps {
   customHeader: ReactNode;

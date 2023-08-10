@@ -113,23 +113,13 @@ const stepFourSchema = z
   })
   .passthrough()
   .superRefine((input, ctx) => {
-    if (input.externalAccess) {
-      if (!input.sourceRange) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.too_small,
-          minimum: 1,
-          inclusive: true,
-          type: 'string',
-          path: ['sourceRange'],
-        });
-      } else if (IP_REGEX.exec(input.sourceRange) === null) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.invalid_string,
-          validation: 'ip',
-          path: ['sourceRange'],
-          message: Messages.errors.sourceRange.invalid,
-        });
-      }
+    if (input.sourceRange && IP_REGEX.exec(input.sourceRange) === null) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.invalid_string,
+        validation: 'ip',
+        path: ['sourceRange'],
+        message: Messages.errors.sourceRange.invalid,
+      });
     }
   });
 

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 // percona-everest-frontend
 // Copyright (C) 2023 Percona LLC
 //
@@ -12,27 +13,15 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
+import { BackupStorageType } from '../pages/settings/storage-locations/storage-locations.types';
+
+export type BackupStorage = BackupStorageType;
+
+export type GetBackupStoragesPayload = BackupStorageType[];
+
 export enum StorageType {
   S3 = 's3',
   AZURE = 'azure',
   GCS = 'gcs',
 }
-
-export type BaseBackupStorageFields = {
-  name: string;
-  type: StorageType;
-  bucketName: string;
-  region: string;
-  url?: string;
-};
-
-export type BackupStorage = BaseBackupStorageFields & {
-  id: string;
-};
-
-export type GetBackupStoragesPayload = BackupStorage[];
-
-export type CreateBackupStoragePayload = BaseBackupStorageFields & {
-  accessKey: string;
-  secretKey: string;
-};
