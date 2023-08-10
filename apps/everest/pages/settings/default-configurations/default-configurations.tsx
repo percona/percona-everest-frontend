@@ -132,7 +132,6 @@ export const DefaultConfigurations = () => {
               childrenSx={{
                 flexDirection: 'column',
                 display: 'flex',
-                gap: 1,
                 justifyContent: 'end',
                 ...(isLaptop && {
                   justifyContent: 'start',
@@ -142,7 +141,7 @@ export const DefaultConfigurations = () => {
                 }),
               }}
             >
-              {externalAccess && <SourceRanges methods={methods} />}
+              {externalAccess && <SourceRanges fieldName={DefaultConfigurationsFields.sourceRanges} />}
             </SwitchOutlinedBox>
             <Stack direction="row" justifyContent="flex-end" mt={2} gap={1}>
               <Button onClick={() => {}} variant="text">

@@ -13,10 +13,11 @@ import { useFormContext } from 'react-hook-form';
 import { Messages } from './fourth-step.messages';
 
 import { DbWizardFormFields } from '../../new-database.types';
+import { SourceRanges } from '../../../settings/default-configurations/source-ranges/source-ranges';
 
 export const FourthStep = () => {
-  const { setValue, watch } = useFormContext();
-  const externalAccess = watch(DbWizardFormFields.externalAccess);
+  const methods = useFormContext();
+  const externalAccess = methods.watch(DbWizardFormFields.externalAccess);
 
   return (
     <>
@@ -33,7 +34,7 @@ export const FourthStep = () => {
               label={Messages.internetFacing}
               name={DbWizardFormFields.internetFacing}
             /> */}
-            <TextInput
+            {/* <TextInput
               name={DbWizardFormFields.sourceRange}
               label={Messages.sourceRange}
               textFieldProps={{
@@ -55,7 +56,8 @@ export const FourthStep = () => {
                   ),
                 },
               }}
-            />
+            /> */}
+            <SourceRanges label='Source ranges' fieldName={DbWizardFormFields.sourceRanges} />
           </>
         )}
       </FormGroup>
