@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import {
-  BorderColor,
-  DeleteOutline,
-  PauseCircleOutline,
-  RestartAlt,
+    BorderColor,
+    DeleteOutline,
+    PauseCircleOutline,
+    RestartAlt,
 } from '@mui/icons-material';
 import { Box, MenuItem, Stack } from '@mui/material';
 import { Table } from '@percona/ui-lib.table';
@@ -21,13 +21,54 @@ import { DbClusterStatus } from '../../types/dbCluster.types';
 import { beautifyDbClusterStatus } from './DbClusterView.utils';
 import { DbEngineType } from '../../types/dbEngines.types';
 import { useSelectedDBCluster } from "../../hooks/db-cluster/useSelectedDBCluster";
+import { useDeleteDbCluster } from '../../hooks/api/db-cluster/useDeleteDbCluster';
+import { useSelectedKubernetesCluster } from '../../hooks/api/kubernetesClusters/useSelectedKubernetesCluster';
+import { usePausedDbCluster } from '../../hooks/api/db-cluster/usePausedDbCluster';
+import { useRestartDbCluster } from '../../hooks/api/db-cluster/useRestartDbCluster';
 
 
 export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
-  const { combinedData, loadingAllClusters } = useDbClusters();
+  const { combinedDataForTable, loadingAllClusters, refetch: reFetchDbClusters, combinedDbClusters } = useDbClusters();
   const { setSelectedDBClusterName } = useSelectedDBCluster();
+  const { mutate: deleteDbCluster } = useDeleteDbCluster();
+  const { mutate: suspendDbCluster } = usePausedDbCluster();
+  const { mutate: restartDbCluster } = useRestartDbCluster();
+  const { id: k8sClusterId } = useSelectedKubernetesCluster();
+  const isPaused = (status: DbClusterStatus) => status===DbClusterStatus.paused || status===DbClusterStatus.pausing;
 
-  const columns = useMemo<MRT_ColumnDef<DbClusterTableElement>[]>(
+  const handleDeleteDbCluster = (dbClusterName: string) => {
+      deleteDbCluster({ k8sClusterId, dbClusterName}, {
+          onSuccess: ()=>{
+              reFetchDbClusters(); // TODO change to the common function when  EVEREST-161-storage-location-page will be ready
+          },
+      })
+  };
+    const handleDbSuspendOrResumed = (status: DbClusterStatus, dbClusterName:string) => {
+        const paused = !isPaused(status);
+        const dbCluster = combinedDbClusters.find(item => item.metadata.name===dbClusterName);
+        if (dbClusterName) {
+            suspendDbCluster({paused, k8sClusterId, dbCluster}, {
+                onSuccess: ()=>{
+                    reFetchDbClusters(); // TODO change to the common function when  EVEREST-161-storage-location-page will be ready
+                },
+            })
+        }
+    };
+
+    const handleDbRestart = (status: DbClusterStatus, dbClusterName:string) => {
+        const dbCluster = combinedDbClusters.find(item => item.metadata.name===dbClusterName);
+        debugger;
+        if (dbClusterName) {
+            restartDbCluster({k8sClusterId, dbCluster}, {
+                onSuccess: ()=>{
+                    reFetchDbClusters(); // TODO change to the common function when  EVEREST-161-storage-location-page will be ready
+                },
+            })
+        }
+    };
+
+
+    const columns = useMemo<MRT_ColumnDef<DbClusterTableElement>[]>(
     () => [
       {
         accessorKey: 'status',
@@ -88,7 +129,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
           noDataMessage={Messages.dbCluster.noData}
           state={{ isLoading: loadingAllClusters }}
           columns={columns}
-          data={combinedData}
+          data={combinedDataForTable}
           enableRowActions
           renderRowActionMenuItems={({ row }) => [
             // TODO: finish when design is ready
@@ -97,7 +138,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
               component={Link}
               to="/databases/edit"
               onClick={()=> {
-                  setSelectedDBClusterName(row.original.databaseName);
+                  setSelectedDBClusterName(row.original.databaseName!);
               }}
               sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
             >
@@ -105,21 +146,24 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
             </MenuItem>,
             <MenuItem
               key={1}
+              onClick={() => handleDeleteDbCluster(row.original.databaseName!)}
               sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
             >
               <DeleteOutline /> {Messages.menuItems.delete}
             </MenuItem>,
             <MenuItem
               key={2}
+              onClick={() => handleDbRestart(row.original.status, row.original.databaseName)}
               sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
             >
               <RestartAlt /> {Messages.menuItems.restart}
             </MenuItem>,
             <MenuItem
               key={3}
+              onClick={() => handleDbSuspendOrResumed(row.original.status, row.original.databaseName)}
               sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
             >
-              <PauseCircleOutline /> {Messages.menuItems.suspend}
+              <PauseCircleOutline /> {isPaused(row.original.status)? Messages.menuItems.resume: Messages.menuItems.suspend}
             </MenuItem>,
           ]}
           renderDetailPanel={({ row }) => <ExpandedRow row={row} />}

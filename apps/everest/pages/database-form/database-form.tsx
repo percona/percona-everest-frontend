@@ -41,7 +41,7 @@ export const DatabasePage = () => {
   const [closeModalIsOpen, setModalIsOpen] = useState(false);
   const currentValidationSchema = dbWizardSchema[activeStep];
   const { mutate: addDbCluster } = useCreateDbCluster();
-  const { mutate: editDBCluster } = useUpdateDbCluster();
+  const { mutate: editDbCluster } = useUpdateDbCluster();
   const { id } = useSelectedKubernetesCluster();
   const { setSelectedDBClusterName } = useSelectedDBCluster();
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
@@ -83,7 +83,7 @@ export const DatabasePage = () => {
       );
     }
     if (mode === 'edit') {
-      editDBCluster(
+      editDbCluster(
         { k8sClusterId: id, dbPayload: data, dbCluster: dbClusterData },
         {
           onSuccess: () => {
@@ -130,8 +130,7 @@ export const DatabasePage = () => {
       />
     ),
     [activeStep, isDesktop]
-  );  debugger;
-
+  );
 
   return formSubmitted ? (
     <SixthStep />

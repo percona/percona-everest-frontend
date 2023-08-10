@@ -12,16 +12,12 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import {
-  useQuery,
-} from 'react-query';
-import {
-  DbCluster,
-} from '../../../types/dbCluster.types';
+import { useQuery } from 'react-query';
+import { DbCluster } from '../../../types/dbCluster.types';
 
 import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
 import { useSelectedDBCluster } from '../../db-cluster/useSelectedDBCluster';
-import { getDbCluster } from '../../../api/dbClusterApi';
+import { getDbClusterFn } from '../../../api/dbClusterApi';
 
 export const useDbCluster = (enabled?: boolean) => {
   const { id } = useSelectedKubernetesCluster();
@@ -29,7 +25,7 @@ export const useDbCluster = (enabled?: boolean) => {
 
   return useQuery<DbCluster, unknown, DbCluster>(
     'dbCluster',
-    () => getDbCluster(id, dbClusterName),
+    () => getDbClusterFn(id, dbClusterName),
     {
       enabled,
     }

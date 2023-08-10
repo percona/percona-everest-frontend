@@ -28,7 +28,7 @@ export const createDbClusterFn = async (data: DbCluster, clusterId: string) => {
   return response.data;
 };
 
-export const updateDbCluster = async (
+export const updateDbClusterFn = async (
   k8sClusterId: string,
   dbClusterName: string,
   data: DbCluster
@@ -41,7 +41,7 @@ export const updateDbCluster = async (
   return response.data;
 };
 
-export const getDbClusters = async (clusterId: string) => {
+export const getDbClustersFn = async (clusterId: string) => {
   const response = await api.get<GetDbClusterPayload>(
     `kubernetes/${clusterId}/database-clusters`
   );
@@ -59,7 +59,7 @@ export const getDbClusterCredentialsFn = async (
   return response.data;
 };
 
-export const getDbCluster = async (
+export const getDbClusterFn = async (
   k8sClusterId: string,
   dbClusterName: string
 ) => {
@@ -68,13 +68,13 @@ export const getDbCluster = async (
   );
   return response.data;
 };
-// TODO return
-// export const deleteDbCluster = async (
-//   k8sClusterId: string,
-//   dbClusterName: string
-// ) => {
-//   const response = await api.delete<DbCluster>(
-//     `kubernetes/${k8sClusterId}/database-clusters/${dbClusterName}`
-//   );
-//   return response.data;
-// };
+
+export const deleteDbClusterFn = async (
+  k8sClusterId: string,
+  dbClusterName: string
+) => {
+  const response = await api.delete<DbCluster>(
+    `kubernetes/${k8sClusterId}/database-clusters/${dbClusterName}`
+  );
+  return response.data;
+};

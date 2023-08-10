@@ -12,22 +12,24 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { useContext } from 'react';
+import { useContext, useCallback } from 'react';
 import { useQueries } from 'react-query';
-import { getDbClusters } from '../../../api/dbClusterApi';
+import { getDbClustersFn } from '../../../api/dbClusterApi';
 import { K8Context } from '../../../contexts/kubernetes/kubernetes.context';
 import { KubernetesCluster } from '../../../types/kubernetes.types';
 import { DbClusterTableElement } from './dbCluster.type';
 import {
+  DbCluster,
   DbClusterStatus,
   GetDbClusterPayload,
+  DbClusterAPI,
 } from '../../../types/dbCluster.types';
 
 const mapRawDataToDbClusterModel = (
-  payload: GetDbClusterPayload,
-  cluster: KubernetesCluster
+  payload: ExtraDbCluster[]
 ): DbClusterTableElement[] => {
-  return (payload.items || []).flatMap((item) => {
+  debugger;
+  return payload.flatMap(({ dbCluster: item, k8sClusterName }) => {
     try {
       const newElement: DbClusterTableElement = {
         status: item.status ? item.status.status : DbClusterStatus.unknown,
@@ -35,7 +37,7 @@ const mapRawDataToDbClusterModel = (
         dbVersion: item.spec.engine.version || '',
         backupsEnabled: !!item.spec.backup?.enabled,
         databaseName: item.metadata.name,
-        kubernetesCluster: cluster.name,
+        kubernetesCluster: k8sClusterName,
         cpu: item.spec.engine.resources?.cpu || '',
         memory: item.spec.engine.resources?.memory || '',
         storage: item.spec.engine.storage.size,
@@ -53,18 +55,32 @@ const mapRawDataToDbClusterModel = (
   });
 };
 
+interface ExtraDbCluster {
+  dbCluster: DbClusterAPI;
+  k8sClusterName: string;
+}
+const combineK8sClusterWithDbCluster = (
+  dbCluster: DbClusterAPI,
+  k8sCluster: KubernetesCluster
+): ExtraDbCluster => ({
+  dbCluster,
+  k8sClusterName: k8sCluster.name,
+});
+
 export const useDbClusters = () => {
   const { clusters } = useContext(K8Context);
   const clusterData = clusters?.data ?? [];
-  const userQueries = useQueries<DbClusterTableElement[]>(
+  const userQueries = useQueries<ExtraDbCluster[]>(
     clusterData.map(
       (cluster) => {
         return {
           queryKey: ['dbClusters', cluster.id],
           queryFn: async () => {
-            const response = await getDbClusters(cluster.id);
+            const response = await getDbClustersFn(cluster.id);
 
-            return mapRawDataToDbClusterModel(response, cluster);
+            return (response?.items || []).flatMap((item: DbCluster) =>
+              combineK8sClusterWithDbCluster(item, cluster)
+            );
           },
         };
       },
@@ -72,15 +88,31 @@ export const useDbClusters = () => {
     )
   );
 
+  const refetch = useCallback(() => {
+    userQueries.forEach((result) => result.refetch());
+  }, [userQueries]);
+
   const loadingAllClusters = userQueries.every((cluster) => cluster.isLoading);
 
   const errorInSomeClusters = userQueries.some((cluster) => cluster.error);
 
-  const combinedData = userQueries
-    .map((cluster) => {
-      return cluster?.data ?? [];
-    })
+  const combinedDataForTable: DbClusterTableElement[] = userQueries
+    .map((cluster) =>
+      mapRawDataToDbClusterModel((cluster?.data as ExtraDbCluster[]) || [])
+    )
     .flat() as DbClusterTableElement[];
 
-  return { combinedData, loadingAllClusters, errorInSomeClusters };
+  const combinedDbClusters: DbCluster[] = userQueries
+    .map((cluster) =>
+      ((cluster?.data as ExtraDbCluster[]) ?? []).map((item) => item.dbCluster)
+    )
+    .flat() as DbCluster[];
+
+  return {
+    combinedDataForTable,
+    loadingAllClusters,
+    errorInSomeClusters,
+    refetch,
+    combinedDbClusters,
+  };
 };

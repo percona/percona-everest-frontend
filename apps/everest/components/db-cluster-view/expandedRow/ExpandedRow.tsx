@@ -5,7 +5,7 @@ import { DbClusterTableElement } from '../../../hooks/api/db-clusters/dbCluster.
 import { ProxyExposeType } from '../../../types/dbCluster.types';
 import { Messages } from '../dbClusterView.messages';
 import { LabelValue } from './LabelValue';
-import { useDbClusterCredentials } from "../../../hooks/api/db-cluster/useCreateDbCluster";
+import { useDbClusterCredentials } from '../../../hooks/api/db-cluster/useCreateDbCluster';
 
 export const ExpandedRow = ({
   row,

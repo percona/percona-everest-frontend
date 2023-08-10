@@ -1,6 +1,6 @@
 import { UseMutationOptions, useMutation } from 'react-query';
 import { DbWizardType } from '../../../pages/database-form/database-form.types';
-import { updateDbCluster } from '../../../api/dbClusterApi';
+import { updateDbClusterFn } from '../../../api/dbClusterApi';
 import { DbCluster, ProxyExposeType } from '../../../types/dbCluster.types';
 // import {getCronExpressionFromFormValues} from "../../components/time-selection/time-selection.utils";
 // import {TimeValue, WeekDays} from "../../components/time-selection/time-selection.types";
@@ -85,7 +85,7 @@ export const useUpdateDbCluster = (
     ({ dbPayload, k8sClusterId, dbCluster }: UpdateDbClusterArgType) => {
       const dbClusterName = dbCluster?.metadata?.name;
       const payload = formValuesToPayloadOverrides(dbPayload, dbCluster);
-      return updateDbCluster(k8sClusterId, dbClusterName, payload);
+      return updateDbClusterFn(k8sClusterId, dbClusterName, payload);
     },
     { ...options }
   );

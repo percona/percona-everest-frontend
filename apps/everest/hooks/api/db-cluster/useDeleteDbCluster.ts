@@ -1,16 +1,18 @@
-import { useQuery } from 'react-query';
-import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
-import { useSelectedDBCluster } from '../../db-cluster/useSelectedDBCluster';
-import { DbCluster } from '../../../types/dbCluster.types';
-import { getDbCluster } from '../../../api/dbClusterApi';
+import { useMutation, UseMutationOptions } from 'react-query';
+import { deleteDbClusterFn } from '../../../api/dbClusterApi';
 
-// TODO return
-export const useDeleteDbCluster = () => {
-  const { id } = useSelectedKubernetesCluster();
-  const { dbClusterName } = useSelectedDBCluster();
-
-  useQuery<DbCluster>('dbCluster', () => getDbCluster(id, dbClusterName));
-  return useQuery<DbCluster>('dbCluster', () =>
-    getDbCluster(id, dbClusterName)
+type DeleteDbClusterArgType = {
+  k8sClusterId: string;
+  dbClusterName: string;
+};
+export const useDeleteDbCluster = (
+  options?: UseMutationOptions<any, unknown, DeleteDbClusterArgType, unknown>
+) => {
+  return useMutation(
+    ({ k8sClusterId, dbClusterName }: DeleteDbClusterArgType) =>
+      deleteDbClusterFn(k8sClusterId, dbClusterName),
+    {
+      ...options,
+    }
   );
 };

@@ -30,7 +30,7 @@ import {
   getDbClusterCredentialsFn,
 } from '../../../api/dbClusterApi';
 import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
-import { DbWizardType } from "../../../pages/database-form/database-form.types";
+import { DbWizardType } from '../../../pages/database-form/database-form.types';
 // import {getCronExpressionFromFormValues} from "../../components/time-selection/time-selection.utils";
 // import {TimeValue, WeekDays} from "../../components/time-selection/time-selection.types";
 

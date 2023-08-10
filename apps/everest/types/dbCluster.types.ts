@@ -71,6 +71,7 @@ export interface Spec {
   backup?: Backup;
   engine: Engine;
   proxy: Proxy;
+  paused?: boolean;
 }
 
 export interface StatusSpec {
@@ -84,16 +85,19 @@ export interface DbCluster {
   kind: 'DatabaseCluster';
   metadata: {
     name: string;
+    annotations?: {
+      'everest.percona.com/restart'?: string;
+    };
   };
   spec: Spec;
 }
 
+export type DbClusterAPI = DbCluster & {
+  status?: StatusSpec;
+};
+
 export type GetDbClusterPayload = {
-  items: Array<
-    DbCluster & {
-      status?: StatusSpec;
-    }
-  >;
+  items: Array<DbClusterAPI>;
 };
 
 export type ClusterCredentials = {
