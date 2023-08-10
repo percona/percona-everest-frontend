@@ -107,15 +107,15 @@ const stepTwoSchema = z
 
 const stepFourSchema = z
   .object({
-    externalAccess: z.boolean(),
+    [DbWizardFormFields.externalAccess]: z.boolean(),
     // internetFacing: z.boolean(),
-    sourceRange: z.array(
+    [DbWizardFormFields.sourceRanges]: z.array(
       z.object({ sourceRange: z.string().optional() })
     ),
   })
   .passthrough()
-  .superRefine(({ sourceRange }, ctx) => {
-    sourceRange.forEach(({ sourceRange }, index) => {
+  .superRefine(({ sourceRanges }, ctx) => {
+    sourceRanges.forEach(({ sourceRange }, index) => {
       if (sourceRange && IP_REGEX.exec(sourceRange) === null) {
         ctx.addIssue({
           code: z.ZodIssueCode.invalid_string,
