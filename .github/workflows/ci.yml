@@ -2,7 +2,7 @@
 name: CI
 on:
   schedule:
-    - cron: "0 12 * * 0"
+    - cron: '0 12 * * 0'
   push:
     branches:
       - main
@@ -54,7 +54,7 @@ jobs:
       - name: Install dependencies
         run: make init
 
-      - name: Run linter 
+      - name: Run linter
         run: make lint
 
       - name: Run formatter
@@ -62,7 +62,7 @@ jobs:
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "chore: format files"
+          commit_message: 'chore: format files'
           file_pattern: ':(exclude)pnpm-lock.yaml'
   tests:
     name: Tests
@@ -79,7 +79,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           path: ./percona-everest-frontend
-          
+
       - name: Checkout CLI repo
         uses: percona-platform/checkout@v3
         with:
@@ -176,7 +176,7 @@ jobs:
       - name: Run Provisioning
         run: |
           cd ${GITHUB_WORKSPACE}/percona-everest-cli
-          go run cmd/everest/main.go install operators --backup.enable=false --everest.endpoint=http://127.0.0.1:8081 --monitoring.enable=false --name=minikube --operator.mongodb=true --operator.postgresql=true --operator.xtradb-cluster=true --skip-wizard --namespace test-everest
+          go run cmd/everest/main.go install operators --backup.enable=false --everest.endpoint=http://127.0.0.1:8080 --monitoring.enable=false --name=minikube --operator.mongodb=true --operator.postgresql=true --operator.xtradb-cluster=true --skip-wizard --namespace test-everest
 
       - name: Run integration tests
         run: |

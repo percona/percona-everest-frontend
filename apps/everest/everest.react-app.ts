@@ -41,7 +41,7 @@ const titleAndFaviconModifier = (configMutator) => {
 };
 
 const proxyModifier = (configMutator) => {
-  const apiPort = process.env.API_PORT || '8081';
+  const apiPort = process.env.API_PORT || '8080';
 
   const newWebpackConfig = {
     devServer: {
@@ -60,13 +60,13 @@ const outputModifier = (configMutator) => {
   if (configMutator.raw.mode === 'production') {
     configMutator.merge({
       output: {
-        filename: 'static/[name].[chunkhash].js'
+        filename: 'static/[name].[chunkhash].js',
       },
     });
   }
 
   return configMutator;
-}
+};
 
 export const EverestApp: ReactAppOptions = {
   name: 'everest',
