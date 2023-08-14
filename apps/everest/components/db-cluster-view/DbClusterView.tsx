@@ -34,7 +34,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
   const { mutate: suspendDbCluster } = usePausedDbCluster();
   const { mutate: restartDbCluster } = useRestartDbCluster();
   const { id: k8sClusterId } = useSelectedKubernetesCluster();
-  const isPaused = (status: DbClusterStatus) => status===DbClusterStatus.paused || status===DbClusterStatus.pausing;
+  const isPaused = (status: DbClusterStatus) => status === DbClusterStatus.paused || status === DbClusterStatus.pausing;
 
   const handleDeleteDbCluster = (dbClusterName: string) => {
       deleteDbCluster({ k8sClusterId, dbClusterName}, {
