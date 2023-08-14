@@ -81,7 +81,7 @@ export const FirstStep = () => {
       );
     }
     setDbVersions(newVersions);
-  }, [dbType, dbEngines]);
+  }, [dbType, dbEngines, mode]);
 
   return (
     <>

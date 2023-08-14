@@ -57,7 +57,6 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
 
     const handleDbRestart = (status: DbClusterStatus, dbClusterName:string) => {
         const dbCluster = combinedDbClusters.find(item => item.metadata.name===dbClusterName);
-        debugger;
         if (dbClusterName) {
             restartDbCluster({k8sClusterId, dbCluster}, {
                 onSuccess: ()=>{

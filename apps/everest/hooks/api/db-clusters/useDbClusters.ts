@@ -28,7 +28,6 @@ import {
 const mapRawDataToDbClusterModel = (
   payload: ExtraDbCluster[]
 ): DbClusterTableElement[] => {
-  debugger;
   return payload.flatMap(({ dbCluster: item, k8sClusterName }) => {
     try {
       const newElement: DbClusterTableElement = {
