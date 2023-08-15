@@ -13,6 +13,7 @@ import {
   FormProvider,
   useWatch,
 } from 'react-hook-form';
+import { TextArray } from '@percona/ui-lib.form.inputs.text-array';
 import { Messages } from './default-configurations.messages';
 import {
   DefaultConfigurationsFields,
@@ -26,7 +27,6 @@ import {
   WeekDays,
 } from '../../../components/time-selection/time-selection.types';
 import { SwitchOutlinedBox } from '../../../components/switch-outlined-box/switch-oulined-box';
-import { TextArray } from '@percona/ui-lib.form.inputs.text-array';
 
 export const DefaultConfigurations = () => {
   const theme = useTheme();

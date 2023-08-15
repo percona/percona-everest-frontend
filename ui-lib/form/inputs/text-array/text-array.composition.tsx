@@ -1,9 +1,9 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { TextArray } from './text-array';
 import { CompositionViewer } from '@percona/design.composition-viewer';
 import { baseThemeOptions } from '@percona/design.themes.base';
 import { Box } from '@mui/material';
+import { TextArray } from './text-array';
 
 export const WithoutLabel = () => {
   const methods = useForm({
