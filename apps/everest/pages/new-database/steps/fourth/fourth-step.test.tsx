@@ -9,7 +9,9 @@ const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
     defaultValues: {
       externalAccess: false,
       // internetFacing: false,
-      sourceRange: '',
+      sourceRanges: [{
+        sourgeRange: '192.168.1.1'
+      }],
     },
   });
 
@@ -33,7 +35,7 @@ describe('FourthStep', () => {
       screen.queryByTestId('switch-input-internet-facing')
     ).not.toBeInTheDocument();
     expect(
-      screen.queryByTestId('text-input-source-range')
+      screen.queryByTestId('text-input-source-ranges.0.source-range')
     ).not.toBeInTheDocument();
   });
 
@@ -54,27 +56,6 @@ describe('FourthStep', () => {
     // expect(
     //   screen.getByTestId('switch-input-internet-facing')
     // ).toBeInTheDocument();
-    expect(screen.getByTestId('text-input-source-range')).toBeInTheDocument();
-  });
-
-  it('should delete text when clicking the trash icon', async () => {
-    render(
-      <TestWrapper>
-        <FormProviderWrapper>
-          <FourthStep />
-        </FormProviderWrapper>
-      </TestWrapper>
-    );
-
-    fireEvent.click(screen.getByTestId('switch-input-external-access'));
-
-    const input = screen.getByTestId('text-input-source-range');
-    fireEvent.change(input, { target: { value: 'test' } });
-
-    expect(input.getAttribute('value')).toBe('test');
-
-    fireEvent.click(screen.getByTestId('delete-button'));
-
-    await waitFor(() => expect(input.getAttribute('value')).toBe(''));
+    expect(screen.getByTestId('text-input-source-ranges.0.source-range')).toBeInTheDocument();
   });
 });
