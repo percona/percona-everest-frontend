@@ -113,6 +113,19 @@
         "mainFile": "index.ts",
         "rootDir": "ui-lib/labeled-content"
     },
+    "menu-button": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui-lib",
+        "mainFile": "index.ts",
+        "rootDir": "ui-lib/menu-button",
+        "config": {
+            "teambit.envs/envs": {
+                "env": "percona.envs/percona-react-env"
+            },
+            "percona.envs/percona-react-env": {}
+        }
+    },
     "percona-react-env": {
         "scope": "percona.envs",
         "version": "0.0.2",
