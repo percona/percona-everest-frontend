@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   DbWizardFormFields,
   DbWizardMode,
@@ -10,7 +11,6 @@ import { DbCluster, ProxyExposeType } from '../../types/dbCluster.types';
 import { dbEngineToDbType } from '../../utils/db';
 import { matchFieldsValueToResourceSize } from './steps/second/second-step.utils';
 import { DB_WIZARD_DEFAULTS } from './database-form.constants';
-import { useLocation } from 'react-router-dom';
 
 const removeMeasurementValue = (value: string) =>
   value ? +value?.slice(0, -1) : 0;

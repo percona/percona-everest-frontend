@@ -10,6 +10,7 @@ import { Table } from '@percona/ui-lib.table';
 import { type MRT_ColumnDef } from 'material-react-table';
 import React, { useMemo } from 'react';
 import { Link } from "react-router-dom";
+import { useQueryClient } from 'react-query';
 import { DbClusterTableElement } from '../../hooks/api/db-clusters/dbCluster.type';
 import { DB_CLUSTERS_QUERY_KEY, ExtraDbCluster, useDbClusters } from '../../hooks/api/db-clusters/useDbClusters';
 import { Messages } from './dbClusterView.messages';
@@ -24,7 +25,6 @@ import { useDeleteDbCluster } from '../../hooks/api/db-cluster/useDeleteDbCluste
 import { useSelectedKubernetesCluster } from '../../hooks/api/kubernetesClusters/useSelectedKubernetesCluster';
 import { usePausedDbCluster } from '../../hooks/api/db-cluster/usePausedDbCluster';
 import { useRestartDbCluster } from '../../hooks/api/db-cluster/useRestartDbCluster';
-import { useQueryClient } from 'react-query';
 
 
 
