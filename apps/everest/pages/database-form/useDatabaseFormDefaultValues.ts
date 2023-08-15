@@ -10,7 +10,10 @@ import { DbCluster, ProxyExposeType } from '../../types/dbCluster.types';
 import { dbEngineToDbType } from '../../utils/db';
 import { matchFieldsValueToResourceSize } from './steps/second/second-step.utils';
 import { DB_WIZARD_DEFAULTS } from './database-form.constants';
+import { useLocation } from 'react-router-dom';
 
+const removeMeasurementValue = (value: string) =>
+  value ? +value?.slice(0, -1) : 0;
 export const DbClusterPayloadToFormValues = (
   dbCluster: DbCluster
 ): DbWizardType => ({
@@ -41,8 +44,12 @@ export const DbClusterPayloadToFormValues = (
   [DbWizardFormFields.resourceSizePerNode]:
     matchFieldsValueToResourceSize(dbCluster),
   [DbWizardFormFields.cpu]: +dbCluster?.spec?.engine?.resources?.cpu || 0,
-  [DbWizardFormFields.disk]: +dbCluster?.spec?.engine?.storage?.size || 0,
-  [DbWizardFormFields.memory]: +dbCluster?.spec?.engine?.resources?.memory || 0,
+  [DbWizardFormFields.disk]: removeMeasurementValue(
+    dbCluster?.spec?.engine?.storage?.size.toString()
+  ),
+  [DbWizardFormFields.memory]: removeMeasurementValue(
+    dbCluster?.spec?.engine?.resources?.memory.toString()
+  ),
 });
 
 export const useDatabasePageDefaultValues = (
@@ -52,7 +59,11 @@ export const useDatabasePageDefaultValues = (
   dbClusterData: DbCluster;
   dbClusterStatus: 'error' | 'idle' | 'loading' | 'success';
 } => {
-  const { data, status } = useDbCluster(mode === 'edit');
+  const { state } = useLocation();
+  const { data, status } = useDbCluster(
+    state?.selectedDbCluster,
+    mode === 'edit' && !!state?.selectedDbCluster
+  );
 
   const [defaultValues, setDefaultValues] = useState<DbWizardType>(
     mode === 'new'

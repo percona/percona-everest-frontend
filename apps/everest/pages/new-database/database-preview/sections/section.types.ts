@@ -12,6 +12,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { DbWizardType } from '../../new-database.types';
+import { DbWizardType } from '../../../database-form/database-form.types';
 
 export type SectionProps = DbWizardType;

@@ -7,7 +7,6 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { DrawerContextProvider } from './contexts/drawer/drawer.context';
 import { K8ContextProvider } from './contexts/kubernetes/kubernetes.context';
 import { Main } from './components/main/Main';
-import { DBClusterContextProvider } from './contexts/db-cluster/db-cluster.context';
 
 export const EverestApp = () => {
   const queryClient = new QueryClient({
@@ -22,13 +21,11 @@ export const EverestApp = () => {
     <SnackbarProvider maxSnack={3}>
       <QueryClientProvider client={queryClient}>
         <K8ContextProvider>
-          <DBClusterContextProvider>
-            <ThemeContextProvider themeOptions={everestThemeOptions}>
-              <DrawerContextProvider>
-                <Main />
-              </DrawerContextProvider>
-            </ThemeContextProvider>
-          </DBClusterContextProvider>
+          <ThemeContextProvider themeOptions={everestThemeOptions}>
+            <DrawerContextProvider>
+              <Main />
+            </DrawerContextProvider>
+          </ThemeContextProvider>
         </K8ContextProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

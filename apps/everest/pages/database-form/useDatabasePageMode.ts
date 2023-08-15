@@ -1,8 +1,7 @@
-import { useContext } from 'react';
-import { DBClustersContext } from '../../contexts/db-cluster/db-cluster.context';
 import { DbWizardMode } from './database-form.types';
+import { useLocation } from 'react-router-dom';
 
 export const useDatabasePageMode = (): DbWizardMode => {
-  const { dbClusterName } = useContext(DBClustersContext);
-  return dbClusterName ? 'edit' : 'new';
+  const { state } = useLocation();
+  return state?.selectedDbCluster ? 'edit' : 'new';
 };

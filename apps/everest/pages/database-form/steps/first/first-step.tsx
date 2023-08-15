@@ -55,7 +55,7 @@ export const FirstStep = () => {
     }
     const { isTouched } = getFieldState(DbWizardFormFields.dbName);
 
-    if (!isTouched) {
+    if (!isTouched && mode === 'new') {
       setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`, {
         shouldValidate: true,
       });
@@ -72,7 +72,6 @@ export const FirstStep = () => {
       const recommendedVersion = newVersions.availableVersions.engine.find(
         (version) => version.status === DbEngineToolStatus.RECOMMENDED
       );
-
       setValue(
         DbWizardFormFields.dbVersion,
         recommendedVersion

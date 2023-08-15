@@ -21,10 +21,10 @@ import { DbClusterTableElement } from './dbCluster.type';
 import {
   DbCluster,
   DbClusterStatus,
-  GetDbClusterPayload,
   DbClusterAPI,
 } from '../../../types/dbCluster.types';
 
+export const DB_CLUSTERS_QUERY_KEY = 'dbClusters';
 const mapRawDataToDbClusterModel = (
   payload: ExtraDbCluster[]
 ): DbClusterTableElement[] => {
@@ -54,7 +54,7 @@ const mapRawDataToDbClusterModel = (
   });
 };
 
-interface ExtraDbCluster {
+export interface ExtraDbCluster {
   dbCluster: DbClusterAPI;
   k8sClusterName: string;
 }
@@ -73,7 +73,7 @@ export const useDbClusters = () => {
     clusterData.map(
       (cluster) => {
         return {
-          queryKey: ['dbClusters', cluster.id],
+          queryKey: [DB_CLUSTERS_QUERY_KEY, cluster.id],
           queryFn: async () => {
             const response = await getDbClustersFn(cluster.id);
 
@@ -86,10 +86,6 @@ export const useDbClusters = () => {
       { enabled: clusters?.data }
     )
   );
-
-  const refetch = useCallback(() => {
-    userQueries.forEach((result) => result.refetch());
-  }, [userQueries]);
 
   const loadingAllClusters = userQueries.every((cluster) => cluster.isLoading);
 
@@ -111,7 +107,6 @@ export const useDbClusters = () => {
     combinedDataForTable,
     loadingAllClusters,
     errorInSomeClusters,
-    refetch,
     combinedDbClusters,
   };
 };

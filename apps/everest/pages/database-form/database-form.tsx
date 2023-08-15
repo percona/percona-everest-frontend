@@ -31,7 +31,6 @@ import { useSelectedKubernetesCluster } from '../../hooks/api/kubernetesClusters
 import { DatabasePreview } from './database-preview/database-preview';
 import { useDatabasePageMode } from './useDatabasePageMode';
 import { useDatabasePageDefaultValues } from './useDatabaseFormDefaultValues';
-import { useSelectedDBCluster } from '../../hooks/db-cluster/useSelectedDBCluster';
 import { useUpdateDbCluster } from '../../hooks/api/db-cluster/useUpdateDbCluster';
 
 export const DatabasePage = () => {
@@ -43,19 +42,12 @@ export const DatabasePage = () => {
   const { mutate: addDbCluster } = useCreateDbCluster();
   const { mutate: editDbCluster } = useUpdateDbCluster();
   const { id } = useSelectedKubernetesCluster();
-  const { setSelectedDBClusterName } = useSelectedDBCluster();
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
   const navigate = useNavigate();
 
   const mode = useDatabasePageMode();
   const { defaultValues, dbClusterData, dbClusterStatus } =
     useDatabasePageDefaultValues(mode);
-
-  useEffect(() => {
-    return () => {
-      setSelectedDBClusterName('');
-    };
-  }, []);
 
   const methods = useForm<DbWizardType>({
     mode: 'onChange',

@@ -16,12 +16,10 @@ import { useQuery } from 'react-query';
 import { DbCluster } from '../../../types/dbCluster.types';
 
 import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
-import { useSelectedDBCluster } from '../../db-cluster/useSelectedDBCluster';
 import { getDbClusterFn } from '../../../api/dbClusterApi';
 
-export const useDbCluster = (enabled?: boolean) => {
+export const useDbCluster = (dbClusterName: string, enabled?: boolean) => {
   const { id } = useSelectedKubernetesCluster();
-  const { dbClusterName } = useSelectedDBCluster();
 
   return useQuery<DbCluster, unknown, DbCluster>(
     'dbCluster',

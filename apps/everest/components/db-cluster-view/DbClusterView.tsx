@@ -11,7 +11,7 @@ import { type MRT_ColumnDef } from 'material-react-table';
 import React, { useMemo } from 'react';
 import { Link } from "react-router-dom";
 import { DbClusterTableElement } from '../../hooks/api/db-clusters/dbCluster.type';
-import { useDbClusters } from '../../hooks/api/db-clusters/useDbClusters';
+import { DB_CLUSTERS_QUERY_KEY, ExtraDbCluster, useDbClusters } from '../../hooks/api/db-clusters/useDbClusters';
 import { Messages } from './dbClusterView.messages';
 import { DbClusterViewProps } from './dbClusterView.type';
 import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
@@ -20,48 +20,64 @@ import { StatusProvider } from './statusProvider/StatusProvider';
 import { DbClusterStatus } from '../../types/dbCluster.types';
 import { beautifyDbClusterStatus } from './DbClusterView.utils';
 import { DbEngineType } from '../../types/dbEngines.types';
-import { useSelectedDBCluster } from "../../hooks/db-cluster/useSelectedDBCluster";
 import { useDeleteDbCluster } from '../../hooks/api/db-cluster/useDeleteDbCluster';
 import { useSelectedKubernetesCluster } from '../../hooks/api/kubernetesClusters/useSelectedKubernetesCluster';
 import { usePausedDbCluster } from '../../hooks/api/db-cluster/usePausedDbCluster';
 import { useRestartDbCluster } from '../../hooks/api/db-cluster/useRestartDbCluster';
+import { useQueryClient } from 'react-query';
+
 
 
 export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
-  const { combinedDataForTable, loadingAllClusters, refetch: reFetchDbClusters, combinedDbClusters } = useDbClusters();
-  const { setSelectedDBClusterName } = useSelectedDBCluster();
+  const { combinedDataForTable, loadingAllClusters, combinedDbClusters } = useDbClusters();
   const { mutate: deleteDbCluster } = useDeleteDbCluster();
   const { mutate: suspendDbCluster } = usePausedDbCluster();
   const { mutate: restartDbCluster } = useRestartDbCluster();
   const { id: k8sClusterId } = useSelectedKubernetesCluster();
+  const queryClient = useQueryClient();
   const isPaused = (status: DbClusterStatus) => status === DbClusterStatus.paused || status === DbClusterStatus.pausing;
 
   const handleDeleteDbCluster = (dbClusterName: string) => {
       deleteDbCluster({ k8sClusterId, dbClusterName}, {
-          onSuccess: ()=>{
-              reFetchDbClusters(); // TODO change to the common function when  EVEREST-161-storage-location-page will be ready
+          onSuccess: (_, variables) => {
+              queryClient.setQueryData(
+                  [DB_CLUSTERS_QUERY_KEY, k8sClusterId],
+                  (oldData?: ExtraDbCluster[]) => (oldData || []).filter((value) => value.dbCluster.metadata.name !== variables.objectId)
+              );
           },
       })
   };
     const handleDbSuspendOrResumed = (status: DbClusterStatus, dbClusterName:string) => {
         const paused = !isPaused(status);
         const dbCluster = combinedDbClusters.find(item => item.metadata.name===dbClusterName);
-        if (dbClusterName) {
+        if (dbCluster) {
             suspendDbCluster({paused, k8sClusterId, dbCluster}, {
-                onSuccess: ()=>{
-                    reFetchDbClusters(); // TODO change to the common function when  EVEREST-161-storage-location-page will be ready
-                },
+                onSuccess: (updatedObject) => {
+                    queryClient.setQueryData(
+                        [DB_CLUSTERS_QUERY_KEY, k8sClusterId],
+                        (oldData?: ExtraDbCluster[]) => oldData.map(value => value.dbCluster.metadata.name === updatedObject.metadata.name ? {
+                                    dbCluster: updatedObject,
+                                    k8sClusterName: value.k8sClusterName,
+                                }: value)
+                    )
+                }
             })
         }
     };
 
-    const handleDbRestart = (status: DbClusterStatus, dbClusterName:string) => {
+    const handleDbRestart = (dbClusterName:string) => {
         const dbCluster = combinedDbClusters.find(item => item.metadata.name===dbClusterName);
-        if (dbClusterName) {
+        if (dbCluster) {
             restartDbCluster({k8sClusterId, dbCluster}, {
-                onSuccess: ()=>{
-                    reFetchDbClusters(); // TODO change to the common function when  EVEREST-161-storage-location-page will be ready
-                },
+                onSuccess: (updatedObject) => {
+                    queryClient.setQueryData(
+                        [DB_CLUSTERS_QUERY_KEY, k8sClusterId],
+                        (oldData?: ExtraDbCluster[]) => oldData.map(value => value.dbCluster.metadata.name === updatedObject.metadata.name ? {
+                            dbCluster: updatedObject,
+                            k8sClusterName: value.k8sClusterName,
+                        }: value)
+                    )
+                }
             })
         }
     };
@@ -136,9 +152,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
               key={0}
               component={Link}
               to="/databases/edit"
-              onClick={()=> {
-                  setSelectedDBClusterName(row.original.databaseName!);
-              }}
+              state={{ selectedDbCluster: row.original.databaseName! }}
               sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
             >
               <BorderColor fontSize="small" /> {Messages.menuItems.edit}
@@ -152,13 +166,14 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
             </MenuItem>,
             <MenuItem
               key={2}
-              onClick={() => handleDbRestart(row.original.status, row.original.databaseName)}
+              onClick={() => handleDbRestart(row.original.databaseName)}
               sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
             >
               <RestartAlt /> {Messages.menuItems.restart}
             </MenuItem>,
             <MenuItem
               key={3}
+              disabled={row.original.status === DbClusterStatus.pausing}
               onClick={() => handleDbSuspendOrResumed(row.original.status, row.original.databaseName)}
               sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
             >
