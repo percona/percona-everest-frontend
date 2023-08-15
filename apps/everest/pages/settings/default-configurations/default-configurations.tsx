@@ -25,8 +25,8 @@ import {
   TimeValue,
   WeekDays,
 } from '../../../components/time-selection/time-selection.types';
-import { SourceRanges } from './source-ranges/source-ranges';
 import { SwitchOutlinedBox } from '../../../components/switch-outlined-box/switch-oulined-box';
+import { TextArray } from '@percona/ui-lib.form.inputs.text-array';
 
 export const DefaultConfigurations = () => {
   const theme = useTheme();
@@ -141,7 +141,7 @@ export const DefaultConfigurations = () => {
                 }),
               }}
             >
-              {externalAccess && <SourceRanges fieldName={DefaultConfigurationsFields.sourceRanges} />}
+              {externalAccess && <TextArray fieldName={DefaultConfigurationsFields.sourceRanges} fieldKey='sourceRange' />}
             </SwitchOutlinedBox>
             <Stack direction="row" justifyContent="flex-end" mt={2} gap={1}>
               <Button onClick={() => {}} variant="text">

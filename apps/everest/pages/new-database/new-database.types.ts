@@ -120,7 +120,11 @@ const stepFourSchema = z
         ctx.addIssue({
           code: z.ZodIssueCode.invalid_string,
           validation: 'ip',
-          path: ['sourceRange'],
+          path: [
+            DbWizardFormFields.sourceRanges,
+            index,
+            'sourceRange',
+          ],
           message: Messages.errors.sourceRange.invalid,
         });
       }

@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import React from 'react';
+import { FieldError, useFieldArray, useFormContext } from 'react-hook-form';
 import { Button, IconButton, InputAdornment, Stack, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -18,11 +18,7 @@ export const TextArray = ({ fieldName, fieldKey, label, placeholder }: TextArray
   });
 
   const defaultFields = fields.length ? fields : [];
-  const errorMessage = (index) => {
-    const message =
-      errors?.[fieldName]?.[index]?.[fieldKey];
-    return message?.message ? message?.message : '';
-  };
+  const error = (index: number): FieldError | undefined => errors?.[fieldName]?.[index]?.[fieldKey];
 
   return (
     <>
@@ -63,10 +59,8 @@ export const TextArray = ({ fieldName, fieldKey, label, placeholder }: TextArray
           textFieldProps={{
             variant: 'outlined',
             placeholder,
-            error:
-              errors?.[fieldName]?.[index]
-                ?.fieldKey !== undefined,
-            helperText: errorMessage(index),
+            error: !!error(index),
+            helperText: error(index) ? error(index)?.message : '',
             sx: {
               width: '100%',
               '&:not(:last-child)': {

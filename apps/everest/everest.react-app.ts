@@ -41,7 +41,7 @@ const titleAndFaviconModifier = (configMutator) => {
 };
 
 const proxyModifier = (configMutator) => {
-  const apiPort = process.env.API_PORT || '8081';
+  const apiPort = process.env.API_PORT || '8080';
 
   const newWebpackConfig = {
     devServer: {
