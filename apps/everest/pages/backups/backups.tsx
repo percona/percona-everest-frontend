@@ -27,7 +27,7 @@ export const Backups = () => {
         }}
       >
         <IconButton onClick={() => navigate('/databases')}>
-          <ArrowBackIosIcon sx={{ pl: '10px' }} fontSize={'large'} />
+          <ArrowBackIosIcon sx={{ pl: '10px' }} fontSize="large" />
         </IconButton>
         <Typography variant="h4">{dbClusterName}</Typography>
       </Box>
