@@ -60,13 +60,13 @@ const outputModifier = (configMutator) => {
   if (configMutator.raw.mode === 'production') {
     configMutator.merge({
       output: {
-        filename: 'static/[name].[chunkhash].js'
+        filename: 'static/[name].[chunkhash].js',
       },
     });
   }
 
   return configMutator;
-}
+};
 
 export const EverestApp: ReactAppOptions = {
   name: 'everest',
