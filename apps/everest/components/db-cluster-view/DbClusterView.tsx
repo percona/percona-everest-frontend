@@ -125,7 +125,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
               navigate(`/databases/${row.original.databaseName}/backups`);
             },
             sx: {
-              cursor: 'pointer', //you might want to change the cursor too when adding an onClick
+              cursor: 'pointer', // you might want to change the cursor too when adding an onClick
             },
           })}
           renderTopToolbarCustomActions={() => customHeader}
