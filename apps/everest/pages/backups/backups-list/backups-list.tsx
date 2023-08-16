@@ -18,10 +18,6 @@ export const BackupsList = () => {
         header: 'Name',
       },
       {
-        accessorKey: 'size',
-        header: 'Size',
-      },
-      {
         accessorKey: 'started',
         header: 'Started',
       },
