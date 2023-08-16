@@ -1,9 +1,24 @@
+// percona-everest-frontend
+// Copyright (C) 2023 Percona LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 /* eslint-disable react/prop-types */
 import {
     BorderColor,
     DeleteOutline,
     PauseCircleOutline,
-    RestartAlt,
+    PlayArrowOutlined
 } from '@mui/icons-material';
 import { Box, MenuItem, Stack } from '@mui/material';
 import { Table } from '@percona/ui-lib.table';
@@ -14,7 +29,7 @@ import { useQueryClient } from 'react-query';
 import { DbClusterTableElement } from '../../hooks/api/db-clusters/dbCluster.type';
 import { DB_CLUSTERS_QUERY_KEY, ExtraDbCluster, useDbClusters } from '../../hooks/api/db-clusters/useDbClusters';
 import { Messages } from './dbClusterView.messages';
-import { DbClusterViewProps } from './dbClusterView.type';
+import { DbClusterViewProps } from './dbClusterView.types';
 import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
 import { StatusProvider } from './statusProvider/StatusProvider';
@@ -48,10 +63,10 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
       })
   };
     const handleDbSuspendOrResumed = (status: DbClusterStatus, dbClusterName:string) => {
-        const paused = !isPaused(status);
+        const shouldBePaused = !isPaused(status);
         const dbCluster = combinedDbClusters.find(item => item.metadata.name===dbClusterName);
         if (dbCluster) {
-            suspendDbCluster({paused, k8sClusterId, dbCluster}, {
+            suspendDbCluster({shouldBePaused, k8sClusterId, dbCluster}, {
                 onSuccess: (updatedObject) => {
                     queryClient.setQueryData(
                         [DB_CLUSTERS_QUERY_KEY, k8sClusterId],
@@ -146,7 +161,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
           columns={columns}
           data={combinedDataForTable}
           enableRowActions
-          renderRowActionMenuItems={({ row }) => [
+          renderRowActionMenuItems={({ row, closeMenu }) => [
             // TODO: finish when design is ready
             <MenuItem
               key={0}
@@ -166,15 +181,21 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
             </MenuItem>,
             <MenuItem
               key={2}
-              onClick={() => handleDbRestart(row.original.databaseName)}
+              onClick={() => {
+                  handleDbRestart(row.original.databaseName);
+                  closeMenu();
+              }}
               sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
             >
-              <RestartAlt /> {Messages.menuItems.restart}
+              <PlayArrowOutlined /> {Messages.menuItems.restart}
             </MenuItem>,
             <MenuItem
               key={3}
               disabled={row.original.status === DbClusterStatus.pausing}
-              onClick={() => handleDbSuspendOrResumed(row.original.status, row.original.databaseName)}
+              onClick={() => {
+                  handleDbSuspendOrResumed(row.original.status, row.original.databaseName);
+                  closeMenu();
+              }}
               sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
             >
               <PauseCircleOutline /> {isPaused(row.original.status)? Messages.menuItems.resume: Messages.menuItems.suspend}

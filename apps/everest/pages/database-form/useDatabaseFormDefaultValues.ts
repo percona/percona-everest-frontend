@@ -1,3 +1,18 @@
+// percona-everest-frontend
+// Copyright (C) 2023 Percona LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
@@ -17,7 +32,7 @@ const removeMeasurementValue = (value: string) =>
 export const DbClusterPayloadToFormValues = (
   dbCluster: DbCluster
 ): DbWizardType => ({
-  // TODO commented
+  // TODO should be returned with backups
   // [DbWizardFormFields.backupsEnabled]: true,
   // [DbWizardFormFields.pitrEnabled]: true,
   // [DbWizardFormFields.pitrTime]: '60',
@@ -28,7 +43,6 @@ export const DbClusterPayloadToFormValues = (
   // [DbWizardFormFields.amPm]: AmPM.AM,
   // [DbWizardFormFields.weekDay]: WeekDays.Mo,
   // [DbWizardFormFields.onDay]: 1,
-  // TODO commented
   [DbWizardFormFields.dbType]: dbEngineToDbType(dbCluster?.spec?.engine?.type),
   [DbWizardFormFields.dbName]: dbCluster?.metadata?.name,
   [DbWizardFormFields.dbVersion]: dbCluster?.spec?.engine?.version || '',
@@ -37,8 +51,8 @@ export const DbClusterPayloadToFormValues = (
   // [DbWizardFormFields.internetFacing]: true, //TODO commented
   [DbWizardFormFields.sourceRange]:
     dbCluster?.spec?.proxy?.expose?.ipSourceRanges?.[0] || '', // TODO multi sourceRanges
-  [DbWizardFormFields.monitoring]: false,
-  // [DbWizardFormFields.endpoint]: '', //TODO commented
+  // [DbWizardFormFields.monitoring]: dbCluster?.spec?.monitoring?.enabled,
+  // [DbWizardFormFields.endpoint]: dbCluster?.spec?.monitoring?.enabled?.pmm?.publicAddress,
   [DbWizardFormFields.numberOfNodes]:
     `${dbCluster?.spec?.proxy?.replicas}` as unknown as NumberOfNodes,
   [DbWizardFormFields.resourceSizePerNode]:
