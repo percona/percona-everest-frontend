@@ -1,15 +1,23 @@
 import React, { useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import { Table } from '@percona/ui-lib.table';
 import { MenuItem } from '@mui/material';
 import { MRT_ColumnDef } from 'material-react-table';
 import { MenuButton } from '@percona/ui-lib.menu-button';
+import { useDbBackups } from '../../../hooks/api/backups/useBackups';
+import { Backup } from '../../../types/backups.types';
 
 export const BackupsList = () => {
+  const { dbClusterName } = useParams();
 
-  const columns = useMemo<MRT_ColumnDef[]>(
+  const { data: backups = [] } = useDbBackups(dbClusterName!, { enabled: !!dbClusterName });
+  
+  console.log(backups);
+
+  const columns = useMemo<MRT_ColumnDef<Backup>[]>(
     () => [
       {
-        accessorKey: 'status',
+        accessorKey: 'state',
         header: 'Status',
       },
       {
@@ -17,11 +25,11 @@ export const BackupsList = () => {
         header: 'Name',
       },
       {
-        accessorKey: 'started',
+        accessorKey: 'created',
         header: 'Started',
       },
       {
-        accessorKey: 'finished',
+        accessorKey: 'completed',
         header: 'Finished',
       },
     ],
