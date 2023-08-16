@@ -113,10 +113,33 @@ test('Cluster creation', async ({ page, request }) => {
     (cluster) => cluster.metadata.name === clusterName
   );
 
-  const deleteResponse = await request.delete(
-    `/v1/kubernetes/${kubernetesId}/database-clusters/${addedCluster?.metadata.name}`
-  );
-  expect(deleteResponse.ok()).toBeTruthy();
+  await page.goto('/databases');
+
+  // cluster actions menu click
+  (await page.locator('.MuiTableRow-root').filter({ hasText: 'db-cluster-ui-test'}).getByTestId('MoreHorizIcon')).click();
+
+  const suspendAction = page.getByTestId('PauseCircleOutlineIcon');
+  await suspendAction.click();
+  await page.reload();
+
+  const clusterRowAfterSuspend = await page.locator('.MuiTableRow-root').filter({ hasText: 'db-cluster-ui-test'});
+
+  await (await clusterRowAfterSuspend.getByTestId('MoreHorizIcon')).click();
+  const resumeAction = page.getByTestId('PauseCircleOutlineIcon');
+  await resumeAction.click();
+
+  await page.reload();
+  (await page.locator('.MuiTableRow-root').filter({ hasText: 'db-cluster-ui-test'}).getByTestId('MoreHorizIcon')).click();
+  const restartAction = page.getByTestId('PlayArrowOutlinedIcon');
+  await restartAction.click();
+
+  await page.reload();
+  (await page.locator('.MuiTableRow-root').filter({ hasText: 'db-cluster-ui-test'}).getByTestId('MoreHorizIcon')).click();
+  const deleteAction = page.getByTestId('DeleteOutlineIcon');
+  await deleteAction.click();
+
+  await page.reload();
+  expect(await page.getByText('db-cluster-ui-test').count()).toEqual(0);
 
   expect(addedCluster).not.toBeUndefined();
   expect(addedCluster?.spec.engine.type).toBe('psmdb');
