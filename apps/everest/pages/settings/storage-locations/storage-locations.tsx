@@ -110,7 +110,7 @@ export const StorageLocations = () => {
   return (
     <>
       <Table
-        noDataMessage="No backups storages"
+        noDataMessage={Messages.noData}
         hideExpandAllIcon
         state={{
           columnVisibility: {
