@@ -57,7 +57,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
           onSuccess: (_, variables) => {
               queryClient.setQueryData(
                   [DB_CLUSTERS_QUERY_KEY, k8sClusterId],
-                  (oldData?: ExtraDbCluster[]) => (oldData || []).filter((value) => value.dbCluster.metadata.name !== variables.objectId)
+                  (oldData?: ExtraDbCluster[]) => (oldData || []).filter((value) => value.dbCluster.metadata.name !== variables.dbClusterName)
               );
           },
       })
