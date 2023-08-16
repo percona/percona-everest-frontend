@@ -11,6 +11,9 @@
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
+
+import { INVALID_SOURCE_RANGE_ERROR, SOURCE_RANGE_PLACEHOLDER } from "../../../constants";
+
 // limitations under the License.
 export const Messages = {
   pageDescription:
@@ -27,10 +30,10 @@ export const Messages = {
   externalAccessMessage:
     'Enable external access by default for databases that should be reachable outside the network cluster.',
   repeatsEvery: 'Repeats',
-  sourceRangePlaceholder: '181.170.213.40/32',
+  sourceRangePlaceholder: SOURCE_RANGE_PLACEHOLDER,
   addNew: 'Add new',
   errors: {
-    invalidIP: 'Invalid IP address range',
+    invalidIP: INVALID_SOURCE_RANGE_ERROR,
     required: 'Required field',
   },
 };

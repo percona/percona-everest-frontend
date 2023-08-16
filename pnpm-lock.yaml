@@ -144,6 +144,8 @@ importers:
 
   ui-lib/form/inputs/text: {}
 
+  ui-lib/form/inputs/text-array: {}
+
   ui-lib/form/inputs/toggle-button-group: {}
 
   ui-lib/icons/db: {}
