@@ -13,6 +13,7 @@ import {
   FormProvider,
   useWatch,
 } from 'react-hook-form';
+import { TextArray } from '@percona/ui-lib.form.inputs.text-array';
 import { Messages } from './default-configurations.messages';
 import {
   DefaultConfigurationsFields,
@@ -25,7 +26,6 @@ import {
   TimeValue,
   WeekDays,
 } from '../../../components/time-selection/time-selection.types';
-import { SourceRanges } from './source-ranges/source-ranges';
 import { SwitchOutlinedBox } from '../../../components/switch-outlined-box/switch-oulined-box';
 
 export const DefaultConfigurations = () => {
@@ -132,7 +132,6 @@ export const DefaultConfigurations = () => {
               childrenSx={{
                 flexDirection: 'column',
                 display: 'flex',
-                gap: 1,
                 justifyContent: 'end',
                 ...(isLaptop && {
                   justifyContent: 'start',
@@ -142,7 +141,7 @@ export const DefaultConfigurations = () => {
                 }),
               }}
             >
-              {externalAccess && <SourceRanges methods={methods} />}
+              {externalAccess && <TextArray fieldName={DefaultConfigurationsFields.sourceRanges} fieldKey='sourceRange' />}
             </SwitchOutlinedBox>
             <Stack direction="row" justifyContent="flex-end" mt={2} gap={1}>
               <Button onClick={() => {}} variant="text">

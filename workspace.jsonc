@@ -102,5 +102,6 @@
   "percona.utils/string": {},
   "percona.ui-lib/form/inputs/auto-complete": {},
   "percona.ui-lib/dialog-title": {},
-  "percona.ui-lib/menu-button": {}
+  "percona.ui-lib/menu-button": {},
+  "percona.ui-lib/form/inputs/text-array": {}
 }

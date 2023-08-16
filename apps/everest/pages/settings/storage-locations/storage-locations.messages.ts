@@ -19,4 +19,5 @@ export const Messages = {
   edit: 'Edit',
   delete: 'Delete',
   addStorageLocationButton: 'Add backup storage',
+  noData: "No storage location set up yet. Let's get started!",
 };
