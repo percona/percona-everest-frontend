@@ -12,6 +12,7 @@ import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ResourcesDetail } from '../../../../components/resources-detail';
 import { DbWizardFormFields } from '../../new-database.types';
+import { useKubernetesResources } from '../../../../hooks/api/resources/useKubernetesResources';
 import { ResourcesLegend } from './resources-legend/resources-legend';
 import { DEFAULT_SIZES } from './second-step.const';
 import { Messages } from './second-step.messages';
@@ -23,18 +24,22 @@ import {
 
 export const SecondStep = () => {
   const { watch, setValue } = useFormContext();
+  const { data: resources } = useKubernetesResources();
+
+  // We defined placeholderData, so there will be something here
+  const { available, capacity } = resources!;
 
   // TODO should be set from api https://jira.percona.com/browse/EVEREST-172
   const totalSizes = {
-    cpu: 32,
-    memory: 40,
-    disk: 200,
+    cpu: capacity.cpuMillis / 1000,
+    memory: capacity.memoryBytes / 10**9,
+    disk: capacity.diskSize / 10**9,
   };
 
   const consumedSizes = {
-    cpu: 2,
-    memory: 12,
-    disk: 77,
+    cpu: (capacity.cpuMillis - available.cpuMillis) / 1000,
+    memory: (capacity.memoryBytes - available.memoryBytes) / 10**9,
+    disk: (capacity.diskSize - capacity.diskSize) / 10**9,
   };
 
   const theme = useTheme();
