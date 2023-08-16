@@ -177,7 +177,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
               onClick={() => handleDeleteDbCluster(row.original.databaseName!)}
               sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
             >
-              <DeleteOutline /> {Messages.menuItems.delete}
+              <DeleteOutline/> {Messages.menuItems.delete}
             </MenuItem>,
             <MenuItem
               key={2}

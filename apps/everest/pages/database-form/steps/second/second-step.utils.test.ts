@@ -70,8 +70,4 @@ describe('Second step utils', () => {
     expect(getResourceNames(['memory', 'disk'])).toBe('memory and disk');
     expect(getResourceNames(['disk'])).toBe('disk');
   });
-
-  it.skip('should match cpu, memory and disk size to Resources size enum', async () => {
-    // TODO matchFieldsValueToResourceSize
-  });
 });
