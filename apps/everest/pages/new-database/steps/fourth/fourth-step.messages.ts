@@ -11,6 +11,9 @@
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
+
+import { SOURCE_RANGE_PLACEHOLDER } from "../../../../constants";
+
 // limitations under the License.
 export const Messages = {
   externalAccess: 'External Access',
@@ -22,6 +25,5 @@ export const Messages = {
   enableExternalAccess: 'Enable External Access',
   internetFacing: 'Internet Facing',
   sourceRange: 'Source Range',
-  sourceRangePlaceholder:
-    'Please insert the single IP address or range using netmask',
+  sourceRangePlaceholder: SOURCE_RANGE_PLACEHOLDER,
 };

@@ -18,7 +18,7 @@ import {
   TimeValue,
   WeekDays,
 } from '../../../components/time-selection/time-selection.types';
-import { IP_RANGE_PATTERN } from './source-ranges/source-range.constants';
+import { IP_REGEX } from '../../../constants';
 import { Messages } from './default-configurations.messages';
 
 export enum DefaultConfigurationsFields {
@@ -54,7 +54,7 @@ export const defaultConfigurationsSchema = baseDefaultConfigurationsSchema
   .superRefine((schema, ctx) => {
     if (schema.externalAccess) {
       schema.sourceRanges.forEach(({ sourceRange }, index) => {
-        if (!sourceRange.match(IP_RANGE_PATTERN)) {
+        if (!sourceRange.match(IP_REGEX)) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             message: Messages.errors.invalidIP,

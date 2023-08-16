@@ -41,7 +41,7 @@ export enum DbWizardFormFields {
   onDay = 'onDay',
   externalAccess = 'externalAccess',
   internetFacing = 'internetFacing',
-  sourceRange = 'sourceRange',
+  sourceRanges = 'sourceRanges',
   monitoring = 'monitoring',
   endpoint = 'endpoint',
 }
@@ -107,20 +107,28 @@ const stepTwoSchema = z
 
 const stepFourSchema = z
   .object({
-    externalAccess: z.boolean(),
+    [DbWizardFormFields.externalAccess]: z.boolean(),
     // internetFacing: z.boolean(),
-    sourceRange: z.string().optional(),
+    [DbWizardFormFields.sourceRanges]: z.array(
+      z.object({ sourceRange: z.string().optional() })
+    ),
   })
   .passthrough()
-  .superRefine((input, ctx) => {
-    if (input.sourceRange && IP_REGEX.exec(input.sourceRange) === null) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.invalid_string,
-        validation: 'ip',
-        path: ['sourceRange'],
-        message: Messages.errors.sourceRange.invalid,
-      });
-    }
+  .superRefine(({ sourceRanges }, ctx) => {
+    sourceRanges.forEach(({ sourceRange }, index) => {
+      if (sourceRange && IP_REGEX.exec(sourceRange) === null) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.invalid_string,
+          validation: 'ip',
+          path: [
+            DbWizardFormFields.sourceRanges,
+            index,
+            'sourceRange',
+          ],
+          message: Messages.errors.sourceRange.invalid,
+        });
+      }
+    });
   });
 
 // TODO re-add step after API is ready for monitoring
