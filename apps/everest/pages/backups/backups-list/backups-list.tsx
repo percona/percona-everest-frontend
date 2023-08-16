@@ -1,7 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { Table } from '@percona/ui-lib.table';
-import { Button, Menu, MenuItem } from '@mui/material';
-import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
+import { MenuItem } from '@mui/material';
 import { MRT_ColumnDef } from 'material-react-table';
 import { MenuButton } from '@percona/ui-lib.menu-button';
 
@@ -29,6 +28,10 @@ export const BackupsList = () => {
     []
   );
 
+  const handleManualBackup = (handleClose: () => void) => {
+    handleClose();
+  }
+
   return (
     <Table
       noDataMessage="You don't have any backups yet. Create one to get started"
@@ -36,8 +39,12 @@ export const BackupsList = () => {
       columns={columns}
       renderTopToolbarCustomActions={() => (
         <MenuButton buttonText='Create Backup'>
-          <MenuItem>Now</MenuItem>
-          <MenuItem>Schedule</MenuItem>
+          {/* MUI Menu does not like fragments and asks for arrays instead */}
+          {(handleClose) => [
+              <MenuItem key="now" onClick={() => handleManualBackup(handleClose)}>Now</MenuItem>,
+              <MenuItem key="schedule">Schedule</MenuItem>
+            ]
+          }
         </MenuButton>
       )}
     />

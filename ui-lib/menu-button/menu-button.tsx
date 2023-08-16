@@ -42,7 +42,7 @@ export const MenuButton = ({ children, buttonText, buttonProps, menuProps }: Men
         }}
         {...menuProps}
       >
-        {children}
+        {children && children(handleClose)}
       </Menu>
     </>
   );

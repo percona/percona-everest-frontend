@@ -8,8 +8,10 @@ export const Menu = () => {
   return (
     <CompositionViewer themeOptions={everestThemeOptions}>
       <MenuButton buttonText='Create backup'>
-        <MenuItem>Now</MenuItem>
-        <MenuItem>Schedule</MenuItem>
+        {(handleClose) => [
+          <MenuItem key="now">Now</MenuItem>,
+          <MenuItem key="schedule">Schedule</MenuItem>
+        ]}
       </MenuButton>
     </CompositionViewer>
   );
