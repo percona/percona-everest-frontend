@@ -1,14 +1,20 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Box, IconButton, Tab, Tabs, Typography } from '@mui/material';
 import React from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
-import { useRouteMatch } from '../../hooks/settings/useRouteMatch';
+import {
+  Link,
+  Outlet,
+  useMatch,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import { Messages } from './backups.messages';
 import { BackupsTabs } from './backups.types';
 
 export const Backups = () => {
   const { dbClusterName } = useParams();
-  const routeMatch = useRouteMatch([`/databases/:dbClusterName/:tabs`]);
+  const routeMatch = useMatch('/databases/:dbClusterName/:tabs');
+  const navigate = useNavigate();
   const currentTab = routeMatch?.params?.tabs;
   return (
     <Box sx={{ width: '100%' }}>
@@ -17,10 +23,11 @@ export const Backups = () => {
           display: 'flex',
           gap: 1,
           alignItems: 'center',
+          mb: 1,
         }}
       >
-        <IconButton LinkComponent={Link} href="databases">
-          <ArrowBackIosIcon />
+        <IconButton onClick={() => navigate('/databases')}>
+          <ArrowBackIosIcon sx={{ pl: '10px' }} fontSize="large" />
         </IconButton>
         <Typography variant="h4">{dbClusterName}</Typography>
       </Box>
