@@ -32,7 +32,7 @@ export enum DbClusterStatus {
 interface Schedule {
   enabled: boolean;
   name: string;
-  objectStorageName: string;
+  backupStorageName: string;
   retentionCopies?: number;
   schedule: string;
 }

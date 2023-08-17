@@ -51,9 +51,9 @@ export interface TimeSelectionProps {
 
 export type TimeProps = {
   selectedTime: TimeValue;
-  minute: number;
-  hour: number;
-  amPm: string;
-  onDay: number;
-  weekDay: WeekDays;
+  minute?: number;
+  hour?: number;
+  amPm?: string;
+  onDay?: number;
+  weekDay?: WeekDays;
 };

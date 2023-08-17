@@ -13,8 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // import { CronTime } from 'cron-time-generator';
+import CronTime from 'cron-time-generator';
 import { Messages } from './time-selection.messages';
-import { TimeValue } from './time-selection.types';
+import { AmPM, TimeProps, TimeValue } from './time-selection.types';
 
 export const addZeroToSingleDigit = (value: number) => {
   return value.toString().padStart(2, '0');
@@ -42,19 +43,25 @@ export const getTimeText = (
   return `${Messages.getTimeText.hours} ${minute}.`;
 };
 
-// export const getCronExpressionFromFormValues = (timeProps: TimeProps): string => {
-//   const { minute, hour, amPm, onDay, weekDay, selectedTime } = timeProps;
-//   const hour24 = amPm === AmPM.PM ? (hour === 12 ? 0 : hour + 12) : hour;
-//   switch (selectedTime) {
-//     case TimeValue.hours:
-//       return CronTime.everyHourAt(minute);
-//     case TimeValue.days:
-//       return CronTime.everyDayAt(hour24, minute);
-//     case TimeValue.weeks:
-//       return CronTime.onSpecificDaysAt([weekDay], hour24, minute);
-//     case TimeValue.months:
-//       return CronTime.everyMonthOn(onDay, hour24, minute);
-//     default:
-//       return CronTime.everyHourAt(5);
-//   }
-// };
+export const getCronExpressionFromFormValues = (timeProps: TimeProps): string => {
+  const { minute, hour, amPm, onDay, weekDay, selectedTime } = timeProps;
+
+  let parsedMinute = Number(minute);
+  let parsedHour = Number(hour);
+  let parsedDay = Number(onDay);
+
+  const hour24 = amPm === AmPM.PM ? (parsedHour === 12 ? 0 : parsedHour + 12) : parsedHour;
+
+  switch (selectedTime) {
+    case TimeValue.hours:
+      return CronTime.everyHourAt(parsedMinute);
+    case TimeValue.days:
+      return CronTime.everyDayAt(hour24, parsedMinute);
+    case TimeValue.weeks:
+      return CronTime.onSpecificDaysAt([weekDay!], hour24, parsedMinute);
+    case TimeValue.months:
+      return CronTime.everyMonthOn(parsedDay, hour24, parsedMinute);
+    default:
+      return CronTime.everyHourAt(5);
+  }
+};

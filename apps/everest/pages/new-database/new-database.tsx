@@ -45,6 +45,7 @@ export const NewDatabasePage = () => {
   const methods = useForm<DbWizardType>({
     mode: 'onChange',
     resolver: zodResolver(currentValidationSchema),
+    // @ts-ignore
     defaultValues: DB_WIZARD_DEFAULTS,
   });
   const firstStep = activeStep === 0;

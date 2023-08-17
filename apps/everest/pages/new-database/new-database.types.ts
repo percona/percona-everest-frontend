@@ -17,6 +17,7 @@ import { z } from 'zod';
 import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
 import { Messages } from './new-database.messages';
 import { IP_REGEX } from '../../constants';
+import { AmPM, TimeValue, WeekDays } from '../../components/time-selection/time-selection.types';
 
 export enum DbWizardFormFields {
   dbName = 'dbName',
@@ -72,38 +73,36 @@ const stepTwoSchema = z
   })
   .passthrough();
 
-// TODO re-add third step after API is ready for backups
-// const stepThreeSchema = z
-//   .object({
-//     backupsEnabled: z.boolean(),
-//     // pitrEnabled: z.boolean(),
-//     // pitrTime: z.string(),
-//     storageLocation:
-//       z.string()
-//         .or(
-//           z.object({
-//             id: z.string(),
-//             name: z.string(),
-//           })
-//         )
-//         .nullish()
-//         .superRefine((input, ctx) => {
-//           if (!input || typeof input === 'string' || !input.id || !input.name) {
-//             ctx.addIssue({
-//               code: z.ZodIssueCode.custom,
-//               message: Messages.errors.storageLocation.invalid,
-//             });
-//           }
-//         }),
-//     selectedTime: z.nativeEnum(TimeValue),
-//     minuteHour: z.number().optional(),
-//     minute: z.number().optional(),
-//     hour: z.number().optional(),
-//     amPm: z.nativeEnum(AmPM).optional(),
-//     weekDay: z.nativeEnum(WeekDays).optional(),
-//     onDay: z.number().optional(),
-//   })
-//   .passthrough()
+const stepThreeSchema = z
+  .object({
+    backupsEnabled: z.boolean(),
+    // pitrEnabled: z.boolean(),
+    // pitrTime: z.string(),
+    storageLocation:
+      z.string()
+        .or(
+          z.object({
+            name: z.string(),
+          })
+        )
+        .nullable()
+        .superRefine((input, ctx) => {
+          if (!input || typeof input === 'string' || !input.name) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: Messages.errors.storageLocation.invalid,
+            });
+          }
+        }),
+    selectedTime: z.nativeEnum(TimeValue),
+    minuteHour: z.number().optional(),
+    minute: z.number().optional(),
+    hour: z.number().optional(),
+    amPm: z.nativeEnum(AmPM).optional(),
+    weekDay: z.nativeEnum(WeekDays).optional(),
+    onDay: z.number().optional(),
+  })
+  .passthrough()
 
 const stepFourSchema = z
   .object({
@@ -158,14 +157,14 @@ const stepFourSchema = z
 export const dbWizardSchema = [
   stepOneSchema,
   stepTwoSchema,
-  // stepThreeSchema,
+  stepThreeSchema,
   stepFourSchema,
   // stepFiveSchema,
 ];
 
 const superset = stepOneSchema
   .and(stepTwoSchema)
-  // .and(stepThreeSchema)
+  .and(stepThreeSchema)
   .and(stepFourSchema);
 // .and(stepFiveSchema);
 
