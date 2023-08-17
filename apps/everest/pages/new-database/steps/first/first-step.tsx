@@ -12,11 +12,14 @@ import { dbEngineToDbType, dbTypeToDbEngine } from '../../../../utils/db';
 import { DbWizardFormFields } from '../../new-database.types';
 import { Messages } from './first-step.messages';
 import { generateShortUID } from './utils';
+import { useKubernetesClusterInfo } from '../../../../hooks/api/kubernetesClusters/useKubernetesClusterInfo';
+import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
 
 export const FirstStep = () => {
   const { watch, setValue, getFieldState } = useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
+  const { data: clusterInfo, isFetching: clusterInfoFetching } = useKubernetesClusterInfo()
 
   // TODO change to api request's result
   // const k8sNamespacesOptions = [
@@ -160,6 +163,12 @@ export const FirstStep = () => {
             </MenuItem>
           ))}
         </SelectInput>
+        <AutoCompleteInput
+          name={DbWizardFormFields.storageClass}
+          label={Messages.labels.storageClass}
+          loading={clusterInfoFetching}
+          options={clusterInfo?.storageClassNames || []}
+        />
       </FormGroup>
     </>
   );

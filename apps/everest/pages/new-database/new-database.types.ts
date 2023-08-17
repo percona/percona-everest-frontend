@@ -24,6 +24,7 @@ export enum DbWizardFormFields {
   k8sNamespace = 'k8sNamespace',
   dbEnvironment = 'dbEnvironment',
   dbVersion = 'dbVersion',
+  storageClass = 'storageClass',
   cpu = 'cpu',
   memory = 'memory',
   disk = 'disk',
@@ -59,6 +60,14 @@ const stepOneSchema = z
     // [DbWizardFormFields.k8sNamespace]: z.string().nonempty(),
     // [DbWizardFormFields.dbEnvironment]: z.string().nonempty(),
     [DbWizardFormFields.dbVersion]: z.string().nonempty(),
+    [DbWizardFormFields.storageClass]: z.string().nullable().superRefine((input, ctx) => {
+      if (!input) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: Messages.errors.storageClass.invalid,
+        });
+      }
+    })
   })
   .passthrough();
 

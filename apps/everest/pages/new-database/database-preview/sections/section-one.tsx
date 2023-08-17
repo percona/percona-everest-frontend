@@ -7,10 +7,12 @@ export const PreviewSectionOne = ({
   dbName,
   dbVersion,
   dbType,
+  storageClass,
 }: SectionProps) => (
   <>
     <PreviewContentText text={`Type: ${beautifyDbTypeName(dbType)}`} />
     <PreviewContentText text={`Name: ${dbName}`} />
     <PreviewContentText text={`Version: ${dbVersion}`} />
+    <PreviewContentText text={`Storage class: ${storageClass ?? ''}`} />
   </>
 );

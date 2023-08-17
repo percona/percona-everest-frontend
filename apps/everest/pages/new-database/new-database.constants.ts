@@ -13,12 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import { DbType } from '@percona/ui-lib.db-toggle-card';
-import { DbWizardFormFields } from './new-database.types';
+import { DbWizardFormFields, DbWizardType } from './new-database.types';
 import { DEFAULT_SIZES } from './steps/second/second-step.const';
 import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
+import { DefaultValues } from 'react-hook-form';
 
 // TODO re-add steps after API is ready
-export const DB_WIZARD_DEFAULTS = {
+// .passthrough() adds a [key: string]: {} | undefined to the typings, which does not allow null, so we have to bypass this error
+// @ts-ignore
+export const DB_WIZARD_DEFAULTS: DefaultValues<DbWizardType> = {
   // [DbWizardFormFields.backupsEnabled]: true,
   // [DbWizardFormFields.pitrEnabled]: true,
   // [DbWizardFormFields.pitrTime]: '60',
@@ -32,12 +35,12 @@ export const DB_WIZARD_DEFAULTS = {
   [DbWizardFormFields.dbType]: DbType.Mysql,
   [DbWizardFormFields.dbName]: '',
   [DbWizardFormFields.dbVersion]: '',
+  [DbWizardFormFields.storageClass]: null,
   [DbWizardFormFields.externalAccess]: false,
   // [DbWizardFormFields.internetFacing]: true,
   [DbWizardFormFields.sourceRanges]: [
     { sourceRange: '181.170.213.40/32' },
   ],
-  [DbWizardFormFields.monitoring]: false,
   // [DbWizardFormFields.endpoint]: '',
   [DbWizardFormFields.numberOfNodes]: NumberOfNodes.oneNode,
   [DbWizardFormFields.resourceSizePerNode]: ResourceSize.small,
