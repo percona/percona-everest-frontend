@@ -83,7 +83,11 @@ export const StorageLocations = () => {
 
   const handleEditBackup = (data: BackupStorage) => {
     editBackupStorage(data, {
-      onSuccess: updateDataAfterEdit(queryClient, BACKUP_STORAGES_QUERY_KEY),
+      onSuccess: updateDataAfterEdit(
+        queryClient,
+        BACKUP_STORAGES_QUERY_KEY,
+        StorageLocationsFields.name
+      ),
     });
   };
 
@@ -104,7 +108,11 @@ export const StorageLocations = () => {
 
   const handleDeleteBackup = (backupStorageId: string) => {
     deleteBackupStorage(backupStorageId, {
-      onSuccess: updateDataAfterDelete(queryClient, BACKUP_STORAGES_QUERY_KEY),
+      onSuccess: updateDataAfterDelete(
+        queryClient,
+        BACKUP_STORAGES_QUERY_KEY,
+        StorageLocationsFields.name
+      ),
     });
   };
   return (
@@ -134,17 +142,23 @@ export const StorageLocations = () => {
           </Button>
         )}
         enableRowActions
-        renderRowActionMenuItems={({ row }) => [
+        renderRowActionMenuItems={({ row, closeMenu }) => [
           <MenuItem
             key={0}
-            onClick={() => handleOpenEditModal(row.original)}
+            onClick={() => {
+              handleOpenEditModal(row.original);
+              closeMenu();
+            }}
             sx={{ m: 0, display: 'flex', gap: 1 }}
           >
             <Edit /> {Messages.edit}
           </MenuItem>,
           <MenuItem
             key={1}
-            onClick={() => handleDeleteBackup(row.original.id!)}
+            onClick={() => {
+              handleDeleteBackup(row.original.name);
+              closeMenu();
+            }}
             sx={{ m: 0, display: 'flex', gap: 1 }}
           >
             <Delete />

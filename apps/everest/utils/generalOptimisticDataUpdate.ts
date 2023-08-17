@@ -6,11 +6,17 @@ interface DataObject {
 }
 
 export const updateDataAfterEdit =
-  (queryClient: QueryClient, queryKey: string) =>
+  (
+    queryClient: QueryClient,
+    queryKey: string,
+    identificator: string | undefined = 'id'
+  ) =>
   <T extends DataObject>(updatedObject: T) => {
     queryClient.setQueryData([queryKey], (oldData?: T[]) => {
       return (oldData || []).map((value) =>
-        value.id === updatedObject.id ? updatedObject : value
+        value[identificator] === updatedObject[identificator]
+          ? updatedObject
+          : value
       );
     });
   };
@@ -24,9 +30,15 @@ export const updateDataAfterCreate =
   };
 
 export const updateDataAfterDelete =
-  (queryClient: QueryClient, queryKey: string) =>
+  (
+    queryClient: QueryClient,
+    queryKey: string,
+    identificator: string | undefined = 'id'
+  ) =>
   <T extends DataObject>(_: T, objectId: string) => {
     queryClient.setQueryData([queryKey], (oldData?: T[]) => {
-      return (oldData || []).filter((value) => value.id !== objectId);
+      return (oldData || []).filter(
+        (value) => value[identificator] !== objectId
+      );
     });
   };

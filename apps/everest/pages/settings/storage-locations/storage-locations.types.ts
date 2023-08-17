@@ -50,6 +50,4 @@ export const storageLocationsSchema = z.object({
   [StorageLocationsFields.secretKey]: z.string().nonempty(),
 });
 
-export type BackupStorageType = z.infer<typeof storageLocationsSchema> & {
-  id?: string;
-};
+export type BackupStorageType = z.infer<typeof storageLocationsSchema>;
