@@ -36,7 +36,8 @@ export const ThirdStep = () => {
             loading={isFetching}
             options={backupStorages}
             autoCompleteProps={{
-              isOptionEqualToValue: (option, value) => option.id === value.id,
+              isOptionEqualToValue: (option, value) =>
+                option.name === value.name,
               getOptionLabel: (option) =>
                 typeof option === 'string' ? option : option.name,
             }}
