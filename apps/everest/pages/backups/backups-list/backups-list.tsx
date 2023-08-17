@@ -4,8 +4,10 @@ import { Table } from '@percona/ui-lib.table';
 import { MenuItem } from '@mui/material';
 import { MRT_ColumnDef } from 'material-react-table';
 import { MenuButton } from '@percona/ui-lib.menu-button';
+import { format } from 'date-fns';
 import { useDbBackups } from '../../../hooks/api/backups/useBackups';
 import { Backup } from '../../../types/backups.types';
+import { DATE_FORMAT } from '../../../constants';
 
 export const BackupsList = () => {
   const { dbClusterName } = useParams();
@@ -25,10 +27,12 @@ export const BackupsList = () => {
       {
         accessorKey: 'created',
         header: 'Started',
+        Cell: ({ cell }) => format(new Date(cell.getValue<string>()), DATE_FORMAT)
       },
       {
         accessorKey: 'completed',
         header: 'Finished',
+        Cell: ({ cell }) => cell.getValue() ? format(new Date(cell.getValue<string>()), DATE_FORMAT) : ''
       },
     ],
     []
@@ -41,7 +45,7 @@ export const BackupsList = () => {
   return (
     <Table
       noDataMessage="You don't have any backups yet. Create one to get started"
-      data={[]}
+      data={backups}
       columns={columns}
       renderTopToolbarCustomActions={() => (
         <MenuButton buttonText='Create Backup'>
