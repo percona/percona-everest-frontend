@@ -6,14 +6,18 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { EverestApp } from './app';
+import { Backups } from './pages/backups/backups';
+import { BackupsList } from './pages/backups/backups-list/backups-list';
+import { BackupsTabs } from './pages/backups/backups.types';
+import { GeneralInformation } from './pages/backups/general-information/general-information';
 import { DatabasesPage } from './pages/databases/databases';
 import { NewDatabasePage } from './pages/new-database/new-database';
-import { Settings } from './pages/settings/settings';
 import { DefaultConfigurations } from './pages/settings/default-configurations/default-configurations';
-import { StorageLocations } from './pages/settings/storage-locations/storage-locations';
-import { MonitoringEndpoints } from './pages/settings/monitoring-endpoints/monitoring-endpoints';
 import { K8sClusters } from './pages/settings/k8s-clusters/k8s-clusters';
+import { MonitoringEndpoints } from './pages/settings/monitoring-endpoints/monitoring-endpoints';
+import { Settings } from './pages/settings/settings';
 import { SettingsTabs } from './pages/settings/settings.types';
+import { StorageLocations } from './pages/settings/storage-locations/storage-locations';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +31,21 @@ const router = createBrowserRouter([
       {
         path: 'databases/new',
         element: <NewDatabasePage />,
+      },
+      {
+        path: 'databases/:dbClusterName',
+        element: <Backups />,
+        children: [
+          {
+            index: true,
+            path: BackupsTabs.backups,
+            element: <BackupsList />,
+          },
+          {
+            path: BackupsTabs.generalInformation,
+            element: <GeneralInformation />,
+          },
+        ],
       },
       {
         index: true,
