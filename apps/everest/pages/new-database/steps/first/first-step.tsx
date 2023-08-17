@@ -6,6 +6,7 @@ import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { ToggleButtonGroupInput } from '@percona/ui-lib.form.inputs.toggle-button-group';
 import { useFormContext } from 'react-hook-form';
+import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
 import { useDbEngines } from '../../../../hooks/api/db-engines/useDbEngines';
 import { DbEngineToolStatus } from '../../../../types/dbEngines.types';
 import { dbEngineToDbType, dbTypeToDbEngine } from '../../../../utils/db';
@@ -13,7 +14,6 @@ import { DbWizardFormFields } from '../../new-database.types';
 import { Messages } from './first-step.messages';
 import { generateShortUID } from './utils';
 import { useKubernetesClusterInfo } from '../../../../hooks/api/kubernetesClusters/useKubernetesClusterInfo';
-import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
 
 export const FirstStep = () => {
   const { watch, setValue, getFieldState } = useFormContext();

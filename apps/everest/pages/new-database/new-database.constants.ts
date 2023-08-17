@@ -13,10 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import { DbType } from '@percona/ui-lib.db-toggle-card';
+import { DefaultValues } from 'react-hook-form';
 import { DbWizardFormFields, DbWizardType } from './new-database.types';
 import { DEFAULT_SIZES } from './steps/second/second-step.const';
 import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
-import { DefaultValues } from 'react-hook-form';
 
 // TODO re-add steps after API is ready
 // .passthrough() adds a [key: string]: {} | undefined to the typings, which does not allow null, so we have to bypass this error
