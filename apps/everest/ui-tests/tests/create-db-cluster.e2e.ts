@@ -21,6 +21,7 @@ const engineVersions = {
   psmdb: [],
   postgresql: [],
 };
+let storageClasses = [];
 
 test.beforeAll(async ({ request }) => {
   const kubernetesList = await request.get('/v1/kubernetes');
@@ -29,6 +30,9 @@ test.beforeAll(async ({ request }) => {
   const enginesList = await request.get(`/v1/kubernetes/${kubernetesId}/database-engines`);
   const engines = (await enginesList.json()).items;
 
+  const kubernetesClusterInfo = await request.get(`/v1/kubernetes/${kubernetesId}/cluster-info`);
+  const { storageClassNames = [] } = await kubernetesClusterInfo.json();
+
   engines.forEach((engine) => {
     const { type } = engine.spec;
   
@@ -36,6 +40,8 @@ test.beforeAll(async ({ request }) => {
       engineVersions[type].push(...Object.keys(engine.status.availableVersions.engine)); 
     }
   });
+
+  storageClasses = storageClassNames;
 });
 
 test.beforeEach(async ({ page }) => {
@@ -45,6 +51,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('Cluster creation', async ({ page, request }) => {
+  expect(storageClasses.length).toBeGreaterThan(0);
   const clusterName = 'db-cluster-ui-test';
 
   const dbEnginesButtons = page.getByTestId('toggle-button-group-input-db-type').getByRole('button');
@@ -61,12 +68,19 @@ test('Cluster creation', async ({ page, request }) => {
   await mongoButton.click();
   await page.getByTestId('select-db-version-button').click();
 
-  const options = page.getByRole('option');
+  const dbVersionOptions = page.getByRole('option');
 
-  engineVersions.psmdb.forEach((version) => expect(options.filter({ hasText: new RegExp(`^${version}$`) })).toBeVisible());
+  engineVersions.psmdb.forEach((version) => expect(dbVersionOptions.filter({ hasText: new RegExp(`^${version}$`) })).toBeVisible());
 
   await page.getByRole('option').first().click();
   await page.getByTestId('text-input-db-name').fill(clusterName);
+  await page.getByTestId('text-input-storage-class').click();
+
+  const storageClassOptions = page.getByRole('option');
+
+  storageClasses.forEach((className) => expect(storageClassOptions.filter({ hasText: new RegExp(`^${className}$`) })).toBeVisible());
+
+  await page.getByRole('option').first().click();
   await page.getByTestId('db-wizard-continue-button').click();
 
   await expect(
@@ -122,11 +136,14 @@ test('Cluster creation', async ({ page, request }) => {
     '192.168.1.1/24',
     '192.168.1.0',
   ]);
+  expect(addedCluster?.spec.engine.storage.class).toBe(storageClasses[0]);
 });
 
 test('Cancel wizard', async ({ page }) => {
   await page.getByTestId('mongodb-toggle-button').click();
   await page.getByTestId('text-input-db-name').fill('new-cluster');
+  await page.getByTestId('text-input-storage-class').click();
+  await page.getByRole('option').first().click();
   await page.getByTestId('db-wizard-continue-button').click();
 
   await expect(
