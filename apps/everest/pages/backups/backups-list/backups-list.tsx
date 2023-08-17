@@ -10,9 +10,7 @@ import { Backup } from '../../../types/backups.types';
 export const BackupsList = () => {
   const { dbClusterName } = useParams();
 
-  const { data: backups = [] } = useDbBackups(dbClusterName!, { enabled: !!dbClusterName });
-  
-  console.log(backups);
+  const { data: backups = [] } = useDbBackups(dbClusterName!, { enabled: !!dbClusterName, refetchInterval: 10 * 1000 });
 
   const columns = useMemo<MRT_ColumnDef<Backup>[]>(
     () => [
