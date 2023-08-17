@@ -45,7 +45,7 @@ export const CreateEditModalStorage = ({
   );
 
   const onSubmit: SubmitHandler<BackupStorage> = (data) => {
-    handleSubmitModal(isEditMode, { ...data, id: selectedStorageLocation?.id });
+    handleSubmitModal(isEditMode, data);
   };
 
   return (
@@ -61,6 +61,7 @@ export const CreateEditModalStorage = ({
       <TextInput
         name={StorageLocationsFields.name}
         label={Messages.name}
+        textFieldProps={{ disabled: isEditMode }}
         isRequired
         labelProps={{ sx: { mt: 0 } }}
       />
