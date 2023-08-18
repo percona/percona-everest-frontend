@@ -119,7 +119,6 @@ export const StorageLocations = () => {
   };
 
   const handleConfirmDelete = (backupStorageId: string) => {
-    console.log(backupStorageId);
     deleteBackupStorage(backupStorageId, {
       onSuccess: updateDataAfterDelete(
         queryClient,
