@@ -1,3 +1,4 @@
+import { BaseStatus } from "../components/status-field/status-field.types";
 import { BACKUP_STATE_TO_STATUS } from "../constants";
 import { BackupStatus } from "../types/backups.types";
 

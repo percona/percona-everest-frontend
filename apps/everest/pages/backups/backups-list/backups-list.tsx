@@ -8,6 +8,8 @@ import { format } from 'date-fns';
 import { useDbBackups } from '../../../hooks/api/backups/useBackups';
 import { Backup, BackupStatus } from '../../../types/backups.types';
 import { DATE_FORMAT } from '../../../constants';
+import { StatusField } from '../../../components/status-field/status-field';
+import { BACKUP_STATUS_TO_BASE_STATUS } from './backups-list.constants';
 
 export const BackupsList = () => {
   const { dbClusterName } = useParams();
@@ -21,6 +23,7 @@ export const BackupsList = () => {
         header: 'Status',
         filterVariant: 'multi-select',
         filterSelectOptions: Object.values(BackupStatus),
+        Cell: ({ cell }) => <StatusField status={cell.getValue<BackupStatus>()} statusMap={BACKUP_STATUS_TO_BASE_STATUS}>{cell.getValue()}</StatusField>
       },
       {
         accessorKey: 'name',
