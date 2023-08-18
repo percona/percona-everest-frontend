@@ -25,7 +25,3 @@ export interface DbClusterViewProps {
 export interface DbTypeIconProviderProps {
   dbType: DbEngineType | DbType;
 }
-
-export interface StatusProviderProps {
-  status: DbClusterStatus;
-}

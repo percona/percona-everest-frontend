@@ -19,7 +19,8 @@ import { DbClusterViewProps } from './dbClusterView.type';
 import { beautifyDbClusterStatus } from './DbClusterView.utils';
 import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
-import { StatusProvider } from './statusProvider/StatusProvider';
+import { StatusField } from '../status-field/status-field';
+import { DB_CLUSTER_STATUS_TO_BASE_STATUS } from './DbClusterView.constants';
 
 export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
   const navigate = useNavigate();
@@ -35,15 +36,13 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
           text: beautifyDbClusterStatus(status),
           value: status,
         })),
-        Cell: ({ row }) => (
-          <Stack
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            gap={1}
+        Cell: ({ cell }) => (
+          <StatusField
+            status={cell.getValue<DbClusterStatus>()}
+            statusMap={DB_CLUSTER_STATUS_TO_BASE_STATUS}
           >
-            <StatusProvider status={row.original?.status} />
-          </Stack>
+            {beautifyDbClusterStatus(cell.getValue<DbClusterStatus>())}
+          </StatusField>
         ),
       },
       {
