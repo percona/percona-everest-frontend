@@ -12,8 +12,8 @@ export const useDbBackups = (dbClusterName: string, options?: UseQueryOptions<Ge
     {
       select: ({ items = [] }) => items.map(({ metadata: { name }, status, spec: { dbClusterName, backupStorageName } }) => ({
         name,
-        created: status?.created || '',
-        completed: status?.completed || '',
+        created: status?.created ? new Date(status.created) : null,
+        completed: status?.completed ? new Date(status.completed) : null,
         state: status?.state || '',
         dbClusterName,
         backupStorageName

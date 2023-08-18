@@ -17,8 +17,8 @@ export type GetBackupPayload = {
 
 export type Backup = {
   name: string;
-  created: string;
-  completed: string;
+  created: Date | null;
+  completed: Date | null;
   state: string;
   dbClusterName: string;
   backupStorageName: string;

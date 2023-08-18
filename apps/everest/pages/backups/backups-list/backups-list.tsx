@@ -27,12 +27,16 @@ export const BackupsList = () => {
       {
         accessorKey: 'created',
         header: 'Started',
-        Cell: ({ cell }) => format(new Date(cell.getValue<string>()), DATE_FORMAT)
+        enableColumnFilter: false,
+        sortingFn: 'datetime',
+        Cell: ({ cell }) => cell.getValue<Date>() ? format(cell.getValue<Date>(), DATE_FORMAT) : '',
       },
       {
         accessorKey: 'completed',
         header: 'Finished',
-        Cell: ({ cell }) => cell.getValue() ? format(new Date(cell.getValue<string>()), DATE_FORMAT) : ''
+        enableColumnFilter: false,
+        sortingFn: 'datetime',
+        Cell: ({ cell }) => cell.getValue<Date>() ? format(cell.getValue<Date>(), DATE_FORMAT) : '',
       },
     ],
     []
