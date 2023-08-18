@@ -46,9 +46,9 @@ export const getTimeText = (
 export const getCronExpressionFromFormValues = (timeProps: TimeProps): string => {
   const { minute, hour, amPm, onDay, weekDay, selectedTime } = timeProps;
 
-  let parsedMinute = Number(minute);
-  let parsedHour = Number(hour);
-  let parsedDay = Number(onDay);
+  const parsedMinute = Number(minute);
+  const parsedHour = Number(hour);
+  const parsedDay = Number(onDay);
 
   const hour24 = amPm === AmPM.PM ? (parsedHour === 12 ? 0 : parsedHour + 12) : parsedHour;
 
