@@ -19,7 +19,14 @@ export type Backup = {
   name: string;
   created: Date | null;
   completed: Date | null;
-  state: string;
+  state: BackupStatus;
   dbClusterName: string;
   backupStorageName: string;
+}
+
+export enum BackupStatus {
+  OK = "OK",
+  FAILED = 'Failed',
+  IN_PROGRESS = 'In progress',
+  UNKNOWN = 'Unknown',
 }

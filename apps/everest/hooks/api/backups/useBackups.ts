@@ -2,6 +2,7 @@ import { useQuery, UseQueryOptions } from "react-query";
 import { useSelectedKubernetesCluster } from "../kubernetesClusters/useSelectedKubernetesCluster";
 import { Backup, GetBackupPayload } from "../../../types/backups.types";
 import { getBackupsFn } from "../../../api/backups";
+import { mapBackupState } from "../../../utils/backups";
 
 export const useDbBackups = (dbClusterName: string, options?: UseQueryOptions<GetBackupPayload, unknown, Backup[]>,) => {
   const { id } = useSelectedKubernetesCluster();
@@ -14,7 +15,7 @@ export const useDbBackups = (dbClusterName: string, options?: UseQueryOptions<Ge
         name,
         created: status?.created ? new Date(status.created) : null,
         completed: status?.completed ? new Date(status.completed) : null,
-        state: status?.state || '',
+        state: mapBackupState(status?.state),
         dbClusterName,
         backupStorageName
       })),

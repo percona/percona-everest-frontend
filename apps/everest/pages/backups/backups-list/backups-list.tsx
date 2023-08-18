@@ -6,7 +6,7 @@ import { MRT_ColumnDef } from 'material-react-table';
 import { MenuButton } from '@percona/ui-lib.menu-button';
 import { format } from 'date-fns';
 import { useDbBackups } from '../../../hooks/api/backups/useBackups';
-import { Backup } from '../../../types/backups.types';
+import { Backup, BackupStatus } from '../../../types/backups.types';
 import { DATE_FORMAT } from '../../../constants';
 
 export const BackupsList = () => {
@@ -19,6 +19,8 @@ export const BackupsList = () => {
       {
         accessorKey: 'state',
         header: 'Status',
+        filterVariant: 'multi-select',
+        filterSelectOptions: Object.values(BackupStatus),
       },
       {
         accessorKey: 'name',
