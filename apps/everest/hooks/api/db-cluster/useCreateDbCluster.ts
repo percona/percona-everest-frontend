@@ -37,7 +37,9 @@ import { DbWizardType } from '../../../pages/database-form/database-form.types';
 
 type CreateDbClusterArgType = { dbPayload: DbWizardType; id: string };
 
-const formValuesToPayloadMapping = (dbPayload: DbWizardType): DbCluster => {
+export const formValuesToPayloadMapping = (
+  dbPayload: DbWizardType
+): DbCluster => {
   // const { selectedTime, minute, hour, amPm, onDay, weekDay } = dbPayload;
   // const backupSchedule = getCronExpressionFromFormValues({selectedTime, minute, hour, amPm, onDay, weekDay});
 

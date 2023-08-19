@@ -14,55 +14,36 @@
 // limitations under the License.
 import { test, expect } from '@playwright/test';
 import { GetDbClusterPayload } from '../../types/dbCluster.types';
+import {
+  createDbClusterPageIsReady,
+  dbEnginesButtonsIsReady,
+  EngineVersions,
+} from './utils/createDbClusterForm';
+import { getK8sClusters } from './utils/k8sClusters';
+import { getEnginesVersions } from './utils/database-engines';
 
 let kubernetesId;
-const engineVersions = {
+
+let engineVersions: EngineVersions = {
   pxc: [],
   psmdb: [],
   postgresql: [],
 };
 
 test.beforeAll(async ({ request }) => {
-  const kubernetesList = await request.get('/v1/kubernetes');
-  kubernetesId = (await kubernetesList.json())[0].id;
-
-  const enginesList = await request.get(
-    `/v1/kubernetes/${kubernetesId}/database-engines`
-  );
-  const engines = (await enginesList.json()).items;
-
-  engines.forEach((engine) => {
-    const { type } = engine.spec;
-
-    if (engine.status.status === 'installed') {
-      engineVersions[type].push(
-        ...Object.keys(engine.status.availableVersions.engine)
-      );
-    }
-  });
+  const k8sClusters = await getK8sClusters(request);
+  kubernetesId = k8sClusters[0].id;
+  engineVersions = await getEnginesVersions(request, kubernetesId);
 });
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('/databases/new');
-  await page.getByTestId('toggle-button-group-input-db-type').waitFor();
-  await page.getByTestId('select-input-db-version').waitFor();
+  await createDbClusterPageIsReady(page);
 });
 
 test('Cluster creation', async ({ page, request }) => {
   const clusterName = 'db-cluster-ui-test';
-
-  const dbEnginesButtons = page
-    .getByTestId('toggle-button-group-input-db-type')
-    .getByRole('button');
-  const nrButtons = await dbEnginesButtons.count();
-
-  expect(nrButtons).toBe(3);
-
-  const mySqlButton = dbEnginesButtons.filter({ hasText: 'MySQL' });
-  const mongoButton = dbEnginesButtons.filter({ hasText: 'MongoDB' });
-
-  await expect(mySqlButton).toBeVisible();
-  await expect(mongoButton).toBeVisible();
+  const dbEngines = await dbEnginesButtonsIsReady(page);
+  const { psmdb: mongoButton } = dbEngines;
 
   await mongoButton.click();
   await page.getByTestId('select-db-version-button').click();
@@ -97,6 +78,7 @@ test('Cluster creation', async ({ page, request }) => {
     await page.getByLabel('Enable External Access').isChecked()
   ).toBeTruthy();
   await page.getByTestId('text-input-source-range').fill('192.168.1.1');
+  page.pause();
   await page.getByTestId('db-wizard-submit-button').click();
 
   await expect(page.getByTestId('db-wizard-goto-db-clusters')).toBeVisible();
@@ -116,25 +98,42 @@ test('Cluster creation', async ({ page, request }) => {
   await page.goto('/databases');
 
   // cluster actions menu click
-  (await page.locator('.MuiTableRow-root').filter({ hasText: 'db-cluster-ui-test'}).getByTestId('MoreHorizIcon')).click();
+  (
+    await page
+      .locator('.MuiTableRow-root')
+      .filter({ hasText: 'db-cluster-ui-test' })
+      .getByTestId('MoreHorizIcon')
+  ).click();
 
   const suspendAction = page.getByTestId('PauseCircleOutlineIcon');
   await suspendAction.click();
   await page.reload();
 
-  const clusterRowAfterSuspend = await page.locator('.MuiTableRow-root').filter({ hasText: 'db-cluster-ui-test'});
+  const clusterRowAfterSuspend = await page
+    .locator('.MuiTableRow-root')
+    .filter({ hasText: 'db-cluster-ui-test' });
 
   await (await clusterRowAfterSuspend.getByTestId('MoreHorizIcon')).click();
   const resumeAction = page.getByTestId('PauseCircleOutlineIcon');
   await resumeAction.click();
 
   await page.reload();
-  (await page.locator('.MuiTableRow-root').filter({ hasText: 'db-cluster-ui-test'}).getByTestId('MoreHorizIcon')).click();
+  (
+    await page
+      .locator('.MuiTableRow-root')
+      .filter({ hasText: 'db-cluster-ui-test' })
+      .getByTestId('MoreHorizIcon')
+  ).click();
   const restartAction = page.getByTestId('PlayArrowOutlinedIcon');
   await restartAction.click();
 
   await page.reload();
-  (await page.locator('.MuiTableRow-root').filter({ hasText: 'db-cluster-ui-test'}).getByTestId('MoreHorizIcon')).click();
+  (
+    await page
+      .locator('.MuiTableRow-root')
+      .filter({ hasText: 'db-cluster-ui-test' })
+      .getByTestId('MoreHorizIcon')
+  ).click();
   const deleteAction = page.getByTestId('DeleteOutlineIcon');
   await deleteAction.click();
 
