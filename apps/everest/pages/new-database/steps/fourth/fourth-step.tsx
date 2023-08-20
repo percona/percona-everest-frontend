@@ -1,5 +1,6 @@
 import {
   FormGroup,
+  Stack,
   Typography,
 } from '@mui/material';
 import React from 'react';
@@ -17,15 +18,17 @@ export const FourthStep = () => {
 
   return (
     <>
-      <Typography variant="h5">{Messages.externalAccess}</Typography>
-      <Typography variant="subtitle2">{Messages.caption}</Typography>
+      <Typography variant="h5">{Messages.advanced}</Typography>
       <FormGroup sx={{ mt: 2 }}>
         <SwitchInput
-          label={Messages.enableExternalAccess}
+          label={Messages.enableExternalAccess.title}
+          labelCaption={Messages.enableExternalAccess.caption}
           name={DbWizardFormFields.externalAccess}
         />
         {externalAccess && (
-          <TextArray fieldName={DbWizardFormFields.sourceRanges} fieldKey='sourceRange' label={Messages.sourceRange} />
+          <Stack sx={{ ml: 6 }}>
+            <TextArray fieldName={DbWizardFormFields.sourceRanges} fieldKey='sourceRange' label={Messages.sourceRange} />
+          </Stack>
         )}
       </FormGroup>
     </>

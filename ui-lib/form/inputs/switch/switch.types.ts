@@ -22,5 +22,6 @@ export type SwitchInputProps = {
   controllerProps?: UseControllerProps;
   formControlLabelProps?: FormControlLabelProps;
   name: string;
-  label: React.ReactNode;
+  label: string;
+  labelCaption?: string;
 };
