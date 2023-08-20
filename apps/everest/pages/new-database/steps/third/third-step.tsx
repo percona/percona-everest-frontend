@@ -16,8 +16,8 @@ export const ThirdStep = () => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-      <Typography variant="h6">{Messages.backups}</Typography>
-      <Typography variant="caption">{Messages.captionBackups}</Typography>
+      <Typography variant="h5">{Messages.backups}</Typography>
+      <Typography variant="subtitle2">{Messages.captionBackups}</Typography>
       <SwitchInput
         control={control}
         label={Messages.enableBackups}
