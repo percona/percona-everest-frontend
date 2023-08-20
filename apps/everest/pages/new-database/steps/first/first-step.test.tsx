@@ -11,6 +11,7 @@ jest.mock('./utils', () => ({
 }));
 
 jest.mock('../../../../hooks/api/db-engines/useDbEngines');
+jest.mock('../../../../hooks/api/kubernetesClusters/useKubernetesClusterInfo');
 
 interface FormProviderWrapperProps {
   handleSubmit: jest.Mock<any, any>;
