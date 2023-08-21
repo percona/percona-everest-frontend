@@ -46,6 +46,8 @@ export const FourthStep = () => {
             name={DbWizardFormFields.engineParameters}
             textFieldProps={{
               placeholder: getParamsPlaceholderFromDbType(dbType),
+              multiline: true,
+              minRows: 3,
               sx: {
                 ml: 6
               }
