@@ -1,13 +1,12 @@
 import { Box, Tab, Tabs } from '@mui/material';
 import React from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Link, Outlet, useMatch } from 'react-router-dom';
 
-import { SettingsTabs } from './settings.types';
 import { Messages } from './settings.messages';
-import { useRouteMatch } from '../../hooks/settings/useRouteMatch';
+import { SettingsTabs } from './settings.types';
 
 export const Settings = () => {
-  const routeMatch = useRouteMatch([`/settings/:tabs`]);
+  const routeMatch = useMatch('/settings/:tabs');
   const currentTab = routeMatch?.params?.tabs;
 
   return (

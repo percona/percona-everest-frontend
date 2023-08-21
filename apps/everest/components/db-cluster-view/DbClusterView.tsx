@@ -24,7 +24,7 @@ import { Box, MenuItem, Stack } from '@mui/material';
 import { Table } from '@percona/ui-lib.table';
 import { type MRT_ColumnDef } from 'material-react-table';
 import React, { useMemo } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useQueryClient } from 'react-query';
 import { DbClusterTableElement } from '../../hooks/api/db-clusters/dbCluster.type';
 import { DB_CLUSTERS_QUERY_KEY, ExtraDbCluster, useDbClusters } from '../../hooks/api/db-clusters/useDbClusters';
@@ -49,7 +49,9 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
   const { mutate: suspendDbCluster } = usePausedDbCluster();
   const { mutate: restartDbCluster } = useRestartDbCluster();
   const { id: k8sClusterId } = useSelectedKubernetesCluster();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
+
   const isPaused = (status: DbClusterStatus) => status === DbClusterStatus.paused || status === DbClusterStatus.pausing;
 
   const handleDeleteDbCluster = (dbClusterName: string) => {
@@ -104,7 +106,10 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
         accessorKey: 'status',
         header: 'Status',
         filterVariant: 'multi-select',
-        filterSelectOptions: Object.values(DbClusterStatus).map((status) => ({ text: beautifyDbClusterStatus(status), value: status })),
+        filterSelectOptions: Object.values(DbClusterStatus).map((status) => ({
+          text: beautifyDbClusterStatus(status),
+          value: status,
+        })),
         Cell: ({ row }) => (
           <Stack
             direction="row"
@@ -143,7 +148,8 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
         header: 'Backups',
         filterVariant: 'checkbox',
         accessorFn: (row) => (row.backupsEnabled ? 'true' : 'false'),
-        Cell: ({ cell }) => cell.getValue() === 'true' ? 'Enabled' : 'Disabled',
+        Cell: ({ cell }) =>
+          cell.getValue() === 'true' ? 'Enabled' : 'Disabled',
       },
       {
         accessorKey: 'kubernetesCluster',
@@ -202,6 +208,14 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
             </MenuItem>,
           ]}
           renderDetailPanel={({ row }) => <ExpandedRow row={row} />}
+          muiTableBodyRowProps={({ row }) => ({
+            onClick: () => {
+              navigate(`/databases/${row.original.databaseName}/backups`);
+            },
+            sx: {
+              cursor: 'pointer', // you might want to change the cursor too when adding an onClick
+            },
+          })}
           renderTopToolbarCustomActions={() => customHeader}
           hideExpandAllIcon
         />

@@ -1,18 +1,3 @@
-// percona-everest-frontend
-// Copyright (C) 2023 Percona LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
@@ -21,14 +6,19 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { EverestApp } from './app';
+import { Backups } from './pages/backups/backups';
+import { BackupsList } from './pages/backups/backups-list/backups-list';
+import { BackupsTabs } from './pages/backups/backups.types';
+import { GeneralInformation } from './pages/backups/general-information/general-information';
 import { DatabasesPage } from './pages/databases/databases';
 import { DatabasePage } from './pages/database-form/database-form';
 import { Settings } from './pages/settings/settings';
 import { DefaultConfigurations } from './pages/settings/default-configurations/default-configurations';
-import { StorageLocations } from './pages/settings/storage-locations/storage-locations';
-import { MonitoringEndpoints } from './pages/settings/monitoring-endpoints/monitoring-endpoints';
 import { K8sClusters } from './pages/settings/k8s-clusters/k8s-clusters';
+import { MonitoringEndpoints } from './pages/settings/monitoring-endpoints/monitoring-endpoints';
+import { Settings } from './pages/settings/settings';
 import { SettingsTabs } from './pages/settings/settings.types';
+import { StorageLocations } from './pages/settings/storage-locations/storage-locations';
 
 const router = createBrowserRouter([
   {
@@ -46,6 +36,21 @@ const router = createBrowserRouter([
       {
         path: 'databases/edit',
         element: <DatabasePage />,
+      },
+      {
+        path: 'databases/:dbClusterName',
+        element: <Backups />,
+        children: [
+          {
+            index: true,
+            path: BackupsTabs.backups,
+            element: <BackupsList />,
+          },
+          {
+            path: BackupsTabs.generalInformation,
+            element: <GeneralInformation />,
+          },
+        ],
       },
       {
         index: true,

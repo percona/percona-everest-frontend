@@ -96,7 +96,9 @@ test('Cluster creation', async ({ page, request }) => {
   expect(
     await page.getByLabel('Enable External Access').isChecked()
   ).toBeTruthy();
-  await page.getByTestId('text-input-source-range').fill('192.168.1.1');
+  await page.getByTestId('text-input-source-ranges.0.source-range').fill('192.168.1.1/24');
+  await page.getByTestId('add-text-input-button').click();
+  await page.getByTestId('text-input-source-ranges.1.source-range').fill('192.168.1.0');
   await page.getByTestId('db-wizard-submit-button').click();
 
   await expect(page.getByTestId('db-wizard-goto-db-clusters')).toBeVisible();
@@ -150,7 +152,8 @@ test('Cluster creation', async ({ page, request }) => {
   expect(addedCluster?.spec.proxy.expose.type).toBe('external');
   expect(addedCluster?.spec.proxy.replicas).toBe(2);
   expect(addedCluster?.spec.proxy.expose.ipSourceRanges).toEqual([
-    '192.168.1.1',
+    '192.168.1.1/24',
+    '192.168.1.0',
   ]);
 });
 

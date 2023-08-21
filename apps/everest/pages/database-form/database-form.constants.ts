@@ -34,7 +34,9 @@ export const DB_WIZARD_DEFAULTS = {
   [DbWizardFormFields.dbVersion]: '',
   [DbWizardFormFields.externalAccess]: false,
   // [DbWizardFormFields.internetFacing]: true,
-  [DbWizardFormFields.sourceRange]: '',
+  [DbWizardFormFields.sourceRanges]: [
+    { sourceRange: '181.170.213.40/32' },
+  ],
   [DbWizardFormFields.monitoring]: false,
   // [DbWizardFormFields.endpoint]: '',
   [DbWizardFormFields.numberOfNodes]: NumberOfNodes.oneNode,

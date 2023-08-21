@@ -20,7 +20,6 @@ import { api } from './api';
 
 export const getBackupStoragesFn = async () => {
   const response = await api.get<GetBackupStoragesPayload>('backup-storages');
-
   return response.data;
 };
 
@@ -31,7 +30,10 @@ export const createBackupStorageFn = async (formData: BackupStorage) => {
 };
 
 export const editBackupStorageFn = async (formData: BackupStorage) => {
-  const response = await api.patch(`backup-storages/${formData.id}`, formData);
+  const response = await api.patch(
+    `backup-storages/${formData.name}`,
+    formData
+  );
 
   return response.data;
 };
