@@ -24,11 +24,12 @@ import { useDbCluster } from '../../hooks/api/db-cluster/useDbCluster';
 import { NumberOfNodes } from './steps/second/second-step.types';
 import { DbCluster, ProxyExposeType } from '../../types/dbCluster.types';
 import { dbEngineToDbType } from '../../utils/db';
-import { matchFieldsValueToResourceSize } from './steps/second/second-step.utils';
+import {
+  matchFieldsValueToResourceSize,
+  removeMeasurementValue,
+} from './steps/second/second-step.utils';
 import { DB_WIZARD_DEFAULTS } from './database-form.constants';
 
-const removeMeasurementValue = (value: string) =>
-  value ? +value?.slice(0, -1) : 0;
 export const DbClusterPayloadToFormValues = (
   dbCluster: DbCluster
 ): DbWizardType => ({
@@ -49,10 +50,12 @@ export const DbClusterPayloadToFormValues = (
   [DbWizardFormFields.externalAccess]:
     dbCluster?.spec?.proxy?.expose?.type === ProxyExposeType.external,
   // [DbWizardFormFields.internetFacing]: true, //TODO commented
-  [DbWizardFormFields.sourceRanges]:
-    dbCluster?.spec?.proxy?.expose?.ipSourceRanges.map((item) => ({
-      sourceRange: item,
-    })) || [],
+  [DbWizardFormFields.sourceRanges]: dbCluster?.spec?.proxy?.expose
+    ?.ipSourceRanges
+    ? dbCluster?.spec?.proxy?.expose?.ipSourceRanges.map((item) => ({
+        sourceRange: item,
+      }))
+    : [],
   // [DbWizardFormFields.monitoring]: dbCluster?.spec?.monitoring?.enabled,
   // [DbWizardFormFields.endpoint]: dbCluster?.spec?.monitoring?.enabled?.pmm?.publicAddress,
   [DbWizardFormFields.numberOfNodes]:
