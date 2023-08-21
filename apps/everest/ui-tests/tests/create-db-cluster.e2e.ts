@@ -96,9 +96,13 @@ test('Cluster creation', async ({ page, request }) => {
   expect(
     await page.getByLabel('Enable External Access').isChecked()
   ).toBeTruthy();
-  await page.getByTestId('text-input-source-ranges.0.source-range').fill('192.168.1.1/24');
+  await page
+    .getByTestId('text-input-source-ranges.0.source-range')
+    .fill('192.168.1.1/24');
   await page.getByTestId('add-text-input-button').click();
-  await page.getByTestId('text-input-source-ranges.1.source-range').fill('192.168.1.0');
+  await page
+    .getByTestId('text-input-source-ranges.1.source-range')
+    .fill('192.168.1.0');
   await page.getByTestId('db-wizard-submit-button').click();
 
   await expect(page.getByTestId('db-wizard-goto-db-clusters')).toBeVisible();
@@ -118,25 +122,42 @@ test('Cluster creation', async ({ page, request }) => {
   await page.goto('/databases');
 
   // cluster actions menu click
-  (await page.locator('.MuiTableRow-root').filter({ hasText: 'db-cluster-ui-test'}).getByTestId('MoreHorizIcon')).click();
+  (
+    await page
+      .locator('.MuiTableRow-root')
+      .filter({ hasText: 'db-cluster-ui-test' })
+      .getByTestId('MoreHorizIcon')
+  ).click();
 
   const suspendAction = page.getByTestId('PauseCircleOutlineIcon');
   await suspendAction.click();
   await page.reload();
 
-  const clusterRowAfterSuspend = await page.locator('.MuiTableRow-root').filter({ hasText: 'db-cluster-ui-test'});
+  const clusterRowAfterSuspend = await page
+    .locator('.MuiTableRow-root')
+    .filter({ hasText: 'db-cluster-ui-test' });
 
   await (await clusterRowAfterSuspend.getByTestId('MoreHorizIcon')).click();
   const resumeAction = page.getByTestId('PauseCircleOutlineIcon');
   await resumeAction.click();
 
   await page.reload();
-  (await page.locator('.MuiTableRow-root').filter({ hasText: 'db-cluster-ui-test'}).getByTestId('MoreHorizIcon')).click();
+  (
+    await page
+      .locator('.MuiTableRow-root')
+      .filter({ hasText: 'db-cluster-ui-test' })
+      .getByTestId('MoreHorizIcon')
+  ).click();
   const restartAction = page.getByTestId('PlayArrowOutlinedIcon');
   await restartAction.click();
 
   await page.reload();
-  (await page.locator('.MuiTableRow-root').filter({ hasText: 'db-cluster-ui-test'}).getByTestId('MoreHorizIcon')).click();
+  (
+    await page
+      .locator('.MuiTableRow-root')
+      .filter({ hasText: 'db-cluster-ui-test' })
+      .getByTestId('MoreHorizIcon')
+  ).click();
   const deleteAction = page.getByTestId('DeleteOutlineIcon');
   await deleteAction.click();
 

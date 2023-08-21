@@ -41,8 +41,6 @@ import { useSelectedKubernetesCluster } from '../../hooks/api/kubernetesClusters
 import { usePausedDbCluster } from '../../hooks/api/db-cluster/usePausedDbCluster';
 import { useRestartDbCluster } from '../../hooks/api/db-cluster/useRestartDbCluster';
 
-
-
 export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
   const { combinedDataForTable, loadingAllClusters, combinedDbClusters } = useDbClusters();
   const { mutate: deleteDbCluster } = useDeleteDbCluster();

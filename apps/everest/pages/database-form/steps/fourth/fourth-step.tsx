@@ -13,10 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  FormGroup,
-  Typography,
-} from '@mui/material';
+import { FormGroup, Typography } from '@mui/material';
 import React from 'react';
 
 import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
@@ -40,7 +37,11 @@ export const FourthStep = () => {
           name={DbWizardFormFields.externalAccess}
         />
         {externalAccess && (
-          <TextArray fieldName={DbWizardFormFields.sourceRanges} fieldKey='sourceRange' label={Messages.sourceRange} />
+          <TextArray
+            fieldName={DbWizardFormFields.sourceRanges}
+            fieldKey="sourceRange"
+            label={Messages.sourceRange}
+          />
         )}
       </FormGroup>
     </>

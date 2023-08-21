@@ -16,7 +16,7 @@ import { Settings } from './pages/settings/settings';
 import { DefaultConfigurations } from './pages/settings/default-configurations/default-configurations';
 import { K8sClusters } from './pages/settings/k8s-clusters/k8s-clusters';
 import { MonitoringEndpoints } from './pages/settings/monitoring-endpoints/monitoring-endpoints';
-import { Settings } from './pages/settings/settings';
+
 import { SettingsTabs } from './pages/settings/settings.types';
 import { StorageLocations } from './pages/settings/storage-locations/storage-locations';
 

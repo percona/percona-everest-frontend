@@ -89,9 +89,11 @@ const formValuesToPayloadMapping = (dbPayload: DbWizardType): DbCluster => {
             ? ProxyExposeType.external
             : ProxyExposeType.internal,
           ...(!!dbPayload.externalAccess &&
-              dbPayload.sourceRanges && {
-                ipSourceRanges: dbPayload.sourceRanges.flatMap((source) => source.sourceRange ? [source.sourceRange] : []),
-              }),
+            dbPayload.sourceRanges && {
+              ipSourceRanges: dbPayload.sourceRanges.flatMap((source) =>
+                source.sourceRange ? [source.sourceRange] : []
+              ),
+            }),
         },
       },
     },

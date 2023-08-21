@@ -49,8 +49,10 @@ export const DbClusterPayloadToFormValues = (
   [DbWizardFormFields.externalAccess]:
     dbCluster?.spec?.proxy?.expose?.type === ProxyExposeType.external,
   // [DbWizardFormFields.internetFacing]: true, //TODO commented
-  [DbWizardFormFields.sourceRange]:
-    dbCluster?.spec?.proxy?.expose?.ipSourceRanges?.[0] || '', // TODO multi sourceRanges
+  [DbWizardFormFields.sourceRanges]:
+    dbCluster?.spec?.proxy?.expose?.ipSourceRanges.map((item) => ({
+      sourceRange: item,
+    })) || [],
   // [DbWizardFormFields.monitoring]: dbCluster?.spec?.monitoring?.enabled,
   // [DbWizardFormFields.endpoint]: dbCluster?.spec?.monitoring?.enabled?.pmm?.publicAddress,
   [DbWizardFormFields.numberOfNodes]:

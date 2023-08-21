@@ -85,7 +85,9 @@ const formValuesToPayloadOverrides = (
             : ProxyExposeType.internal,
           ...(!!dbPayload.externalAccess &&
             dbPayload.sourceRanges && {
-              ipSourceRanges: dbPayload.sourceRanges.flatMap((source) => source.sourceRange ? [source.sourceRange] : []),
+              ipSourceRanges: dbPayload.sourceRanges.flatMap((source) =>
+                source.sourceRange ? [source.sourceRange] : []
+              ),
             }),
         },
       },
