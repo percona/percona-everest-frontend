@@ -27,7 +27,7 @@ export const Messages = {
     'Basic Information',
     'Resources',
     // 'Backups',
-    'External Access',
+    'Advanced Configurations',
     // 'Monitoring',
   ],
 };
