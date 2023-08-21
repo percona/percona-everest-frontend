@@ -37,6 +37,8 @@ export const DB_WIZARD_DEFAULTS = {
   [DbWizardFormFields.sourceRanges]: [
     { sourceRange: '181.170.213.40/32' },
   ],
+  [DbWizardFormFields.engineParametersEnabled]: false,
+  [DbWizardFormFields.engineParameters]: '',
   [DbWizardFormFields.monitoring]: false,
   // [DbWizardFormFields.endpoint]: '',
   [DbWizardFormFields.numberOfNodes]: NumberOfNodes.oneNode,

@@ -42,6 +42,8 @@ export enum DbWizardFormFields {
   externalAccess = 'externalAccess',
   internetFacing = 'internetFacing',
   sourceRanges = 'sourceRanges',
+  engineParametersEnabled = 'engineParametersEnabled',
+  engineParameters = 'engineParameters',
   monitoring = 'monitoring',
   endpoint = 'endpoint',
 }
@@ -112,6 +114,8 @@ const stepFourSchema = z
     [DbWizardFormFields.sourceRanges]: z.array(
       z.object({ sourceRange: z.string().optional() })
     ),
+    [DbWizardFormFields.engineParametersEnabled]: z.boolean(),
+    [DbWizardFormFields.engineParameters]: z.string(),
   })
   .passthrough()
   .superRefine(({ sourceRanges }, ctx) => {

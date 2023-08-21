@@ -32,4 +32,8 @@ export const Messages = {
   internetFacing: 'Internet Facing',
   sourceRange: 'Source Range',
   sourceRangePlaceholder: SOURCE_RANGE_PLACEHOLDER,
+  engineParameters: {
+    title: 'Database engine parameters',
+    caption: 'Configure specific values to optimize performance, security, and functionality according to your requirements.'
+  },
 };

@@ -11,10 +11,16 @@ import { useFormContext } from 'react-hook-form';
 import { Messages } from './fourth-step.messages';
 
 import { DbWizardFormFields } from '../../new-database.types';
+import { TextInput } from '@percona/ui-lib.form.inputs.text';
+import { getParamsPlaceholderFromDbType } from './fourth-step.utils';
 
 export const FourthStep = () => {
   const methods = useFormContext();
-  const externalAccess = methods.watch(DbWizardFormFields.externalAccess);
+  const [
+    externalAccess,
+    engineParametersEnabled,
+    dbType,
+  ] = methods.watch([DbWizardFormFields.externalAccess, DbWizardFormFields.engineParametersEnabled, DbWizardFormFields.dbType]);
 
   return (
     <>
@@ -29,6 +35,22 @@ export const FourthStep = () => {
           <Stack sx={{ ml: 6 }}>
             <TextArray fieldName={DbWizardFormFields.sourceRanges} fieldKey='sourceRange' label={Messages.sourceRange} />
           </Stack>
+        )}
+        <SwitchInput
+          label={Messages.engineParameters.title}
+          labelCaption={Messages.engineParameters.caption}
+          name={DbWizardFormFields.engineParametersEnabled}
+        />
+        {engineParametersEnabled && (
+          <TextInput
+            name={DbWizardFormFields.engineParameters}
+            textFieldProps={{
+              placeholder: getParamsPlaceholderFromDbType(dbType),
+              sx: {
+                ml: 6
+              }
+            }}
+          />
         )}
       </FormGroup>
     </>
