@@ -19,8 +19,6 @@ import { DEFAULT_SIZES } from './steps/second/second-step.const';
 import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
 
 // TODO re-add steps after API is ready
-// .passthrough() adds a [key: string]: {} | undefined to the typings, which does not allow null, so we have to bypass this error
-// @ts-ignore
 export const DB_WIZARD_DEFAULTS: DefaultValues<DbWizardType> = {
   // [DbWizardFormFields.backupsEnabled]: true,
   // [DbWizardFormFields.pitrEnabled]: true,
@@ -35,7 +33,7 @@ export const DB_WIZARD_DEFAULTS: DefaultValues<DbWizardType> = {
   [DbWizardFormFields.dbType]: DbType.Mysql,
   [DbWizardFormFields.dbName]: '',
   [DbWizardFormFields.dbVersion]: '',
-  [DbWizardFormFields.storageClass]: null,
+  [DbWizardFormFields.storageClass]: '',
   [DbWizardFormFields.externalAccess]: false,
   // [DbWizardFormFields.internetFacing]: true,
   [DbWizardFormFields.sourceRanges]: [
