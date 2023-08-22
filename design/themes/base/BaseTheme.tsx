@@ -412,8 +412,8 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
           '.MuiFormControlLabel-label': {
             paddingTop: '6px',
           },
-        }
-      }
-    }
+        },
+      },
+    },
   },
 });
