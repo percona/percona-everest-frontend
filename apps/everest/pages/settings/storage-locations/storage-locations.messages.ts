@@ -5,6 +5,12 @@ export const Messages = {
     addEditButton: (isEditMode: boolean) => (isEditMode ? 'Edit' : 'Add'),
     cancel: 'Cancel',
   },
+  deleteDialog: {
+    header: 'Delete storage',
+    content: `Are you sure you want to permanently delete this storage location? Any
+database clusters using this storage will no longer be able to execute
+their scheduled backup jobs.`,
+  },
   s3: 'Amazon S3',
   gcs: 'Google Cloud Storage',
   azure: 'Azure Cloud Storage',
