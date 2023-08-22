@@ -11,6 +11,7 @@ export const getParamsPlaceholderFromDbType = (dbType: DbType) => {
       dynamicText = 'max_allowed_packet=128M';
       break;
     case DbType.Postresql:
+    default:
       dynamicText = 'shared_buffers = 128MB';
       break;
   }
