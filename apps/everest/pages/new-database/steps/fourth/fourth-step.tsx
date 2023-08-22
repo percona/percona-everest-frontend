@@ -8,10 +8,10 @@ import React from 'react';
 import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
 import { TextArray } from '@percona/ui-lib.form.inputs.text-array';
 import { useFormContext } from 'react-hook-form';
+import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { Messages } from './fourth-step.messages';
 
 import { DbWizardFormFields } from '../../new-database.types';
-import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { getParamsPlaceholderFromDbType } from './fourth-step.utils';
 
 export const FourthStep = () => {
