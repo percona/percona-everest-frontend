@@ -1,24 +1,9 @@
-import {
-  ErrorIcon,
-  PausedIcon,
-  PendingIcon,
-  SuccessIcon,
-  UknownIcon,
-} from '@percona/ui-lib.icons.status';
+import { UknownIcon } from '@percona/ui-lib.icons.status';
 import React from 'react';
-import { Stack, SvgIconProps } from '@mui/material';
+import { Stack } from '@mui/material';
 import { StatusFieldProps, BaseStatus } from './status-field.types';
+import { STATUS_TO_ICON } from './status-field.utils';
 
-const STATUS_TO_ICON: Record<
-BaseStatus,
-  (props: SvgIconProps) => React.JSX.Element
-> = {
-  'success': SuccessIcon,
-  'error': ErrorIcon,
-  'pending': PendingIcon,
-  'paused': PausedIcon,
-  'unknown': UknownIcon,
-};
 
 export function StatusField<T extends string | number | symbol>({ status, statusMap, children }: StatusFieldProps<T>) {
   const mappedStatus: BaseStatus = statusMap[status]
