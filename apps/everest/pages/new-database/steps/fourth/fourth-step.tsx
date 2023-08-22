@@ -40,6 +40,11 @@ export const FourthStep = () => {
           label={Messages.engineParameters.title}
           labelCaption={Messages.engineParameters.caption}
           name={DbWizardFormFields.engineParametersEnabled}
+          formControlLabelProps={{
+            sx: {
+              mt: 1,
+            }
+          }}
         />
         {engineParametersEnabled && (
           <TextInput

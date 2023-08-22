@@ -15,12 +15,12 @@
 import { FormControlLabelProps as MuiFormControlLabelProps, SxProps, Theme } from "@mui/material";
 import { Control, UseControllerProps } from "react-hook-form";
 
-type FormControlLabelProps = MuiFormControlLabelProps & {sx?: SxProps<Theme>};
+type FormControlLabelProps = MuiFormControlLabelProps;
 
 export type SwitchInputProps = {
   control?: Control<any>;
   controllerProps?: UseControllerProps;
-  formControlLabelProps?: FormControlLabelProps;
+  formControlLabelProps?: Omit<FormControlLabelProps, 'control' | 'label'>;
   name: string;
   label: string;
   labelCaption?: string;

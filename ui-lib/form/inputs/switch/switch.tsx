@@ -26,7 +26,8 @@ export const SwitchInput = ({
         alignItems: 'flex-start',
         '& > .MuiTypography-root': {
           pt: 1
-        }
+        },
+        ...formControlLabelProps?.sx
       }}
       control={
         <Controller
