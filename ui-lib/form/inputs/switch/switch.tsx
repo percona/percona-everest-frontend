@@ -22,13 +22,6 @@ export const SwitchInput = ({
         </>
       }
       data-testid={`switch-input-${kebabize(name)}-label`}
-      sx={{
-        alignItems: 'flex-start',
-        '& > .MuiTypography-root': {
-          pt: 1
-        },
-        ...formControlLabelProps?.sx
-      }}
       control={
         <Controller
           name={name}
