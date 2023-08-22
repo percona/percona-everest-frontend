@@ -10,6 +10,7 @@ import { Backup, BackupStatus } from '../../../types/backups.types';
 import { DATE_FORMAT } from '../../../constants';
 import { StatusField } from '../../../components/status-field/status-field';
 import { BACKUP_STATUS_TO_BASE_STATUS } from './backups-list.constants';
+import { Messages } from './backups-list.messages';
 
 export const BackupsList = () => {
   const { dbClusterName } = useParams();
@@ -53,15 +54,15 @@ export const BackupsList = () => {
 
   return (
     <Table
-      noDataMessage="You don't have any backups yet. Create one to get started"
+      noDataMessage={Messages.noData}
       data={backups}
       columns={columns}
       renderTopToolbarCustomActions={() => (
-        <MenuButton buttonText='Create Backup'>
+        <MenuButton buttonText={Messages.createBackup}>
           {/* MUI Menu does not like fragments and asks for arrays instead */}
           {(handleClose) => [
-              <MenuItem key="now" onClick={() => handleManualBackup(handleClose)}>Now</MenuItem>,
-              <MenuItem key="schedule">Schedule</MenuItem>
+              <MenuItem key="now" onClick={() => handleManualBackup(handleClose)}>{Messages.now}</MenuItem>,
+              <MenuItem key="schedule">{Messages.schedule}</MenuItem>
             ]
           }
         </MenuButton>
