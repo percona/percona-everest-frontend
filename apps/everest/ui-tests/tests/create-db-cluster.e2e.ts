@@ -80,7 +80,7 @@ test('Cluster creation', async ({ page, request }) => {
   await page.getByTestId('db-wizard-continue-button').click();
 
   await expect(
-    page.getByRole('heading', { name: 'External Access' })
+    page.getByRole('heading', { name: 'Advanced Configurations' })
   ).toBeVisible();
   await page.getByLabel('Enable External Access').check();
   expect(
@@ -89,6 +89,13 @@ test('Cluster creation', async ({ page, request }) => {
   await page.getByTestId('text-input-source-ranges.0.source-range').fill('192.168.1.1/24');
   await page.getByTestId('add-text-input-button').click();
   await page.getByTestId('text-input-source-ranges.1.source-range').fill('192.168.1.0');
+
+  await page.getByLabel('Database engine parameters').check();
+  expect(
+    await page.getByLabel('Database engine parameters').isChecked()
+  ).toBeTruthy();
+
+  await page.getByTestId('text-input-engine-parameters').fill('max_alllowed_packet=128M')
   await page.getByTestId('db-wizard-submit-button').click();
 
   await expect(page.getByTestId('db-wizard-goto-db-clusters')).toBeVisible();
@@ -141,7 +148,7 @@ test('Cancel wizard', async ({ page }) => {
   await page.getByTestId('db-wizard-continue-button').click();
 
   await expect(
-    page.getByRole('heading', { name: 'External Access' })
+    page.getByRole('heading', { name: 'Advanced Configurations' })
   ).toBeVisible();
 
   await page.getByTestId('db-wizard-cancel-button').click();
