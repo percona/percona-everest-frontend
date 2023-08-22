@@ -20,9 +20,8 @@ export type SwitchOutlinedBoxProps = {
   controllerProps?: UseControllerProps;
   formControlLabelProps?: FormControlLabelProps;
   name: string;
-  label?: string;
-  labelHeader?: string;
-  labelDescription?: string;
+  label: string;
+  labelCaption?: string;
   children?: React.ReactNode;
   rootSx?: SxProps<Theme>;
   childrenSx?: SxProps<Theme>;
