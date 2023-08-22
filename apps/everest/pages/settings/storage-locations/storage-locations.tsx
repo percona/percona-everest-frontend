@@ -5,6 +5,7 @@ import { type MRT_ColumnDef } from 'material-react-table';
 import React, { useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { LabelValue } from '../../../components/db-cluster-view/expandedRow/LabelValue';
+import { DeleteDialog } from '../../../components/delete-dialog/delete-dialog';
 import {
   BACKUP_STORAGES_QUERY_KEY,
   useBackupStorages,
@@ -35,6 +36,8 @@ export const StorageLocations = () => {
   const { mutate: deleteBackupStorage } = useDeleteBackupStorage();
 
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
+  const [selectedStorageId, setSelectedStorageId] = useState<string>('');
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [selectedStorageLocation, setSelectedStorageLocation] =
     useState<BackupStorage>();
 
@@ -107,6 +110,15 @@ export const StorageLocations = () => {
   };
 
   const handleDeleteBackup = (backupStorageId: string) => {
+    setSelectedStorageId(backupStorageId);
+    setOpenDeleteDialog(true);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
+  };
+
+  const handleConfirmDelete = (backupStorageId: string) => {
     deleteBackupStorage(backupStorageId, {
       onSuccess: updateDataAfterDelete(
         queryClient,
@@ -204,6 +216,17 @@ export const StorageLocations = () => {
           handleSubmitModal={handleSubmit}
           selectedStorageLocation={selectedStorageLocation}
         />
+      )}
+      {openDeleteDialog && (
+        <DeleteDialog
+          isOpen={openDeleteDialog}
+          selectedId={selectedStorageId}
+          closeModal={handleCloseDeleteDialog}
+          headerMessage={Messages.deleteDialog.header}
+          handleConfirm={handleConfirmDelete}
+        >
+          {Messages.deleteDialog.content}
+        </DeleteDialog>
       )}
     </>
   );
