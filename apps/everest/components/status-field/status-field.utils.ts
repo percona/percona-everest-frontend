@@ -1,6 +1,6 @@
 import { SvgIconProps } from "@mui/material";
-import { BaseStatus } from "./status-field.types";
 import { ErrorIcon, PausedIcon, PendingIcon, SuccessIcon, UknownIcon } from "@percona/ui-lib.icons.status";
+import { BaseStatus } from "./status-field.types";
 
 export const STATUS_TO_ICON: Record<
 BaseStatus,
