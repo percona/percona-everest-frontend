@@ -11,7 +11,6 @@ import { ToggleCard } from '@percona/ui-lib.toggle-card';
 import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ResourcesDetail } from '../../../../components/resources-detail';
-import { DbWizardFormFields } from '../../new-database.types';
 import { ResourcesLegend } from './resources-legend/resources-legend';
 import { DEFAULT_SIZES } from './second-step.const';
 import { Messages } from './second-step.messages';
@@ -20,9 +19,12 @@ import {
   checkSwitchToCustom,
   humanizeResourceSizeMap,
 } from './second-step.utils';
+import { DbWizardFormFields } from '../../database-form.types';
+import { useDatabasePageMode } from '../../useDatabasePageMode';
 
 export const SecondStep = () => {
   const { watch, setValue } = useFormContext();
+  const mode = useDatabasePageMode();
 
   // TODO should be set from api https://jira.percona.com/browse/EVEREST-172
   const totalSizes = {
@@ -68,10 +70,12 @@ export const SecondStep = () => {
   useEffect(() => {
     if (resourceSizePerNode && resourceSizePerNode !== ResourceSize.custom) {
       setValue(DbWizardFormFields.cpu, DEFAULT_SIZES[resourceSizePerNode].cpu);
-      setValue(
-        DbWizardFormFields.disk,
-        DEFAULT_SIZES[resourceSizePerNode].disk
-      );
+      if (mode !== 'edit') {
+        setValue(
+          DbWizardFormFields.disk,
+          DEFAULT_SIZES[resourceSizePerNode].disk
+        );
+      }
       setValue(
         DbWizardFormFields.memory,
         DEFAULT_SIZES[resourceSizePerNode].memory
@@ -158,53 +162,60 @@ export const SecondStep = () => {
           <ResourcesDetail
             value={consumedSizes.cpu}
             total={totalSizes.cpu}
-            inputValue={cpu}
-            setInputValue={(value: number) => {
-              setValue(DbWizardFormFields.cpu, value);
-              checkSwitchToCustom(
-                DbWizardFormFields.cpu,
-                value,
-                resourceSizePerNode,
-                setValue
-              );
+            inputProps={{
+              value: cpu,
+              setValue: (value: number) => {
+                setValue(DbWizardFormFields.cpu, value);
+                checkSwitchToCustom(
+                  DbWizardFormFields.cpu,
+                  value,
+                  resourceSizePerNode,
+                  setValue
+                );
+              },
+              units: 'CPU',
+              dataTestId: 'cpu',
             }}
             label={Messages.labels.cpu}
-            units="CPU"
-            dataTestId="cpu"
           />
           <ResourcesDetail
             value={consumedSizes.memory}
             total={totalSizes.memory}
-            inputValue={memory}
-            setInputValue={(value: number) => {
-              setValue(DbWizardFormFields.memory, value);
-              checkSwitchToCustom(
-                DbWizardFormFields.memory,
-                value,
-                resourceSizePerNode,
-                setValue
-              );
+            inputProps={{
+              value: memory,
+              setValue: (value: number) => {
+                setValue(DbWizardFormFields.memory, value);
+                checkSwitchToCustom(
+                  DbWizardFormFields.memory,
+                  value,
+                  resourceSizePerNode,
+                  setValue
+                );
+              },
+              units: 'GB',
+              dataTestId: 'memory',
             }}
             label={Messages.labels.memory.toUpperCase()}
-            units="GB"
-            dataTestId="memory"
           />
           <ResourcesDetail
-            value={consumedSizes.disk}
             total={totalSizes.disk}
-            inputValue={disk}
-            setInputValue={(value: number) => {
-              setValue(DbWizardFormFields.disk, value);
-              checkSwitchToCustom(
-                DbWizardFormFields.memory,
-                value,
-                resourceSizePerNode,
-                setValue
-              );
+            value={consumedSizes.disk}
+            inputProps={{
+              value: disk,
+              setValue: (value: number) => {
+                setValue(DbWizardFormFields.disk, value);
+                checkSwitchToCustom(
+                  DbWizardFormFields.memory,
+                  value,
+                  resourceSizePerNode,
+                  setValue
+                );
+              },
+              units: 'GB',
+              dataTestId: 'disk',
+              disabled: mode === 'edit',
             }}
             label={Messages.labels.disk.toUpperCase()}
-            units="GB"
-            dataTestId="disk"
           />
           {!isMobile && <ResourcesLegend />}
         </Box>

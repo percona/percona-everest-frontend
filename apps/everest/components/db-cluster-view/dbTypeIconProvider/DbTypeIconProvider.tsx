@@ -5,7 +5,7 @@ import {
 } from '@percona/ui-lib.icons.db';
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import React from 'react';
-import { DbTypeIconProviderProps } from '../dbClusterView.type';
+import { DbTypeIconProviderProps } from '../dbClusterView.types';
 import { DbEngineType } from '../../../types/dbEngines.types';
 
 export const DbTypeIconProvider = ({ dbType }: DbTypeIconProviderProps) => {

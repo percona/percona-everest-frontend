@@ -16,4 +16,5 @@ export const IP_REGEX =
   /^([0-9]{1,3}\.){3}[0-9]{1,3}(\/([0-9]|[1-2][0-9]|3[0-2]))?$/;
 
 export const INVALID_SOURCE_RANGE_ERROR = 'Invalid IP address range';
-export const SOURCE_RANGE_PLACEHOLDER = 'Please insert the single IP address or range using netmask (e.g. 192.168.1.1/24)';
+export const SOURCE_RANGE_PLACEHOLDER =
+  'Please insert the single IP address or range using netmask (e.g. 192.168.1.1/24)';

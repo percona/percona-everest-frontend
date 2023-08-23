@@ -12,12 +12,22 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { InputProps } from '@percona/ui-lib.input';
 
-export type ResourcesDetailProps = {
-  label: string;
-  labelProgressBar?: string;
-  value: number;
-  total: number;
-  inputProps?: InputProps;
+import { useMutation, UseMutationOptions } from 'react-query';
+import { deleteDbClusterFn } from '../../../api/dbClusterApi';
+
+type DeleteDbClusterArgType = {
+  k8sClusterId: string;
+  dbClusterName: string;
+};
+export const useDeleteDbCluster = (
+  options?: UseMutationOptions<any, unknown, DeleteDbClusterArgType, unknown>
+) => {
+  return useMutation(
+    ({ k8sClusterId, dbClusterName }: DeleteDbClusterArgType) =>
+      deleteDbClusterFn(k8sClusterId, dbClusterName),
+    {
+      ...options,
+    }
+  );
 };

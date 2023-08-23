@@ -15,7 +15,7 @@
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { z } from 'zod';
 import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
-import { Messages } from './new-database.messages';
+import { Messages } from './database-form.messages';
 import { IP_REGEX } from '../../constants';
 
 export enum DbWizardFormFields {
@@ -129,11 +129,7 @@ const stepFourSchema = z
         ctx.addIssue({
           code: z.ZodIssueCode.invalid_string,
           validation: 'ip',
-          path: [
-            DbWizardFormFields.sourceRanges,
-            index,
-            'sourceRange',
-          ],
+          path: [DbWizardFormFields.sourceRanges, index, 'sourceRange'],
           message: Messages.errors.sourceRange.invalid,
         });
       }
@@ -179,3 +175,5 @@ const superset = stepOneSchema
 // .and(stepFiveSchema);
 
 export type DbWizardType = z.infer<typeof superset>;
+
+export type DbWizardMode = 'edit' | 'new';

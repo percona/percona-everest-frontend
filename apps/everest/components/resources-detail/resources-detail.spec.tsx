@@ -9,14 +9,16 @@ const ResourcesDetailWrapper = () => {
   return (
     <ThemeContextProvider themeOptions={everestThemeOptions}>
       <ResourcesDetail
-        dataTestId="cpu"
+        inputProps={{
+          dataTestId: 'cpu',
+          setValue: setInputValue,
+          value: inputValue,
+          units: 'CPU',
+        }}
         value={1}
         total={10}
-        inputValue={inputValue}
-        setInputValue={setInputValue}
         label="CPU"
         labelProgressBar="Using 112.52 CPU (16.7%) of 675.33 CPU in total"
-        units="CPU"
       />
     </ThemeContextProvider>
   );

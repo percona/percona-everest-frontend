@@ -2,7 +2,7 @@ import React from 'react';
 import { FieldError, useFieldArray, useFormContext } from 'react-hook-form';
 import { Button, IconButton, InputAdornment, Stack, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { TextArrayProps } from './text-array.types';
 import { Messages } from './text-array.messages';
@@ -74,7 +74,7 @@ export const TextArray = ({ fieldName, fieldKey, label, placeholder }: TextArray
                     data-testid={`delete-text-input-${index}-button`}
                     onClick={() => remove(index)}
                   >
-                    <DeleteIcon />
+                    <DeleteOutlineOutlinedIcon />
                   </IconButton>
                 </InputAdornment>
               ),

@@ -4,7 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { TestWrapper } from '../../../../utils/test';
 import { FirstStep } from './first-step';
-import { DbWizardFormFields } from '../../new-database.types';
+import { DbWizardFormFields } from '../../database-form.types';
 
 jest.mock('./utils', () => ({
   generateShortUID: jest.fn(() => '123'),
