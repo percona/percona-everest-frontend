@@ -70,7 +70,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
                 onSuccess: (updatedObject) => {
                     queryClient.setQueryData(
                         [DB_CLUSTERS_QUERY_KEY, k8sClusterId],
-                        (oldData?: ExtraDbCluster[]) => oldData.map(value => value.dbCluster.metadata.name === updatedObject.metadata.name ? {
+                        (oldData?: ExtraDbCluster[]) => (oldData || []).map(value => value.dbCluster.metadata.name === updatedObject.metadata.name ? {
                                     dbCluster: updatedObject,
                                     k8sClusterName: value.k8sClusterName,
                                 }: value)
@@ -87,7 +87,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
                 onSuccess: (updatedObject) => {
                     queryClient.setQueryData(
                         [DB_CLUSTERS_QUERY_KEY, k8sClusterId],
-                        (oldData?: ExtraDbCluster[]) => oldData.map(value => value.dbCluster.metadata.name === updatedObject.metadata.name ? {
+                        (oldData?: ExtraDbCluster[]) => (oldData || []).map(value => value.dbCluster.metadata.name === updatedObject.metadata.name ? {
                             dbCluster: updatedObject,
                             k8sClusterName: value.k8sClusterName,
                         }: value)

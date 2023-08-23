@@ -62,12 +62,12 @@ export const DbClusterPayloadToFormValues = (
     `${dbCluster?.spec?.proxy?.replicas}` as unknown as NumberOfNodes,
   [DbWizardFormFields.resourceSizePerNode]:
     matchFieldsValueToResourceSize(dbCluster),
-  [DbWizardFormFields.cpu]: +dbCluster?.spec?.engine?.resources?.cpu || 0,
+  [DbWizardFormFields.cpu]: +(dbCluster?.spec?.engine?.resources?.cpu || 0),
   [DbWizardFormFields.disk]: removeMeasurementValue(
     dbCluster?.spec?.engine?.storage?.size.toString()
   ),
   [DbWizardFormFields.memory]: removeMeasurementValue(
-    dbCluster?.spec?.engine?.resources?.memory.toString()
+    (dbCluster?.spec?.engine?.resources?.memory || 0).toString()
   ),
 });
 
@@ -75,7 +75,7 @@ export const useDatabasePageDefaultValues = (
   mode: DbWizardMode
 ): {
   defaultValues: DbWizardType;
-  dbClusterData: DbCluster;
+  dbClusterData: DbCluster| undefined;
   dbClusterStatus: 'error' | 'idle' | 'loading' | 'success';
 } => {
   const { state } = useLocation();
@@ -89,7 +89,7 @@ export const useDatabasePageDefaultValues = (
       ? DB_WIZARD_DEFAULTS
       : status === 'success'
       ? DbClusterPayloadToFormValues(data)
-      : { [DbWizardFormFields.dbVersion]: '' }
+      : { ...DB_WIZARD_DEFAULTS, [DbWizardFormFields.dbVersion]: '' }
   );
 
   useEffect(() => {

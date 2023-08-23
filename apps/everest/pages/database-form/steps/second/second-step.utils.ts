@@ -76,11 +76,12 @@ export const matchFieldsValueToResourceSize = (
   const size = +removeMeasurementValue(
     dbCluster?.spec?.engine?.storage?.size.toString()
   );
-  const memory = +removeMeasurementValue(resources?.memory.toString());
+  const memory =resources?.memory? +removeMeasurementValue(resources.memory.toString()): DEFAULT_SIZES.small.memory;
+  const cpu = resources?.cpu || DEFAULT_SIZES.small.cpu;
 
   const res = Object.values(DEFAULT_SIZES).findIndex(
     (item) =>
-      item.cpu === +resources?.cpu &&
+      item.cpu === +cpu &&
       item.memory === memory &&
       item.disk === size
   );
