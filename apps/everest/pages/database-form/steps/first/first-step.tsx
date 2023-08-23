@@ -35,8 +35,19 @@ export const FirstStep = () => {
   const { watch, setValue, getFieldState } = useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
-  const { data: clusterInfo, isFetching: clusterInfoFetching } = useKubernetesClusterInfo()
+  const { data: clusterInfo, isFetching: clusterInfoFetching } =
+    useKubernetesClusterInfo();
+
   const mode = useDatabasePageMode();
+
+  useEffect(() => {
+    if (mode === 'new' && clusterInfo?.storageClassNames.length > 0) {
+      setValue(
+        DbWizardFormFields.storageClass,
+        clusterInfo?.storageClassNames[0]
+      );
+    }
+  }, [clusterInfo]);
 
   // TODO change to api request's result
   // const k8sNamespacesOptions = [
@@ -192,6 +203,10 @@ export const FirstStep = () => {
           label={Messages.labels.storageClass}
           loading={clusterInfoFetching}
           options={clusterInfo?.storageClassNames || []}
+          autoCompleteProps={{
+            disableClearable: true,
+            disabled: mode === 'edit',
+          }}
         />
       </FormGroup>
     </>

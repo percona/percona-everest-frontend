@@ -42,7 +42,7 @@ export const Messages = {
       invalid: 'Invalid storage location',
     },
     storageClass: {
-      invalid: 'Invalid storage class'
-    }
+      invalid: 'Invalid storage class',
+    },
   },
 };

@@ -69,6 +69,8 @@ export const DbClusterPayloadToFormValues = (
   [DbWizardFormFields.memory]: removeMeasurementValue(
     dbCluster?.spec?.engine?.resources?.memory.toString()
   ),
+  [DbWizardFormFields.storageClass]:
+  dbCluster?.spec?.engine?.storage?.class || null,
 });
 
 export const useDatabasePageDefaultValues = (
@@ -89,7 +91,7 @@ export const useDatabasePageDefaultValues = (
       ? DB_WIZARD_DEFAULTS
       : status === 'success'
       ? DbClusterPayloadToFormValues(data)
-      : { [DbWizardFormFields.dbVersion]: '' }
+      : { ...DB_WIZARD_DEFAULTS, [DbWizardFormFields.dbVersion]: '' }
   );
 
   useEffect(() => {

@@ -32,7 +32,9 @@ test.beforeAll(async ({ request }) => {
   );
   const engines = (await enginesList.json()).items;
 
-  const kubernetesClusterInfo = await request.get(`/v1/kubernetes/${kubernetesId}/cluster-info`);
+  const kubernetesClusterInfo = await request.get(
+    `/v1/kubernetes/${kubernetesId}/cluster-info`
+  );
   const { storageClassNames = [] } = await kubernetesClusterInfo.json();
 
   engines.forEach((engine) => {
@@ -76,7 +78,11 @@ test('Cluster creation', async ({ page, request }) => {
 
   const dbVersionOptions = page.getByRole('option');
 
-  engineVersions.psmdb.forEach((version) => expect(dbVersionOptions.filter({ hasText: new RegExp(`^${version}$`) })).toBeVisible());
+  engineVersions.psmdb.forEach((version) =>
+    expect(
+      dbVersionOptions.filter({ hasText: new RegExp(`^${version}$`) })
+    ).toBeVisible()
+  );
   engineVersions.psmdb.forEach((version) =>
     expect(
       options.filter({ hasText: new RegExp(`^${version}$`) })
@@ -89,7 +95,11 @@ test('Cluster creation', async ({ page, request }) => {
 
   const storageClassOptions = page.getByRole('option');
 
-  storageClasses.forEach((className) => expect(storageClassOptions.filter({ hasText: new RegExp(`^${className}$`) })).toBeVisible());
+  storageClasses.forEach((className) =>
+    expect(
+      storageClassOptions.filter({ hasText: new RegExp(`^${className}$`) })
+    ).toBeVisible()
+  );
 
   await page.getByRole('option').first().click();
   await page.getByTestId('db-wizard-continue-button').click();

@@ -1,13 +1,17 @@
 import { useQuery } from 'react-query';
-import { GetKubernetesClusterInfoPayload, KubernetesClusterInfo } from '../../../types/kubernetes.types';
+import {
+  GetKubernetesClusterInfoPayload,
+  KubernetesClusterInfo,
+} from '../../../types/kubernetes.types';
 import { getKubernetesClusterInfoFn } from '../../../api/kubernetesClusterApi';
 import { useSelectedKubernetesCluster } from './useSelectedKubernetesCluster';
 
 export const useKubernetesClusterInfo = () => {
   const { id } = useSelectedKubernetesCluster();
 
-  return useQuery<GetKubernetesClusterInfoPayload, unknown, KubernetesClusterInfo>(
-    `${id}-cluster-info`,
-    () => getKubernetesClusterInfoFn(id),
-  )
-}
+  return useQuery<
+    GetKubernetesClusterInfoPayload,
+    unknown,
+    KubernetesClusterInfo
+  >(`${id}-cluster-info`, () => getKubernetesClusterInfoFn(id));
+};

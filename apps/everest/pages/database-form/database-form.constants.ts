@@ -36,9 +36,7 @@ export const DB_WIZARD_DEFAULTS: DefaultValues<DbWizardType> = {
   [DbWizardFormFields.storageClass]: '',
   [DbWizardFormFields.externalAccess]: false,
   // [DbWizardFormFields.internetFacing]: true,
-  [DbWizardFormFields.sourceRanges]: [
-    { sourceRange: '181.170.213.40/32' },
-  ],
+  [DbWizardFormFields.sourceRanges]: [{ sourceRange: '181.170.213.40/32' }],
   // [DbWizardFormFields.endpoint]: '',
   [DbWizardFormFields.numberOfNodes]: NumberOfNodes.oneNode,
   [DbWizardFormFields.resourceSizePerNode]: ResourceSize.small,
