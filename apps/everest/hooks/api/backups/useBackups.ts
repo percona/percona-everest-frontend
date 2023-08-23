@@ -1,62 +1,25 @@
-import {
-  useMutation,
-  UseMutationOptions,
-  useQuery,
-  UseQueryOptions,
-} from 'react-query';
-import { createBackupOnDemand, getBackupsFn } from '../../../api/backups';
-import { BackupFormData } from '../../../pages/backups/on-demand-backup-modal/on-demand-backup-modal.types';
-import { Backup, GetBackupPayload } from '../../../types/backups.types';
-import { mapBackupState } from '../../../utils/backups';
-import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
+import { useQuery, UseQueryOptions } from "react-query";
+import { useSelectedKubernetesCluster } from "../kubernetesClusters/useSelectedKubernetesCluster";
+import { Backup, GetBackupPayload } from "../../../types/backups.types";
+import { getBackupsFn } from "../../../api/backups";
+import { mapBackupState } from "../../../utils/backups";
 
-export const useDbBackups = (
-  dbClusterName: string,
-  options?: UseQueryOptions<GetBackupPayload, unknown, Backup[]>
-) => {
+export const useDbBackups = (dbClusterName: string, options?: UseQueryOptions<GetBackupPayload, unknown, Backup[]>,) => {
   const { id } = useSelectedKubernetesCluster();
 
   return useQuery<GetBackupPayload, unknown, Backup[]>(
     `${dbClusterName}-backups`,
     () => getBackupsFn(id, dbClusterName),
     {
-      select: ({ items = [] }) =>
-        items.map(
-          ({ metadata: { name }, status, spec: { backupStorageName } }) => ({
-            name,
-            created: status?.created ? new Date(status.created) : null,
-            completed: status?.completed ? new Date(status.completed) : null,
-            state: mapBackupState(status?.state),
-            dbClusterName,
-            backupStorageName,
-          })
-        ),
-      ...options,
+      select: ({ items = [] }) => items.map(({ metadata: { name }, status, spec: { backupStorageName } }) => ({
+        name,
+        created: status?.created ? new Date(status.created) : null,
+        completed: status?.completed ? new Date(status.completed) : null,
+        state: mapBackupState(status?.state),
+        dbClusterName,
+        backupStorageName
+      })),
+      ...options
     }
   );
-};
-
-export const useCreateBackupOnDemand = (
-  dbClusterName: string,
-  options?: UseMutationOptions<any, unknown, BackupFormData, unknown>
-) => {
-  const { id: clusterId } = useSelectedKubernetesCluster();
-  return useMutation(
-    (formData: BackupFormData) =>
-      createBackupOnDemand(clusterId, {
-        apiVersion: 'everest.percona.com/v1alpha1',
-        kind: 'DatabaseClusterBackup',
-        metadata: {
-          name: formData.name,
-        },
-        spec: {
-          dbClusterName: dbClusterName,
-          backupStorageName:
-            typeof formData.storageLocation === 'string'
-              ? formData.storageLocation
-              : formData.storageLocation!.name,
-        },
-      }),
-    { ...options }
-  );
-};
+}
