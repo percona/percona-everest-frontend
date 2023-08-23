@@ -12,10 +12,12 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 import { UseFormSetValue, FieldValues } from 'react-hook-form';
 import { ResourceSize } from './second-step.types';
 import { DEFAULT_SIZES } from './second-step.const';
-import { DbWizardFormFields } from '../../new-database.types';
+import { DbWizardFormFields } from '../../database-form.types';
+import { DbCluster } from '../../../../types/dbCluster.types';
 
 const humanizedResourceSizeMap: Record<ResourceSize, string> = {
   [ResourceSize.small]: 'Small',
@@ -62,4 +64,27 @@ export const getResourceNames = (names: string[]): string => {
   if (names.length === 2) return `${names[0]} and ${names[1]}`;
   if (names.length === 3) return `${names[0]}, ${names[1]}, and ${names[2]}`;
   return '';
+};
+
+export const removeMeasurementValue = (value: string) =>
+  value ? +value?.slice(0, -1) : 0;
+
+export const matchFieldsValueToResourceSize = (
+  dbCluster: DbCluster
+): ResourceSize => {
+  const resources = dbCluster?.spec?.engine?.resources;
+  const size = +removeMeasurementValue(
+    dbCluster?.spec?.engine?.storage?.size.toString()
+  );
+  const memory = +removeMeasurementValue(resources?.memory.toString());
+
+  const res = Object.values(DEFAULT_SIZES).findIndex(
+    (item) =>
+      item.cpu === +resources?.cpu &&
+      item.memory === memory &&
+      item.disk === size
+  );
+  return res !== -1
+    ? (Object.keys(DEFAULT_SIZES)[res] as ResourceSize)
+    : ResourceSize.custom;
 };

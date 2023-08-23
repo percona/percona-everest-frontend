@@ -1,3 +1,18 @@
+// percona-everest-frontend
+// Copyright (C) 2023 Percona LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { Input } from '@percona/ui-lib.input';
 import { ProgressBar } from '@percona/ui-lib.progress-bar';
@@ -7,14 +22,17 @@ import { ResourcesDetailProps } from './resources-detail.types';
 export function ResourcesDetail({
   label,
   labelProgressBar,
-  units,
   value,
   total,
-  inputValue,
-  setInputValue,
-  dataTestId,
+  inputProps,
 }: ResourcesDetailProps) {
   const theme = useTheme();
+  const {
+    value: inputValue,
+    units,
+    setValue: setInputValue,
+    dataTestId,
+  } = inputProps;
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const labelProcessBarDefault = `Using ${inputValue} ${units} (${Math.floor(
@@ -44,6 +62,7 @@ export function ResourcesDetail({
       </Box>
       <Box sx={{ maxWidth: '150px', minWidth: '100px' }}>
         <Input
+          {...inputProps}
           value={inputValue}
           setValue={setInputValue}
           units={units}

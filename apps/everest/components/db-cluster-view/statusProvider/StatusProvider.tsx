@@ -7,7 +7,7 @@ import {
 } from '@percona/ui-lib.icons.status';
 import React from 'react';
 import { SvgIconProps } from '@mui/material';
-import { StatusProviderProps } from '../dbClusterView.type';
+import { StatusProviderProps } from '../dbClusterView.types';
 import { DbClusterStatus } from '../../../types/dbCluster.types';
 import { beautifyDbClusterStatus } from '../DbClusterView.utils';
 

@@ -26,14 +26,18 @@ test.beforeAll(async ({ request }) => {
   const kubernetesList = await request.get('/v1/kubernetes');
   kubernetesId = (await kubernetesList.json())[0].id;
 
-  const enginesList = await request.get(`/v1/kubernetes/${kubernetesId}/database-engines`);
+  const enginesList = await request.get(
+    `/v1/kubernetes/${kubernetesId}/database-engines`
+  );
   const engines = (await enginesList.json()).items;
 
   engines.forEach((engine) => {
     const { type } = engine.spec;
-  
+
     if (engine.status.status === 'installed') {
-      engineVersions[type].push(...Object.keys(engine.status.availableVersions.engine)); 
+      engineVersions[type].push(
+        ...Object.keys(engine.status.availableVersions.engine)
+      );
     }
   });
 });
@@ -47,7 +51,9 @@ test.beforeEach(async ({ page }) => {
 test('Cluster creation', async ({ page, request }) => {
   const clusterName = 'db-cluster-ui-test';
 
-  const dbEnginesButtons = page.getByTestId('toggle-button-group-input-db-type').getByRole('button');
+  const dbEnginesButtons = page
+    .getByTestId('toggle-button-group-input-db-type')
+    .getByRole('button');
   const nrButtons = await dbEnginesButtons.count();
 
   expect(nrButtons).toBe(3);
@@ -63,7 +69,11 @@ test('Cluster creation', async ({ page, request }) => {
 
   const options = page.getByRole('option');
 
-  engineVersions.psmdb.forEach((version) => expect(options.filter({ hasText: new RegExp(`^${version}$`) })).toBeVisible());
+  engineVersions.psmdb.forEach((version) =>
+    expect(
+      options.filter({ hasText: new RegExp(`^${version}$`) })
+    ).toBeVisible()
+  );
 
   await page.getByRole('option').first().click();
   await page.getByTestId('text-input-db-name').fill(clusterName);
@@ -86,9 +96,13 @@ test('Cluster creation', async ({ page, request }) => {
   expect(
     await page.getByLabel('Enable External Access').isChecked()
   ).toBeTruthy();
-  await page.getByTestId('text-input-source-ranges.0.source-range').fill('192.168.1.1/24');
+  await page
+    .getByTestId('text-input-source-ranges.0.source-range')
+    .fill('192.168.1.1/24');
   await page.getByTestId('add-text-input-button').click();
-  await page.getByTestId('text-input-source-ranges.1.source-range').fill('192.168.1.0');
+  await page
+    .getByTestId('text-input-source-ranges.1.source-range')
+    .fill('192.168.1.0');
   await page.getByTestId('db-wizard-submit-button').click();
 
   await expect(page.getByTestId('db-wizard-goto-db-clusters')).toBeVisible();
@@ -105,10 +119,50 @@ test('Cluster creation', async ({ page, request }) => {
     (cluster) => cluster.metadata.name === clusterName
   );
 
-  const deleteResponse = await request.delete(
-    `/v1/kubernetes/${kubernetesId}/database-clusters/${addedCluster?.metadata.name}`
-  );
-  expect(deleteResponse.ok()).toBeTruthy();
+  await page.goto('/databases');
+
+  // cluster actions menu click
+  (
+    await page
+      .locator('.MuiTableRow-root')
+      .filter({ hasText: 'db-cluster-ui-test' })
+      .getByTestId('MoreHorizIcon')
+  ).click();
+
+  const suspendAction = page.getByTestId('PauseCircleOutlineIcon');
+  await suspendAction.click();
+  await page.reload();
+
+  const clusterRowAfterSuspend = await page
+    .locator('.MuiTableRow-root')
+    .filter({ hasText: 'db-cluster-ui-test' });
+
+  await (await clusterRowAfterSuspend.getByTestId('MoreHorizIcon')).click();
+  const resumeAction = page.getByTestId('PauseCircleOutlineIcon');
+  await resumeAction.click();
+
+  await page.reload();
+  (
+    await page
+      .locator('.MuiTableRow-root')
+      .filter({ hasText: 'db-cluster-ui-test' })
+      .getByTestId('MoreHorizIcon')
+  ).click();
+  const restartAction = page.getByTestId('PlayArrowOutlinedIcon');
+  await restartAction.click();
+
+  await page.reload();
+  (
+    await page
+      .locator('.MuiTableRow-root')
+      .filter({ hasText: 'db-cluster-ui-test' })
+      .getByTestId('MoreHorizIcon')
+  ).click();
+  const deleteAction = page.getByTestId('DeleteOutlineIcon');
+  await deleteAction.click();
+
+  await page.reload();
+  expect(await page.getByText('db-cluster-ui-test').count()).toEqual(0);
 
   expect(addedCluster).not.toBeUndefined();
   expect(addedCluster?.spec.engine.type).toBe('psmdb');

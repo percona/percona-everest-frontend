@@ -5,7 +5,7 @@ import { TestWrapper } from '../../../../utils/test';
 import { SecondStep } from './second-step';
 import { NumberOfNodes, ResourceSize } from './second-step.types';
 import { DEFAULT_SIZES } from './second-step.const';
-import { DbWizardFormFields } from '../../new-database.types';
+import { DbWizardFormFields } from '../../database-form.types';
 
 interface FormProviderWrapperProps {
   handleSubmit: jest.Mock<any, any>;
@@ -139,9 +139,9 @@ describe('Second Step', () => {
       screen.queryByTestId('resources-exceeding-alert')
     ).not.toBeInTheDocument();
 
-    const maxCPU = screen
-      .getByTestId('cpu-progress-bar')
-      .getAttribute('aria-valuemax') || '';
+    const maxCPU =
+      screen.getByTestId('cpu-progress-bar').getAttribute('aria-valuemax') ||
+      '';
 
     await waitFor(() =>
       fireEvent.change(cpu, { target: { value: +maxCPU + 1 } })

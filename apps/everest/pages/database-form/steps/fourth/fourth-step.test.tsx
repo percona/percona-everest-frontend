@@ -9,9 +9,11 @@ const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
     defaultValues: {
       externalAccess: false,
       // internetFacing: false,
-      sourceRanges: [{
-        sourgeRange: '192.168.1.1'
-      }],
+      sourceRanges: [
+        {
+          sourgeRange: '192.168.1.1',
+        },
+      ],
     },
   });
 
@@ -56,6 +58,8 @@ describe('FourthStep', () => {
     // expect(
     //   screen.getByTestId('switch-input-internet-facing')
     // ).toBeInTheDocument();
-    expect(screen.getByTestId('text-input-source-ranges.0.source-range')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('text-input-source-ranges.0.source-range')
+    ).toBeInTheDocument();
   });
 });
