@@ -12,7 +12,7 @@ export type GetBackupPayload = {
       dbClusterName: string;
       backupStorageName: string;
     };
-  }>
+  }>;
 };
 
 export type Backup = {
@@ -22,11 +22,23 @@ export type Backup = {
   state: BackupStatus;
   dbClusterName: string;
   backupStorageName: string;
-}
+};
 
 export enum BackupStatus {
-  OK = "OK",
+  OK = 'OK',
   FAILED = 'Failed',
   IN_PROGRESS = 'In progress',
   UNKNOWN = 'Unknown',
 }
+
+export type BackupPayload = {
+  apiVersion: 'everest.percona.com/v1alpha1';
+  kind: 'DatabaseClusterBackup';
+  metadata: {
+    name: string;
+  };
+  spec: {
+    dbClusterName: string;
+    backupStorageName: string;
+  };
+};
