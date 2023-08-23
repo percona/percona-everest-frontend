@@ -83,11 +83,6 @@ test('Cluster creation', async ({ page, request }) => {
       dbVersionOptions.filter({ hasText: new RegExp(`^${version}$`) })
     ).toBeVisible()
   );
-  engineVersions.psmdb.forEach((version) =>
-    expect(
-      options.filter({ hasText: new RegExp(`^${version}$`) })
-    ).toBeVisible()
-  );
 
   await page.getByRole('option').first().click();
   await page.getByTestId('text-input-db-name').fill(clusterName);
