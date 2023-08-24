@@ -15,9 +15,13 @@
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { z } from 'zod';
 import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
-import { Messages } from './new-database.messages';
+import { Messages } from './database-form.messages';
 import { IP_REGEX } from '../../constants';
-import { AmPM, TimeValue, WeekDays } from '../../components/time-selection/time-selection.types';
+import {
+  AmPM,
+  TimeValue,
+  WeekDays,
+} from '../../components/time-selection/time-selection.types';
 
 export enum DbWizardFormFields {
   dbName = 'dbName',
@@ -78,22 +82,22 @@ const stepThreeSchema = z
     backupsEnabled: z.boolean(),
     // pitrEnabled: z.boolean(),
     // pitrTime: z.string(),
-    storageLocation:
-      z.string()
-        .or(
-          z.object({
-            name: z.string(),
-          })
-        )
-        .nullable()
-        .superRefine((input, ctx) => {
-          if (!input || typeof input === 'string' || !input.name) {
-            ctx.addIssue({
-              code: z.ZodIssueCode.custom,
-              message: Messages.errors.storageLocation.invalid,
-            });
-          }
-        }),
+    storageLocation: z
+      .string()
+      .or(
+        z.object({
+          name: z.string(),
+        })
+      )
+      .nullable()
+      .superRefine((input, ctx) => {
+        if (!input || typeof input === 'string' || !input.name) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: Messages.errors.storageLocation.invalid,
+          });
+        }
+      }),
     selectedTime: z.nativeEnum(TimeValue),
     minuteHour: z.number().optional(),
     minute: z.number().optional(),
@@ -102,7 +106,7 @@ const stepThreeSchema = z
     weekDay: z.nativeEnum(WeekDays).optional(),
     onDay: z.number().optional(),
   })
-  .passthrough()
+  .passthrough();
 
 const stepFourSchema = z
   .object({
@@ -119,11 +123,7 @@ const stepFourSchema = z
         ctx.addIssue({
           code: z.ZodIssueCode.invalid_string,
           validation: 'ip',
-          path: [
-            DbWizardFormFields.sourceRanges,
-            index,
-            'sourceRange',
-          ],
+          path: [DbWizardFormFields.sourceRanges, index, 'sourceRange'],
           message: Messages.errors.sourceRange.invalid,
         });
       }
@@ -169,3 +169,5 @@ const superset = stepOneSchema
 // .and(stepFiveSchema);
 
 export type DbWizardType = z.infer<typeof superset>;
+
+export type DbWizardMode = 'edit' | 'new';

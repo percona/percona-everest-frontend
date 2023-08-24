@@ -43,14 +43,17 @@ export const getTimeText = (
   return `${Messages.getTimeText.hours} ${minute}.`;
 };
 
-export const getCronExpressionFromFormValues = (timeProps: TimeProps): string => {
+export const getCronExpressionFromFormValues = (
+  timeProps: TimeProps
+): string => {
   const { minute, hour, amPm, onDay, weekDay, selectedTime } = timeProps;
 
   const parsedMinute = Number(minute);
   const parsedHour = Number(hour);
   const parsedDay = Number(onDay);
 
-  const hour24 = amPm === AmPM.PM ? (parsedHour === 12 ? 0 : parsedHour + 12) : parsedHour;
+  const hour24 =
+    amPm === AmPM.PM ? (parsedHour === 12 ? 0 : parsedHour + 12) : parsedHour;
 
   switch (selectedTime) {
     case TimeValue.hours:

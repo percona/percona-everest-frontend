@@ -2,8 +2,8 @@ import React from 'react';
 import { screen, render, fireEvent, waitFor } from '@testing-library/react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { DbType } from '@percona/ui-lib.db-toggle-card';
-import { DbWizardType } from '../new-database.types';
-import { DB_WIZARD_DEFAULTS } from '../new-database.constants';
+import { DbWizardType } from '../database-form.types';
+import { DB_WIZARD_DEFAULTS } from '../database-form.constants';
 import { TestWrapper } from '../../../utils/test';
 import { DatabasePreview } from './database-preview';
 

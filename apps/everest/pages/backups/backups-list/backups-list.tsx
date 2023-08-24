@@ -15,7 +15,10 @@ import { Messages } from './backups-list.messages';
 export const BackupsList = () => {
   const { dbClusterName } = useParams();
 
-  const { data: backups = [] } = useDbBackups(dbClusterName!, { enabled: !!dbClusterName, refetchInterval: 10 * 1000 });
+  const { data: backups = [] } = useDbBackups(dbClusterName!, {
+    enabled: !!dbClusterName,
+    refetchInterval: 10 * 1000,
+  });
 
   const columns = useMemo<MRT_ColumnDef<Backup>[]>(
     () => [
@@ -24,7 +27,14 @@ export const BackupsList = () => {
         header: 'Status',
         filterVariant: 'multi-select',
         filterSelectOptions: Object.values(BackupStatus),
-        Cell: ({ cell }) => <StatusField status={cell.getValue<BackupStatus>()} statusMap={BACKUP_STATUS_TO_BASE_STATUS}>{cell.getValue()}</StatusField>
+        Cell: ({ cell }) => (
+          <StatusField
+            status={cell.getValue<BackupStatus>()}
+            statusMap={BACKUP_STATUS_TO_BASE_STATUS}
+          >
+            {cell.getValue()}
+          </StatusField>
+        ),
       },
       {
         accessorKey: 'name',
@@ -35,14 +45,20 @@ export const BackupsList = () => {
         header: 'Started',
         enableColumnFilter: false,
         sortingFn: 'datetime',
-        Cell: ({ cell }) => cell.getValue<Date>() ? format(cell.getValue<Date>(), DATE_FORMAT) : '',
+        Cell: ({ cell }) =>
+          cell.getValue<Date>()
+            ? format(cell.getValue<Date>(), DATE_FORMAT)
+            : '',
       },
       {
         accessorKey: 'completed',
         header: 'Finished',
         enableColumnFilter: false,
         sortingFn: 'datetime',
-        Cell: ({ cell }) => cell.getValue<Date>() ? format(cell.getValue<Date>(), DATE_FORMAT) : '',
+        Cell: ({ cell }) =>
+          cell.getValue<Date>()
+            ? format(cell.getValue<Date>(), DATE_FORMAT)
+            : '',
       },
     ],
     []
@@ -50,7 +66,7 @@ export const BackupsList = () => {
 
   const handleManualBackup = (handleClose: () => void) => {
     handleClose();
-  }
+  };
 
   return (
     <Table
@@ -61,10 +77,11 @@ export const BackupsList = () => {
         <MenuButton buttonText={Messages.createBackup}>
           {/* MUI Menu does not like fragments and asks for arrays instead */}
           {(handleClose) => [
-              <MenuItem key="now" onClick={() => handleManualBackup(handleClose)}>{Messages.now}</MenuItem>,
-              <MenuItem key="schedule">{Messages.schedule}</MenuItem>
-            ]
-          }
+            <MenuItem key="now" onClick={() => handleManualBackup(handleClose)}>
+              {Messages.now}
+            </MenuItem>,
+            <MenuItem key="schedule">{Messages.schedule}</MenuItem>,
+          ]}
         </MenuButton>
       )}
     />

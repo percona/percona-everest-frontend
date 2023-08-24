@@ -18,46 +18,72 @@ import {
 } from '@mui/material';
 import { Stepper } from '@percona/ui-lib.stepper';
 import { DialogTitle } from '@percona/ui-lib.dialog-title';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { Messages } from './new-database.messages';
-import { dbWizardSchema, DbWizardType } from './new-database.types';
+import { Messages } from './database-form.messages';
+import { dbWizardSchema, DbWizardType } from './database-form.types';
 import { steps } from './steps';
 
 import { SixthStep } from './steps/sixth/sixth-step';
-import { useCreateDbCluster } from '../../hooks/api/db-cluster/useDbCluster';
+import { useCreateDbCluster } from '../../hooks/api/db-cluster/useCreateDbCluster';
 import { useSelectedKubernetesCluster } from '../../hooks/api/kubernetesClusters/useSelectedKubernetesCluster';
 import { DatabasePreview } from './database-preview/database-preview';
-import { DB_WIZARD_DEFAULTS } from './new-database.constants';
+import { useDatabasePageMode } from './useDatabasePageMode';
+import { useDatabasePageDefaultValues } from './useDatabaseFormDefaultValues';
+import { useUpdateDbCluster } from '../../hooks/api/db-cluster/useUpdateDbCluster';
 
-export const NewDatabasePage = () => {
+export const DatabasePage = () => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [closeModalIsOpen, setModalIsOpen] = useState(false);
   const currentValidationSchema = dbWizardSchema[activeStep];
   const { mutate: addDbCluster } = useCreateDbCluster();
+  const { mutate: editDbCluster } = useUpdateDbCluster();
   const { id } = useSelectedKubernetesCluster();
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
   const navigate = useNavigate();
 
+  const mode = useDatabasePageMode();
+  const { defaultValues, dbClusterData, dbClusterStatus } =
+    useDatabasePageDefaultValues(mode);
+
   const methods = useForm<DbWizardType>({
     mode: 'onChange',
     resolver: zodResolver(currentValidationSchema),
-    defaultValues: DB_WIZARD_DEFAULTS,
+    defaultValues,
   });
+
+  useEffect(() => {
+    if (mode === 'edit') {
+      methods.reset(defaultValues);
+    }
+  }, [defaultValues]);
+
   const firstStep = activeStep === 0;
 
   const onSubmit: SubmitHandler<DbWizardType> = (data) => {
-    addDbCluster(
-      { dbPayload: data, id },
-      {
-        onSuccess: () => {
-          setFormSubmitted(true);
-        },
-      }
-    );
+    if (mode === 'new') {
+      addDbCluster(
+        { dbPayload: data, id },
+        {
+          onSuccess: () => {
+            setFormSubmitted(true);
+          },
+        }
+      );
+    }
+    if (mode === 'edit') {
+      editDbCluster(
+        { k8sClusterId: id, dbPayload: data, dbCluster: dbClusterData },
+        {
+          onSuccess: () => {
+            setFormSubmitted(true);
+          },
+        }
+      );
+    }
   };
 
   const handleNext: React.MouseEventHandler<HTMLButtonElement> = async () => {
@@ -80,7 +106,7 @@ export const NewDatabasePage = () => {
 
   const handleCancel = () => {
     navigate('/databases');
-  }
+  };
 
   const PreviewContent = useMemo(
     () => (
@@ -107,12 +133,14 @@ export const NewDatabasePage = () => {
           {Messages.dialog.title}
         </DialogTitle>
         <DialogContent>
-          <Typography>
-            {Messages.dialog.content}
-          </Typography>
+          <Typography>{Messages.dialog.content}</Typography>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus variant="text" onClick={() => setModalIsOpen(false)}>
+          <Button
+            autoFocus
+            variant="text"
+            onClick={() => setModalIsOpen(false)}
+          >
             {Messages.dialog.reject}
           </Button>
           <Button variant="contained" onClick={handleCancel}>
@@ -133,7 +161,11 @@ export const NewDatabasePage = () => {
             style={{ flexGrow: 1 }}
             onSubmit={methods.handleSubmit(onSubmit)}
           >
-            <Box>{React.createElement(steps[activeStep])}</Box>
+            <Box>
+              {(mode === 'new' ||
+                (mode === 'edit' && dbClusterStatus === 'success')) &&
+                React.createElement(steps[activeStep])}
+            </Box>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
               <Button
                 type="button"
@@ -161,7 +193,9 @@ export const NewDatabasePage = () => {
                   variant="contained"
                   data-testid="db-wizard-submit-button"
                 >
-                  {Messages.createDatabase}
+                  {mode === 'edit'
+                    ? Messages.editDatabase
+                    : Messages.createDatabase}
                 </Button>
               ) : (
                 <Button
