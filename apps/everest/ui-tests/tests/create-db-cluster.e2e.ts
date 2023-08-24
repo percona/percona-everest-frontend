@@ -139,7 +139,12 @@ test('Cluster creation', async ({ page, request }) => {
     (cluster) => cluster.metadata.name === clusterName
   );
 
-  await page.goto('/databases');
+  const deleteResponse = await request.delete(
+      `/v1/kubernetes/${kubernetesId}/database-clusters/${addedCluster?.metadata.name}`
+  );
+  expect(deleteResponse.ok()).toBeTruthy();
+
+  // await page.goto('/databases');
 
   // TODO return and move to separate test
   // cluster actions menu click
