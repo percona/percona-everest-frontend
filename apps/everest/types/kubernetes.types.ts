@@ -18,3 +18,10 @@ export type KubernetesCluster = {
 };
 
 export type KubernetesClusterList = KubernetesCluster[];
+
+export type GetKubernetesClusterInfoPayload = {
+  clusterType: string;
+  storageClassNames: string[];
+};
+
+export type KubernetesClusterInfo = GetKubernetesClusterInfoPayload;

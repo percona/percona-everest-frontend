@@ -21,19 +21,33 @@ import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { ToggleButtonGroupInput } from '@percona/ui-lib.form.inputs.toggle-button-group';
 import { useFormContext } from 'react-hook-form';
+import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
 import { useDbEngines } from '../../../../hooks/api/db-engines/useDbEngines';
 import { DbEngineToolStatus } from '../../../../types/dbEngines.types';
 import { dbEngineToDbType, dbTypeToDbEngine } from '../../../../utils/db';
 import { DbWizardFormFields } from '../../database-form.types';
 import { Messages } from './first-step.messages';
 import { generateShortUID } from './utils';
+import { useKubernetesClusterInfo } from '../../../../hooks/api/kubernetesClusters/useKubernetesClusterInfo';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 
 export const FirstStep = () => {
   const { watch, setValue, getFieldState } = useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
+  const { data: clusterInfo, isFetching: clusterInfoFetching } =
+    useKubernetesClusterInfo();
+
   const mode = useDatabasePageMode();
+
+  useEffect(() => {
+    if (mode === 'new' && clusterInfo?.storageClassNames.length > 0) {
+      setValue(
+        DbWizardFormFields.storageClass,
+        clusterInfo?.storageClassNames[0]
+      );
+    }
+  }, [clusterInfo]);
 
   // TODO change to api request's result
   // const k8sNamespacesOptions = [
@@ -184,6 +198,16 @@ export const FirstStep = () => {
             </MenuItem>
           ))}
         </SelectInput>
+        <AutoCompleteInput
+          name={DbWizardFormFields.storageClass}
+          label={Messages.labels.storageClass}
+          loading={clusterInfoFetching}
+          options={clusterInfo?.storageClassNames || []}
+          autoCompleteProps={{
+            disableClearable: true,
+            disabled: mode === 'edit',
+          }}
+        />
       </FormGroup>
     </>
   );
