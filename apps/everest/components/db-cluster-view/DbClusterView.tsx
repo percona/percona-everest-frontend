@@ -14,6 +14,7 @@
 // limitations under the License.
 
 /* eslint-disable react/prop-types */
+import React, { useMemo } from 'react';
 import {
     BorderColor,
     DeleteOutline,

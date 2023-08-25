@@ -23,17 +23,21 @@ import {
 } from '../../components/time-selection/time-selection.types';
 
 // TODO re-add steps after API is ready
-export const DB_WIZARD_DEFAULTS = {
-  [DbWizardFormFields.backupsEnabled]: true,
-  // [DbWizardFormFields.pitrEnabled]: true,
-  // [DbWizardFormFields.pitrTime]: '60',
-  [DbWizardFormFields.storageLocation]: '',
+export const TIME_SELECTION_DEFAULTS = {
   [DbWizardFormFields.selectedTime]: TimeValue.hours,
   [DbWizardFormFields.minute]: 0,
   [DbWizardFormFields.hour]: 12,
   [DbWizardFormFields.amPm]: AmPM.AM,
   [DbWizardFormFields.weekDay]: WeekDays.Mo,
   [DbWizardFormFields.onDay]: 1,
+};
+
+export const DB_WIZARD_DEFAULTS = {
+  [DbWizardFormFields.backupsEnabled]: true,
+  // [DbWizardFormFields.pitrEnabled]: true,
+  // [DbWizardFormFields.pitrTime]: '60',
+  [DbWizardFormFields.storageLocation]: '',
+  ...TIME_SELECTION_DEFAULTS,
   [DbWizardFormFields.dbType]: DbType.Mysql,
   [DbWizardFormFields.dbName]: '',
   [DbWizardFormFields.dbVersion]: '',

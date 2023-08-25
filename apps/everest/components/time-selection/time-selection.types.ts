@@ -15,13 +15,14 @@
 import { Theme, SxProps } from '@mui/material';
 
 export enum WeekDays {
+  // don't change the order of the days, the list is used in getWeekDayByNumber function
+  Su = 'Sunday',
   Mo = 'Monday',
   Tu = 'Tuesday',
   We = 'Wednesday',
   Th = 'Thursday',
   Fr = 'Friday',
   Sa = 'Saturday',
-  Su = 'Sunday',
 }
 
 export const weekDaysPlural = (day: WeekDays) => `${day}s`;
