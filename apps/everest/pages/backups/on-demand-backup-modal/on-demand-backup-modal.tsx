@@ -1,16 +1,17 @@
 import { FormDialog } from '@percona/everest.form.form-dialog';
 import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 
 import { useBackupStorages } from '../../../hooks/api/backup-storages/useBackupStorages';
 import { useCreateBackupOnDemand } from '../../../hooks/api/backups/useBackups';
+import { Messages } from '../backups.messages';
 import {
   BackupFields,
   BackupFormData,
-  defaultValues,
+  defaultValuesFc,
   OnDemandBackupModalProps,
   schema,
 } from './on-demand-backup-modal.types';
@@ -32,20 +33,32 @@ export const OnDemandBackupModal = ({
       },
     });
   };
+
+  const defaultValues = useMemo(
+    () => defaultValuesFc(dbClusterName),
+    [dbClusterName]
+  );
+
   return (
     <FormDialog
       isOpen={open}
       closeModal={handleClose}
-      headerMessage="Create backup"
+      headerMessage={Messages.onDemandBackupModal.headerMessage}
       onSubmit={handleSubmit}
-      submitMessage="Create"
+      submitMessage={Messages.onDemandBackupModal.submitMessage}
       schema={schema}
       defaultValues={defaultValues}
+      size="XL"
+      subHead={Messages.onDemandBackupModal.subHead}
     >
-      <TextInput name={BackupFields.name} label="Backup Name" isRequired />
+      <TextInput
+        name={BackupFields.name}
+        label={Messages.onDemandBackupModal.backupName}
+        isRequired
+      />
       <AutoCompleteInput
         name={BackupFields.storageLocation}
-        label="Storage location"
+        label={Messages.onDemandBackupModal.backupStorage}
         loading={isFetching}
         options={backupStorages}
         autoCompleteProps={{
@@ -53,6 +66,7 @@ export const OnDemandBackupModal = ({
           getOptionLabel: (option) =>
             typeof option === 'string' ? option : option.name,
         }}
+        isRequired
       />
     </FormDialog>
   );

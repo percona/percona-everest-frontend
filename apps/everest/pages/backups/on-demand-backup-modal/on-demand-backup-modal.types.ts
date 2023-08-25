@@ -10,10 +10,10 @@ export enum BackupFields {
   storageLocation = 'storageLocation',
 }
 
-export const defaultValues = {
-  [BackupFields.name]: '',
+export const defaultValuesFc = (dbClusterName?: string) => ({
+  [BackupFields.name]: dbClusterName ? `backup-${dbClusterName}` : '',
   [BackupFields.storageLocation]: '',
-};
+});
 
 export const schema = z.object({
   [BackupFields.name]: z.string().nonempty(),
@@ -24,7 +24,15 @@ export const schema = z.object({
         name: z.string(),
       })
     )
-    .nullable(),
+    .nullable()
+    .superRefine((input, ctx) => {
+      if (!input || typeof input === 'string' || !input.name) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'Invalid',
+        });
+      }
+    }),
 });
 
 export type BackupFormData = z.infer<typeof schema>;

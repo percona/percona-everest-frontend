@@ -20,7 +20,6 @@ export const BackupsList = () => {
     enabled: !!dbClusterName,
     refetchInterval: 10 * 1000,
   });
-  console.log(backups);
   const columns = useMemo<MRT_ColumnDef<Backup>[]>(
     () => [
       {
@@ -90,7 +89,8 @@ export const BackupsList = () => {
               >
                 {Messages.now}
               </MenuItem>,
-              <MenuItem key="schedule">{Messages.schedule}</MenuItem>,
+              // TODO: Uncomment when ready
+              // <MenuItem key="schedule">{Messages.schedule}</MenuItem>,
             ]}
           </MenuButton>
         )}
