@@ -47,6 +47,7 @@
         "axios": "^1.4.0",
         "cron-time-generator": "^2.0.0",
         "css-mediaquery": "^0.1.2",
+        "date-fns": "^2.30.0",
         "eslint-import-resolver-node": "0.3.6",
         "eslint-plugin-import": "2.22.1",
         "eslint-plugin-jest": "24.4.0",
@@ -102,5 +103,6 @@
   "percona.utils/string": {},
   "percona.ui-lib/form/inputs/auto-complete": {},
   "percona.ui-lib/dialog-title": {},
+  "percona.ui-lib/menu-button": {},
   "percona.ui-lib/form/inputs/text-array": {}
 }

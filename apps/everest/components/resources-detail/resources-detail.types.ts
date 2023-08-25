@@ -12,13 +12,12 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+import { InputProps } from '@percona/ui-lib.input';
+
 export type ResourcesDetailProps = {
   label: string;
   labelProgressBar?: string;
-  units: string;
   value: number;
   total: number;
-  inputValue: number;
-  setInputValue: React.Dispatch<React.SetStateAction<number>>;
-  dataTestId: string;
+  inputProps?: InputProps;
 };
