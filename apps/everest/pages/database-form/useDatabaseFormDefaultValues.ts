@@ -46,7 +46,7 @@ const getBackupInfo = (backup: Backup) => {
       return {
         ...getFormValuesFromCronExpression(firstSchedule.schedule),
         [DbWizardFormFields.storageLocation]:
-          firstSchedule.backupStorageName || null,
+          { name: firstSchedule.backupStorageName } || null,
       };
     }
   }
@@ -94,7 +94,7 @@ export const DbClusterPayloadToFormValues = (
     [DbWizardFormFields.memory]: removeMeasurementValue(
       dbCluster?.spec?.engine?.resources?.memory.toString()
     ),
-      [DbWizardFormFields.storageClass]:
+    [DbWizardFormFields.storageClass]:
       dbCluster?.spec?.engine?.storage?.class || null,
   };
 };

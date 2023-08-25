@@ -103,7 +103,10 @@ const stepThreeSchema = z
       )
       .nullable()
       .superRefine((input, ctx) => {
-        if (!input || typeof input === 'string' || !input.name) {
+        if (
+          (!input || typeof input === 'string' || !input.name) &&
+          input !== null
+        ) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             message: Messages.errors.storageLocation.invalid,
@@ -118,7 +121,16 @@ const stepThreeSchema = z
     weekDay: z.nativeEnum(WeekDays).optional(),
     onDay: z.number().optional(),
   })
-  .passthrough();
+  .passthrough()
+  .superRefine(({ backupsEnabled, storageLocation }, ctx) => {
+    if (backupsEnabled && !storageLocation) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: [DbWizardFormFields.storageLocation],
+        message: Messages.errors.storageLocation.invalid,
+      });
+    }
+  });
 
 const stepFourSchema = z
   .object({

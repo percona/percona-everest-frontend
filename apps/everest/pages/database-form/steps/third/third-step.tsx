@@ -13,21 +13,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import React, { useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
 import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
-import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { TimeSelection } from '../../../../components/time-selection/time-selection';
 import { useBackupStorages } from '../../../../hooks/api/backup-storages/useBackupStorages';
 import { DbWizardFormFields } from '../../database-form.types';
 import { Messages } from './third-step.messages';
+import { useDatabasePageMode } from '../../useDatabasePageMode';
 
 export const ThirdStep = () => {
-  const { control, watch } = useFormContext();
+  const { control, watch, setValue } = useFormContext();
+  const mode = useDatabasePageMode();
   const backupsEnabled: boolean = watch(DbWizardFormFields.backupsEnabled);
   // const pitrEnabled: boolean = watch(DbWizardFormFields.pitrEnabled);
   const { data: backupStorages = [], isFetching } = useBackupStorages();
+
+  useEffect(() => {
+    if (mode === 'new' && backupStorages?.length > 0) {
+      setValue(DbWizardFormFields.storageLocation, {
+        name: backupStorages[0].name,
+      });
+    }
+  }, [backupStorages]);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>

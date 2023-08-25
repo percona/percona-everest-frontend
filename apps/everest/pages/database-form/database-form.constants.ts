@@ -37,7 +37,7 @@ export const DB_WIZARD_DEFAULTS: DefaultValues<DbWizardType> = {
   [DbWizardFormFields.backupsEnabled]: true,
   // [DbWizardFormFields.pitrEnabled]: true,
   // [DbWizardFormFields.pitrTime]: '60',
-  [DbWizardFormFields.storageLocation]: '',
+  [DbWizardFormFields.storageLocation]: null,
   ...TIME_SELECTION_DEFAULTS,
   [DbWizardFormFields.dbType]: DbType.Mysql,
   [DbWizardFormFields.dbName]: '',
