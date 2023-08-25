@@ -21,7 +21,6 @@ import {
     PauseCircleOutline,
     PlayArrowOutlined
 } from '@mui/icons-material';
-import React, { useMemo } from 'react';
 import { Box, MenuItem, Stack } from '@mui/material';
 import { Table } from '@percona/ui-lib.table';
 import { type MRT_ColumnDef } from 'material-react-table';
