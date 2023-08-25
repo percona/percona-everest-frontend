@@ -21,6 +21,7 @@ export const Messages = {
     k8sNamespace: 'Kubernetes namespace',
     dbEnvironment: 'Database environment',
     dbVersion: 'Database version',
+    storageClass: 'Storage class',
   },
   placeholders: {
     dbName: 'E.g. postgresql-123',

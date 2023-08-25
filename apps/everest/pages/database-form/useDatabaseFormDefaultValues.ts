@@ -74,7 +74,7 @@ export const DbClusterPayloadToFormValues = (
     [DbWizardFormFields.dbVersion]: dbCluster?.spec?.engine?.version || '',
     [DbWizardFormFields.externalAccess]:
       dbCluster?.spec?.proxy?.expose?.type === ProxyExposeType.external,
-    // [DbWizardFormFields.internetFacing]: true, //TODO commented
+    // [DbWizardFormFields.internetFacing]: true,
     [DbWizardFormFields.sourceRanges]: dbCluster?.spec?.proxy?.expose
       ?.ipSourceRanges
       ? dbCluster?.spec?.proxy?.expose?.ipSourceRanges.map((item) => ({
@@ -94,6 +94,8 @@ export const DbClusterPayloadToFormValues = (
     [DbWizardFormFields.memory]: removeMeasurementValue(
       dbCluster?.spec?.engine?.resources?.memory.toString()
     ),
+      [DbWizardFormFields.storageClass]:
+      dbCluster?.spec?.engine?.storage?.class || null,
   };
 };
 
@@ -115,7 +117,7 @@ export const useDatabasePageDefaultValues = (
       ? DB_WIZARD_DEFAULTS
       : status === 'success'
       ? DbClusterPayloadToFormValues(data)
-      : { [DbWizardFormFields.dbVersion]: '' }
+      : { ...DB_WIZARD_DEFAULTS, [DbWizardFormFields.dbVersion]: '' }
   );
 
   useEffect(() => {

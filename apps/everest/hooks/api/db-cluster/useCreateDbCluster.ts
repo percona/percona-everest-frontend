@@ -81,6 +81,7 @@ const formValuesToPayloadMapping = (dbPayload: DbWizardType): DbCluster => {
           memory: `${dbPayload.memory}G`,
         },
         storage: {
+          class: dbPayload.storageClass!,
           size: `${dbPayload.disk}G`,
         },
       },

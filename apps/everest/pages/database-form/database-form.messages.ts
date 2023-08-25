@@ -41,5 +41,8 @@ export const Messages = {
     storageLocation: {
       invalid: 'Invalid storage location',
     },
+    storageClass: {
+      invalid: 'Invalid storage class',
+    },
   },
 };

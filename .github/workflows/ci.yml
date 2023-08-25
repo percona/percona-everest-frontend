@@ -168,7 +168,13 @@ jobs:
           cd ${GITHUB_WORKSPACE}/percona-everest-backend
           make init
           make local-env-up
-          make run-debug &
+          make build-debug
+          make run-debug &> everest-backend.log &
+
+      - name: Run debug commands on failure
+        if: ${{ failure() }}
+        run: |
+          cat everest-backend.log
 
       - name: Create KIND cluster
         uses: helm/kind-action@v1.8.0

@@ -13,7 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import { DbType } from '@percona/ui-lib.db-toggle-card';
-import { DbWizardFormFields } from './database-form.types';
+import { DefaultValues } from 'react-hook-form';
+import { DbWizardFormFields, DbWizardType } from './database-form.types';
 import { DEFAULT_SIZES } from './steps/second/second-step.const';
 import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
 import {
@@ -32,7 +33,7 @@ export const TIME_SELECTION_DEFAULTS = {
   [DbWizardFormFields.onDay]: 1,
 };
 
-export const DB_WIZARD_DEFAULTS = {
+export const DB_WIZARD_DEFAULTS: DefaultValues<DbWizardType> = {
   [DbWizardFormFields.backupsEnabled]: true,
   // [DbWizardFormFields.pitrEnabled]: true,
   // [DbWizardFormFields.pitrTime]: '60',
@@ -41,10 +42,10 @@ export const DB_WIZARD_DEFAULTS = {
   [DbWizardFormFields.dbType]: DbType.Mysql,
   [DbWizardFormFields.dbName]: '',
   [DbWizardFormFields.dbVersion]: '',
+  [DbWizardFormFields.storageClass]: '',
   [DbWizardFormFields.externalAccess]: false,
   // [DbWizardFormFields.internetFacing]: true,
   [DbWizardFormFields.sourceRanges]: [{ sourceRange: '181.170.213.40/32' }],
-  [DbWizardFormFields.monitoring]: false,
   // [DbWizardFormFields.endpoint]: '',
   [DbWizardFormFields.numberOfNodes]: NumberOfNodes.oneNode,
   [DbWizardFormFields.resourceSizePerNode]: ResourceSize.small,

@@ -67,11 +67,12 @@ const formValuesToPayloadOverrides = (
         resources: {
           ...dbCluster.spec.engine.resources,
           cpu: dbPayload.cpu,
-          memory: dbPayload.memory,
+          memory: `${dbPayload.memory}G`,
         },
         storage: {
           ...dbCluster.spec.engine.storage,
-          size: dbPayload.disk,
+          class: dbPayload.storageClass!,
+          size: `${dbPayload.disk}G`,
         },
       },
       // monitoring: {
