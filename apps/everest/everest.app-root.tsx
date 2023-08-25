@@ -11,11 +11,12 @@ import { BackupsList } from './pages/backups/backups-list/backups-list';
 import { BackupsTabs } from './pages/backups/backups.types';
 import { GeneralInformation } from './pages/backups/general-information/general-information';
 import { DatabasesPage } from './pages/databases/databases';
-import { NewDatabasePage } from './pages/new-database/new-database';
+import { DatabasePage } from './pages/database-form/database-form';
+import { Settings } from './pages/settings/settings';
 import { DefaultConfigurations } from './pages/settings/default-configurations/default-configurations';
 import { K8sClusters } from './pages/settings/k8s-clusters/k8s-clusters';
 import { MonitoringEndpoints } from './pages/settings/monitoring-endpoints/monitoring-endpoints';
-import { Settings } from './pages/settings/settings';
+
 import { SettingsTabs } from './pages/settings/settings.types';
 import { StorageLocations } from './pages/settings/storage-locations/storage-locations';
 
@@ -30,7 +31,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'databases/new',
-        element: <NewDatabasePage />,
+        element: <DatabasePage />,
+      },
+      {
+        path: 'databases/edit',
+        element: <DatabasePage />,
       },
       {
         path: 'databases/:dbClusterName',

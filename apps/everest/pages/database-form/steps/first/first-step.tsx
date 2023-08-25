@@ -1,3 +1,18 @@
+// percona-everest-frontend
+// Copyright (C) 2023 Percona LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 import { FormGroup, MenuItem, Skeleton, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
@@ -9,14 +24,16 @@ import { useFormContext } from 'react-hook-form';
 import { useDbEngines } from '../../../../hooks/api/db-engines/useDbEngines';
 import { DbEngineToolStatus } from '../../../../types/dbEngines.types';
 import { dbEngineToDbType, dbTypeToDbEngine } from '../../../../utils/db';
-import { DbWizardFormFields } from '../../new-database.types';
+import { DbWizardFormFields } from '../../database-form.types';
 import { Messages } from './first-step.messages';
 import { generateShortUID } from './utils';
+import { useDatabasePageMode } from '../../useDatabasePageMode';
 
 export const FirstStep = () => {
   const { watch, setValue, getFieldState } = useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
+  const mode = useDatabasePageMode();
 
   // TODO change to api request's result
   // const k8sNamespacesOptions = [
@@ -41,6 +58,7 @@ export const FirstStep = () => {
   // ];
 
   const dbType: DbType = watch(DbWizardFormFields.dbType);
+  const dbVersion: DbType = watch(DbWizardFormFields.dbVersion);
   const dbEngine = dbTypeToDbEngine(dbType);
   const [dbVersions, setDbVersions] = useState(
     dbEngines.find((engine) => engine.type === dbEngine)
@@ -52,7 +70,7 @@ export const FirstStep = () => {
     }
     const { isTouched } = getFieldState(DbWizardFormFields.dbName);
 
-    if (!isTouched) {
+    if (!isTouched && mode === 'new') {
       setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`, {
         shouldValidate: true,
       });
@@ -65,18 +83,19 @@ export const FirstStep = () => {
       return;
     }
 
-    const recommendedVersion = newVersions.availableVersions.engine.find(
-      (version) => version.status === DbEngineToolStatus.RECOMMENDED
-    );
-
-    setValue(
-      DbWizardFormFields.dbVersion,
-      recommendedVersion
-        ? recommendedVersion.version
-        : newVersions.availableVersions.engine[0].version
-    );
+    if ((mode === 'edit' && !dbVersion) || mode === 'new') {
+      const recommendedVersion = newVersions.availableVersions.engine.find(
+        (version) => version.status === DbEngineToolStatus.RECOMMENDED
+      );
+      setValue(
+        DbWizardFormFields.dbVersion,
+        recommendedVersion
+          ? recommendedVersion.version
+          : newVersions.availableVersions.engine[0].version
+      );
+    }
     setDbVersions(newVersions);
-  }, [dbType, dbEngines]);
+  }, [dbType, dbEngines, mode]);
 
   return (
     <>
@@ -93,7 +112,11 @@ export const FirstStep = () => {
         ) : (
           <ToggleButtonGroupInput name={DbWizardFormFields.dbType}>
             {dbEngines.map(({ type }) => (
-              <DbToggleCard key={type} value={dbEngineToDbType(type)} />
+              <DbToggleCard
+                key={type}
+                value={dbEngineToDbType(type)}
+                disabled={mode === 'edit' && dbType !== dbEngineToDbType(type)}
+              />
             ))}
           </ToggleButtonGroupInput>
         )}
@@ -102,6 +125,7 @@ export const FirstStep = () => {
           label={Messages.labels.dbName}
           textFieldProps={{
             placeholder: Messages.placeholders.dbName,
+            disabled: mode === 'edit',
           }}
         />
         {/* <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>

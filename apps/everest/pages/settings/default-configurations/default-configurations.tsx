@@ -141,7 +141,12 @@ export const DefaultConfigurations = () => {
                 }),
               }}
             >
-              {externalAccess && <TextArray fieldName={DefaultConfigurationsFields.sourceRanges} fieldKey='sourceRange' />}
+              {externalAccess && (
+                <TextArray
+                  fieldName={DefaultConfigurationsFields.sourceRanges}
+                  fieldKey="sourceRange"
+                />
+              )}
             </SwitchOutlinedBox>
             <Stack direction="row" justifyContent="flex-end" mt={2} gap={1}>
               <Button onClick={() => {}} variant="text">

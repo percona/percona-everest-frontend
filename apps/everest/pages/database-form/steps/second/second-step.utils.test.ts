@@ -15,7 +15,7 @@
 import { getResourceNames, isCustom } from './second-step.utils';
 import { ResourceSize } from './second-step.types';
 import { DEFAULT_SIZES } from './second-step.const';
-import { DbWizardFormFields } from '../../new-database.types';
+import { DbWizardFormFields } from '../../database-form.types';
 
 describe('Second step utils', () => {
   it('should detect when to switch into custom resource mode', async () => {
