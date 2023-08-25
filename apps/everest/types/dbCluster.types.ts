@@ -36,7 +36,7 @@ interface Schedule {
   retentionCopies?: number;
   schedule: string;
 }
-interface Backup {
+export interface Backup {
   enabled: boolean;
   schedules?: Array<Schedule>;
 }
