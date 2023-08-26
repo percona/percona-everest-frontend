@@ -1,4 +1,4 @@
-import { DbType } from "@percona/ui-lib.db-toggle-card";
+import { DbType } from '@percona/ui-lib.db-toggle-card';
 
 export const getParamsPlaceholderFromDbType = (dbType: DbType) => {
   let dynamicText = '';
@@ -16,5 +16,5 @@ export const getParamsPlaceholderFromDbType = (dbType: DbType) => {
       break;
   }
 
-  return `Insert parameters ${dynamicText && (`(e.g. ${  dynamicText  })`)}`;
-}
+  return `Insert parameters ${dynamicText && `(e.g. ${dynamicText})`}`;
+};

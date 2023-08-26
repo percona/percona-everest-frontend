@@ -74,6 +74,9 @@ const formValuesToPayloadOverrides = (
           class: dbPayload.storageClass!,
           size: `${dbPayload.disk}G`,
         },
+        config: dbPayload.engineParametersEnabled
+          ? dbPayload.engineParameters
+          : '',
       },
       // monitoring: {
       //   ...dbCluster.spec.monitoring,
