@@ -28,7 +28,7 @@ export const CreateEditModalStorage = ({
   const schema = useMemo(
     () =>
       isEditMode
-        ? storageLocationsSchema.omit({
+        ? storageLocationsSchema.partial({
             accessKey: true,
             secretKey: true,
           })
@@ -94,20 +94,22 @@ export const CreateEditModalStorage = ({
         label={Messages.url}
         isRequired
       />
-      {!isEditMode && (
-        <>
-          <TextInput
-            name={StorageLocationsFields.accessKey}
-            label={Messages.accessKey}
-            isRequired
-          />
-          <TextInput
-            name={StorageLocationsFields.secretKey}
-            label={Messages.secretKey}
-            isRequired
-          />
-        </>
-      )}
+      <TextInput
+        textFieldProps={{
+          placeholder: isEditMode ? '************' : undefined,
+        }}
+        name={StorageLocationsFields.accessKey}
+        label={Messages.accessKey}
+        isRequired
+      />
+      <TextInput
+        textFieldProps={{
+          placeholder: isEditMode ? '************' : undefined,
+        }}
+        name={StorageLocationsFields.secretKey}
+        label={Messages.secretKey}
+        isRequired
+      />
     </FormDialog>
   );
 };
