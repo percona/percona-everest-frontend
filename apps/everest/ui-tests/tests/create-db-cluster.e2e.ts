@@ -15,221 +15,253 @@
 import { test, expect } from '@playwright/test';
 import { GetDbClusterPayload } from '../../types/dbCluster.types';
 
-let kubernetesId;
-const engineVersions = {
-  pxc: [],
-  psmdb: [],
-  postgresql: [],
-};
-let storageClasses = [];
+test.describe('DB Cluster creation', () => {
+  let kubernetesId;
+  const engineVersions = {
+    pxc: [],
+    psmdb: [],
+    postgresql: [],
+  };
+  let storageClasses = [];
 
-test.beforeAll(async ({ request }) => {
-  const kubernetesList = await request.get('/v1/kubernetes');
-  kubernetesId = (await kubernetesList.json())[0].id;
+  test.beforeAll(async ({ request }) => {
+    const kubernetesList = await request.get('/v1/kubernetes');
+    kubernetesId = (await kubernetesList.json())[0].id;
 
-  const enginesList = await request.get(
-    `/v1/kubernetes/${kubernetesId}/database-engines`
-  );
-  const engines = (await enginesList.json()).items;
+    const enginesList = await request.get(
+      `/v1/kubernetes/${kubernetesId}/database-engines`
+    );
+    const engines = (await enginesList.json()).items;
 
-  const kubernetesClusterInfo = await request.get(
-    `/v1/kubernetes/${kubernetesId}/cluster-info`
-  );
-  const { storageClassNames = [] } = await kubernetesClusterInfo.json();
+    const kubernetesClusterInfo = await request.get(
+      `/v1/kubernetes/${kubernetesId}/cluster-info`
+    );
+    const { storageClassNames = [] } = await kubernetesClusterInfo.json();
 
-  engines.forEach((engine) => {
-    const { type } = engine.spec;
+    engines.forEach((engine) => {
+      const { type } = engine.spec;
 
-    if (engine.status.status === 'installed') {
-      engineVersions[type].push(
-        ...Object.keys(engine.status.availableVersions.engine)
-      );
-    }
+      if (engine.status.status === 'installed') {
+        engineVersions[type].push(
+          ...Object.keys(engine.status.availableVersions.engine)
+        );
+      }
+    });
+
+    storageClasses = storageClassNames;
   });
 
-  storageClasses = storageClassNames;
-});
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/databases/new');
+    await page.getByTestId('toggle-button-group-input-db-type').waitFor();
+    await page.getByTestId('select-input-db-version').waitFor();
+  });
 
-test.beforeEach(async ({ page }) => {
-  await page.goto('/databases/new');
-  await page.getByTestId('toggle-button-group-input-db-type').waitFor();
-  await page.getByTestId('select-input-db-version').waitFor();
-});
+  test('Cluster creation', async ({ page, request }) => {
+    expect(storageClasses.length).toBeGreaterThan(0);
+    const clusterName = 'db-cluster-ui-test';
 
-test('Cluster creation', async ({ page, request }) => {
-  expect(storageClasses.length).toBeGreaterThan(0);
-  const clusterName = 'db-cluster-ui-test';
+    const dbEnginesButtons = page
+      .getByTestId('toggle-button-group-input-db-type')
+      .getByRole('button');
+    const nrButtons = await dbEnginesButtons.count();
 
-  const dbEnginesButtons = page
-    .getByTestId('toggle-button-group-input-db-type')
-    .getByRole('button');
-  const nrButtons = await dbEnginesButtons.count();
+    expect(nrButtons).toBe(3);
 
-  expect(nrButtons).toBe(3);
+    const mySqlButton = dbEnginesButtons.filter({ hasText: 'MySQL' });
+    const mongoButton = dbEnginesButtons.filter({ hasText: 'MongoDB' });
 
-  const mySqlButton = dbEnginesButtons.filter({ hasText: 'MySQL' });
-  const mongoButton = dbEnginesButtons.filter({ hasText: 'MongoDB' });
+    await expect(mySqlButton).toBeVisible();
+    await expect(mongoButton).toBeVisible();
 
-  await expect(mySqlButton).toBeVisible();
-  await expect(mongoButton).toBeVisible();
+    await mongoButton.click();
+    await page.getByTestId('select-db-version-button').click();
 
-  await mongoButton.click();
-  await page.getByTestId('select-db-version-button').click();
+    const dbVersionOptions = page.getByRole('option');
 
-  const dbVersionOptions = page.getByRole('option');
+    engineVersions.psmdb.forEach((version) =>
+      expect(
+        dbVersionOptions.filter({ hasText: new RegExp(`^${version}$`) })
+      ).toBeVisible()
+    );
 
-  engineVersions.psmdb.forEach((version) =>
+    await page.getByRole('option').first().click();
+    await page.getByTestId('text-input-db-name').fill(clusterName);
+    await page.getByTestId('text-input-storage-class').click();
+
+    const storageClassOptions = page.getByRole('option');
+
+    storageClasses.forEach((className) =>
+      expect(
+        storageClassOptions.filter({ hasText: new RegExp(`^${className}$`) })
+      ).toBeVisible()
+    );
+
+    await page.getByRole('option').first().click();
+    await page.getByTestId('db-wizard-continue-button').click();
+
+    await expect(
+      page.getByRole('heading', {
+        name: 'Configure the resources your new database will have access to.',
+      })
+    ).toBeVisible();
+    await page.getByTestId('toggle-button-two-nodes').click();
+    await page.getByTestId('toggle-button-large').click();
+    await page.getByTestId('disk-input').fill('150');
+    await page.getByTestId('db-wizard-continue-button').click();
+
+    await expect(
+      page.getByRole('heading', {
+        name: 'Specify how often you want to run backup jobs for your database.',
+      })
+    ).toBeVisible();
+
+    await page.getByTestId('text-input-storage-location').click();
+
+    const storageOptions = page.getByRole('option');
+
+    expect(storageOptions.filter({ hasText: 'ui-dev' })).toBeVisible();
+    await storageOptions.first().click();
+
+    await page.getByTestId('db-wizard-continue-button').click();
+
+    await expect(
+      page.getByRole('heading', { name: 'External Access' })
+    ).toBeVisible();
+    await page.getByLabel('Enable External Access').check();
     expect(
-      dbVersionOptions.filter({ hasText: new RegExp(`^${version}$`) })
-    ).toBeVisible()
-  );
+      await page.getByLabel('Enable External Access').isChecked()
+    ).toBeTruthy();
+    await page
+      .getByTestId('text-input-source-ranges.0.source-range')
+      .fill('192.168.1.1/24');
+    await page.getByTestId('add-text-input-button').click();
+    await page
+      .getByTestId('text-input-source-ranges.1.source-range')
+      .fill('192.168.1.0');
+    await page.getByTestId('db-wizard-submit-button').click();
 
-  await page.getByRole('option').first().click();
-  await page.getByTestId('text-input-db-name').fill(clusterName);
-  await page.getByTestId('text-input-storage-class').click();
+    await expect(page.getByTestId('db-wizard-goto-db-clusters')).toBeVisible();
 
-  const storageClassOptions = page.getByRole('option');
+    const response = await request.get(
+      `/v1/kubernetes/${kubernetesId}/database-clusters`
+    );
 
-  storageClasses.forEach((className) =>
-    expect(
-      storageClassOptions.filter({ hasText: new RegExp(`^${className}$`) })
-    ).toBeVisible()
-  );
+    expect(response.ok()).toBeTruthy();
+    // TODO replace with correct payload typings from GET DB Clusters
+    const { items: clusters }: GetDbClusterPayload = await response.json();
 
-  await page.getByRole('option').first().click();
-  await page.getByTestId('db-wizard-continue-button').click();
+    const addedCluster = clusters.find(
+      (cluster) => cluster.metadata.name === clusterName
+    );
 
-  await expect(
-    page.getByRole('heading', {
-      name: 'Configure the resources your new database will have access to.',
-    })
-  ).toBeVisible();
-  await page.getByTestId('toggle-button-two-nodes').click();
-  await page.getByTestId('toggle-button-large').click();
-  await page.getByTestId('disk-input').fill('150');
-  await page.getByTestId('db-wizard-continue-button').click();
-
-  await expect(
-    page.getByRole('heading', { name: 'External Access' })
-  ).toBeVisible();
-  await page.getByLabel('Enable External Access').check();
-  expect(
-    await page.getByLabel('Enable External Access').isChecked()
-  ).toBeTruthy();
-  await page
-    .getByTestId('text-input-source-ranges.0.source-range')
-    .fill('192.168.1.1/24');
-  await page.getByTestId('add-text-input-button').click();
-  await page
-    .getByTestId('text-input-source-ranges.1.source-range')
-    .fill('192.168.1.0');
-  await page.getByTestId('db-wizard-submit-button').click();
-
-  await expect(page.getByTestId('db-wizard-goto-db-clusters')).toBeVisible();
-
-  const response = await request.get(
-    `/v1/kubernetes/${kubernetesId}/database-clusters`
-  );
-
-  expect(response.ok()).toBeTruthy();
-  // TODO replace with correct payload typings from GET DB Clusters
-  const { items: clusters }: GetDbClusterPayload = await response.json();
-
-  const addedCluster = clusters.find(
-    (cluster) => cluster.metadata.name === clusterName
-  );
-
-  const deleteResponse = await request.delete(
+    const deleteResponse = await request.delete(
       `/v1/kubernetes/${kubernetesId}/database-clusters/${addedCluster?.metadata.name}`
-  );
-  expect(deleteResponse.ok()).toBeTruthy();
+    );
+    expect(deleteResponse.ok()).toBeTruthy();
 
-  // await page.goto('/databases');
+    // TODO return and move to separate test
+    // await page.goto('/databases');
 
-  // TODO return and move to separate test
-  // cluster actions menu click
-  // (
-  //   await page
-  //     .locator('.MuiTableRow-root')
-  //     .filter({ hasText: 'db-cluster-ui-test' })
-  //     .getByTestId('MoreHorizIcon')
-  // ).click();
-  //
-  // const suspendAction = page.getByTestId('PauseCircleOutlineIcon');
-  // await suspendAction.click();
-  // await page.reload();
-  //
-  // const clusterRowAfterSuspend = await page
-  //   .locator('.MuiTableRow-root')
-  //   .filter({ hasText: 'db-cluster-ui-test' });
-  //
-  // await (await clusterRowAfterSuspend.getByTestId('MoreHorizIcon')).click();
-  // const resumeAction = page.getByTestId('PauseCircleOutlineIcon');
-  // await resumeAction.click();
-  //
-  // await page.reload();
-  // (
-  //   await page
-  //     .locator('.MuiTableRow-root')
-  //     .filter({ hasText: 'db-cluster-ui-test' })
-  //     .getByTestId('MoreHorizIcon')
-  // ).click();
-  // const restartAction = page.getByTestId('PlayArrowOutlinedIcon');
-  // await restartAction.click();
+    // cluster actions menu click
+    // (
+    //   await page
+    //     .locator('.MuiTableRow-root')
+    //     .filter({ hasText: 'db-cluster-ui-test' })
+    //     .getByTestId('MoreHorizIcon')
+    // ).click();
+    //
+    // const suspendAction = page.getByTestId('PauseCircleOutlineIcon');
+    // await suspendAction.click();
+    // await page.reload();
+    //
+    // const clusterRowAfterSuspend = await page
+    //   .locator('.MuiTableRow-root')
+    //   .filter({ hasText: 'db-cluster-ui-test' });
+    //
+    // await (await clusterRowAfterSuspend.getByTestId('MoreHorizIcon')).click();
+    // const resumeAction = page.getByTestId('PauseCircleOutlineIcon');
+    // await resumeAction.click();
+    //
+    // await page.reload();
+    // (
+    //   await page
+    //     .locator('.MuiTableRow-root')
+    //     .filter({ hasText: 'db-cluster-ui-test' })
+    //     .getByTestId('MoreHorizIcon')
+    // ).click();
+    // const restartAction = page.getByTestId('PlayArrowOutlinedIcon');
+    // await restartAction.click();
 
-  // await page.reload();
-  // (
-  //   await page
-  //     .locator('.MuiTableRow-root')
-  //     .filter({ hasText: 'db-cluster-ui-test' })
-  //     .getByTestId('MoreHorizIcon')
-  // ).click();
-  // const deleteAction = page.getByTestId('DeleteOutlineIcon');
-  // await deleteAction.click();
-  //
-  // await page.reload();
-  // expect(await page.getByText('db-cluster-ui-test').count()).toEqual(0);
+    // await page.reload();
+    // (
+    //   await page
+    //     .locator('.MuiTableRow-root')
+    //     .filter({ hasText: 'db-cluster-ui-test' })
+    //     .getByTestId('MoreHorizIcon')
+    // ).click();
+    // const deleteAction = page.getByTestId('DeleteOutlineIcon');
+    // await deleteAction.click();
+    //
+    // await page.reload();
+    // expect(await page.getByText('db-cluster-ui-test').count()).toEqual(0);
 
-  expect(addedCluster).not.toBeUndefined();
-  expect(addedCluster?.spec.engine.type).toBe('psmdb');
-  expect(addedCluster?.spec.engine.replicas).toBe(2);
-  expect(addedCluster?.spec.engine.resources?.cpu.toString()).toBe('8');
-  expect(addedCluster?.spec.engine.resources?.memory.toString()).toBe('32G');
-  expect(addedCluster?.spec.engine.storage.size.toString()).toBe('150G');
-  expect(addedCluster?.spec.proxy.expose.type).toBe('external');
-  expect(addedCluster?.spec.proxy.replicas).toBe(2);
-  expect(addedCluster?.spec.proxy.expose.ipSourceRanges).toEqual([
-    '192.168.1.1/24',
-    '192.168.1.0',
-  ]);
-  expect(addedCluster?.spec.engine.storage.class).toBe(storageClasses[0]);
-});
+    expect(addedCluster).not.toBeUndefined();
+    expect(addedCluster?.spec.engine.type).toBe('psmdb');
+    expect(addedCluster?.spec.engine.replicas).toBe(2);
+    expect(addedCluster?.spec.engine.resources?.cpu.toString()).toBe('8');
+    expect(addedCluster?.spec.engine.resources?.memory.toString()).toBe('32G');
+    expect(addedCluster?.spec.engine.storage.size.toString()).toBe('150G');
+    expect(addedCluster?.spec.proxy.expose.type).toBe('external');
+    expect(addedCluster?.spec.proxy.replicas).toBe(2);
+    expect(addedCluster?.spec.proxy.expose.ipSourceRanges).toEqual([
+      '192.168.1.1/24',
+      '192.168.1.0',
+    ]);
+    expect(addedCluster?.spec.engine.storage.class).toBe(storageClasses[0]);
+  });
 
-test('Cancel wizard', async ({ page }) => {
-  await page.getByTestId('mongodb-toggle-button').click();
-  await page.getByTestId('text-input-db-name').fill('new-cluster');
-  await page.getByTestId('text-input-storage-class').click();
-  await page.getByRole('option').first().click();
-  await page.getByTestId('db-wizard-continue-button').click();
+  test('Cancel wizard', async ({ page }) => {
+    await page.getByTestId('mongodb-toggle-button').click();
+    await page.getByTestId('text-input-db-name').fill('new-cluster');
+    await page.getByTestId('text-input-storage-class').click();
+    await page.getByRole('option').first().click();
+    await page.getByTestId('db-wizard-continue-button').click();
 
-  await expect(
-    page.getByRole('heading', {
-      name: 'Configure the resources your new database will have access to.',
-    })
-  ).toBeVisible();
+    await expect(
+      page.getByRole('heading', {
+        name: 'Configure the resources your new database will have access to.',
+      })
+    ).toBeVisible();
 
-  await page.getByTestId('toggle-button-two-nodes').click();
-  await page.getByTestId('toggle-button-large').click();
-  await page.getByTestId('disk-input').fill('150');
-  await page.getByTestId('db-wizard-continue-button').click();
+    await page.getByTestId('toggle-button-two-nodes').click();
+    await page.getByTestId('toggle-button-large').click();
+    await page.getByTestId('disk-input').fill('150');
+    await page.getByTestId('db-wizard-continue-button').click();
 
-  await expect(
-    page.getByRole('heading', { name: 'External Access' })
-  ).toBeVisible();
+    await expect(
+      page.getByRole('heading', {
+        name: 'Specify how often you want to run backup jobs for your database.',
+      })
+    ).toBeVisible();
 
-  await page.getByTestId('db-wizard-cancel-button').click();
-  await expect(page.getByRole('dialog')).toBeVisible();
-  await page.getByText('Yes, cancel').click();
+    await page.getByTestId('text-input-storage-location').click();
 
-  await expect(page).toHaveURL('/databases');
+    const storageOptions = page.getByRole('option');
+
+    expect(storageOptions.filter({ hasText: 'ui-dev' })).toBeVisible();
+    await storageOptions.first().click();
+
+    await page.getByTestId('db-wizard-continue-button').click();
+
+    await expect(
+      page.getByRole('heading', { name: 'External Access' })
+    ).toBeVisible();
+
+    await page.getByTestId('db-wizard-cancel-button').click();
+    await expect(page.getByRole('dialog')).toBeVisible();
+    await page.getByText('Yes, cancel').click();
+
+    await expect(page).toHaveURL('/databases');
+  });
 });

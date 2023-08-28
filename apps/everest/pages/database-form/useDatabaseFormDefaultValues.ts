@@ -22,56 +22,82 @@ import {
 } from './database-form.types';
 import { useDbCluster } from '../../hooks/api/db-cluster/useDbCluster';
 import { NumberOfNodes } from './steps/second/second-step.types';
-import { DbCluster, ProxyExposeType } from '../../types/dbCluster.types';
+import {
+  Backup,
+  DbCluster,
+  ProxyExposeType,
+} from '../../types/dbCluster.types';
 import { dbEngineToDbType } from '../../utils/db';
 import {
   matchFieldsValueToResourceSize,
   removeMeasurementValue,
 } from './steps/second/second-step.utils';
-import { DB_WIZARD_DEFAULTS } from './database-form.constants';
+import {
+  DB_WIZARD_DEFAULTS,
+  TIME_SELECTION_DEFAULTS,
+} from './database-form.constants';
+import { getFormValuesFromCronExpression } from '../../components/time-selection/time-selection.utils';
+
+const getBackupInfo = (backup: Backup) => {
+  if (backup?.enabled) {
+    const schedules = backup?.schedules;
+    const firstSchedule = schedules && schedules[0];
+    if (firstSchedule.schedule) {
+      return {
+        ...getFormValuesFromCronExpression(firstSchedule.schedule),
+        [DbWizardFormFields.storageLocation]:
+          { name: firstSchedule.backupStorageName } || null,
+      };
+    }
+  }
+  return {
+    ...TIME_SELECTION_DEFAULTS,
+    [DbWizardFormFields.storageLocation]:
+      DB_WIZARD_DEFAULTS[DbWizardFormFields.storageLocation],
+  };
+};
 
 export const DbClusterPayloadToFormValues = (
   dbCluster: DbCluster
-): DbWizardType => ({
-  // TODO should be returned with backups
-  // [DbWizardFormFields.backupsEnabled]: true,
-  // [DbWizardFormFields.pitrEnabled]: true,
-  // [DbWizardFormFields.pitrTime]: '60',
-  // [DbWizardFormFields.storageLocation]: '',
-  // [DbWizardFormFields.selectedTime]: TimeValue.hours,
-  // [DbWizardFormFields.minute]: 0,
-  // [DbWizardFormFields.hour]: 12,
-  // [DbWizardFormFields.amPm]: AmPM.AM,
-  // [DbWizardFormFields.weekDay]: WeekDays.Mo,
-  // [DbWizardFormFields.onDay]: 1,
-  [DbWizardFormFields.dbType]: dbEngineToDbType(dbCluster?.spec?.engine?.type),
-  [DbWizardFormFields.dbName]: dbCluster?.metadata?.name,
-  [DbWizardFormFields.dbVersion]: dbCluster?.spec?.engine?.version || '',
-  [DbWizardFormFields.externalAccess]:
-    dbCluster?.spec?.proxy?.expose?.type === ProxyExposeType.external,
-  // [DbWizardFormFields.internetFacing]: true, //TODO commented
-  [DbWizardFormFields.sourceRanges]: dbCluster?.spec?.proxy?.expose
-    ?.ipSourceRanges
-    ? dbCluster?.spec?.proxy?.expose?.ipSourceRanges.map((item) => ({
-        sourceRange: item,
-      }))
-    : [],
-  // [DbWizardFormFields.monitoring]: dbCluster?.spec?.monitoring?.enabled,
-  // [DbWizardFormFields.endpoint]: dbCluster?.spec?.monitoring?.enabled?.pmm?.publicAddress,
-  [DbWizardFormFields.numberOfNodes]:
-    `${dbCluster?.spec?.proxy?.replicas}` as unknown as NumberOfNodes,
-  [DbWizardFormFields.resourceSizePerNode]:
-    matchFieldsValueToResourceSize(dbCluster),
-  [DbWizardFormFields.cpu]: +dbCluster?.spec?.engine?.resources?.cpu || 0,
-  [DbWizardFormFields.disk]: removeMeasurementValue(
-    dbCluster?.spec?.engine?.storage?.size.toString()
-  ),
-  [DbWizardFormFields.memory]: removeMeasurementValue(
-    dbCluster?.spec?.engine?.resources?.memory.toString()
-  ),
-  [DbWizardFormFields.storageClass]:
-  dbCluster?.spec?.engine?.storage?.class || null,
-});
+): DbWizardType => {
+  const backupInfo = getBackupInfo(dbCluster?.spec?.backup);
+
+  return {
+    [DbWizardFormFields.backupsEnabled]: dbCluster?.spec?.backup?.enabled,
+    // [DbWizardFormFields.pitrEnabled]: true,
+    // [DbWizardFormFields.pitrTime]: '60',
+    ...backupInfo,
+    [DbWizardFormFields.dbType]: dbEngineToDbType(
+      dbCluster?.spec?.engine?.type
+    ),
+    [DbWizardFormFields.dbName]: dbCluster?.metadata?.name,
+    [DbWizardFormFields.dbVersion]: dbCluster?.spec?.engine?.version || '',
+    [DbWizardFormFields.externalAccess]:
+      dbCluster?.spec?.proxy?.expose?.type === ProxyExposeType.external,
+    // [DbWizardFormFields.internetFacing]: true,
+    [DbWizardFormFields.sourceRanges]: dbCluster?.spec?.proxy?.expose
+      ?.ipSourceRanges
+      ? dbCluster?.spec?.proxy?.expose?.ipSourceRanges.map((item) => ({
+          sourceRange: item,
+        }))
+      : [],
+    // [DbWizardFormFields.monitoring]: dbCluster?.spec?.monitoring?.enabled,
+    // [DbWizardFormFields.endpoint]: dbCluster?.spec?.monitoring?.enabled?.pmm?.publicAddress,
+    [DbWizardFormFields.numberOfNodes]:
+      `${dbCluster?.spec?.proxy?.replicas}` as unknown as NumberOfNodes,
+    [DbWizardFormFields.resourceSizePerNode]:
+      matchFieldsValueToResourceSize(dbCluster),
+    [DbWizardFormFields.cpu]: +dbCluster?.spec?.engine?.resources?.cpu || 0,
+    [DbWizardFormFields.disk]: removeMeasurementValue(
+      dbCluster?.spec?.engine?.storage?.size.toString()
+    ),
+    [DbWizardFormFields.memory]: removeMeasurementValue(
+      dbCluster?.spec?.engine?.resources?.memory.toString()
+    ),
+    [DbWizardFormFields.storageClass]:
+      dbCluster?.spec?.engine?.storage?.class || null,
+  };
+};
 
 export const useDatabasePageDefaultValues = (
   mode: DbWizardMode
