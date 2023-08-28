@@ -14,8 +14,10 @@
 // limitations under the License.
 // import { CronTime } from 'cron-time-generator';
 import CronTime from 'cron-time-generator';
+import { TIME_SELECTION_DEFAULTS } from '../../pages/database-form/database-form.constants';
+import { DbWizardFormFields } from '../../pages/database-form/database-form.types';
 import { Messages } from './time-selection.messages';
-import { AmPM, TimeProps, TimeValue } from './time-selection.types';
+import { AmPM, TimeProps, TimeValue, WeekDays } from './time-selection.types';
 
 export const addZeroToSingleDigit = (value: number) => {
   return value.toString().padStart(2, '0');
@@ -43,14 +45,17 @@ export const getTimeText = (
   return `${Messages.getTimeText.hours} ${minute}.`;
 };
 
-export const getCronExpressionFromFormValues = (timeProps: TimeProps): string => {
+export const getCronExpressionFromFormValues = (
+  timeProps: TimeProps
+): string => {
   const { minute, hour, amPm, onDay, weekDay, selectedTime } = timeProps;
 
   const parsedMinute = Number(minute);
   const parsedHour = Number(hour);
   const parsedDay = Number(onDay);
 
-  const hour24 = amPm === AmPM.PM ? (parsedHour === 12 ? 0 : parsedHour + 12) : parsedHour;
+  const hour24 =
+    amPm === AmPM.PM ? (parsedHour === 12 ? 0 : parsedHour + 12) : parsedHour;
 
   switch (selectedTime) {
     case TimeValue.hours:
@@ -64,4 +69,61 @@ export const getCronExpressionFromFormValues = (timeProps: TimeProps): string =>
     default:
       return CronTime.everyHourAt(5);
   }
+};
+
+const getAmPm = (hour: number): AmPM =>
+  hour === 0 || hour > 12 ? AmPM.PM : AmPM.AM;
+const getHour12 = (hour24: number): number =>
+  hour24 === 12 ? hour24 : hour24 % 12;
+const getWeekDayByNumber = (weekDay: number): WeekDays =>
+  Object.values(WeekDays)[weekDay];
+
+const getSelectedTime = (
+  hour: number,
+  dayOfMonth: number,
+  dayOfWeek: number
+): TimeValue => {
+  if (!Number.isNaN(dayOfMonth)) return TimeValue.months;
+  if (!Number.isNaN(dayOfWeek)) return TimeValue.weeks;
+  if (!Number.isNaN(hour)) return TimeValue.days;
+  return TimeValue.hours;
+};
+
+export const getFormValuesFromCronExpression = (cron: string) => {
+  const parts = cron.replace(/\s+/g, ' ').trim().split(' ');
+
+  if (parts.length !== 5) {
+    return TIME_SELECTION_DEFAULTS;
+  }
+
+  const cronObj = {
+    minute: +parts[0],
+    hour: +parts[1],
+    dayOfMonth: +parts[2],
+    month: +parts[3],
+    dayOfWeek: +parts[4],
+  };
+
+  return {
+    [DbWizardFormFields.minute]: !Number.isNaN(cronObj.minute)
+      ? cronObj.minute
+      : 0,
+    [DbWizardFormFields.hour]: !Number.isNaN(cronObj.hour)
+      ? getHour12(cronObj.hour)
+      : 12,
+    [DbWizardFormFields.amPm]: !Number.isNaN(cronObj.hour)
+      ? getAmPm(cronObj.hour)
+      : AmPM.AM,
+    [DbWizardFormFields.onDay]: !Number.isNaN(cronObj.dayOfMonth)
+      ? cronObj.dayOfMonth
+      : 1,
+    [DbWizardFormFields.weekDay]: !Number.isNaN(cronObj.dayOfWeek)
+      ? getWeekDayByNumber(cronObj.dayOfWeek)
+      : WeekDays.Mo,
+    [DbWizardFormFields.selectedTime]: getSelectedTime(
+      cronObj.hour,
+      cronObj.dayOfMonth,
+      cronObj.dayOfWeek
+    ),
+  };
 };

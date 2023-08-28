@@ -26,7 +26,6 @@ export function AutoCompleteInput<T>({
         <Autocomplete
           {...field}
           options={options}
-          freeSolo
           forcePopupIcon
           onChange={(event, newValue) => {
             field.onChange(newValue);
