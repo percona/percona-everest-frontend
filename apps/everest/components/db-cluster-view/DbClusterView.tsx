@@ -14,6 +14,7 @@
 // limitations under the License.
 
 /* eslint-disable react/prop-types */
+import React, { useMemo } from 'react';
 import {
     BorderColor,
     DeleteOutline,
@@ -23,7 +24,6 @@ import {
 import { Box, MenuItem, Stack } from '@mui/material';
 import { Table } from '@percona/ui-lib.table';
 import { type MRT_ColumnDef } from 'material-react-table';
-import React, { useMemo } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useQueryClient } from 'react-query';
 import { DbClusterTableElement } from '../../hooks/api/db-clusters/dbCluster.type';
@@ -32,7 +32,6 @@ import { Messages } from './dbClusterView.messages';
 import { DbClusterViewProps } from './dbClusterView.types';
 import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
-import { StatusProvider } from './statusProvider/StatusProvider';
 import { DbClusterStatus } from '../../types/dbCluster.types';
 import { beautifyDbClusterStatus } from './DbClusterView.utils';
 import { DbEngineType } from '../../types/dbEngines.types';
@@ -40,6 +39,8 @@ import { useDeleteDbCluster } from '../../hooks/api/db-cluster/useDeleteDbCluste
 import { useSelectedKubernetesCluster } from '../../hooks/api/kubernetesClusters/useSelectedKubernetesCluster';
 import { usePausedDbCluster } from '../../hooks/api/db-cluster/usePausedDbCluster';
 import { useRestartDbCluster } from '../../hooks/api/db-cluster/useRestartDbCluster';
+import { StatusField } from '../status-field/status-field';
+import { DB_CLUSTER_STATUS_TO_BASE_STATUS } from './DbClusterView.constants';
 
 export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
   const { combinedDataForTable, loadingAllClusters, combinedDbClusters } = useDbClusters();
@@ -108,15 +109,13 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
           text: beautifyDbClusterStatus(status),
           value: status,
         })),
-        Cell: ({ row }) => (
-          <Stack
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            gap={1}
+        Cell: ({ cell }) => (
+          <StatusField
+            status={cell.getValue<DbClusterStatus>()}
+            statusMap={DB_CLUSTER_STATUS_TO_BASE_STATUS}
           >
-            <StatusProvider status={row.original?.status} />
-          </Stack>
+            {beautifyDbClusterStatus(cell.getValue<DbClusterStatus>())}
+          </StatusField>
         ),
       },
       {
