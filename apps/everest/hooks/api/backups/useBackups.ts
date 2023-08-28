@@ -50,7 +50,7 @@ export const useCreateBackupOnDemand = (
           name: formData.name,
         },
         spec: {
-          dbClusterName: dbClusterName,
+          dbClusterName,
           backupStorageName:
             typeof formData.storageLocation === 'string'
               ? formData.storageLocation
