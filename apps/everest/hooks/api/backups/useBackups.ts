@@ -1,8 +1,13 @@
-import { useQuery, UseQueryOptions } from 'react-query';
-import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
+import {
+  useMutation,
+  UseMutationOptions,
+  useQuery,
+  UseQueryOptions,
+} from 'react-query';
+import { deleteBackupFn, getBackupsFn } from '../../../api/backups';
 import { Backup, GetBackupPayload } from '../../../types/backups.types';
-import { getBackupsFn } from '../../../api/backups';
 import { mapBackupState } from '../../../utils/backups';
+import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
 
 export const useDbBackups = (
   dbClusterName: string,
@@ -28,4 +33,13 @@ export const useDbBackups = (
       ...options,
     }
   );
+};
+
+export const useDeleteBackupStorage = (
+  options?: UseMutationOptions<any, unknown, string, unknown>
+) => {
+  const { id } = useSelectedKubernetesCluster();
+  return useMutation((backupName: string) => deleteBackupFn(id, backupName), {
+    ...options,
+  });
 };
