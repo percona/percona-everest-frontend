@@ -1,8 +1,15 @@
-import { useQuery, UseQueryOptions } from 'react-query';
-import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
+import {
+  useMutation,
+  UseMutationOptions,
+  useQuery,
+  UseQueryOptions,
+} from 'react-query';
+import { deleteBackupFn, getBackupsFn } from '../../../api/backups';
 import { Backup, GetBackupPayload } from '../../../types/backups.types';
-import { getBackupsFn } from '../../../api/backups';
 import { mapBackupState } from '../../../utils/backups';
+import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
+
+export const BACKUPS_QUERY_KEY = 'backups';
 
 export const useDbBackups = (
   dbClusterName: string,
@@ -11,7 +18,7 @@ export const useDbBackups = (
   const { id } = useSelectedKubernetesCluster();
 
   return useQuery<GetBackupPayload, unknown, Backup[]>(
-    `${dbClusterName}-backups`,
+    [BACKUPS_QUERY_KEY, dbClusterName],
     () => getBackupsFn(id, dbClusterName),
     {
       select: ({ items = [] }) =>
@@ -28,4 +35,13 @@ export const useDbBackups = (
       ...options,
     }
   );
+};
+
+export const useDeleteBackupStorage = (
+  options?: UseMutationOptions<any, unknown, string, unknown>
+) => {
+  const { id } = useSelectedKubernetesCluster();
+  return useMutation((backupName: string) => deleteBackupFn(id, backupName), {
+    ...options,
+  });
 };
