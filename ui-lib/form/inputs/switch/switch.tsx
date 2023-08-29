@@ -1,4 +1,4 @@
-import { FormControlLabel, Switch } from '@mui/material';
+import { FormControlLabel, Switch, Typography } from '@mui/material';
 import { kebabize } from '@percona/utils.string';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -8,13 +8,19 @@ export const SwitchInput = ({
   name,
   control,
   label,
+  labelCaption,
   controllerProps,
   formControlLabelProps,
 }: SwitchInputProps) => {
   const { control: contextControl } = useFormContext();
   return (
     <FormControlLabel
-      label={label}
+      label={
+        <>
+          <Typography variant='body1'>{label}</Typography>
+          {labelCaption && <Typography variant='caption'>{labelCaption}</Typography>}
+        </>
+      }
       data-testid={`switch-input-${kebabize(name)}-label`}
       control={
         <Controller

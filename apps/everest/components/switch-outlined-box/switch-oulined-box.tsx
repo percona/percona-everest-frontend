@@ -3,7 +3,6 @@ import { useTheme, Box, useMediaQuery } from '@mui/material';
 import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
 import { kebabize } from '@percona/utils.string';
 import { SwitchOutlinedBoxProps } from './switch-outlined-box.types';
-import { Label } from './label/label';
 
 const switchOutlinedBoxStyles = (theme) => ({
   borderStyle: 'solid',
@@ -23,8 +22,7 @@ export const SwitchOutlinedBox = ({
   formControlLabelProps,
   name,
   label,
-  labelHeader,
-  labelDescription,
+  labelCaption,
   children,
   rootSx,
   childrenSx,
@@ -32,14 +30,6 @@ export const SwitchOutlinedBox = ({
   const theme = useTheme();
   const isLaptop = useMediaQuery(theme.breakpoints.down('lg'));
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-  const labelComponent =
-    label ||
-    (labelHeader || labelDescription ? (
-      <Label labelHeader={labelHeader} labelDescription={labelDescription} />
-    ) : (
-      <></>
-    ));
 
   return children ? (
     <Box
@@ -55,7 +45,8 @@ export const SwitchOutlinedBox = ({
       <SwitchInput
         control={control}
         name={name}
-        label={labelComponent}
+        label={label}
+        labelCaption={labelCaption}
         controllerProps={controllerProps}
         formControlLabelProps={{
           sx: {
@@ -80,7 +71,8 @@ export const SwitchOutlinedBox = ({
       <SwitchInput
         control={control}
         name={name}
-        label={labelComponent}
+        label={label}
+        labelCaption={labelCaption}
         controllerProps={controllerProps}
         formControlLabelProps={formControlLabelProps}
       />

@@ -57,6 +57,7 @@ interface Engine {
   storage: Storage;
   type: DbEngineType;
   version?: string;
+  config?: string;
 }
 
 interface Proxy {
