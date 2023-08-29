@@ -11,6 +11,7 @@ import { DeleteDialog } from '../../../components/delete-dialog/delete-dialog';
 import { StatusField } from '../../../components/status-field/status-field';
 import { DATE_FORMAT } from '../../../constants';
 import {
+  BACKUPS_QUERY_KEY,
   useDbBackups,
   useDeleteBackupStorage,
 } from '../../../hooks/api/backups/useBackups';
@@ -28,7 +29,7 @@ export const BackupsList = () => {
     enabled: !!dbClusterName,
     refetchInterval: 10 * 1000,
   });
-
+  console.log(backups);
   const { mutate: deleteBackup } = useDeleteBackupStorage();
 
   const columns = useMemo<MRT_ColumnDef<Backup>[]>(
@@ -91,7 +92,7 @@ export const BackupsList = () => {
   const handleConfirmDelete = (backupName: string) => {
     deleteBackup(backupName, {
       onSuccess() {
-        queryClient.invalidateQueries(`${dbClusterName}-backups`);
+        queryClient.invalidateQueries([BACKUPS_QUERY_KEY, dbClusterName]);
       },
     });
   };
