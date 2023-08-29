@@ -6,7 +6,10 @@ import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 
 import { useBackupStorages } from '../../../hooks/api/backup-storages/useBackupStorages';
-import { useCreateBackupOnDemand } from '../../../hooks/api/backups/useBackups';
+import {
+  BACKUPS_QUERY_KEY,
+  useCreateBackupOnDemand,
+} from '../../../hooks/api/backups/useBackups';
 import { Messages } from '../backups.messages';
 import {
   BackupFields,
@@ -29,7 +32,7 @@ export const OnDemandBackupModal = ({
   const handleSubmit = (data: BackupFormData) => {
     createBackupOnDemand(data, {
       onSuccess() {
-        queryClient.invalidateQueries(`${dbClusterName}-backups`);
+        queryClient.invalidateQueries([BACKUPS_QUERY_KEY, dbClusterName]);
       },
     });
   };
