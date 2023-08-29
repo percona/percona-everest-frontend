@@ -405,5 +405,15 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
         },
       },
     },
+    MuiFormControlLabel: {
+      styleOverrides: {
+        root: {
+          alignItems: 'flex-start',
+          '.MuiFormControlLabel-label': {
+            paddingTop: '6px',
+          },
+        },
+      },
+    },
   },
 });

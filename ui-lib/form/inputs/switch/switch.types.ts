@@ -12,15 +12,16 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { FormControlLabelProps as MuiFormControlLabelProps, SxProps, Theme } from "@mui/material";
+import { FormControlLabelProps as MuiFormControlLabelProps } from "@mui/material";
 import { Control, UseControllerProps } from "react-hook-form";
 
-type FormControlLabelProps = MuiFormControlLabelProps & {sx?: SxProps<Theme>};
+type FormControlLabelProps = MuiFormControlLabelProps;
 
 export type SwitchInputProps = {
   control?: Control<any>;
   controllerProps?: UseControllerProps;
-  formControlLabelProps?: FormControlLabelProps;
+  formControlLabelProps?: Omit<FormControlLabelProps, 'control' | 'label'>;
   name: string;
-  label: React.ReactNode;
+  label: string;
+  labelCaption?: string;
 };

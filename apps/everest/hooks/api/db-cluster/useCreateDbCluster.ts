@@ -84,6 +84,9 @@ const formValuesToPayloadMapping = (dbPayload: DbWizardType): DbCluster => {
           class: dbPayload.storageClass!,
           size: `${dbPayload.disk}G`,
         },
+        config: dbPayload.engineParametersEnabled
+          ? dbPayload.engineParameters
+          : '',
       },
       // monitoring: {
       //   enabled: dbPayload.monitoring,
