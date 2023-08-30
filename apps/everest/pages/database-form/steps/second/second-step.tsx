@@ -185,7 +185,7 @@ export const SecondStep = () => {
                   );
                 }}
                 units="CPU"
-                dataTestId="cpu"
+                dataTestId="cpu-input"
               />
               <FormHelperText>
                 {checkResourceText(
@@ -212,7 +212,7 @@ export const SecondStep = () => {
                   );
                 }}
                 units="GB"
-                dataTestId="memory"
+                dataTestId="memory-input"
               />
               <FormHelperText>
                 {checkResourceText(
@@ -240,7 +240,7 @@ export const SecondStep = () => {
                 }}
                 error={diskCapacityExceeded}
                 units="GB"
-                dataTestId="disk"
+                dataTestId="disk-input"
                 disabled={mode === 'edit'}
               />
               <FormHelperText>
