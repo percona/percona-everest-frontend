@@ -27,7 +27,6 @@ const FormProviderWrapper = ({
 };
 
 describe('DatabasePreview', () => {
-    // TODO fix test with meaningful values
   it('should show all sections', () => {
     render(
       <FormProviderWrapper>
