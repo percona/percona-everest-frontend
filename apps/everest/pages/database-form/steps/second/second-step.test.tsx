@@ -122,7 +122,7 @@ describe('Second Step', () => {
     expect(pressedButtons[0]).toHaveValue(NumberOfNodes.oneNode);
     expect(pressedButtons[1]).toHaveValue(ResourceSize.custom);
   });
-  //TODO should be fixed
+  // TODO should be fixed
   it.skip('should show warning when the value entered by the user exceeds the maximum recommended value', async () => {
     render(
       <TestWrapper>
