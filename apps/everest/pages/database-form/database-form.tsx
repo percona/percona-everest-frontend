@@ -91,20 +91,20 @@ export const DatabasePage = () => {
   };
 
   const handleNext: React.MouseEventHandler<HTMLButtonElement> = async () => {
-      if (activeStep < steps.length - 1) {
-        const {formState} = methods;
+    if (activeStep < steps.length - 1) {
+      const { formState } = methods;
 
-        let isStepValid;
-        if (formState.errors[DbWizardFormFields.disk] && activeStep === 1) {
-          isStepValid = false;
-        } else {
-          isStepValid = await methods.trigger();
-        }
-        if (isStepValid) {
-          setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        }
+      let isStepValid;
+      if (formState.errors[DbWizardFormFields.disk] && activeStep === 1) {
+        isStepValid = false;
+      } else {
+        isStepValid = await methods.trigger();
+      }
+      if (isStepValid) {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
     }
+  };
 
   const handleBack = () => {
     if (activeStep > 0) {

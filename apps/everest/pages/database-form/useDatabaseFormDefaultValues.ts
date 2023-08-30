@@ -75,8 +75,8 @@ export const DbClusterPayloadToFormValues = (
     [DbWizardFormFields.externalAccess]:
       dbCluster?.spec?.proxy?.expose?.type === ProxyExposeType.external,
     // [DbWizardFormFields.internetFacing]: true,
-    [DbWizardFormFields.engineParametersEnabled]: !!dbCluster?.spec?.engine
-      ?.config,
+    [DbWizardFormFields.engineParametersEnabled]:
+      !!dbCluster?.spec?.engine?.config,
     [DbWizardFormFields.engineParameters]: dbCluster?.spec?.engine?.config,
     [DbWizardFormFields.sourceRanges]: dbCluster?.spec?.proxy?.expose
       ?.ipSourceRanges

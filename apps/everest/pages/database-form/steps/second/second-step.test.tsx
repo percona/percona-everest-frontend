@@ -7,8 +7,12 @@ import { NumberOfNodes, ResourceSize } from './second-step.types';
 import { DEFAULT_SIZES } from './second-step.const';
 import { DbWizardFormFields } from '../../database-form.types';
 
-jest.mock('../../../../hooks/api/kubernetesClusters/useSelectedKubernetesCluster');
-jest.mock('../../../../hooks/api/kubernetesClusters/useKubernetesClusterResourcesInfo');
+jest.mock(
+  '../../../../hooks/api/kubernetesClusters/useSelectedKubernetesCluster'
+);
+jest.mock(
+  '../../../../hooks/api/kubernetesClusters/useKubernetesClusterResourcesInfo'
+);
 
 interface FormProviderWrapperProps {
   handleSubmit: jest.Mock<any, any>;
@@ -122,7 +126,7 @@ describe('Second Step', () => {
     expect(pressedButtons[0]).toHaveValue(NumberOfNodes.oneNode);
     expect(pressedButtons[1]).toHaveValue(ResourceSize.custom);
   });
-  //TODO should be fixed
+  // TODO should be fixed
   it.skip('should show warning when the value entered by the user exceeds the maximum recommended value', async () => {
     render(
       <TestWrapper>

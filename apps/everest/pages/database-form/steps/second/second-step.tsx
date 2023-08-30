@@ -41,7 +41,7 @@ export const SecondStep = () => {
       const processedValue =
         fieldLabel === Messages.labels.cpu
           ? Math.floor(+value / 1000)
-          : Math.floor(+value / 1024**3);
+          : Math.floor(+value / 1024 ** 3);
 
       if (exceedFlag) {
         return Messages.alerts.resourcesCapacityExceeding(
@@ -49,7 +49,8 @@ export const SecondStep = () => {
           processedValue,
           units
         );
-      } return Messages.labels.estimated(processedValue, units);
+      }
+      return Messages.labels.estimated(processedValue, units);
     }
     return '';
   };
@@ -65,10 +66,10 @@ export const SecondStep = () => {
     ? cpu * 1000 > resourcesInfo?.available.cpuMillis
     : !resourcesInfoLoading;
   const memoryCapacityExceeded = resourcesInfo
-    ? memory * 1024**3 > resourcesInfo?.available.memoryBytes
+    ? memory * 1024 ** 3 > resourcesInfo?.available.memoryBytes
     : !resourcesInfoLoading;
   const diskCapacityExceeded = resourcesInfo?.available?.diskSize
-    ? disk * 1024**3 > resourcesInfo?.available.diskSize
+    ? disk * 1024 ** 3 > resourcesInfo?.available.diskSize
     : false;
 
   useEffect(() => {
@@ -190,7 +191,7 @@ export const SecondStep = () => {
               <FormHelperText>
                 {checkResourceText(
                   resourcesInfo?.available?.cpuMillis,
-                  "CPU",
+                  'CPU',
                   Messages.labels.cpu,
                   cpuCapacityExceeded
                 )}
@@ -217,7 +218,7 @@ export const SecondStep = () => {
               <FormHelperText>
                 {checkResourceText(
                   resourcesInfo?.available?.memoryBytes,
-                  "GB",
+                  'GB',
                   Messages.labels.memory,
                   memoryCapacityExceeded
                 )}
