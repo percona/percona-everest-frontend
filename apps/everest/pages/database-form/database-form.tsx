@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import { Stepper } from '@percona/ui-lib.stepper';
 import { DialogTitle } from '@percona/ui-lib.dialog-title';
-import React, { useMemo, useState, useEffect, useCallback } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Messages } from './database-form.messages';
@@ -59,8 +59,6 @@ export const DatabasePage = () => {
     defaultValues,
   });
 
-  const {formState} = methods;
-
   useEffect(() => {
     if (mode === 'edit') {
       methods.reset(defaultValues);
@@ -92,8 +90,7 @@ export const DatabasePage = () => {
     }
   };
 
-  const handleNext: React.MouseEventHandler<HTMLButtonElement> =
-    useCallback(async () => {
+  const handleNext: React.MouseEventHandler<HTMLButtonElement> = async () => {
       if (activeStep < steps.length - 1) {
         const {formState} = methods;
 
@@ -107,7 +104,7 @@ export const DatabasePage = () => {
           setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }
       }
-    }, [formState]);
+    }
 
   const handleBack = () => {
     if (activeStep > 0) {
