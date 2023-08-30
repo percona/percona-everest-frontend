@@ -37,7 +37,7 @@ const FormProviderWrapper = ({
 };
 
 describe('Second Step', () => {
-  it.skip('should set default values', async () => {
+  it('should set default values', async () => {
     const handleSubmitMock = jest.fn();
 
     render(
@@ -64,7 +64,7 @@ describe('Second Step', () => {
       expect.anything()
     );
   });
-  it.skip('should change input values while switching resource size per node tabs', async () => {
+  it('should change input values while switching resource size per node tabs', async () => {
     render(
       <TestWrapper>
         <FormProviderWrapper handleSubmit={jest.fn()}>
@@ -97,7 +97,7 @@ describe('Second Step', () => {
     );
   });
 
-  it.skip('should set custom tab when resource size per node input is changed by user', async () => {
+  it('should set custom tab when resource size per node input is changed by user', async () => {
     render(
       <TestWrapper>
         <FormProviderWrapper handleSubmit={jest.fn()}>
@@ -122,6 +122,7 @@ describe('Second Step', () => {
     expect(pressedButtons[0]).toHaveValue(NumberOfNodes.oneNode);
     expect(pressedButtons[1]).toHaveValue(ResourceSize.custom);
   });
+  //TODO should be fixed
   it.skip('should show warning when the value entered by the user exceeds the maximum recommended value', async () => {
     render(
       <TestWrapper>
@@ -149,6 +150,7 @@ describe('Second Step', () => {
     await waitFor(() =>
       fireEvent.change(cpu, { target: { value: +maxCPU + 1 } })
     );
+
     expect(screen.getByTestId('resources-exceeding-alert')).toBeInTheDocument();
   });
 });
