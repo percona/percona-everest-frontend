@@ -16,6 +16,7 @@ import {
   useDeleteBackupStorage,
 } from '../../../hooks/api/backups/useBackups';
 import { Backup, BackupStatus } from '../../../types/backups.types';
+import { OnDemandBackupModal } from '../on-demand-backup-modal/on-demand-backup-modal';
 import { BACKUP_STATUS_TO_BASE_STATUS } from './backups-list.constants';
 import { Messages } from './backups-list.messages';
 
@@ -24,7 +25,7 @@ export const BackupsList = () => {
   const [selectedBackup, setSelectedBackup] = useState('');
   const queryClient = useQueryClient();
   const { dbClusterName } = useParams();
-
+  const [openCreateBackupModal, setOpenCreateBackupModal] = useState(false);
   const { data: backups = [] } = useDbBackups(dbClusterName!, {
     enabled: !!dbClusterName,
     refetchInterval: 10 * 1000,
@@ -81,9 +82,13 @@ export const BackupsList = () => {
   };
 
   const handleManualBackup = (handleClose: () => void) => {
+    setOpenCreateBackupModal(true);
     handleClose();
   };
 
+  const handleCloseBackupModal = () => {
+    setOpenCreateBackupModal(false);
+  };
   const handleCloseDeleteDialog = () => {
     setOpenDeleteDialog(false);
   };
@@ -112,7 +117,8 @@ export const BackupsList = () => {
               >
                 {Messages.now}
               </MenuItem>,
-              <MenuItem key="schedule">{Messages.schedule}</MenuItem>,
+              // TODO: Uncomment when ready
+              // <MenuItem key="schedule">{Messages.schedule}</MenuItem>,
             ]}
           </MenuButton>
         )}
@@ -130,6 +136,10 @@ export const BackupsList = () => {
             {Messages.delete}
           </MenuItem>,
         ]}
+      />
+      <OnDemandBackupModal
+        open={openCreateBackupModal}
+        handleClose={handleCloseBackupModal}
       />
       {openDeleteDialog && (
         <DeleteDialog

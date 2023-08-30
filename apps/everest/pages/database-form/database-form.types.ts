@@ -14,14 +14,14 @@
 // limitations under the License.
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { z } from 'zod';
-import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
-import { Messages } from './database-form.messages';
-import { IP_REGEX } from '../../constants';
 import {
   AmPM,
   TimeValue,
   WeekDays,
 } from '../../components/time-selection/time-selection.types';
+import { IP_REGEX } from '../../constants';
+import { Messages } from './database-form.messages';
+import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
 
 export enum DbWizardFormFields {
   dbName = 'dbName',

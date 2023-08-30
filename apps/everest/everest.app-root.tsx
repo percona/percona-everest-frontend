@@ -9,7 +9,6 @@ import { EverestApp } from './app';
 import { Backups } from './pages/backups/backups';
 import { BackupsList } from './pages/backups/backups-list/backups-list';
 import { BackupsTabs } from './pages/backups/backups.types';
-import { GeneralInformation } from './pages/backups/general-information/general-information';
 import { DatabasesPage } from './pages/databases/databases';
 import { DatabasePage } from './pages/database-form/database-form';
 import { Settings } from './pages/settings/settings';
@@ -46,10 +45,11 @@ const router = createBrowserRouter([
             path: BackupsTabs.backups,
             element: <BackupsList />,
           },
-          {
-            path: BackupsTabs.generalInformation,
-            element: <GeneralInformation />,
-          },
+          // TODO: uncomment when ready
+          // {
+          //   path: BackupsTabs.generalInformation,
+          //   element: <GeneralInformation />,
+          // },
         ],
       },
       {

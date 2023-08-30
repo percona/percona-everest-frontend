@@ -4,7 +4,12 @@ import {
   useQuery,
   UseQueryOptions,
 } from 'react-query';
-import { deleteBackupFn, getBackupsFn } from '../../../api/backups';
+import {
+  createBackupOnDemand,
+  deleteBackupFn,
+  getBackupsFn,
+} from '../../../api/backups';
+import { BackupFormData } from '../../../pages/backups/on-demand-backup-modal/on-demand-backup-modal.types';
 import { Backup, GetBackupPayload } from '../../../types/backups.types';
 import { mapBackupState } from '../../../utils/backups';
 import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
@@ -34,6 +39,31 @@ export const useDbBackups = (
         ),
       ...options,
     }
+  );
+};
+
+export const useCreateBackupOnDemand = (
+  dbClusterName: string,
+  options?: UseMutationOptions<any, unknown, BackupFormData, unknown>
+) => {
+  const { id: clusterId } = useSelectedKubernetesCluster();
+  return useMutation(
+    (formData: BackupFormData) =>
+      createBackupOnDemand(clusterId, {
+        apiVersion: 'everest.percona.com/v1alpha1',
+        kind: 'DatabaseClusterBackup',
+        metadata: {
+          name: formData.name,
+        },
+        spec: {
+          dbClusterName,
+          backupStorageName:
+            typeof formData.storageLocation === 'string'
+              ? formData.storageLocation
+              : formData.storageLocation!.name,
+        },
+      }),
+    { ...options }
   );
 };
 

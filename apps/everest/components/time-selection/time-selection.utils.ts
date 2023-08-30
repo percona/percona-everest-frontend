@@ -14,10 +14,10 @@
 // limitations under the License.
 // import { CronTime } from 'cron-time-generator';
 import CronTime from 'cron-time-generator';
+import { TIME_SELECTION_DEFAULTS } from '../../pages/database-form/database-form.constants';
+import { DbWizardFormFields } from '../../pages/database-form/database-form.types';
 import { Messages } from './time-selection.messages';
 import { AmPM, TimeProps, TimeValue, WeekDays } from './time-selection.types';
-import { DbWizardFormFields } from '../../pages/database-form/database-form.types';
-import { TIME_SELECTION_DEFAULTS } from '../../pages/database-form/database-form.constants';
 
 export const addZeroToSingleDigit = (value: number) => {
   return value.toString().padStart(2, '0');

@@ -7,6 +7,7 @@ import {
   DialogActions,
   DialogContent,
   FormGroup,
+  Typography,
 } from '@mui/material';
 import { DialogTitle } from '@percona/ui-lib.dialog-title';
 import {
@@ -28,6 +29,8 @@ export const FormDialog = <T extends FieldValues>({
   cancelMessage = 'Cancel',
   submitMessage,
   validationMode = 'onChange',
+  subHead,
+  size = 'L',
 }: FormDialogProps<T>) => {
   const methods = useForm<T>({
     mode: validationMode,
@@ -35,15 +38,23 @@ export const FormDialog = <T extends FieldValues>({
     defaultValues,
   });
 
+  const modalWidth = size === 'L' ? '480px' : '640px';
+
   const handleSubmit: SubmitHandler<T> = (data) => {
     onSubmit(data);
     closeModal();
   };
 
   return (
-    <Dialog open={isOpen} onClose={closeModal}>
+    <Dialog
+      PaperProps={{ sx: { minWidth: modalWidth } }}
+      open={isOpen}
+      onClose={closeModal}
+    >
       <DialogTitle onClose={closeModal}>{headerMessage}</DialogTitle>
-      <DialogContent sx={{ width: '480px' }}>
+      <DialogContent sx={{ width: modalWidth }}>
+        {/* @ts-ignore */}
+        <Typography variant="subHead">{subHead}</Typography>
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(handleSubmit)}>
             <FormGroup>{children}</FormGroup>

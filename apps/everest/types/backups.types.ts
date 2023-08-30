@@ -30,3 +30,15 @@ export enum BackupStatus {
   IN_PROGRESS = 'In progress',
   UNKNOWN = 'Unknown',
 }
+
+export type BackupPayload = {
+  apiVersion: 'everest.percona.com/v1alpha1';
+  kind: 'DatabaseClusterBackup';
+  metadata: {
+    name: string;
+  };
+  spec: {
+    dbClusterName: string;
+    backupStorageName: string;
+  };
+};

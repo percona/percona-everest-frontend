@@ -14,14 +14,14 @@
 // limitations under the License.
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { DefaultValues } from 'react-hook-form';
-import { DbWizardFormFields, DbWizardType } from './database-form.types';
-import { DEFAULT_SIZES } from './steps/second/second-step.const';
-import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
 import {
   AmPM,
   TimeValue,
   WeekDays,
 } from '../../components/time-selection/time-selection.types';
+import { DbWizardFormFields, DbWizardType } from './database-form.types';
+import { DEFAULT_SIZES } from './steps/second/second-step.const';
+import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
 
 // TODO re-add steps after API is ready
 export const TIME_SELECTION_DEFAULTS = {

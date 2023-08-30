@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { GetDbClusterPayload } from '../../types/dbCluster.types';
 
 test.describe('DB Cluster creation', () => {
