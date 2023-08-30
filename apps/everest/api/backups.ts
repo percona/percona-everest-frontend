@@ -20,6 +20,13 @@ export const createBackupOnDemand = async (
     `kubernetes/${clusterId}/database-cluster-backups`,
     payload
   );
+  return response.data;
+};
+
+export const deleteBackupFn = async (clusterId: string, backupName: string) => {
+  const response = await api.delete(
+    `kubernetes/${clusterId}/database-cluster-backups/${backupName}`
+  );
 
   return response.data;
 };

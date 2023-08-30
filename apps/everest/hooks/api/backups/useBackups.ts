@@ -4,7 +4,11 @@ import {
   useQuery,
   UseQueryOptions,
 } from 'react-query';
-import { createBackupOnDemand, getBackupsFn } from '../../../api/backups';
+import {
+  createBackupOnDemand,
+  deleteBackupFn,
+  getBackupsFn,
+} from '../../../api/backups';
 import { BackupFormData } from '../../../pages/backups/on-demand-backup-modal/on-demand-backup-modal.types';
 import { Backup, GetBackupPayload } from '../../../types/backups.types';
 import { mapBackupState } from '../../../utils/backups';
@@ -61,4 +65,13 @@ export const useCreateBackupOnDemand = (
       }),
     { ...options }
   );
+};
+
+export const useDeleteBackupStorage = (
+  options?: UseMutationOptions<any, unknown, string, unknown>
+) => {
+  const { id } = useSelectedKubernetesCluster();
+  return useMutation((backupName: string) => deleteBackupFn(id, backupName), {
+    ...options,
+  });
 };
