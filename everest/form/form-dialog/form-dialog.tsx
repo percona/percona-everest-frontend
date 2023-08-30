@@ -53,6 +53,7 @@ export const FormDialog = <T extends FieldValues>({
     >
       <DialogTitle onClose={closeModal}>{headerMessage}</DialogTitle>
       <DialogContent sx={{ width: modalWidth }}>
+        {/* @ts-ignore */}
         <Typography variant="subHead">{subHead}</Typography>
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(handleSubmit)}>
