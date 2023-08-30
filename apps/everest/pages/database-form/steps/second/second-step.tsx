@@ -24,7 +24,7 @@ import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { useKubernetesClusterResourcesInfo } from '../../../../hooks/api/kubernetesClusters/useKubernetesClusterResourcesInfo';
 
 export const SecondStep = () => {
-  const { watch, setValue } = useFormContext();
+  const { watch, setValue, setError, clearErrors } = useFormContext();
   const mode = useDatabasePageMode();
   const { data: resourcesInfo, isFetching: resourcesInfoLoading } =
     useKubernetesClusterResourcesInfo();
@@ -41,14 +41,15 @@ export const SecondStep = () => {
       const processedValue =
         fieldLabel === Messages.labels.cpu
           ? Math.floor(+value / 1000)
-          : Math.floor(+value / Math.pow(1024, 3));
+          : Math.floor(+value / 1024**3);
+
       if (exceedFlag) {
         return Messages.alerts.resourcesCapacityExceeding(
           fieldLabel,
           processedValue,
           units
         );
-      } else return Messages.labels.estimated(processedValue, units);
+      } return Messages.labels.estimated(processedValue, units);
     }
     return '';
   };
@@ -61,13 +62,13 @@ export const SecondStep = () => {
   const disk = watch(DbWizardFormFields.disk);
 
   const cpuCapacityExceeded = resourcesInfo
-    ? cpu * 1000 > resourcesInfo?.capacity.cpuMillis
+    ? cpu * 1000 > resourcesInfo?.available.cpuMillis
     : !resourcesInfoLoading;
   const memoryCapacityExceeded = resourcesInfo
-    ? memory * Math.pow(1024, 3) > resourcesInfo?.capacity.memoryBytes
+    ? memory * 1024**3 > resourcesInfo?.available.memoryBytes
     : !resourcesInfoLoading;
-  const diskCapacityExceeded = resourcesInfo?.capacity?.diskSize
-    ? disk * Math.pow(1024, 3) > resourcesInfo?.capacity.diskSize
+  const diskCapacityExceeded = resourcesInfo?.available?.diskSize
+    ? disk * 1024**3 > resourcesInfo?.available.diskSize
     : false;
 
   useEffect(() => {
@@ -86,10 +87,11 @@ export const SecondStep = () => {
     }
   }, [resourceSizePerNode]);
 
-  //TODO
-  // useEffect(() => {
-  //   setError(DbWizardFormFields.disk, { type: 'custom', message: 'fff' });
-  // }, [diskCapacityExceeded]);
+  useEffect(() => {
+    if (diskCapacityExceeded) {
+      setError(DbWizardFormFields.disk, { type: 'custom', message: 'fff' });
+    } else clearErrors(DbWizardFormFields.disk);
+  }, [diskCapacityExceeded]);
 
   return (
     <>
@@ -182,13 +184,13 @@ export const SecondStep = () => {
                     setValue
                   );
                 }}
-                units={'CPU'}
+                units="CPU"
                 dataTestId="cpu"
               />
               <FormHelperText>
                 {checkResourceText(
                   resourcesInfo?.available?.cpuMillis,
-                  'CPU',
+                  "CPU",
                   Messages.labels.cpu,
                   cpuCapacityExceeded
                 )}
@@ -209,13 +211,13 @@ export const SecondStep = () => {
                     setValue
                   );
                 }}
-                units={'GB'}
+                units="GB"
                 dataTestId="memory"
               />
               <FormHelperText>
                 {checkResourceText(
                   resourcesInfo?.available?.memoryBytes,
-                  'GB',
+                  "GB",
                   Messages.labels.memory,
                   memoryCapacityExceeded
                 )}
@@ -236,7 +238,8 @@ export const SecondStep = () => {
                     setValue
                   );
                 }}
-                units={'GB'}
+                error={diskCapacityExceeded}
+                units="GB"
                 dataTestId="disk"
                 disabled={mode === 'edit'}
               />
