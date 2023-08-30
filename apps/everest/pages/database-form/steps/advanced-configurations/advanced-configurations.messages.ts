@@ -16,14 +16,25 @@ import { SOURCE_RANGE_PLACEHOLDER } from '../../../../constants';
 
 // limitations under the License.
 export const Messages = {
-  externalAccess: 'External Access',
+  advanced: 'Advanced Configurations',
   caption: `
     Exposing your database to the internet poses severe risks, including unauthorized access, data breaches,
     theft of sensitive information, data manipulation, compliance violations, legal consequences, and reputational damage.
     Secure your database with strong controls, encryption, and firewalls. Use secure remote access, regularly back up data, and conduct security audits.
   `,
-  enableExternalAccess: 'Enable External Access',
+  enableExternalAccess: {
+    title: 'Enable External Access',
+    caption: `
+      Enable this to make this database available outside of the Kubernetes cluster network.
+      Exposing your database to remote access poses severe risks, including unauthorized access, data breaches and compliance violations.
+    `,
+  },
   internetFacing: 'Internet Facing',
   sourceRange: 'Source Range',
   sourceRangePlaceholder: SOURCE_RANGE_PLACEHOLDER,
+  engineParameters: {
+    title: 'Database engine parameters',
+    caption:
+      'Configure specific values to optimize performance, security, and functionality according to your requirements.',
+  },
 };

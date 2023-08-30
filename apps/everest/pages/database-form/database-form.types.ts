@@ -14,14 +14,14 @@
 // limitations under the License.
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { z } from 'zod';
-import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
-import { Messages } from './database-form.messages';
-import { IP_REGEX } from '../../constants';
 import {
   AmPM,
   TimeValue,
   WeekDays,
 } from '../../components/time-selection/time-selection.types';
+import { IP_REGEX } from '../../constants';
+import { Messages } from './database-form.messages';
+import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
 
 export enum DbWizardFormFields {
   dbName = 'dbName',
@@ -48,6 +48,8 @@ export enum DbWizardFormFields {
   externalAccess = 'externalAccess',
   internetFacing = 'internetFacing',
   sourceRanges = 'sourceRanges',
+  engineParametersEnabled = 'engineParametersEnabled',
+  engineParameters = 'engineParameters',
   monitoring = 'monitoring',
   endpoint = 'endpoint',
 }
@@ -132,13 +134,15 @@ const stepThreeSchema = z
     }
   });
 
-const stepFourSchema = z
+const advancedConfigurationsSchema = z
   .object({
     [DbWizardFormFields.externalAccess]: z.boolean(),
     // internetFacing: z.boolean(),
     [DbWizardFormFields.sourceRanges]: z.array(
       z.object({ sourceRange: z.string().optional() })
     ),
+    [DbWizardFormFields.engineParametersEnabled]: z.boolean(),
+    [DbWizardFormFields.engineParameters]: z.string().optional(),
   })
   .passthrough()
   .superRefine(({ sourceRanges }, ctx) => {
@@ -182,14 +186,14 @@ export const dbWizardSchema = [
   stepOneSchema,
   stepTwoSchema,
   stepThreeSchema,
-  stepFourSchema,
+  advancedConfigurationsSchema,
   // stepFiveSchema,
 ];
 
 const superset = stepOneSchema
   .and(stepTwoSchema)
   .and(stepThreeSchema)
-  .and(stepFourSchema);
+  .and(advancedConfigurationsSchema);
 // .and(stepFiveSchema);
 
 export type DbWizardType = z.infer<typeof superset>;

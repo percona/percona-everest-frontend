@@ -83,14 +83,14 @@ export const DefaultConfigurations = () => {
             <SwitchOutlinedBox
               name={DefaultConfigurationsFields.monitoring}
               control={methods.control}
-              labelHeader={Messages.monitoring}
-              labelDescription={Messages.monitoringMessage}
+              label={Messages.monitoring}
+              labelCaption={Messages.monitoringMessage}
             />
             <SwitchOutlinedBox
               name={DefaultConfigurationsFields.backupsEnabled}
               control={methods.control}
-              labelHeader={Messages.backups}
-              labelDescription={Messages.backupsMessage}
+              label={Messages.backups}
+              labelCaption={Messages.backupsMessage}
               childrenSx={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -127,8 +127,8 @@ export const DefaultConfigurations = () => {
             <SwitchOutlinedBox
               name={DefaultConfigurationsFields.externalAccess}
               control={methods.control}
-              labelHeader={Messages.externalAccess}
-              labelDescription={Messages.externalAccessMessage}
+              label={Messages.externalAccess}
+              labelCaption={Messages.externalAccessMessage}
               childrenSx={{
                 flexDirection: 'column',
                 display: 'flex',

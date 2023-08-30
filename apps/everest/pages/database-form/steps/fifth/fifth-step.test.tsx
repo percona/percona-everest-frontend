@@ -12,7 +12,7 @@ const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
   return <FormProvider {...methods}>{children}</FormProvider>;
 };
 
-describe('FourthStep', () => {
+describe('AdvancedConfigurations', () => {
   it("should render only monitoring input if it's off", () => {
     render(
       <TestWrapper>

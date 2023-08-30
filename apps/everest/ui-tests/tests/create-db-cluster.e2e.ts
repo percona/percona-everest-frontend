@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { GetDbClusterPayload } from '../../types/dbCluster.types';
 
 test.describe('DB Cluster creation', () => {
@@ -126,7 +126,7 @@ test.describe('DB Cluster creation', () => {
     await page.getByTestId('db-wizard-continue-button').click();
 
     await expect(
-      page.getByRole('heading', { name: 'External Access' })
+      page.getByRole('heading', { name: 'Advanced Configurations' })
     ).toBeVisible();
     await page.getByLabel('Enable External Access').check();
     expect(
@@ -139,6 +139,15 @@ test.describe('DB Cluster creation', () => {
     await page
       .getByTestId('text-input-source-ranges.1.source-range')
       .fill('192.168.1.0');
+
+    await page.getByLabel('Database engine parameters').check();
+    expect(
+      await page.getByLabel('Database engine parameters').isChecked()
+    ).toBeTruthy();
+
+    await page
+      .getByTestId('text-input-engine-parameters')
+      .fill('max_alllowed_packet=128M');
     await page.getByTestId('db-wizard-submit-button').click();
 
     await expect(page.getByTestId('db-wizard-goto-db-clusters')).toBeVisible();
@@ -255,7 +264,7 @@ test.describe('DB Cluster creation', () => {
     await page.getByTestId('db-wizard-continue-button').click();
 
     await expect(
-      page.getByRole('heading', { name: 'External Access' })
+      page.getByRole('heading', { name: 'Advanced Configurations' })
     ).toBeVisible();
 
     await page.getByTestId('db-wizard-cancel-button').click();

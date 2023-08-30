@@ -15,6 +15,7 @@ export function AutoCompleteInput<T>({
   textFieldProps,
   options,
   loading = false,
+  isRequired = false,
 }: AutoCompleteInputProps<T>) {
   const { control: contextControl } = useFormContext();
   const content = (
@@ -63,7 +64,7 @@ export function AutoCompleteInput<T>({
   );
 
   return label ? (
-    <LabeledContent label={label} {...labelProps}>
+    <LabeledContent label={label} isRequired={isRequired} {...labelProps}>
       {content}
     </LabeledContent>
   ) : (

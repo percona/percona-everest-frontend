@@ -1,7 +1,7 @@
+import { Stack } from '@mui/material';
 import { UknownIcon } from '@percona/ui-lib.icons.status';
 import React from 'react';
-import { Stack } from '@mui/material';
-import { StatusFieldProps, BaseStatus } from './status-field.types';
+import { BaseStatus, StatusFieldProps } from './status-field.types';
 import { STATUS_TO_ICON } from './status-field.utils';
 
 export function StatusField<T extends string | number | symbol>({
