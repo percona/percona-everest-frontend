@@ -89,7 +89,7 @@ export const SecondStep = () => {
 
   useEffect(() => {
     if (diskCapacityExceeded) {
-      setError(DbWizardFormFields.disk, { type: 'custom', message: 'fff' });
+      setError(DbWizardFormFields.disk, { type: 'custom' });
     } else clearErrors(DbWizardFormFields.disk);
   }, [diskCapacityExceeded]);
 
