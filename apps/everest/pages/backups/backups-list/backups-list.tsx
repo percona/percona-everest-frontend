@@ -9,7 +9,7 @@ import { MRT_ColumnDef } from 'material-react-table';
 import React, { useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
-import { DeleteDialog } from '../../../components/delete-dialog/delete-dialog';
+import { ConfirmDialog } from '../../../components/confirm-dialog/confirm-dialog';
 import { StatusField } from '../../../components/status-field/status-field';
 import { DATE_FORMAT } from '../../../constants';
 import {
@@ -198,7 +198,7 @@ export const BackupsList = () => {
         handleClose={handleCloseBackupModal}
       />
       {openDeleteDialog && (
-        <DeleteDialog
+        <ConfirmDialog
           isOpen={openDeleteDialog}
           selectedId={selectedBackup}
           closeModal={handleCloseDeleteDialog}
@@ -206,10 +206,10 @@ export const BackupsList = () => {
           handleConfirm={handleConfirmDelete}
         >
           {Messages.deleteDialog.content}
-        </DeleteDialog>
+        </ConfirmDialog>
       )}
       {openRestoreDialog && (
-        <DeleteDialog
+        <ConfirmDialog
           isOpen={openRestoreDialog}
           selectedId={selectedBackup}
           closeModal={handleCloseRestoreDialog}
@@ -218,10 +218,10 @@ export const BackupsList = () => {
           submitMessage={Messages.restoreDialog.submitButton}
         >
           {Messages.restoreDialog.content}
-        </DeleteDialog>
+        </ConfirmDialog>
       )}
       {openRestoreToNewDbDialog && (
-        <DeleteDialog
+        <ConfirmDialog
           isOpen={openRestoreToNewDbDialog}
           selectedId={selectedBackup}
           closeModal={handleCloseRestoreToNewDbDialog}
@@ -230,7 +230,7 @@ export const BackupsList = () => {
           submitMessage={Messages.restoreDialogToNewDb.submitButton}
         >
           {Messages.restoreDialogToNewDb.content}
-        </DeleteDialog>
+        </ConfirmDialog>
       )}
     </>
   );
