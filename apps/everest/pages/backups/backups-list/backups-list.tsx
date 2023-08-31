@@ -139,7 +139,7 @@ export const BackupsList = () => {
 
   const handleConfirmRestoreToNewDb = (backupName: string) => {
     navigate('/databases/new', {
-      state: { selectedDbCluster: dbClusterName!, backupName: backupName },
+      state: { selectedDbCluster: dbClusterName!, backupName },
     });
   };
 
