@@ -4,8 +4,8 @@ import { Table } from '@percona/ui-lib.table';
 import { type MRT_ColumnDef } from 'material-react-table';
 import React, { useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
+import { ConfirmDialog } from '../../../components/confirm-dialog/confirm-dialog';
 import { LabelValue } from '../../../components/db-cluster-view/expandedRow/LabelValue';
-import { DeleteDialog } from '../../../components/delete-dialog/delete-dialog';
 import {
   BACKUP_STORAGES_QUERY_KEY,
   useBackupStorages,
@@ -218,7 +218,7 @@ export const StorageLocations = () => {
         />
       )}
       {openDeleteDialog && (
-        <DeleteDialog
+        <ConfirmDialog
           isOpen={openDeleteDialog}
           selectedId={selectedStorageId}
           closeModal={handleCloseDeleteDialog}
@@ -226,7 +226,7 @@ export const StorageLocations = () => {
           handleConfirm={handleConfirmDelete}
         >
           {Messages.deleteDialog.content}
-        </DeleteDialog>
+        </ConfirmDialog>
       )}
     </>
   );

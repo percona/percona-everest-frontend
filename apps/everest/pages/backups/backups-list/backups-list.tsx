@@ -1,4 +1,6 @@
 import { Delete } from '@mui/icons-material';
+import AddIcon from '@mui/icons-material/Add';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { MenuItem } from '@mui/material';
 import { MenuButton } from '@percona/ui-lib.menu-button';
 import { Table } from '@percona/ui-lib.table';
@@ -6,6 +8,8 @@ import { format } from 'date-fns';
 import { MRT_ColumnDef } from 'material-react-table';
 import React, { useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ConfirmDialog } from '../../../components/confirm-dialog/confirm-dialog';
 import { useParams, Link } from 'react-router-dom';
 import { DeleteDialog } from '../../../components/delete-dialog/delete-dialog';
 import { StatusField } from '../../../components/status-field/status-field';
@@ -15,13 +19,18 @@ import {
   useDbBackups,
   useDeleteBackupStorage,
 } from '../../../hooks/api/backups/useBackups';
+import { useDbClusterRestore } from '../../../hooks/api/restores/useDbClusterRestore';
 import { Backup, BackupStatus } from '../../../types/backups.types';
 import { OnDemandBackupModal } from '../on-demand-backup-modal/on-demand-backup-modal';
 import { BACKUP_STATUS_TO_BASE_STATUS } from './backups-list.constants';
 import { Messages } from './backups-list.messages';
 
 export const BackupsList = () => {
+  const navigate = useNavigate();
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [openRestoreDialog, setOpenRestoreDialog] = useState(false);
+  const [openRestoreToNewDbDialog, setOpenRestoreToNewDbDialog] =
+    useState(false);
   const [selectedBackup, setSelectedBackup] = useState('');
   const queryClient = useQueryClient();
   const { dbClusterName } = useParams();
@@ -31,6 +40,7 @@ export const BackupsList = () => {
     refetchInterval: 10 * 1000,
   });
   const { mutate: deleteBackup } = useDeleteBackupStorage();
+  const { mutate: restoreBackup } = useDbClusterRestore(dbClusterName!);
 
   const columns = useMemo<MRT_ColumnDef<Backup>[]>(
     () => [
@@ -101,6 +111,41 @@ export const BackupsList = () => {
     });
   };
 
+  const handleRestoreBackup = (backupName: string) => {
+    setSelectedBackup(backupName);
+    setOpenRestoreDialog(true);
+  };
+
+  const handleCloseRestoreDialog = () => {
+    setOpenRestoreDialog(false);
+  };
+
+  const handleConfirmRestore = (backupName: string) => {
+    restoreBackup(
+      { backupName },
+      {
+        onSuccess() {
+          navigate('/databases');
+        },
+      }
+    );
+  };
+
+  const handleRestoreToNewDbBackup = (backupName: string) => {
+    setSelectedBackup(backupName);
+    setOpenRestoreToNewDbDialog(true);
+  };
+
+  const handleCloseRestoreToNewDbDialog = () => {
+    setOpenRestoreToNewDbDialog(false);
+  };
+
+  const handleConfirmRestoreToNewDb = (backupName: string) => {
+    navigate('/databases/new', {
+      state: { selectedDbCluster: dbClusterName!, backupName },
+    });
+  };
+
   return (
     <>
       <Table
@@ -125,7 +170,29 @@ export const BackupsList = () => {
         enableRowActions
         renderRowActionMenuItems={({ row, closeMenu }) => [
           <MenuItem
+            key={0}
+            onClick={() => {
+              handleRestoreBackup(row.original.name);
+              closeMenu();
+            }}
+            sx={{ m: 0, display: 'flex', gap: 1 }}
+          >
+            <RestartAltIcon />
+            {Messages.restore}
+          </MenuItem>,
+          <MenuItem
             key={1}
+            onClick={() => {
+              handleRestoreToNewDbBackup(row.original.name);
+              closeMenu();
+            }}
+            sx={{ m: 0, display: 'flex', gap: 1 }}
+          >
+            <AddIcon />
+            {Messages.restoreToNewDb}
+          </MenuItem>,
+          <MenuItem
+            key={2}
             onClick={() => {
               handleDeleteBackup(row.original.name);
               closeMenu();
@@ -135,15 +202,6 @@ export const BackupsList = () => {
             <Delete />
             {Messages.delete}
           </MenuItem>,
-          <MenuItem
-            key={2}
-            component={Link}
-            to="/databases/new"
-            state={{ selectedDbCluster: row.original.dbClusterName, backupName: row.original.name }}
-            sx={{ m: 0, display: 'flex', gap: 1 }}
-          >
-            {Messages.now}
-          </MenuItem>,
         ]}
       />
       <OnDemandBackupModal
@@ -151,7 +209,7 @@ export const BackupsList = () => {
         handleClose={handleCloseBackupModal}
       />
       {openDeleteDialog && (
-        <DeleteDialog
+        <ConfirmDialog
           isOpen={openDeleteDialog}
           selectedId={selectedBackup}
           closeModal={handleCloseDeleteDialog}
@@ -159,7 +217,31 @@ export const BackupsList = () => {
           handleConfirm={handleConfirmDelete}
         >
           {Messages.deleteDialog.content}
-        </DeleteDialog>
+        </ConfirmDialog>
+      )}
+      {openRestoreDialog && (
+        <ConfirmDialog
+          isOpen={openRestoreDialog}
+          selectedId={selectedBackup}
+          closeModal={handleCloseRestoreDialog}
+          headerMessage={Messages.restoreDialog.header}
+          handleConfirm={handleConfirmRestore}
+          submitMessage={Messages.restoreDialog.submitButton}
+        >
+          {Messages.restoreDialog.content}
+        </ConfirmDialog>
+      )}
+      {openRestoreToNewDbDialog && (
+        <ConfirmDialog
+          isOpen={openRestoreToNewDbDialog}
+          selectedId={selectedBackup}
+          closeModal={handleCloseRestoreToNewDbDialog}
+          headerMessage={Messages.restoreDialogToNewDb.header}
+          handleConfirm={handleConfirmRestoreToNewDb}
+          submitMessage={Messages.restoreDialogToNewDb.submitButton}
+        >
+          {Messages.restoreDialogToNewDb.content}
+        </ConfirmDialog>
       )}
     </>
   );

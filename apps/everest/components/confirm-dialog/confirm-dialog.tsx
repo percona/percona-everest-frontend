@@ -1,19 +1,9 @@
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import { DialogTitle } from '@percona/ui-lib.dialog-title';
-import React, { ReactNode } from 'react';
+import React from 'react';
+import { ConfirmDialogProps } from './confirm-dialog.types';
 
-interface DeleteDialogProps {
-  isOpen: boolean;
-  selectedId: string;
-  closeModal: () => void;
-  headerMessage: string;
-  children: ReactNode;
-  handleConfirm: (selectedId: string) => void;
-  cancelMessage?: string;
-  submitMessage?: string;
-}
-
-export const DeleteDialog = ({
+export const ConfirmDialog = ({
   isOpen,
   closeModal,
   selectedId,
@@ -22,7 +12,7 @@ export const DeleteDialog = ({
   headerMessage,
   cancelMessage = 'Cancel',
   submitMessage = 'Delete',
-}: DeleteDialogProps) => {
+}: ConfirmDialogProps) => {
   const handleClose = () => {
     handleConfirm(selectedId);
     closeModal();
