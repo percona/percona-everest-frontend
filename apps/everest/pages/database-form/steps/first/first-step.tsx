@@ -198,7 +198,7 @@ export const FirstStep = () => {
           name={DbWizardFormFields.dbVersion}
           label={Messages.labels.dbVersion}
           selectFieldProps={{
-            disabled: mode === 'restoreFromBackup'
+            disabled: mode === 'restoreFromBackup',
           }}
         >
           {dbVersions?.availableVersions.engine.map((version) => (

@@ -67,6 +67,7 @@ export const DatabasePage = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
 
+
   const mode = useDatabasePageMode();
   const { defaultValues, dbClusterData, dbClusterStatus } =
     useDatabasePageDefaultValues(mode);
@@ -93,7 +94,7 @@ export const DatabasePage = () => {
         {
           dbPayload: data,
           id,
-          ...(mode==='restoreFromBackup' && {
+          ...(mode === 'restoreFromBackup' && {
             backupName,
           }),
         },
@@ -193,9 +194,9 @@ export const DatabasePage = () => {
       </Stepper>
       <FormProvider {...methods}>
         <RestoreDialog
-            open={restoreFromBackupModal}
-            setOpen={setRestoreFromBackupModal}
-            onSubmit={onSubmit}
+          open={restoreFromBackupModal}
+          setOpen={setRestoreFromBackupModal}
+          onSubmit={onSubmit}
         />
         <Stack direction={isDesktop ? 'row' : 'column'}>
           <form

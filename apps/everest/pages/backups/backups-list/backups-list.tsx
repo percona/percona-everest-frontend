@@ -10,8 +10,6 @@ import React, { useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ConfirmDialog } from '../../../components/confirm-dialog/confirm-dialog';
-import { useParams, Link } from 'react-router-dom';
-import { DeleteDialog } from '../../../components/delete-dialog/delete-dialog';
 import { StatusField } from '../../../components/status-field/status-field';
 import { DATE_FORMAT } from '../../../constants';
 import {

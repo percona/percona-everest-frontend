@@ -20,5 +20,5 @@ export const Messages = {
   reject: 'Cancel',
   accept: 'Done',
   alert: '"kubectl get secret <name> -o yaml | kubectl create-”',
-  copyToClipboardTooltip: "Successfully copied",
+  copyToClipboardTooltip: 'Successfully copied',
 };

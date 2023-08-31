@@ -39,22 +39,28 @@ export const RestoreDialog = ({
     <Dialog open={open}>
       <DialogTitle onClose={() => setOpen(false)}>{Messages.title}</DialogTitle>
       <DialogContent>
-        <Typography sx={{mb:2}}>{Messages.content}</Typography>
+        <Typography sx={{ mb: 2 }}>{Messages.content}</Typography>
         <Alert
-            icon={false}
-            severity="info"
-            action={
-                navigator.clipboard && window.isSecureContext &&
-                    <Button color="inherit" size="medium" onClick={()=> {
-                    navigator.clipboard.writeText(Messages.alert).then(()=> {
-                        enqueueSnackbar(Messages.copyToClipboardTooltip, {
-                            variant: 'success',
-                        });
+          icon={false}
+          severity="info"
+          action={
+            navigator.clipboard &&
+            window.isSecureContext && (
+              <Button
+                color="inherit"
+                size="medium"
+                onClick={() => {
+                  navigator.clipboard.writeText(Messages.alert).then(() => {
+                    enqueueSnackbar(Messages.copyToClipboardTooltip, {
+                      variant: 'success',
                     });
-                }}>
-                    Copy
-                </Button>
-            }
+                  });
+                }}
+              >
+                Copy
+              </Button>
+            )
+          }
         >
           {Messages.alert}
         </Alert>
