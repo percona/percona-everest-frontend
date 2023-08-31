@@ -17,6 +17,7 @@ import {
   useDbBackups,
   useDeleteBackupStorage,
 } from '../../../hooks/api/backups/useBackups';
+import { useDbClusterRestore } from '../../../hooks/api/restores/useDbClusterRestore';
 import { Backup, BackupStatus } from '../../../types/backups.types';
 import { OnDemandBackupModal } from '../on-demand-backup-modal/on-demand-backup-modal';
 import { BACKUP_STATUS_TO_BASE_STATUS } from './backups-list.constants';
@@ -37,7 +38,7 @@ export const BackupsList = () => {
     refetchInterval: 10 * 1000,
   });
   const { mutate: deleteBackup } = useDeleteBackupStorage();
-
+  const { mutate: restoreBackup } = useDbClusterRestore(dbClusterName!);
   const columns = useMemo<MRT_ColumnDef<Backup>[]>(
     () => [
       {
@@ -117,7 +118,14 @@ export const BackupsList = () => {
   };
 
   const handleConfirmRestore = (backupName: string) => {
-    console.log('restoration');
+    restoreBackup(
+      { backupName },
+      {
+        onSuccess() {
+          navigate('/databases');
+        },
+      }
+    );
   };
 
   const handleRestoreToNewDbBackup = (backupName: string) => {
