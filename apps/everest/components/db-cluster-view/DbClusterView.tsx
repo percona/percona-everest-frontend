@@ -38,7 +38,7 @@ import {
 import { useSelectedKubernetesCluster } from '../../hooks/api/kubernetesClusters/useSelectedKubernetesCluster';
 import { DbClusterStatus } from '../../types/dbCluster.types';
 import { DbEngineType } from '../../types/dbEngines.types';
-import { DeleteDialog } from '../delete-dialog/delete-dialog';
+import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
 import { StatusField } from '../status-field/status-field';
 import { DB_CLUSTER_STATUS_TO_BASE_STATUS } from './DbClusterView.constants';
 import { Messages } from './dbClusterView.messages';
@@ -275,7 +275,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
         />
       </Box>
       {openDeleteDialog && (
-        <DeleteDialog
+        <ConfirmDialog
           isOpen={openDeleteDialog}
           selectedId={selectedDbCluster}
           closeModal={handleCloseDeleteDialog}
@@ -283,7 +283,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
           handleConfirm={handleConfirmDelete}
         >
           {Messages.deleteModal.content}
-        </DeleteDialog>
+        </ConfirmDialog>
       )}
     </Stack>
   );
