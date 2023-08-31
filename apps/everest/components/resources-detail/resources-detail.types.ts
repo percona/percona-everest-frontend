@@ -19,5 +19,5 @@ export type ResourcesDetailProps = {
   labelProgressBar?: string;
   value: number;
   total: number;
-  inputProps?: InputProps;
+  inputProps: InputProps;
 };

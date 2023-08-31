@@ -12,7 +12,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { getResourceNames } from './second-step.utils';
 
 export const Messages = {
   pageTitle: 'Resources',
@@ -21,17 +20,23 @@ export const Messages = {
   labels: {
     numberOfNodes: 'Number of nodes',
     resourceSizePerNode: 'Resource size per node',
-    cpu: 'CPU',
+    cpu: 'cpu',
     memory: 'memory',
     disk: 'disk',
     standalone: 'Standalone \n 1 node',
     sourceReplica: 'Source Replica \n 2 nodes',
     sourceReplicaReplica: 'Source Replica Replica \n 3 nodes',
+    estimated: (value: string | number | undefined, units: string) =>
+      value ? `Estimated: ${value} ${units}` : '',
   },
   alerts: {
-    resourcesCapacityExceeding: (names: string[]) =>
-      `The resources you have specified exceed the available ${getResourceNames(
-        names
-      )} capacity of the cluster node. Database creation might fail.`,
+    resourcesCapacityExceeding: (
+      fieldName: string,
+      value: number | undefined,
+      units: string
+    ) =>
+      `Your specified ${fieldName} size exceeds the ${
+        value ? `${value} ${units}` : ''
+      } of available storage. Enter a smaller disk size before continuing.`,
   },
 };

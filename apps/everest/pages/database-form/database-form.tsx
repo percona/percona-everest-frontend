@@ -22,7 +22,11 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Messages } from './database-form.messages';
-import { dbWizardSchema, DbWizardType } from './database-form.types';
+import {
+  DbWizardFormFields,
+  dbWizardSchema,
+  DbWizardType,
+} from './database-form.types';
 import { steps } from './steps';
 
 import { SixthStep } from './steps/sixth/sixth-step';
@@ -88,8 +92,14 @@ export const DatabasePage = () => {
 
   const handleNext: React.MouseEventHandler<HTMLButtonElement> = async () => {
     if (activeStep < steps.length - 1) {
-      const isStepValid = await methods.trigger();
+      const { formState } = methods;
 
+      let isStepValid;
+      if (formState.errors[DbWizardFormFields.disk] && activeStep === 1) {
+        isStepValid = false;
+      } else {
+        isStepValid = await methods.trigger();
+      }
       if (isStepValid) {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
