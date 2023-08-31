@@ -97,7 +97,10 @@ export const FirstStep = () => {
       return;
     }
 
-    if ((mode === 'edit' && !dbVersion) || mode === 'new') {
+    if (
+      ((mode === 'edit' || mode === 'restoreFromBackup') && !dbVersion) ||
+      mode === 'new'
+    ) {
       const recommendedVersion = newVersions.availableVersions.engine.find(
         (version) => version.status === DbEngineToolStatus.RECOMMENDED
       );
@@ -129,7 +132,10 @@ export const FirstStep = () => {
               <DbToggleCard
                 key={type}
                 value={dbEngineToDbType(type)}
-                disabled={mode === 'edit' && dbType !== dbEngineToDbType(type)}
+                disabled={
+                  (mode === 'edit' || mode === 'restoreFromBackup') &&
+                  dbType !== dbEngineToDbType(type)
+                }
               />
             ))}
           </ToggleButtonGroupInput>
@@ -191,6 +197,9 @@ export const FirstStep = () => {
         <SelectInput
           name={DbWizardFormFields.dbVersion}
           label={Messages.labels.dbVersion}
+          selectFieldProps={{
+            disabled: mode === 'restoreFromBackup'
+          }}
         >
           {dbVersions?.availableVersions.engine.map((version) => (
             <MenuItem value={version.version} key={version.version}>

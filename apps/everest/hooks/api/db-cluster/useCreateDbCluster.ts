@@ -35,9 +35,16 @@ import { getCronExpressionFromFormValues } from '../../../components/time-select
 import { dbTypeToDbEngine } from '../../../utils/db';
 // import {TimeValue, WeekDays} from "../../components/time-selection/time-selection.types";
 
-type CreateDbClusterArgType = { dbPayload: DbWizardType; id: string };
+type CreateDbClusterArgType = {
+  dbPayload: DbWizardType;
+  id: string;
+  backupName?: string;
+};
 
-const formValuesToPayloadMapping = (dbPayload: DbWizardType): DbCluster => {
+const formValuesToPayloadMapping = (
+  dbPayload: DbWizardType,
+  backupName?: string
+): DbCluster => {
   const { selectedTime, minute, hour, amPm, onDay, weekDay } = dbPayload;
   const backupSchedule = getCronExpressionFromFormValues({
     selectedTime,
@@ -110,6 +117,11 @@ const formValuesToPayloadMapping = (dbPayload: DbWizardType): DbCluster => {
             }),
         },
       },
+      ...(backupName && {
+        dataSource: {
+          dbClusterBackupName: backupName,
+        },
+      }),
     },
   };
 
@@ -120,8 +132,8 @@ export const useCreateDbCluster = (
   options?: UseMutationOptions<any, unknown, CreateDbClusterArgType, unknown>
 ) => {
   return useMutation(
-    ({ dbPayload, id }: CreateDbClusterArgType) =>
-      createDbClusterFn(formValuesToPayloadMapping(dbPayload), id),
+    ({ dbPayload, id, backupName }: CreateDbClusterArgType) =>
+      createDbClusterFn(formValuesToPayloadMapping(dbPayload, backupName), id),
     { ...options }
   );
 };

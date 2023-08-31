@@ -1,3 +1,18 @@
+// percona-everest-frontend
+// Copyright (C) 2023 Percona LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {
@@ -20,7 +35,7 @@ import { Stepper } from '@percona/ui-lib.stepper';
 import { DialogTitle } from '@percona/ui-lib.dialog-title';
 import React, { useMemo, useState, useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Messages } from './database-form.messages';
 import { dbWizardSchema, DbWizardType } from './database-form.types';
 import { steps } from './steps';
@@ -32,18 +47,21 @@ import { DatabasePreview } from './database-preview/database-preview';
 import { useDatabasePageMode } from './useDatabasePageMode';
 import { useDatabasePageDefaultValues } from './useDatabaseFormDefaultValues';
 import { useUpdateDbCluster } from '../../hooks/api/db-cluster/useUpdateDbCluster';
+import { RestoreDialog } from './restore-dialog/restore-dialog';
 
 export const DatabasePage = () => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [closeModalIsOpen, setModalIsOpen] = useState(false);
+  const [restoreFromBackupModal, setRestoreFromBackupModal] = useState(false);
   const currentValidationSchema = dbWizardSchema[activeStep];
   const { mutate: addDbCluster } = useCreateDbCluster();
   const { mutate: editDbCluster } = useUpdateDbCluster();
   const { id } = useSelectedKubernetesCluster();
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
   const navigate = useNavigate();
+  const { state } = useLocation();
 
   const mode = useDatabasePageMode();
   const { defaultValues, dbClusterData, dbClusterStatus } =
@@ -56,7 +74,7 @@ export const DatabasePage = () => {
   });
 
   useEffect(() => {
-    if (mode === 'edit') {
+    if (mode === 'edit' || mode === 'restoreFromBackup') {
       methods.reset(defaultValues);
     }
   }, [defaultValues]);
@@ -64,9 +82,17 @@ export const DatabasePage = () => {
   const firstStep = activeStep === 0;
 
   const onSubmit: SubmitHandler<DbWizardType> = (data) => {
-    if (mode === 'new') {
+    if (mode === 'new' || mode === 'restoreFromBackup') {
+      const backupName = state?.backupName;
+
       addDbCluster(
-        { dbPayload: data, id },
+        {
+          dbPayload: data,
+          id,
+          ...(mode==='restoreFromBackup' && {
+            backupName,
+          }),
+        },
         {
           onSuccess: () => {
             setFormSubmitted(true);
@@ -156,6 +182,11 @@ export const DatabasePage = () => {
         ))}
       </Stepper>
       <FormProvider {...methods}>
+        <RestoreDialog
+            open={restoreFromBackupModal}
+            setOpen={setRestoreFromBackupModal}
+            onSubmit={onSubmit}
+        />
         <Stack direction={isDesktop ? 'row' : 'column'}>
           <form
             style={{ flexGrow: 1 }}
@@ -163,7 +194,8 @@ export const DatabasePage = () => {
           >
             <Box>
               {(mode === 'new' ||
-                (mode === 'edit' && dbClusterStatus === 'success')) &&
+                ((mode === 'edit' || mode === 'restoreFromBackup') &&
+                  dbClusterStatus === 'success')) &&
                 React.createElement(steps[activeStep])}
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
@@ -188,15 +220,26 @@ export const DatabasePage = () => {
                 {Messages.cancel}
               </Button>
               {activeStep === steps.length - 1 ? (
-                <Button
-                  onClick={methods.handleSubmit(onSubmit)}
-                  variant="contained"
-                  data-testid="db-wizard-submit-button"
-                >
-                  {mode === 'edit'
-                    ? Messages.editDatabase
-                    : Messages.createDatabase}
-                </Button>
+                mode !== 'restoreFromBackup' ? (
+                  <Button
+                    onClick={methods.handleSubmit(onSubmit)}
+                    variant="contained"
+                    data-testid="db-wizard-submit-button"
+                  >
+                    {mode === 'edit' && Messages.editDatabase}
+                    {mode === 'new' && Messages.createDatabase}
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      setRestoreFromBackupModal(true);
+                    }}
+                    variant="contained"
+                    data-testid="db-wizard-submit-button"
+                  >
+                    {Messages.continue}
+                  </Button>
+                )
               ) : (
                 <Button
                   onClick={handleNext}

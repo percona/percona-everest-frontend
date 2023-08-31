@@ -6,7 +6,7 @@ import { format } from 'date-fns';
 import { MRT_ColumnDef } from 'material-react-table';
 import React, { useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { DeleteDialog } from '../../../components/delete-dialog/delete-dialog';
 import { StatusField } from '../../../components/status-field/status-field';
 import { DATE_FORMAT } from '../../../constants';
@@ -134,6 +134,15 @@ export const BackupsList = () => {
           >
             <Delete />
             {Messages.delete}
+          </MenuItem>,
+          <MenuItem
+            key={2}
+            component={Link}
+            to="/databases/new"
+            state={{ selectedDbCluster: row.original.dbClusterName, backupName: row.original.name }}
+            sx={{ m: 0, display: 'flex', gap: 1 }}
+          >
+            {Messages.now}
           </MenuItem>,
         ]}
       />

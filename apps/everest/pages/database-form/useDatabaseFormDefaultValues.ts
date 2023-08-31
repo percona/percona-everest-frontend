@@ -75,8 +75,8 @@ export const DbClusterPayloadToFormValues = (
     [DbWizardFormFields.externalAccess]:
       dbCluster?.spec?.proxy?.expose?.type === ProxyExposeType.external,
     // [DbWizardFormFields.internetFacing]: true,
-    [DbWizardFormFields.engineParametersEnabled]: !!dbCluster?.spec?.engine
-      ?.config,
+    [DbWizardFormFields.engineParametersEnabled]:
+      !!dbCluster?.spec?.engine?.config,
     [DbWizardFormFields.engineParameters]: dbCluster?.spec?.engine?.config,
     [DbWizardFormFields.sourceRanges]: dbCluster?.spec?.proxy?.expose
       ?.ipSourceRanges
@@ -112,7 +112,8 @@ export const useDatabasePageDefaultValues = (
   const { state } = useLocation();
   const { data, status } = useDbCluster(
     state?.selectedDbCluster,
-    mode === 'edit' && !!state?.selectedDbCluster
+    (mode === 'edit' || mode === 'restoreFromBackup') &&
+      !!state?.selectedDbCluster
   );
 
   const [defaultValues, setDefaultValues] = useState<DbWizardType>(
@@ -124,7 +125,7 @@ export const useDatabasePageDefaultValues = (
   );
 
   useEffect(() => {
-    if (mode === 'edit') {
+    if (mode === 'edit' || mode === 'restoreFromBackup') {
       if (status === 'success')
         setDefaultValues(DbClusterPayloadToFormValues(data));
     } else setDefaultValues(DB_WIZARD_DEFAULTS);

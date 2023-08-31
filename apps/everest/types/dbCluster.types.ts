@@ -68,11 +68,16 @@ interface Proxy {
   };
 }
 
+interface DataSource {
+  dbClusterBackupName?: string;
+}
+
 export interface Spec {
   backup?: Backup;
   engine: Engine;
   proxy: Proxy;
   paused?: boolean;
+  dataSource?: DataSource;
 }
 
 export interface StatusSpec {
