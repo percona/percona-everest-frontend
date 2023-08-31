@@ -23,10 +23,10 @@ import {
   Alert,
 } from '@mui/material';
 import { DialogTitle } from '@percona/ui-lib.dialog-title';
-import { Messages } from './restore-dialog.messages';
 import { useFormContext } from 'react-hook-form';
-import { RestoreDialogProps } from './restore-dialog.types';
 import { enqueueSnackbar } from 'notistack';
+import { Messages } from './restore-dialog.messages';
+import { RestoreDialogProps } from './restore-dialog.types';
 
 export const RestoreDialog = ({
   open,

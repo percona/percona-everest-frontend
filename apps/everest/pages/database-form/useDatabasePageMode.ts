@@ -7,7 +7,7 @@ export const useDatabasePageMode = (): DbWizardMode => {
     if (state?.backupName) {
       return 'restoreFromBackup';
     }
-    else return 'edit';
+    return 'edit';
   }
   return 'new';
 };
