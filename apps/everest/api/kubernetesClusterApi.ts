@@ -15,6 +15,7 @@
 import { api } from './api';
 import {
   GetKubernetesClusterInfoPayload,
+  GetKubernetesClusterResourcesInfoPayload,
   KubernetesClusterList,
 } from '../types/kubernetes.types';
 
@@ -29,5 +30,14 @@ export const getKubernetesClusterInfoFn = async (clusterId: string) => {
     `kubernetes/${clusterId}/cluster-info`
   );
 
+  return response.data;
+};
+
+export const getKubernetesClusterResourcesInfo = async (
+  k8sClusterId: string
+) => {
+  const response = await api.get<GetKubernetesClusterResourcesInfoPayload>(
+    `/kubernetes/${k8sClusterId}/resources`
+  );
   return response.data;
 };

@@ -8,6 +8,7 @@ const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
   const methods = useForm({
     defaultValues: {
       externalAccess: false,
+      engineParametersEnabled: false,
       // internetFacing: false,
       sourceRanges: [
         {
