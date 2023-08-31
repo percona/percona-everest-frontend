@@ -23,7 +23,7 @@ import {
 import { Box, MenuItem, Stack } from '@mui/material';
 import { Table } from '@percona/ui-lib.table';
 import { type MRT_ColumnDef } from 'material-react-table';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDeleteDbCluster } from '../../hooks/api/db-cluster/useDeleteDbCluster';
@@ -38,6 +38,7 @@ import {
 import { useSelectedKubernetesCluster } from '../../hooks/api/kubernetesClusters/useSelectedKubernetesCluster';
 import { DbClusterStatus } from '../../types/dbCluster.types';
 import { DbEngineType } from '../../types/dbEngines.types';
+import { DeleteDialog } from '../delete-dialog/delete-dialog';
 import { StatusField } from '../status-field/status-field';
 import { DB_CLUSTER_STATUS_TO_BASE_STATUS } from './DbClusterView.constants';
 import { Messages } from './dbClusterView.messages';
@@ -47,6 +48,8 @@ import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
 
 export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
+  const [selectedDbCluster, setSelectedDbCluster] = useState<string>('');
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const { combinedDataForTable, loadingAllClusters, combinedDbClusters } =
     useDbClusters();
   const { mutate: deleteDbCluster } = useDeleteDbCluster();
@@ -59,23 +62,6 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
   const isPaused = (status: DbClusterStatus) =>
     status === DbClusterStatus.paused || status === DbClusterStatus.pausing;
 
-  const handleDeleteDbCluster = (dbClusterName: string) => {
-    deleteDbCluster(
-      { k8sClusterId, dbClusterName },
-      {
-        onSuccess: (_, variables) => {
-          queryClient.setQueryData(
-            [DB_CLUSTERS_QUERY_KEY, k8sClusterId],
-            (oldData?: ExtraDbCluster[]) =>
-              (oldData || []).filter(
-                (value) =>
-                  value.dbCluster.metadata.name !== variables.dbClusterName
-              )
-          );
-        },
-      }
-    );
-  };
   const handleDbSuspendOrResumed = (
     status: DbClusterStatus,
     dbClusterName: string
@@ -132,6 +118,33 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
         }
       );
     }
+  };
+
+  const handleDeleteDbCluster = (dbClusterName: string) => {
+    setSelectedDbCluster(dbClusterName);
+    setOpenDeleteDialog(true);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
+  };
+
+  const handleConfirmDelete = (dbClusterName: string) => {
+    deleteDbCluster(
+      { k8sClusterId, dbClusterName },
+      {
+        onSuccess: (_, variables) => {
+          queryClient.setQueryData(
+            [DB_CLUSTERS_QUERY_KEY, k8sClusterId],
+            (oldData?: ExtraDbCluster[]) =>
+              (oldData || []).filter(
+                (value) =>
+                  value.dbCluster.metadata.name !== variables.dbClusterName
+              )
+          );
+        },
+      }
+    );
   };
 
   const columns = useMemo<MRT_ColumnDef<DbClusterTableElement>[]>(
@@ -212,7 +225,10 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
             </MenuItem>,
             <MenuItem
               key={1}
-              onClick={() => handleDeleteDbCluster(row.original.databaseName!)}
+              onClick={() => {
+                handleDeleteDbCluster(row.original.databaseName!);
+                closeMenu();
+              }}
               sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
             >
               <DeleteOutline /> {Messages.menuItems.delete}
@@ -258,6 +274,17 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
           hideExpandAllIcon
         />
       </Box>
+      {openDeleteDialog && (
+        <DeleteDialog
+          isOpen={openDeleteDialog}
+          selectedId={selectedDbCluster}
+          closeModal={handleCloseDeleteDialog}
+          headerMessage={Messages.deleteModal.header}
+          handleConfirm={handleConfirmDelete}
+        >
+          {Messages.deleteModal.content}
+        </DeleteDialog>
+      )}
     </Stack>
   );
 };

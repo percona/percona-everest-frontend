@@ -43,4 +43,9 @@ export const Messages = {
   dbCluster: {
     noData: "You don't have any databases yet. Create one to get started.",
   },
+  deleteModal: {
+    header: 'Delete database',
+    content:
+      'Are you sure you want to permanently delete this database and any datasets it contains?',
+  },
 };
