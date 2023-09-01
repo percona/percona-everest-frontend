@@ -114,7 +114,6 @@ test.describe('DB Cluster creation', () => {
     await page.getByTestId('disk-input').fill('150');
     await page.getByTestId('db-wizard-continue-button').click();
 
-
     // backup step
 
     // await expect(

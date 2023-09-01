@@ -96,7 +96,7 @@ export const DbClusterPayloadToFormValues = (
       dbCluster?.spec?.engine?.storage?.size.toString()
     ),
     [DbWizardFormFields.memory]: removeMeasurementValue(
-        (dbCluster?.spec?.engine?.resources?.memory||0).toString()
+      (dbCluster?.spec?.engine?.resources?.memory || 0).toString()
     ),
     [DbWizardFormFields.storageClass]:
       dbCluster?.spec?.engine?.storage?.class || null,
@@ -113,7 +113,8 @@ export const useDatabasePageDefaultValues = (
   const { state } = useLocation();
   const { data, status } = useDbCluster(
     state?.selectedDbCluster,
-    mode === 'edit' && !!state?.selectedDbCluster
+    (mode === 'edit' || mode === 'restoreFromBackup') &&
+      !!state?.selectedDbCluster
   );
 
   const [defaultValues, setDefaultValues] = useState<DbWizardType>(
@@ -125,7 +126,7 @@ export const useDatabasePageDefaultValues = (
   );
 
   useEffect(() => {
-    if (mode === 'edit') {
+    if (mode === 'edit' || mode === 'restoreFromBackup') {
       if (status === 'success')
         setDefaultValues(DbClusterPayloadToFormValues(data));
     } else setDefaultValues(DB_WIZARD_DEFAULTS);

@@ -68,11 +68,17 @@ interface Proxy {
   };
 }
 
+export interface DataSource {
+  backupStorageName: string;
+  backupName: string;
+}
+
 export interface Spec {
   backup?: Backup;
   engine: Engine;
   proxy: Proxy;
   paused?: boolean;
+  dataSource?: DataSource;
 }
 
 export interface StatusSpec {

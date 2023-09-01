@@ -30,6 +30,7 @@ export const BackupsList = () => {
   const [openRestoreToNewDbDialog, setOpenRestoreToNewDbDialog] =
     useState(false);
   const [selectedBackup, setSelectedBackup] = useState('');
+  const [selectedBackupStorage, setSelectedBackupStorage] = useState('');
   const queryClient = useQueryClient();
   const { dbClusterName } = useParams();
   const [openCreateBackupModal, setOpenCreateBackupModal] = useState(false);
@@ -39,6 +40,7 @@ export const BackupsList = () => {
   });
   const { mutate: deleteBackup } = useDeleteBackupStorage();
   const { mutate: restoreBackup } = useDbClusterRestore(dbClusterName!);
+
   const columns = useMemo<MRT_ColumnDef<Backup>[]>(
     () => [
       {
@@ -128,8 +130,12 @@ export const BackupsList = () => {
     );
   };
 
-  const handleRestoreToNewDbBackup = (backupName: string) => {
+  const handleRestoreToNewDbBackup = (
+    backupName: string,
+    backupStorageName: string
+  ) => {
     setSelectedBackup(backupName);
+    setSelectedBackupStorage(backupStorageName);
     setOpenRestoreToNewDbDialog(true);
   };
 
@@ -139,7 +145,11 @@ export const BackupsList = () => {
 
   const handleConfirmRestoreToNewDb = (backupName: string) => {
     navigate('/databases/new', {
-      state: { selectedDbCluster: dbClusterName!, backupName },
+      state: {
+        selectedDbCluster: dbClusterName!,
+        backupName,
+        backupStorageName: selectedBackupStorage,
+      },
     });
   };
 
@@ -180,7 +190,10 @@ export const BackupsList = () => {
           <MenuItem
             key={1}
             onClick={() => {
-              handleRestoreToNewDbBackup(row.original.name);
+              handleRestoreToNewDbBackup(
+                row.original.name,
+                row.original.backupStorageName
+              );
               closeMenu();
             }}
             sx={{ m: 0, display: 'flex', gap: 1 }}

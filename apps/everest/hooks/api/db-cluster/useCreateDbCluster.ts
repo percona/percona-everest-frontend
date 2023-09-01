@@ -21,6 +21,7 @@ import {
 } from 'react-query';
 import {
   ClusterCredentials,
+  DataSource,
   DbCluster,
   GetDbClusterCredentialsPayload,
   ProxyExposeType,
@@ -35,9 +36,16 @@ import { DbWizardType } from '../../../pages/database-form/database-form.types';
 import { dbTypeToDbEngine } from '../../../utils/db';
 // import {TimeValue, WeekDays} from "../../components/time-selection/time-selection.types";
 
-type CreateDbClusterArgType = { dbPayload: DbWizardType; id: string };
+type CreateDbClusterArgType = {
+  dbPayload: DbWizardType;
+  id: string;
+  backupDataSource?: DataSource;
+};
 
-const formValuesToPayloadMapping = (dbPayload: DbWizardType): DbCluster => {
+const formValuesToPayloadMapping = (
+  dbPayload: DbWizardType,
+  backupDataSource?: DataSource
+): DbCluster => {
   // const { selectedTime, minute, hour, amPm, onDay, weekDay } = dbPayload;
   // const backupSchedule = getCronExpressionFromFormValues({
   //   selectedTime,
@@ -110,6 +118,13 @@ const formValuesToPayloadMapping = (dbPayload: DbWizardType): DbCluster => {
             }),
         },
       },
+      ...((backupDataSource?.backupName ||
+        backupDataSource?.backupStorageName) && {
+        dataSource: {
+          backupName: backupDataSource.backupName,
+          backupStorageName: backupDataSource.backupStorageName,
+        },
+      }),
     },
   };
 
@@ -120,8 +135,11 @@ export const useCreateDbCluster = (
   options?: UseMutationOptions<any, unknown, CreateDbClusterArgType, unknown>
 ) => {
   return useMutation(
-    ({ dbPayload, id }: CreateDbClusterArgType) =>
-      createDbClusterFn(formValuesToPayloadMapping(dbPayload), id),
+    ({ dbPayload, id, backupDataSource }: CreateDbClusterArgType) =>
+      createDbClusterFn(
+        formValuesToPayloadMapping(dbPayload, backupDataSource),
+        id
+      ),
     { ...options }
   );
 };

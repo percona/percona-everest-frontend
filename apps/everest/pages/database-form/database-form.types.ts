@@ -198,4 +198,4 @@ const superset = stepOneSchema
 
 export type DbWizardType = z.infer<typeof superset>;
 
-export type DbWizardMode = 'edit' | 'new';
+export type DbWizardMode = 'edit' | 'new' | 'restoreFromBackup';
