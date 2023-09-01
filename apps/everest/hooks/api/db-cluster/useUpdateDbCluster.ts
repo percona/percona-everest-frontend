@@ -17,7 +17,7 @@ import { UseMutationOptions, useMutation } from 'react-query';
 import { DbWizardType } from '../../../pages/database-form/database-form.types';
 import { updateDbClusterFn } from '../../../api/dbClusterApi';
 import { DbCluster, ProxyExposeType } from '../../../types/dbCluster.types';
-import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils';
+// import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils';
 
 type UpdateDbClusterArgType = {
   dbPayload: DbWizardType;
@@ -29,37 +29,36 @@ const formValuesToPayloadOverrides = (
   dbPayload: DbWizardType,
   dbCluster: DbCluster
 ): DbCluster => {
-  const { selectedTime, minute, hour, amPm, onDay, weekDay } = dbPayload;
-  const backupSchedule = getCronExpressionFromFormValues({
-    selectedTime,
-    minute,
-    hour,
-    amPm,
-    onDay,
-    weekDay,
-  });
+  // const { selectedTime, minute, hour, amPm, onDay, weekDay } = dbPayload;
+  // const backupSchedule = getCronExpressionFromFormValues({
+  //   selectedTime,
+  //   minute,
+  //   hour,
+  //   amPm,
+  //   onDay,
+  //   weekDay,
+  // });
 
   return {
     apiVersion: 'everest.percona.com/v1alpha1',
     kind: 'DatabaseCluster',
     metadata: dbCluster.metadata,
     spec: {
-      backup: {
-        enabled: dbPayload.backupsEnabled,
-        ...(dbPayload.backupsEnabled && {
-          schedules: [
-            {
-              enabled: true,
-              name: '',
-              backupStorageName:
-                typeof dbPayload.storageLocation === 'string'
-                  ? dbPayload.storageLocation
-                  : dbPayload.storageLocation!.name,
-              schedule: backupSchedule,
-            },
-          ],
-        }),
-      },
+      // backup: {
+      //   enabled: dbPayload.backupsEnabled,
+      //   ...(dbPayload.backupsEnabled && {
+      //     schedules: [
+      //       {
+      //         enabled: true,
+      //         name: '',
+      //         backupStorageName:
+      //           typeof dbPayload.storageLocation === 'string'
+      //             ? dbPayload.storageLocation
+      //             : dbPayload.storageLocation!.name,
+      //         schedule: backupSchedule,
+      //       },
+      //     ],
+      //   }),
       engine: {
         ...dbCluster.spec.engine,
         version: dbPayload.dbVersion,

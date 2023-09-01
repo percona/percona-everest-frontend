@@ -188,18 +188,18 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
           </Stack>
         ),
       },
-      {
-        accessorKey: 'backupsEnabled',
-        header: 'Backups',
-        filterVariant: 'checkbox',
-        accessorFn: (row) => (row.backupsEnabled ? 'true' : 'false'),
-        Cell: ({ cell }) =>
-          cell.getValue() === 'true' ? 'Enabled' : 'Disabled',
-      },
-      {
-        accessorKey: 'kubernetesCluster',
-        header: 'Kubernetes Cluster',
-      },
+      // {
+      //   accessorKey: 'backupsEnabled',
+      //   header: 'Backups',
+      //   filterVariant: 'checkbox',
+      //   accessorFn: (row) => (row.backupsEnabled ? 'true' : 'false'),
+      //   Cell: ({ cell }) =>
+      //     cell.getValue() === 'true' ? 'Enabled' : 'Disabled',
+      // },
+      // {
+      //   accessorKey: 'kubernetesCluster',
+      //   header: 'Kubernetes Cluster',
+      // },
     ],
     []
   );

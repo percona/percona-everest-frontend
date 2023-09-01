@@ -14,8 +14,8 @@
 // limitations under the License.
 import { FirstStep } from './first/first-step';
 import { SecondStep } from './second/second-step';
-import { ThirdStep } from './third/third-step';
+// import { ThirdStep } from './third/third-step';
 import { AdvancedConfigurations } from './advanced-configurations/advanced-configurations';
 
 // TODO re-add steps after API is ready
-export const steps = [FirstStep, SecondStep, ThirdStep, AdvancedConfigurations];
+export const steps = [FirstStep, SecondStep, AdvancedConfigurations];
