@@ -67,7 +67,6 @@ export const DatabasePage = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
 
-
   const mode = useDatabasePageMode();
   const { defaultValues, dbClusterData, dbClusterStatus } =
     useDatabasePageDefaultValues(mode);
@@ -88,18 +87,20 @@ export const DatabasePage = () => {
 
   const onSubmit: SubmitHandler<DbWizardType> = (data) => {
     if (mode === 'new' || mode === 'restoreFromBackup') {
-      const backupName = state?.backupName;
-
       addDbCluster(
         {
           dbPayload: data,
           id,
           ...(mode === 'restoreFromBackup' && {
-            backupName,
+            backupDataSource: {
+              backupName: state?.backupName,
+              backupStorageName: state?.backupStorageName,
+            },
           }),
         },
         {
           onSuccess: () => {
+            setRestoreFromBackupModal(false);
             setFormSubmitted(true);
           },
         }

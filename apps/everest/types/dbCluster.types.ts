@@ -68,8 +68,9 @@ interface Proxy {
   };
 }
 
-interface DataSource {
-  dbClusterBackupName?: string;
+export interface DataSource {
+  backupStorageName: string;
+  backupName: string;
 }
 
 export interface Spec {
