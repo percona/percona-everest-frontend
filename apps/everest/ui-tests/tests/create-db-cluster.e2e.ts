@@ -130,7 +130,7 @@ test.describe('DB Cluster creation', () => {
     // expect(storageOptions.filter({ hasText: 'ui-dev' })).toBeVisible();
     // await storageOptions.first().click();
 
-    await page.getByTestId('db-wizard-continue-button').click();
+    // await page.getByTestId('db-wizard-continue-button').click();
 
     await expect(
       page.getByRole('heading', { name: 'Advanced Configurations' })
