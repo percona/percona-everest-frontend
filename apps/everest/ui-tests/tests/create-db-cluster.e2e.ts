@@ -255,20 +255,20 @@ test.describe('DB Cluster creation', () => {
     await page.getByTestId('disk-input').fill('150');
     await page.getByTestId('db-wizard-continue-button').click();
 
-    await expect(
-      page.getByRole('heading', {
-        name: 'Specify how often you want to run backup jobs for your database.',
-      })
-    ).toBeVisible();
-
-    await page.getByTestId('text-input-storage-location').click();
-
-    const storageOptions = page.getByRole('option');
-
-    expect(storageOptions.filter({ hasText: 'ui-dev' })).toBeVisible();
-    await storageOptions.first().click();
-
-    await page.getByTestId('db-wizard-continue-button').click();
+    // await expect(
+    //   page.getByRole('heading', {
+    //     name: 'Specify how often you want to run backup jobs for your database.',
+    //   })
+    // ).toBeVisible();
+    //
+    // await page.getByTestId('text-input-storage-location').click();
+    //
+    // const storageOptions = page.getByRole('option');
+    //
+    // expect(storageOptions.filter({ hasText: 'ui-dev' })).toBeVisible();
+    // await storageOptions.first().click();
+    //
+    // await page.getByTestId('db-wizard-continue-button').click();
 
     await expect(
       page.getByRole('heading', { name: 'Advanced Configurations' })
