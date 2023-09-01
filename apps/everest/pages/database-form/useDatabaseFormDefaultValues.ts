@@ -23,7 +23,7 @@ import {
 import { useDbCluster } from '../../hooks/api/db-cluster/useDbCluster';
 import { NumberOfNodes } from './steps/second/second-step.types';
 import {
-  Backup,
+  // Backup,
   DbCluster,
   ProxyExposeType,
 } from '../../types/dbCluster.types';
@@ -34,39 +34,40 @@ import {
 } from './steps/second/second-step.utils';
 import {
   DB_WIZARD_DEFAULTS,
-  TIME_SELECTION_DEFAULTS,
+  // TIME_SELECTION_DEFAULTS,
 } from './database-form.constants';
-import { getFormValuesFromCronExpression } from '../../components/time-selection/time-selection.utils';
+// import { getFormValuesFromCronExpression } from '../../components/time-selection/time-selection.utils';
 
-const getBackupInfo = (backup: Backup) => {
-  if (backup?.enabled) {
-    const schedules = backup?.schedules;
-    const firstSchedule = schedules && schedules[0];
-    if (firstSchedule.schedule) {
-      return {
-        ...getFormValuesFromCronExpression(firstSchedule.schedule),
-        [DbWizardFormFields.storageLocation]:
-          { name: firstSchedule.backupStorageName } || null,
-      };
-    }
-  }
-  return {
-    ...TIME_SELECTION_DEFAULTS,
-    [DbWizardFormFields.storageLocation]:
-      DB_WIZARD_DEFAULTS[DbWizardFormFields.storageLocation],
-  };
-};
+// EVEREST-334
+// const getBackupInfo = (backup: Backup) => {
+//   if (backup?.enabled) {
+//     const schedules = backup?.schedules;
+//     const firstSchedule = schedules && schedules[0];
+//     if (firstSchedule.schedule) {
+//       return {
+//         ...getFormValuesFromCronExpression(firstSchedule.schedule),
+//         [DbWizardFormFields.storageLocation]:
+//           { name: firstSchedule.backupStorageName } || null,
+//       };
+//     }
+//   }
+//   return {
+//     ...TIME_SELECTION_DEFAULTS,
+//     [DbWizardFormFields.storageLocation]:
+//       DB_WIZARD_DEFAULTS[DbWizardFormFields.storageLocation],
+//   };
+// };
 
 export const DbClusterPayloadToFormValues = (
   dbCluster: DbCluster
 ): DbWizardType => {
-  const backupInfo = getBackupInfo(dbCluster?.spec?.backup);
+  // const backupInfo = getBackupInfo(dbCluster?.spec?.backup); // EVEREST-334
 
   return {
-    [DbWizardFormFields.backupsEnabled]: dbCluster?.spec?.backup?.enabled,
+    // [DbWizardFormFields.backupsEnabled]: dbCluster?.spec?.backup?.enabled, // EVEREST-334
     // [DbWizardFormFields.pitrEnabled]: true,
     // [DbWizardFormFields.pitrTime]: '60',
-    ...backupInfo,
+    // ...backupInfo, // EVEREST-334
     [DbWizardFormFields.dbType]: dbEngineToDbType(
       dbCluster?.spec?.engine?.type
     ),
@@ -90,12 +91,12 @@ export const DbClusterPayloadToFormValues = (
       `${dbCluster?.spec?.proxy?.replicas}` as unknown as NumberOfNodes,
     [DbWizardFormFields.resourceSizePerNode]:
       matchFieldsValueToResourceSize(dbCluster),
-    [DbWizardFormFields.cpu]: +dbCluster?.spec?.engine?.resources?.cpu || 0,
+    [DbWizardFormFields.cpu]: +(dbCluster?.spec?.engine?.resources?.cpu || 0),
     [DbWizardFormFields.disk]: removeMeasurementValue(
       dbCluster?.spec?.engine?.storage?.size.toString()
     ),
     [DbWizardFormFields.memory]: removeMeasurementValue(
-      dbCluster?.spec?.engine?.resources?.memory.toString()
+        (dbCluster?.spec?.engine?.resources?.memory||0).toString()
     ),
     [DbWizardFormFields.storageClass]:
       dbCluster?.spec?.engine?.storage?.class || null,
@@ -106,7 +107,7 @@ export const useDatabasePageDefaultValues = (
   mode: DbWizardMode
 ): {
   defaultValues: DbWizardType;
-  dbClusterData: DbCluster;
+  dbClusterData: DbCluster | undefined;
   dbClusterStatus: 'error' | 'idle' | 'loading' | 'success';
 } => {
   const { state } = useLocation();

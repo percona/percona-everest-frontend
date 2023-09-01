@@ -14,11 +14,11 @@
 // limitations under the License.
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { z } from 'zod';
-import {
-  AmPM,
-  TimeValue,
-  WeekDays,
-} from '../../components/time-selection/time-selection.types';
+// import {
+//   AmPM,
+//   TimeValue,
+//   WeekDays,
+// } from '../../components/time-selection/time-selection.types';
 import { IP_REGEX } from '../../constants';
 import { Messages } from './database-form.messages';
 import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
@@ -91,48 +91,48 @@ const stepTwoSchema = z
   })
   .passthrough();
 
-const stepThreeSchema = z
-  .object({
-    backupsEnabled: z.boolean(),
-    // pitrEnabled: z.boolean(),
-    // pitrTime: z.string(),
-    storageLocation: z
-      .string()
-      .or(
-        z.object({
-          name: z.string(),
-        })
-      )
-      .nullable()
-      .superRefine((input, ctx) => {
-        if (
-          (!input || typeof input === 'string' || !input.name) &&
-          input !== null
-        ) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: Messages.errors.storageLocation.invalid,
-          });
-        }
-      }),
-    selectedTime: z.nativeEnum(TimeValue),
-    minuteHour: z.number().optional(),
-    minute: z.number().optional(),
-    hour: z.number().optional(),
-    amPm: z.nativeEnum(AmPM).optional(),
-    weekDay: z.nativeEnum(WeekDays).optional(),
-    onDay: z.number().optional(),
-  })
-  .passthrough()
-  .superRefine(({ backupsEnabled, storageLocation }, ctx) => {
-    if (backupsEnabled && !storageLocation) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: [DbWizardFormFields.storageLocation],
-        message: Messages.errors.storageLocation.invalid,
-      });
-    }
-  });
+// const stepThreeSchema = z
+//   .object({
+//     backupsEnabled: z.boolean(),
+//     // pitrEnabled: z.boolean(),
+//     // pitrTime: z.string(),
+//     storageLocation: z
+//       .string()
+//       .or(
+//         z.object({
+//           name: z.string(),
+//         })
+//       )
+//       .nullable()
+//       .superRefine((input, ctx) => {
+//         if (
+//           (!input || typeof input === 'string' || !input.name) &&
+//           input !== null
+//         ) {
+//           ctx.addIssue({
+//             code: z.ZodIssueCode.custom,
+//             message: Messages.errors.storageLocation.invalid,
+//           });
+//         }
+//       }),
+//     selectedTime: z.nativeEnum(TimeValue),
+//     minuteHour: z.number().optional(),
+//     minute: z.number().optional(),
+//     hour: z.number().optional(),
+//     amPm: z.nativeEnum(AmPM).optional(),
+//     weekDay: z.nativeEnum(WeekDays).optional(),
+//     onDay: z.number().optional(),
+//   })
+//   .passthrough()
+//   .superRefine(({ backupsEnabled, storageLocation }, ctx) => {
+//     if (backupsEnabled && !storageLocation) {
+//       ctx.addIssue({
+//         code: z.ZodIssueCode.custom,
+//         path: [DbWizardFormFields.storageLocation],
+//         message: Messages.errors.storageLocation.invalid,
+//       });
+//     }
+//   });
 
 const advancedConfigurationsSchema = z
   .object({
@@ -185,14 +185,14 @@ const advancedConfigurationsSchema = z
 export const dbWizardSchema = [
   stepOneSchema,
   stepTwoSchema,
-  stepThreeSchema,
+  // stepThreeSchema,
   advancedConfigurationsSchema,
   // stepFiveSchema,
 ];
 
 const superset = stepOneSchema
   .and(stepTwoSchema)
-  .and(stepThreeSchema)
+  // .and(stepThreeSchema)
   .and(advancedConfigurationsSchema);
 // .and(stepFiveSchema);
 
