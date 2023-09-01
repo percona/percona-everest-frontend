@@ -96,7 +96,7 @@ export const DbClusterPayloadToFormValues = (
       dbCluster?.spec?.engine?.storage?.size.toString()
     ),
     [DbWizardFormFields.memory]: removeMeasurementValue(
-        (dbCluster?.spec?.engine?.resources?.memory||0).toString()
+      (dbCluster?.spec?.engine?.resources?.memory || 0).toString()
     ),
     [DbWizardFormFields.storageClass]:
       dbCluster?.spec?.engine?.storage?.class || null,
