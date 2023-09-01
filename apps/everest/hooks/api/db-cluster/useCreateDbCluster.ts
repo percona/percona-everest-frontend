@@ -56,7 +56,6 @@ const formValuesToPayloadMapping = (
   //   weekDay,
   // });
 
-  debugger;
   // TODO re-add payload after API is ready
   const dbClusterPayload: DbCluster = {
     apiVersion: 'everest.percona.com/v1alpha1',
