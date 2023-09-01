@@ -72,8 +72,8 @@ export const CreateEditModalStorage = ({
         isRequired
       >
         <MenuItem value={StorageType.S3}>{Messages.s3}</MenuItem>
-        <MenuItem value={StorageType.GCS}>{Messages.gcs}</MenuItem>
-        <MenuItem value={StorageType.AZURE}>{Messages.azure}</MenuItem>
+        {/* <MenuItem value={StorageType.GCS}>{Messages.gcs}</MenuItem> */}
+        {/* <MenuItem value={StorageType.AZURE}>{Messages.azure}</MenuItem> */}
       </SelectInput>
       <TextInput
         name={StorageLocationsFields.bucketName}

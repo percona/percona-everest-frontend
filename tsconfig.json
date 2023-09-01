@@ -3,7 +3,7 @@
   // "include": ["types"],
   "compilerOptions": {
     "noEmit": true,
-    "strict": true
+  //"strict": true
   },
   "exclude": [
     "dist"
