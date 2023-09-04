@@ -48,4 +48,9 @@ export const Messages = {
     content:
       'Are you sure you want to permanently delete this database and any datasets it contains?',
   },
+  responseMessages: {
+    restart: 'The database is being restarted',
+    resume: 'The database is being resumed',
+    pause: 'The database is being suspended',
+  },
 };
