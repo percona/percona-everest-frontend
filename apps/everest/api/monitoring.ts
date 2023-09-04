@@ -7,18 +7,3 @@ export const getMonitoringInstancesFn = async () => {
   );
   return response.data;
 };
-
-export const createMonitoringInstanceFn = async () => {
-  const testPrefix = 'test-prefix';
-  const data = {
-    type: 'pmm',
-    name: `${testPrefix}-monitoring-api-key`,
-    url: 'http://monitoring',
-    pmm: {
-      apiKey: '123',
-    },
-  };
-  const response = await api.post(`monitoring-instances`, data);
-
-  return response.data;
-};
