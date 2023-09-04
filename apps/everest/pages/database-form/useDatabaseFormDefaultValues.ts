@@ -33,10 +33,6 @@ import {
   matchFieldsValueToResourceSize,
   removeMeasurementValue,
 } from './steps/second/second-step.utils';
-import {
-  DB_WIZARD_DEFAULTS,
-  // TIME_SELECTION_DEFAULTS,
-} from './database-form.constants';
 import { useMonitoringInstancesList } from '../../hooks/api/monitoring/useMonitoringInstancesList';
 import {
   MonitoringInstance,
@@ -81,7 +77,7 @@ const getMonitoringInstanceValue = (
 export const DbClusterPayloadToFormValues = (
   dbCluster: DbCluster,
   monitoringInstances: MonitoringInstanceList,
-  mode: DbWizardMode,
+  mode: DbWizardMode
 ): DbWizardType => {
   // const backupInfo = getBackupInfo(dbCluster?.spec?.backup); // EVEREST-334
 

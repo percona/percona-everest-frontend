@@ -77,9 +77,6 @@ export const DatabasePage = () => {
     defaultValues,
   });
 
-  const originalDbName = state?.selectedDbCluster;
-  const restoreDbName = methods.watch(DbWizardFormFields.dbName);
-
   useEffect(() => {
     if (mode === 'edit' || mode === 'restoreFromBackup') {
       methods.reset(defaultValues);
@@ -198,8 +195,6 @@ export const DatabasePage = () => {
       <FormProvider {...methods}>
         {mode === 'restoreFromBackup' && (
           <RestoreDialog
-            backupDb={originalDbName}
-            restoreDb={restoreDbName}
             open={restoreFromBackupModal}
             setOpen={setRestoreFromBackupModal}
             onSubmit={onSubmit}

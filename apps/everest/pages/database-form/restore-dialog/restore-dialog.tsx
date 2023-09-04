@@ -25,20 +25,24 @@ import { DialogTitle } from '@percona/ui-lib.dialog-title';
 import { enqueueSnackbar } from 'notistack';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
 import { Messages } from './restore-dialog.messages';
 import { RestoreDialogProps } from './restore-dialog.types';
+import { DbWizardFormFields } from '../database-form.types';
 
 export const RestoreDialog = ({
   open,
-  backupDb,
-  restoreDb,
   setOpen,
   onSubmit,
 }: RestoreDialogProps) => {
-  const { handleSubmit } = useFormContext();
-
+  const { handleSubmit, watch } = useFormContext();
+  const { state } = useLocation();
+  const originalDbName = state?.selectedDbCluster;
+  const restoreDbName = watch(DbWizardFormFields.dbName);
   const copyToClipboard = async () => {
-    await navigator.clipboard.writeText(Messages.alert(backupDb, restoreDb));
+    await navigator.clipboard.writeText(
+      Messages.alert(originalDbName, restoreDbName)
+    );
     enqueueSnackbar(Messages.copyToClipboardTooltip, {
       variant: 'success',
     });
@@ -61,7 +65,7 @@ export const RestoreDialog = ({
             )
           }
         >
-          {Messages.alert(backupDb, restoreDb)}
+          {Messages.alert(originalDbName, restoreDbName)}
         </Alert>
       </DialogContent>
       <DialogActions>

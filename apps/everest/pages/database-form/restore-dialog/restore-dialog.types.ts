@@ -18,8 +18,6 @@ import { DbWizardType } from '../database-form.types';
 
 export type RestoreDialogProps = {
   open: boolean;
-  backupDb: string;
-  restoreDb: string;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onSubmit: SubmitHandler<DbWizardType>;
 };
