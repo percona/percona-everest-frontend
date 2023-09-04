@@ -31,11 +31,11 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { Stepper } from '@percona/ui-lib.stepper';
 import { DialogTitle } from '@percona/ui-lib.dialog-title';
-import React, { useMemo, useState, useEffect } from 'react';
+import { Stepper } from '@percona/ui-lib.stepper';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Messages } from './database-form.messages';
 import {
   DbWizardFormFields,
@@ -44,14 +44,14 @@ import {
 } from './database-form.types';
 import { steps } from './steps';
 
-import { SixthStep } from './steps/sixth/sixth-step';
 import { useCreateDbCluster } from '../../hooks/api/db-cluster/useCreateDbCluster';
+import { useUpdateDbCluster } from '../../hooks/api/db-cluster/useUpdateDbCluster';
 import { useSelectedKubernetesCluster } from '../../hooks/api/kubernetesClusters/useSelectedKubernetesCluster';
 import { DatabasePreview } from './database-preview/database-preview';
-import { useDatabasePageMode } from './useDatabasePageMode';
-import { useDatabasePageDefaultValues } from './useDatabaseFormDefaultValues';
-import { useUpdateDbCluster } from '../../hooks/api/db-cluster/useUpdateDbCluster';
 import { RestoreDialog } from './restore-dialog/restore-dialog';
+import { SixthStep } from './steps/sixth/sixth-step';
+import { useDatabasePageDefaultValues } from './useDatabaseFormDefaultValues';
+import { useDatabasePageMode } from './useDatabasePageMode';
 
 export const DatabasePage = () => {
   const theme = useTheme();
@@ -76,6 +76,9 @@ export const DatabasePage = () => {
     resolver: zodResolver(currentValidationSchema),
     defaultValues,
   });
+
+  const originalDbName = state?.selectedDbCluster;
+  const restoreDbName = methods.watch(DbWizardFormFields.dbName);
 
   useEffect(() => {
     if (mode === 'edit' || mode === 'restoreFromBackup') {
@@ -194,11 +197,15 @@ export const DatabasePage = () => {
         ))}
       </Stepper>
       <FormProvider {...methods}>
-        <RestoreDialog
-          open={restoreFromBackupModal}
-          setOpen={setRestoreFromBackupModal}
-          onSubmit={onSubmit}
-        />
+        {mode === 'restoreFromBackup' && (
+          <RestoreDialog
+            backupDb={originalDbName}
+            restoreDb={restoreDbName}
+            open={restoreFromBackupModal}
+            setOpen={setRestoreFromBackupModal}
+            onSubmit={onSubmit}
+          />
+        )}
         <Stack direction={isDesktop ? 'row' : 'column'}>
           <form
             style={{ flexGrow: 1 }}
@@ -249,7 +256,7 @@ export const DatabasePage = () => {
                     variant="contained"
                     data-testid="db-wizard-submit-button"
                   >
-                    {Messages.continue}
+                    {Messages.createDatabase}
                   </Button>
                 )
               ) : (

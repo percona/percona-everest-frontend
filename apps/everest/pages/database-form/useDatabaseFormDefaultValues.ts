@@ -15,27 +15,24 @@
 
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import {
-  DbWizardFormFields,
-  DbWizardMode,
-  DbWizardType,
-} from './database-form.types';
 import { useDbCluster } from '../../hooks/api/db-cluster/useDbCluster';
-import { NumberOfNodes } from './steps/second/second-step.types';
 import {
   // Backup,
   DbCluster,
   ProxyExposeType,
 } from '../../types/dbCluster.types';
 import { dbEngineToDbType } from '../../utils/db';
+import { DB_WIZARD_DEFAULTS } from './database-form.constants';
+import {
+  DbWizardFormFields,
+  DbWizardMode,
+  DbWizardType,
+} from './database-form.types';
+import { NumberOfNodes } from './steps/second/second-step.types';
 import {
   matchFieldsValueToResourceSize,
   removeMeasurementValue,
 } from './steps/second/second-step.utils';
-import {
-  DB_WIZARD_DEFAULTS,
-  // TIME_SELECTION_DEFAULTS,
-} from './database-form.constants';
 // import { getFormValuesFromCronExpression } from '../../components/time-selection/time-selection.utils';
 
 // EVEREST-334
@@ -59,7 +56,8 @@ import {
 // };
 
 export const DbClusterPayloadToFormValues = (
-  dbCluster: DbCluster
+  dbCluster: DbCluster,
+  mode: DbWizardMode
 ): DbWizardType => {
   // const backupInfo = getBackupInfo(dbCluster?.spec?.backup); // EVEREST-334
 
@@ -71,7 +69,10 @@ export const DbClusterPayloadToFormValues = (
     [DbWizardFormFields.dbType]: dbEngineToDbType(
       dbCluster?.spec?.engine?.type
     ),
-    [DbWizardFormFields.dbName]: dbCluster?.metadata?.name,
+    [DbWizardFormFields.dbName]:
+      mode === 'restoreFromBackup'
+        ? `restored-${dbCluster?.metadata?.name}`
+        : dbCluster?.metadata?.name,
     [DbWizardFormFields.dbVersion]: dbCluster?.spec?.engine?.version || '',
     [DbWizardFormFields.externalAccess]:
       dbCluster?.spec?.proxy?.expose?.type === ProxyExposeType.external,
@@ -121,14 +122,14 @@ export const useDatabasePageDefaultValues = (
     mode === 'new'
       ? DB_WIZARD_DEFAULTS
       : status === 'success'
-      ? DbClusterPayloadToFormValues(data)
+      ? DbClusterPayloadToFormValues(data, mode)
       : { ...DB_WIZARD_DEFAULTS, [DbWizardFormFields.dbVersion]: '' }
   );
 
   useEffect(() => {
     if (mode === 'edit' || mode === 'restoreFromBackup') {
       if (status === 'success')
-        setDefaultValues(DbClusterPayloadToFormValues(data));
+        setDefaultValues(DbClusterPayloadToFormValues(data, mode));
     } else setDefaultValues(DB_WIZARD_DEFAULTS);
   }, [data]);
 
