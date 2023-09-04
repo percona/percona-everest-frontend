@@ -80,10 +80,10 @@ importers:
         specifier: ^3.0.1
         version: registry.npmjs.org/notistack@3.0.1(react-dom@17.0.2)(react@17.0.2)
       react:
-        specifier: 17.0.2
+        specifier: ^16.8.0 || ^17.0.0
         version: registry.npmjs.org/react@17.0.2
       react-dom:
-        specifier: 17.0.2
+        specifier: ^16.8.0 || ^17.0.0
         version: registry.npmjs.org/react-dom@17.0.2(react@17.0.2)
       react-hook-form:
         specifier: ^7.44.3
@@ -102,7 +102,7 @@ importers:
         specifier: 7.20.0
         version: registry.npmjs.org/@babel/runtime@7.20.0
       '@types/jest':
-        specifier: 26.0.20
+        specifier: ^26.0.0
         version: registry.npmjs.org/@types/jest@26.0.20
       '@types/node':
         specifier: 12.20.4
