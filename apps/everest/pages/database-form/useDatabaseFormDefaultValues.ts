@@ -140,8 +140,9 @@ export const useDatabasePageDefaultValues = (
     (mode === 'edit' || mode === 'restoreFromBackup') &&
       !!state?.selectedDbCluster
   );
-  const { data: monitoringInstances } =
-    useMonitoringInstancesList(mode === 'edit');
+  const { data: monitoringInstances } = useMonitoringInstancesList(
+    mode === 'edit'
+  );
 
   const [defaultValues, setDefaultValues] = useState<DbWizardType>(
     mode === 'new'

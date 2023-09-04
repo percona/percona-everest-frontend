@@ -155,7 +155,7 @@ test.describe('DB Cluster creation', () => {
       .getByTestId('text-input-engine-parameters')
       .fill('max_alllowed_packet=128M');
     await page.getByTestId('db-wizard-continue-button').click();
-    //TODO monitoring clusters tests
+    // TODO monitoring clusters tests
 
     await page.getByTestId('db-wizard-submit-button').click();
 
