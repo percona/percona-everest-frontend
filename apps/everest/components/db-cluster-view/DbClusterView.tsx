@@ -23,6 +23,7 @@ import {
 import { Box, MenuItem, Stack } from '@mui/material';
 import { Table } from '@percona/ui-lib.table';
 import { type MRT_ColumnDef } from 'material-react-table';
+import { enqueueSnackbar } from 'notistack';
 import React, { useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
@@ -87,6 +88,14 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
                     : value
                 )
             );
+            enqueueSnackbar(
+              shouldBePaused
+                ? Messages.responseMessages.pause
+                : Messages.responseMessages.resume,
+              {
+                variant: 'success',
+              }
+            );
           },
         }
       );
@@ -114,6 +123,9 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
                     : value
                 )
             );
+            enqueueSnackbar(Messages.responseMessages.restart, {
+              variant: 'success',
+            });
           },
         }
       );
