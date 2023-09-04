@@ -10,7 +10,8 @@ export const SwitchInput = ({
   label,
   labelCaption,
   controllerProps,
-  formControlLabelProps,switchFieldProps,
+  formControlLabelProps,
+  switchFieldProps,
 }: SwitchInputProps) => {
   const { control: contextControl } = useFormContext();
   return (
