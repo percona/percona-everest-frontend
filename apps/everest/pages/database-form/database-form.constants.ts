@@ -49,7 +49,7 @@ export const DB_WIZARD_DEFAULTS: DefaultValues<DbWizardType> = {
   [DbWizardFormFields.engineParametersEnabled]: false,
   [DbWizardFormFields.engineParameters]: '',
   [DbWizardFormFields.monitoring]: false,
-  // [DbWizardFormFields.endpoint]: '',
+  [DbWizardFormFields.monitoringInstance]: '',
   [DbWizardFormFields.numberOfNodes]: NumberOfNodes.oneNode,
   [DbWizardFormFields.resourceSizePerNode]: ResourceSize.small,
   [DbWizardFormFields.cpu]: DEFAULT_SIZES.small.cpu,

@@ -69,8 +69,11 @@ interface Proxy {
 }
 
 export interface DataSource {
-  backupStorageName: string;
-  backupName: string;
+  dbClusterBackupName: string;
+}
+
+export interface Monitoring {
+  monitoringConfigName?: string;
 }
 
 export interface Spec {
@@ -79,6 +82,7 @@ export interface Spec {
   proxy: Proxy;
   paused?: boolean;
   dataSource?: DataSource;
+  monitoring: Monitoring;
 }
 
 export interface StatusSpec {

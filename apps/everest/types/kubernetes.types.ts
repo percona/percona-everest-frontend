@@ -38,3 +38,11 @@ export type GetKubernetesClusterResourcesInfoPayload = {
 
 export type KubernetesClusterResourcesInfo =
   GetKubernetesClusterResourcesInfoPayload;
+
+export type GetKubernetesClusterMonitoringInfoResponse = {
+  clusterType: string;
+  storageClassNames: string[];
+};
+
+export type KubernetesClusterMonitoringInfo =
+  GetKubernetesClusterMonitoringInfoResponse;

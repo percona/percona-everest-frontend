@@ -77,15 +77,14 @@ const formValuesToPayloadOverrides = (
           ? dbPayload.engineParameters
           : '',
       },
-      // monitoring: {
-      //   ...dbCluster.spec.monitoring,
-      //   enabled: dbPayload.monitoring,
-      //   ...(!!dbPayload.monitoring && {
-      //     pmm: {
-      //       publicAddress: dbPayload.endpoint || '',
-      //     }
-      //   })
-      // },
+      monitoring: {
+        ...(!!dbPayload.monitoring && {
+          monitoringConfigName:
+            typeof dbPayload.monitoringInstance === 'string'
+              ? dbPayload.monitoringInstance
+              : dbPayload?.monitoringInstance!.name,
+        }),
+      },
       proxy: {
         ...dbCluster.spec.proxy,
         replicas: +dbPayload.numberOfNodes,

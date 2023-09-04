@@ -12,11 +12,15 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { FirstStep } from './first/first-step';
-import { SecondStep } from './second/second-step';
-// import { ThirdStep } from './third/third-step';
-import { AdvancedConfigurations } from './advanced-configurations/advanced-configurations';
-import { FifthStep } from './fifth/fifth-step';
+import { useQuery } from 'react-query';
+import { getMonitoringInstancesFn } from '../../../api/monitoring';
+import { MonitoringInstanceList } from '../../../types/monitoring.types';
 
-// TODO re-add steps after API is ready
-export const steps = [FirstStep, SecondStep, AdvancedConfigurations, FifthStep];
+export const useMonitoringInstancesList = (enabled?: boolean) =>
+  useQuery<MonitoringInstanceList>(
+    'monitoring-instances',
+    () => getMonitoringInstancesFn(),
+    {
+      enabled,
+    }
+  );

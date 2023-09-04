@@ -96,8 +96,7 @@ export const DatabasePage = () => {
           id,
           ...(mode === 'restoreFromBackup' && {
             backupDataSource: {
-              backupName: state?.backupName,
-              backupStorageName: state?.backupStorageName,
+              dbClusterBackupName: state?.backupName,
             },
           }),
         },
