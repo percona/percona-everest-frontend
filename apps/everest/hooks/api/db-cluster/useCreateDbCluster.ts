@@ -14,11 +14,16 @@
 // limitations under the License.
 
 import {
-  UseMutationOptions,
-  UseQueryOptions,
   useMutation,
+  UseMutationOptions,
   useQuery,
+  UseQueryOptions,
 } from 'react-query';
+import {
+  createDbClusterFn,
+  getDbClusterCredentialsFn,
+} from '../../../api/dbClusterApi';
+import { DbWizardType } from '../../../pages/database-form/database-form.types';
 import {
   ClusterCredentials,
   DataSource,
@@ -26,12 +31,7 @@ import {
   GetDbClusterCredentialsPayload,
   ProxyExposeType,
 } from '../../../types/dbCluster.types';
-import {
-  createDbClusterFn,
-  getDbClusterCredentialsFn,
-} from '../../../api/dbClusterApi';
 import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
-import { DbWizardType } from '../../../pages/database-form/database-form.types';
 // import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils';
 import { dbTypeToDbEngine } from '../../../utils/db';
 // import {TimeValue, WeekDays} from "../../components/time-selection/time-selection.types";
@@ -118,11 +118,9 @@ const formValuesToPayloadMapping = (
             }),
         },
       },
-      ...((backupDataSource?.backupName ||
-        backupDataSource?.backupStorageName) && {
+      ...(backupDataSource?.dbClusterBackupName && {
         dataSource: {
-          backupName: backupDataSource.backupName,
-          backupStorageName: backupDataSource.backupStorageName,
+          dbClusterBackupName: backupDataSource.dbClusterBackupName,
         },
       }),
     },

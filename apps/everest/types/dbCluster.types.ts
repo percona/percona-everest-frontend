@@ -69,8 +69,7 @@ interface Proxy {
 }
 
 export interface DataSource {
-  backupStorageName: string;
-  backupName: string;
+  dbClusterBackupName: string;
 }
 
 export interface Monitoring {
