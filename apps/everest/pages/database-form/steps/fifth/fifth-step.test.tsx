@@ -15,7 +15,7 @@ const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
 };
 
 describe('AdvancedConfigurations', () => {
-  xit("should render only monitoring input if it's off", () => {
+  it.skip("should render only monitoring input if it's off", () => {
     render(
       <TestWrapper>
         <FormProviderWrapper>
@@ -28,7 +28,7 @@ describe('AdvancedConfigurations', () => {
     expect(screen.queryByTestId('text-input-endpoint')).not.toBeInTheDocument();
   });
 
-  xit('should render remaining fields when monitoring is on', () => {
+  it.skip('should render remaining fields when monitoring is on', () => {
     render(
       <TestWrapper>
         <FormProviderWrapper>
