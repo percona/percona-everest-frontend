@@ -72,12 +72,17 @@ export interface DataSource {
   dbClusterBackupName: string;
 }
 
+export interface Monitoring {
+  monitoringConfigName?: string;
+}
+
 export interface Spec {
   backup?: Backup;
   engine: Engine;
   proxy: Proxy;
   paused?: boolean;
   dataSource?: DataSource;
+  monitoring: Monitoring;
 }
 
 export interface StatusSpec {

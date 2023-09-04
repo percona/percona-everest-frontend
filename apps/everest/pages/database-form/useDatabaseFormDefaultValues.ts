@@ -36,6 +36,11 @@ import {
   DB_WIZARD_DEFAULTS,
   // TIME_SELECTION_DEFAULTS,
 } from './database-form.constants';
+import { useMonitoringInstancesList } from '../../hooks/api/monitoring/useMonitoringInstancesList';
+import {
+  MonitoringInstance,
+  MonitoringInstanceList,
+} from '../../types/monitoring.types';
 // import { getFormValuesFromCronExpression } from '../../components/time-selection/time-selection.utils';
 
 // EVEREST-334
@@ -58,8 +63,23 @@ import {
 //   };
 // };
 
+const getMonitoringInstanceValue = (
+  monitoringInstances: MonitoringInstanceList,
+  instanceName: string
+): MonitoringInstance | '' => {
+  if (monitoringInstances?.length) {
+    const monitoringInstance = monitoringInstances.find(
+      (item) => item.name === instanceName
+    );
+    if (monitoringInstance) return monitoringInstance;
+    return '';
+  }
+  return '';
+};
+
 export const DbClusterPayloadToFormValues = (
-  dbCluster: DbCluster
+  dbCluster: DbCluster,
+  monitoringInstances: MonitoringInstanceList
 ): DbWizardType => {
   // const backupInfo = getBackupInfo(dbCluster?.spec?.backup); // EVEREST-334
 
@@ -85,8 +105,12 @@ export const DbClusterPayloadToFormValues = (
           sourceRange: item,
         }))
       : [],
-    // [DbWizardFormFields.monitoring]: dbCluster?.spec?.monitoring?.enabled,
-    // [DbWizardFormFields.endpoint]: dbCluster?.spec?.monitoring?.enabled?.pmm?.publicAddress,
+    [DbWizardFormFields.monitoring]:
+      !!dbCluster?.spec?.monitoring?.monitoringConfigName,
+    [DbWizardFormFields.monitoringInstance]: getMonitoringInstanceValue(
+      monitoringInstances,
+      dbCluster?.spec?.monitoring?.monitoringConfigName
+    ),
     [DbWizardFormFields.numberOfNodes]:
       `${dbCluster?.spec?.proxy?.replicas}` as unknown as NumberOfNodes,
     [DbWizardFormFields.resourceSizePerNode]:
@@ -116,21 +140,26 @@ export const useDatabasePageDefaultValues = (
     (mode === 'edit' || mode === 'restoreFromBackup') &&
       !!state?.selectedDbCluster
   );
+  const { data: monitoringInstances } = useMonitoringInstancesList(
+    mode === 'edit'
+  );
 
   const [defaultValues, setDefaultValues] = useState<DbWizardType>(
     mode === 'new'
       ? DB_WIZARD_DEFAULTS
       : status === 'success'
-      ? DbClusterPayloadToFormValues(data)
+      ? DbClusterPayloadToFormValues(data, monitoringInstances)
       : { ...DB_WIZARD_DEFAULTS, [DbWizardFormFields.dbVersion]: '' }
   );
 
   useEffect(() => {
     if (mode === 'edit' || mode === 'restoreFromBackup') {
       if (status === 'success')
-        setDefaultValues(DbClusterPayloadToFormValues(data));
+        setDefaultValues(
+          DbClusterPayloadToFormValues(data, monitoringInstances)
+        );
     } else setDefaultValues(DB_WIZARD_DEFAULTS);
-  }, [data]);
+  }, [data, monitoringInstances]);
 
   return { defaultValues, dbClusterData: data, dbClusterStatus: status };
 };
