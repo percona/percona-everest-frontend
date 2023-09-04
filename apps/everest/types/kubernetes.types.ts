@@ -45,5 +45,4 @@ export type GetKubernetesClusterMonitoringInfoResponse = {
 };
 
 export type KubernetesClusterMonitoringInfo =
-    GetKubernetesClusterMonitoringInfoResponse;
-
+  GetKubernetesClusterMonitoringInfoResponse;

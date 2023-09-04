@@ -37,7 +37,6 @@ export const FirstStep = () => {
     useDbEngines();
   const { data: clusterInfo, isFetching: clusterInfoFetching } =
     useKubernetesClusterInfo();
-  // const { data: monitoringCreationRes} = useMonitoringCreation();
 
   const mode = useDatabasePageMode();
 
@@ -49,11 +48,6 @@ export const FirstStep = () => {
       );
     }
   }, [clusterInfo]);
-
-  // useEffect(() => {
-  //   console.log(monitoringCreationRes);
-  //   debugger;
-  // }, [monitoringCreationRes]);
 
   // TODO change to api request's result
   // const k8sNamespacesOptions = [

@@ -2,9 +2,9 @@ import { FormGroup, Typography } from '@mui/material';
 import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
 import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
 import { DbWizardFormFields } from '../../database-form.types';
 import { Messages } from './fifth-step.messages';
-import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
 import { useMonitoringInstancesList } from '../../../../hooks/api/monitoring/useMonitoringInstancesList';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 
@@ -26,9 +26,9 @@ export const FifthStep = () => {
       }
     }
     if (
-        (mode === 'edit' || mode === 'restoreFromBackup') &&
+      (mode === 'edit' || mode === 'restoreFromBackup') &&
       monitoringInstances?.length &&
-        !monitoringInstance
+      !monitoringInstance
     ) {
       setValue(DbWizardFormFields.monitoringInstance, monitoringInstances[0]);
     }
@@ -43,7 +43,7 @@ export const FifthStep = () => {
           label={Messages.monitoringEnabled}
           name={DbWizardFormFields.monitoring}
           formControlLabelProps={{
-            disabled: !monitoringInstances?.length
+            disabled: !monitoringInstances?.length,
           }}
         />
         {monitoring && monitoringInstances?.length && (

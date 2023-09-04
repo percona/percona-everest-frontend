@@ -72,8 +72,9 @@ const getMonitoringInstanceValue = (
       (item) => item.name === instanceName
     );
     if (monitoringInstance) return monitoringInstance;
-    else return '';
-  } else return '';
+    return '';
+  }
+  return '';
 };
 
 export const DbClusterPayloadToFormValues = (
@@ -139,9 +140,8 @@ export const useDatabasePageDefaultValues = (
     (mode === 'edit' || mode === 'restoreFromBackup') &&
       !!state?.selectedDbCluster
   );
-  const { data: monitoringInstances, isFetching: monitoringInstancesLoading } =
+  const { data: monitoringInstances } =
     useMonitoringInstancesList(mode === 'edit');
-  debugger;
 
   const [defaultValues, setDefaultValues] = useState<DbWizardType>(
     mode === 'new'

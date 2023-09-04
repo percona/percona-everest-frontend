@@ -18,5 +18,4 @@ export const Messages = {
     'Monitor the health of your database to detect issues quickly and improve its performance.',
   monitoringEnabled: 'Monitoring enabled',
   monitoringInstanceLabel: 'Monitoring endpoint',
-  // monitoringInstancePlaceholder: 'URL',
 };
