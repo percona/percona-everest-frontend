@@ -14,21 +14,18 @@
 // limitations under the License.
 import { useQuery } from 'react-query';
 import {
-    GetKubernetesClusterMonitoringInfoResponse,
-    KubernetesClusterResourcesInfo,
+  GetKubernetesClusterMonitoringInfoResponse,
+  KubernetesClusterResourcesInfo,
 } from '../../../types/kubernetes.types';
-import {useSelectedKubernetesCluster} from "./useSelectedKubernetesCluster";
-
-
+import { useSelectedKubernetesCluster } from './useSelectedKubernetesCluster';
 
 export const useKubernetesClusterMonitoringInfo = () => {
-    // const { id } = useSelectedKubernetesCluster();
-
-    // return useQuery<
-    //     GetKubernetesClusterMonitoringInfoResponse,
-    //     unknown,
-    //     KubernetesClusterResourcesInfo
-    // >(`${id}-cluster-monitoring-info`, () =>
-    //     getKubernetesClusterMonitoringInfo(id)
-    // );
+  // const { id } = useSelectedKubernetesCluster();
+  // return useQuery<
+  //     GetKubernetesClusterMonitoringInfoResponse,
+  //     unknown,
+  //     KubernetesClusterResourcesInfo
+  // >(`${id}-cluster-monitoring-info`, () =>
+  //     getKubernetesClusterMonitoringInfo(id)
+  // );
 };

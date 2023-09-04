@@ -36,8 +36,11 @@ import {
   DB_WIZARD_DEFAULTS,
   // TIME_SELECTION_DEFAULTS,
 } from './database-form.constants';
-import {useMonitoringInstancesList} from "../../hooks/api/monitoring/useMonitoringInstancesList";
-import {MonitoringInstanceList} from "../../types/monitoring.types";
+import { useMonitoringInstancesList } from '../../hooks/api/monitoring/useMonitoringInstancesList';
+import {
+  MonitoringInstance,
+  MonitoringInstanceList,
+} from '../../types/monitoring.types';
 // import { getFormValuesFromCronExpression } from '../../components/time-selection/time-selection.utils';
 
 // EVEREST-334
@@ -60,17 +63,22 @@ import {MonitoringInstanceList} from "../../types/monitoring.types";
 //   };
 // };
 
-const getMonitoringInstanceValue = (monitoringInstances: MonitoringInstanceList, instanceName: string) => {
+const getMonitoringInstanceValue = (
+  monitoringInstances: MonitoringInstanceList,
+  instanceName: string
+): MonitoringInstance | '' => {
   if (monitoringInstances?.length) {
-    const monitoringInstance = monitoringInstances.find(item => item.name===instanceName);
-    if (monitoringInstances) return monitoringInstances;
+    const monitoringInstance = monitoringInstances.find(
+      (item) => item.name === instanceName
+    );
+    if (monitoringInstance) return monitoringInstance;
     else return '';
-  }
+  } else return '';
 };
 
 export const DbClusterPayloadToFormValues = (
   dbCluster: DbCluster,
-  monitoringInstances: MonitoringInstanceList,
+  monitoringInstances: MonitoringInstanceList
 ): DbWizardType => {
   // const backupInfo = getBackupInfo(dbCluster?.spec?.backup); // EVEREST-334
 
@@ -96,8 +104,12 @@ export const DbClusterPayloadToFormValues = (
           sourceRange: item,
         }))
       : [],
-    [DbWizardFormFields.monitoring]: !!dbCluster?.spec?.monitoring?.monitoringConfigName,
-    [DbWizardFormFields.monitoringInstance]: dbCluster?.spec?.monitoring?.monitoringConfigName,
+    [DbWizardFormFields.monitoring]:
+      !!dbCluster?.spec?.monitoring?.monitoringConfigName,
+    [DbWizardFormFields.monitoringInstance]: getMonitoringInstanceValue(
+      monitoringInstances,
+      dbCluster?.spec?.monitoring?.monitoringConfigName
+    ),
     [DbWizardFormFields.numberOfNodes]:
       `${dbCluster?.spec?.proxy?.replicas}` as unknown as NumberOfNodes,
     [DbWizardFormFields.resourceSizePerNode]:
@@ -128,7 +140,7 @@ export const useDatabasePageDefaultValues = (
       !!state?.selectedDbCluster
   );
   const { data: monitoringInstances, isFetching: monitoringInstancesLoading } =
-      useMonitoringInstancesList(mode==='edit');
+    useMonitoringInstancesList(mode === 'edit');
   debugger;
 
   const [defaultValues, setDefaultValues] = useState<DbWizardType>(
@@ -142,7 +154,9 @@ export const useDatabasePageDefaultValues = (
   useEffect(() => {
     if (mode === 'edit' || mode === 'restoreFromBackup') {
       if (status === 'success')
-        setDefaultValues(DbClusterPayloadToFormValues(data, monitoringInstances));
+        setDefaultValues(
+          DbClusterPayloadToFormValues(data, monitoringInstances)
+        );
     } else setDefaultValues(DB_WIZARD_DEFAULTS);
   }, [data, monitoringInstances]);
 

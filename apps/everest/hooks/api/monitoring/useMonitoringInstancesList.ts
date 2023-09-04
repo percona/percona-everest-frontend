@@ -14,19 +14,22 @@
 // limitations under the License.
 import { useQuery } from 'react-query';
 import { KubernetesClusterList } from '../../../types/kubernetes.types';
-import {createMonitoringInstanceFn, getMonitoringInstancesFn} from "../../../api/monitoring";
-import {MonitoringInstanceList} from "../../../types/monitoring.types";
+import {
+  createMonitoringInstanceFn,
+  getMonitoringInstancesFn,
+} from '../../../api/monitoring';
+import { MonitoringInstanceList } from '../../../types/monitoring.types';
 
-export const useMonitoringInstancesList = ( enabled?: boolean) =>
-    useQuery<MonitoringInstanceList>('monitoring-instances', () =>
-        getMonitoringInstancesFn(),
-        {
-            enabled,
-        }
-    );
+export const useMonitoringInstancesList = (enabled?: boolean) =>
+  useQuery<MonitoringInstanceList>(
+    'monitoring-instances',
+    () => getMonitoringInstancesFn(),
+    {
+      enabled,
+    }
+  );
 
 export const useMonitoringCreation = () =>
-    useQuery<KubernetesClusterList>('monitoring-instance-create', () =>
-        createMonitoringInstanceFn()
-    );
-
+  useQuery<KubernetesClusterList>('monitoring-instance-create', () =>
+    createMonitoringInstanceFn()
+  );

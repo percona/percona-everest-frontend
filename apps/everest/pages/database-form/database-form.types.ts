@@ -162,13 +162,17 @@ const advancedConfigurationsSchema = z
 const stepFiveSchema = z
   .object({
     monitoring: z.boolean(),
-    monitoringInstance: z.string().or(
+    monitoringInstance: z
+      .string()
+      .or(
         z.object({
-            type: z.string().optional(),
-            url:  z.string().optional(),
-            name:  z.string().optional(),
+          type: z.string().optional(),
+          url: z.string().optional(),
+          name: z.string().optional(),
         })
-      ).nullable()})
+      )
+      .nullable(),
+  })
   .passthrough();
 
 // Each position of the array is the validation schema for a given step
@@ -184,7 +188,8 @@ export const dbWizardSchema = [
 const superset = stepOneSchema
   .and(stepTwoSchema)
   // .and(stepThreeSchema)
-  .and(advancedConfigurationsSchema).and(stepFiveSchema);
+  .and(advancedConfigurationsSchema)
+  .and(stepFiveSchema);
 
 export type DbWizardType = z.infer<typeof superset>;
 
