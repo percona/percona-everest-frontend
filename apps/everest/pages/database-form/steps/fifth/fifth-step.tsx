@@ -42,7 +42,7 @@ export const FifthStep = () => {
         <SwitchInput
           label={Messages.monitoringEnabled}
           name={DbWizardFormFields.monitoring}
-          formControlLabelProps={{
+          switchFieldProps={{
             disabled: !monitoringInstances?.length,
           }}
         />

@@ -10,7 +10,7 @@ export const SwitchInput = ({
   label,
   labelCaption,
   controllerProps,
-  formControlLabelProps,
+  formControlLabelProps,switchFieldProps,
 }: SwitchInputProps) => {
   const { control: contextControl } = useFormContext();
   return (
@@ -31,6 +31,7 @@ export const SwitchInput = ({
               {...field}
               checked={field.value}
               data-testid={`switch-input-${kebabize(name)}`}
+              {...switchFieldProps}
             />
           )}
           {...controllerProps}
