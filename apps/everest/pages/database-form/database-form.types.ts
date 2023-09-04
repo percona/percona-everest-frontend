@@ -51,6 +51,7 @@ export enum DbWizardFormFields {
   engineParametersEnabled = 'engineParametersEnabled',
   engineParameters = 'engineParameters',
   monitoring = 'monitoring',
+  monitoringInstance = 'monitoringInstance',
   endpoint = 'endpoint',
 }
 
@@ -158,27 +159,17 @@ const advancedConfigurationsSchema = z
     });
   });
 
-// TODO re-add step after API is ready for monitoring
-// const stepFiveSchema = z
-//   .object({
-//     monitoring: z.boolean(),
-//     endpoint: z.string().optional(),
-//   })
-//   .passthrough()
-//   .superRefine((input, ctx) => {
-//     if (input.monitoring) {
-//       const { success } = z.string().url().nonempty().safeParse(input.endpoint);
-
-//       if (!success) {
-//         ctx.addIssue({
-//           code: z.ZodIssueCode.invalid_string,
-//           validation: 'url',
-//           path: ['endpoint'],
-//           message: Messages.errors.endpoint.invalid,
-//         });
-//       }
-//     }
-//   });
+const stepFiveSchema = z
+  .object({
+    monitoring: z.boolean(),
+    monitoringInstance: z.string().or(
+        z.object({
+            type: z.string().optional(),
+            url:  z.string().optional(),
+            name:  z.string().optional(),
+        })
+      ).nullable()})
+  .passthrough();
 
 // Each position of the array is the validation schema for a given step
 // TODO re-add steps after API is ready
@@ -187,14 +178,13 @@ export const dbWizardSchema = [
   stepTwoSchema,
   // stepThreeSchema,
   advancedConfigurationsSchema,
-  // stepFiveSchema,
+  stepFiveSchema,
 ];
 
 const superset = stepOneSchema
   .and(stepTwoSchema)
   // .and(stepThreeSchema)
-  .and(advancedConfigurationsSchema);
-// .and(stepFiveSchema);
+  .and(advancedConfigurationsSchema).and(stepFiveSchema);
 
 export type DbWizardType = z.infer<typeof superset>;
 

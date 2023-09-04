@@ -41,3 +41,12 @@ export const getKubernetesClusterResourcesInfo = async (
   );
   return response.data;
 };
+
+// export const getKubernetesClusterMonitoringInfo = async (
+//     k8sClusterId: string
+// ) => {
+//   const response = await api.post<GetKubernetesClusterMonitoringInfoResponse>(
+//       `/kubernetes/${k8sClusterId}/cluster-monitoring`
+//   );
+//   return response.data;
+// };

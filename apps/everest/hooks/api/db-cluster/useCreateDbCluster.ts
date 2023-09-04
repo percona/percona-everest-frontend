@@ -96,14 +96,11 @@ const formValuesToPayloadMapping = (
           ? dbPayload.engineParameters
           : '',
       },
-      // monitoring: {
-      //   enabled: dbPayload.monitoring,
-      //   ...(!!dbPayload.monitoring && {
-      //     pmm: {
-      //       publicAddress: dbPayload.endpoint || '',
-      //     }
-      //   })
-      // },
+      monitoring: {
+        ...(!!dbPayload.monitoring && {
+          monitoringConfigName: typeof dbPayload.monitoringInstance === 'string' ? dbPayload.monitoringInstance : dbPayload?.monitoringInstance!.name,
+        })
+      },
       proxy: {
         replicas: +dbPayload.numberOfNodes,
         expose: {

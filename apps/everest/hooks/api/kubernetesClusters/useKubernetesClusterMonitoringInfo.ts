@@ -12,11 +12,23 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-export const Messages = {
-  monitoring: 'Monitoring',
-  caption:
-    'Monitor the health of your database to detect issues quickly and improve its performance.',
-  monitoringEnabled: 'Monitoring enabled',
-  monitoringInstanceLabel: 'Monitoring endpoint',
-  // monitoringInstancePlaceholder: 'URL',
+import { useQuery } from 'react-query';
+import {
+    GetKubernetesClusterMonitoringInfoResponse,
+    KubernetesClusterResourcesInfo,
+} from '../../../types/kubernetes.types';
+import {useSelectedKubernetesCluster} from "./useSelectedKubernetesCluster";
+
+
+
+export const useKubernetesClusterMonitoringInfo = () => {
+    // const { id } = useSelectedKubernetesCluster();
+
+    // return useQuery<
+    //     GetKubernetesClusterMonitoringInfoResponse,
+    //     unknown,
+    //     KubernetesClusterResourcesInfo
+    // >(`${id}-cluster-monitoring-info`, () =>
+    //     getKubernetesClusterMonitoringInfo(id)
+    // );
 };
