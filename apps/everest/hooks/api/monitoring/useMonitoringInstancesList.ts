@@ -13,11 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import { useQuery } from 'react-query';
-import { KubernetesClusterList } from '../../../types/kubernetes.types';
-import {
-  createMonitoringInstanceFn,
-  getMonitoringInstancesFn,
-} from '../../../api/monitoring';
+import { getMonitoringInstancesFn } from '../../../api/monitoring';
 import { MonitoringInstanceList } from '../../../types/monitoring.types';
 
 export const useMonitoringInstancesList = (enabled?: boolean) =>
@@ -27,9 +23,4 @@ export const useMonitoringInstancesList = (enabled?: boolean) =>
     {
       enabled,
     }
-  );
-
-export const useMonitoringCreation = () =>
-  useQuery<KubernetesClusterList>('monitoring-instance-create', () =>
-    createMonitoringInstanceFn()
   );
