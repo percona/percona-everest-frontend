@@ -13,15 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 export enum SettingsTabs {
-  defaultConfigurations = 'default-configurations',
+  // defaultConfigurations = 'default-configurations',
   storageLocations = 'storage-locations',
-  monitoringEndpoints = 'monitoring-endpoints',
-  k8sClusters = 'k8s-clusters',
+  // monitoringEndpoints = 'monitoring-endpoints',
+  // k8sClusters = 'k8s-clusters',
 }
 
 export const settingsTabsMui: Record<SettingsTabs, number> = {
-  [SettingsTabs.defaultConfigurations]: 0,
+  // [SettingsTabs.defaultConfigurations]: 0,
   [SettingsTabs.storageLocations]: 1,
-  [SettingsTabs.monitoringEndpoints]: 2,
-  [SettingsTabs.k8sClusters]: 3,
+  // [SettingsTabs.monitoringEndpoints]: 2,
+  // [SettingsTabs.k8sClusters]: 3,
 };
