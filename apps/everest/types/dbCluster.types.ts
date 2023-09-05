@@ -77,6 +77,7 @@ export interface Monitoring {
 }
 
 export interface Spec {
+  allowUnsafeConfiguration?: boolean;
   backup?: Backup;
   engine: Engine;
   proxy: Proxy;

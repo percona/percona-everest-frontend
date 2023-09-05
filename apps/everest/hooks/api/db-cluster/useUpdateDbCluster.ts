@@ -44,6 +44,7 @@ const formValuesToPayloadOverrides = (
     kind: 'DatabaseCluster',
     metadata: dbCluster.metadata,
     spec: {
+      ...dbCluster?.spec,
       // backup: {
       //   enabled: dbPayload.backupsEnabled,
       //   ...(dbPayload.backupsEnabled && {
