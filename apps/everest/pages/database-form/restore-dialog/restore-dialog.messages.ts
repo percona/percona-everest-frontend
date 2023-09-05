@@ -20,7 +20,7 @@ export const Messages = {
   reject: 'Cancel',
   accept: 'Done',
   alert: (backupDb: string, restoreDb: string) =>
-    `BACKUPDB=${backupDb}; RESTOREDB=${restoreDb}; kubectl get secret "everest-secrets-$BACKUPDB" -n everest-operator-system -o yaml | sed "s/name: everest-secrets-$BACKUPDB/name: everest-secrets-$RESTOREDB/" | kubectl apply -f -`,
+    `BACKUPDB=${backupDb}; RESTOREDB=${restoreDb}; kubectl get secret "everest-secrets-$BACKUPDB" -n percona-everest -o yaml | sed "s/name: everest-secrets-$BACKUPDB/name: everest-secrets-$RESTOREDB/" | kubectl apply -f -`,
   copyToClipboardTooltip: 'Successfully copied',
   copy: 'Copy',
 };
