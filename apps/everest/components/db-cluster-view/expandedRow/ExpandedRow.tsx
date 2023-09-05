@@ -54,6 +54,10 @@ export const ExpandedRow = ({
         justifyContent: 'start',
         alignItems: 'start',
         gap: '50px',
+        cursor: 'auto',
+      }}
+      onClick={(e) => {
+        e.stopPropagation();
       }}
     >
       <Box>
@@ -77,7 +81,6 @@ export const ExpandedRow = ({
           </>
         )}
       </Box>
-
       <Box>
         <Typography
           variant="subtitle2"
