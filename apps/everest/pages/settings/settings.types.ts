@@ -20,7 +20,7 @@ export enum SettingsTabs {
 }
 
 export const settingsTabsMui: Record<SettingsTabs, number> = {
-  [SettingsTabs.defaultConfigurations]: 0,
+  // [SettingsTabs.defaultConfigurations]: 0,
   [SettingsTabs.storageLocations]: 1,
   // [SettingsTabs.monitoringEndpoints]: 2,
   // [SettingsTabs.k8sClusters]: 3,
