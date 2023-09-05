@@ -193,11 +193,13 @@ export const DatabasePage = () => {
         ))}
       </Stepper>
       <FormProvider {...methods}>
-        <RestoreDialog
-          open={restoreFromBackupModal}
-          setOpen={setRestoreFromBackupModal}
-          onSubmit={onSubmit}
-        />
+        {mode === 'restoreFromBackup' && (
+          <RestoreDialog
+            open={restoreFromBackupModal}
+            setOpen={setRestoreFromBackupModal}
+            onSubmit={onSubmit}
+          />
+        )}
         <Stack direction={isDesktop ? 'row' : 'column'}>
           <form
             style={{ flexGrow: 1 }}
@@ -248,7 +250,7 @@ export const DatabasePage = () => {
                     variant="contained"
                     data-testid="db-wizard-submit-button"
                   >
-                    {Messages.continue}
+                    {Messages.createDatabase}
                   </Button>
                 )
               ) : (

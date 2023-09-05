@@ -13,27 +13,40 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React from 'react';
 import {
+  Alert,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   Typography,
-  Alert,
 } from '@mui/material';
 import { DialogTitle } from '@percona/ui-lib.dialog-title';
-import { useFormContext } from 'react-hook-form';
 import { enqueueSnackbar } from 'notistack';
+import React from 'react';
+import { useFormContext } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
 import { Messages } from './restore-dialog.messages';
 import { RestoreDialogProps } from './restore-dialog.types';
+import { DbWizardFormFields } from '../database-form.types';
 
 export const RestoreDialog = ({
   open,
   setOpen,
   onSubmit,
 }: RestoreDialogProps) => {
-  const { handleSubmit } = useFormContext();
+  const { handleSubmit, watch } = useFormContext();
+  const { state } = useLocation();
+  const originalDbName = state?.selectedDbCluster;
+  const restoreDbName = watch(DbWizardFormFields.dbName);
+  const copyToClipboard = async () => {
+    await navigator.clipboard.writeText(
+      Messages.alert(originalDbName, restoreDbName)
+    );
+    enqueueSnackbar(Messages.copyToClipboardTooltip, {
+      variant: 'success',
+    });
+  };
 
   return (
     <Dialog open={open}>
@@ -46,23 +59,13 @@ export const RestoreDialog = ({
           action={
             navigator.clipboard &&
             window.isSecureContext && (
-              <Button
-                color="inherit"
-                size="medium"
-                onClick={() => {
-                  navigator.clipboard.writeText(Messages.alert).then(() => {
-                    enqueueSnackbar(Messages.copyToClipboardTooltip, {
-                      variant: 'success',
-                    });
-                  });
-                }}
-              >
-                Copy
+              <Button color="inherit" size="medium" onClick={copyToClipboard}>
+                {Messages.copy}
               </Button>
             )
           }
         >
-          {Messages.alert}
+          {Messages.alert(originalDbName, restoreDbName)}
         </Alert>
       </DialogContent>
       <DialogActions>
