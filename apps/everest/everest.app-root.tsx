@@ -11,9 +11,7 @@ import { BackupsList } from './pages/backups/backups-list/backups-list';
 import { BackupsTabs } from './pages/backups/backups.types';
 import { DatabasePage } from './pages/database-form/database-form';
 import { DatabasesPage } from './pages/databases/databases';
-import { DefaultConfigurations } from './pages/settings/default-configurations/default-configurations';
 import { Settings } from './pages/settings/settings';
-
 import { SettingsTabs } from './pages/settings/settings.types';
 import { StorageLocations } from './pages/settings/storage-locations/storage-locations';
 
@@ -58,10 +56,10 @@ const router = createBrowserRouter([
         path: 'settings',
         element: <Settings />,
         children: [
-          {
-            path: SettingsTabs.defaultConfigurations,
-            element: <DefaultConfigurations />,
-          },
+          // {
+          //   path: SettingsTabs.defaultConfigurations,
+          //   element: <DefaultConfigurations />,
+          // },
           {
             path: SettingsTabs.storageLocations,
             element: <StorageLocations />,
