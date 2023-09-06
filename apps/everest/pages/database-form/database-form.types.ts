@@ -58,12 +58,21 @@ export enum DbWizardFormFields {
 // .passthrough tells Zod to not drop unrecognized keys
 // this is needed because we parse step by step
 // so, by default, Zod would leave behind the keys from previous steps
+
+const doesNotContainerAnythingButAlphanumericAndDash = /^[a-z0-9-]+$/;
+const doesNotStartWithDash = /^[^-]/;
+const doesNotEndWithDash = /[^-]$/;
+
 const stepOneSchema = z
   .object({
     [DbWizardFormFields.dbType]: z.nativeEnum(DbType),
     [DbWizardFormFields.dbName]: z
       .string()
-      .max(255, Messages.errors.dbName.tooLong)
+      .max(22, Messages.errors.dbName.tooLong)
+        .regex(doesNotContainerAnythingButAlphanumericAndDash, 'The name should contain only lowercase alphanumeric characters or -')
+        .regex(doesNotEndWithDash, 'The name shouldn\'t end with -')
+        .regex(doesNotStartWithDash, 'The name shouldn\'t start with -')
+        .trim()
       .nonempty(),
     // [DbWizardFormFields.k8sNamespace]: z.string().nonempty(),
     // [DbWizardFormFields.dbEnvironment]: z.string().nonempty(),
