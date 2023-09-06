@@ -178,6 +178,7 @@ export const BackupsList = () => {
         renderRowActionMenuItems={({ row, closeMenu }) => [
           <MenuItem
             key={0}
+            disabled={row.original.state !== BackupStatus.OK}
             onClick={() => {
               handleRestoreBackup(row.original.name);
               closeMenu();
@@ -189,6 +190,7 @@ export const BackupsList = () => {
           </MenuItem>,
           <MenuItem
             key={1}
+            disabled={row.original.state !== BackupStatus.OK}
             onClick={() => {
               handleRestoreToNewDbBackup(
                 row.original.name,
