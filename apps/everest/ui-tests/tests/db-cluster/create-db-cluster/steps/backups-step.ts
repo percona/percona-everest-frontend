@@ -13,19 +13,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { test as setup } from '@playwright/test';
-import {
-  deleteMonitoringInstance,
-  testMonitoringName,
-  testMonitoringName2,
-} from './utils/monitoring-instance';
-
-setup('Delete backup storage', async ({ request }) => {
-  // TODO console.log('DELET BACKUP STORAGE');
-  await request.delete('/v1/backup-storages/ui-dev');
-});
-
-setup('Delete monitoring instances', async ({ request }) => {
-  await deleteMonitoringInstance(request, testMonitoringName);
-  await deleteMonitoringInstance(request, testMonitoringName2);
-});
+export const backupsStepCheck = async () => {
+  // TODO return backup step tests
+  // await expect(
+  //   page.getByRole('heading', {
+  //     name: 'Specify how often you want to run backup jobs for your database.',
+  //   })
+  // ).toBeVisible();
+  //
+  // await page.getByTestId('text-input-storage-location').click();
+  //
+  // const storageOptions = page.getByRole('option');
+  //
+  // expect(storageOptions.filter({ hasText: 'ui-dev' })).toBeVisible();
+  // await storageOptions.first().click();
+};

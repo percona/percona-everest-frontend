@@ -170,13 +170,14 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
           value: status,
         })),
         Cell: ({ cell }) => (
-          <StatusField
-            status={cell.getValue<DbClusterStatus>()}
-            statusMap={DB_CLUSTER_STATUS_TO_BASE_STATUS}
-          >
-            {beautifyDbClusterStatus(cell.getValue<DbClusterStatus>())}
-          </StatusField>
-        ),
+                <StatusField
+                    dataTestId={cell?.row?.original?.databaseName}
+                    status={cell.getValue<DbClusterStatus>()}
+                    statusMap={DB_CLUSTER_STATUS_TO_BASE_STATUS}
+                >
+                    {beautifyDbClusterStatus(cell.getValue<DbClusterStatus>())}
+                </StatusField>
+            )
       },
       {
         accessorKey: 'databaseName',
@@ -236,6 +237,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
               <BorderColor fontSize="small" /> {Messages.menuItems.edit}
             </MenuItem>,
             <MenuItem
+                data-testid={`${row.original?.databaseName}-delete`}
               key={1}
               onClick={() => {
                 handleDeleteDbCluster(row.original.databaseName!);

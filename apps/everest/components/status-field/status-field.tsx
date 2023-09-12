@@ -8,12 +8,13 @@ export function StatusField<T extends string | number | symbol>({
   status,
   statusMap,
   children,
+  dataTestId,
 }: StatusFieldProps<T>) {
   const mappedStatus: BaseStatus = statusMap[status];
   const MappedIcon = STATUS_TO_ICON[mappedStatus] || UknownIcon;
 
   return (
-    <Stack direction="row" gap={1}>
+    <Stack data-testid={`${dataTestId}-status`} direction="row" gap={1}>
       <MappedIcon />
       {children}
     </Stack>
