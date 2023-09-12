@@ -17,14 +17,14 @@ import { APIRequestContext, expect } from '@playwright/test';
 import { DbCluster, ProxyExposeType } from '../../../types/dbCluster.types';
 import { dbTypeToDbEngine } from '../../../utils/db';
 import { DbWizardType } from '../../../pages/database-form/database-form.types';
-import { DbType } from '../../../../../ui-lib/db-toggle-card';
+import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { getEnginesVersions } from './database-engines';
 import { getK8sClusters } from './k8s-clusters';
 import { getClusterDetailedInfo } from './storage-class';
 
 export const createDbClusterFn = async (
   request: APIRequestContext,
-  customOptions?: DbWizardType,
+  customOptions?: Partial<DbWizardType>,
   kubernetesId?: string
 ) => {
   const k8sClusterId = kubernetesId || (await getK8sClusters(request))[0].id;
@@ -81,7 +81,7 @@ export const createDbClusterFn = async (
       engine: {
         type: dbEngineType,
         version: customOptions?.dbVersion || lastVersion,
-        replicas: +customOptions?.numberOfNodes || 1,
+        replicas: +(customOptions?.numberOfNodes || 1),
         resources: {
           cpu: customOptions?.cpu || 1,
           memory: `${customOptions?.memory || 2}G`,
@@ -105,12 +105,12 @@ export const createDbClusterFn = async (
         // }),
       },
       proxy: {
-        replicas: +customOptions?.numberOfNodes || 1,
+        replicas: +(customOptions?.numberOfNodes || 1),
         expose: {
           type: customOptions?.externalAccess
             ? ProxyExposeType.external
             : ProxyExposeType.internal,
-          ...(!!customOptions.externalAccess &&
+          ...(!!customOptions?.externalAccess &&
             customOptions?.sourceRanges && {
               ipSourceRanges: customOptions?.sourceRanges.flatMap((source) =>
                 source.sourceRange ? [source.sourceRange] : []
@@ -137,7 +137,7 @@ export const createDbClusterFn = async (
   expect(response.ok()).toBeTruthy();
 };
 
-export const deleteDbClusterFn = async (request, kubernetesId, clusterName) => {
+export const deleteDbClusterFn = async (request: APIRequestContext, kubernetesId: string, clusterName: string) => {
   const deleteResponse = await request.delete(
     `/v1/kubernetes/${kubernetesId}/database-clusters/${clusterName}`
   );
