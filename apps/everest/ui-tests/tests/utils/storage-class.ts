@@ -13,8 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { APIRequestContext , expect } from '@playwright/test';
-
+import { APIRequestContext, expect } from '@playwright/test';
 
 export const getClusterDetailedInfo = async (
   request: APIRequestContext,

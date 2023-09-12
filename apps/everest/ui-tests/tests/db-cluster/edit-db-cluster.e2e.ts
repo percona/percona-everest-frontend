@@ -12,29 +12,30 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 import { test } from '@playwright/test';
-import { getK8sClusters } from '../utils/k8s-clusters';
-import { getEnginesVersions } from '../utils/database-engines';
-import { getClusterDetailedInfo } from '../utils/storage-class';
+// import { getK8sClusters } from '../utils/k8s-clusters';
+// import { getEnginesVersions } from '../utils/database-engines';
+// import { getClusterDetailedInfo } from '../utils/storage-class';
 
 test.describe('DB Cluster creation', () => {
-  let kubernetesId;
-  let engineVersions = {
-    pxc: [],
-    psmdb: [],
-    postgresql: [],
-  };
-  let storageClasses = [];
+  // let kubernetesId;
+  // let engineVersions = {
+  //   pxc: [],
+  //   psmdb: [],
+  //   postgresql: [],
+  // };
+  // let storageClasses = [];
 
   test.beforeAll(async ({ request }) => {
-    kubernetesId = (await getK8sClusters(request))[0].id;
-    engineVersions = await getEnginesVersions(request, kubernetesId);
+    // kubernetesId = (await getK8sClusters(request))[0].id;
+    // engineVersions = await getEnginesVersions(request, kubernetesId);
 
-    const { storageClassNames = [] } = await getClusterDetailedInfo(
-      request,
-      kubernetesId
-    );
-    storageClasses = storageClassNames;
+    // const { storageClassNames = [] } = await getClusterDetailedInfo(
+    //   request,
+    //   kubernetesId
+    // );
+    // storageClasses = storageClassNames;
     // TODO createDbCluster(request);
   });
 
