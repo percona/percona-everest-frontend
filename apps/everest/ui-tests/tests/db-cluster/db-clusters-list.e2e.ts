@@ -14,9 +14,9 @@
 // limitations under the License.
 
 import { test } from '@playwright/test';
+import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { getK8sClusters } from '../utils/k8s-clusters';
 import { createDbClusterFn } from '../utils/db-cluster';
-import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { NumberOfNodes } from '../../../pages/database-form/steps/second/second-step.types';
 
 test.describe('DB Cluster List', () => {

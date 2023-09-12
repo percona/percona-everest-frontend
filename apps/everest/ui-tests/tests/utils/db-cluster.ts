@@ -14,10 +14,10 @@
 // limitations under the License.
 
 import { APIRequestContext, expect } from '@playwright/test';
+import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { DbCluster, ProxyExposeType } from '../../../types/dbCluster.types';
 import { dbTypeToDbEngine } from '../../../utils/db';
 import { DbWizardType } from '../../../pages/database-form/database-form.types';
-import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { getEnginesVersions } from './database-engines';
 import { getK8sClusters } from './k8s-clusters';
 import { getClusterDetailedInfo } from './storage-class';
