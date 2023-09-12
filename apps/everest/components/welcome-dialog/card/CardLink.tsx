@@ -1,0 +1,48 @@
+import { Card, CardContent, SvgIcon, Typography } from '@mui/material';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+export const CardLink = ({
+  Icon,
+  action,
+  description,
+  link,
+  handleCloseModal,
+}: {
+  Icon: typeof SvgIcon;
+  action: string;
+  description: string;
+  link: string;
+  handleCloseModal: () => void;
+}) => {
+  const navigate = useNavigate();
+  const handleRedirect = () => {
+    handleCloseModal();
+    navigate(link);
+  };
+  return (
+    <Card
+      sx={{
+        width: '334px',
+        height: '188px',
+        boxShadow: 3,
+        ':hover': {
+          cursor: 'pointer',
+        },
+      }}
+      onClick={handleRedirect}
+    >
+      <CardContent
+        sx={{
+          padding: '24px 32px 24px 32px',
+        }}
+      >
+        <Icon
+          fontSize="inherit"
+          sx={{ fontSize: '58px', stroke: '#ffffff', strokeWidth: 1 }}
+        />
+        <Typography variant="h6">{action}</Typography>
+        <Typography variant="helperText">{description}</Typography>
+      </CardContent>
+    </Card>
+  );
+};

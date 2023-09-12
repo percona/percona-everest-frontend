@@ -8,10 +8,11 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
 import { DrawerContext } from '../../contexts/drawer/drawer.context';
 import { K8Context } from '../../contexts/kubernetes/kubernetes.context';
+import useLocalStorage from '../../hooks/utils/useLocalStorage';
 import { AppBar } from '../app-bar/AppBar';
 import { Drawer } from '../drawer/Drawer';
 import { WelcomeDialog } from '../welcome-dialog/welcome-dialog';
@@ -19,7 +20,10 @@ import { Messages } from './Main.messages';
 
 export const Main = () => {
   const theme = useTheme();
-  const [openWelcomeDialog, setOpenWelcomeDialog] = useState(true);
+  const [openWelcomeDialogLS, setOpenWelcomeDialogLS] = useLocalStorage(
+    'welcomeModal',
+    true
+  );
   const { activeBreakpoint } = useContext(DrawerContext);
   const { clusters } = useContext(K8Context);
   const isFetching = !!clusters?.isFetching;
@@ -27,7 +31,7 @@ export const Main = () => {
   const noKubernetesClusters = !clusters?.data?.length;
 
   const handleCloseWelcomeDialog = () => {
-    setOpenWelcomeDialog(false);
+    setOpenWelcomeDialogLS(false);
   };
 
   const handleClick = () => {
@@ -83,10 +87,12 @@ export const Main = () => {
         ) : (
           <Outlet />
         )}
-        <WelcomeDialog
-          open={openWelcomeDialog}
-          closeDialog={handleCloseWelcomeDialog}
-        />
+        {openWelcomeDialogLS && (
+          <WelcomeDialog
+            open={openWelcomeDialogLS}
+            closeDialog={handleCloseWelcomeDialog}
+          />
+        )}
       </Box>
     </Box>
   );
