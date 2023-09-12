@@ -27,7 +27,7 @@ test.describe('DB Cluster creation', () => {
   // };
   // let storageClasses = [];
 
-  test.beforeAll(async ({ request }) => {
+  test.beforeAll(async () => {
     // kubernetesId = (await getK8sClusters(request))[0].id;
     // engineVersions = await getEnginesVersions(request, kubernetesId);
 
