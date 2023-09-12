@@ -14,5 +14,6 @@
 // limitations under the License.
 export const Messages = {
   somethingWrong: 'Something went wrong',
+  noKubernetesClusters: 'Please register kubernetes cluster to continue',
   retry: 'Retry',
 };

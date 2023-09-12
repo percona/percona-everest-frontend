@@ -29,7 +29,7 @@ export const FormDialog = <T extends FieldValues>({
   cancelMessage = 'Cancel',
   submitMessage,
   validationMode = 'onChange',
-  subHead,
+  subHead2,
   size = 'L',
 }: FormDialogProps<T>) => {
   const methods = useForm<T>({
@@ -54,7 +54,7 @@ export const FormDialog = <T extends FieldValues>({
       <DialogTitle onClose={closeModal}>{headerMessage}</DialogTitle>
       <DialogContent sx={{ width: modalWidth }}>
         {/* @ts-ignore */}
-        <Typography variant="subHead">{subHead}</Typography>
+        <Typography variant="subHead2">{subHead2}</Typography>
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(handleSubmit)}>
             <FormGroup>{children}</FormGroup>

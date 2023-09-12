@@ -8,20 +8,27 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { DrawerContext } from '../../contexts/drawer/drawer.context';
 import { K8Context } from '../../contexts/kubernetes/kubernetes.context';
 import { AppBar } from '../app-bar/AppBar';
 import { Drawer } from '../drawer/Drawer';
+import { WelcomeDialog } from '../welcome-dialog/welcome-dialog';
 import { Messages } from './Main.messages';
 
 export const Main = () => {
   const theme = useTheme();
+  const [openWelcomeDialog, setOpenWelcomeDialog] = useState(true);
   const { activeBreakpoint } = useContext(DrawerContext);
   const { clusters } = useContext(K8Context);
   const isFetching = !!clusters?.isFetching;
-  const badResult = !!clusters?.isError || !clusters?.data?.length;
+  const badResult = !!clusters?.isError;
+  const noKubernetesClusters = !clusters?.data?.length;
+
+  const handleCloseWelcomeDialog = () => {
+    setOpenWelcomeDialog(false);
+  };
 
   const handleClick = () => {
     clusters?.refetch();
@@ -69,9 +76,17 @@ export const Main = () => {
               {Messages.retry}
             </Button>
           </Stack>
+        ) : noKubernetesClusters ? (
+          <Typography variant="subtitle1">
+            {Messages.noKubernetesClusters}
+          </Typography>
         ) : (
           <Outlet />
         )}
+        <WelcomeDialog
+          open={openWelcomeDialog}
+          closeDialog={handleCloseWelcomeDialog}
+        />
       </Box>
     </Box>
   );
