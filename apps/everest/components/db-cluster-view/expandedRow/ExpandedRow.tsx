@@ -21,6 +21,7 @@ import { ProxyExposeType } from '../../../types/dbCluster.types';
 import { Messages } from '../dbClusterView.messages';
 import { LabelValue } from './LabelValue';
 import { useDbClusterCredentials } from '../../../hooks/api/db-cluster/useCreateDbCluster';
+import { HiddenRow } from "../../hidden-row";
 
 export const ExpandedRow = ({
   row,
@@ -77,7 +78,10 @@ export const ExpandedRow = ({
         ) : (
           <>
             <LabelValue label="Username" value={data?.username} />
-            <LabelValue label="Password" value={data?.password} />
+            <LabelValue
+              label="Password"
+              value={<HiddenRow value={data?.password || ''} />}
+            />
           </>
         )}
       </Box>
