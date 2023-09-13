@@ -1,5 +1,8 @@
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ReplayIcon from '@mui/icons-material/Replay';
 import {
+  Alert,
+  AlertTitle,
   Box,
   Button,
   Skeleton,
@@ -8,6 +11,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import { enqueueSnackbar } from 'notistack';
 import React, { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
 import { DrawerContext } from '../../contexts/drawer/drawer.context';
@@ -41,6 +45,13 @@ export const Main = () => {
   const drawerWidth = theme.breakpoints.up('sm')
     ? `calc(${theme.spacing(8)} + 1px)`
     : `calc(${theme.spacing(7)} + 1px)`;
+
+  const copyToClipboard = async () => {
+    await navigator.clipboard.writeText(Messages.noKubernetesCommand);
+    enqueueSnackbar(Messages.copyToClipboardTooltip, {
+      variant: 'success',
+    });
+  };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -81,9 +92,44 @@ export const Main = () => {
             </Button>
           </Stack>
         ) : noKubernetesClusters ? (
-          <Typography variant="subtitle1">
-            {Messages.noKubernetesClusters}
-          </Typography>
+          <Box
+            sx={{
+              padding: '20px 60px 20px 60px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '24px',
+            }}
+          >
+            <Typography variant="h5">
+              {Messages.noKubernetesClusters}
+            </Typography>
+            <Alert
+              severity="info"
+              action={
+                navigator.clipboard &&
+                window.isSecureContext && (
+                  <Button
+                    color="inherit"
+                    size="small"
+                    onClick={copyToClipboard}
+                    sx={{
+                      whiteSpace: 'nowrap',
+                      display: 'flex',
+                      gap: 1,
+                      fontWeight: 600,
+                    }}
+                  >
+                    <ContentCopyIcon /> {Messages.copyCommand}
+                  </Button>
+                )
+              }
+            >
+              <AlertTitle sx={{ fontWeight: 600 }}>
+                {Messages.alertTitle}
+              </AlertTitle>
+              {Messages.noKubernetesCommand}
+            </Alert>
+          </Box>
         ) : (
           <Outlet />
         )}
