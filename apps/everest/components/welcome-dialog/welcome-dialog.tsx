@@ -1,16 +1,14 @@
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import {
-  Box,
+  Button,
   Dialog,
+  DialogActions,
   DialogContent,
-  Divider,
   Link,
   Typography,
 } from '@mui/material';
 import { DialogTitle } from '@percona/ui-lib.dialog-title';
 import React from 'react';
-import { CardLink } from './card/CardLink';
+import { useNavigate } from 'react-router-dom';
 import { Messages } from './welcome-dialog.messages';
 export const WelcomeDialog = ({
   open,
@@ -19,6 +17,13 @@ export const WelcomeDialog = ({
   open: boolean;
   closeDialog: () => void;
 }) => {
+  const navigate = useNavigate();
+
+  const handleRedirectHome = () => {
+    navigate('/');
+    closeDialog();
+  };
+
   return (
     <Dialog
       PaperProps={{ sx: { minWidth: '800px' } }}
@@ -36,7 +41,8 @@ export const WelcomeDialog = ({
           </Link>
           .
         </Typography>
-        <Divider />
+        {/* TODO: uncomment when default settings page is ready */}
+        {/* <Divider />
         <Typography variant="subHead1" sx={{ p: '24px 44px 8px 44px' }}>
           {Messages.subHead2}
         </Typography>
@@ -48,7 +54,7 @@ export const WelcomeDialog = ({
             px: '44px',
           }}
         >
-          {/* TODO: uncomment when default settings page is ready */}
+
           <CardLink
             Icon={AddCircleOutlineOutlinedIcon}
             action={Messages.card1.header}
@@ -63,8 +69,14 @@ export const WelcomeDialog = ({
             link="/settings"
             handleCloseModal={closeDialog}
           />
-        </Box>
+        </Box> */}
       </DialogContent>
+      {/* TODO: remove dialog actions when cards are uncommented */}
+      <DialogActions>
+        <Button onClick={handleRedirectHome} variant="contained" size="large">
+          {Messages.letsGo}
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 };

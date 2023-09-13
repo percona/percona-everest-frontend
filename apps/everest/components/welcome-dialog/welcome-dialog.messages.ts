@@ -17,4 +17,5 @@ via this `,
     description: `Customize settings and ensure that your database operates
     optimally from the get-go.`,
   },
+  letsGo: 'Let’s go',
 };

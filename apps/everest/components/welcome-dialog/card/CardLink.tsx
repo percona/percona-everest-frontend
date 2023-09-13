@@ -38,6 +38,7 @@ export const CardLink = ({
       >
         <Icon
           fontSize="inherit"
+          // This is hack to make those icons thinner
           sx={{ fontSize: '58px', stroke: '#ffffff', strokeWidth: 1 }}
         />
         <Typography variant="h6">{action}</Typography>
