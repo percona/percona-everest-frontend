@@ -14,4 +14,12 @@
 // limitations under the License.
 export const Messages = {
   createDatabase: 'Create Database',
+  noKubernetesClusters:
+    'Oops! It looks like you don’t have any Kubernetes Cluster yet.',
+  copyCommand: 'Copy command',
+  alertTitle:
+    'Run the following command to install all required operators in headless mode:',
+  copyToClipboardTooltip: 'Successfully copied',
+  noKubernetesCommand:
+    '/everestctl install operators --backup.enable=false --everest.endpoint=http://127.0.0.1:8080 --monitoring.enable=false --operator.mongodb=true --operator.postgresql=true --operator.xtradb-cluster=true --skip-wizard -k config.yaml',
 };
