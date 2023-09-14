@@ -15,8 +15,8 @@
 
 import React, { useState } from 'react';
 import { Box, IconButton } from '@mui/material';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
 type HideRowProps = {
   value: string;
@@ -41,11 +41,11 @@ export const HiddenRow = ({ value }: HideRowProps) => {
       </Box>
       {show ? (
         <IconButton onClick={toggle} aria-label="visibility-off">
-          <VisibilityOffIcon />
+          <VisibilityOutlinedIcon />
         </IconButton>
       ) : (
         <IconButton onClick={toggle} aria-label="visibility-on">
-          <VisibilityIcon />
+          <VisibilityOffOutlinedIcon />
         </IconButton>
       )}
     </Box>
