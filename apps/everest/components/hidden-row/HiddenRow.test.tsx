@@ -8,7 +8,7 @@ describe('Drawer', () => {
     expect(screen.getByTestId('hidden-row')).toHaveTextContent('****');
   });
   it('Should show row by icon click', async () => {
-    render(<HiddenRow value={'test'} />);
+    render(<HiddenRow value="test" />);
     expect(screen.getByTestId('hidden-row')).toHaveTextContent('****');
     const visabilityIcon = screen.getByTestId('VisibilityIcon');
     expect(visabilityIcon).toBeInTheDocument();
