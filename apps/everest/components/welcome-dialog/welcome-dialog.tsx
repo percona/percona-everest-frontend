@@ -10,6 +10,7 @@ import { DialogTitle } from '@percona/ui-lib.dialog-title';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Messages } from './welcome-dialog.messages';
+
 export const WelcomeDialog = ({
   open,
   closeDialog,
