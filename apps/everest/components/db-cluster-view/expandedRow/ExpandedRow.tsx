@@ -21,7 +21,7 @@ import { ProxyExposeType } from '../../../types/dbCluster.types';
 import { Messages } from '../dbClusterView.messages';
 import { LabelValue } from './LabelValue';
 import { useDbClusterCredentials } from '../../../hooks/api/db-cluster/useCreateDbCluster';
-import { HiddenRow } from "../../hidden-row";
+import { HiddenRow } from '../../hidden-row';
 
 export const ExpandedRow = ({
   row,
