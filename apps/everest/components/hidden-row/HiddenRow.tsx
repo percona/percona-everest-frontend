@@ -36,7 +36,7 @@ export const HiddenRow = ({ value }: HideRowProps) => {
         gap: 2,
       }}
     >
-      <Box sx={{ mt: '3px' }}>{formattedValue}</Box>
+      <Box data-testid="hidden-row" sx={{ mt: '3px' }}>{formattedValue}</Box>
       {show ? (
         <IconButton onClick={toggle} aria-label="visibility-off">
           <VisibilityOffIcon />
