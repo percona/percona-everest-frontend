@@ -17,13 +17,22 @@ import React, { useState } from 'react';
 import { Box, IconButton } from '@mui/material';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import { Messages } from './HiddenPasswordToggle.messages';
 
 type HideRowProps = {
   value: string;
+  fixedAsteriskLength?: boolean;
 };
-export const HiddenRow = ({ value }: HideRowProps) => {
+export const HiddenPasswordToggle = ({
+  value,
+  fixedAsteriskLength = true,
+}: HideRowProps) => {
   const [show, setShow] = useState(false);
-  const formattedValue = show ? value : value.replace(/./g, '*');
+  const formattedValue = show
+    ? value
+    : fixedAsteriskLength
+    ? Messages.asteriskHiddenText
+    : value.replace(/./g, '*');
   const toggle = () => {
     setShow((prevState) => !prevState);
   };
