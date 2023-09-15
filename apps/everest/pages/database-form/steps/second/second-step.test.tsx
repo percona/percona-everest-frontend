@@ -5,7 +5,8 @@ import { TestWrapper } from '../../../../utils/test';
 import { SecondStep } from './second-step';
 import { ResourceSize } from './second-step.types';
 import { DEFAULT_SIZES } from './second-step.const';
-import { DbWizardFormFields } from '../../database-form.types';
+import { DbWizardFormFields, DbWizardType } from '../../database-form.types';
+import { DbType } from '@percona/ui-lib.db-toggle-card';
 
 jest.mock(
   '../../../../hooks/api/kubernetesClusters/useSelectedKubernetesCluster'
@@ -17,19 +18,23 @@ jest.mock(
 interface FormProviderWrapperProps {
   handleSubmit: jest.Mock<any, any>;
   children: ReactNode;
+  values?: Partial<DbWizardType>,
 }
 
 const FormProviderWrapper = ({
   children,
   handleSubmit,
+  values,
 }: FormProviderWrapperProps) => {
   const methods = useForm({
     defaultValues: {
+      [DbWizardFormFields.dbType]: DbType.Mysql,
       [DbWizardFormFields.numberOfNodes]: '1',
       [DbWizardFormFields.resourceSizePerNode]: ResourceSize.small,
       [DbWizardFormFields.cpu]: DEFAULT_SIZES.small.cpu,
       [DbWizardFormFields.disk]: DEFAULT_SIZES.small.disk,
       [DbWizardFormFields.memory]: DEFAULT_SIZES.small.memory,
+      ...values,
     },
   });
 
@@ -68,6 +73,39 @@ describe('Second Step', () => {
       expect.anything()
     );
   });
+
+  it('should have 1, 2 and 3 nodes for PostgreSQL', () => {
+    render(
+      <TestWrapper>
+        <FormProviderWrapper handleSubmit={jest.fn()} values={{ dbType: DbType.Postresql }}>
+          <SecondStep />
+        </FormProviderWrapper>
+      </TestWrapper>
+    );
+
+    expect(screen.queryByTestId('toggle-button-nodes-1')).toBeInTheDocument();
+    expect(screen.queryByTestId('toggle-button-nodes-2')).toBeInTheDocument();
+    expect(screen.queryByTestId('toggle-button-nodes-3')).toBeInTheDocument();
+    expect(screen.queryByTestId('toggle-button-nodes-4')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('toggle-button-nodes-5')).not.toBeInTheDocument();
+  });
+
+  it('should have 1, 3 and 5 nodes for MySQL', () => {
+    render(
+      <TestWrapper>
+        <FormProviderWrapper handleSubmit={jest.fn()} values={{ dbType: DbType.Mysql }}>
+          <SecondStep />
+        </FormProviderWrapper>
+      </TestWrapper>
+    );
+
+    expect(screen.queryByTestId('toggle-button-nodes-1')).toBeInTheDocument();
+    expect(screen.queryByTestId('toggle-button-nodes-2')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('toggle-button-nodes-3')).toBeInTheDocument();
+    expect(screen.queryByTestId('toggle-button-nodes-4')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('toggle-button-nodes-5')).toBeInTheDocument();
+  });
+
   it('should change input values while switching resource size per node tabs', async () => {
     render(
       <TestWrapper>
@@ -123,7 +161,7 @@ describe('Second Step', () => {
     expect(cpu).toHaveValue(5);
 
     const pressedButtons = screen.getAllByRole('button', { pressed: true });
-    expect(pressedButtons[0]).toHaveValue(1);
+    expect(pressedButtons[0]).toHaveValue('1');
     expect(pressedButtons[1]).toHaveValue(ResourceSize.custom);
   });
   // TODO should be fixed
