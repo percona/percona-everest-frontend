@@ -62,4 +62,6 @@ describe('First Step', () => {
       expect.anything()
     );
   });
+
+  // TODO it should be disabled if monitoring instances list length <=0 or undefined
 });

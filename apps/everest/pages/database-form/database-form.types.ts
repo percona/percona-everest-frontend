@@ -69,10 +69,13 @@ const stepOneSchema = z
     [DbWizardFormFields.dbName]: z
       .string()
       .max(22, Messages.errors.dbName.tooLong)
-        .regex(doesNotContainerAnythingButAlphanumericAndDash, 'The name should contain only lowercase alphanumeric characters or -')
-        .regex(doesNotEndWithDash, 'The name shouldn\'t end with -')
-        .regex(doesNotStartWithDash, 'The name shouldn\'t start with -')
-        .trim()
+      .regex(
+        doesNotContainerAnythingButAlphanumericAndDash,
+        'The name should contain only lowercase alphanumeric characters or -'
+      )
+      .regex(doesNotEndWithDash, "The name shouldn't end with -")
+      .regex(doesNotStartWithDash, "The name shouldn't start with -")
+      .trim()
       .nonempty(),
     // [DbWizardFormFields.k8sNamespace]: z.string().nonempty(),
     // [DbWizardFormFields.dbEnvironment]: z.string().nonempty(),

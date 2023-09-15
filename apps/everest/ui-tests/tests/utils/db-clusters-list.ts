@@ -13,19 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { test as setup } from '@playwright/test';
-import {
-  deleteMonitoringInstance,
-  testMonitoringName,
-  testMonitoringName2,
-} from './utils/monitoring-instance';
+import { APIRequestContext, expect } from '@playwright/test';
 
-setup('Delete backup storage', async ({ request }) => {
-  // TODO console.log('DELET BACKUP STORAGE');
-  await request.delete('/v1/backup-storages/ui-dev');
-});
+export const getDBClustersList = async (
+  request: APIRequestContext,
+  kubernetesId
+) => {
+  const response = await request.get(
+    `/v1/kubernetes/${kubernetesId}/database-clusters`
+  );
 
-setup('Delete monitoring instances', async ({ request }) => {
-  await deleteMonitoringInstance(request, testMonitoringName);
-  await deleteMonitoringInstance(request, testMonitoringName2);
-});
+  expect(response.ok()).toBeTruthy();
+  return response.json();
+};

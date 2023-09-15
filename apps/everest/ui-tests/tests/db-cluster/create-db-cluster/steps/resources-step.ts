@@ -13,19 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { test as setup } from '@playwright/test';
-import {
-  deleteMonitoringInstance,
-  testMonitoringName,
-  testMonitoringName2,
-} from './utils/monitoring-instance';
+import { expect } from '@playwright/test';
 
-setup('Delete backup storage', async ({ request }) => {
-  // TODO console.log('DELET BACKUP STORAGE');
-  await request.delete('/v1/backup-storages/ui-dev');
-});
-
-setup('Delete monitoring instances', async ({ request }) => {
-  await deleteMonitoringInstance(request, testMonitoringName);
-  await deleteMonitoringInstance(request, testMonitoringName2);
-});
+export const resourcesStepCheck = async (page) => {
+  await expect(
+    page.getByRole('heading', {
+      name: 'Configure the resources your new database will have access to.',
+    })
+  ).toBeVisible();
+  await page.getByTestId('toggle-button-two-nodes').click();
+  await page.getByTestId('toggle-button-large').click();
+  await page.getByTestId('disk-input').fill('150');
+};
