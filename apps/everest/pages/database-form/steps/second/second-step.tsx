@@ -12,6 +12,7 @@ import { ToggleCard } from '@percona/ui-lib.toggle-card';
 import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { Input } from '@percona/ui-lib.input';
+import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { DEFAULT_SIZES, NODES_DB_TYPE_MAP } from './second-step.const';
 import { Messages } from './second-step.messages';
 import { ResourceSize } from './second-step.types';
@@ -22,7 +23,6 @@ import {
 import { DbWizardFormFields } from '../../database-form.types';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { useKubernetesClusterResourcesInfo } from '../../../../hooks/api/kubernetesClusters/useKubernetesClusterResourcesInfo';
-import { DbType } from '@percona/ui-lib.db-toggle-card';
 
 export const SecondStep = () => {
   const { watch, setValue, setError, clearErrors } = useFormContext();
