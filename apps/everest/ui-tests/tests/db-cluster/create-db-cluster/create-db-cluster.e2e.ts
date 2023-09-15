@@ -106,7 +106,7 @@ test.describe('DB Cluster creation', () => {
     expect(addedCluster?.spec.engine.resources?.memory.toString()).toBe('32G');
     expect(addedCluster?.spec.engine.storage.size.toString()).toBe('150G');
     expect(addedCluster?.spec.proxy.expose.type).toBe('external');
-    expect(addedCluster?.spec.proxy.replicas).toBe(2);
+    expect(addedCluster?.spec.proxy.replicas).toBe(3);
     expect(addedCluster?.spec.proxy.expose.ipSourceRanges).toEqual([
       '192.168.1.1/24',
       '192.168.1.0',
