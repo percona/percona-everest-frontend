@@ -60,7 +60,7 @@ export enum DbWizardFormFields {
 // so, by default, Zod would leave behind the keys from previous steps
 
 const doesNotContainerAnythingButAlphanumericAndDash = /^[a-z0-9-]+$/;
-const doesNotStartWithDash = /^[^-]/;
+const doesNotStartWithDash = /^[^0-9-]/;
 const doesNotEndWithDash = /[^-]$/;
 
 const stepOneSchema = z
@@ -74,7 +74,7 @@ const stepOneSchema = z
         'The name should contain only lowercase alphanumeric characters or -'
       )
       .regex(doesNotEndWithDash, "The name shouldn't end with -")
-      .regex(doesNotStartWithDash, "The name shouldn't start with -")
+      .regex(doesNotStartWithDash, "The name shouldn't start with - or number")
       .trim()
       .nonempty(),
     // [DbWizardFormFields.k8sNamespace]: z.string().nonempty(),
