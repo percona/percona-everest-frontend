@@ -17,7 +17,6 @@ import { test } from '@playwright/test';
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { getK8sClusters } from '../utils/k8s-clusters';
 import { createDbClusterFn } from '../utils/db-cluster';
-import { NumberOfNodes } from '../../../pages/database-form/steps/second/second-step.types';
 
 test.describe('DB Cluster List', () => {
   let kubernetesId: string;
@@ -37,7 +36,7 @@ test.describe('DB Cluster List', () => {
       {
         dbName: mySQLName,
         dbType: DbType.Mysql,
-        numberOfNodes: NumberOfNodes.oneNode,
+        numberOfNodes: '1',
       },
       kubernetesId
     );

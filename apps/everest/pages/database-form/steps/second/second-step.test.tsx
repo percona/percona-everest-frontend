@@ -3,7 +3,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { TestWrapper } from '../../../../utils/test';
 import { SecondStep } from './second-step';
-import { NumberOfNodes, ResourceSize } from './second-step.types';
+import { ResourceSize } from './second-step.types';
 import { DEFAULT_SIZES } from './second-step.const';
 import { DbWizardFormFields } from '../../database-form.types';
 
@@ -25,7 +25,7 @@ const FormProviderWrapper = ({
 }: FormProviderWrapperProps) => {
   const methods = useForm({
     defaultValues: {
-      [DbWizardFormFields.numberOfNodes]: NumberOfNodes.oneNode,
+      [DbWizardFormFields.numberOfNodes]: '1',
       [DbWizardFormFields.resourceSizePerNode]: ResourceSize.small,
       [DbWizardFormFields.cpu]: DEFAULT_SIZES.small.cpu,
       [DbWizardFormFields.disk]: DEFAULT_SIZES.small.disk,
@@ -123,7 +123,7 @@ describe('Second Step', () => {
     expect(cpu).toHaveValue(5);
 
     const pressedButtons = screen.getAllByRole('button', { pressed: true });
-    expect(pressedButtons[0]).toHaveValue(NumberOfNodes.oneNode);
+    expect(pressedButtons[0]).toHaveValue(1);
     expect(pressedButtons[1]).toHaveValue(ResourceSize.custom);
   });
   // TODO should be fixed

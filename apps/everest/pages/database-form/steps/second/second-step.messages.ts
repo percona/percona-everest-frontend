@@ -23,9 +23,6 @@ export const Messages = {
     cpu: 'cpu',
     memory: 'memory',
     disk: 'disk',
-    standalone: 'Standalone \n 1 node',
-    sourceReplica: 'Source Replica \n 2 nodes',
-    sourceReplicaReplica: 'Source Replica Replica \n 3 nodes',
     estimated: (value: string | number | undefined, units: string) =>
       value ? `Estimated: ${value} ${units}` : '',
   },

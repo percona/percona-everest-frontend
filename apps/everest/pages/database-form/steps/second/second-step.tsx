@@ -12,9 +12,9 @@ import { ToggleCard } from '@percona/ui-lib.toggle-card';
 import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { Input } from '@percona/ui-lib.input';
-import { DEFAULT_SIZES } from './second-step.const';
+import { DEFAULT_SIZES, NODES_DB_TYPE_MAP } from './second-step.const';
 import { Messages } from './second-step.messages';
-import { NumberOfNodes, ResourceSize } from './second-step.types';
+import { ResourceSize } from './second-step.types';
 import {
   checkSwitchToCustom,
   humanizeResourceSizeMap,
@@ -22,6 +22,7 @@ import {
 import { DbWizardFormFields } from '../../database-form.types';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { useKubernetesClusterResourcesInfo } from '../../../../hooks/api/kubernetesClusters/useKubernetesClusterResourcesInfo';
+import { DbType } from '@percona/ui-lib.db-toggle-card';
 
 export const SecondStep = () => {
   const { watch, setValue, setError, clearErrors } = useFormContext();
@@ -61,6 +62,7 @@ export const SecondStep = () => {
   const cpu = watch(DbWizardFormFields.cpu);
   const memory = watch(DbWizardFormFields.memory);
   const disk = watch(DbWizardFormFields.disk);
+  const dbType: DbType = watch(DbWizardFormFields.dbType);
 
   const cpuCapacityExceeded = resourcesInfo
     ? cpu * 1000 > resourcesInfo?.available.cpuMillis
@@ -103,30 +105,15 @@ export const SecondStep = () => {
           name={DbWizardFormFields.numberOfNodes}
           label={Messages.labels.numberOfNodes}
         >
-          <ToggleCard
-            value={NumberOfNodes.oneNode}
-            data-testid="toggle-button-one-node"
-          >
-            {Messages.labels.standalone}
-          </ToggleCard>
-          <ToggleCard
-            value={NumberOfNodes.twoNodes}
-            data-testid="toggle-button-two-nodes"
-            sx={{
-              '&.MuiButtonBase-root': {
-                wordWrap: 'break-word',
-                whiteSpace: 'pre-wrap',
-              },
-            }}
-          >
-            {Messages.labels.sourceReplica}
-          </ToggleCard>
-          <ToggleCard
-            value={NumberOfNodes.threeNodes}
-            data-testid="toggle-button-three-nodes"
-          >
-            {Messages.labels.sourceReplicaReplica}
-          </ToggleCard>
+          {NODES_DB_TYPE_MAP[dbType].map((value) => (
+            <ToggleCard
+              value={value}
+              data-testid={`toggle-button-nodes-${value}`}
+              key={value}
+            >
+              {`${value} node${+value > 1 ? 's' : ''}`}
+            </ToggleCard>
+          ))}
         </ToggleButtonGroupInput>
         <ToggleButtonGroupInput
           name={DbWizardFormFields.resourceSizePerNode}
