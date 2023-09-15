@@ -1,12 +1,12 @@
 import React, { ReactNode } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { TestWrapper } from '../../../../utils/test';
 import { SecondStep } from './second-step';
 import { ResourceSize } from './second-step.types';
 import { DEFAULT_SIZES } from './second-step.const';
 import { DbWizardFormFields, DbWizardType } from '../../database-form.types';
-import { DbType } from '@percona/ui-lib.db-toggle-card';
 
 jest.mock(
   '../../../../hooks/api/kubernetesClusters/useSelectedKubernetesCluster'
