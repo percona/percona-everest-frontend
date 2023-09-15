@@ -18,7 +18,11 @@ export const ConfirmDialog = ({
     closeModal();
   };
   return (
-    <Dialog open={isOpen} onClose={closeModal}>
+    <Dialog
+      open={isOpen}
+      onClose={closeModal}
+      data-testid={`${selectedId}-confirm-dialog`}
+    >
       <DialogTitle onClose={closeModal}>{headerMessage}</DialogTitle>
       <DialogContent sx={{ width: '480px' }}>{content}</DialogContent>
       <DialogActions>
