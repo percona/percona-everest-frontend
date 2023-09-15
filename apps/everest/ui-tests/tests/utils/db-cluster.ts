@@ -137,7 +137,11 @@ export const createDbClusterFn = async (
   expect(response.ok()).toBeTruthy();
 };
 
-export const deleteDbClusterFn = async (request: APIRequestContext, kubernetesId: string, clusterName: string) => {
+export const deleteDbClusterFn = async (
+  request: APIRequestContext,
+  kubernetesId: string,
+  clusterName: string
+) => {
   const deleteResponse = await request.delete(
     `/v1/kubernetes/${kubernetesId}/database-clusters/${clusterName}`
   );

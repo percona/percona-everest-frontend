@@ -14,7 +14,11 @@ export function StatusField<T extends string | number | symbol>({
   const MappedIcon = STATUS_TO_ICON[mappedStatus] || UknownIcon;
 
   return (
-    <Stack direction="row" gap={1} data-testid={`${dataTestId? `${dataTestId}-`: ''}status`}>
+    <Stack
+      direction="row"
+      gap={1}
+      data-testid={`${dataTestId ? `${dataTestId}-` : ''}status`}
+    >
       <MappedIcon />
       {children}
     </Stack>
