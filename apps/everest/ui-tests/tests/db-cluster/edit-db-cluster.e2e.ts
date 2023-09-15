@@ -30,7 +30,6 @@ test.describe('DB Cluster creation', () => {
   test.beforeAll(async () => {
     // kubernetesId = (await getK8sClusters(request))[0].id;
     // engineVersions = await getEnginesVersions(request, kubernetesId);
-
     // const { storageClassNames = [] } = await getClusterDetailedInfo(
     //   request,
     //   kubernetesId
@@ -41,6 +40,10 @@ test.describe('DB Cluster creation', () => {
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/databases');
+    const closeIcon = page.getByTestId('close-dialog-icon');
+    if (closeIcon) {
+      await closeIcon.click();
+    }
   });
 
   test('Editing', async () => {
