@@ -127,7 +127,7 @@ test.describe('DB Cluster creation', () => {
       })
     ).toBeVisible();
 
-    await page.getByTestId('toggle-button-two-nodes').click();
+    await page.getByTestId('toggle-button-nodes-3').click();
     await page.getByTestId('toggle-button-large').click();
     await page.getByTestId('disk-input').fill('150');
     await page.getByTestId('db-wizard-continue-button').click();
