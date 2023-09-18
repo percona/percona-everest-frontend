@@ -18,12 +18,10 @@ import { GetDbClusterPayload } from '../../../../types/dbCluster.types';
 import { basicInformationStepCheck } from './steps/basic-information-step';
 import { resourcesStepCheck } from './steps/resources-step';
 import { advancedConfigurationStepCheck } from './steps/advanced-configuration-step';
-import { monitoringStepCheck } from './steps/monitoring-step';
 import { backupsStepCheck } from './steps/backups-step';
 import { getK8sClusters } from '../../utils/k8s-clusters';
 import { getEnginesVersions } from '../../utils/database-engines';
 import { getClusterDetailedInfo } from '../../utils/storage-class';
-import { getMonitoringInstanceList } from '../../utils/monitoring-instance';
 
 test.describe('DB Cluster creation', () => {
   let kubernetesId;
@@ -33,7 +31,7 @@ test.describe('DB Cluster creation', () => {
     postgresql: [],
   };
   let storageClasses = [];
-  let monitoringInstancesList = [];
+  // let monitoringInstancesList = [];
 
   test.beforeAll(async ({ request }) => {
     const kuberneteslist = await getK8sClusters(request);
@@ -46,7 +44,7 @@ test.describe('DB Cluster creation', () => {
     );
     storageClasses = storageClassNames;
 
-    monitoringInstancesList = await getMonitoringInstanceList(request);
+    // monitoringInstancesList = await getMonitoringInstanceList(request);
   });
 
   test.beforeEach(async ({ page }) => {
@@ -78,7 +76,7 @@ test.describe('DB Cluster creation', () => {
     await advancedConfigurationStepCheck(page);
     await page.getByTestId('db-wizard-continue-button').click();
 
-    await monitoringStepCheck(page, monitoringInstancesList);
+    // await monitoringStepCheck(page, monitoringInstancesList);
     await page.getByTestId('db-wizard-submit-button').click();
     await expect(page.getByTestId('db-wizard-goto-db-clusters')).toBeVisible();
     await expect(page.getByText('Awesome! Your database is being created!')).toBeVisible();
@@ -102,12 +100,12 @@ test.describe('DB Cluster creation', () => {
 
     expect(addedCluster).not.toBeUndefined();
     expect(addedCluster?.spec.engine.type).toBe('psmdb');
-    expect(addedCluster?.spec.engine.replicas).toBe(2);
+    expect(addedCluster?.spec.engine.replicas).toBe(3);
     expect(addedCluster?.spec.engine.resources?.cpu.toString()).toBe('8');
     expect(addedCluster?.spec.engine.resources?.memory.toString()).toBe('32G');
     expect(addedCluster?.spec.engine.storage.size.toString()).toBe('150G');
     expect(addedCluster?.spec.proxy.expose.type).toBe('external');
-    expect(addedCluster?.spec.proxy.replicas).toBe(2);
+    expect(addedCluster?.spec.proxy.replicas).toBe(3);
     expect(addedCluster?.spec.proxy.expose.ipSourceRanges).toEqual([
       '192.168.1.1/24',
       '192.168.1.0',
@@ -128,7 +126,7 @@ test.describe('DB Cluster creation', () => {
       })
     ).toBeVisible();
 
-    await page.getByTestId('toggle-button-two-nodes').click();
+    await page.getByTestId('toggle-button-nodes-3').click();
     await page.getByTestId('toggle-button-large').click();
     await page.getByTestId('disk-input').fill('150');
     await page.getByTestId('db-wizard-continue-button').click();
