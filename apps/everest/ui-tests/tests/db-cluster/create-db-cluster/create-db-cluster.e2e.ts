@@ -22,7 +22,6 @@ import { backupsStepCheck } from './steps/backups-step';
 import { getK8sClusters } from '../../utils/k8s-clusters';
 import { getEnginesVersions } from '../../utils/database-engines';
 import { getClusterDetailedInfo } from '../../utils/storage-class';
-import { getMonitoringInstanceList } from '../../utils/monitoring-instance';
 
 test.describe('DB Cluster creation', () => {
   let kubernetesId;
