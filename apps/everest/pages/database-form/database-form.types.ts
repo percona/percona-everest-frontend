@@ -71,10 +71,10 @@ const stepOneSchema = z
       .max(22, Messages.errors.dbName.tooLong)
       .regex(
         doesNotContainerAnythingButAlphanumericAndDash,
-        'The name should contain only lowercase alphanumeric characters or -'
+        'The database name should not exceed x characters.'
       )
-      .regex(doesNotEndWithDash, "The name shouldn't end with -")
-      .regex(doesNotStartWithDash, "The name shouldn't start with - or number")
+      .regex(doesNotEndWithDash, "The name shouldn't end with a hyphen.")
+      .regex(doesNotStartWithDash, "The name shouldn't start with a hyphen or a number.")
       .trim()
       .nonempty(),
     // [DbWizardFormFields.k8sNamespace]: z.string().nonempty(),
