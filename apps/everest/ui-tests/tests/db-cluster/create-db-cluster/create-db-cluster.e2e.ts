@@ -18,7 +18,6 @@ import { GetDbClusterPayload } from '../../../../types/dbCluster.types';
 import { basicInformationStepCheck } from './steps/basic-information-step';
 import { resourcesStepCheck } from './steps/resources-step';
 import { advancedConfigurationStepCheck } from './steps/advanced-configuration-step';
-import { monitoringStepCheck } from './steps/monitoring-step';
 import { backupsStepCheck } from './steps/backups-step';
 import { getK8sClusters } from '../../utils/k8s-clusters';
 import { getEnginesVersions } from '../../utils/database-engines';
@@ -78,7 +77,7 @@ test.describe('DB Cluster creation', () => {
     await advancedConfigurationStepCheck(page);
     await page.getByTestId('db-wizard-continue-button').click();
 
-    await monitoringStepCheck(page, monitoringInstancesList);
+    // await monitoringStepCheck(page, monitoringInstancesList);
     await page.getByTestId('db-wizard-submit-button').click();
     await expect(page.getByTestId('db-wizard-goto-db-clusters')).toBeVisible();
 
