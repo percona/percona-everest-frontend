@@ -12,6 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { DbWizardFormFields } from '../../database-form.types';
 import { ResourceSize } from './second-step.types';
 
@@ -32,3 +33,9 @@ export const DEFAULT_SIZES = {
     [DbWizardFormFields.disk]: 200,
   },
 };
+
+export const NODES_DB_TYPE_MAP: Record<DbType, string[]> = {
+  [DbType.Mongo]: ['1', '3', '5'],
+  [DbType.Mysql]: ['1', '3', '5'],
+  [DbType.Postresql]: ['1', '2', '3'],
+}

@@ -28,7 +28,6 @@ import {
   DbWizardMode,
   DbWizardType,
 } from './database-form.types';
-import { NumberOfNodes } from './steps/second/second-step.types';
 import {
   matchFieldsValueToResourceSize,
   removeMeasurementValue,
@@ -112,8 +111,7 @@ export const DbClusterPayloadToFormValues = (
       monitoringInstances,
       dbCluster?.spec?.monitoring?.monitoringConfigName
     ),
-    [DbWizardFormFields.numberOfNodes]:
-      `${dbCluster?.spec?.proxy?.replicas}` as unknown as NumberOfNodes,
+    [DbWizardFormFields.numberOfNodes]: `${dbCluster?.spec?.proxy?.replicas}`,
     [DbWizardFormFields.resourceSizePerNode]:
       matchFieldsValueToResourceSize(dbCluster),
     [DbWizardFormFields.cpu]: +(dbCluster?.spec?.engine?.resources?.cpu || 0),

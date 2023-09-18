@@ -14,18 +14,13 @@
 // limitations under the License.
 
 import { test as setup } from '@playwright/test';
-import {
-  deleteMonitoringInstance,
-  testMonitoringName,
-  testMonitoringName2,
-} from './utils/monitoring-instance';
 
 setup('Delete backup storage', async ({ request }) => {
   // TODO console.log('DELET BACKUP STORAGE');
   await request.delete('/v1/backup-storages/ui-dev');
 });
 
-setup('Delete monitoring instances', async ({ request }) => {
-  await deleteMonitoringInstance(request, testMonitoringName);
-  await deleteMonitoringInstance(request, testMonitoringName2);
-});
+// setup('Delete monitoring instances', async ({ request }) => {
+//   await deleteMonitoringInstance(request, testMonitoringName);
+//   await deleteMonitoringInstance(request, testMonitoringName2);
+// });
