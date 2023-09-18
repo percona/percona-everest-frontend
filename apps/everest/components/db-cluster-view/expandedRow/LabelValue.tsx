@@ -10,7 +10,7 @@ export const LabelValue = ({
 }) => {
   return value?.toString().length ? (
     <Box sx={{ display: 'flex', alignItems: 'baseline' }}>
-      <Box sx={{ width: '140px', fontWeight: 'bold' }}>{label}</Box>
+      <Box sx={{ minWidth: '140px', fontWeight: 'bold' }}>{label}</Box>
       <Box sx={{ minWidth: '200px' }}>{value}</Box>
     </Box>
   ) : null;

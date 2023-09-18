@@ -21,7 +21,7 @@ import { z } from 'zod';
 // } from '../../components/time-selection/time-selection.types';
 import { IP_REGEX } from '../../constants';
 import { Messages } from './database-form.messages';
-import { NumberOfNodes, ResourceSize } from './steps/second/second-step.types';
+import { ResourceSize } from './steps/second/second-step.types';
 
 export enum DbWizardFormFields {
   dbName = 'dbName',
@@ -100,7 +100,7 @@ const stepTwoSchema = z
     [DbWizardFormFields.memory]: z.number(),
     [DbWizardFormFields.disk]: z.number(),
     [DbWizardFormFields.resourceSizePerNode]: z.nativeEnum(ResourceSize),
-    [DbWizardFormFields.numberOfNodes]: z.nativeEnum(NumberOfNodes),
+    [DbWizardFormFields.numberOfNodes]: z.string(),
   })
   .passthrough();
 
