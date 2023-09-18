@@ -81,6 +81,7 @@ test.describe('DB Cluster creation', () => {
     await monitoringStepCheck(page, monitoringInstancesList);
     await page.getByTestId('db-wizard-submit-button').click();
     await expect(page.getByTestId('db-wizard-goto-db-clusters')).toBeVisible();
+    await expect(page.getByText('Awesome! Your database is being created!')).toBeVisible();
 
     const response = await request.get(
       `/v1/kubernetes/${kubernetesId}/database-clusters`
