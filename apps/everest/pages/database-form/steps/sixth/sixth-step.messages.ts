@@ -14,6 +14,7 @@
 // limitations under the License.
 export const Messages = {
   dbBeingCreated: 'Awesome! Your database is being created!',
+  dbBeingUpdated: 'Your database is being updated',
   sitTight: `
     Everest is now hard at work creating your new database, tailored to your specifications.
     Sit tight and relax while we handle the setup for you.
