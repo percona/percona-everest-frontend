@@ -21,8 +21,8 @@ export const IP_REGEX =
 export const INVALID_SOURCE_RANGE_ERROR = 'Invalid IP address range';
 export const SOURCE_RANGE_PLACEHOLDER =
   'Please insert the single IP address or range using netmask (e.g. 192.168.1.1/24)';
-export const DATE_FORMAT = "dd'/'MM'/'yyyy 'at' HH':'mm' 'a";
-export const FILENAME_TIMESTAMP_FORMAT = "yyyy'-'MM'-'dd'T'HH'.'mm";
+export const DATE_FORMAT = "dd'/'MM'/'yyyy 'at' hh':'mm' 'a";
+export const FILENAME_TIMESTAMP_FORMAT = "yyyy'.'MM'.'dd'-'HH'.'mm'.'ss";
 
 export const BACKUP_STATE_TO_STATUS: Record<string, BackupStatus> = {
   Starting: BackupStatus.IN_PROGRESS,

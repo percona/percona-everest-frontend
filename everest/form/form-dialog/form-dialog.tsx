@@ -25,6 +25,7 @@ export const FormDialog = <T extends FieldValues>({
   children,
   schema,
   defaultValues,
+  values,
   onSubmit,
   cancelMessage = 'Cancel',
   submitMessage,
@@ -36,6 +37,7 @@ export const FormDialog = <T extends FieldValues>({
     mode: validationMode,
     resolver: zodResolver(schema),
     defaultValues,
+    values,
   });
 
   const modalWidth = size === 'L' ? '480px' : '640px';
