@@ -32,7 +32,7 @@ test.describe('DB Cluster creation', () => {
     postgresql: [],
   };
   let storageClasses = [];
-  let monitoringInstancesList = [];
+  // let monitoringInstancesList = [];
 
   test.beforeAll(async ({ request }) => {
     const kuberneteslist = await getK8sClusters(request);
@@ -45,7 +45,7 @@ test.describe('DB Cluster creation', () => {
     );
     storageClasses = storageClassNames;
 
-    monitoringInstancesList = await getMonitoringInstanceList(request);
+    // monitoringInstancesList = await getMonitoringInstanceList(request);
   });
 
   test.beforeEach(async ({ page }) => {
