@@ -4,6 +4,7 @@ import { kebabize } from '@percona/utils.string';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { TextInputProps } from './text.types';
+import { getInputTransformerFromType, getOutputTransformerFromType } from './text.utils';
 
 export const TextInput = ({
   control,
@@ -22,14 +23,16 @@ export const TextInput = ({
       render={({ field, fieldState: { error } }) => (
         <TextField
           {...field}
+          {...textFieldProps}
+          // onChange={(e) => field.onChange(getOutputTransformerFromType(textFieldProps?.type, e))}
+          // value={getInputTransformerFromType(textFieldProps?.type, field.value)}
           variant="outlined"
           error={!!error}
-          helperText={error ? error.message : textFieldProps?.helperText}
           inputProps={{
             'data-testid': `text-input-${kebabize(name)}`,
             ...textFieldProps?.inputProps,
           }}
-          {...textFieldProps}
+          helperText={error ? error.message : textFieldProps?.helperText}
         />
       )}
       {...controllerProps}

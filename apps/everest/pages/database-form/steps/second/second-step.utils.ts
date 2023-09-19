@@ -29,36 +29,6 @@ const humanizedResourceSizeMap: Record<ResourceSize, string> = {
 export const humanizeResourceSizeMap = (type: ResourceSize): string =>
   humanizedResourceSizeMap[type];
 
-export const isCustom = (
-  typeOfField:
-    | DbWizardFormFields.cpu
-    | DbWizardFormFields.disk
-    | DbWizardFormFields.memory,
-  value: number,
-  currentLabel: ResourceSize
-) => {
-  return currentLabel !== ResourceSize.custom
-    ? !(DEFAULT_SIZES[currentLabel][typeOfField] === value)
-    : undefined;
-};
-
-export const checkSwitchToCustom = (
-  fieldName:
-    | DbWizardFormFields.disk
-    | DbWizardFormFields.cpu
-    | DbWizardFormFields.memory,
-  value: number,
-  resourceSizePerNode: ResourceSize,
-  setValue: UseFormSetValue<FieldValues>
-) => {
-  if (
-    resourceSizePerNode !== ResourceSize.custom &&
-    isCustom(fieldName, value, resourceSizePerNode)
-  ) {
-    setValue(DbWizardFormFields.resourceSizePerNode, ResourceSize.custom);
-  }
-};
-
 export const getResourceNames = (names: string[]): string => {
   if (names.length === 1) return names[0];
   if (names.length === 2) return `${names[0]} and ${names[1]}`;

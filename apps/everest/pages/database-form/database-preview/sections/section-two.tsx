@@ -7,11 +7,17 @@ export const PreviewSectionTwo = ({
   cpu,
   disk,
   memory,
-}: SectionProps) => (
-  <>
-    <PreviewContentText text={`Number of nodes: ${numberOfNodes}`} />
-    <PreviewContentText text={`CPU: ${cpu} CPU`} />
-    <PreviewContentText text={`Memory: ${memory} GB`} />
-    <PreviewContentText text={`Disk: ${disk} GB`} />
-  </>
-);
+}: SectionProps) => {
+  const parsedCPU = Number(cpu);
+  const parsedDisk = Number(disk);
+  const parsedMemory = Number(memory);
+
+  return (
+    <>
+      <PreviewContentText text={`Number of nodes: ${numberOfNodes}`} />
+      <PreviewContentText text={`CPU: ${isNaN(parsedCPU) ? '' : parsedCPU + ' CPU'}`} />
+      <PreviewContentText text={`Memory: ${isNaN(parsedMemory) ? '' : parsedMemory + ' GB'}`} />
+      <PreviewContentText text={`Disk: ${isNaN(parsedDisk) ? '':  parsedDisk + ' GB'}`} />
+    </>
+  );
+};
