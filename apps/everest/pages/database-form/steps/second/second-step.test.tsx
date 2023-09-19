@@ -115,27 +115,27 @@ describe('Second Step', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByTestId('cpu-input')).toHaveValue(
-      DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.cpu]
+    expect(screen.getByTestId('text-input-cpu')).toHaveValue(
+      DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.cpu].toString()
     );
-    expect(screen.getByTestId('memory-input')).toHaveValue(
-      DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.memory]
+    expect(screen.getByTestId('text-input-memory')).toHaveValue(
+      DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.memory].toString()
     );
-    expect(screen.getByTestId('disk-input')).toHaveValue(
-      DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.disk]
+    expect(screen.getByTestId('text-input-disk')).toHaveValue(
+      DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.disk].toString()
     );
 
     const mediumButton = screen.getByTestId('toggle-button-medium');
     await waitFor(() => fireEvent.click(mediumButton));
 
-    expect(screen.getByTestId('cpu-input')).toHaveValue(
-      DEFAULT_SIZES[ResourceSize.medium][DbWizardFormFields.cpu]
+    expect(screen.getByTestId('text-input-cpu')).toHaveValue(
+      DEFAULT_SIZES[ResourceSize.medium][DbWizardFormFields.cpu].toString()
     );
-    expect(screen.getByTestId('memory-input')).toHaveValue(
-      DEFAULT_SIZES[ResourceSize.medium][DbWizardFormFields.memory]
+    expect(screen.getByTestId('text-input-memory')).toHaveValue(
+      DEFAULT_SIZES[ResourceSize.medium][DbWizardFormFields.memory].toString()
     );
-    expect(screen.getByTestId('disk-input')).toHaveValue(
-      DEFAULT_SIZES[ResourceSize.medium][DbWizardFormFields.disk]
+    expect(screen.getByTestId('text-input-disk')).toHaveValue(
+      DEFAULT_SIZES[ResourceSize.medium][DbWizardFormFields.disk].toString()
     );
   });
 
@@ -150,15 +150,15 @@ describe('Second Step', () => {
         </FormProviderWrapper>
       </TestWrapper>
     );
-    const cpu = screen.getByTestId('cpu-input');
+    const cpu = screen.getByTestId('text-input-cpu');
 
     expect(cpu).toHaveValue(
-      DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.cpu]
+      DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.cpu].toString()
     );
 
     await waitFor(() => fireEvent.change(cpu, { target: { value: 5 } }));
 
-    expect(cpu).toHaveValue(5);
+    expect(cpu).toHaveValue('5');
 
     const pressedButtons = screen.getAllByRole('button', { pressed: true });
     expect(pressedButtons[0]).toHaveValue('1');
@@ -177,9 +177,9 @@ describe('Second Step', () => {
       </TestWrapper>
     );
 
-    const cpu = screen.getByTestId('cpu-input');
+    const cpu = screen.getByTestId('text-input-cpu');
     expect(cpu).toHaveValue(
-      DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.cpu]
+      DEFAULT_SIZES[ResourceSize.small][DbWizardFormFields.cpu].toString()
     );
     expect(
       screen.queryByTestId('resources-exceeding-alert')
