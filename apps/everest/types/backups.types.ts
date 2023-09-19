@@ -25,7 +25,7 @@ export type Backup = {
 };
 
 export enum BackupStatus {
-  OK = 'OK',
+  OK = 'Succeeded',
   FAILED = 'Failed',
   IN_PROGRESS = 'In progress',
   UNKNOWN = 'Unknown',
