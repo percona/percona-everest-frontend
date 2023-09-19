@@ -58,6 +58,14 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
     };
   }, [data]);
 
+  // disable hiding for first 2 columns
+  const customColumns = columns.map((col, index) => {
+    if (index < 2) {
+      return { ...col, enableHiding: false };
+    }
+    return col;
+  });
+
   return (
     <MaterialReactTable
       renderEmptyRowsFallback={() => (
@@ -119,10 +127,12 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
             sx: {
               flex: 'none',
               width: '60px',
-              // @ts-ignore
-              ...displayColumnDefOptions?.['mrt-row-actions']?.muiTableBodyCellProps?.sx,
+              ...displayColumnDefOptions?.['mrt-row-actions']
+                // @ts-ignore
+                ?.muiTableBodyCellProps?.sx,
             },
-            ...displayColumnDefOptions?.['mrt-row-actions']?.muiTableBodyCellProps,
+            ...displayColumnDefOptions?.['mrt-row-actions']
+              ?.muiTableBodyCellProps,
           },
           muiTableHeadCellProps: {
             sx: {
@@ -132,10 +142,13 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
               // However, MRT takes that string and shows it in the show/hide columns menu
               // By doing this, we still have "Actions" in that menu, but no text (i.e. transparent) in the header cell
               color: 'transparent',
-              // @ts-ignore
-              ...displayColumnDefOptions?.['mrt-row-actions']?.muiTableHeadCellProps?.sx,
+
+              ...displayColumnDefOptions?.['mrt-row-actions']
+                // @ts-ignore
+                ?.muiTableHeadCellProps?.sx,
             },
-            ...displayColumnDefOptions?.['mrt-row-actions']?.muiTableHeadCellProps,
+            ...displayColumnDefOptions?.['mrt-row-actions']
+              ?.muiTableHeadCellProps,
           },
           ...displayColumnDefOptions?.['mrt-row-actions'],
         },
@@ -145,10 +158,12 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
             sx: {
               flex: 'none',
               width: '60px',
-              // @ts-ignore
-              ...displayColumnDefOptions?.['mrt-row-expand']?.muiTableBodyCellProps?.sx,
+              ...displayColumnDefOptions?.['mrt-row-expand']
+                // @ts-ignore
+                ?.muiTableBodyCellProps?.sx,
             },
-            ...displayColumnDefOptions?.['mrt-row-expand']?.muiTableBodyCellProps,
+            ...displayColumnDefOptions?.['mrt-row-expand']
+              ?.muiTableBodyCellProps,
           },
           muiTableHeadCellProps: {
             sx: {
@@ -159,17 +174,20 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
                   display: 'none',
                 },
               }),
-              // @ts-ignore
-              ...displayColumnDefOptions?.['mrt-row-expand']?.muiTableHeadCellProps?.sx,
+
+              ...displayColumnDefOptions?.['mrt-row-expand']
+                // @ts-ignore
+                ?.muiTableHeadCellProps?.sx,
             },
-            ...displayColumnDefOptions?.['mrt-row-expand']?.muiTableHeadCellProps,
+            ...displayColumnDefOptions?.['mrt-row-expand']
+              ?.muiTableHeadCellProps,
           },
           ...displayColumnDefOptions?.['mrt-row-expand'],
         },
         ...displayColumnDefOptions,
       }}
       {...props}
-      columns={columns}
+      columns={customColumns}
       data={data}
     />
   );
