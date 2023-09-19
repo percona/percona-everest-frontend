@@ -100,7 +100,7 @@ test.describe('DB Cluster creation', () => {
     expect(addedCluster).not.toBeUndefined();
     expect(addedCluster?.spec.engine.type).toBe('psmdb');
     expect(addedCluster?.spec.engine.replicas).toBe(3);
-    expect(addedCluster?.spec.engine.resources?.cpu.toString()).toBe('8');
+    expect(addedCluster?.spec.engine.resources?.cpu.toString()).toBe('500m');
     expect(addedCluster?.spec.engine.resources?.memory.toString()).toBe('32G');
     expect(addedCluster?.spec.engine.storage.size.toString()).toBe('150G');
     expect(addedCluster?.spec.proxy.expose.type).toBe('external');
@@ -127,7 +127,7 @@ test.describe('DB Cluster creation', () => {
 
     await page.getByTestId('toggle-button-nodes-3').click();
     await page.getByTestId('toggle-button-large').click();
-    await page.getByTestId('disk-input').fill('150');
+    await page.getByTestId('text-input-disk').fill('150');
     await page.getByTestId('db-wizard-continue-button').click();
 
     // await expect(
