@@ -12,16 +12,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-import { expect } from '@playwright/test';
-
-export const resourcesStepCheck = async (page) => {
-  await expect(
-    page.getByRole('heading', {
-      name: 'Configure the resources your new database will have access to.',
-    })
-  ).toBeVisible();
-  await page.getByTestId('toggle-button-nodes-3').click();
-  await page.getByTestId('toggle-button-large').click();
-  await page.getByTestId('disk-input').fill('150');
+export const Messages = {
+  asteriskHiddenText: '***************',
 };
