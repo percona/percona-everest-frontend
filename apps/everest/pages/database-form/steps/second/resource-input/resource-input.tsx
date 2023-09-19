@@ -1,7 +1,7 @@
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import React from 'react';
-import { ResourceInputProps } from './resource-input.types';
 import { InputAdornment } from '@mui/material';
+import { ResourceInputProps } from './resource-input.types';
 
 export const ResourceInput = ({ name, label, helperText, endSuffix }: ResourceInputProps) => (
   <TextInput
