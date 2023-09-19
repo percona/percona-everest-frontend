@@ -13,10 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { UseFormSetValue, FieldValues } from 'react-hook-form';
 import { ResourceSize } from './second-step.types';
 import { DEFAULT_SIZES } from './second-step.const';
-import { DbWizardFormFields } from '../../database-form.types';
 import { DbCluster } from '../../../../types/dbCluster.types';
 
 const humanizedResourceSizeMap: Record<ResourceSize, string> = {
@@ -30,9 +28,18 @@ export const humanizeResourceSizeMap = (type: ResourceSize): string =>
   humanizedResourceSizeMap[type];
 
 export const getResourceNames = (names: string[]): string => {
-  if (names.length === 1) return names[0];
-  if (names.length === 2) return `${names[0]} and ${names[1]}`;
-  if (names.length === 3) return `${names[0]}, ${names[1]}, and ${names[2]}`;
+  if (names.length === 1) {
+    return names[0]
+  };
+
+  if (names.length === 2) {
+    return `${names[0]} and ${names[1]}`
+  };
+
+  if (names.length === 3) {
+    return `${names[0]}, ${names[1]}, and ${names[2]}`
+  };
+
   return '';
 };
 
@@ -43,14 +50,19 @@ export const matchFieldsValueToResourceSize = (
   dbCluster: DbCluster
 ): ResourceSize => {
   const resources = dbCluster?.spec?.engine?.resources;
+
+  if (!resources) {
+    return ResourceSize.custom;
+  }
+
   const size = +removeMeasurementValue(
     dbCluster?.spec?.engine?.storage?.size.toString()
   );
-  const memory = +removeMeasurementValue(resources?.memory.toString());
+  const memory = +removeMeasurementValue(resources.memory.toString());
 
   const res = Object.values(DEFAULT_SIZES).findIndex(
     (item) =>
-      item.cpu === +resources?.cpu &&
+      item.cpu === Number(resources.cpu) &&
       item.memory === memory &&
       item.disk === size
   );
