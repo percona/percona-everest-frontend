@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - release-[0-9]+.[0-9]+.[0-9]+*
-      - EVEREST-428-rc-pipeline # <--- DELETE ME before merge
 
 jobs:
   build:
