@@ -25,6 +25,7 @@ import { defineConfig } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests',
+  outputDir: './test-results',
   testMatch: /.*\.e2e\.(js|ts)x?/,
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -46,7 +47,7 @@ export default defineConfig({
     },
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'retain-on-failure',
+    trace: 'on-first-retry',
   },
 
   /* Configure projects for major browsers */
