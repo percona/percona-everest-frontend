@@ -54,7 +54,7 @@ test.describe('DB Cluster creation', () => {
   });
 
   test.skip('Cluster creation with an incomplete list of DBEngines', () => {
-    //TODO after the https://jira.percona.com/browse/EVEREST-203 is ready
+    // TODO after the https://jira.percona.com/browse/EVEREST-203 is ready
     // 1) rewrite the starting pipeline of launching everest to launch everest without clusters
     // 2) add 2 clusters using new methods from EVEREST-203
     // 3) check that the default parameters for MySQL are changed with parameters for the first available dbEngine
