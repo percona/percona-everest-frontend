@@ -189,6 +189,10 @@ jobs:
           cd ${GITHUB_WORKSPACE}/percona-everest-frontend/apps/everest
           make test-ui
 
+      - name: LS -R
+        if: always()
+        run: ls -R .
+
       - name: Archive test results
         if: always()
         uses: actions/upload-artifact@v3
