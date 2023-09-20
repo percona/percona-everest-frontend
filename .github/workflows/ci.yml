@@ -188,3 +188,9 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}/percona-everest-frontend/apps/everest
           make test-ui
+
+      - name: Archive test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: ${GITHUB_WORKSPACE}/percona-everest-frontend/apps/everest/ui-tests/test-results/
