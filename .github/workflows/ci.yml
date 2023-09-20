@@ -191,8 +191,7 @@ jobs:
 
       - name: Ls
         if: always()
-        run: |
-          - ls -R ${GITHUB_WORKSPACE}
+        run: “ls -R ${GITHUB_WORKSPACE}”
 
       - name: Archive test results
         if: always()
