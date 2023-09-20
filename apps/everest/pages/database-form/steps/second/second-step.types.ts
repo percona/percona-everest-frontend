@@ -18,9 +18,3 @@ export enum ResourceSize {
   large = 'large',
   custom = 'custom',
 }
-
-export enum NumberOfNodes {
-  oneNode = '1',
-  twoNodes = '2',
-  threeNodes = '3',
-}

@@ -14,11 +14,6 @@
 // limitations under the License.
 
 import { test as setup } from '@playwright/test';
-import {
-  createMonitoringInstance,
-  testMonitoringName,
-  testMonitoringName2,
-} from './utils/monitoring-instance';
 
 setup('Backup storage', async ({ request }) => {
   // TODO console.log('CREATE BACKUP STORAGE');
@@ -36,7 +31,7 @@ setup('Backup storage', async ({ request }) => {
   });
 });
 
-setup('Monitoring setup', async ({ request }) => {
-  await createMonitoringInstance(request, testMonitoringName);
-  await createMonitoringInstance(request, testMonitoringName2);
-});
+// setup('Monitoring setup', async ({ request }) => {
+//   await createMonitoringInstance(request, testMonitoringName);
+//   await createMonitoringInstance(request, testMonitoringName2);
+// });
