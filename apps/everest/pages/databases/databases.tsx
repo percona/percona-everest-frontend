@@ -8,6 +8,8 @@ import {
   List,
   ListItem,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { enqueueSnackbar } from 'notistack';
 import React, { useContext } from 'react';
@@ -19,6 +21,11 @@ import { Messages } from './databases.messages';
 export const DatabasesPage = () => {
   const { clusters } = useContext(K8Context);
   const noKubernetesClusters = !clusters?.data?.length;
+  const theme = useTheme();
+  const isLaptop = useMediaQuery(theme.breakpoints.down('lg'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  console.log(isMobile);
 
   const copyToClipboard = async () => {
     await navigator.clipboard.writeText(Messages.noKubernetesCommand);
@@ -30,7 +37,7 @@ export const DatabasesPage = () => {
   return noKubernetesClusters ? (
     <Box
       sx={{
-        padding: '52px 212px 52px 212px',
+        padding: isMobile ? '8px' : isLaptop ? '16px' : '52px 212px 52px 212px',
         display: 'flex',
         flexDirection: 'column',
       }}
@@ -86,7 +93,7 @@ export const DatabasesPage = () => {
                   fontWeight: 600,
                 }}
               >
-                <ContentCopyIcon /> {Messages.copyCommand}
+                <ContentCopyIcon /> {!isMobile && Messages.copyCommand}
               </Button>
             )
           }
