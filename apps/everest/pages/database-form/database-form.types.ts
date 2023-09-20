@@ -96,9 +96,9 @@ const stepOneSchema = z
 
 const stepTwoSchema = z
   .object({
-    [DbWizardFormFields.cpu]: z.number(),
-    [DbWizardFormFields.memory]: z.number(),
-    [DbWizardFormFields.disk]: z.number(),
+    [DbWizardFormFields.cpu]: z.string(),
+    [DbWizardFormFields.memory]: z.string(),
+    [DbWizardFormFields.disk]: z.string(),
     [DbWizardFormFields.resourceSizePerNode]: z.nativeEnum(ResourceSize),
     [DbWizardFormFields.numberOfNodes]: z.string(),
   })
