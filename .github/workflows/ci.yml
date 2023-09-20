@@ -195,3 +195,10 @@ jobs:
         with:
           name: test-results
           path: ${GITHUB_WORKSPACE}/percona-everest-frontend/apps/everest/ui-tests/test-results/
+
+      - name: Archive report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-report
+          path: ${GITHUB_WORKSPACE}/percona-everest-frontend/apps/everest/ui-tests/playwright-report/
