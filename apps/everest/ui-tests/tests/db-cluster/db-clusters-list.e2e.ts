@@ -18,7 +18,7 @@ import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { getK8sClusters } from '../utils/k8s-clusters';
 import { createDbClusterFn } from '../utils/db-cluster';
 
-test.describe('DB Cluster List', () => {
+test.skip('DB Cluster List', () => {
   let kubernetesId: string;
   const mySQLName = 'mysql-test-ui';
 

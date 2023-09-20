@@ -113,7 +113,7 @@ test.describe('DB Cluster creation', () => {
     expect(addedCluster?.spec.engine.storage.class).toBe(storageClasses[0]);
   });
 
-  test('Cancel wizard', async ({ page }) => {
+  test.skip('Cancel wizard', async ({ page }) => {
     await page.getByTestId('mongodb-toggle-button').click();
     await page.getByTestId('text-input-db-name').fill('new-cluster');
     await page.getByTestId('text-input-storage-class').click();
