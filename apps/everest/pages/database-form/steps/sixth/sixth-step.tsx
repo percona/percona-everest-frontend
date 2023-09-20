@@ -3,8 +3,11 @@ import { Stack, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { Messages } from './sixth-step.messages';
+import { useDatabasePageMode } from '../../useDatabasePageMode';
 
 export const SixthStep = () => {
+  const mode = useDatabasePageMode();
+
   return (
     <Stack alignItems="center">
       <Stack direction="row" alignItems="center">
@@ -12,8 +15,8 @@ export const SixthStep = () => {
           sx={{ color: 'success.contrastText', fontSize: 64, mr: 1 }}
         />
         <Stack direction="column">
-          <Typography variant="h6">{Messages.dbBeingCreated}</Typography>
-          <Typography variant="caption">{Messages.sitTight}</Typography>
+          <Typography variant="h6">{mode === 'new' ? Messages.dbBeingCreated : Messages.dbBeingUpdated}</Typography>
+          {mode === 'new' && <Typography variant="caption">{Messages.sitTight}</Typography>}
         </Stack>
       </Stack>
       <Button
