@@ -190,6 +190,7 @@ jobs:
           make test-ui
 
       - name: Ls
+        if: always()
         run: |
           - ls -R ${GITHUB_WORKSPACE}
 
