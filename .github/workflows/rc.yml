@@ -1,0 +1,23 @@
+name: Build and push RC image
+
+on:
+  push:
+    branches:
+      - release-[0-9]+.[0-9]+.[0-9]+*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_BRANCH_NAME: ''
+    steps:
+      - name: Define release branch name
+        run: |
+          echo "RELEASE_BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
+
+      - name: Trigger dispatch in the BE release branch
+        run: |
+          curl -XPOST -v https://api.github.com/repos/percona/percona-everest-backend/actions/workflows/69408739/dispatches \
+            -H 'Accept: application/vnd.github.v3+json' \
+            -H 'Authorization: token ${{ secrets.ROBOT_TOKEN }}' \
+            --data '{"ref": "${{ env.RELEASE_BRANCH_NAME}}"}' --fail-with-body
