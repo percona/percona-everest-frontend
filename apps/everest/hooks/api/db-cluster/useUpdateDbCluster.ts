@@ -66,7 +66,7 @@ const formValuesToPayloadOverrides = (
         replicas: +dbPayload.numberOfNodes,
         resources: {
           ...dbCluster.spec.engine.resources,
-          cpu: dbPayload.cpu,
+          cpu: `${dbPayload.cpu}`,
           memory: `${dbPayload.memory}G`,
         },
         storage: {
