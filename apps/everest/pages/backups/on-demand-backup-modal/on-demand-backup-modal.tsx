@@ -52,7 +52,7 @@ export const OnDemandBackupModal = ({
       schema={schema}
       values={values}
       size="XL"
-      subHead={Messages.onDemandBackupModal.subHead}
+      subHead2={Messages.onDemandBackupModal.subHead}
     >
       <TextInput
         name={BackupFields.name}
