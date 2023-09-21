@@ -45,7 +45,7 @@ export const DB_WIZARD_DEFAULTS: DefaultValues<DbWizardType> = {
   [DbWizardFormFields.storageClass]: '',
   [DbWizardFormFields.externalAccess]: false,
   // [DbWizardFormFields.internetFacing]: true,
-  [DbWizardFormFields.sourceRanges]: [{ sourceRange: '181.170.213.40/32' }],
+  [DbWizardFormFields.sourceRanges]: [{ sourceRange: '' }],
   [DbWizardFormFields.engineParametersEnabled]: false,
   [DbWizardFormFields.engineParameters]: '',
   [DbWizardFormFields.monitoring]: false,

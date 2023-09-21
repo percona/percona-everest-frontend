@@ -15,8 +15,12 @@ export const SixthStep = () => {
           sx={{ color: 'success.contrastText', fontSize: 64, mr: 1 }}
         />
         <Stack direction="column">
-          <Typography variant="h6">{mode === 'new' ? Messages.dbBeingCreated : Messages.dbBeingUpdated}</Typography>
-          {mode === 'new' && <Typography variant="caption">{Messages.sitTight}</Typography>}
+          <Typography variant="h6">
+            {mode === 'new' ? Messages.dbBeingCreated : Messages.dbBeingUpdated}
+          </Typography>
+          {mode === 'new' && (
+            <Typography variant="caption">{Messages.sitTight}</Typography>
+          )}
         </Stack>
       </Stack>
       <Button
