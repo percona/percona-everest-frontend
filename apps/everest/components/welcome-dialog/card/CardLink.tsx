@@ -34,7 +34,8 @@ export const CardLink = ({
     >
       <CardContent
         sx={{
-          padding: '24px 32px 24px 32px',
+          py: 3,
+          px: 4,
         }}
       >
         <Icon

@@ -25,8 +25,6 @@ export const DatabasesPage = () => {
   const isLaptop = useMediaQuery(theme.breakpoints.down('lg'));
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  console.log(isMobile);
-
   const copyToClipboard = async () => {
     await navigator.clipboard.writeText(Messages.noKubernetesCommand);
     enqueueSnackbar(Messages.copyToClipboardTooltip, {
@@ -37,12 +35,12 @@ export const DatabasesPage = () => {
   return noKubernetesClusters ? (
     <Box
       sx={{
-        padding: isMobile ? '8px' : isLaptop ? '16px' : '52px 212px 52px 212px',
+        padding: isMobile ? 1 : isLaptop ? 2 : '52px 212px 52px 212px',
         display: 'flex',
         flexDirection: 'column',
       }}
     >
-      <Typography sx={{ mb: '24px' }} variant="h5">
+      <Typography sx={{ mb: 3 }} variant="h5">
         {Messages.noKubernetesClusters}
       </Typography>
       <List
