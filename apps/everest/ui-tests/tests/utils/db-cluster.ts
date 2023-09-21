@@ -83,7 +83,7 @@ export const createDbClusterFn = async (
         version: customOptions?.dbVersion || lastVersion,
         replicas: +(customOptions?.numberOfNodes || 1),
         resources: {
-          cpu: customOptions?.cpu || 1,
+          cpu: `${customOptions?.cpu || 1}`,
           memory: `${customOptions?.memory || 2}G`,
         },
         storage: {
