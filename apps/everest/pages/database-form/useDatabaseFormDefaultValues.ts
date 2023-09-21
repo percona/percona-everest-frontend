@@ -15,6 +15,7 @@
 
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { format } from 'date-fns';
 import { useDbCluster } from '../../hooks/api/db-cluster/useDbCluster';
 import {
   // Backup,
@@ -37,6 +38,7 @@ import {
   MonitoringInstance,
   MonitoringInstanceList,
 } from '../../types/monitoring.types';
+import { FILENAME_TIMESTAMP_FORMAT } from '../../constants';
 // import { getFormValuesFromCronExpression } from '../../components/time-selection/time-selection.utils';
 
 // EVEREST-334
@@ -90,7 +92,7 @@ export const DbClusterPayloadToFormValues = (
     ),
     [DbWizardFormFields.dbName]:
       mode === 'restoreFromBackup'
-        ? `restored-${dbCluster?.metadata?.name}`
+        ? `restored-${dbCluster?.metadata?.name}-${format(new Date(), FILENAME_TIMESTAMP_FORMAT)}`
         : dbCluster?.metadata?.name,
     [DbWizardFormFields.dbVersion]: dbCluster?.spec?.engine?.version || '',
     [DbWizardFormFields.externalAccess]:
