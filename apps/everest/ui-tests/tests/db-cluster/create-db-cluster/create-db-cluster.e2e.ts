@@ -15,13 +15,13 @@
 
 import { expect, test } from '@playwright/test';
 import { GetDbClusterPayload } from '../../../../types/dbCluster.types';
-import { basicInformationStepCheck } from './steps/basic-information-step';
-import { resourcesStepCheck } from './steps/resources-step';
+import { getEnginesVersions } from '../../utils/database-engines';
+import { getK8sClusters } from '../../utils/k8s-clusters';
+import { getClusterDetailedInfo } from '../../utils/storage-class';
 import { advancedConfigurationStepCheck } from './steps/advanced-configuration-step';
 import { backupsStepCheck } from './steps/backups-step';
-import { getK8sClusters } from '../../utils/k8s-clusters';
-import { getEnginesVersions } from '../../utils/database-engines';
-import { getClusterDetailedInfo } from '../../utils/storage-class';
+import { basicInformationStepCheck } from './steps/basic-information-step';
+import { resourcesStepCheck } from './steps/resources-step';
 
 test.describe('DB Cluster creation', () => {
   let kubernetesId;
@@ -49,6 +49,11 @@ test.describe('DB Cluster creation', () => {
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/databases/new');
+    const closeIcon = page.getByTestId('close-dialog-icon');
+    if (closeIcon) {
+      await closeIcon.click();
+    }
+
     await page.getByTestId('toggle-button-group-input-db-type').waitFor();
     await page.getByTestId('select-input-db-version').waitFor();
   });
