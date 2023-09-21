@@ -18,7 +18,7 @@ import { test } from '@playwright/test';
 // import { getEnginesVersions } from '../utils/database-engines';
 // import { getClusterDetailedInfo } from '../utils/storage-class';
 
-test.describe('DB Cluster creation', () => {
+test.skip('DB Cluster creation', () => {
   // let kubernetesId;
   // let engineVersions = {
   //   pxc: [],
