@@ -16,5 +16,5 @@ export interface FormDialogProps<T extends FieldValues> {
   submitMessage: string;
   validationMode?: keyof ValidationMode;
   size?: 'L' | 'XL';
-  subHead?: string;
+  subHead2?: string;
 }

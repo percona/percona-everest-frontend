@@ -22,14 +22,14 @@ export const TextInput = ({
       render={({ field, fieldState: { error } }) => (
         <TextField
           {...field}
+          {...textFieldProps}
           variant="outlined"
           error={!!error}
-          helperText={error ? error.message : textFieldProps?.helperText}
           inputProps={{
             'data-testid': `text-input-${kebabize(name)}`,
             ...textFieldProps?.inputProps,
           }}
-          {...textFieldProps}
+          helperText={error ? error.message : textFieldProps?.helperText}
         />
       )}
       {...controllerProps}

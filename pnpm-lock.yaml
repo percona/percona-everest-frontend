@@ -157,8 +157,6 @@ importers:
 
   ui-lib/icons/status: {}
 
-  ui-lib/input: {}
-
   ui-lib/labeled-content: {}
 
   ui-lib/menu-button: {}

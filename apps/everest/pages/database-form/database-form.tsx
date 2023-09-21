@@ -60,8 +60,8 @@ export const DatabasePage = () => {
   const [closeModalIsOpen, setModalIsOpen] = useState(false);
   const [restoreFromBackupModal, setRestoreFromBackupModal] = useState(false);
   const currentValidationSchema = dbWizardSchema[activeStep];
-  const { mutate: addDbCluster } = useCreateDbCluster();
-  const { mutate: editDbCluster } = useUpdateDbCluster();
+  const { mutate: addDbCluster, isLoading: isCreating } = useCreateDbCluster();
+  const { mutate: editDbCluster, isLoading: isUpdating } = useUpdateDbCluster();
   const { id } = useSelectedKubernetesCluster();
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
   const navigate = useNavigate();
@@ -226,6 +226,7 @@ export const DatabasePage = () => {
               <Box sx={{ flex: '1 1 auto' }} />
               <Button
                 variant="outlined"
+                disabled={isCreating || isUpdating}
                 data-testid="db-wizard-cancel-button"
                 sx={{ mr: 1 }}
                 onClick={() => setModalIsOpen(true)}
@@ -237,6 +238,7 @@ export const DatabasePage = () => {
                   <Button
                     onClick={methods.handleSubmit(onSubmit)}
                     variant="contained"
+                    disabled={isCreating || isUpdating}
                     data-testid="db-wizard-submit-button"
                   >
                     {mode === 'edit' && Messages.editDatabase}
@@ -247,6 +249,7 @@ export const DatabasePage = () => {
                     onClick={() => {
                       setRestoreFromBackupModal(true);
                     }}
+                    disabled={isCreating}
                     variant="contained"
                     data-testid="db-wizard-submit-button"
                   >

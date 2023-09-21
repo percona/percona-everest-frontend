@@ -1,28 +1,25 @@
 import {
   Box,
-  Stack,
   FormGroup,
   Typography,
   useMediaQuery,
-  FormHelperText,
   useTheme,
 } from '@mui/material';
 import { ToggleButtonGroupInput } from '@percona/ui-lib.form.inputs.toggle-button-group';
 import { ToggleCard } from '@percona/ui-lib.toggle-card';
 import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { Input } from '@percona/ui-lib.input';
 import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { DEFAULT_SIZES, NODES_DB_TYPE_MAP } from './second-step.const';
 import { Messages } from './second-step.messages';
 import { ResourceSize } from './second-step.types';
 import {
-  checkSwitchToCustom,
   humanizeResourceSizeMap,
 } from './second-step.utils';
 import { DbWizardFormFields } from '../../database-form.types';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { useKubernetesClusterResourcesInfo } from '../../../../hooks/api/kubernetesClusters/useKubernetesClusterResourcesInfo';
+import { ResourceInput } from './resource-input/resource-input';
 
 export const SecondStep = () => {
   const { watch, setValue, setError, clearErrors } = useFormContext();
@@ -39,10 +36,14 @@ export const SecondStep = () => {
     exceedFlag: boolean
   ) => {
     if (value) {
+      const parsedNumber = Number(value);
+
+      if (Number.isNaN(parsedNumber)) {
+        return '';
+      }
+
       const processedValue =
-        fieldLabel === Messages.labels.cpu
-          ? Math.floor(+value / 1000)
-          : Math.floor(+value / 1024 ** 3);
+        fieldLabel === Messages.labels.cpu ? parsedNumber / 1000 : parsedNumber / (10 ** 9);
 
       if (exceedFlag) {
         return Messages.alerts.resourcesCapacityExceeding(
@@ -59,19 +60,19 @@ export const SecondStep = () => {
   const resourceSizePerNode: ResourceSize = watch(
     DbWizardFormFields.resourceSizePerNode
   );
-  const cpu = watch(DbWizardFormFields.cpu);
-  const memory = watch(DbWizardFormFields.memory);
-  const disk = watch(DbWizardFormFields.disk);
+  const cpu: number = watch(DbWizardFormFields.cpu);
+  const memory: number = watch(DbWizardFormFields.memory);
+  const disk: number = watch(DbWizardFormFields.disk);
   const dbType: DbType = watch(DbWizardFormFields.dbType);
 
   const cpuCapacityExceeded = resourcesInfo
     ? cpu * 1000 > resourcesInfo?.available.cpuMillis
     : !resourcesInfoLoading;
   const memoryCapacityExceeded = resourcesInfo
-    ? memory * 1024 ** 3 > resourcesInfo?.available.memoryBytes
+    ? memory * 1000 ** 3 > resourcesInfo?.available.memoryBytes
     : !resourcesInfoLoading;
   const diskCapacityExceeded = resourcesInfo?.available?.diskSize
-    ? disk * 1024 ** 3 > resourcesInfo?.available.diskSize
+    ? disk * 1000 ** 3 > resourcesInfo?.available.diskSize
     : false;
 
   useEffect(() => {
@@ -95,6 +96,25 @@ export const SecondStep = () => {
       setError(DbWizardFormFields.disk, { type: 'custom' });
     } else clearErrors(DbWizardFormFields.disk);
   }, [diskCapacityExceeded]);
+
+  useEffect(() => {
+    if (resourceSizePerNode !== ResourceSize.custom && cpu !== DEFAULT_SIZES[resourceSizePerNode].cpu) {
+      setValue(DbWizardFormFields.resourceSizePerNode, ResourceSize.custom);
+    }
+  }, [cpu, resourceSizePerNode]);
+
+  useEffect(() => {
+    if (resourceSizePerNode !== ResourceSize.custom && disk !== DEFAULT_SIZES[resourceSizePerNode].disk) {
+      setValue(DbWizardFormFields.resourceSizePerNode, ResourceSize.custom);
+    }
+  }, [disk, resourceSizePerNode]);
+
+  useEffect(() => {
+    if (resourceSizePerNode !== ResourceSize.custom && memory !== DEFAULT_SIZES[resourceSizePerNode].memory) {
+      setValue(DbWizardFormFields.resourceSizePerNode, ResourceSize.custom);
+    }
+  }, [memory, resourceSizePerNode]);
+
 
   return (
     <>
@@ -145,102 +165,56 @@ export const SecondStep = () => {
           </ToggleCard>
         </ToggleButtonGroupInput>
         <Box
-          sx={{ display: 'flex', flexDirection: 'column', mt: 4, gap: 1 }}
-          data-testid="resources-box"
+          sx={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            justifyContent: 'space-between',
+            marginTop: 4,
+            gap: isMobile ? 3 : 2,
+            '& > *': {
+              width: isMobile ? '100%' : '33%',
+            },
+          }}
         >
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: isMobile ? 'column' : 'row',
-              justifyContent: 'space-between',
-              marginTop: -1,
-              gap: 2,
-            }}
-          >
-            <Stack sx={{ flex: '1 1' }}>
-              <Typography variant="sectionHeading">
-                {Messages.labels.cpu.toUpperCase()}
-              </Typography>
-              <Input
-                value={cpu}
-                setValue={(value: number) => {
-                  setValue(DbWizardFormFields.cpu, value);
-                  checkSwitchToCustom(
-                    DbWizardFormFields.cpu,
-                    value,
-                    resourceSizePerNode,
-                    setValue
-                  );
-                }}
-                units="CPU"
-                dataTestId="cpu-input"
-              />
-              <FormHelperText>
-                {checkResourceText(
-                  resourcesInfo?.available?.cpuMillis,
-                  'CPU',
-                  Messages.labels.cpu,
-                  cpuCapacityExceeded
-                )}
-              </FormHelperText>
-            </Stack>
-            <Stack sx={{ flex: '1 1' }}>
-              <Typography variant="sectionHeading">
-                {Messages.labels.memory.toUpperCase()}
-              </Typography>
-              <Input
-                value={memory}
-                setValue={(value: number) => {
-                  setValue(DbWizardFormFields.memory, value);
-                  checkSwitchToCustom(
-                    DbWizardFormFields.memory,
-                    value,
-                    resourceSizePerNode,
-                    setValue
-                  );
-                }}
-                units="GB"
-                dataTestId="memory-input"
-              />
-              <FormHelperText>
-                {checkResourceText(
-                  resourcesInfo?.available?.memoryBytes,
-                  'GB',
-                  Messages.labels.memory,
-                  memoryCapacityExceeded
-                )}
-              </FormHelperText>
-            </Stack>
-            <Stack sx={{ flex: '1 1' }}>
-              <Typography variant="sectionHeading">
-                {Messages.labels.disk.toUpperCase()}
-              </Typography>
-              <Input
-                value={disk}
-                setValue={(value: number) => {
-                  setValue(DbWizardFormFields.disk, value);
-                  checkSwitchToCustom(
-                    DbWizardFormFields.disk,
-                    value,
-                    resourceSizePerNode,
-                    setValue
-                  );
-                }}
-                error={diskCapacityExceeded}
-                units="GB"
-                dataTestId="disk-input"
-                disabled={mode === 'edit'}
-              />
-              <FormHelperText>
-                {checkResourceText(
-                  resourcesInfo?.available?.diskSize,
-                  'GB',
-                  Messages.labels.disk,
-                  diskCapacityExceeded
-                )}
-              </FormHelperText>
-            </Stack>
-          </Box>
+          <ResourceInput
+            name={DbWizardFormFields.cpu}
+            label={Messages.labels.cpu.toUpperCase()}
+            helperText={
+              checkResourceText(
+                resourcesInfo?.available?.cpuMillis,
+                'CPU',
+                Messages.labels.cpu,
+                cpuCapacityExceeded,
+              )
+            }
+            endSuffix='CPU'
+          />
+          <ResourceInput
+            name={DbWizardFormFields.memory}
+            label={Messages.labels.memory.toUpperCase()}
+            helperText={
+              checkResourceText(
+                resourcesInfo?.available?.memoryBytes,
+                'GB',
+                Messages.labels.memory,
+                memoryCapacityExceeded,
+              )
+            }
+            endSuffix='GB'
+          />
+          <ResourceInput
+            name={DbWizardFormFields.disk}
+            label={Messages.labels.disk.toUpperCase()}
+            helperText={
+              checkResourceText(
+                resourcesInfo?.available?.diskSize,
+                'GB',
+                Messages.labels.disk,
+                diskCapacityExceeded,
+              )
+            }
+            endSuffix='GB'
+          />
         </Box>
       </FormGroup>
     </>

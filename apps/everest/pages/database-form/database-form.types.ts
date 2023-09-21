@@ -62,6 +62,15 @@ export enum DbWizardFormFields {
 const doesNotContainerAnythingButAlphanumericAndDash = /^[a-z0-9-]+$/;
 const doesNotStartWithDash = /^[^0-9-]/;
 const doesNotEndWithDash = /[^-]$/;
+const resourceToNumber = (minimum = 0) => z
+  .union([z.string().nonempty(), z.number()])
+  .pipe(
+    z
+      .coerce.number({
+        invalid_type_error: 'Please insert a valid number'
+      })
+      .min(minimum)
+  )
 
 const stepOneSchema = z
   .object({
@@ -99,9 +108,9 @@ const stepOneSchema = z
 
 const stepTwoSchema = z
   .object({
-    [DbWizardFormFields.cpu]: z.number(),
-    [DbWizardFormFields.memory]: z.number(),
-    [DbWizardFormFields.disk]: z.number(),
+    [DbWizardFormFields.cpu]: resourceToNumber(0.6),
+    [DbWizardFormFields.memory]: resourceToNumber(0.512),
+    [DbWizardFormFields.disk]: resourceToNumber(1),
     [DbWizardFormFields.resourceSizePerNode]: z.nativeEnum(ResourceSize),
     [DbWizardFormFields.numberOfNodes]: z.string(),
   })
