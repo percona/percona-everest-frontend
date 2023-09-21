@@ -14,6 +14,7 @@
 // limitations under the License.
 
 import { expect } from '@playwright/test';
+// import {SOURCE_RANGE_PLACEHOLDER} from "../../../../../constants";
 
 export const advancedConfigurationStepCheck = async (page) => {
   await expect(
@@ -23,13 +24,19 @@ export const advancedConfigurationStepCheck = async (page) => {
   // expect(
   //   await page.getByLabel('Enable External Access').isChecked()
   // ).toBeTruthy();
-  // await page
-  //   .getByTestId('text-input-source-ranges.0.source-range')
-  //   .fill('192.168.1.1/24');
+  //
+  // const sourceRangeFirstField = page.getByTestId('text-input-source-ranges.0.source-range');
+  // expect(sourceRangeFirstField).toHaveValue('');
+  // expect(sourceRangeFirstField).toHaveAttribute('placeholder', SOURCE_RANGE_PLACEHOLDER);
+  // await sourceRangeFirstField.fill('192.168.1.1/24');
+  //
   // await page.getByTestId('add-text-input-button').click();
-  // await page
-  //   .getByTestId('text-input-source-ranges.1.source-range')
-  //   .fill('192.168.1.0');
+  //
+  // const sourceRangeSecondField = page
+  //     .getByTestId('text-input-source-ranges.1.source-range');
+  // expect(sourceRangeSecondField).toHaveValue('');
+  // expect(sourceRangeSecondField).toHaveAttribute('placeholder', SOURCE_RANGE_PLACEHOLDER);
+  // await sourceRangeSecondField.fill('192.168.1.0');
 
   await page.getByLabel('Database engine parameters').check();
   expect(
