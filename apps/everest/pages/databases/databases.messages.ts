@@ -21,7 +21,7 @@ export const Messages = {
     'Run the following command to install all required operators in headless mode:',
   copyToClipboardTooltip: 'Successfully copied',
   noKubernetesCommand:
-    'sh KUBECONFIG=~/.kube/config; ./everestctl install operators',
+    'KUBECONFIG=~/.kube/config; ./everestctl install operators',
   firstLine1: 'Download the latest release of the ',
   firstLineLink: 'everestctl',
   firstLine2: ' command to provision Percona Everest.',
