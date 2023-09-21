@@ -9,19 +9,25 @@ declare module '@mui/material/styles' {
   }
   interface TypographyVariants {
     sectionHeading: React.CSSProperties;
-    subHead: React.CSSProperties;
+    subHead1: React.CSSProperties;
+    subHead2: React.CSSProperties;
+    helperText: React.CSSProperties;
   }
 
   interface TypographyVariantsOptions {
     sectionHeading: React.CSSProperties;
-    subHead: React.CSSProperties;
+    subHead1: React.CSSProperties;
+    subHead2: React.CSSProperties;
+    helperText: React.CSSProperties;
   }
 }
 
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     sectionHeading: true;
-    subHead: true;
+    subHead1: true;
+    subHead2: true;
+    helperText: true;
   }
 }
 
@@ -191,10 +197,20 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
       fontSize: '14px',
       lineHeight: '17.5px',
     },
-    subHead: {
+    subHead1: {
+      fontWeight: 600,
+      fontSize: '19px',
+      lineHeight: '26.13px',
+    },
+    subHead2: {
       fontWeight: 600,
       fontSize: '16px',
       lineHeight: '22px',
+    },
+    helperText: {
+      fontWeight: 450,
+      fontSize: '12px',
+      lineHeight: '15px',
     },
     body1: {
       fontWeight: 400,
