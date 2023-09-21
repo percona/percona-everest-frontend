@@ -166,9 +166,9 @@ export const SecondStep = () => {
             flexDirection: isMobile ? 'column' : 'row',
             justifyContent: 'space-between',
             marginTop: 4,
-            gap: 2,
+            gap: isMobile ? 3 : 2,
             '& > *': {
-              width: '33%'
+              width: isMobile ? '100%' : '33%',
             },
           }}
         >
