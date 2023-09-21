@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import { format } from 'date-fns';
 import { DbCluster, ProxyExposeType } from '../../types/dbCluster.types';
 import {
   MonitoringInstance,
@@ -28,6 +29,7 @@ import {
   matchFieldsValueToResourceSize,
   removeMeasurementValue,
 } from './steps/second/second-step.utils';
+import { FILENAME_TIMESTAMP_FORMAT } from '../../constants';
 // import { getFormValuesFromCronExpression } from '../../components/time-selection/time-selection.utils';
 
 // EVEREST-334
@@ -58,7 +60,9 @@ const getMonitoringInstanceValue = (
     const monitoringInstance = monitoringInstances.find(
       (item) => item.name === instanceName
     );
-    if (monitoringInstance) return monitoringInstance;
+    if (monitoringInstance) {
+      return monitoringInstance;
+    }
     return '';
   }
   return '';
@@ -80,7 +84,10 @@ export const DbClusterPayloadToFormValues = (
     ),
     [DbWizardFormFields.dbName]:
       mode === 'restoreFromBackup'
-        ? `restored-${dbCluster?.metadata?.name}`
+        ? `restored-${dbCluster?.metadata?.name}-${format(
+            new Date(),
+            FILENAME_TIMESTAMP_FORMAT
+          )}`
         : dbCluster?.metadata?.name,
     [DbWizardFormFields.dbVersion]: dbCluster?.spec?.engine?.version || '',
     [DbWizardFormFields.externalAccess]:
