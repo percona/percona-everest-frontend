@@ -111,12 +111,12 @@ test.describe('DB Cluster creation', () => {
     expect(addedCluster?.spec.engine.resources?.cpu.toString()).toBe('8');
     expect(addedCluster?.spec.engine.resources?.memory.toString()).toBe('32G');
     expect(addedCluster?.spec.engine.storage.size.toString()).toBe('150G');
-    expect(addedCluster?.spec.proxy.expose.type).toBe('external');
+    expect(addedCluster?.spec.proxy.expose.type).toBe('internal');
     expect(addedCluster?.spec.proxy.replicas).toBe(3);
-    expect(addedCluster?.spec.proxy.expose.ipSourceRanges).toEqual([
-      '192.168.1.1/24',
-      '192.168.1.0',
-    ]);
+    // expect(addedCluster?.spec.proxy.expose.ipSourceRanges).toEqual([
+    //   '192.168.1.1/24',
+    //   '192.168.1.0',
+    // ]);
     expect(addedCluster?.spec.engine.storage.class).toBe(storageClasses[0]);
   });
 

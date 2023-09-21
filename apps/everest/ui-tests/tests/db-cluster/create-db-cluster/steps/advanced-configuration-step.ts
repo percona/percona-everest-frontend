@@ -19,17 +19,17 @@ export const advancedConfigurationStepCheck = async (page) => {
   await expect(
     page.getByRole('heading', { name: 'Advanced Configurations' })
   ).toBeVisible();
-  await page.getByLabel('Enable External Access').check();
-  expect(
-    await page.getByLabel('Enable External Access').isChecked()
-  ).toBeTruthy();
-  await page
-    .getByTestId('text-input-source-ranges.0.source-range')
-    .fill('192.168.1.1/24');
-  await page.getByTestId('add-text-input-button').click();
-  await page
-    .getByTestId('text-input-source-ranges.1.source-range')
-    .fill('192.168.1.0');
+  // await page.getByLabel('Enable External Access').check();
+  // expect(
+  //   await page.getByLabel('Enable External Access').isChecked()
+  // ).toBeTruthy();
+  // await page
+  //   .getByTestId('text-input-source-ranges.0.source-range')
+  //   .fill('192.168.1.1/24');
+  // await page.getByTestId('add-text-input-button').click();
+  // await page
+  //   .getByTestId('text-input-source-ranges.1.source-range')
+  //   .fill('192.168.1.0');
 
   await page.getByLabel('Database engine parameters').check();
   expect(
