@@ -34,6 +34,6 @@ export const Messages = {
     ) =>
       `Your specified ${fieldName} size exceeds the ${
         value ? `${value} ${units}` : ''
-      } of available storage. Enter a smaller disk size before continuing.`,
+      } available. Enter a smaller value before continuing.`,
   },
 };

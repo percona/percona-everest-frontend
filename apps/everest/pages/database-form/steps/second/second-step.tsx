@@ -36,10 +36,14 @@ export const SecondStep = () => {
     exceedFlag: boolean
   ) => {
     if (value) {
+      const parsedNumber = Number(value);
+
+      if (Number.isNaN(parsedNumber)) {
+        return '';
+      }
+
       const processedValue =
-        fieldLabel === Messages.labels.cpu
-          ? Math.floor(+value / 1000)
-          : Math.floor(+value / 1024 ** 3);
+        fieldLabel === Messages.labels.cpu ? parsedNumber / 1000 : parsedNumber / (10 ** 9);
 
       if (exceedFlag) {
         return Messages.alerts.resourcesCapacityExceeding(
@@ -65,10 +69,10 @@ export const SecondStep = () => {
     ? cpu * 1000 > resourcesInfo?.available.cpuMillis
     : !resourcesInfoLoading;
   const memoryCapacityExceeded = resourcesInfo
-    ? memory * 1024 ** 3 > resourcesInfo?.available.memoryBytes
+    ? memory * 1000 ** 3 > resourcesInfo?.available.memoryBytes
     : !resourcesInfoLoading;
   const diskCapacityExceeded = resourcesInfo?.available?.diskSize
-    ? disk * 1024 ** 3 > resourcesInfo?.available.diskSize
+    ? disk * 1000 ** 3 > resourcesInfo?.available.diskSize
     : false;
 
   useEffect(() => {
