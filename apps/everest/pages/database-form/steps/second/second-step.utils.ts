@@ -16,6 +16,7 @@
 import { ResourceSize } from './second-step.types';
 import { DEFAULT_SIZES } from './second-step.const';
 import { DbCluster } from '../../../../types/dbCluster.types';
+import { memoryParser } from '../../../../utils/k8ResourceParser';
 
 const humanizedResourceSizeMap: Record<ResourceSize, string> = {
   [ResourceSize.small]: 'Small',
@@ -43,9 +44,6 @@ export const getResourceNames = (names: string[]): string => {
   return '';
 };
 
-export const removeMeasurementValue = (value: string) =>
-  value ? +value?.slice(0, -1) : 0;
-
 export const matchFieldsValueToResourceSize = (
   dbCluster: DbCluster
 ): ResourceSize => {
@@ -55,10 +53,8 @@ export const matchFieldsValueToResourceSize = (
     return ResourceSize.custom;
   }
 
-  const size = +removeMeasurementValue(
-    dbCluster?.spec?.engine?.storage?.size.toString()
-  );
-  const memory = +removeMeasurementValue(resources.memory.toString());
+  const size = memoryParser(dbCluster?.spec?.engine?.storage?.size.toString());
+  const memory = memoryParser(resources.memory.toString());
 
   const res = Object.values(DEFAULT_SIZES).findIndex(
     (item) =>
