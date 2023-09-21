@@ -73,7 +73,7 @@ export const DbClusterPayloadToFormValues = (
   mode: DbWizardMode
 ): DbWizardType => {
   // const backupInfo = getBackupInfo(dbCluster?.spec?.backup); // EVEREST-334
-  console.log(dbCluster);
+
   return {
     // [DbWizardFormFields.backupsEnabled]: dbCluster?.spec?.backup?.enabled, // EVEREST-334
     // [DbWizardFormFields.pitrEnabled]: true,
