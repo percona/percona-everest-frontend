@@ -24,7 +24,7 @@ export const Messages = {
     memory: 'memory',
     disk: 'disk',
     estimated: (value: string | number | undefined, units: string) =>
-      value ? `Estimated: ${value} ${units}` : '',
+      value ? `Estimated available: ${value} ${units}` : '',
   },
   alerts: {
     resourcesCapacityExceeding: (
@@ -34,6 +34,6 @@ export const Messages = {
     ) =>
       `Your specified ${fieldName} size exceeds the ${
         value ? `${value} ${units}` : ''
-      } of available storage. Enter a smaller disk size before continuing.`,
+      } available. Enter a smaller value before continuing.`,
   },
 };

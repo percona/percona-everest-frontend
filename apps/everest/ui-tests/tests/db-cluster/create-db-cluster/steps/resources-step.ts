@@ -23,5 +23,6 @@ export const resourcesStepCheck = async (page) => {
   ).toBeVisible();
   await page.getByTestId('toggle-button-nodes-3').click();
   await page.getByTestId('toggle-button-large').click();
-  await page.getByTestId('disk-input').fill('150');
+  await page.getByTestId('text-input-cpu').fill('0.6');
+  await page.getByTestId('text-input-disk').fill('150');
 };
