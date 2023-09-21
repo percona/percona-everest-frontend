@@ -29,7 +29,7 @@ jobs:
       - name: Check out Everest frontend
         uses: actions/checkout@v4
         with:
-          ref: $ {{ env.RELEASE_BRANCH_NAME }}
+          ref: ${{ env.RELEASE_BRANCH_NAME }}
           path: percona-everest-frontend
           token: ${{ secrets.ROBOT_TOKEN }}
 
@@ -66,7 +66,7 @@ jobs:
         with:
           repository: percona/percona-everest-backend
           path: ./backend
-          ref: $ {{ env.RELEASE_BRANCH_NAME }}
+          ref: ${{ env.RELEASE_BRANCH_NAME }}
           token: ${{ secrets.ROBOT_TOKEN }}
 
       - name: Embed Everest Frontend app into backend
