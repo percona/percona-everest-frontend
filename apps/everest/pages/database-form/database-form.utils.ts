@@ -101,7 +101,7 @@ export const DbClusterPayloadToFormValues = (
       ? dbCluster?.spec?.proxy?.expose?.ipSourceRanges.map((item) => ({
           sourceRange: item,
         }))
-      : [],
+      : [{ sourceRange: '' }],
     [DbWizardFormFields.monitoring]:
       !!dbCluster?.spec?.monitoring?.monitoringConfigName,
     [DbWizardFormFields.monitoringInstance]: getMonitoringInstanceValue(
