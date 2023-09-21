@@ -1,4 +1,6 @@
 import z from 'zod';
+import { format } from 'date-fns';
+import { FILENAME_TIMESTAMP_FORMAT } from '../../../constants';
 
 export type OnDemandBackupModalProps = {
   open: boolean;
@@ -11,7 +13,9 @@ export enum BackupFields {
 }
 
 export const defaultValuesFc = (dbClusterName?: string) => ({
-  [BackupFields.name]: dbClusterName ? `backup-${dbClusterName}` : '',
+  [BackupFields.name]: dbClusterName
+    ? `backup-${dbClusterName}-${format(new Date(), FILENAME_TIMESTAMP_FORMAT)}`
+    : '',
   [BackupFields.storageLocation]: '',
 });
 

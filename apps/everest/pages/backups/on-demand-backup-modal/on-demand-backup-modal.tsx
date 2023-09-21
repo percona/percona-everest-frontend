@@ -37,9 +37,9 @@ export const OnDemandBackupModal = ({
     });
   };
 
-  const defaultValues = useMemo(
+  const values = useMemo(
     () => defaultValuesFc(dbClusterName),
-    [dbClusterName]
+    [dbClusterName, open]
   );
 
   return (
@@ -50,7 +50,7 @@ export const OnDemandBackupModal = ({
       onSubmit={handleSubmit}
       submitMessage={Messages.onDemandBackupModal.submitMessage}
       schema={schema}
-      defaultValues={defaultValues}
+      values={values}
       size="XL"
       subHead2={Messages.onDemandBackupModal.subHead}
     >
