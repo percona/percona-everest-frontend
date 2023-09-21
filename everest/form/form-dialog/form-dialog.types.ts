@@ -9,6 +9,7 @@ export interface FormDialogProps<T extends FieldValues> {
   headerMessage: string;
   schema: ZodObject<ZodRawShape>;
   defaultValues?: DefaultValues<T>;
+  values?: T;
   onSubmit: (data: T) => void;
   children: ReactNode;
   cancelMessage?: string;
