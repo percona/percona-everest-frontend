@@ -1,6 +1,9 @@
 run:
 	bit run everest
 
+run-skip-watch:
+	bit run everest --skip-watch
+
 test:
 	bit test everest
 
