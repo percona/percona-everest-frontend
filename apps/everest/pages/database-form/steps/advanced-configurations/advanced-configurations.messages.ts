@@ -33,8 +33,8 @@ export const Messages = {
   sourceRange: 'Source Range',
   sourceRangePlaceholder: SOURCE_RANGE_PLACEHOLDER,
   engineParameters: {
-    title: 'Database engine parameters',
+    title: 'Set database engine parameters',
     caption:
-      'Configure specific values to optimize performance, security, and functionality according to your requirements.',
+      'Set your database engine configuration to adjust your database system to your workload and performance needs. For configuration format and specific parameters, check your database type documentation.',
   },
 };
