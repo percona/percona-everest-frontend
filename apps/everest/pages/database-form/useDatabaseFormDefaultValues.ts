@@ -15,6 +15,7 @@
 
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { format } from 'date-fns';
 import { useDbCluster } from '../../hooks/api/db-cluster/useDbCluster';
 import {
   // Backup,
@@ -28,6 +29,99 @@ import {
   DbWizardType,
 } from './database-form.types';
 import { useMonitoringInstancesList } from '../../hooks/api/monitoring/useMonitoringInstancesList';
+import {
+  MonitoringInstance,
+  MonitoringInstanceList,
+} from '../../types/monitoring.types';
+import { FILENAME_TIMESTAMP_FORMAT } from '../../constants';
+// import { getFormValuesFromCronExpression } from '../../components/time-selection/time-selection.utils';
+
+// EVEREST-334
+// const getBackupInfo = (backup: Backup) => {
+//   if (backup?.enabled) {
+//     const schedules = backup?.schedules;
+//     const firstSchedule = schedules && schedules[0];
+//     if (firstSchedule.schedule) {
+//       return {
+//         ...getFormValuesFromCronExpression(firstSchedule.schedule),
+//         [DbWizardFormFields.storageLocation]:
+//           { name: firstSchedule.backupStorageName } || null,
+//       };
+//     }
+//   }
+//   return {
+//     ...TIME_SELECTION_DEFAULTS,
+//     [DbWizardFormFields.storageLocation]:
+//       DB_WIZARD_DEFAULTS[DbWizardFormFields.storageLocation],
+//   };
+// };
+
+const getMonitoringInstanceValue = (
+  monitoringInstances: MonitoringInstanceList,
+  instanceName: string
+): MonitoringInstance | '' => {
+  if (monitoringInstances?.length) {
+    const monitoringInstance = monitoringInstances.find(
+      (item) => item.name === instanceName
+    );
+    if (monitoringInstance) return monitoringInstance;
+    return '';
+  }
+  return '';
+};
+
+export const DbClusterPayloadToFormValues = (
+  dbCluster: DbCluster,
+  monitoringInstances: MonitoringInstanceList,
+  mode: DbWizardMode
+): DbWizardType => {
+  // const backupInfo = getBackupInfo(dbCluster?.spec?.backup); // EVEREST-334
+
+  return {
+    // [DbWizardFormFields.backupsEnabled]: dbCluster?.spec?.backup?.enabled, // EVEREST-334
+    // [DbWizardFormFields.pitrEnabled]: true,
+    // [DbWizardFormFields.pitrTime]: '60',
+    // ...backupInfo, // EVEREST-334
+    [DbWizardFormFields.dbType]: dbEngineToDbType(
+      dbCluster?.spec?.engine?.type
+    ),
+    [DbWizardFormFields.dbName]:
+      mode === 'restoreFromBackup'
+        ? `restored-${dbCluster?.metadata?.name}-${format(new Date(), FILENAME_TIMESTAMP_FORMAT)}`
+        : dbCluster?.metadata?.name,
+    [DbWizardFormFields.dbVersion]: dbCluster?.spec?.engine?.version || '',
+    [DbWizardFormFields.externalAccess]:
+      dbCluster?.spec?.proxy?.expose?.type === ProxyExposeType.external,
+    // [DbWizardFormFields.internetFacing]: true,
+    [DbWizardFormFields.engineParametersEnabled]:
+      !!dbCluster?.spec?.engine?.config,
+    [DbWizardFormFields.engineParameters]: dbCluster?.spec?.engine?.config,
+    [DbWizardFormFields.sourceRanges]: dbCluster?.spec?.proxy?.expose
+      ?.ipSourceRanges
+      ? dbCluster?.spec?.proxy?.expose?.ipSourceRanges.map((item) => ({
+          sourceRange: item,
+        }))
+      : [],
+    [DbWizardFormFields.monitoring]:
+      !!dbCluster?.spec?.monitoring?.monitoringConfigName,
+    [DbWizardFormFields.monitoringInstance]: getMonitoringInstanceValue(
+      monitoringInstances,
+      dbCluster?.spec?.monitoring?.monitoringConfigName
+    ),
+    [DbWizardFormFields.numberOfNodes]: `${dbCluster?.spec?.proxy?.replicas}`,
+    [DbWizardFormFields.resourceSizePerNode]:
+      matchFieldsValueToResourceSize(dbCluster),
+    [DbWizardFormFields.cpu]: +(dbCluster?.spec?.engine?.resources?.cpu || 0),
+    [DbWizardFormFields.disk]: removeMeasurementValue(
+      dbCluster?.spec?.engine?.storage?.size.toString()
+    ),
+    [DbWizardFormFields.memory]: removeMeasurementValue(
+      (dbCluster?.spec?.engine?.resources?.memory || 0).toString()
+    ),
+    [DbWizardFormFields.storageClass]:
+      dbCluster?.spec?.engine?.storage?.class || null,
+  };
+};
 import { useDbEngines } from '../../hooks/api/db-engines/useDbEngines';
 import { DbClusterPayloadToFormValues } from './database-form.utils';
 
