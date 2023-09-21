@@ -92,7 +92,10 @@ export const DbClusterPayloadToFormValues = (
     ),
     [DbWizardFormFields.dbName]:
       mode === 'restoreFromBackup'
-        ? `restored-${dbCluster?.metadata?.name}-${format(new Date(), FILENAME_TIMESTAMP_FORMAT)}`
+        ? `restored-${dbCluster?.metadata?.name}-${format(
+            new Date(),
+            FILENAME_TIMESTAMP_FORMAT
+          )}`
         : dbCluster?.metadata?.name,
     [DbWizardFormFields.dbVersion]: dbCluster?.spec?.engine?.version || '',
     [DbWizardFormFields.externalAccess]:

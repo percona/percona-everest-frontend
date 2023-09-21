@@ -45,6 +45,7 @@ export const AdvancedConfigurations = () => {
         {externalAccess && (
           <Stack sx={{ ml: 6 }}>
             <TextArray
+              placeholder={Messages.sourceRangePlaceholder}
               fieldName={DbWizardFormFields.sourceRanges}
               fieldKey="sourceRange"
               label={Messages.sourceRange}
