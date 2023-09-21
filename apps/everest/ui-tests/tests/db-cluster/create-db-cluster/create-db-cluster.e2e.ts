@@ -53,6 +53,13 @@ test.describe('DB Cluster creation', () => {
     await page.getByTestId('select-input-db-version').waitFor();
   });
 
+  test.skip('Cluster creation with an incomplete list of DBEngines', () => {
+    // TODO after the https://jira.percona.com/browse/EVEREST-203 is ready
+    // 1) rewrite the starting pipeline of launching everest to launch everest without clusters
+    // 2) add 2 clusters using new methods from EVEREST-203
+    // 3) check that the default parameters for MySQL are changed with parameters for the first available dbEngine
+  });
+
   test('Cluster creation', async ({ page, request }) => {
     const clusterName = 'db-cluster-ui-test';
 
@@ -78,8 +85,12 @@ test.describe('DB Cluster creation', () => {
 
     // await monitoringStepCheck(page, monitoringInstancesList);
     await page.getByTestId('db-wizard-submit-button').click();
-    await expect(page.getByTestId('db-wizard-goto-db-clusters')).toBeVisible({ timeout: 10 * 1000 });
-    await expect(page.getByText('Awesome! Your database is being created!')).toBeVisible();
+    await expect(page.getByTestId('db-wizard-goto-db-clusters')).toBeVisible({
+      timeout: 10 * 1000,
+    });
+    await expect(
+      page.getByText('Awesome! Your database is being created!')
+    ).toBeVisible();
 
     const response = await request.get(
       `/v1/kubernetes/${kubernetesId}/database-clusters`

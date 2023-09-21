@@ -74,7 +74,10 @@ const stepOneSchema = z
         'The database name should not exceed x characters.'
       )
       .regex(doesNotEndWithDash, "The name shouldn't end with a hyphen.")
-      .regex(doesNotStartWithDash, "The name shouldn't start with a hyphen or a number.")
+      .regex(
+        doesNotStartWithDash,
+        "The name shouldn't start with a hyphen or a number."
+      )
       .trim()
       .nonempty(),
     // [DbWizardFormFields.k8sNamespace]: z.string().nonempty(),

@@ -13,7 +13,9 @@ export enum BackupFields {
 }
 
 export const defaultValuesFc = (dbClusterName?: string) => ({
-  [BackupFields.name]: dbClusterName ? `backup-${dbClusterName}-${format(new Date(), FILENAME_TIMESTAMP_FORMAT)}` : '',
+  [BackupFields.name]: dbClusterName
+    ? `backup-${dbClusterName}-${format(new Date(), FILENAME_TIMESTAMP_FORMAT)}`
+    : '',
   [BackupFields.storageLocation]: '',
 });
 

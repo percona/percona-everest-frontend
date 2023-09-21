@@ -18,7 +18,7 @@ jest.mock(
 interface FormProviderWrapperProps {
   handleSubmit: jest.Mock<any, any>;
   children: ReactNode;
-  values?: Partial<DbWizardType>,
+  values?: Partial<DbWizardType>;
 }
 
 const FormProviderWrapper = ({
@@ -77,7 +77,10 @@ describe('Second Step', () => {
   it('should have 1, 2 and 3 nodes for PostgreSQL', () => {
     render(
       <TestWrapper>
-        <FormProviderWrapper handleSubmit={jest.fn()} values={{ dbType: DbType.Postresql }}>
+        <FormProviderWrapper
+          handleSubmit={jest.fn()}
+          values={{ dbType: DbType.Postresql }}
+        >
           <SecondStep />
         </FormProviderWrapper>
       </TestWrapper>
@@ -86,23 +89,34 @@ describe('Second Step', () => {
     expect(screen.queryByTestId('toggle-button-nodes-1')).toBeInTheDocument();
     expect(screen.queryByTestId('toggle-button-nodes-2')).toBeInTheDocument();
     expect(screen.queryByTestId('toggle-button-nodes-3')).toBeInTheDocument();
-    expect(screen.queryByTestId('toggle-button-nodes-4')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('toggle-button-nodes-5')).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('toggle-button-nodes-4')
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('toggle-button-nodes-5')
+    ).not.toBeInTheDocument();
   });
 
   it('should have 1, 3 and 5 nodes for MySQL', () => {
     render(
       <TestWrapper>
-        <FormProviderWrapper handleSubmit={jest.fn()} values={{ dbType: DbType.Mysql }}>
+        <FormProviderWrapper
+          handleSubmit={jest.fn()}
+          values={{ dbType: DbType.Mysql }}
+        >
           <SecondStep />
         </FormProviderWrapper>
       </TestWrapper>
     );
 
     expect(screen.queryByTestId('toggle-button-nodes-1')).toBeInTheDocument();
-    expect(screen.queryByTestId('toggle-button-nodes-2')).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('toggle-button-nodes-2')
+    ).not.toBeInTheDocument();
     expect(screen.queryByTestId('toggle-button-nodes-3')).toBeInTheDocument();
-    expect(screen.queryByTestId('toggle-button-nodes-4')).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('toggle-button-nodes-4')
+    ).not.toBeInTheDocument();
     expect(screen.queryByTestId('toggle-button-nodes-5')).toBeInTheDocument();
   });
 
