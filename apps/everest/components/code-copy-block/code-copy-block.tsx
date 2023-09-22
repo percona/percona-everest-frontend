@@ -26,12 +26,9 @@ export const CodeCopyBlock = ({
 }: CodeCopyBlockProps) => {
   const copyToClipboard = async () => {
     await navigator.clipboard.writeText(message);
-    enqueueSnackbar(
-      snackbarSuccessMessage || Messages.copyToClipboardTooltip,
-      {
-        variant: 'success',
-      }
-    );
+    enqueueSnackbar(snackbarSuccessMessage || Messages.copyToClipboardTooltip, {
+      variant: 'success',
+    });
   };
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -40,6 +37,12 @@ export const CodeCopyBlock = ({
     <Alert
       severity="info"
       icon={false}
+      sx={{ mt: 0.5, mb: 0.5,
+          '& .MuiAlert-action': {
+              alignItems: 'center',
+              pt: 0,
+          },
+    }}
       action={
         navigator.clipboard &&
         window.isSecureContext && (

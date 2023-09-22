@@ -34,5 +34,6 @@ export const Messages = {
     'From the installation wizard, provision and register the Kubernetes cluster in Everest using the following command.',
   captionPart1: 'Note that Everest will search for the kubeconfig file in the ',
   captionPart2: ' path. If your file is located elsewhere, add the ',
-  captionPart3: ' environment variable before running the command',
+  captionPart3: ' environment variable before running the command.',
+  retry: 'Retry',
 };

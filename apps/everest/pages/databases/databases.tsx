@@ -25,12 +25,13 @@ import {
   useTheme,
 } from '@mui/material';
 import React, { useContext } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink , useNavigate } from 'react-router-dom';
 import { DbClusterView } from '../../components/db-cluster-view/DbClusterView';
 import { K8Context } from '../../contexts/kubernetes/kubernetes.context';
 import { Messages } from './databases.messages';
 import { CodeCopyBlock } from '../../components/code-copy-block/code-copy-block';
 import { CodeBlock } from '../../components/code-block/code-block';
+
 
 export const DatabasesPage = () => {
   const { clusters } = useContext(K8Context);
@@ -38,6 +39,7 @@ export const DatabasesPage = () => {
   const theme = useTheme();
   const isLaptop = useMediaQuery(theme.breakpoints.down('lg'));
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const navigate = useNavigate();
 
   return noKubernetesClusters ? (
     <Box
@@ -57,7 +59,7 @@ export const DatabasesPage = () => {
           '& .MuiListItem-root': {
             display: 'list-item',
             pt: 0,
-            pb: 0,
+            pb: 1,
           },
         }}
       >
@@ -84,17 +86,24 @@ export const DatabasesPage = () => {
         </ListItem>
         <ListItem>
           <Typography variant="body2">{Messages.forthLine}</Typography>
+          <CodeCopyBlock message={Messages.noKubernetesCommand} />
         </ListItem>
       </List>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mx: 2 }}>
-        <CodeCopyBlock message={Messages.noKubernetesCommand} />
+      <Box sx={{ display: 'flex', flexDirection: 'column', mx: 2 }}>
         <Typography variant="caption">
           {Messages.captionPart1}
-          <CodeBlock message="~/.kube/config'" />
+          <CodeBlock message="~/.kube/config" />
           {Messages.captionPart2}
           <CodeBlock message="KUBECONFIG" />
           {Messages.captionPart3}
         </Typography>
+        <Button
+          variant="outlined"
+          sx={{ alignSelf: 'flex-end' }}
+          onClick={() => navigate(0)}
+        >
+          {Messages.retry}
+        </Button>
       </Box>
     </Box>
   ) : (
