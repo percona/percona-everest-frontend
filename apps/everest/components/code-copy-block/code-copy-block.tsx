@@ -14,10 +14,10 @@
 // limitations under the License.
 
 import React from 'react';
-import { Messages } from './code-copy-block.messages';
 import { Alert, Button, useMediaQuery, useTheme } from '@mui/material';
 import { enqueueSnackbar } from 'notistack';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { Messages } from './code-copy-block.messages';
 import { CodeCopyBlockProps } from './code-copy-block.types';
 
 export const CodeCopyBlock = ({
@@ -27,9 +27,7 @@ export const CodeCopyBlock = ({
   const copyToClipboard = async () => {
     await navigator.clipboard.writeText(message);
     enqueueSnackbar(
-      snackbarSuccessMessage
-        ? snackbarSuccessMessage
-        : Messages.copyToClipboardTooltip,
+      snackbarSuccessMessage || Messages.copyToClipboardTooltip,
       {
         variant: 'success',
       }
