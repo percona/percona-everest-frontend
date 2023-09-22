@@ -14,27 +14,7 @@
 // limitations under the License.
 export const Messages = {
   createDatabase: 'Create Database',
-  noKubernetesClusters:
-    "Oops! It looks like you don't have any Kubernetes clusters yet.",
-  letsCreateOne: 'Let’s create one:',
-  copyCommand: 'Copy command',
+  // TODO now we don't use this message, if it's not needed anymore we should delete this one
   alertTitle:
     'Run the following command to install all required operators in headless mode:',
-  noKubernetesCommand:
-    'KUBECONFIG=~/.kube/config; ./everestctl install operators',
-  firstLine1: 'Download the latest release of the ',
-  firstLineLink: 'everestctl',
-  firstLine2: ' command to provision Percona Everest.',
-  secondLine1:
-    'Rename the downloaded file using the following command and replacing the placeholder ',
-  secondLine2: ' to match the file downloaded in the previous step:',
-  secondLineCommand: 'mv everestctl-darwin-amd64 everestctl',
-  thirdLine: 'Modify the file permissions:',
-  thirdLineCommand: 'chmod +x everestctl',
-  forthLine:
-    'From the installation wizard, provision and register the Kubernetes cluster in Everest using the following command.',
-  captionPart1: 'Note that Everest will search for the kubeconfig file in the ',
-  captionPart2: ' path. If your file is located elsewhere, add the ',
-  captionPart3: ' environment variable before running the command.',
-  retry: 'Retry',
 };
