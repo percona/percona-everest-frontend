@@ -15,7 +15,8 @@
 export const Messages = {
   createDatabase: 'Create Database',
   noKubernetesClusters:
-    "Oops! It looks like you don't have any Kubernetes clusters yet. Let’s create one:",
+    "Oops! It looks like you don't have any Kubernetes clusters yet.",
+  letsCreateOne: 'Let’s create one:',
   copyCommand: 'Copy command',
   alertTitle:
     'Run the following command to install all required operators in headless mode:',

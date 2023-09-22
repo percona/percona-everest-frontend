@@ -51,6 +51,7 @@ export const DatabasesPage = () => {
       <Typography sx={{ mb: 3 }} variant="h5">
         {Messages.noKubernetesClusters}
       </Typography>
+      <Typography variant="body2">{Messages.letsCreateOne}</Typography>
       <List
         sx={{
           listStyleType: 'decimal',
