@@ -14,7 +14,7 @@
 // limitations under the License.
 
 import AddIcon from '@mui/icons-material/Add';
-import { Button, useTheme } from '@mui/material';
+import { Button } from '@mui/material';
 import React, { useContext } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { DbClusterView } from '../../components/db-cluster-view/DbClusterView';
