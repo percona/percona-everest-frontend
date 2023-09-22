@@ -55,6 +55,7 @@ export const DatabasesPage = () => {
       <List
         sx={{
           listStyleType: 'decimal',
+          pl: '18px',
           pt: 0,
           '& .MuiListItem-root': {
             display: 'list-item',
@@ -89,7 +90,7 @@ export const DatabasesPage = () => {
           <CodeCopyBlock message={Messages.noKubernetesCommand} />
         </ListItem>
       </List>
-      <Box sx={{ display: 'flex', flexDirection: 'column', mx: 2 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', mx: 2, pl: '18px'}}>
         <Typography variant="caption">
           {Messages.captionPart1}
           <CodeBlock message="~/.kube/config" />
