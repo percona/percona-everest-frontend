@@ -25,7 +25,6 @@ import { NoKubernetes } from './no-kubernetes/no-kubernetes';
 export const DatabasesPage = () => {
   const { clusters } = useContext(K8Context);
   const noKubernetesClusters = !clusters?.data?.length;
-  const theme = useTheme();
 
   return noKubernetesClusters ? (
     <NoKubernetes />
