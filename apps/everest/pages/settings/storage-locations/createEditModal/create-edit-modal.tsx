@@ -1,5 +1,5 @@
 import { MenuItem } from '@mui/material';
-import { FormDialog } from '@percona/everest.form.form-dialog';
+import { FormDialog } from '../../../../components/form-dialog/form-dialog';
 import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import React, { useMemo } from 'react';

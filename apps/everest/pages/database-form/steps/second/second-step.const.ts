@@ -34,6 +34,7 @@ export const DEFAULT_SIZES = {
   },
 };
 
+
 export const NODES_DB_TYPE_MAP: Record<DbType, string[]> = {
   [DbType.Mongo]: ['1', '3', '5'],
   [DbType.Mysql]: ['1', '3', '5'],

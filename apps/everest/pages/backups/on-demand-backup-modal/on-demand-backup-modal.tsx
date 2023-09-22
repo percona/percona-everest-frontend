@@ -1,10 +1,9 @@
-import { FormDialog } from '@percona/everest.form.form-dialog';
+
 import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import React, { useMemo } from 'react';
 import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
-
 import { useBackupStorages } from '../../../hooks/api/backup-storages/useBackupStorages';
 import {
   BACKUPS_QUERY_KEY,
@@ -18,10 +17,12 @@ import {
   OnDemandBackupModalProps,
   schema,
 } from './on-demand-backup-modal.types';
+import { FormDialog } from '../../../components/form-dialog/form-dialog';
 
 export const OnDemandBackupModal = ({
   open,
   handleClose,
+  numberOfBackups,
 }: OnDemandBackupModalProps) => {
   const queryClient = useQueryClient();
   const { dbClusterName } = useParams();
@@ -38,8 +39,8 @@ export const OnDemandBackupModal = ({
   };
 
   const values = useMemo(
-    () => defaultValuesFc(dbClusterName),
-    [dbClusterName, open]
+    () => defaultValuesFc(numberOfBackups),
+    [open]
   );
 
   return (
