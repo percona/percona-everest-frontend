@@ -25,13 +25,12 @@ import {
   useTheme,
 } from '@mui/material';
 import React, { useContext } from 'react';
-import { Link as RouterLink , useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { DbClusterView } from '../../components/db-cluster-view/DbClusterView';
 import { K8Context } from '../../contexts/kubernetes/kubernetes.context';
 import { Messages } from './databases.messages';
 import { CodeCopyBlock } from '../../components/code-copy-block/code-copy-block';
 import { CodeBlock } from '../../components/code-block/code-block';
-
 
 export const DatabasesPage = () => {
   const { clusters } = useContext(K8Context);
@@ -90,7 +89,7 @@ export const DatabasesPage = () => {
           <CodeCopyBlock message={Messages.noKubernetesCommand} />
         </ListItem>
       </List>
-      <Box sx={{ display: 'flex', flexDirection: 'column', mx: 2, pl: '18px'}}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', mx: 2, pl: '18px' }}>
         <Typography variant="caption">
           {Messages.captionPart1}
           <CodeBlock message="~/.kube/config" />

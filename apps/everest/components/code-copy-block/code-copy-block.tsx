@@ -14,7 +14,13 @@
 // limitations under the License.
 
 import React from 'react';
-import { Alert, Button, useMediaQuery, useTheme } from '@mui/material';
+import {
+  Alert,
+  useMediaQuery,
+  useTheme,
+  IconButton,
+  Button,
+} from '@mui/material';
 import { enqueueSnackbar } from 'notistack';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Messages } from './code-copy-block.messages';
@@ -22,6 +28,7 @@ import { CodeCopyBlockProps } from './code-copy-block.types';
 
 export const CodeCopyBlock = ({
   message,
+  showCopyButtonText,
   snackbarSuccessMessage,
 }: CodeCopyBlockProps) => {
   const copyToClipboard = async () => {
@@ -37,18 +44,21 @@ export const CodeCopyBlock = ({
     <Alert
       severity="info"
       icon={false}
-      sx={{ mt: 0.5, mb: 0.5,
-          '& .MuiAlert-action': {
-              alignItems: 'center',
-              pt: 0,
-          },
-    }}
+      sx={{
+        mt: 0.5,
+        mb: 0.5,
+        '& .MuiAlert-action': {
+          alignItems: 'center',
+          pt: 0,
+        },
+      }}
       action={
         navigator.clipboard &&
-        window.isSecureContext && (
+        window.isSecureContext &&
+        (showCopyButtonText ? (
           <Button
-            color="inherit"
             size="small"
+            color="primary"
             onClick={copyToClipboard}
             sx={{
               whiteSpace: 'nowrap',
@@ -57,9 +67,26 @@ export const CodeCopyBlock = ({
               fontWeight: 600,
             }}
           >
-            <ContentCopyIcon /> {!isMobile && Messages.copyCommand}
+            <ContentCopyIcon />{' '}
+            {!isMobile && showCopyButtonText && Messages.copyCommand}
           </Button>
-        )
+        ) : (
+          <IconButton
+            aria-label="copy to clipboard"
+            color="primary"
+            size="small"
+            sx={{
+              whiteSpace: 'nowrap',
+              display: 'flex',
+              gap: 1,
+              fontWeight: 600,
+            }}
+            data-testid="close-dialog-icon"
+            onClick={copyToClipboard}
+          >
+            <ContentCopyIcon />
+          </IconButton>
+        ))
       }
     >
       {message}
