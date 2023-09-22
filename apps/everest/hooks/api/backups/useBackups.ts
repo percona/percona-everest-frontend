@@ -67,7 +67,7 @@ export const useCreateBackupOnDemand = (
   );
 };
 
-export const useDeleteBackupStorage = (
+export const useDeleteBackup = (
   options?: UseMutationOptions<any, unknown, string, unknown>
 ) => {
   const { id } = useSelectedKubernetesCluster();

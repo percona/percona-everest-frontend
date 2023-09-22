@@ -15,7 +15,7 @@ import { DATE_FORMAT } from '../../../constants';
 import {
   BACKUPS_QUERY_KEY,
   useDbBackups,
-  useDeleteBackupStorage,
+  useDeleteBackup,
 } from '../../../hooks/api/backups/useBackups';
 import { useDbClusterRestore } from '../../../hooks/api/restores/useDbClusterRestore';
 import { Backup, BackupStatus } from '../../../types/backups.types';
@@ -38,8 +38,8 @@ export const BackupsList = () => {
     enabled: !!dbClusterName,
     refetchInterval: 10 * 1000,
   });
-  const { mutate: deleteBackup } = useDeleteBackupStorage();
-  const { mutate: restoreBackup } = useDbClusterRestore(dbClusterName!);
+  const { mutate: deleteBackup, isLoading: deletingBackup } = useDeleteBackup();
+  const { mutate: restoreBackup, isLoading: restoringBackup } = useDbClusterRestore(dbClusterName!);
 
   const columns = useMemo<MRT_ColumnDef<Backup>[]>(
     () => [
@@ -104,8 +104,9 @@ export const BackupsList = () => {
 
   const handleConfirmDelete = (backupName: string) => {
     deleteBackup(backupName, {
-      onSuccess() {
+      onSuccess: () => {
         queryClient.invalidateQueries([BACKUPS_QUERY_KEY, dbClusterName]);
+        handleCloseDeleteDialog();
       },
     });
   };
@@ -228,6 +229,7 @@ export const BackupsList = () => {
           closeModal={handleCloseDeleteDialog}
           headerMessage={Messages.deleteDialog.header}
           handleConfirm={handleConfirmDelete}
+          disabledButtons={deletingBackup}
         >
           {Messages.deleteDialog.content}
         </ConfirmDialog>
@@ -240,6 +242,7 @@ export const BackupsList = () => {
           headerMessage={Messages.restoreDialog.header}
           handleConfirm={handleConfirmRestore}
           submitMessage={Messages.restoreDialog.submitButton}
+          disabledButtons={restoringBackup}
         >
           {Messages.restoreDialog.content}
         </ConfirmDialog>

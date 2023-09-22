@@ -26,7 +26,7 @@ export const OnDemandBackupModal = ({
 }: OnDemandBackupModalProps) => {
   const queryClient = useQueryClient();
   const { dbClusterName } = useParams();
-  const { mutate: createBackupOnDemand } = useCreateBackupOnDemand(
+  const { mutate: createBackupOnDemand, isLoading: creatingBackup } = useCreateBackupOnDemand(
     dbClusterName!
   );
   const { data: backupStorages = [], isFetching } = useBackupStorages();
@@ -34,6 +34,7 @@ export const OnDemandBackupModal = ({
     createBackupOnDemand(data, {
       onSuccess() {
         queryClient.invalidateQueries([BACKUPS_QUERY_KEY, dbClusterName]);
+        handleClose();
       },
     });
   };
@@ -49,6 +50,7 @@ export const OnDemandBackupModal = ({
       closeModal={handleClose}
       headerMessage={Messages.onDemandBackupModal.headerMessage}
       onSubmit={handleSubmit}
+      submitting={creatingBackup}
       submitMessage={Messages.onDemandBackupModal.submitMessage}
       schema={schema}
       values={values}
