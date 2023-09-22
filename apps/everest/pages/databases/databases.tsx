@@ -1,7 +1,20 @@
+// percona-everest-frontend
+// Copyright (C) 2023 Percona LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 import AddIcon from '@mui/icons-material/Add';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import {
-  Alert,
   Box,
   Button,
   Link,
@@ -11,12 +24,13 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { enqueueSnackbar } from 'notistack';
 import React, { useContext } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { DbClusterView } from '../../components/db-cluster-view/DbClusterView';
 import { K8Context } from '../../contexts/kubernetes/kubernetes.context';
 import { Messages } from './databases.messages';
+import { CodeCopyBlock } from '../../components/code-copy-block/code-copy-block';
+import { CodeBlock } from '../../components/code-block/code-block';
 
 export const DatabasesPage = () => {
   const { clusters } = useContext(K8Context);
@@ -24,13 +38,6 @@ export const DatabasesPage = () => {
   const theme = useTheme();
   const isLaptop = useMediaQuery(theme.breakpoints.down('lg'));
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-  const copyToClipboard = async () => {
-    await navigator.clipboard.writeText(Messages.noKubernetesCommand);
-    enqueueSnackbar(Messages.copyToClipboardTooltip, {
-      variant: 'success',
-    });
-  };
 
   return noKubernetesClusters ? (
     <Box
@@ -64,41 +71,30 @@ export const DatabasesPage = () => {
           </Typography>
         </ListItem>
         <ListItem>
-          <Typography variant="body2">{Messages.secondLine}</Typography>
+          <Typography variant="body2">
+            {Messages.secondLine1}
+            <CodeBlock message="everestctl-darwin-amd64" />
+            {Messages.secondLine2}
+          </Typography>
+          <CodeCopyBlock message={Messages.secondLineCommand} />
         </ListItem>
         <ListItem>
           <Typography variant="body2">{Messages.thirdLine}</Typography>
+          <CodeCopyBlock message={Messages.thirdLineCommand} />
         </ListItem>
         <ListItem>
           <Typography variant="body2">{Messages.forthLine}</Typography>
         </ListItem>
       </List>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mx: 2 }}>
-        <Alert
-          severity="info"
-          icon={false}
-          action={
-            navigator.clipboard &&
-            window.isSecureContext && (
-              <Button
-                color="inherit"
-                size="small"
-                onClick={copyToClipboard}
-                sx={{
-                  whiteSpace: 'nowrap',
-                  display: 'flex',
-                  gap: 1,
-                  fontWeight: 600,
-                }}
-              >
-                <ContentCopyIcon /> {!isMobile && Messages.copyCommand}
-              </Button>
-            )
-          }
-        >
-          {Messages.noKubernetesCommand}
-        </Alert>
-        <Typography variant="caption">{Messages.caption}</Typography>
+        <CodeCopyBlock message={Messages.noKubernetesCommand} />
+        <Typography variant="caption">
+          {Messages.captionPart1}
+          <CodeBlock message="~/.kube/config'" />
+          {Messages.captionPart2}
+          <CodeBlock message="KUBECONFIG" />
+          {Messages.captionPart3}
+        </Typography>
       </Box>
     </Box>
   ) : (

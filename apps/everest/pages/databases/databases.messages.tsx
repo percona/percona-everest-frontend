@@ -19,17 +19,20 @@ export const Messages = {
   copyCommand: 'Copy command',
   alertTitle:
     'Run the following command to install all required operators in headless mode:',
-  copyToClipboardTooltip: 'Successfully copied',
   noKubernetesCommand:
     'KUBECONFIG=~/.kube/config; ./everestctl install operators',
   firstLine1: 'Download the latest release of the ',
   firstLineLink: 'everestctl',
   firstLine2: ' command to provision Percona Everest.',
-  secondLine:
-    'Rename the downloaded file using the following command and replacing the placeholder `everestctl-darwin-amd64` to match the file downloaded in the previous step: `mv everestctl-darwin-amd64 everestctl`.',
-  thirdLine: 'Modify the file permissions: `chmod +x everestctl`.',
+  secondLine1:
+    'Rename the downloaded file using the following command and replacing the placeholder ',
+  secondLine2: ' to match the file downloaded in the previous step:',
+  secondLineCommand: 'mv everestctl-darwin-amd64 everestctl',
+  thirdLine: 'Modify the file permissions:',
+  thirdLineCommand: 'chmod +x everestctl',
   forthLine:
     'From the installation wizard, provision and register the Kubernetes cluster in Everest using the following command.',
-  caption:
-    'Note that Everest will search for the kubeconfig file in the `~/.kube/config` path. If your file is located elsewhere, add the `KUBECONFIG` environment variable before running the command',
+  captionPart1: 'Note that Everest will search for the kubeconfig file in the ',
+  captionPart2: ' path. If your file is located elsewhere, add the ',
+  captionPart3: ' environment variable before running the command',
 };
