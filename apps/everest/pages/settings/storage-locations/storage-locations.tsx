@@ -19,7 +19,6 @@ import {
 } from '../../../types/backupStorages.types';
 import {
   updateDataAfterCreate,
-  updateDataAfterDelete,
   updateDataAfterEdit,
 } from '../../../utils/generalOptimisticDataUpdate';
 import { CreateEditModalStorage } from './createEditModal/create-edit-modal';
@@ -127,11 +126,6 @@ export const StorageLocations = () => {
     deleteBackupStorage(backupStorageId, {
       onSuccess: () => {
         queryClient.invalidateQueries([BACKUP_STORAGES_QUERY_KEY]);
-        // updateDataAfterDelete(
-        //   queryClient,
-        //   BACKUP_STORAGES_QUERY_KEY,
-        //   StorageLocationsFields.name
-        // );
         handleCloseDeleteDialog();
       },
     });
