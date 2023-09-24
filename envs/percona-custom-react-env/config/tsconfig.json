@@ -1,0 +1,25 @@
+{
+  // add your compiler options here
+
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "lib": ["esnext", "dom", "dom.Iterable"],
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    // "emitDecoratorMetadata": true,
+    "allowJs": true,
+    // "baseUrl": ".",
+    "jsx": "react-jsx"
+  },
+  "exclude": ["artifacts", "public", "dist", "node_modules", "package.json", "**/*.cjs"],
+  "include": [
+    "**/*",
+    "**/*.json"
+  ]
+}
