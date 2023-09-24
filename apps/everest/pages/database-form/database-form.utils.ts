@@ -25,9 +25,7 @@ import {
   DbWizardType,
 } from './database-form.types';
 import { dbEngineToDbType } from '../../utils/db';
-import {
-  matchFieldsValueToResourceSize,
-} from './steps/second/second-step.utils';
+import { matchFieldsValueToResourceSize } from './steps/second/second-step.utils';
 import { FILENAME_TIMESTAMP_FORMAT } from '../../constants';
 import { cpuParser, memoryParser } from '../../utils/k8ResourceParser';
 // import { getFormValuesFromCronExpression } from '../../components/time-selection/time-selection.utils';
@@ -111,9 +109,15 @@ export const DbClusterPayloadToFormValues = (
     [DbWizardFormFields.numberOfNodes]: `${dbCluster?.spec?.proxy?.replicas}`,
     [DbWizardFormFields.resourceSizePerNode]:
       matchFieldsValueToResourceSize(dbCluster),
-    [DbWizardFormFields.cpu]: cpuParser(dbCluster?.spec?.engine?.resources?.cpu.toString() || '0'),
-    [DbWizardFormFields.disk]: memoryParser(dbCluster?.spec?.engine?.storage?.size.toString()),
-    [DbWizardFormFields.memory]: memoryParser((dbCluster?.spec?.engine?.resources?.memory || 0).toString()),
+    [DbWizardFormFields.cpu]: cpuParser(
+      dbCluster?.spec?.engine?.resources?.cpu.toString() || '0'
+    ),
+    [DbWizardFormFields.disk]: memoryParser(
+      dbCluster?.spec?.engine?.storage?.size.toString()
+    ),
+    [DbWizardFormFields.memory]: memoryParser(
+      (dbCluster?.spec?.engine?.resources?.memory || 0).toString()
+    ),
     [DbWizardFormFields.storageClass]:
       dbCluster?.spec?.engine?.storage?.class || null,
   };

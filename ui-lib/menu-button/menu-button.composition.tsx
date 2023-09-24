@@ -7,12 +7,12 @@ import { MenuButton } from './menu-button';
 export const Menu = () => {
   return (
     <CompositionViewer themeOptions={everestThemeOptions}>
-      <MenuButton buttonText='Create backup'>
+      <MenuButton buttonText="Create backup">
         {() => [
           <MenuItem key="now">Now</MenuItem>,
-          <MenuItem key="schedule">Schedule</MenuItem>
+          <MenuItem key="schedule">Schedule</MenuItem>,
         ]}
       </MenuButton>
     </CompositionViewer>
   );
-}
+};

@@ -177,7 +177,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
           >
             {beautifyDbClusterStatus(cell.getValue<DbClusterStatus>())}
           </StatusField>
-        )
+        ),
       },
       {
         accessorKey: 'databaseName',
@@ -237,7 +237,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
               <BorderColor fontSize="small" /> {Messages.menuItems.edit}
             </MenuItem>,
             <MenuItem
-                data-testid={`${row.original?.databaseName}-delete`}
+              data-testid={`${row.original?.databaseName}-delete`}
               key={1}
               onClick={() => {
                 handleDeleteDbCluster(row.original.databaseName!);

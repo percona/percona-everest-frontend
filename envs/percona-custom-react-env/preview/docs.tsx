@@ -16,25 +16,26 @@ export type DocsProvider = ComponentType<{ children: ReactNode }>;
 
 function createDocsTemplate(Provider: DocsProvider = React.Fragment) {
   const DocsTemplate = ({
-      componentId,
-      docs,
-      compositions,
-      context,
-    }: DocsRootProps) => {
+    componentId,
+    docs,
+    compositions,
+    context,
+  }: DocsRootProps) => {
     const rootElm = document.getElementById('root');
     ReactDOM.render(
-      //@ts-ignore
+      // @ts-ignore
       <Provider>
         <DocsApp
           componentId={componentId}
           docs={docs}
           compositions={compositions}
           context={context}
-        />,
+        />
+        ,
       </Provider>,
       rootElm
-    );  
-  }
+    );
+  };
   DocsTemplate.apiObject = true;
   return DocsTemplate;
 }

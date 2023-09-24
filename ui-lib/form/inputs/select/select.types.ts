@@ -12,9 +12,9 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { SelectProps } from "@mui/material";
-import { LabeledContentProps } from "@percona/ui-lib.labeled-content";
-import { Control, UseControllerProps } from "react-hook-form";
+import { SelectProps } from '@mui/material';
+import { LabeledContentProps } from '@percona/ui-lib.labeled-content';
+import { Control, UseControllerProps } from 'react-hook-form';
 
 export type SelectInputProps = {
   control?: Control<any>;
