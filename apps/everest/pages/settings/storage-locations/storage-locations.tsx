@@ -32,7 +32,8 @@ export const StorageLocations = () => {
   const { data: backupStorages = [], isFetching } = useBackupStorages();
   const { mutate: createBackupStorage } = useCreateBackupStorage();
   const { mutate: editBackupStorage } = useEditBackupStorage();
-  const { mutate: deleteBackupStorage, isLoading: deletingBackupStorage } = useDeleteBackupStorage();
+  const { mutate: deleteBackupStorage, isLoading: deletingBackupStorage } =
+    useDeleteBackupStorage();
 
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
   const [selectedStorageId, setSelectedStorageId] = useState<string>('');
