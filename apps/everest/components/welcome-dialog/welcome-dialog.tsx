@@ -37,8 +37,8 @@ export const WelcomeDialog = ({
       <DialogContent sx={{ display: 'flex', flexFlow: 'column' }}>
         <Typography variant="body1" sx={{ marginBottom: 2 }}>
           {Messages.subHead}
-          <Link href="https://www.notion.so/percona/d67b6dd6afa04a149ab8685c609dbda8?v=ee3ab0c7c4d5490aa57552eb506da3bb">
-            {Messages.notionPage}
+          <Link href="https://github.com/percona/percona-everest-backend/issues">
+            {Messages.githubIssues}
           </Link>
           .
         </Typography>
