@@ -1,6 +1,6 @@
 install-bit:
 	npm i -g @teambit/bvm
-	bvm install 0.2.3
+	bvm install 1.0.0
 
 init:
 	bit install --recurring-install
