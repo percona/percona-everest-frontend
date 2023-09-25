@@ -1,106 +1,33 @@
+// percona-everest-frontend
+// Copyright (C) 2023 Percona LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 import AddIcon from '@mui/icons-material/Add';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import {
-  Alert,
-  Box,
-  Button,
-  Link,
-  List,
-  ListItem,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
-import { enqueueSnackbar } from 'notistack';
+import { Button } from '@mui/material';
 import React, { useContext } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { DbClusterView } from '../../components/db-cluster-view/DbClusterView';
 import { K8Context } from '../../contexts/kubernetes/kubernetes.context';
 import { Messages } from './databases.messages';
+import { NoKubernetes } from './no-kubernetes/no-kubernetes';
 
 export const DatabasesPage = () => {
   const { clusters } = useContext(K8Context);
   const noKubernetesClusters = !clusters?.data?.length;
-  const theme = useTheme();
-  const isLaptop = useMediaQuery(theme.breakpoints.down('lg'));
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-  const copyToClipboard = async () => {
-    await navigator.clipboard.writeText(Messages.noKubernetesCommand);
-    enqueueSnackbar(Messages.copyToClipboardTooltip, {
-      variant: 'success',
-    });
-  };
 
   return noKubernetesClusters ? (
-    <Box
-      sx={{
-        padding: isMobile ? 1 : isLaptop ? 2 : '52px 212px 52px 212px',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      <Typography sx={{ mb: 3 }} variant="h5">
-        {Messages.noKubernetesClusters}
-      </Typography>
-      <List
-        sx={{
-          listStyleType: 'decimal',
-          pt: 0,
-          '& .MuiListItem-root': {
-            display: 'list-item',
-            pt: 0,
-            pb: 0,
-          },
-        }}
-      >
-        <ListItem>
-          <Typography variant="body2">
-            {Messages.firstLine1}
-            <Link href="https://github.com/percona/percona-everest-cli/releases">
-              {Messages.firstLineLink}
-            </Link>
-            {Messages.firstLine2}
-          </Typography>
-        </ListItem>
-        <ListItem>
-          <Typography variant="body2">{Messages.secondLine}</Typography>
-        </ListItem>
-        <ListItem>
-          <Typography variant="body2">{Messages.thirdLine}</Typography>
-        </ListItem>
-        <ListItem>
-          <Typography variant="body2">{Messages.forthLine}</Typography>
-        </ListItem>
-      </List>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mx: 2 }}>
-        <Alert
-          severity="info"
-          icon={false}
-          action={
-            navigator.clipboard &&
-            window.isSecureContext && (
-              <Button
-                color="inherit"
-                size="small"
-                onClick={copyToClipboard}
-                sx={{
-                  whiteSpace: 'nowrap',
-                  display: 'flex',
-                  gap: 1,
-                  fontWeight: 600,
-                }}
-              >
-                <ContentCopyIcon /> {!isMobile && Messages.copyCommand}
-              </Button>
-            )
-          }
-        >
-          {Messages.noKubernetesCommand}
-        </Alert>
-        <Typography variant="caption">{Messages.caption}</Typography>
-      </Box>
-    </Box>
+    <NoKubernetes />
   ) : (
     <DbClusterView
       customHeader={
