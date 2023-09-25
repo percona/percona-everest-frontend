@@ -8,6 +8,6 @@ module.exports = {
     'jest/no-done-callback': ['off'],
     'react/require-default-props': ['off'],
     'react/prop-types': ['off'],
-    'react/destructuring-assignment': ['off']
+    'react/destructuring-assignment': ['off'],
   },
 };

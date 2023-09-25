@@ -13,9 +13,7 @@ import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { DEFAULT_SIZES, NODES_DB_TYPE_MAP } from './second-step.const';
 import { Messages } from './second-step.messages';
 import { ResourceSize } from './second-step.types';
-import {
-  humanizeResourceSizeMap,
-} from './second-step.utils';
+import { humanizeResourceSizeMap } from './second-step.utils';
 import { DbWizardFormFields } from '../../database-form.types';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { useKubernetesClusterResourcesInfo } from '../../../../hooks/api/kubernetesClusters/useKubernetesClusterResourcesInfo';
@@ -43,7 +41,9 @@ export const SecondStep = () => {
       }
 
       const processedValue =
-        fieldLabel === Messages.labels.cpu ? parsedNumber / 1000 : parsedNumber / (10 ** 9);
+        fieldLabel === Messages.labels.cpu
+          ? parsedNumber / 1000
+          : parsedNumber / 10 ** 9;
 
       if (exceedFlag) {
         return Messages.alerts.resourcesCapacityExceeding(
@@ -98,23 +98,31 @@ export const SecondStep = () => {
   }, [diskCapacityExceeded]);
 
   useEffect(() => {
-    if (resourceSizePerNode !== ResourceSize.custom && cpu !== DEFAULT_SIZES[resourceSizePerNode].cpu) {
+    if (
+      resourceSizePerNode !== ResourceSize.custom &&
+      cpu !== DEFAULT_SIZES[resourceSizePerNode].cpu
+    ) {
       setValue(DbWizardFormFields.resourceSizePerNode, ResourceSize.custom);
     }
   }, [cpu, resourceSizePerNode]);
 
   useEffect(() => {
-    if (resourceSizePerNode !== ResourceSize.custom && disk !== DEFAULT_SIZES[resourceSizePerNode].disk) {
+    if (
+      resourceSizePerNode !== ResourceSize.custom &&
+      disk !== DEFAULT_SIZES[resourceSizePerNode].disk
+    ) {
       setValue(DbWizardFormFields.resourceSizePerNode, ResourceSize.custom);
     }
   }, [disk, resourceSizePerNode]);
 
   useEffect(() => {
-    if (resourceSizePerNode !== ResourceSize.custom && memory !== DEFAULT_SIZES[resourceSizePerNode].memory) {
+    if (
+      resourceSizePerNode !== ResourceSize.custom &&
+      memory !== DEFAULT_SIZES[resourceSizePerNode].memory
+    ) {
       setValue(DbWizardFormFields.resourceSizePerNode, ResourceSize.custom);
     }
   }, [memory, resourceSizePerNode]);
-
 
   return (
     <>
@@ -179,41 +187,35 @@ export const SecondStep = () => {
           <ResourceInput
             name={DbWizardFormFields.cpu}
             label={Messages.labels.cpu.toUpperCase()}
-            helperText={
-              checkResourceText(
-                resourcesInfo?.available?.cpuMillis,
-                'CPU',
-                Messages.labels.cpu,
-                cpuCapacityExceeded,
-              )
-            }
-            endSuffix='CPU'
+            helperText={checkResourceText(
+              resourcesInfo?.available?.cpuMillis,
+              'CPU',
+              Messages.labels.cpu,
+              cpuCapacityExceeded
+            )}
+            endSuffix="CPU"
           />
           <ResourceInput
             name={DbWizardFormFields.memory}
             label={Messages.labels.memory.toUpperCase()}
-            helperText={
-              checkResourceText(
-                resourcesInfo?.available?.memoryBytes,
-                'GB',
-                Messages.labels.memory,
-                memoryCapacityExceeded,
-              )
-            }
-            endSuffix='GB'
+            helperText={checkResourceText(
+              resourcesInfo?.available?.memoryBytes,
+              'GB',
+              Messages.labels.memory,
+              memoryCapacityExceeded
+            )}
+            endSuffix="GB"
           />
           <ResourceInput
             name={DbWizardFormFields.disk}
             label={Messages.labels.disk.toUpperCase()}
-            helperText={
-              checkResourceText(
-                resourcesInfo?.available?.diskSize,
-                'GB',
-                Messages.labels.disk,
-                diskCapacityExceeded,
-              )
-            }
-            endSuffix='GB'
+            helperText={checkResourceText(
+              resourcesInfo?.available?.diskSize,
+              'GB',
+              Messages.labels.disk,
+              diskCapacityExceeded
+            )}
+            endSuffix="GB"
           />
         </Box>
       </FormGroup>

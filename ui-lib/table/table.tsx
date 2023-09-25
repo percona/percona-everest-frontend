@@ -127,8 +127,8 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
             sx: {
               flex: 'none',
               width: '60px',
-              ...displayColumnDefOptions?.['mrt-row-actions']
-                // @ts-ignore
+              ...// @ts-ignore
+              displayColumnDefOptions?.['mrt-row-actions']
                 ?.muiTableBodyCellProps?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-actions']
@@ -143,8 +143,8 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
               // By doing this, we still have "Actions" in that menu, but no text (i.e. transparent) in the header cell
               color: 'transparent',
 
-              ...displayColumnDefOptions?.['mrt-row-actions']
-                // @ts-ignore
+              ...// @ts-ignore
+              displayColumnDefOptions?.['mrt-row-actions']
                 ?.muiTableHeadCellProps?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-actions']
@@ -158,9 +158,9 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
             sx: {
               flex: 'none',
               width: '60px',
-              ...displayColumnDefOptions?.['mrt-row-expand']
-                // @ts-ignore
-                ?.muiTableBodyCellProps?.sx,
+              ...// @ts-ignore
+              displayColumnDefOptions?.['mrt-row-expand']?.muiTableBodyCellProps
+                ?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-expand']
               ?.muiTableBodyCellProps,
@@ -175,9 +175,9 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
                 },
               }),
 
-              ...displayColumnDefOptions?.['mrt-row-expand']
-                // @ts-ignore
-                ?.muiTableHeadCellProps?.sx,
+              ...// @ts-ignore
+              displayColumnDefOptions?.['mrt-row-expand']?.muiTableHeadCellProps
+                ?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-expand']
               ?.muiTableHeadCellProps,

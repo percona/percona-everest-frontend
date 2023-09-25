@@ -3,4 +3,4 @@ export type ResourceInputProps = {
   label: string;
   helperText: string;
   endSuffix: string;
-}
+};

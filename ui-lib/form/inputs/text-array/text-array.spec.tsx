@@ -6,19 +6,21 @@ import { TextArray } from './text-array';
 const Wrapper = ({ children }: { children: React.ReactNode }) => {
   const methods = useForm({
     defaultValues: {
-      people: [{
-        person: 'John'
-      }]
-    }
+      people: [
+        {
+          person: 'John',
+        },
+      ],
+    },
   });
 
-  return <FormProvider {...methods}>{children}</FormProvider>
-}
+  return <FormProvider {...methods}>{children}</FormProvider>;
+};
 
 it('should add / remove fields', () => {
   render(
     <Wrapper>
-      <TextArray fieldName='people' fieldKey='person' />
+      <TextArray fieldName="people" fieldKey="person" />
     </Wrapper>
   );
 
@@ -30,5 +32,7 @@ it('should add / remove fields', () => {
 
   fireEvent.click(screen.getByTestId('delete-text-input-0-button'));
 
-  expect(screen.queryByTestId('text-input-people.1.person')).not.toBeInTheDocument()
+  expect(
+    screen.queryByTestId('text-input-people.1.person')
+  ).not.toBeInTheDocument();
 });

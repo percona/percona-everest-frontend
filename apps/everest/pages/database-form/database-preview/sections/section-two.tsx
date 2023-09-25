@@ -15,9 +15,17 @@ export const PreviewSectionTwo = ({
   return (
     <>
       <PreviewContentText text={`Number of nodes: ${numberOfNodes}`} />
-      <PreviewContentText text={`CPU: ${Number.isNaN(parsedCPU) ? '' : `${parsedCPU  } CPU`}`} />
-      <PreviewContentText text={`Memory: ${Number.isNaN(parsedMemory) ? '' : `${parsedMemory  } GB`}`} />
-      <PreviewContentText text={`Disk: ${Number.isNaN(parsedDisk) ? '':  `${parsedDisk  } GB`}`} />
+      <PreviewContentText
+        text={`CPU: ${Number.isNaN(parsedCPU) ? '' : `${parsedCPU} CPU`}`}
+      />
+      <PreviewContentText
+        text={`Memory: ${
+          Number.isNaN(parsedMemory) ? '' : `${parsedMemory} GB`
+        }`}
+      />
+      <PreviewContentText
+        text={`Disk: ${Number.isNaN(parsedDisk) ? '' : `${parsedDisk} GB`}`}
+      />
     </>
   );
 };

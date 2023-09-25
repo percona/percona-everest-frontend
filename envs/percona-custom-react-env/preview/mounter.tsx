@@ -37,5 +37,5 @@ export function createMounter(Provider: MounterProvider = React.Fragment): any {
  * use the default template or create your own.
  * @see https://docs/react-env/component-previews#composition-mounter
  */
-//@ts-ignore
+// @ts-ignore
 export default createMounter(MyReactProvider);
