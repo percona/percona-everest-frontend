@@ -172,10 +172,12 @@ jobs:
           touch everest-backend.log
           make run-debug &> everest-backend.log &
 
-      - name: Run debug commands on failure
-        if: ${{ failure() }}
-        run: |
-          cat everest-backend.log
+      - name: Archive backend log
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: everest-backend.log
+          path: ./percona-everest-backend/everest-backend.log
 
       - name: Create KIND cluster
         uses: helm/kind-action@v1.8.0
