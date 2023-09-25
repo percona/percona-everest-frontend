@@ -19,7 +19,7 @@ import { z } from 'zod';
 //   TimeValue,
 //   WeekDays,
 // } from '../../components/time-selection/time-selection.types';
-import { IP_REGEX } from '../../constants';
+import { IP_REGEX, MAX_DB_CLUSTER_NAME_LENGTH } from '../../constants';
 import { Messages } from './database-form.messages';
 import { ResourceSize } from './steps/second/second-step.types';
 
@@ -77,7 +77,7 @@ const stepOneSchema = z
     [DbWizardFormFields.dbType]: z.nativeEnum(DbType),
     [DbWizardFormFields.dbName]: z
       .string()
-      .max(22, Messages.errors.dbName.tooLong)
+      .max(MAX_DB_CLUSTER_NAME_LENGTH, Messages.errors.dbName.tooLong)
       .regex(
         doesNotContainerAnythingButAlphanumericAndDash,
         'The database name should not exceed x characters.'

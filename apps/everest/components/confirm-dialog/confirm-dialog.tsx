@@ -12,11 +12,13 @@ export const ConfirmDialog = ({
   headerMessage,
   cancelMessage = 'Cancel',
   submitMessage = 'Delete',
+  disabledButtons = false,
 }: ConfirmDialogProps) => {
-  const handleClose = () => {
+
+  const onClick = () => {
     handleConfirm(selectedId);
-    closeModal();
   };
+
   return (
     <Dialog
       open={isOpen}
@@ -26,8 +28,8 @@ export const ConfirmDialog = ({
       <DialogTitle onClose={closeModal}>{headerMessage}</DialogTitle>
       <DialogContent sx={{ width: '480px' }}>{content}</DialogContent>
       <DialogActions>
-        <Button onClick={closeModal}>{cancelMessage}</Button>
-        <Button variant="contained" onClick={handleClose}>
+        <Button onClick={closeModal} disabled={disabledButtons}>{cancelMessage}</Button>
+        <Button variant="contained" onClick={onClick} disabled={disabledButtons}>
           {submitMessage}
         </Button>
       </DialogActions>
