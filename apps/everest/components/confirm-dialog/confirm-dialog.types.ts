@@ -9,4 +9,5 @@ export interface ConfirmDialogProps {
   handleConfirm: (selectedId: string) => void;
   cancelMessage?: string;
   submitMessage?: string;
+  disabledButtons?: boolean;
 }

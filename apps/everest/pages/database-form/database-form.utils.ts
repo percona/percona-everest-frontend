@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { format } from 'date-fns';
 import { DbCluster, ProxyExposeType } from '../../types/dbCluster.types';
 import {
   MonitoringInstance,
@@ -25,9 +24,12 @@ import {
   DbWizardType,
 } from './database-form.types';
 import { dbEngineToDbType } from '../../utils/db';
-import { matchFieldsValueToResourceSize } from './steps/second/second-step.utils';
-import { FILENAME_TIMESTAMP_FORMAT } from '../../constants';
+import {
+  matchFieldsValueToResourceSize,
+} from './steps/second/second-step.utils';
 import { cpuParser, memoryParser } from '../../utils/k8ResourceParser';
+import { generateShortUID } from './steps/first/utils';
+import { MAX_DB_CLUSTER_NAME_LENGTH } from '../../constants';
 // import { getFormValuesFromCronExpression } from '../../components/time-selection/time-selection.utils';
 
 // EVEREST-334
@@ -82,10 +84,7 @@ export const DbClusterPayloadToFormValues = (
     ),
     [DbWizardFormFields.dbName]:
       mode === 'restoreFromBackup'
-        ? `restored-${dbCluster?.metadata?.name}-${format(
-            new Date(),
-            FILENAME_TIMESTAMP_FORMAT
-          )}`
+        ? `restored-${dbCluster?.metadata?.name}-${generateShortUID()}`.slice(0, MAX_DB_CLUSTER_NAME_LENGTH - 1)
         : dbCluster?.metadata?.name,
     [DbWizardFormFields.dbVersion]: dbCluster?.spec?.engine?.version || '',
     [DbWizardFormFields.externalAccess]:
@@ -109,15 +108,9 @@ export const DbClusterPayloadToFormValues = (
     [DbWizardFormFields.numberOfNodes]: `${dbCluster?.spec?.proxy?.replicas}`,
     [DbWizardFormFields.resourceSizePerNode]:
       matchFieldsValueToResourceSize(dbCluster),
-    [DbWizardFormFields.cpu]: cpuParser(
-      dbCluster?.spec?.engine?.resources?.cpu.toString() || '0'
-    ),
-    [DbWizardFormFields.disk]: memoryParser(
-      dbCluster?.spec?.engine?.storage?.size.toString()
-    ),
-    [DbWizardFormFields.memory]: memoryParser(
-      (dbCluster?.spec?.engine?.resources?.memory || 0).toString()
-    ),
+    [DbWizardFormFields.cpu]: cpuParser(dbCluster?.spec?.engine?.resources?.cpu.toString() || '0'),
+    [DbWizardFormFields.disk]: memoryParser(dbCluster?.spec?.engine?.storage?.size.toString()),
+    [DbWizardFormFields.memory]: memoryParser((dbCluster?.spec?.engine?.resources?.memory || 0).toString()),
     [DbWizardFormFields.storageClass]:
       dbCluster?.spec?.engine?.storage?.class || null,
   };

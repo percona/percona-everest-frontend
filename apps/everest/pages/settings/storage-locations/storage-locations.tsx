@@ -19,7 +19,6 @@ import {
 } from '../../../types/backupStorages.types';
 import {
   updateDataAfterCreate,
-  updateDataAfterDelete,
   updateDataAfterEdit,
 } from '../../../utils/generalOptimisticDataUpdate';
 import { CreateEditModalStorage } from './createEditModal/create-edit-modal';
@@ -33,7 +32,7 @@ export const StorageLocations = () => {
   const { data: backupStorages = [], isFetching } = useBackupStorages();
   const { mutate: createBackupStorage } = useCreateBackupStorage();
   const { mutate: editBackupStorage } = useEditBackupStorage();
-  const { mutate: deleteBackupStorage } = useDeleteBackupStorage();
+  const { mutate: deleteBackupStorage, isLoading: deletingBackupStorage } = useDeleteBackupStorage();
 
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
   const [selectedStorageId, setSelectedStorageId] = useState<string>('');
@@ -86,17 +85,23 @@ export const StorageLocations = () => {
 
   const handleEditBackup = (data: BackupStorage) => {
     editBackupStorage(data, {
-      onSuccess: updateDataAfterEdit(
-        queryClient,
-        BACKUP_STORAGES_QUERY_KEY,
-        StorageLocationsFields.name
-      ),
+      onSuccess: () => {
+        updateDataAfterEdit(
+          queryClient,
+          BACKUP_STORAGES_QUERY_KEY,
+          StorageLocationsFields.name
+        );
+        handleCloseModal();
+      },
     });
   };
 
   const handleCreateBackup = (data: BackupStorage) => {
     createBackupStorage(data, {
-      onSuccess: updateDataAfterCreate(queryClient, BACKUP_STORAGES_QUERY_KEY),
+      onSuccess: () => {
+        updateDataAfterCreate(queryClient, BACKUP_STORAGES_QUERY_KEY);
+        handleCloseModal();
+      },
     });
   };
 
@@ -106,7 +111,6 @@ export const StorageLocations = () => {
     } else {
       handleCreateBackup(data);
     }
-    handleCloseModal();
   };
 
   const handleDeleteBackup = (backupStorageId: string) => {
@@ -120,11 +124,10 @@ export const StorageLocations = () => {
 
   const handleConfirmDelete = (backupStorageId: string) => {
     deleteBackupStorage(backupStorageId, {
-      onSuccess: updateDataAfterDelete(
-        queryClient,
-        BACKUP_STORAGES_QUERY_KEY,
-        StorageLocationsFields.name
-      ),
+      onSuccess: () => {
+        queryClient.invalidateQueries([BACKUP_STORAGES_QUERY_KEY]);
+        handleCloseDeleteDialog();
+      },
     });
   };
   return (
@@ -224,6 +227,7 @@ export const StorageLocations = () => {
           closeModal={handleCloseDeleteDialog}
           headerMessage={Messages.deleteDialog.header}
           handleConfirm={handleConfirmDelete}
+          disabledButtons={deletingBackupStorage}
         >
           {Messages.deleteDialog.content}
         </ConfirmDialog>

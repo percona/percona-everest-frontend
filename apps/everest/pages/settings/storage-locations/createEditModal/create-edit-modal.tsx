@@ -1,9 +1,9 @@
 import { MenuItem } from '@mui/material';
-import { FormDialog } from '@percona/everest.form.form-dialog';
 import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import React, { useMemo } from 'react';
 import { SubmitHandler } from 'react-hook-form';
+import { FormDialog } from '../../../../components/form-dialog/form-dialog';
 import {
   BackupStorage,
   StorageType,
@@ -16,6 +16,7 @@ import {
   storageLocationsSchema,
 } from '../storage-locations.types';
 import { CreateEditModalStorageProps } from './create-edit-modal.types';
+import { useCreateBackupStorage, useEditBackupStorage } from '../../../../hooks/api/backup-storages/useBackupStorages';
 
 export const CreateEditModalStorage = ({
   open,
@@ -24,6 +25,8 @@ export const CreateEditModalStorage = ({
   selectedStorageLocation,
 }: CreateEditModalStorageProps) => {
   const isEditMode = !!selectedStorageLocation;
+  const { isLoading: isCreating } = useCreateBackupStorage();
+  const { isLoading: isUpdating } = useEditBackupStorage();
 
   const schema = useMemo(
     () =>
@@ -52,6 +55,7 @@ export const CreateEditModalStorage = ({
     <FormDialog
       isOpen={open}
       closeModal={handleCloseModal}
+      submitting={isCreating || isUpdating}
       headerMessage={Messages.createEditModal.addEditModal(isEditMode)}
       onSubmit={onSubmit}
       submitMessage={Messages.createEditModal.addEditButton(isEditMode)}
