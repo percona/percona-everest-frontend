@@ -16,8 +16,7 @@ export const Messages = {
   noKubernetesClusters:
     "Oops! It looks like you don't have any Kubernetes clusters yet.",
   letsCreate: 'Let’s create one:',
-  noKubernetesCommand:
-    'KUBECONFIG=~/.kube/config; ./everestctl install operators',
+  noKubernetesCommand: 'KUBECONFIG=~/.kube/config',
   downloadTheLatest: 'Download the latest release of the ',
   everestctl: 'everestctl',
   toProvisionPercona: ' command to provision Percona Everest.',
@@ -29,9 +28,14 @@ export const Messages = {
   modifyPermissionsCommand: 'chmod +x everestctl',
   fromTheInstallationWizard:
     'From the installation wizard, provision and register the Kubernetes cluster in Everest using the following command.',
-  noteThatEverest:
-    'Note that Everest will search for the kubeconfig file in the ',
-  ifYourFileIsLocated: ' path. If your file is located elsewhere, add the ',
-  beforeRunningTheCommand: ' environment variable before running the command.',
+  everestWillSearch: 'Everest will search for the kubeconfig file in the ',
+  ifYourFileIsLocated: ' path. If your file is located elsewhere, add the  ',
+  beforeRunningTheCommand: ' environment variable before running the command:',
+  everestctlInstall: './everestctl install operators',
   recheck: 'Recheck',
+  note: 'Note:',
+  makeSure:
+    "Make sure to fill in database monitoring details in this provisioning step, as you won't be able to enable it from the UI later.",
+  usingPMMServerInstanceCase:
+    'If you are using a PMM server instance with a self-signed certificate you cannot use HTTPS in the PMM URL endpoint.',
 };

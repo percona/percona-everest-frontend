@@ -85,16 +85,35 @@ export const NoKubernetes = () => {
             {Messages.fromTheInstallationWizard}
           </Typography>
           <CodeCopyBlock message={Messages.noKubernetesCommand} />
+          <Typography variant="body2">
+            {Messages.everestWillSearch}
+            <CodeBlock message="~/.kube/config" />
+            {Messages.ifYourFileIsLocated}
+            <CodeBlock message="KUBECONFIG" />
+            {Messages.beforeRunningTheCommand}
+          </Typography>
+          <CodeCopyBlock message={Messages.everestctlInstall} />
+          <Typography variant="caption">
+            {Messages.note}
+            <List
+              sx={{
+                listStyleType: 'circle',
+                pt: 0,
+                '& .MuiListItem-root': {
+                  display: 'list-item',
+                  listStylePosition: 'inside',
+                  pl: 0,
+                  pb: 0,
+                },
+              }}
+            >
+              <ListItem>{Messages.makeSure}</ListItem>
+              <ListItem>{Messages.usingPMMServerInstanceCase}</ListItem>
+            </List>
+          </Typography>
         </ListItem>
       </List>
       <Box sx={{ display: 'flex', flexDirection: 'column', mx: 2, pl: '18px' }}>
-        <Typography variant="caption">
-          {Messages.noteThatEverest}
-          <CodeBlock message="~/.kube/config" />
-          {Messages.ifYourFileIsLocated}
-          <CodeBlock message="KUBECONFIG" />
-          {Messages.beforeRunningTheCommand}
-        </Typography>
         <Button
           variant="outlined"
           sx={{ alignSelf: 'flex-end' }}
