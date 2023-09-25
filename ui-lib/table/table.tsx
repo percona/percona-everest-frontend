@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+// @ts-nocheck
 import FilterListIcon from '@mui/icons-material/FilterList';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -114,7 +115,6 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
         sx: {
           '& .MuiBox-root': {
             flexDirection: 'row-reverse',
-            // @ts-ignore
             ...muiTopToolbarProps?.sx,
           },
         },
@@ -127,7 +127,7 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
             sx: {
               flex: 'none',
               width: '60px',
-              ...// @ts-ignore
+              ...
               displayColumnDefOptions?.['mrt-row-actions']
                 ?.muiTableBodyCellProps?.sx,
             },
@@ -142,8 +142,7 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
               // However, MRT takes that string and shows it in the show/hide columns menu
               // By doing this, we still have "Actions" in that menu, but no text (i.e. transparent) in the header cell
               color: 'transparent',
-
-              ...// @ts-ignore
+              ...
               displayColumnDefOptions?.['mrt-row-actions']
                 ?.muiTableHeadCellProps?.sx,
             },
@@ -174,8 +173,7 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
                   display: 'none',
                 },
               }),
-
-              ...// @ts-ignore
+              ...
               displayColumnDefOptions?.['mrt-row-expand']?.muiTableHeadCellProps
                 ?.sx,
             },
