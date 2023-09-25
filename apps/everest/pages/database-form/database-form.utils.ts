@@ -24,9 +24,7 @@ import {
   DbWizardType,
 } from './database-form.types';
 import { dbEngineToDbType } from '../../utils/db';
-import {
-  matchFieldsValueToResourceSize,
-} from './steps/second/second-step.utils';
+import { matchFieldsValueToResourceSize } from './steps/second/second-step.utils';
 import { cpuParser, memoryParser } from '../../utils/k8ResourceParser';
 import { generateShortUID } from './steps/first/utils';
 import { MAX_DB_CLUSTER_NAME_LENGTH } from '../../constants';
@@ -84,7 +82,10 @@ export const DbClusterPayloadToFormValues = (
     ),
     [DbWizardFormFields.dbName]:
       mode === 'restoreFromBackup'
-        ? `restored-${dbCluster?.metadata?.name}-${generateShortUID()}`.slice(0, MAX_DB_CLUSTER_NAME_LENGTH - 1)
+        ? `restored-${dbCluster?.metadata?.name}-${generateShortUID()}`.slice(
+            0,
+            MAX_DB_CLUSTER_NAME_LENGTH - 1
+          )
         : dbCluster?.metadata?.name,
     [DbWizardFormFields.dbVersion]: dbCluster?.spec?.engine?.version || '',
     [DbWizardFormFields.externalAccess]:

@@ -14,7 +14,6 @@ export const ConfirmDialog = ({
   submitMessage = 'Delete',
   disabledButtons = false,
 }: ConfirmDialogProps) => {
-
   const onClick = () => {
     handleConfirm(selectedId);
   };
@@ -28,8 +27,14 @@ export const ConfirmDialog = ({
       <DialogTitle onClose={closeModal}>{headerMessage}</DialogTitle>
       <DialogContent sx={{ width: '480px' }}>{content}</DialogContent>
       <DialogActions>
-        <Button onClick={closeModal} disabled={disabledButtons}>{cancelMessage}</Button>
-        <Button variant="contained" onClick={onClick} disabled={disabledButtons}>
+        <Button onClick={closeModal} disabled={disabledButtons}>
+          {cancelMessage}
+        </Button>
+        <Button
+          variant="contained"
+          onClick={onClick}
+          disabled={disabledButtons}
+        >
           {submitMessage}
         </Button>
       </DialogActions>
