@@ -127,9 +127,8 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
             sx: {
               flex: 'none',
               width: '60px',
-              ...
+              ...// @ts-ignore
               displayColumnDefOptions?.['mrt-row-actions']
-                // @ts-ignore
                 ?.muiTableBodyCellProps?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-actions']
@@ -144,9 +143,8 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
               // By doing this, we still have "Actions" in that menu, but no text (i.e. transparent) in the header cell
               color: 'transparent',
 
-              ...
+              ...// @ts-ignore
               displayColumnDefOptions?.['mrt-row-actions']
-                // @ts-ignore
                 ?.muiTableHeadCellProps?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-actions']
@@ -160,9 +158,8 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
             sx: {
               flex: 'none',
               width: '60px',
-              ...
+              ...// @ts-ignore
               displayColumnDefOptions?.['mrt-row-expand']?.muiTableBodyCellProps
-                // @ts-ignore
                 ?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-expand']
@@ -178,9 +175,8 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
                 },
               }),
 
-              ...
+              ...// @ts-ignore
               displayColumnDefOptions?.['mrt-row-expand']?.muiTableHeadCellProps
-                // @ts-ignore
                 ?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-expand']
