@@ -169,6 +169,7 @@ jobs:
           make init
           make local-env-up
           make build-debug
+          touch everest-backend.log
           make run-debug &> everest-backend.log &
 
       - name: Run debug commands on failure
