@@ -22,7 +22,6 @@ export const INVALID_SOURCE_RANGE_ERROR = 'Invalid IP address range';
 export const SOURCE_RANGE_PLACEHOLDER =
   'Please insert the single IP address or range using netmask (e.g. 192.168.1.1/24)';
 export const DATE_FORMAT = "dd'/'MM'/'yyyy 'at' hh':'mm' 'a";
-export const FILENAME_TIMESTAMP_FORMAT = "yyyy'.'MM'.'dd'-'HH'.'mm'.'ss";
 
 export const BACKUP_STATE_TO_STATUS: Record<string, BackupStatus> = {
   Starting: BackupStatus.IN_PROGRESS,
@@ -36,3 +35,5 @@ export const BACKUP_STATE_TO_STATUS: Record<string, BackupStatus> = {
   error: BackupStatus.FAILED,
   ready: BackupStatus.OK,
 };
+
+export const MAX_DB_CLUSTER_NAME_LENGTH = 22;
