@@ -1,10 +1,9 @@
-import { FormDialog } from '@percona/everest.form.form-dialog';
+
 import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import React, { useMemo } from 'react';
 import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
-
 import { useBackupStorages } from '../../../hooks/api/backup-storages/useBackupStorages';
 import {
   BACKUPS_QUERY_KEY,
@@ -18,14 +17,16 @@ import {
   OnDemandBackupModalProps,
   schema,
 } from './on-demand-backup-modal.types';
+import { FormDialog } from '../../../components/form-dialog/form-dialog';
 
 export const OnDemandBackupModal = ({
   open,
   handleClose,
+  numberOfBackups,
 }: OnDemandBackupModalProps) => {
   const queryClient = useQueryClient();
   const { dbClusterName } = useParams();
-  const { mutate: createBackupOnDemand } = useCreateBackupOnDemand(
+  const { mutate: createBackupOnDemand, isLoading: creatingBackup } = useCreateBackupOnDemand(
     dbClusterName!
   );
   const { data: backupStorages = [], isFetching } = useBackupStorages();
@@ -33,13 +34,14 @@ export const OnDemandBackupModal = ({
     createBackupOnDemand(data, {
       onSuccess() {
         queryClient.invalidateQueries([BACKUPS_QUERY_KEY, dbClusterName]);
+        handleClose();
       },
     });
   };
 
   const values = useMemo(
-    () => defaultValuesFc(dbClusterName),
-    [dbClusterName, open]
+    () => defaultValuesFc(numberOfBackups),
+    [open]
   );
 
   return (
@@ -48,6 +50,7 @@ export const OnDemandBackupModal = ({
       closeModal={handleClose}
       headerMessage={Messages.onDemandBackupModal.headerMessage}
       onSubmit={handleSubmit}
+      submitting={creatingBackup}
       submitMessage={Messages.onDemandBackupModal.submitMessage}
       schema={schema}
       values={values}

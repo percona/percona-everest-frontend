@@ -32,6 +32,7 @@ export const FormDialog = <T extends FieldValues>({
   validationMode = 'onChange',
   subHead2,
   size = 'L',
+  submitting = false,
 }: FormDialogProps<T>) => {
   const methods = useForm<T>({
     mode: validationMode,
@@ -44,7 +45,6 @@ export const FormDialog = <T extends FieldValues>({
 
   const handleSubmit: SubmitHandler<T> = (data) => {
     onSubmit(data);
-    closeModal();
   };
 
   return (
@@ -68,6 +68,7 @@ export const FormDialog = <T extends FieldValues>({
         <Button
           variant="contained"
           onClick={methods.handleSubmit(handleSubmit)}
+          disabled={submitting}
         >
           {submitMessage}
         </Button>
