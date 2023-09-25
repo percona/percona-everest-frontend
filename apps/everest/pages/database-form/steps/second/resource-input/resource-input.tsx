@@ -3,7 +3,12 @@ import React from 'react';
 import { InputAdornment } from '@mui/material';
 import { ResourceInputProps } from './resource-input.types';
 
-export const ResourceInput = ({ name, label, helperText, endSuffix }: ResourceInputProps) => (
+export const ResourceInput = ({
+  name,
+  label,
+  helperText,
+  endSuffix,
+}: ResourceInputProps) => (
   <TextInput
     name={name}
     textFieldProps={{
@@ -11,11 +16,13 @@ export const ResourceInput = ({ name, label, helperText, endSuffix }: ResourceIn
       label,
       helperText,
       InputProps: {
-        endAdornment: <InputAdornment position="end">{endSuffix}</InputAdornment>,
+        endAdornment: (
+          <InputAdornment position="end">{endSuffix}</InputAdornment>
+        ),
       },
       InputLabelProps: {
-        shrink: true
-      }
+        shrink: true,
+      },
     }}
   />
 );
