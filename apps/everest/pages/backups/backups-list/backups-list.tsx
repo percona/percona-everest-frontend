@@ -39,7 +39,8 @@ export const BackupsList = () => {
     refetchInterval: 10 * 1000,
   });
   const { mutate: deleteBackup, isLoading: deletingBackup } = useDeleteBackup();
-  const { mutate: restoreBackup, isLoading: restoringBackup } = useDbClusterRestore(dbClusterName!);
+  const { mutate: restoreBackup, isLoading: restoringBackup } =
+    useDbClusterRestore(dbClusterName!);
 
   const columns = useMemo<MRT_ColumnDef<Backup>[]>(
     () => [
