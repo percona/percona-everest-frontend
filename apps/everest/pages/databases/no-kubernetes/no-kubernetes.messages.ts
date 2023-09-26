@@ -15,7 +15,7 @@
 export const Messages = {
   noKubernetesClusters:
     "Oops! It looks like you don't have any Kubernetes clusters yet.",
-  letsCreate: 'Let’s create one:',
+  letsCreate: 'Let’s register one:',
   exportKubeConfig: 'export KUBECONFIG = ~/.kube/config',
   kubeconfig: '~/.kube/config',
   downloadTheLatest: 'Download the latest release of the ',
