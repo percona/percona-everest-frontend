@@ -12,11 +12,23 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-export const generateShortUID = (): string => {
-  // eslint-disable-next-line no-bitwise
-  const firstPart = `000${((Math.random() * 46656) | 0).toString(36)}`;
-  // eslint-disable-next-line no-bitwise
-  const secondPart = `000${((Math.random() * 46656) | 0).toString(36)}`;
 
-  return `${firstPart}${secondPart}`.slice(0, 3);
+import React from 'react';
+import { Typography, useTheme } from '@mui/material';
+import { CodeBlockProps } from './code-block.types';
+
+export const CodeBlock = ({ message }: CodeBlockProps) => {
+  const theme = useTheme();
+  return (
+    <Typography
+      variant="caption"
+      sx={{
+        backgroundColor: theme.palette.action.focus,
+        padding: '2px 5px 2px 5px',
+        borderRadius: '5px',
+      }}
+    >
+      {message}
+    </Typography>
+  );
 };

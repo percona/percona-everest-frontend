@@ -12,11 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-export const generateShortUID = (): string => {
-  // eslint-disable-next-line no-bitwise
-  const firstPart = `000${((Math.random() * 46656) | 0).toString(36)}`;
-  // eslint-disable-next-line no-bitwise
-  const secondPart = `000${((Math.random() * 46656) | 0).toString(36)}`;
 
-  return `${firstPart}${secondPart}`.slice(0, 3);
+export type CodeBlockProps = {
+  message: string;
 };
