@@ -15,8 +15,9 @@
 export const Messages = {
   noKubernetesClusters:
     "Oops! It looks like you don't have any Kubernetes clusters yet.",
-  letsCreate: 'Let’s create one:',
-  noKubernetesCommand: 'KUBECONFIG=~/.kube/config',
+  letsCreate: 'Let’s register one:',
+  exportKubeConfig: 'export KUBECONFIG = ~/.kube/config',
+  kubeconfig: '~/.kube/config',
   downloadTheLatest: 'Download the latest release of the ',
   everestctl: 'everestctl',
   toProvisionPercona: ' to provision Percona Everest.',
@@ -27,9 +28,9 @@ export const Messages = {
   modifyPermissions: 'Modify the file permissions:',
   modifyPermissionsCommand: 'chmod +x everestctl',
   fromTheInstallationWizard:
-    'From the installation wizard, provision and register the Kubernetes cluster in Everest using the following command.',
+    'From the installation wizard, provision and register the Kubernetes cluster in Everest using the following commands:',
   everestWillSearch: 'Everest will search for the kubeconfig file in the ',
-  ifYourFileIsLocated: ' path. If your file is located elsewhere, add the  ',
+  ifYourFileIsLocated: ' path. If your file is located elsewhere, set the ',
   beforeRunningTheCommand: ' environment variable before running the command:',
   everestctlInstall: './everestctl install operators',
   recheck: 'Recheck',
