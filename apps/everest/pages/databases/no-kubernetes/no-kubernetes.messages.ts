@@ -19,7 +19,7 @@ export const Messages = {
   noKubernetesCommand: 'KUBECONFIG=~/.kube/config',
   downloadTheLatest: 'Download the latest release of the ',
   everestctl: 'everestctl',
-  toProvisionPercona: ' command to provision Percona Everest.',
+  toProvisionPercona: ' to provision Percona Everest.',
   renameTheFile:
     'Rename the downloaded file using the following command and replacing the placeholder ',
   toMatchTheFile: ' to match the file downloaded in the previous step:',
