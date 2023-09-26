@@ -84,14 +84,15 @@ export const NoKubernetes = () => {
           <Typography variant="body2">
             {Messages.fromTheInstallationWizard}
           </Typography>
-          <CodeCopyBlock message={Messages.noKubernetesCommand} />
           <Typography variant="body2">
             {Messages.everestWillSearch}
-            <CodeBlock message="~/.kube/config" />
+            <CodeBlock message={Messages.kubeconfig} />
             {Messages.ifYourFileIsLocated}
             <CodeBlock message="KUBECONFIG" />
             {Messages.beforeRunningTheCommand}
           </Typography>
+          <CodeCopyBlock message={Messages.exportKubeConfig} />
+
           <CodeCopyBlock message={Messages.everestctlInstall} />
           <Typography variant="caption">
             {Messages.note}
