@@ -126,6 +126,8 @@ export const BackupsList = () => {
       { backupName },
       {
         onSuccess() {
+          // In principle, not needed
+          handleCloseRestoreDialog();
           navigate('/databases');
         },
       }
