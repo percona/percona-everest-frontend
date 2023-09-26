@@ -24,9 +24,7 @@ import {
   DbWizardType,
 } from './database-form.types';
 import { dbEngineToDbType } from '../../utils/db';
-import {
-  matchFieldsValueToResourceSize,
-} from './steps/second/second-step.utils';
+import { matchFieldsValueToResourceSize } from './steps/second/second-step.utils';
 import { cpuParser, memoryParser } from '../../utils/k8ResourceParser';
 import { generateShortUID } from './steps/first/utils';
 import { MAX_DB_CLUSTER_NAME_LENGTH } from '../../constants';
@@ -84,7 +82,10 @@ export const DbClusterPayloadToFormValues = (
     ),
     [DbWizardFormFields.dbName]:
       mode === 'restoreFromBackup'
-        ? `restored-${dbCluster?.metadata?.name}-${generateShortUID()}`.slice(0, MAX_DB_CLUSTER_NAME_LENGTH)
+        ? `restored-${dbCluster?.metadata?.name}-${generateShortUID()}`.slice(
+            0,
+            MAX_DB_CLUSTER_NAME_LENGTH
+          )
         : dbCluster?.metadata?.name,
     [DbWizardFormFields.dbVersion]: dbCluster?.spec?.engine?.version || '',
     [DbWizardFormFields.externalAccess]:
@@ -108,9 +109,15 @@ export const DbClusterPayloadToFormValues = (
     [DbWizardFormFields.numberOfNodes]: `${dbCluster?.spec?.proxy?.replicas}`,
     [DbWizardFormFields.resourceSizePerNode]:
       matchFieldsValueToResourceSize(dbCluster),
-    [DbWizardFormFields.cpu]: cpuParser(dbCluster?.spec?.engine?.resources?.cpu.toString() || '0'),
-    [DbWizardFormFields.disk]: memoryParser(dbCluster?.spec?.engine?.storage?.size.toString()),
-    [DbWizardFormFields.memory]: memoryParser((dbCluster?.spec?.engine?.resources?.memory || 0).toString()),
+    [DbWizardFormFields.cpu]: cpuParser(
+      dbCluster?.spec?.engine?.resources?.cpu.toString() || '0'
+    ),
+    [DbWizardFormFields.disk]: memoryParser(
+      dbCluster?.spec?.engine?.storage?.size.toString()
+    ),
+    [DbWizardFormFields.memory]: memoryParser(
+      (dbCluster?.spec?.engine?.resources?.memory || 0).toString()
+    ),
     [DbWizardFormFields.storageClass]:
       dbCluster?.spec?.engine?.storage?.class || null,
   };

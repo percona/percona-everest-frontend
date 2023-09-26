@@ -74,9 +74,22 @@ export const FirstStep = () => {
   const dbType: DbType = watch(DbWizardFormFields.dbType);
   const dbVersion: DbType = watch(DbWizardFormFields.dbVersion);
   const dbEngine = dbTypeToDbEngine(dbType);
+
   const [dbVersions, setDbVersions] = useState(
     dbEngines.find((engine) => engine.type === dbEngine)
   );
+
+  useEffect(() => {
+    if (!dbType && mode === 'new' && dbEngines.length > 0) {
+      const defaultDbType = dbEngineToDbType(dbEngines[0].type);
+      if (defaultDbType) {
+        setValue(
+          DbWizardFormFields.dbType,
+          dbEngineToDbType(dbEngines[0].type)
+        );
+      }
+    }
+  }, [dbEngines]);
 
   useEffect(() => {
     if (!dbType) {

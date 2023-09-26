@@ -20,7 +20,6 @@ import {
   // Backup,
   DbCluster,
 } from '../../types/dbCluster.types';
-import { dbEngineToDbType } from '../../utils/db';
 import { DB_WIZARD_DEFAULTS } from './database-form.constants';
 import {
   DbWizardFormFields,
@@ -28,7 +27,6 @@ import {
   DbWizardType,
 } from './database-form.types';
 import { useMonitoringInstancesList } from '../../hooks/api/monitoring/useMonitoringInstancesList';
-import { useDbEngines } from '../../hooks/api/db-engines/useDbEngines';
 import { DbClusterPayloadToFormValues } from './database-form.utils';
 
 export const useDatabasePageDefaultValues = (
@@ -39,7 +37,6 @@ export const useDatabasePageDefaultValues = (
   dbClusterStatus: 'error' | 'idle' | 'loading' | 'success';
 } => {
   const { state } = useLocation();
-  const { data: dbEngines = [] } = useDbEngines();
   const { data, status } = useDbCluster(
     state?.selectedDbCluster,
     (mode === 'edit' || mode === 'restoreFromBackup') &&
@@ -65,15 +62,6 @@ export const useDatabasePageDefaultValues = (
         );
     } else setDefaultValues(DB_WIZARD_DEFAULTS);
   }, [data, monitoringInstances]);
-
-  useEffect(() => {
-    if (mode === 'new' && dbEngines.length > 0) {
-      const defaultDbType = dbEngineToDbType(dbEngines[0].type);
-      if (defaultDbType) {
-        defaultValues[DbWizardFormFields.dbType] = defaultDbType;
-      }
-    }
-  }, [dbEngines]);
 
   return { defaultValues, dbClusterData: data, dbClusterStatus: status };
 };
