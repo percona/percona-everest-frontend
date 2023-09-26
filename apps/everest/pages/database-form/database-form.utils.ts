@@ -84,7 +84,7 @@ export const DbClusterPayloadToFormValues = (
     ),
     [DbWizardFormFields.dbName]:
       mode === 'restoreFromBackup'
-        ? `restored-${dbCluster?.metadata?.name}-${generateShortUID()}`.slice(0, MAX_DB_CLUSTER_NAME_LENGTH - 1)
+        ? `restored-${dbCluster?.metadata?.name}-${generateShortUID()}`.slice(0, MAX_DB_CLUSTER_NAME_LENGTH)
         : dbCluster?.metadata?.name,
     [DbWizardFormFields.dbVersion]: dbCluster?.spec?.engine?.version || '',
     [DbWizardFormFields.externalAccess]:
