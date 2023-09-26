@@ -73,7 +73,7 @@ const resourceToNumber = (minimum = 0) =>
 
 const stepOneSchema = z
   .object({
-    [DbWizardFormFields.dbType]: z.string().or(z.nativeEnum(DbType)),
+    [DbWizardFormFields.dbType]: z.nativeEnum(DbType),
     [DbWizardFormFields.dbName]: z
       .string()
       .max(MAX_DB_CLUSTER_NAME_LENGTH, Messages.errors.dbName.tooLong)
