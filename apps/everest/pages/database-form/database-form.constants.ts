@@ -21,7 +21,7 @@ import {
 import { DbWizardFormFields, DbWizardType } from './database-form.types';
 import { DEFAULT_SIZES } from './steps/second/second-step.const';
 import { ResourceSize } from './steps/second/second-step.types';
-import { DbType } from '../../../../ui-lib/db-toggle-card';
+import { DbType } from '@percona/ui-lib.db-toggle-card';
 
 // TODO re-add steps after API is ready
 export const TIME_SELECTION_DEFAULTS = {
