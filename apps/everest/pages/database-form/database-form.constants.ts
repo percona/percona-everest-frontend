@@ -12,7 +12,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { DefaultValues } from 'react-hook-form';
 import {
   AmPM,
@@ -39,7 +38,7 @@ export const DB_WIZARD_DEFAULTS: DefaultValues<DbWizardType> = {
   // [DbWizardFormFields.pitrTime]: '60',
   [DbWizardFormFields.storageLocation]: null,
   ...TIME_SELECTION_DEFAULTS,
-  [DbWizardFormFields.dbType]: DbType.Mysql,
+  [DbWizardFormFields.dbType]: '',
   [DbWizardFormFields.dbName]: '',
   [DbWizardFormFields.dbVersion]: '',
   [DbWizardFormFields.storageClass]: '',
