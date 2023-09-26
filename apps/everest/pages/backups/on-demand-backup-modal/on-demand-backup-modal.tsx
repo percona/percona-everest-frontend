@@ -1,4 +1,3 @@
-
 import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import React, { useMemo } from 'react';
@@ -26,9 +25,8 @@ export const OnDemandBackupModal = ({
 }: OnDemandBackupModalProps) => {
   const queryClient = useQueryClient();
   const { dbClusterName } = useParams();
-  const { mutate: createBackupOnDemand, isLoading: creatingBackup } = useCreateBackupOnDemand(
-    dbClusterName!
-  );
+  const { mutate: createBackupOnDemand, isLoading: creatingBackup } =
+    useCreateBackupOnDemand(dbClusterName!);
   const { data: backupStorages = [], isFetching } = useBackupStorages();
   const handleSubmit = (data: BackupFormData) => {
     createBackupOnDemand(data, {
@@ -39,10 +37,7 @@ export const OnDemandBackupModal = ({
     });
   };
 
-  const values = useMemo(
-    () => defaultValuesFc(numberOfBackups),
-    [open]
-  );
+  const values = useMemo(() => defaultValuesFc(numberOfBackups), [open]);
 
   return (
     <FormDialog
