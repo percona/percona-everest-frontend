@@ -53,7 +53,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const { combinedDataForTable, loadingAllClusters, combinedDbClusters } =
     useDbClusters();
-  const { mutate: deleteDbCluster } = useDeleteDbCluster();
+  const { mutate: deleteDbCluster, isLoading: deletingCluster } = useDeleteDbCluster();
   const { mutate: suspendDbCluster } = usePausedDbCluster();
   const { mutate: restartDbCluster } = useRestartDbCluster();
   const { id: k8sClusterId } = useSelectedKubernetesCluster();
@@ -154,6 +154,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
                   value.dbCluster.metadata.name !== variables.dbClusterName
               )
           );
+          handleCloseDeleteDialog();
         },
       }
     );
@@ -295,6 +296,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
           closeModal={handleCloseDeleteDialog}
           headerMessage={Messages.deleteModal.header}
           handleConfirm={handleConfirmDelete}
+          disabledButtons={deletingCluster}
         >
           {Messages.deleteModal.content}
         </ConfirmDialog>
