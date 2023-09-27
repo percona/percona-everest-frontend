@@ -222,7 +222,6 @@ export const BackupsList = () => {
       <OnDemandBackupModal
         open={openCreateBackupModal}
         handleClose={handleCloseBackupModal}
-        numberOfBackups={backups.length}
       />
       {openDeleteDialog && (
         <ConfirmDialog

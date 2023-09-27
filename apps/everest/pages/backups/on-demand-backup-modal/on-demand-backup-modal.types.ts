@@ -1,9 +1,9 @@
 import z from 'zod';
+import { generateShortUID } from '../../database-form/steps/first/utils';
 
 export type OnDemandBackupModalProps = {
   open: boolean;
   handleClose: () => void;
-  numberOfBackups: number;
 };
 
 export enum BackupFields {
@@ -11,8 +11,8 @@ export enum BackupFields {
   storageLocation = 'storageLocation',
 }
 
-export const defaultValuesFc = (numberOfBackups: number) => ({
-  [BackupFields.name]: `backup-${numberOfBackups + 1}`,
+export const defaultValuesFc = () => ({
+  [BackupFields.name]: `backup-${generateShortUID()}`,
   [BackupFields.storageLocation]: '',
 });
 
