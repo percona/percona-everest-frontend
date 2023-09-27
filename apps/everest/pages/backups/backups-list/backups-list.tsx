@@ -126,6 +126,8 @@ export const BackupsList = () => {
       { backupName },
       {
         onSuccess() {
+          // In principle, not needed
+          handleCloseRestoreDialog();
           navigate('/databases');
         },
       }
@@ -221,7 +223,6 @@ export const BackupsList = () => {
       <OnDemandBackupModal
         open={openCreateBackupModal}
         handleClose={handleCloseBackupModal}
-        numberOfBackups={backups.length}
       />
       {openDeleteDialog && (
         <ConfirmDialog

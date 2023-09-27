@@ -21,7 +21,6 @@ import { FormDialog } from '../../../components/form-dialog/form-dialog';
 export const OnDemandBackupModal = ({
   open,
   handleClose,
-  numberOfBackups,
 }: OnDemandBackupModalProps) => {
   const queryClient = useQueryClient();
   const { dbClusterName } = useParams();
@@ -37,7 +36,7 @@ export const OnDemandBackupModal = ({
     });
   };
 
-  const values = useMemo(() => defaultValuesFc(numberOfBackups), [open]);
+  const values = useMemo(() => defaultValuesFc(), [open]);
 
   return (
     <FormDialog
