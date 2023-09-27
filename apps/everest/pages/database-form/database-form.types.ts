@@ -79,7 +79,7 @@ const stepOneSchema = z
       .max(MAX_DB_CLUSTER_NAME_LENGTH, Messages.errors.dbName.tooLong)
       .regex(
         doesNotContainerAnythingButAlphanumericAndDash,
-        'The database name should not exceed x characters.'
+        'The database name should not exceed 22 characters.'
       )
       .regex(doesNotEndWithDash, "The name shouldn't end with a hyphen.")
       .regex(
