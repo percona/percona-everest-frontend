@@ -27,6 +27,7 @@ export enum DbClusterStatus {
   stopping = 'stopping',
   ready = 'ready',
   error = 'error',
+  restoring = 'restoring',
 }
 
 interface Schedule {
