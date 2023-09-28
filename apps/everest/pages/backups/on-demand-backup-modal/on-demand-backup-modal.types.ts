@@ -30,7 +30,7 @@ export const schema = z.object({
       if (!input || typeof input === 'string' || !input.name) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: 'Invalid',
+          message: 'Invalid option. Please make sure you added a storage location and select it from the dropdown.',
         });
       }
     }),
