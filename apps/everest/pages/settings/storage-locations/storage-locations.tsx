@@ -125,8 +125,8 @@ export const StorageLocations = () => {
 
   const handleConfirmDelete = (backupStorageName: string) => {
     deleteBackupStorage(backupStorageName, {
-      onSuccess: (_, locationId) => {
-        updateDataAfterDelete(queryClient, BACKUP_STORAGES_QUERY_KEY, 'name')(_, locationId)
+      onSuccess: (_, locationName) => {
+        updateDataAfterDelete(queryClient, BACKUP_STORAGES_QUERY_KEY, 'name')(_, locationName)
         handleCloseDeleteDialog();
       },
     });
