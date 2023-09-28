@@ -16,10 +16,6 @@ import {
   storageLocationsSchema,
 } from '../storage-locations.types';
 import { CreateEditModalStorageProps } from './create-edit-modal.types';
-import {
-  useCreateBackupStorage,
-  useEditBackupStorage,
-} from '../../../../hooks/api/backup-storages/useBackupStorages';
 
 export const CreateEditModalStorage = ({
   open,
