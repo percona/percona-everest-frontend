@@ -26,11 +26,9 @@ export const CreateEditModalStorage = ({
   handleCloseModal,
   handleSubmitModal,
   selectedStorageLocation,
+  isLoading = false,
 }: CreateEditModalStorageProps) => {
   const isEditMode = !!selectedStorageLocation;
-  const { isLoading: isCreating } = useCreateBackupStorage();
-  const { isLoading: isUpdating } = useEditBackupStorage();
-
   const schema = useMemo(
     () =>
       isEditMode
@@ -58,7 +56,7 @@ export const CreateEditModalStorage = ({
     <FormDialog
       isOpen={open}
       closeModal={handleCloseModal}
-      submitting={isCreating || isUpdating}
+      submitting={isLoading}
       headerMessage={Messages.createEditModal.addEditModal(isEditMode)}
       onSubmit={onSubmit}
       submitMessage={Messages.createEditModal.addEditButton(isEditMode)}

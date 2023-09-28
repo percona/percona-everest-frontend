@@ -31,8 +31,8 @@ export const StorageLocations = () => {
   const queryClient = useQueryClient();
 
   const { data: backupStorages = [], isFetching } = useBackupStorages();
-  const { mutate: createBackupStorage } = useCreateBackupStorage();
-  const { mutate: editBackupStorage } = useEditBackupStorage();
+  const { mutate: createBackupStorage, isLoading: creatingBackupStorage } = useCreateBackupStorage();
+  const { mutate: editBackupStorage, isLoading: editingBackupStorage } = useEditBackupStorage();
   const { mutate: deleteBackupStorage, isLoading: deletingBackupStorage } = useDeleteBackupStorage();
 
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
@@ -219,6 +219,7 @@ export const StorageLocations = () => {
           handleCloseModal={handleCloseModal}
           handleSubmitModal={handleSubmit}
           selectedStorageLocation={selectedStorageLocation}
+          isLoading={creatingBackupStorage || editingBackupStorage}
         />
       )}
       {openDeleteDialog && (
