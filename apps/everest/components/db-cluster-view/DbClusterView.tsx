@@ -53,7 +53,8 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const { combinedDataForTable, loadingAllClusters, combinedDbClusters } =
     useDbClusters();
-  const { mutate: deleteDbCluster, isLoading: deletingCluster } = useDeleteDbCluster();
+  const { mutate: deleteDbCluster, isLoading: deletingCluster } =
+    useDeleteDbCluster();
   const { mutate: suspendDbCluster } = usePausedDbCluster();
   const { mutate: restartDbCluster } = useRestartDbCluster();
   const { id: k8sClusterId } = useSelectedKubernetesCluster();
