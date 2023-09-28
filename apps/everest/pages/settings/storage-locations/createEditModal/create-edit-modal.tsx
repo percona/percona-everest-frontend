@@ -16,21 +16,15 @@ import {
   storageLocationsSchema,
 } from '../storage-locations.types';
 import { CreateEditModalStorageProps } from './create-edit-modal.types';
-import {
-  useCreateBackupStorage,
-  useEditBackupStorage,
-} from '../../../../hooks/api/backup-storages/useBackupStorages';
 
 export const CreateEditModalStorage = ({
   open,
   handleCloseModal,
   handleSubmitModal,
   selectedStorageLocation,
+  isLoading = false,
 }: CreateEditModalStorageProps) => {
   const isEditMode = !!selectedStorageLocation;
-  const { isLoading: isCreating } = useCreateBackupStorage();
-  const { isLoading: isUpdating } = useEditBackupStorage();
-
   const schema = useMemo(
     () =>
       isEditMode
@@ -58,7 +52,7 @@ export const CreateEditModalStorage = ({
     <FormDialog
       isOpen={open}
       closeModal={handleCloseModal}
-      submitting={isCreating || isUpdating}
+      submitting={isLoading}
       headerMessage={Messages.createEditModal.addEditModal(isEditMode)}
       onSubmit={onSubmit}
       submitMessage={Messages.createEditModal.addEditButton(isEditMode)}
