@@ -21,6 +21,7 @@ export const Messages = {
     stopping: 'Stopping',
     paused: 'Paused',
     unknown: 'Unknown',
+    restoring: 'Restoring',
   },
   expandedRow: {
     connection: 'Connection',
