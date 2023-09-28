@@ -5,4 +5,5 @@ export interface CreateEditModalStorageProps {
   handleCloseModal: () => void;
   handleSubmitModal: (isEdit: boolean, data: BackupStorage) => void;
   selectedStorageLocation?: BackupStorage;
+  isLoading?: boolean;
 }
