@@ -30,9 +30,10 @@ export const createBackupStorageFn = async (formData: BackupStorage) => {
 };
 
 export const editBackupStorageFn = async (formData: BackupStorage) => {
+  const { name, type, ...editableFormData } = formData;
   const response = await api.patch(
     `backup-storages/${formData.name}`,
-    formData
+    editableFormData
   );
 
   return response.data;
