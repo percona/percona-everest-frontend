@@ -12,4 +12,5 @@ export const DB_CLUSTER_STATUS_TO_BASE_STATUS: Record<
   [DbClusterStatus.ready]: 'success',
   [DbClusterStatus.stopping]: 'pending',
   [DbClusterStatus.unknown]: 'unknown',
+  [DbClusterStatus.restoring]: 'pending',
 };

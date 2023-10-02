@@ -11,7 +11,7 @@
 {
     "card": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.0.2",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/card",
         "config": {
@@ -60,7 +60,7 @@
     },
     "db-toggle-card": {
         "scope": "percona.ui-lib",
-        "version": "0.0.3",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/db-toggle-card",
         "config": {
@@ -84,7 +84,7 @@
     },
     "dialog-title": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/dialog-title",
         "config": {
@@ -101,7 +101,7 @@
     },
     "everest": {
         "scope": "percona.apps",
-        "version": "0.0.2",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "apps/everest",
         "config": {
@@ -118,7 +118,7 @@
     },
     "form/inputs/auto-complete": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/form/inputs/auto-complete",
         "config": {
@@ -135,7 +135,7 @@
     },
     "form/inputs/select": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/form/inputs/select",
         "config": {
@@ -152,7 +152,7 @@
     },
     "form/inputs/switch": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/form/inputs/switch",
         "config": {
@@ -169,7 +169,7 @@
     },
     "form/inputs/text": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/form/inputs/text",
         "config": {
@@ -186,7 +186,7 @@
     },
     "form/inputs/text-array": {
         "scope": "",
-        "version": "8809f72588d1880c662803fe1b464003b5cfb35f",
+        "version": "0.3.0",
         "defaultScope": "percona.ui-lib",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/form/inputs/text-array",
@@ -204,7 +204,7 @@
     },
     "form/inputs/toggle-button-group": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/form/inputs/toggle-button-group",
         "config": {
@@ -245,7 +245,7 @@
     },
     "icons/everest": {
         "scope": "percona.ui-lib",
-        "version": "0.0.3",
+        "version": "0.0.4",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/icons/everest",
         "config": {
@@ -269,7 +269,7 @@
     },
     "icons/status": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.0.2",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/icons/status",
         "config": {
@@ -286,7 +286,7 @@
     },
     "labeled-content": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/labeled-content",
         "config": {
@@ -303,7 +303,7 @@
     },
     "menu-button": {
         "scope": "",
-        "version": "be284f51321b68ee0369d76f546fe36de8af1e0c",
+        "version": "0.3.0",
         "defaultScope": "percona.ui-lib",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/menu-button",
@@ -347,7 +347,7 @@
     },
     "progress-bar": {
         "scope": "percona.ui-lib",
-        "version": "0.0.2",
+        "version": "0.0.3",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/progress-bar",
         "config": {
@@ -371,7 +371,7 @@
     },
     "stepper": {
         "scope": "percona.ui-lib",
-        "version": "0.0.2",
+        "version": "0.0.3",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/stepper",
         "config": {
@@ -395,7 +395,7 @@
     },
     "string": {
         "scope": "percona.utils",
-        "version": "0.0.1",
+        "version": "0.0.2",
         "mainFile": "index.ts",
         "rootDir": "utils/string",
         "config": {
@@ -412,7 +412,7 @@
     },
     "table": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/table",
         "config": {
@@ -454,7 +454,7 @@
     },
     "themes/base": {
         "scope": "percona.design",
-        "version": "0.0.3",
+        "version": "0.3.0",
         "defaultScope": "percona.design",
         "mainFile": "index.ts",
         "rootDir": "design/themes/base",
@@ -479,7 +479,7 @@
     },
     "themes/everest": {
         "scope": "percona.design",
-        "version": "0.0.3",
+        "version": "0.0.4",
         "defaultScope": "percona.design",
         "mainFile": "index.ts",
         "rootDir": "design/themes/everest",
@@ -504,7 +504,7 @@
     },
     "toggle-card": {
         "scope": "percona.ui-lib",
-        "version": "0.0.3",
+        "version": "0.0.4",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/toggle-card",
         "config": {
