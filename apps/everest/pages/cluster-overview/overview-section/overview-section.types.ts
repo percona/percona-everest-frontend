@@ -4,5 +4,5 @@ export type OverviewSectionProps = {
 }
 
 export type OverviewSectionTextProps = {
-  text: string;
+  children: React.ReactNode;
 }

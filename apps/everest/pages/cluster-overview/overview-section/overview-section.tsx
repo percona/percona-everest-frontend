@@ -11,6 +11,6 @@ export const OverviewSection = ({ title, children }: OverviewSectionProps) => (
   </Grid>
 )
 
-export const OverviewSectionText = ({ text }: OverviewSectionTextProps) => (
-  <Typography color='text.secondary' variant='caption'>{text}</Typography>
+export const OverviewSectionText = ({ children }: OverviewSectionTextProps) => (
+  <Typography color='text.secondary' variant='caption'>{children}</Typography>
 )
