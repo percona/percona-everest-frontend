@@ -1,10 +1,20 @@
 import { Grid, Stack } from '@mui/material';
 import { Card } from '@percona/ui-lib.card';
+import { useParams } from 'react-router-dom';
 import React from 'react'
 import { OverviewSection, OverviewSectionText } from './overview-section/overview-section';
 import { HiddenPasswordToggle } from '../../components/hidden-row/HiddenPasswordToggle';
+import { useDbCluster } from '../../hooks/api/db-cluster/useDbCluster';
+import { beautifyDbTypeName, dbEngineToDbType } from '../../utils/db';
+import { ProxyExposeType } from '../../types/dbCluster.types';
+import { useDbClusterCredentials } from '../../hooks/api/db-cluster/useCreateDbCluster';
 
 export const ClusterOverview = () => {
+  const { dbClusterName } = useParams();
+
+  const { data: dbCluster, isFetching: fetchingCluster } = useDbCluster(dbClusterName || '', !!dbClusterName);
+  const { data: dbClusterDetails, isFetching } = useDbClusterCredentials(dbClusterName || '');
+
   return (
     <Stack
       direction='row'
@@ -23,18 +33,20 @@ export const ClusterOverview = () => {
         content={
           <Grid container spacing={2}>
             <OverviewSection title='Basic Information'>
-              <OverviewSectionText>Type: MySQL</OverviewSectionText>
-              <OverviewSectionText>Name: mysql-cluster</OverviewSectionText>
+              <OverviewSectionText>Type: {beautifyDbTypeName(dbEngineToDbType(dbCluster?.spec.engine.type!))}</OverviewSectionText>
+              <OverviewSectionText>Name: {dbCluster?.metadata.name}</OverviewSectionText>
+              <OverviewSectionText>Namespace: {dbCluster?.metadata.namespace}</OverviewSectionText>
+              <OverviewSectionText>Version: {dbCluster?.spec.engine.version}</OverviewSectionText>
             </OverviewSection>
             <OverviewSection title='Resources'>
-              <OverviewSectionText>Number of nodes: 1</OverviewSectionText>
-              <OverviewSectionText>CPU: 450 CPU</OverviewSectionText>
+              <OverviewSectionText>Number of nodes: {dbCluster?.spec.engine.replicas}</OverviewSectionText>
+              <OverviewSectionText>CPU: {dbCluster?.spec.engine.resources?.cpu}</OverviewSectionText>
             </OverviewSection>
             <OverviewSection title='External Access'>
-              <OverviewSectionText>Enabled</OverviewSectionText>
+              <OverviewSectionText>{dbCluster?.spec.proxy.expose.type === ProxyExposeType.external ? 'Enabled' : 'Disabled'}</OverviewSectionText>
             </OverviewSection>
             <OverviewSection title='Monitoring'>
-              <OverviewSectionText>Enabled</OverviewSectionText>
+              <OverviewSectionText>{!!dbCluster?.spec.monitoring.monitoringConfigName ? 'Enabled' : 'Disabled'}</OverviewSectionText>
             </OverviewSection>
           </Grid>
         }
@@ -45,17 +57,17 @@ export const ClusterOverview = () => {
         content={
           <Grid container spacing={2}>
             <OverviewSection title='Connection Details'>
-              <OverviewSectionText>Host: http://127.0.0.1</OverviewSectionText>
+              <OverviewSectionText>Host: {dbCluster?.status?.hostname}</OverviewSectionText>
             </OverviewSection>
             <OverviewSection title='Port'>
-              <OverviewSectionText>3306</OverviewSectionText>
+              <OverviewSectionText>{dbCluster?.status?.port}</OverviewSectionText>
             </OverviewSection>
             <OverviewSection title='Username'>
-              <OverviewSectionText>john_doe</OverviewSectionText>
+              <OverviewSectionText>{dbClusterDetails?.username}</OverviewSectionText>
             </OverviewSection>
             <OverviewSection title='Password'>
               <OverviewSectionText>
-                <HiddenPasswordToggle value='foo_bar_doe' />
+                <HiddenPasswordToggle value={dbClusterDetails?.password!} />
               </OverviewSectionText>
             </OverviewSection>
           </Grid>
