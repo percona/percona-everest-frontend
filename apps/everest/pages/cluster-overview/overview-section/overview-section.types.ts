@@ -1,5 +1,6 @@
 export type OverviewSectionProps = {
   title: string;
+  loading?: boolean;
   children: React.ReactNode;
 }
 

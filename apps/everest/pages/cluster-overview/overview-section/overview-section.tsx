@@ -1,12 +1,14 @@
 import React from 'react';
 import { OverviewSectionProps, OverviewSectionTextProps } from './overview-section.types';
-import { Grid, Stack, Typography } from '@mui/material';
+import { Grid, Skeleton, Stack, Typography } from '@mui/material';
 
-export const OverviewSection = ({ title, children }: OverviewSectionProps) => (
+export const OverviewSection = ({ title, loading, children }: OverviewSectionProps) => (
   <Grid item xs={6}>
     <Stack>
       <Typography color='text.primary' variant='sectionHeading'>{title}</Typography>
-      {children}
+      {React.Children.map(children, child => (
+        loading ? <Skeleton /> : <>{child}</>
+      ))}
     </Stack>
   </Grid>
 )
