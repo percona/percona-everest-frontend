@@ -279,7 +279,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
           renderDetailPanel={({ row }) => <ExpandedRow row={row} />}
           muiTableBodyRowProps={({ row }) => ({
             onClick: () => {
-              navigate(`/databases/${row.original.databaseName}/backups`);
+              navigate(`/databases/${row.original.databaseName}/overview`);
             },
             sx: {
               cursor: 'pointer', // you might want to change the cursor too when adding an onClick
