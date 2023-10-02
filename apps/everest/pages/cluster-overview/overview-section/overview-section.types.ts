@@ -1,8 +1,8 @@
+import { LoadableChildrenProps } from '@percona/ui-lib.loadable-children';
+
 export type OverviewSectionProps = {
   title: string;
-  loading?: boolean;
-  children: React.ReactNode;
-}
+} & LoadableChildrenProps;
 
 export type OverviewSectionTextProps = {
   children: React.ReactNode;

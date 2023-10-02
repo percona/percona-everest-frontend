@@ -1,14 +1,13 @@
 import React from 'react';
 import { OverviewSectionProps, OverviewSectionTextProps } from './overview-section.types';
-import { Grid, Skeleton, Stack, Typography } from '@mui/material';
+import { Grid, Stack, Typography } from '@mui/material';
+import { LoadableChildren } from '@percona/ui-lib.loadable-children';
 
 export const OverviewSection = ({ title, loading, children }: OverviewSectionProps) => (
   <Grid item xs={6}>
     <Stack>
       <Typography color='text.primary' variant='sectionHeading'>{title}</Typography>
-      {React.Children.map(children, child => (
-        loading ? <Skeleton /> : <>{child}</>
-      ))}
+      <LoadableChildren loading={loading}>{children}</LoadableChildren>
     </Stack>
   </Grid>
 )
