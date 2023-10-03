@@ -6,6 +6,7 @@ import { LoadableChildren } from '@percona/ui-lib.loadable-children';
 export const OverviewSection = ({ title, loading, children }: OverviewSectionProps) => (
   <Grid item xs={6}>
     <Stack>
+      {/*@ts-ignore*/}
       <Typography color='text.primary' variant='sectionHeading'>{title}</Typography>
       <LoadableChildren loading={loading}>{children}</LoadableChildren>
     </Stack>
