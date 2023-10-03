@@ -8,6 +8,7 @@ import { useDbCluster } from '../../hooks/api/db-cluster/useDbCluster';
 import { beautifyDbTypeName, dbEngineToDbType } from '../../utils/db';
 import { ProxyExposeType } from '../../types/dbCluster.types';
 import { useDbClusterCredentials } from '../../hooks/api/db-cluster/useCreateDbCluster';
+import { Messages } from './cluster-overview.messages';
 
 export const ClusterOverview = () => {
   const { dbClusterName } = useParams();
@@ -28,44 +29,44 @@ export const ClusterOverview = () => {
       }}
     >
       <Card
-        title='Database details'
+        title={Messages.titles.dbDetails}
         dataTestId='database-details'
         content={
           <Grid container spacing={2}>
-            <OverviewSection title='Basic Information' loading={fetchingCluster}>
-              <OverviewSectionText>Type: {beautifyDbTypeName(dbEngineToDbType(dbCluster?.spec.engine.type!))}</OverviewSectionText>
-              <OverviewSectionText>Name: {dbCluster?.metadata.name}</OverviewSectionText>
-              <OverviewSectionText>Namespace: {dbCluster?.metadata.namespace}</OverviewSectionText>
-              <OverviewSectionText>Version: {dbCluster?.spec.engine.version}</OverviewSectionText>
+            <OverviewSection title={Messages.titles.basicInformation} loading={fetchingCluster}>
+              <OverviewSectionText>{Messages.fields.type(beautifyDbTypeName(dbEngineToDbType(dbCluster?.spec.engine.type!)))}</OverviewSectionText>
+              <OverviewSectionText>{Messages.fields.name(dbCluster?.metadata.name)}</OverviewSectionText>
+              <OverviewSectionText>{Messages.fields.namespace(dbCluster?.metadata.namespace)}</OverviewSectionText>
+              <OverviewSectionText>{Messages.fields.version(dbCluster?.spec.engine.version)}</OverviewSectionText>
             </OverviewSection>
-            <OverviewSection title='Resources' loading={fetchingCluster}>
-              <OverviewSectionText>Number of nodes: {dbCluster?.spec.engine.replicas}</OverviewSectionText>
-              <OverviewSectionText>CPU: {dbCluster?.spec.engine.resources?.cpu}</OverviewSectionText>
+            <OverviewSection title={Messages.titles.resources} loading={fetchingCluster}>
+              <OverviewSectionText>{Messages.fields.numberOfNodes(dbCluster?.spec.engine.replicas)}</OverviewSectionText>
+              <OverviewSectionText>{Messages.fields.cpu(dbCluster?.spec.engine.resources?.cpu)}</OverviewSectionText>
             </OverviewSection>
-            <OverviewSection title='External Access' loading={fetchingCluster}>
-              <OverviewSectionText>{dbCluster?.spec.proxy.expose.type === ProxyExposeType.external ? 'Enabled' : 'Disabled'}</OverviewSectionText>
+            <OverviewSection title={Messages.titles.externalAccess} loading={fetchingCluster}>
+              <OverviewSectionText>{dbCluster?.spec.proxy.expose.type === ProxyExposeType.external ? Messages.fields.enabled : Messages.fields.disabled}</OverviewSectionText>
             </OverviewSection>
-            <OverviewSection title='Monitoring' loading={fetchingCluster}>
-              <OverviewSectionText>{!!dbCluster?.spec.monitoring.monitoringConfigName ? 'Enabled' : 'Disabled'}</OverviewSectionText>
+            <OverviewSection title={Messages.titles.monitoring} loading={fetchingCluster}>
+              <OverviewSectionText>{!!dbCluster?.spec.monitoring.monitoringConfigName ? Messages.fields.enabled : Messages.fields.disabled}</OverviewSectionText>
             </OverviewSection>
           </Grid>
         }
       />
       <Card
-        title='Connection details'
+        title={Messages.titles.connectionDetails}
         dataTestId='connection-details'
         content={
           <Grid container spacing={2}>
-            <OverviewSection title='Connection Details' loading={fetchingCluster}>
-              <OverviewSectionText>Host: {dbCluster?.status?.hostname}</OverviewSectionText>
+            <OverviewSection title={Messages.titles.host} loading={fetchingCluster}>
+              <OverviewSectionText>{dbCluster?.status?.hostname}</OverviewSectionText>
             </OverviewSection>
-            <OverviewSection title='Port' loading={fetchingCluster}>
+            <OverviewSection title={Messages.titles.port} loading={fetchingCluster}>
               <OverviewSectionText>{dbCluster?.status?.port}</OverviewSectionText>
             </OverviewSection>
-            <OverviewSection title='Username' loading={fetchingClusterDetails}>
+            <OverviewSection title={Messages.titles.username} loading={fetchingClusterDetails}>
               <OverviewSectionText>{dbClusterDetails?.username}</OverviewSectionText>
             </OverviewSection>
-            <OverviewSection title='Password' loading={fetchingClusterDetails}>
+            <OverviewSection title={Messages.titles.password} loading={fetchingClusterDetails}>
               <OverviewSectionText>
                 <HiddenPasswordToggle value={dbClusterDetails?.password!} />
               </OverviewSectionText>
