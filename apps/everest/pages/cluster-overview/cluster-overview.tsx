@@ -25,7 +25,7 @@ export const ClusterOverview = () => {
         }
       }}
     >
-      {/* We force ! because after while loading no info is shown */}
+      {/* We force ! because while loading no info is shown */}
       <DatabaseDetails
         loading={fetchingCluster}
         type={dbEngineToDbType(dbCluster?.spec.engine.type!)}
