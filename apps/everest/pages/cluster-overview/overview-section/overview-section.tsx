@@ -4,7 +4,7 @@ import { Grid, Stack, Typography } from '@mui/material';
 import { LoadableChildren } from '@percona/ui-lib.loadable-children';
 
 export const OverviewSection = ({ title, loading, children }: OverviewSectionProps) => (
-  <Grid item xs={6}>
+  <Grid item xs={6} data-testid="overview-section">
     <Stack>
       {/*@ts-ignore*/}
       <Typography color='text.primary' variant='sectionHeading'>{title}</Typography>
