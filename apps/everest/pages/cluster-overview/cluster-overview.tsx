@@ -47,7 +47,7 @@ export const ClusterOverview = () => {
               <OverviewSectionText>{dbCluster?.spec.proxy.expose.type === ProxyExposeType.external ? Messages.fields.enabled : Messages.fields.disabled}</OverviewSectionText>
             </OverviewSection>
             <OverviewSection title={Messages.titles.monitoring} loading={fetchingCluster}>
-              <OverviewSectionText>{!!dbCluster?.spec.monitoring.monitoringConfigName ? Messages.fields.enabled : Messages.fields.disabled}</OverviewSectionText>
+              <OverviewSectionText>{dbCluster?.spec.monitoring.monitoringConfigName ? Messages.fields.enabled : Messages.fields.disabled}</OverviewSectionText>
             </OverviewSection>
           </Grid>
         }
