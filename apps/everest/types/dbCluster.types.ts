@@ -98,7 +98,7 @@ export interface DbCluster {
   kind: 'DatabaseCluster';
   metadata: {
     name: string;
-    namespace: string;
+    namespace?: string;
     annotations?: {
       'everest.percona.com/restart'?: string;
     };
