@@ -10,7 +10,6 @@ export const Messages = {
     username: 'Username',
     password: 'Password',
     host: 'Host',
-    port: 'Port',
   },
   fields: {
     type: (type?: string) => `Type: ${type}`,
