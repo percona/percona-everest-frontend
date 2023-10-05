@@ -3,6 +3,7 @@ import { Box, Button, Typography } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { NoMatchIcon } from './icon/NoMatchIcon';
+import { Messages } from './NoMatch.messages';
 
 export const NoMatch = () => {
   return (
@@ -30,7 +31,7 @@ export const NoMatch = () => {
             fontFamily: 'Poppins',
           }}
         >
-          Sorry, we can't seem to find what you are looking for.
+          {Messages.header}
         </Typography>
         <Typography
           sx={{
@@ -41,8 +42,7 @@ export const NoMatch = () => {
             fontFamily: 'Poppins',
           }}
         >
-          The web address you entered seems to be invalid. It could have been
-          renamed or removed, or there could be broken links.
+          {Messages.subHeader}
         </Typography>
         <Button
           component={Link}
@@ -50,7 +50,7 @@ export const NoMatch = () => {
           sx={{ alignSelf: 'start', mt: 2 }}
           variant="contained"
         >
-          Go back to homepage
+          {Messages.redirectButton}
         </Button>
       </Box>
     </Box>
