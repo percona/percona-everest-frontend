@@ -1,3 +1,4 @@
+import '@fontsource/poppins';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
@@ -6,6 +7,7 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { EverestApp } from './app';
+import { NoMatch } from './pages/404/NoMatch';
 import { Backups } from './pages/backups/backups';
 import { BackupsList } from './pages/backups/backups-list/backups-list';
 import { BackupsTabs } from './pages/backups/backups.types';
@@ -74,7 +76,15 @@ const router = createBrowserRouter([
           // },
         ],
       },
+      {
+        path: '*',
+        element: <NoMatch />,
+      },
     ],
+  },
+  {
+    path: '*',
+    element: <NoMatch />,
   },
 ]);
 

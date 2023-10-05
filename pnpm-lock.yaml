@@ -16,6 +16,9 @@ importers:
       '@emotion/styled':
         specifier: ^11.11.0
         version: registry.npmjs.org/@emotion/styled@11.11.0(@emotion/react@11.11.0)(@types/react@17.0.59)(react@17.0.2)
+      '@fontsource/poppins':
+        specifier: ^5.0.8
+        version: registry.npmjs.org/@fontsource/poppins@5.0.8
       '@hookform/resolvers':
         specifier: ^3.1.0
         version: registry.npmjs.org/@hookform/resolvers@3.1.0(react-hook-form@7.44.3)
@@ -634,6 +637,12 @@ packages:
     resolution: {integrity: sha512-EsBwpc7hBUJWAsNPBmJy4hxWx12v6bshQsldrVmjxJoc3isbxhOrF2IcCpaXxfvq03NwkI7sbsOLXbYuqF/8Ww==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/@emotion/weak-memoize/-/weak-memoize-0.3.1.tgz}
     name: '@emotion/weak-memoize'
     version: 0.3.1
+    dev: false
+
+  registry.npmjs.org/@fontsource/poppins@5.0.8:
+    resolution: {integrity: sha512-P8owfYWluoUY5Nyzk4gT/L6LmLmseP6ezFWhj6VBUa5pRIdnCvNJpoQ6i/vhekjtJOfqX6nKlB+LCttoUl2GQQ==, registry: https://node.bit.cloud/, tarball: https://registry.npmjs.org/@fontsource/poppins/-/poppins-5.0.8.tgz}
+    name: '@fontsource/poppins'
+    version: 5.0.8
     dev: false
 
   registry.npmjs.org/@hookform/resolvers@3.1.0(react-hook-form@7.44.3):

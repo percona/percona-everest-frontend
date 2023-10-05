@@ -1,5 +1,5 @@
+import '@fontsource/poppins';
 import { createTheme, PaletteMode, ThemeOptions } from '@mui/material';
-
 declare module '@mui/material/styles' {
   interface TypeAction {
     focusVisible: string;
@@ -124,6 +124,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
   },
   typography: {
     h1: {
+      fontFamily: 'Poppins',
       fontWeight: 600,
       [BaseTheme.breakpoints.down('sm')]: {
         fontSize: '32px',
@@ -133,6 +134,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
       },
     },
     h2: {
+      fontFamily: 'Poppins',
       fontWeight: 600,
       [BaseTheme.breakpoints.down('sm')]: {
         fontSize: '29px',
@@ -142,6 +144,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
       },
     },
     h3: {
+      fontFamily: 'Poppins',
       fontWeight: 600,
       [BaseTheme.breakpoints.down('sm')]: {
         fontSize: '26px',
@@ -151,6 +154,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
       },
     },
     h4: {
+      fontFamily: 'Poppins',
       fontWeight: 600,
       [BaseTheme.breakpoints.down('sm')]: {
         fontSize: '23px',
@@ -160,6 +164,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
       },
     },
     h5: {
+      fontFamily: 'Poppins',
       fontWeight: 600,
       lineHeight: '22.5px',
       [BaseTheme.breakpoints.down('sm')]: {
@@ -170,6 +175,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
       },
     },
     h6: {
+      fontFamily: 'Poppins',
       fontWeight: 600,
       [BaseTheme.breakpoints.down('sm')]: {
         fontSize: '18px',
@@ -189,10 +195,12 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
       lineHeight: '22px',
     },
     overline: {
+      fontFamily: 'Poppins',
       fontWeight: 800,
       fontSize: '12px',
     },
     sectionHeading: {
+      fontFamily: 'Poppins',
       fontWeight: 700,
       fontSize: '14px',
       lineHeight: '17.5px',

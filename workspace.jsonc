@@ -39,6 +39,7 @@
     "packageManager": "teambit.dependencies/pnpm",
     "policy": {
       "dependencies": {
+        "@fontsource/poppins": "^5.0.8",
         "@hookform/resolvers": "^3.1.0",
         "@mui/icons-material": "^5.11.16",
         "@playwright/test": "^1.36.1",
