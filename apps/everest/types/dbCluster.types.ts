@@ -98,19 +98,17 @@ export interface DbCluster {
   kind: 'DatabaseCluster';
   metadata: {
     name: string;
+    namespace?: string;
     annotations?: {
       'everest.percona.com/restart'?: string;
     };
   };
   spec: Spec;
+  status?: StatusSpec;
 }
 
-export type DbClusterAPI = DbCluster & {
-  status?: StatusSpec;
-};
-
 export type GetDbClusterPayload = {
-  items: Array<DbClusterAPI>;
+  items: Array<DbCluster>;
 };
 
 export type ClusterCredentials = {

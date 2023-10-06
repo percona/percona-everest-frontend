@@ -19,7 +19,6 @@ import { getDbClustersFn } from '../../../api/dbClusterApi';
 import { K8Context } from '../../../contexts/kubernetes/kubernetes.context';
 import {
   DbCluster,
-  DbClusterAPI,
   DbClusterStatus,
 } from '../../../types/dbCluster.types';
 import { KubernetesCluster } from '../../../types/kubernetes.types';
@@ -56,11 +55,11 @@ const mapRawDataToDbClusterModel = (
 };
 
 export interface ExtraDbCluster {
-  dbCluster: DbClusterAPI;
+  dbCluster: DbCluster;
   k8sClusterName: string;
 }
 const combineK8sClusterWithDbCluster = (
-  dbCluster: DbClusterAPI,
+  dbCluster: DbCluster,
   k8sCluster: KubernetesCluster
 ): ExtraDbCluster => ({
   dbCluster,
