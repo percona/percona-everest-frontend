@@ -4,6 +4,8 @@ import { deepmerge } from '@mui/utils';
 
 import { baseThemeOptions } from '@percona/design.themes.base';
 
+import "@fontsource/poppins";
+
 export const everestThemeOptions = (mode: PaletteMode): ThemeOptions => {
   const newOptions: ThemeOptions = {
     palette: {
