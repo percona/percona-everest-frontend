@@ -1,5 +1,5 @@
 export enum BackupsTabs {
   // TODO: uncomment when ready
-  // generalInformation = 'general-information',
+  overview = 'overview',
   backups = 'backups',
 }

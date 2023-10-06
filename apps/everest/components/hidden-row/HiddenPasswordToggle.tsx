@@ -31,11 +31,13 @@ export const HiddenPasswordToggle = ({
   const formattedValue = show
     ? value
     : fixedAsteriskLength
-    ? Messages.asteriskHiddenText
-    : value.replace(/./g, '*');
+      ? Messages.asteriskHiddenText
+      : value.replace(/./g, '*');
+
   const toggle = () => {
     setShow((prevState) => !prevState);
   };
+
   return (
     <Box
       sx={{
@@ -43,20 +45,30 @@ export const HiddenPasswordToggle = ({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 2,
+        position: 'relative',
       }}
     >
-      <Box data-testid="hidden-row" sx={{ mt: '3px' }}>
+      <Box
+        data-testid="hidden-row"
+        sx={{
+          mt: '3px',
+          wordBreak: 'break-all',
+          flex: '0 0 70%',
+        }}
+      >
         {formattedValue}
       </Box>
-      {show ? (
-        <IconButton onClick={toggle} aria-label="visibility-off">
-          <VisibilityOutlinedIcon />
-        </IconButton>
-      ) : (
-        <IconButton onClick={toggle} aria-label="visibility-on">
-          <VisibilityOffOutlinedIcon />
-        </IconButton>
-      )}
+      <IconButton
+        onClick={toggle}
+        aria-label={`visibility-${show ? 'off' : 'on'}`}
+        sx={{
+          position: 'absolute',
+          top: (theme) => theme.spacing(-1),
+          right: 0,
+        }}
+      >
+        {show ? <VisibilityOutlinedIcon /> : <VisibilityOffOutlinedIcon />}
+      </IconButton>
     </Box>
   );
 };

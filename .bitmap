@@ -301,6 +301,19 @@
             }
         }
     },
+    "loadable-children": {
+        "scope": "",
+        "version": "",
+        "defaultScope": "percona.ui-lib",
+        "mainFile": "index.ts",
+        "rootDir": "ui-lib/loadable-children",
+        "config": {
+            "teambit.envs/envs": {
+                "env": "percona.envs/percona-react-env"
+            },
+            "percona.envs/percona-react-env": {}
+        }
+    },
     "menu-button": {
         "scope": "",
         "version": "0.3.0",
