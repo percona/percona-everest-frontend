@@ -1,4 +1,3 @@
-import '@fontsource/poppins';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {

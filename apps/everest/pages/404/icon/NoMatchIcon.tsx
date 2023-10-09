@@ -1,10 +1,16 @@
 import React from 'react';
 
-export const NoMatchIcon = () => {
+export const NoMatchIcon = ({
+  w = '435px',
+  h = '435px',
+}: {
+  w?: string;
+  h?: string;
+}) => {
   return (
     <svg
-      width="435px"
-      height="435px"
+      width={w}
+      height={h}
       viewBox="0 0 435 435"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
