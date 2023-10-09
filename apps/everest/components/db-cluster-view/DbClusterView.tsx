@@ -20,7 +20,8 @@ import {
   PauseCircleOutline,
   PlayArrowOutlined,
 } from '@mui/icons-material';
-import { Box, MenuItem, Stack } from '@mui/material';
+import { Box, Button, MenuItem, Stack } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import { Table } from '@percona/ui-lib.table';
 import { type MRT_ColumnDef } from 'material-react-table';
 import { enqueueSnackbar } from 'notistack';
@@ -43,15 +44,14 @@ import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
 import { StatusField } from '../status-field/status-field';
 import { DB_CLUSTER_STATUS_TO_BASE_STATUS } from './DbClusterView.constants';
 import { Messages } from './dbClusterView.messages';
-import { DbClusterViewProps } from './dbClusterView.types';
 import { beautifyDbClusterStatus } from './DbClusterView.utils';
 import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
 
-export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
+export const DbClusterView = () => {
   const [selectedDbCluster, setSelectedDbCluster] = useState<string>('');
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const { combinedDataForTable, loadingAllClusters, combinedDbClusters } =
+  const { combinedDataForTable, loadingAllClusters, combinedDbClusters, errorInAllClusters } =
     useDbClusters();
   const { mutate: deleteDbCluster, isLoading: deletingCluster } = useDeleteDbCluster();
   const { mutate: suspendDbCluster } = usePausedDbCluster();
@@ -82,9 +82,9 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
                 oldData.map((value) =>
                   value.dbCluster.metadata.name === updatedObject.metadata.name
                     ? {
-                        dbCluster: updatedObject,
-                        k8sClusterName: value.k8sClusterName,
-                      }
+                      dbCluster: updatedObject,
+                      k8sClusterName: value.k8sClusterName,
+                    }
                     : value
                 )
             );
@@ -117,9 +117,9 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
                 oldData.map((value) =>
                   value.dbCluster.metadata.name === updatedObject.metadata.name
                     ? {
-                        dbCluster: updatedObject,
-                        k8sClusterName: value.k8sClusterName,
-                      }
+                      dbCluster: updatedObject,
+                      k8sClusterName: value.k8sClusterName,
+                    }
                     : value
                 )
             );
@@ -238,7 +238,7 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
               <BorderColor fontSize="small" /> {Messages.menuItems.edit}
             </MenuItem>,
             <MenuItem
-                data-testid={`${row.original?.databaseName}-delete`}
+              data-testid={`${row.original?.databaseName}-delete`}
               key={1}
               onClick={() => {
                 handleDeleteDbCluster(row.original.databaseName!);
@@ -285,7 +285,19 @@ export const DbClusterView = ({ customHeader }: DbClusterViewProps) => {
               cursor: 'pointer', // you might want to change the cursor too when adding an onClick
             },
           })}
-          renderTopToolbarCustomActions={() => customHeader}
+          renderTopToolbarCustomActions={() => (
+            <Button
+              size="small"
+              startIcon={<AddIcon />}
+              component={Link}
+              to="/databases/new"
+              variant="contained"
+              disabled={errorInAllClusters}
+              data-testid="add-db-cluster-button"
+            >
+              {Messages.createDatabase}
+            </Button>
+          )}
           hideExpandAllIcon
         />
       </Box>
