@@ -63,7 +63,7 @@ export const Backups = () => {
         </IconButton>
         <Typography variant="h4">{dbClusterName}</Typography>
       </Box>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 1 }}>
         <Tabs
           value={currentTab}
           variant="scrollable"

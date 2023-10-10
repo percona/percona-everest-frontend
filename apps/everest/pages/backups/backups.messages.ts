@@ -8,5 +8,5 @@ export const Messages = {
     submitMessage: 'Create',
   },
   backups: 'Backups',
-  generalInformation: 'General Information',
+  overview: 'Overview',
 };

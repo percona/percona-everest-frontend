@@ -15,6 +15,7 @@ import { DatabasesPage } from './pages/databases/databases';
 import { Settings } from './pages/settings/settings';
 import { SettingsTabs } from './pages/settings/settings.types';
 import { StorageLocations } from './pages/settings/storage-locations/storage-locations';
+import { ClusterOverview } from './pages/cluster-overview/cluster-overview';
 
 const router = createBrowserRouter([
   {
@@ -42,11 +43,10 @@ const router = createBrowserRouter([
             path: BackupsTabs.backups,
             element: <BackupsList />,
           },
-          // TODO: uncomment when ready
-          // {
-          //   path: BackupsTabs.generalInformation,
-          //   element: <GeneralInformation />,
-          // },
+          {
+            path: BackupsTabs.overview,
+            element: <ClusterOverview />,
+          },
         ],
       },
       {

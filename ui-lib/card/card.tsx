@@ -43,12 +43,12 @@ export function Card({
 }: CardProps) {
   return (
     <MuiCard
-      data-testId={`${dataTestId}-card`}
+      data-testid={`${dataTestId}-card`}
       sx={{ width: '320px', height: 'fit-content', ...sx }}
       {...props}
     >
       <CardContent
-        data-testId={`${dataTestId}-card-content`}
+        data-testid={`${dataTestId}-card-content`}
         {...cardContentProps}
         sx={{
           '&:last-child': {
@@ -59,7 +59,7 @@ export function Card({
       >
         {title && (
           <Typography
-            data-testId={`${dataTestId}-card-header`}
+            data-testid={`${dataTestId}-card-header`}
             variant="h5"
             {...headerProps}
             sx={{ mb: 4, ...headerProps?.sx }}
@@ -68,21 +68,21 @@ export function Card({
           </Typography>
         )}
         <Box
-          data-testId={`${dataTestId}-card-content-wrapper`}
+          data-testid={`${dataTestId}-card-content-wrapper`}
           {...contentWrapperProps}
         >
           {content}
         </Box>
         {cardActions && (
           <CardActions
-            data-testId={`${dataTestId}-card-actions`}
+            data-testid={`${dataTestId}-card-actions`}
             {...cardActionsProps}
             sx={{ p: 0, mt: 4, ...cardActionsProps?.sx }}
           >
             {cardActions.map(({ text, ...buttonProps }) => (
               <Button
                 key={text}
-                data-testId={`${kebabize(text)}-button`}
+                data-testid={`${kebabize(text)}-button`}
                 {...buttonProps}
               >
                 {text}
