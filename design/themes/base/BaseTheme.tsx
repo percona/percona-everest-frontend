@@ -1,4 +1,4 @@
-import '@fontsource/poppins';
+import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/600.css';
 import { createTheme, PaletteMode, ThemeOptions } from '@mui/material';
 
