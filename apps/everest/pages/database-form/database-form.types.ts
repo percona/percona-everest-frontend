@@ -213,15 +213,17 @@ export const dbWizardSchema = [
   stepFiveSchema,
 ];
 
-export type StepTwoType = z.infer<typeof stepTwoSchema>;
+const superset = stepOneSchema
+  .and(stepTwoSchema)
+  // .and(stepThreeSchema)
+  .and(advancedConfigurationsSchema)
+  .and(stepFiveSchema);
+
 export type AdvancedConfigurationType = z.infer<
   typeof advancedConfigurationsSchema
 >;
-export type StepFiveType = z.infer<typeof stepFiveSchema>;
 export type BackupsStepType = z.infer<typeof backupsStepSchema>;
 
-export type DbWizardType = StepFiveType &
-  AdvancedConfigurationType &
-  StepTwoType;
+export type DbWizardType = z.infer<typeof superset>;
 
 export type DbWizardMode = 'edit' | 'new' | 'restoreFromBackup';
