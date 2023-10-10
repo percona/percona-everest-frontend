@@ -308,10 +308,10 @@
         "mainFile": "index.ts",
         "rootDir": "ui-lib/loadable-children",
         "config": {
+            "percona.envs/percona-custom-react-env": {},
             "teambit.envs/envs": {
-                "env": "percona.envs/percona-react-env"
-            },
-            "percona.envs/percona-react-env": {}
+                "env": "percona.envs/percona-custom-react-env"
+            }
         }
     },
     "menu-button": {
