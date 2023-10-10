@@ -916,148 +916,6 @@ importers:
       '@percona/utils.string':
         injected: true
 
-  node_modules/.bit_roots/percona.envs_percona-react-env:
-    dependencies:
-      '@percona/apps.everest':
-        specifier: workspace:*
-        version: file:apps/everest(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@mui/icons-material@5.14.9)(@mui/material@5.14.10)(@mui/utils@5.14.10)(react-dom@17.0.2)(react-router-dom@6.8.1)(react@17.0.2)
-      '@percona/design.composition-viewer':
-        specifier: workspace:*
-        version: file:design/composition-viewer(@emotion/react@11.11.1)(@mui/icons-material@5.14.9)(@mui/material@5.14.10)(react@17.0.2)
-      '@percona/design.theme-context-provider':
-        specifier: workspace:*
-        version: file:design/theme-context-provider(@emotion/react@11.11.1)(@mui/material@5.14.10)(react@17.0.2)
-      '@percona/design.themes.base':
-        specifier: workspace:*
-        version: file:design/themes/base(@emotion/react@11.11.1)(@mui/icons-material@5.14.9)(@mui/material@5.14.10)(react@17.0.2)
-      '@percona/design.themes.everest':
-        specifier: workspace:*
-        version: file:design/themes/everest(@emotion/react@11.11.1)(@mui/icons-material@5.14.9)(@mui/material@5.14.10)(@mui/utils@5.14.10)(react@17.0.2)
-      '@percona/design.utils.palette-theme-viewer':
-        specifier: workspace:*
-        version: file:design/utils/palette-theme-viewer(@mui/icons-material@5.14.9)(@mui/material@5.14.10)(react@17.0.2)
-      '@percona/envs.percona-custom-react-env':
-        specifier: workspace:*
-        version: file:envs/percona-custom-react-env(@teambit/legacy@node_modules+@teambit+legacy)(@testing-library/react@12.1.5)(@types/node@12.20.4)(@types/react@17.0.65)
-      '@percona/envs.percona-react-env':
-        specifier: latest
-        version: 0.3.0(react-dom@17.0.2)(react@17.0.2)
-      '@percona/ui-lib.card':
-        specifier: workspace:*
-        version: file:ui-lib/card(@emotion/react@11.11.1)(@mui/icons-material@5.14.9)(@mui/material@5.14.10)(@mui/utils@5.14.10)(react@17.0.2)
-      '@percona/ui-lib.db-toggle-card':
-        specifier: workspace:*
-        version: file:ui-lib/db-toggle-card(@emotion/react@11.11.1)(@mui/icons-material@5.14.9)(@mui/material@5.14.10)(@mui/utils@5.14.10)(react@17.0.2)
-      '@percona/ui-lib.dialog-title':
-        specifier: workspace:*
-        version: file:ui-lib/dialog-title(@emotion/react@11.11.1)(@mui/icons-material@5.14.9)(@mui/material@5.14.10)(react@17.0.2)
-      '@percona/ui-lib.form.inputs.auto-complete':
-        specifier: workspace:*
-        version: file:ui-lib/form/inputs/auto-complete(@mui/material@5.14.10)(react@17.0.2)
-      '@percona/ui-lib.form.inputs.select':
-        specifier: workspace:*
-        version: file:ui-lib/form/inputs/select(@mui/material@5.14.10)(react@17.0.2)
-      '@percona/ui-lib.form.inputs.switch':
-        specifier: workspace:*
-        version: file:ui-lib/form/inputs/switch(@mui/material@5.14.10)(react@17.0.2)
-      '@percona/ui-lib.form.inputs.text':
-        specifier: workspace:*
-        version: file:ui-lib/form/inputs/text(@mui/material@5.14.10)(react@17.0.2)
-      '@percona/ui-lib.form.inputs.text-array':
-        specifier: workspace:*
-        version: file:ui-lib/form/inputs/text-array(@emotion/react@11.11.1)(@mui/icons-material@5.14.9)(@mui/material@5.14.10)(react@17.0.2)
-      '@percona/ui-lib.form.inputs.toggle-button-group':
-        specifier: workspace:*
-        version: file:ui-lib/form/inputs/toggle-button-group(@emotion/react@11.11.1)(@mui/icons-material@5.14.9)(@mui/material@5.14.10)(@mui/utils@5.14.10)(react@17.0.2)
-      '@percona/ui-lib.icons.db':
-        specifier: workspace:*
-        version: file:ui-lib/icons/db(@mui/material@5.14.10)(react@17.0.2)
-      '@percona/ui-lib.icons.everest':
-        specifier: workspace:*
-        version: file:ui-lib/icons/everest(@emotion/react@11.11.1)(@mui/icons-material@5.14.9)(@mui/material@5.14.10)(@mui/utils@5.14.10)(react@17.0.2)
-      '@percona/ui-lib.icons.status':
-        specifier: workspace:*
-        version: file:ui-lib/icons/status(@emotion/react@11.11.1)(@mui/icons-material@5.14.9)(@mui/material@5.14.10)(@mui/utils@5.14.10)(react@17.0.2)
-      '@percona/ui-lib.labeled-content':
-        specifier: workspace:*
-        version: file:ui-lib/labeled-content(@mui/material@5.14.10)(react@17.0.2)
-      '@percona/ui-lib.loadable-children':
-        specifier: workspace:*
-        version: file:ui-lib/loadable-children(@mui/material@5.14.10)(react@17.0.2)
-      '@percona/ui-lib.menu-button':
-        specifier: workspace:*
-        version: file:ui-lib/menu-button(@emotion/react@11.11.1)(@mui/icons-material@5.14.9)(@mui/material@5.14.10)(@mui/utils@5.14.10)(react@17.0.2)
-      '@percona/ui-lib.progress-bar':
-        specifier: workspace:*
-        version: file:ui-lib/progress-bar(@emotion/react@11.11.1)(@mui/icons-material@5.14.9)(@mui/material@5.14.10)(@mui/utils@5.14.10)(react@17.0.2)
-      '@percona/ui-lib.stepper':
-        specifier: workspace:*
-        version: file:ui-lib/stepper(@emotion/react@11.11.1)(@mui/icons-material@5.14.9)(@mui/material@5.14.10)(@mui/utils@5.14.10)(react@17.0.2)
-      '@percona/ui-lib.table':
-        specifier: workspace:*
-        version: file:ui-lib/table(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@mui/icons-material@5.14.9)(@mui/material@5.14.10)(react-dom@17.0.2)(react@17.0.2)
-      '@percona/ui-lib.toggle-card':
-        specifier: workspace:*
-        version: file:ui-lib/toggle-card(@emotion/react@11.11.1)(@mui/icons-material@5.14.9)(@mui/material@5.14.10)(@mui/utils@5.14.10)(react@17.0.2)
-      '@percona/utils.string':
-        specifier: workspace:*
-        version: file:utils/string
-    dependenciesMeta:
-      '@percona/apps.everest':
-        injected: true
-      '@percona/design.composition-viewer':
-        injected: true
-      '@percona/design.theme-context-provider':
-        injected: true
-      '@percona/design.themes.base':
-        injected: true
-      '@percona/design.themes.everest':
-        injected: true
-      '@percona/design.utils.palette-theme-viewer':
-        injected: true
-      '@percona/envs.percona-custom-react-env':
-        injected: true
-      '@percona/ui-lib.card':
-        injected: true
-      '@percona/ui-lib.db-toggle-card':
-        injected: true
-      '@percona/ui-lib.dialog-title':
-        injected: true
-      '@percona/ui-lib.form.inputs.auto-complete':
-        injected: true
-      '@percona/ui-lib.form.inputs.select':
-        injected: true
-      '@percona/ui-lib.form.inputs.switch':
-        injected: true
-      '@percona/ui-lib.form.inputs.text':
-        injected: true
-      '@percona/ui-lib.form.inputs.text-array':
-        injected: true
-      '@percona/ui-lib.form.inputs.toggle-button-group':
-        injected: true
-      '@percona/ui-lib.icons.db':
-        injected: true
-      '@percona/ui-lib.icons.everest':
-        injected: true
-      '@percona/ui-lib.icons.status':
-        injected: true
-      '@percona/ui-lib.labeled-content':
-        injected: true
-      '@percona/ui-lib.loadable-children':
-        injected: true
-      '@percona/ui-lib.menu-button':
-        injected: true
-      '@percona/ui-lib.progress-bar':
-        injected: true
-      '@percona/ui-lib.stepper':
-        injected: true
-      '@percona/ui-lib.table':
-        injected: true
-      '@percona/ui-lib.toggle-card':
-        injected: true
-      '@percona/utils.string':
-        injected: true
-
   node_modules/.bit_roots/teambit.envs_env:
     dependencies:
       '@percona/apps.everest':
@@ -1767,25 +1625,43 @@ importers:
 
   ui-lib/loadable-children:
     dependencies:
+      '@mdx-js/react':
+        specifier: ^1.6.22
+        version: 1.6.22(react@17.0.2)
       '@mui/material':
         specifier: ^5.13.1
         version: 5.14.10(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@17.0.65)(react-dom@17.0.2)(react@17.0.2)
+      '@teambit/mdx.ui.mdx-scope-context':
+        specifier: 1.0.0
+        version: 1.0.0(react-dom@17.0.2)(react@17.0.2)
+      graphql:
+        specifier: 14.7.0
+        version: 14.7.0
+      jest:
+        specifier: 29.3.1
+        version: 29.3.1(@types/node@12.20.4)
       react:
         specifier: ^17.0.0
         version: 17.0.2
+      react-dom:
+        specifier: ^17.0.0
+        version: 17.0.2(react@17.0.2)
+      react-router-dom:
+        specifier: 6.8.1
+        version: 6.8.1(react-dom@17.0.2)(react@17.0.2)
     devDependencies:
-      '@babel/runtime':
-        specifier: 7.20.0
-        version: 7.20.0
       '@types/jest':
-        specifier: 26.0.20
-        version: 26.0.20
-      '@types/node':
-        specifier: 12.20.4
-        version: 12.20.4
+        specifier: ^29.2.2
+        version: 29.5.5
       '@types/react':
         specifier: ^17.0.0
         version: 17.0.65
+      '@types/react-dom':
+        specifier: ^17.0.0
+        version: 17.0.20
+      '@types/testing-library__jest-dom':
+        specifier: ^5.9.5
+        version: 5.9.5
 
   ui-lib/menu-button:
     dependencies:
@@ -6700,6 +6576,7 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.11
+    dev: false
 
   /@babel/runtime@7.22.15:
     resolution: {integrity: sha512-T0O+aa+4w0u06iNmapipJXMV4HoUir03hpx3/YqXXhu9xim3w+dVphjFWl1OH8NbZHw5Lbm9k45drDkgq2VNNA==}
@@ -7405,17 +7282,6 @@ packages:
       - supports-color
     dev: false
 
-  /@jest/types@26.6.2:
-    resolution: {integrity: sha512-fC6QCp7Sc5sX6g8Tvbmj4XUTbyrik0akgRy03yjXbQaBWWNWGE7SGtJk98m0N8nzegD/7SggrUlivxo5ax4KWQ==}
-    engines: {node: '>= 10.14.2'}
-    dependencies:
-      '@types/istanbul-lib-coverage': 2.0.4
-      '@types/istanbul-reports': 3.0.1
-      '@types/node': 12.20.4
-      '@types/yargs': 15.0.16
-      chalk: 4.1.2
-    dev: true
-
   /@jest/types@29.6.3:
     resolution: {integrity: sha512-u3UPsIilWKOM3F9CXtrG8LEJmNxwoCQC/XVj4IKYXvvpx7QIi/Kg1LI5uDmDpKlac62NUtX7eLjRh+jVZcLOzw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
@@ -7759,24 +7625,6 @@ packages:
   /@npmcli/name-from-folder@2.0.0:
     resolution: {integrity: sha512-pwK+BfEBZJbKdNYpHHRTNBwBoqrN/iIMO0AiGvYsp3Hoaq0WbgGSWQR6SCldZovoDpY3yje5lkFUe6gsDgJ2vg==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
-    dev: false
-
-  /@percona/envs.percona-react-env@0.3.0(react-dom@17.0.2)(react@17.0.2):
-    resolution: {integrity: sha512-Nj0eF409BlbXLPtoIeO02cfzZ05aRnyyN2s0lD7k/JG3lRQkcSgldPCyEnPfvqbZJyChAjzqcp93dH7kwBBNkg==}
-    peerDependencies:
-      react: '*'
-      react-dom: '*'
-    peerDependenciesMeta:
-      react:
-        optional: true
-      react-dom:
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.20.0
-      '@teambit/harmony': 0.4.6
-      core-js: 3.32.2
-      react: 17.0.2
-      react-dom: 17.0.2(react@17.0.2)
     dev: false
 
   /@pkgjs/parseargs@0.11.0:
@@ -9999,17 +9847,6 @@ packages:
       - encoding
     dev: false
 
-  /@teambit/harmony@0.4.6:
-    resolution: {integrity: sha512-9cWKyOVauMc56GQnosRqez22qz+4YrydJs1X1qXQJSToUA3Op874NFgjawRXp8g+V9MF2XT4NZIM3jzNXyQhIQ==}
-    engines: {node: '>=12.22.0'}
-    dependencies:
-      cleargraph: 5.8.0
-      comment-json: 3.0.3
-      fs-extra: 8.1.0
-      reflect-metadata: 0.1.13
-      user-home: 2.0.0
-    dev: false
-
   /@teambit/legacy-bit-id@0.0.423:
     resolution: {integrity: sha512-eSESv5D7pCnUEqrUQStcqvB1SDpdHffKbMDR0ghq4FwHEt9rqFWkfQV4rbUzzkUz9tKmhIxeRjo8pQif2DXySA==}
     engines: {node: '>=12.22.0'}
@@ -11624,13 +11461,6 @@ packages:
     dependencies:
       '@types/istanbul-lib-report': 3.0.0
 
-  /@types/jest@26.0.20:
-    resolution: {integrity: sha512-9zi2Y+5USJRxd0FsahERhBwlcvFh6D2GLQnY2FH2BzK8J9s9omvNHIbvABwIluXa0fD8XVKMLTO0aOEuUfACAA==}
-    dependencies:
-      jest-diff: 26.6.2
-      pretty-format: 26.6.2
-    dev: true
-
   /@types/jest@29.5.5:
     resolution: {integrity: sha512-ebylz2hnsWR9mYvmBFbXJXr+33UPc4+ZdxyDXh5w0FlPBTfCVN3wPL+kuOiQt3xvrK419v7XWeAs+AeOksafXg==}
     dependencies:
@@ -11777,12 +11607,6 @@ packages:
 
   /@types/yargs-parser@21.0.0:
     resolution: {integrity: sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==}
-
-  /@types/yargs@15.0.16:
-    resolution: {integrity: sha512-2FeD5qezW3FvLpZ0JpfuaEWepgNLl9b2gQYiz/ce0NhoB1W/D+VZu98phITXkADYerfr/jb7JcDcVhITsc9bwg==}
-    dependencies:
-      '@types/yargs-parser': 21.0.0
-    dev: true
 
   /@types/yargs@17.0.24:
     resolution: {integrity: sha512-6i0aC7jV6QzQB8ne1joVZ0eSFIstHsCrobmOtghM11yGlH0j43FKL2UhWdELkyps0zuf7qVTUVCCR+tgSlyLLw==}
@@ -13465,13 +13289,6 @@ packages:
       source-map: 0.6.1
     dev: false
 
-  /cleargraph@5.8.0:
-    resolution: {integrity: sha512-72ZcdfWOwa1w3IfvKQFBp9lbgeZVlx9VFzUEKuGebaWprKIRs+kLIz48cNPAE8A6ZhuIbDsdFbYPQBH85+viRw==}
-    dependencies:
-      graphlib: 2.1.8
-      lodash: 4.17.21
-    dev: false
-
   /cliui@8.0.1:
     resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
     engines: {node: '>=12'}
@@ -13570,16 +13387,6 @@ packages:
   /commander@8.3.0:
     resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
     engines: {node: '>= 12'}
-    dev: false
-
-  /comment-json@3.0.3:
-    resolution: {integrity: sha512-P7XwYkC3qjIK45EAa9c5Y3lR7SMXhJqwFdWg3niAIAcbk3zlpKDdajV8Hyz/Y3sGNn3l+YNMl8A2N/OubSArHg==}
-    engines: {node: '>= 6'}
-    dependencies:
-      core-util-is: 1.0.3
-      esprima: 4.0.1
-      has-own-prop: 2.0.0
-      repeat-string: 1.6.1
     dev: false
 
   /comment-json@4.2.3:
@@ -14447,11 +14254,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: false
-
-  /diff-sequences@26.6.2:
-    resolution: {integrity: sha512-Mv/TDa3nZ9sbc5soK+OoA74BsS3mL37yixCvUAQkiuA4Wz6YtwP/K47n2rv2ovzHZvoiQeA5FTQOschKkEwB0Q==}
-    engines: {node: '>= 10.14.2'}
-    dev: true
 
   /diff-sequences@29.6.3:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
@@ -16110,15 +15912,6 @@ packages:
       universalify: 2.0.0
     dev: false
 
-  /fs-extra@8.1.0:
-    resolution: {integrity: sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==}
-    engines: {node: '>=6 <7 || >=8'}
-    dependencies:
-      graceful-fs: 4.2.11
-      jsonfile: 4.0.0
-      universalify: 0.1.2
-    dev: false
-
   /fs-extra@9.1.0:
     resolution: {integrity: sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==}
     engines: {node: '>=10'}
@@ -16332,12 +16125,6 @@ packages:
 
   /graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
-
-  /graphlib@2.1.8:
-    resolution: {integrity: sha512-jcLLfkpoVGmH7/InMC/1hIvOPSUh38oJtGhvrOFGzioE1DZ+0YW16RgmOJhHiuWTvGiJQ9Z1Ik43JvkRPRvE+A==}
-    dependencies:
-      lodash: 4.17.21
-    dev: false
 
   /graphql-request@4.3.0(graphql@14.7.0):
     resolution: {integrity: sha512-2v6hQViJvSsifK606AliqiNiijb1uwWp6Re7o0RTyH+uRTv/u7Uqm2g4Fjq/LgZIzARB38RZEvVBFOQOVdlBow==}
@@ -17368,16 +17155,6 @@ packages:
       - supports-color
     dev: false
 
-  /jest-diff@26.6.2:
-    resolution: {integrity: sha512-6m+9Z3Gv9wN0WFVasqjCL/06+EFCMTqDEUl/b87HYK2rAPTyfz4ZIuSlPhY51PIQRWx5TaxeF1qmXKe9gfN3sA==}
-    engines: {node: '>= 10.14.2'}
-    dependencies:
-      chalk: 4.1.2
-      diff-sequences: 26.6.2
-      jest-get-type: 26.3.0
-      pretty-format: 26.6.2
-    dev: true
-
   /jest-diff@29.7.0:
     resolution: {integrity: sha512-LMIgiIrhigmPrs03JHpxUh2yISK3vLFPkAodPeo0+BuF7wA2FoQbkEg1u8gBYBThncu7e1oEDUfIXVuTqLRUjw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
@@ -17439,11 +17216,6 @@ packages:
       jest-mock: 29.7.0
       jest-util: 29.7.0
     dev: false
-
-  /jest-get-type@26.3.0:
-    resolution: {integrity: sha512-TpfaviN1R2pQWkIihlfEanwOXK0zcxrKEE4MlU6Tn7keoXdN6/3gK/xl0yEh8DOunn5pOVGKf8hB4R9gVh04ig==}
-    engines: {node: '>= 10.14.2'}
-    dev: true
 
   /jest-get-type@29.6.3:
     resolution: {integrity: sha512-zrteXnqYxfQh7l5FHyL38jL39di8H8rHoecLH3JNxH3BwOrBsNeabdap5e0I23lD4HHI8W5VFBZqG4Eaq5LNcw==}
@@ -17912,12 +17684,6 @@ packages:
     resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
     engines: {node: '>=6'}
     hasBin: true
-    dev: false
-
-  /jsonfile@4.0.0:
-    resolution: {integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==}
-    optionalDependencies:
-      graceful-fs: 4.2.11
     dev: false
 
   /jsonfile@6.1.0:
@@ -19215,11 +18981,6 @@ packages:
 
   /os-browserify@0.3.0:
     resolution: {integrity: sha512-gjcpUc3clBf9+210TRaDWbf+rZZZEshZ+DlXMRCeAjp0xhTrnQsKHypIy1J3d5hKdUzj69t708EHtU8P6bUn0A==}
-    dev: false
-
-  /os-homedir@1.0.2:
-    resolution: {integrity: sha512-B5JU3cabzk8c67mRRd3ECmROafjYMXbuzlwtqdM8IbS8ktlTix8aFGb2bAGKrSRIlnfKwovGUUr72JUPyOb6kQ==}
-    engines: {node: '>=0.10.0'}
     dev: false
 
   /p-limit@1.3.0:
@@ -20545,16 +20306,6 @@ packages:
       renderkid: 3.0.0
     dev: false
 
-  /pretty-format@26.6.2:
-    resolution: {integrity: sha512-7AeGuCYNGmycyQbCqd/3PWH4eOoX/OiCa0uphp57NVTeAGdJGaAliecxwBDHYQCIvrW7aDBZCYeNTP/WX69mkg==}
-    engines: {node: '>= 10'}
-    dependencies:
-      '@jest/types': 26.6.2
-      ansi-regex: 5.0.1
-      ansi-styles: 4.3.0
-      react-is: 17.0.2
-    dev: true
-
   /pretty-format@27.5.1:
     resolution: {integrity: sha512-Qb1gy5OrP5+zDf2Bvnzdl3jsTf1qXVMazbvCoKhtKqVs4/YK4ozX4gKQJJVyNe+cajNPn0KoC0MC3FUmaHWEmQ==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
@@ -21100,10 +20851,6 @@ packages:
       strip-indent: 3.0.0
     dev: false
 
-  /reflect-metadata@0.1.13:
-    resolution: {integrity: sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==}
-    dev: false
-
   /refractor@3.6.0:
     resolution: {integrity: sha512-MY9W41IOWxxk31o+YvFCNyNzdkc9M20NoZK5vq6jkv4I/uh2zkWcfudj0Q1fovjUQJrNewS9NMzeTtqPf+n5EA==}
     dependencies:
@@ -21125,6 +20872,7 @@ packages:
 
   /regenerator-runtime@0.13.11:
     resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
+    dev: false
 
   /regenerator-runtime@0.14.0:
     resolution: {integrity: sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==}
@@ -22830,11 +22578,6 @@ packages:
       unist-util-visit-parents: 5.1.3
     dev: false
 
-  /universalify@0.1.2:
-    resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
-    engines: {node: '>= 4.0.0'}
-    dev: false
-
   /universalify@0.2.0:
     resolution: {integrity: sha512-CJ1QgKmNg3CwvAv/kOFmtnEN05f0D/cn9QntgNOQlQF9dgvVTHj3t+8JPdjqawCHk7V/KA+fbUqzZ9XWhcqPUg==}
     engines: {node: '>= 4.0.0'}
@@ -22965,13 +22708,6 @@ packages:
         optional: true
     dependencies:
       react: 17.0.2
-    dev: false
-
-  /user-home@2.0.0:
-    resolution: {integrity: sha512-KMWqdlOcjCYdtIJpicDSFBQ8nFwS2i9sslAd6f4+CBGcU4gist2REnr2fxj2YocvJFxSF3ZOHLYLVZnUxv4BZQ==}
-    engines: {node: '>=0.10.0'}
-    dependencies:
-      os-homedir: 1.0.2
     dev: false
 
   /util-deprecate@1.0.2:
