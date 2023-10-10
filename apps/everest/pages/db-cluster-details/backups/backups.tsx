@@ -1,7 +1,7 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { ScheduledBackupsList } from './scheduled-backups-list/scheduled-backups-list';
 import { BackupsList } from './backups-list/backups-list';
-import { useParams } from 'react-router-dom';
 import { useDbCluster } from '../../../hooks/api/db-cluster/useDbCluster';
 import { DbEngineType } from '../../../types/dbEngines.types';
 
