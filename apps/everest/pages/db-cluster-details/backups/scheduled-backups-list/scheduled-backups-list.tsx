@@ -29,7 +29,8 @@ import { useDbCluster } from '../../../../hooks/api/db-cluster/useDbCluster';
 import { Messages } from './scheduled-backups-list.messages';
 import { getTimeSelectionPreviewMessage } from '../../../database-form/database-preview/database.preview.messages';
 import { getFormValuesFromCronExpression } from '../../../../components/time-selection/time-selection.utils';
-import { DotsMenu, Option } from '../../../../components/dots-menu/dots-menu';
+import { DotsMenu } from '../../../../components/dots-menu/dots-menu';
+import { Option } from '../../../../components/dots-menu/dots-menu.types';
 
 export const ScheduledBackupsList = () => {
   const { dbClusterName } = useParams();
