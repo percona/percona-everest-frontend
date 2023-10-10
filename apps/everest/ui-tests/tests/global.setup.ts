@@ -16,7 +16,6 @@
 import { test as setup } from '@playwright/test';
 
 setup('Backup storage', async ({ request }) => {
-  // TODO console.log('CREATE BACKUP STORAGE');
   await request.post('/v1/backup-storages/', {
     data: {
       name: 'ui-dev',

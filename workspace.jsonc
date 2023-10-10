@@ -39,6 +39,7 @@
     "packageManager": "teambit.dependencies/pnpm",
     "policy": {
       "dependencies": {
+        "@fontsource/poppins": "^5.0.8",
         "@hookform/resolvers": "^3.1.0",
         "@mui/icons-material": "^5.11.16",
         "@playwright/test": "^1.36.1",
@@ -104,5 +105,6 @@
   "percona.ui-lib/form/inputs/auto-complete": {},
   "percona.ui-lib/dialog-title": {},
   "percona.ui-lib/menu-button": {},
-  "percona.ui-lib/form/inputs/text-array": {}
+  "percona.ui-lib/form/inputs/text-array": {},
+  "percona.ui-lib/loadable-children": {}
 }

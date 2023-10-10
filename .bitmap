@@ -3,15 +3,15 @@
 /**
  * The Bitmap file is an auto generated file used by Bit to track all your Bit components. It maps the component to a folder in your file system.
  * This file should be committed to VCS(version control).
- * Components are listed using their component ID (https://bit.dev/docs/components/component-id).
+ * Components are listed using their component ID (https://bit.dev/reference/components/component-id).
  * If you want to delete components you can use the "bit remove <component-id>" command.
- * See the docs (https://bit.dev/docs/components/removing-components) for more information, or use "bit remove --help".
+ * See the docs (https://bit.dev/reference/components/removing-components) for more information, or use "bit remove --help".
  */
 
 {
     "card": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.0.2",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/card"
     },
@@ -24,62 +24,55 @@
     },
     "db-toggle-card": {
         "scope": "percona.ui-lib",
-        "version": "0.0.3",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/db-toggle-card"
     },
     "dialog-title": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/dialog-title"
     },
     "everest": {
         "scope": "percona.apps",
-        "version": "0.0.2",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "apps/everest"
     },
     "form/inputs/auto-complete": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/form/inputs/auto-complete"
     },
     "form/inputs/select": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/form/inputs/select"
     },
     "form/inputs/switch": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/form/inputs/switch"
     },
     "form/inputs/text": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/form/inputs/text"
     },
     "form/inputs/text-array": {
-        "scope": "",
-        "version": "8809f72588d1880c662803fe1b464003b5cfb35f",
-        "defaultScope": "percona.ui-lib",
+        "scope": "percona.ui-lib",
+        "version": "0.3.0",
         "mainFile": "index.ts",
-        "rootDir": "ui-lib/form/inputs/text-array",
-        "config": {
-            "teambit.envs/envs": {
-                "env": "percona.envs/percona-react-env"
-            },
-            "percona.envs/percona-react-env": {}
-        }
+        "rootDir": "ui-lib/form/inputs/text-array"
     },
     "form/inputs/toggle-button-group": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/form/inputs/toggle-button-group"
     },
@@ -91,28 +84,28 @@
     },
     "icons/everest": {
         "scope": "percona.ui-lib",
-        "version": "0.0.3",
+        "version": "0.0.4",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/icons/everest"
     },
     "icons/status": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.0.2",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/icons/status"
     },
     "labeled-content": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/labeled-content"
     },
-    "menu-button": {
+    "loadable-children": {
         "scope": "",
-        "version": "be284f51321b68ee0369d76f546fe36de8af1e0c",
+        "version": "",
         "defaultScope": "percona.ui-lib",
         "mainFile": "index.ts",
-        "rootDir": "ui-lib/menu-button",
+        "rootDir": "ui-lib/loadable-children",
         "config": {
             "teambit.envs/envs": {
                 "env": "percona.envs/percona-react-env"
@@ -120,33 +113,39 @@
             "percona.envs/percona-react-env": {}
         }
     },
+    "menu-button": {
+        "scope": "percona.ui-lib",
+        "version": "0.3.0",
+        "mainFile": "index.ts",
+        "rootDir": "ui-lib/menu-button"
+    },
     "percona-react-env": {
         "scope": "percona.envs",
-        "version": "0.0.2",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "envs/percona-react-env"
     },
     "progress-bar": {
         "scope": "percona.ui-lib",
-        "version": "0.0.2",
+        "version": "0.0.3",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/progress-bar"
     },
     "stepper": {
         "scope": "percona.ui-lib",
-        "version": "0.0.2",
+        "version": "0.0.3",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/stepper"
     },
     "string": {
         "scope": "percona.utils",
-        "version": "0.0.1",
+        "version": "0.0.2",
         "mainFile": "index.ts",
         "rootDir": "utils/string"
     },
     "table": {
         "scope": "percona.ui-lib",
-        "version": "0.0.1",
+        "version": "0.3.0",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/table"
     },
@@ -159,21 +158,21 @@
     },
     "themes/base": {
         "scope": "percona.design",
-        "version": "0.0.3",
+        "version": "0.3.0",
         "defaultScope": "percona.design",
         "mainFile": "index.ts",
         "rootDir": "design/themes/base"
     },
     "themes/everest": {
         "scope": "percona.design",
-        "version": "0.0.3",
+        "version": "0.0.4",
         "defaultScope": "percona.design",
         "mainFile": "index.ts",
         "rootDir": "design/themes/everest"
     },
     "toggle-card": {
         "scope": "percona.ui-lib",
-        "version": "0.0.3",
+        "version": "0.0.4",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/toggle-card"
     },
@@ -184,5 +183,5 @@
         "mainFile": "index.ts",
         "rootDir": "design/utils/palette-theme-viewer"
     },
-    "$schema-version": "15.0.0"
+    "$schema-version": "16.0.0"
 }
