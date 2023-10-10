@@ -1,4 +1,6 @@
 import { createTheme, PaletteMode, ThemeOptions } from '@mui/material';
+import '@fontsource/poppins';
+import '@fontsource/poppins/600.css';
 
 declare module '@mui/material/styles' {
   interface TypeAction {
@@ -125,6 +127,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
   typography: {
     h1: {
       fontWeight: 600,
+      fontFamily: "'Poppins', sans-serif",
       [BaseTheme.breakpoints.down('sm')]: {
         fontSize: '32px',
       },
@@ -134,6 +137,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
     },
     h2: {
       fontWeight: 600,
+      fontFamily: "'Poppins', sans-serif",
       [BaseTheme.breakpoints.down('sm')]: {
         fontSize: '29px',
       },
@@ -143,6 +147,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
     },
     h3: {
       fontWeight: 600,
+      fontFamily: "'Poppins', sans-serif",
       [BaseTheme.breakpoints.down('sm')]: {
         fontSize: '26px',
       },
@@ -152,6 +157,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
     },
     h4: {
       fontWeight: 600,
+      fontFamily: "'Poppins', sans-serif",
       [BaseTheme.breakpoints.down('sm')]: {
         fontSize: '23px',
       },
@@ -161,6 +167,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
     },
     h5: {
       fontWeight: 600,
+      fontFamily: "'Poppins', sans-serif",
       lineHeight: '22.5px',
       [BaseTheme.breakpoints.down('sm')]: {
         fontSize: '20px',
@@ -171,6 +178,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
     },
     h6: {
       fontWeight: 600,
+      fontFamily: "'Poppins', sans-serif",
       [BaseTheme.breakpoints.down('sm')]: {
         fontSize: '18px',
       },
@@ -189,10 +197,12 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
       lineHeight: '22px',
     },
     overline: {
+      fontFamily: "'Poppins', sans-serif",
       fontWeight: 800,
       fontSize: '12px',
     },
     sectionHeading: {
+      fontFamily: "'Poppins', sans-serif",
       fontWeight: 700,
       fontSize: '14px',
       lineHeight: '17.5px',
@@ -225,6 +235,7 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
       fontSize: '13px',
     },
     button: {
+      fontFamily: "'Poppins', sans-serif",
       textTransform: 'none',
       lineHeight: '1',
       letterSpacing: '0.025em',
