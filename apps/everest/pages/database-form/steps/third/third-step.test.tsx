@@ -27,7 +27,7 @@ const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
 };
 
 describe('ThirdStep', () => {
-  it('should render nothing when db-cluster-details are disabled', () => {
+  it('should render nothing when backups are disabled', () => {
     render(
       <TestWrapper>
         <FormProviderWrapper>
@@ -39,12 +39,10 @@ describe('ThirdStep', () => {
       screen.getByTestId('text-input-storage-location')
     ).toBeInTheDocument();
     expect(
-      screen.getByTestId('switch-input-db-cluster-details-enabled')
+      screen.getByTestId('switch-input-backups-enabled')
     ).toBeInTheDocument();
 
-    fireEvent.click(
-      screen.getByTestId('switch-input-db-cluster-details-enabled')
-    );
+    fireEvent.click(screen.getByTestId('switch-input-backups-enabled'));
     expect(
       screen.queryByTestId('text-input-storage-location')
     ).not.toBeInTheDocument();
@@ -57,7 +55,7 @@ describe('ThirdStep', () => {
     ).not.toBeInTheDocument();
   });
 
-  // it('should render everything when db-cluster-details are enabled', () => {
+  // it('should render everything when backups are enabled', () => {
   //   render(
   //     <TestWrapper>
   //       <FormProviderWrapper>
@@ -67,7 +65,7 @@ describe('ThirdStep', () => {
   //   );
 
   //   expect(
-  //     screen.getByTestId('switch-input-db-cluster-details-enabled')
+  //     screen.getByTestId('switch-input-backups-enabled')
   //   ).toBeInTheDocument();
   //   expect(
   //     screen.getByTestId('text-input-storage-location')
@@ -87,7 +85,7 @@ describe('ThirdStep', () => {
   // //   );
 
   // //   expect(
-  // //     screen.getByTestId('switch-input-db-cluster-details-enabled')
+  // //     screen.getByTestId('switch-input-backups-enabled')
   // //   ).toBeInTheDocument();
   // //   expect(screen.getByTestId('switch-input-pitr-enabled')).toBeInTheDocument();
   // //   expect(screen.getByTestId('pitr-time-minutes')).toBeInTheDocument();
@@ -103,7 +101,7 @@ describe('ThirdStep', () => {
   // //   );
 
   // //   expect(
-  // //     screen.getByTestId('switch-input-db-cluster-details-enabled')
+  // //     screen.getByTestId('switch-input-backups-enabled')
   // //   ).toBeInTheDocument();
   // //   expect(screen.getByTestId('switch-input-pitr-enabled')).toBeInTheDocument();
   // //   expect(screen.getByTestId('pitr-time-minutes')).toBeInTheDocument();
@@ -122,7 +120,7 @@ describe('ThirdStep', () => {
   //   );
 
   //   expect(
-  //     screen.getByTestId('switch-input-db-cluster-details-enabled')
+  //     screen.getByTestId('switch-input-backups-enabled')
   //   ).toBeInTheDocument();
   //   const selectTimeValue = screen.getByTestId('select-input-selected-time');
   //   expect(selectTimeValue).toBeInTheDocument();
@@ -148,7 +146,7 @@ describe('ThirdStep', () => {
   //   );
 
   //   expect(
-  //     screen.getByTestId('switch-input-db-cluster-details-enabled')
+  //     screen.getByTestId('switch-input-backups-enabled')
   //   ).toBeInTheDocument();
   //   const selectTimeValue = screen.getByTestId('select-input-selected-time');
   //   expect(selectTimeValue).toBeInTheDocument();
@@ -180,7 +178,7 @@ describe('ThirdStep', () => {
   //   );
 
   //   expect(
-  //     screen.getByTestId('switch-input-db-cluster-details-enabled')
+  //     screen.getByTestId('switch-input-backups-enabled')
   //   ).toBeInTheDocument();
   //   const selectTimeValue = screen.getByTestId('select-input-selected-time');
   //   expect(selectTimeValue).toBeInTheDocument();
@@ -210,7 +208,7 @@ describe('ThirdStep', () => {
   //   );
 
   //   expect(
-  //     screen.getByTestId('switch-input-db-cluster-details-enabled')
+  //     screen.getByTestId('switch-input-backups-enabled')
   //   ).toBeInTheDocument();
   //   const selectTimeValue = screen.getByTestId('select-input-selected-time');
   //   expect(selectTimeValue).toBeInTheDocument();

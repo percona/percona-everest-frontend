@@ -14,23 +14,9 @@
 // limitations under the License.
 
 import React from 'react';
-import {
-  IconButton,
-  Menu,
-  MenuProps,
-  MenuItem,
-  MenuItemProps,
-} from '@mui/material';
+import { IconButton, Menu, MenuItem } from '@mui/material';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
-
-export interface Option extends MenuItemProps {
-  onClick: () => void;
-}
-interface DotsMenuProps {
-  menuProps?: MenuProps;
-  options: Array<Option>;
-  handleClose?: () => void;
-}
+import { DotsMenuProps } from './dots-menu.types';
 
 export const DotsMenu = ({ menuProps, options }: DotsMenuProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
