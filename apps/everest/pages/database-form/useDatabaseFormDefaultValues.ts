@@ -56,7 +56,7 @@ export const useDatabasePageDefaultValues = (
 
   useEffect(() => {
     if (mode === 'edit' || mode === 'restoreFromBackup') {
-      if (status === 'success')
+      if (status === 'success' && monitoringInstances)
         setDefaultValues(
           DbClusterPayloadToFormValues(data, monitoringInstances, mode)
         );

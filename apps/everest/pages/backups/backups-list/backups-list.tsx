@@ -22,6 +22,7 @@ import { Backup, BackupStatus } from '../../../types/backups.types';
 import { OnDemandBackupModal } from '../on-demand-backup-modal/on-demand-backup-modal';
 import { BACKUP_STATUS_TO_BASE_STATUS } from './backups-list.constants';
 import { Messages } from './backups-list.messages';
+import { ScheduledBackupsList } from '../scheduled-backups-list/scheduled-backups-list';
 
 export const BackupsList = () => {
   const navigate = useNavigate();
@@ -159,6 +160,7 @@ export const BackupsList = () => {
 
   return (
     <>
+      <ScheduledBackupsList />
       <Table
         noDataMessage={Messages.noData}
         data={backups}
