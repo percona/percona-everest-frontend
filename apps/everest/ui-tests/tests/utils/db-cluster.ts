@@ -15,7 +15,7 @@
 
 import { APIRequestContext, expect } from '@playwright/test';
 import { DbType } from '@percona/ui-lib.db-toggle-card';
-import { DbCluster, ProxyExposeType } from '../../../types/dbCluster.types';
+import { DbCluster, ProxyExposeType, Schedule } from '../../../types/dbCluster.types';
 import { dbTypeToDbEngine } from '../../../utils/db';
 import { DbWizardType } from '../../../pages/database-form/database-form.types';
 import { getEnginesVersions } from './database-engines';
@@ -24,12 +24,15 @@ import { getClusterDetailedInfo } from './storage-class';
 
 export const createDbClusterFn = async (
   request: APIRequestContext,
-  customOptions?: Partial<DbWizardType>,
+  // TODO change type to DbWizardType after https://jira.percona.com/browse/EVEREST-485
+  customOptions?: Partial<DbWizardType & {
+    schedules: Schedule[];
+  }>,
   kubernetesId?: string
 ) => {
   const k8sClusterId = kubernetesId || (await getK8sClusters(request))[0].id;
   const dbEngines = await getEnginesVersions(request, k8sClusterId);
-  const dbType = customOptions?.dbType || DbType.Mysql;
+  const dbType = customOptions?.dbType as DbType || DbType.Mysql;
   const dbEngineType = dbTypeToDbEngine(dbType);
   const dbTypeVersions = dbEngines[dbEngineType];
   const dbClusterInfo = await getClusterDetailedInfo(request, k8sClusterId);
@@ -59,25 +62,15 @@ export const createDbClusterFn = async (
     apiVersion: 'everest.percona.com/v1alpha1',
     kind: 'DatabaseCluster',
     metadata: {
-      name: customOptions?.dbName || 'db-cluster-test-ui',
+      name: customOptions?.dbName as string || 'db-cluster-test-ui',
     },
     spec: {
-      // backup: {
-      //   enabled: dbPayload.backupsEnabled,
-      //   ...(dbPayload.backupsEnabled && {
-      //     schedules: [
-      //       {
-      //         enabled: true,
-      //         name: '',
-      //         backupStorageName:
-      //           typeof dbPayload.storageLocation === 'string'
-      //             ? dbPayload.storageLocation
-      //             : dbPayload.storageLocation!.name,
-      //         schedule: backupSchedule,
-      //       },
-      //     ],
-      //   }),
-      // },
+      backup: {
+        enabled: customOptions?.backupsEnabled as boolean || false,
+        ...(customOptions?.backupsEnabled && {
+          schedules: customOptions?.schedules,
+        }),
+      },
       engine: {
         type: dbEngineType,
         version: customOptions?.dbVersion || lastVersion,
