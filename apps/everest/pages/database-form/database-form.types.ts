@@ -214,7 +214,9 @@ export const dbWizardSchema = [
 ];
 
 export type StepTwoType = z.infer<typeof stepTwoSchema>;
-export type AdvancedConfigurationType = z.infer<typeof advancedConfigurationsSchema>;
+export type AdvancedConfigurationType = z.infer<
+  typeof advancedConfigurationsSchema
+>;
 export type StepFiveType = z.infer<typeof stepFiveSchema>;
 export type BackupsStepType = z.infer<typeof backupsStepSchema>;
 

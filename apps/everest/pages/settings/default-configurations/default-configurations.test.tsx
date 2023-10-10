@@ -18,7 +18,9 @@ describe('Default Configurations', () => {
       screen.getByTestId('switch-input-monitoring').querySelector('input')
     ).not.toBeChecked();
     expect(
-      screen.getByTestId('switch-input-backups-enabled').querySelector('input')
+      screen
+        .getByTestId('switch-input-db-cluster-details-enabled')
+        .querySelector('input')
     ).not.toBeChecked();
     expect(
       screen.getByTestId('switch-input-external-access').querySelector('input')

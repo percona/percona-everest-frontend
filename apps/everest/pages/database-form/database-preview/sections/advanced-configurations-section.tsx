@@ -1,6 +1,6 @@
 import React from 'react';
 import { PreviewContentText } from '../preview-section';
-import {AdvancedConfigurationType} from "../../database-form.types";
+import { AdvancedConfigurationType } from '../../database-form.types';
 
 export const AdvancedConfigurationsPreviewSection = ({
   externalAccess,

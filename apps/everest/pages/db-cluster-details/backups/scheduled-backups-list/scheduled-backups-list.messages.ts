@@ -14,8 +14,9 @@
 // limitations under the License.
 
 export const Messages = {
-  sectionHeader: (active: number, inactive: number) =>
-    `${active} active and ${inactive} inactive schedules`,
+  sectionHeader: (schedulesNumber: number) =>
+    `${schedulesNumber} ${schedulesNumber > 1 ? 'schedules' : 'schedule'}`,
+  noSchedules: 'No schedules',
   menuItems: {
     edit: 'Edit',
     delete: 'Delete',
