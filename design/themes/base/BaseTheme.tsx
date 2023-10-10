@@ -1,5 +1,5 @@
 import { createTheme, PaletteMode, ThemeOptions } from '@mui/material';
-import '@fontsource/poppins';
+import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/600.css';
 
 declare module '@mui/material/styles' {
