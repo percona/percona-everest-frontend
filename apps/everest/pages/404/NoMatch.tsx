@@ -5,9 +5,9 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import { NoMatchIcon } from '@percona/ui-lib.icons.no-match';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { NoMatchIcon } from './icon/NoMatchIcon';
 import { Messages } from './NoMatch.messages';
 
 export const NoMatch = () => {

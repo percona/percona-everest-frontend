@@ -1,12 +1,11 @@
 import React from 'react';
 
-export const NoMatchIcon = ({
-  w = '435px',
-  h = '435px',
-}: {
+type NoMatchIconProps = {
   w?: string;
   h?: string;
-}) => {
+};
+
+export const NoMatchIcon = ({ w = '435px', h = '435px' }: NoMatchIconProps) => {
   return (
     <svg
       width={w}
