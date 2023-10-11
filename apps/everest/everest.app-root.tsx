@@ -10,12 +10,12 @@ import { NoMatch } from './pages/404/NoMatch';
 import { Backups } from './pages/backups/backups';
 import { BackupsList } from './pages/backups/backups-list/backups-list';
 import { BackupsTabs } from './pages/backups/backups.types';
+import { ClusterOverview } from './pages/cluster-overview/cluster-overview';
 import { DatabasePage } from './pages/database-form/database-form';
 import { DatabasesPage } from './pages/databases/databases';
 import { Settings } from './pages/settings/settings';
 import { SettingsTabs } from './pages/settings/settings.types';
 import { StorageLocations } from './pages/settings/storage-locations/storage-locations';
-import { ClusterOverview } from './pages/cluster-overview/cluster-overview';
 
 const router = createBrowserRouter([
   {
@@ -74,6 +74,10 @@ const router = createBrowserRouter([
           //   element: <K8sClusters />,
           // },
         ],
+      },
+      {
+        path: '*',
+        element: <NoMatch />,
       },
     ],
   },
