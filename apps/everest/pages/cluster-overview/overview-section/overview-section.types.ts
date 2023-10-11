@@ -6,4 +6,4 @@ export type OverviewSectionProps = {
 
 export type OverviewSectionTextProps = {
   children: React.ReactNode;
-}
+};
