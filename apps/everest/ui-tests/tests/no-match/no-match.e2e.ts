@@ -15,6 +15,7 @@
 
 import { expect, test } from '@playwright/test';
 import { getK8sClusters } from '../utils/k8s-clusters';
+import { checkNoMatchPage } from '../utils/no-match';
 
 test.describe('No match (404) page', () => {
   test.beforeAll(async ({ request }) => {
@@ -34,77 +35,41 @@ test.describe('No match (404) page', () => {
 
   test('non existing url should render no match page', async ({ page }) => {
     await page.goto('/wrong');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-    const button = page.getByTestId('no-match-button');
-
-    await expect(button).toBeVisible();
+    await checkNoMatchPage(page);
   });
 
   test('non existing url with slash should render no match page', async ({
     page,
   }) => {
     await page.goto('/wrong/wrong');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-    const button = page.getByTestId('no-match-button');
-
-    await expect(button).toBeVisible();
+    await checkNoMatchPage(page);
   });
 
   test('non existing url with double slash should render no match page', async ({
     page,
   }) => {
     await page.goto('/wrong/wrong/wrong');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-    const button = page.getByTestId('no-match-button');
-
-    await expect(button).toBeVisible();
+    await checkNoMatchPage(page);
   });
 
   test('existing url with non existing after slash should render no match page', async ({
     page,
   }) => {
     await page.goto('/database/wrong');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-    const button = page.getByTestId('no-match-button');
-
-    await expect(button).toBeVisible();
+    await checkNoMatchPage(page);
   });
 
   test('overview tab with non existing dbName should render no match page', async ({
     page,
   }) => {
     await page.goto('/databases/wrong/overview');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-    const button = page.getByTestId('no-match-button');
-
-    await expect(button).toBeVisible();
+    await checkNoMatchPage(page);
   });
 
   test('backups tab with non existing dbName should render no match page', async ({
     page,
   }) => {
     await page.goto('/databases/wrong/backups');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-    const button = page.getByTestId('no-match-button');
-
-    await expect(button).toBeVisible();
+    await checkNoMatchPage(page);
   });
 });
