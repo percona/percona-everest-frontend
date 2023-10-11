@@ -47,6 +47,7 @@
         "@typescript-eslint/eslint-plugin": "5.35.1",
         "axios": "^1.4.0",
         "cron-time-generator": "^2.0.0",
+        "css-loader": "^6.8.1",
         "css-mediaquery": "^0.1.2",
         "date-fns": "^2.30.0",
         "eslint-import-resolver-node": "0.3.6",
@@ -59,6 +60,7 @@
         "notistack": "^3.0.1",
         "react-hook-form": "^7.44.3",
         "react-query": "^3.39.3",
+        "style-loader": "^3.3.3",
         "zod": "^3.21.4"
       },
       "peerDependencies": {
