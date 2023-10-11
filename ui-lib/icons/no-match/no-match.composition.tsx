@@ -6,7 +6,7 @@ import { NoMatchIcon } from './no-match';
 export const BasicNoMatch = () => {
   return (
     <CompositionViewer themeOptions={everestThemeOptions}>
-      <NoMatchIcon w={'300px'} h={'300px'} />
+      <NoMatchIcon w="300px" h="300px" />
     </CompositionViewer>
   );
 };
