@@ -62,6 +62,7 @@ export const NoMatch = () => {
           to="/"
           sx={{ alignSelf: 'start', mt: 2 }}
           variant="contained"
+          data-testid="no-match-button"
         >
           {Messages.redirectButton}
         </Button>

@@ -37,6 +37,7 @@ export const DatabasesPage = () => {
           component={RouterLink}
           to="/databases/new"
           variant="contained"
+          data-testid="create-database-button"
         >
           {Messages.createDatabase}
         </Button>
