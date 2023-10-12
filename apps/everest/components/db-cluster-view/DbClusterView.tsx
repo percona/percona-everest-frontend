@@ -51,8 +51,12 @@ import { ExpandedRow } from './expandedRow/ExpandedRow';
 export const DbClusterView = () => {
   const [selectedDbCluster, setSelectedDbCluster] = useState<string>('');
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const { combinedDataForTable, loadingAllClusters, combinedDbClusters, errorInAllClusters } =
-    useDbClusters();
+  const {
+    combinedDataForTable,
+    loadingAllClusters,
+    combinedDbClusters,
+    errorInAllClusters,
+  } = useDbClusters();
   const { mutate: deleteDbCluster, isLoading: deletingCluster } =
     useDeleteDbCluster();
   const { mutate: suspendDbCluster } = usePausedDbCluster();
@@ -83,9 +87,9 @@ export const DbClusterView = () => {
                 oldData.map((value) =>
                   value.dbCluster.metadata.name === updatedObject.metadata.name
                     ? {
-                      dbCluster: updatedObject,
-                      k8sClusterName: value.k8sClusterName,
-                    }
+                        dbCluster: updatedObject,
+                        k8sClusterName: value.k8sClusterName,
+                      }
                     : value
                 )
             );
@@ -118,9 +122,9 @@ export const DbClusterView = () => {
                 oldData.map((value) =>
                   value.dbCluster.metadata.name === updatedObject.metadata.name
                     ? {
-                      dbCluster: updatedObject,
-                      k8sClusterName: value.k8sClusterName,
-                    }
+                        dbCluster: updatedObject,
+                        k8sClusterName: value.k8sClusterName,
+                      }
                     : value
                 )
             );
