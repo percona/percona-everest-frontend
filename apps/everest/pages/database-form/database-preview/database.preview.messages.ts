@@ -28,7 +28,7 @@ export const Messages = {
     'Resources',
     // 'Backups',
     'Advanced Configurations',
-    // 'Monitoring',
+    'Monitoring',
   ],
 };
 
