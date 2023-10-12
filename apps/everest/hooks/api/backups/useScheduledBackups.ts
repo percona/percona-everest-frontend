@@ -32,7 +32,7 @@ const formValuesForScheduledBackups = (
           ...(dbCluster.spec.backup?.schedules ?? []),
           {
             enabled: true,
-            name: name,
+            name,
             backupStorageName:
               typeof dbPayload.storageLocation === 'string'
                 ? dbPayload.storageLocation
