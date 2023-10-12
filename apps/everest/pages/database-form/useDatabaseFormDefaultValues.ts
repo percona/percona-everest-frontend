@@ -26,7 +26,6 @@ import {
   DbWizardMode,
   DbWizardType,
 } from './database-form.types';
-import { useMonitoringInstancesList } from '../../hooks/api/monitoring/useMonitoringInstancesList';
 import { DbClusterPayloadToFormValues } from './database-form.utils';
 
 export const useDatabasePageDefaultValues = (
@@ -34,34 +33,33 @@ export const useDatabasePageDefaultValues = (
 ): {
   defaultValues: DbWizardType;
   dbClusterData: DbCluster | undefined;
-  dbClusterStatus: 'error' | 'idle' | 'loading' | 'success';
+  dbClusterRequestStatus: 'error' | 'idle' | 'loading' | 'success';
+  isFetching: boolean;
 } => {
   const { state } = useLocation();
-  const { data, status } = useDbCluster(
-    state?.selectedDbCluster,
-    (mode === 'edit' || mode === 'restoreFromBackup') &&
-      !!state?.selectedDbCluster
-  );
-  const { data: monitoringInstances } = useMonitoringInstancesList(
-    mode === 'edit'
-  );
+  const shouldRetrieveDbClusterData = (mode === 'edit' || mode === 'restoreFromBackup') && !!state?.selectedDbCluster
+  const {
+    data: dbCluster,
+    status: dbClusterRequestStatus,
+    isFetching,
+  } = useDbCluster(state?.selectedDbCluster, shouldRetrieveDbClusterData);
 
   const [defaultValues, setDefaultValues] = useState<DbWizardType>(
     mode === 'new'
       ? DB_WIZARD_DEFAULTS
-      : status === 'success'
-      ? DbClusterPayloadToFormValues(data, monitoringInstances, mode)
-      : { ...DB_WIZARD_DEFAULTS, [DbWizardFormFields.dbVersion]: '' }
+      : dbClusterRequestStatus === 'success'
+        ? DbClusterPayloadToFormValues(dbCluster, mode)
+        : { ...DB_WIZARD_DEFAULTS, [DbWizardFormFields.dbVersion]: '' }
   );
 
   useEffect(() => {
-    if (mode === 'edit' || mode === 'restoreFromBackup') {
-      if (status === 'success')
-        setDefaultValues(
-          DbClusterPayloadToFormValues(data, monitoringInstances, mode)
-        );
-    } else setDefaultValues(DB_WIZARD_DEFAULTS);
-  }, [data, monitoringInstances]);
+    // dbClusterRequestStatus === 'success' when the request is enabled, which only happens if shouldRetrieveDbClusterData === true
+    // hence, no need to re-check mode and so on here
+    if (dbClusterRequestStatus === 'success' && dbCluster)
+      setDefaultValues(
+        DbClusterPayloadToFormValues(dbCluster, mode)
+      );
+  }, [dbCluster, dbClusterRequestStatus]);
 
-  return { defaultValues, dbClusterData: data, dbClusterStatus: status };
+  return { defaultValues, dbClusterData: dbCluster, dbClusterRequestStatus, isFetching };
 };

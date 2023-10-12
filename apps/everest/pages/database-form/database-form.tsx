@@ -68,7 +68,12 @@ export const DatabasePage = () => {
   const { state } = useLocation();
 
   const mode = useDatabasePageMode();
-  const { defaultValues, dbClusterData, dbClusterStatus } =
+  const {
+    defaultValues,
+    dbClusterData,
+    dbClusterRequestStatus,
+    isFetching: loadingDefaultsForEdition,
+  } =
     useDatabasePageDefaultValues(mode);
 
   const methods = useForm<DbWizardType>({
@@ -77,9 +82,27 @@ export const DatabasePage = () => {
     defaultValues,
   });
 
+  const {
+    reset,
+    trigger,
+    handleSubmit,
+    formState: {
+      errors,
+      isDirty,
+    },
+  } = methods;
+
   useEffect(() => {
+    // We disable the inputs on first step to make sure user doesn't change anything before all data is loaded
+    // When users change the inputs, it means all data was loaded and we should't change the defaults anymore at this point
+    // Because this effect relies on defaultValues, which comes from a hook that has dependencies that might be triggered somewhere else
+    // E.g. If defaults depend on monitoringInstances query, step four will cause this to re-rerender, because that step calls that query again
+    if (isDirty) {
+      return;
+    }
+
     if (mode === 'edit' || mode === 'restoreFromBackup') {
-      methods.reset(defaultValues);
+      reset(defaultValues);
     }
   }, [defaultValues]);
 
@@ -119,13 +142,11 @@ export const DatabasePage = () => {
 
   const handleNext: React.MouseEventHandler<HTMLButtonElement> = async () => {
     if (activeStep < steps.length - 1) {
-      const { formState } = methods;
-
       let isStepValid;
-      if (formState.errors[DbWizardFormFields.disk] && activeStep === 1) {
+      if (errors[DbWizardFormFields.disk] && activeStep === 1) {
         isStepValid = false;
       } else {
-        isStepValid = await methods.trigger();
+        isStepValid = await trigger();
       }
       if (isStepValid) {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -203,13 +224,13 @@ export const DatabasePage = () => {
         <Stack direction={isDesktop ? 'row' : 'column'}>
           <form
             style={{ flexGrow: 1 }}
-            onSubmit={methods.handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onSubmit)}
           >
             <Box>
               {(mode === 'new' ||
                 ((mode === 'edit' || mode === 'restoreFromBackup') &&
-                  dbClusterStatus === 'success')) &&
-                React.createElement(steps[activeStep])}
+                  dbClusterRequestStatus === 'success')) &&
+                React.createElement(steps[activeStep], { loadingDefaultsForEdition })}
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
               <Button
@@ -236,7 +257,7 @@ export const DatabasePage = () => {
               {activeStep === steps.length - 1 ? (
                 mode !== 'restoreFromBackup' ? (
                   <Button
-                    onClick={methods.handleSubmit(onSubmit)}
+                    onClick={handleSubmit(onSubmit)}
                     variant="contained"
                     disabled={isCreating || isUpdating}
                     data-testid="db-wizard-submit-button"

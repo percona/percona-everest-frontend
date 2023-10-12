@@ -15,10 +15,6 @@
 
 import { DbCluster, ProxyExposeType } from '../../types/dbCluster.types';
 import {
-  MonitoringInstance,
-  MonitoringInstanceList,
-} from '../../types/monitoring.types';
-import {
   DbWizardFormFields,
   DbWizardMode,
   DbWizardType,
@@ -50,24 +46,8 @@ import { MAX_DB_CLUSTER_NAME_LENGTH } from '../../constants';
 //   };
 // };
 
-const getMonitoringInstanceValue = (
-  monitoringInstances: MonitoringInstanceList,
-  instanceName: string
-): MonitoringInstance | '' => {
-  if (monitoringInstances?.length) {
-    const monitoringInstance = monitoringInstances.find(
-      (item) => item.name === instanceName
-    );
-    if (monitoringInstance) {
-      return monitoringInstance;
-    }
-    return '';
-  }
-  return '';
-};
 export const DbClusterPayloadToFormValues = (
   dbCluster: DbCluster,
-  monitoringInstances: MonitoringInstanceList,
   mode: DbWizardMode
 ): DbWizardType => {
   // const backupInfo = getBackupInfo(dbCluster?.spec?.backup); // EVEREST-334
@@ -102,10 +82,7 @@ export const DbClusterPayloadToFormValues = (
       : [{ sourceRange: '' }],
     [DbWizardFormFields.monitoring]:
       !!dbCluster?.spec?.monitoring?.monitoringConfigName,
-    [DbWizardFormFields.monitoringInstance]: getMonitoringInstanceValue(
-      monitoringInstances,
-      dbCluster?.spec?.monitoring?.monitoringConfigName
-    ),
+    [DbWizardFormFields.monitoringInstance]: dbCluster?.spec?.monitoring?.monitoringConfigName || '',
     [DbWizardFormFields.numberOfNodes]: `${dbCluster?.spec?.proxy?.replicas}`,
     [DbWizardFormFields.resourceSizePerNode]:
       matchFieldsValueToResourceSize(dbCluster),
