@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React, { useState } from 'react';
 import { z } from 'zod';
 import { FormDialog } from './form-dialog';
@@ -48,16 +48,72 @@ const Wrapper = () => {
   );
 };
 
-it('should render correctly', () => {
-  render(<Wrapper />);
-  const openModalButton = screen.getByText('Open Modal');
-  fireEvent.click(openModalButton);
-  expect(screen.getByText('Add name')).toBeInTheDocument();
-});
+describe('FormDialog', () => {
+  it('should render correctly', () => {
+    render(<Wrapper />);
+    const openModalButton = screen.getByText('Open Modal');
+    fireEvent.click(openModalButton);
+    expect(screen.getByText('Add name')).toBeInTheDocument();
+  });
 
-it('should render with correct fields', () => {
-  render(<Wrapper />);
-  const openModalButton = screen.getByText('Open Modal');
-  fireEvent.click(openModalButton);
-  expect(screen.getByText('Name')).toBeInTheDocument();
+  it('should render with correct fields', () => {
+    render(<Wrapper />);
+    const openModalButton = screen.getByText('Open Modal');
+    fireEvent.click(openModalButton);
+    expect(screen.getByText('Name')).toBeInTheDocument();
+  });
+
+  it('should close dialog when form is not dirty and there is a click outside', () => {
+    const closeModal = jest.fn();
+
+    render(
+      <FormDialog
+        isOpen
+        closeModal={closeModal}
+        headerMessage='Test click'
+        onSubmit={jest.fn()}
+        schema={schema}
+        defaultValues={defaultValues}
+        submitMessage="Add"
+      >
+        <TextInput name={DataFields.name} label="Name" isRequired />
+      </FormDialog>
+    );
+
+    const backdrop = document.body.getElementsByClassName('MuiModal-backdrop').item(0);
+
+    expect(backdrop).not.toBeNull();
+    fireEvent.click(backdrop!);
+
+    expect(closeModal).toHaveBeenCalled();
+  });
+
+  it('should keep dialog open when form is dirty and there is a click outside', async () => {
+    const closeModal = jest.fn();
+
+    render(
+      <FormDialog
+        isOpen
+        closeModal={closeModal}
+        headerMessage='Test click'
+        onSubmit={jest.fn()}
+        schema={schema}
+        defaultValues={defaultValues}
+        submitMessage="Add"
+      >
+        <TextInput name={DataFields.name} label="Name" isRequired />
+      </FormDialog>
+    );
+
+    fireEvent.change(screen.getByTestId('text-input-name'), { target: { value: 'John' } });
+
+    await waitFor(() => screen.getByDisplayValue('John'));
+
+    const backdrop = document.body.getElementsByClassName('MuiModal-backdrop').item(0);
+
+    expect(backdrop).not.toBeNull();
+    fireEvent.click(backdrop!);
+
+    expect(closeModal).not.toHaveBeenCalled();
+  });
 });

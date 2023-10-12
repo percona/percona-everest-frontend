@@ -7,6 +7,7 @@ import {
   DialogActions,
   DialogContent,
   FormGroup,
+  ModalProps,
   Typography,
 } from '@mui/material';
 import { DialogTitle } from '@percona/ui-lib.dialog-title';
@@ -40,18 +41,31 @@ export const FormDialog = <T extends FieldValues>({
     defaultValues,
     values,
   });
+  const { formState: { isDirty } } = methods;
 
   const modalWidth = size === 'L' ? '480px' : size === 'XL' ? '640px' : '700px';
 
   const handleSubmit: SubmitHandler<T> = (data) => {
     onSubmit(data);
   };
+  
+  const handleClose: ModalProps['onClose'] = (e, reason) => {
+    if (reason === 'backdropClick') {
+      if (!isDirty) {
+        closeModal();
+      }
+    } else {
+      closeModal();
+    }
+  }
+
+
 
   return (
     <Dialog
       PaperProps={{ sx: { minWidth: modalWidth } }}
       open={isOpen}
-      onClose={closeModal}
+      onClose={handleClose}
     >
       <DialogTitle onClose={closeModal}>{headerMessage}</DialogTitle>
       <DialogContent sx={{ width: modalWidth }}>

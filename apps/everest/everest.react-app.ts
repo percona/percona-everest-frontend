@@ -68,11 +68,22 @@ const outputModifier = (configMutator) => {
   return configMutator;
 };
 
+const cssLoaderModifider = (configMutator) => {
+  configMutator.addRuleToOneOf(
+    {
+      test: /\.css$/i,
+      use: ['style-loader', 'css-loader'],
+    },
+  );
+
+  return configMutator;
+}
+
 export const EverestApp: ReactAppOptions = {
   name: 'everest',
   entry: [require.resolve('./everest.app-root')],
   favicon: require.resolve('./favicon.ico'),
-  webpackTransformers: [titleAndFaviconModifier, proxyModifier, outputModifier],
+  webpackTransformers: [titleAndFaviconModifier, proxyModifier, outputModifier, cssLoaderModifider],
 };
 
 export default EverestApp;

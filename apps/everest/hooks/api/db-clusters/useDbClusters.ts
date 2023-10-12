@@ -87,7 +87,9 @@ export const useDbClusters = () => {
 
   const loadingAllClusters = userQueries.every((cluster) => cluster.isLoading);
 
-  const errorInSomeClusters = userQueries.some((cluster) => cluster.error);
+  const errorInSomeClusters = userQueries.some((cluster) => !!cluster.error);
+
+  const errorInAllClusters = userQueries.every((cluster) => !!cluster.error);
 
   const combinedDataForTable: DbClusterTableElement[] = userQueries
     .map((cluster) =>
@@ -106,5 +108,6 @@ export const useDbClusters = () => {
     loadingAllClusters,
     errorInSomeClusters,
     combinedDbClusters,
+    errorInAllClusters,
   };
 };
