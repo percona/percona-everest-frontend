@@ -219,6 +219,7 @@ export const DatabasePage = () => {
             open={restoreFromBackupModal}
             setOpen={setRestoreFromBackupModal}
             onSubmit={onSubmit}
+            submitting={isCreating}
           />
         )}
         <Stack direction={isDesktop ? 'row' : 'column'}>

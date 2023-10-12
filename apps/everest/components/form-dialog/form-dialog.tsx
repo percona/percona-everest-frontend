@@ -78,7 +78,7 @@ export const FormDialog = <T extends FieldValues>({
         </FormProvider>
       </DialogContent>
       <DialogActions>
-        <Button onClick={closeModal}>{cancelMessage}</Button>
+        <Button disabled={submitting} onClick={closeModal}>{cancelMessage}</Button>
         <Button
           variant="contained"
           onClick={methods.handleSubmit(handleSubmit)}
