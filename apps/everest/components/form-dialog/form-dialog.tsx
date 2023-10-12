@@ -41,7 +41,7 @@ export const FormDialog = <T extends FieldValues>({
     values,
   });
 
-  const modalWidth = size === 'L' ? '480px' : '640px';
+  const modalWidth = size === 'L' ? '480px' : size === 'XL' ? '640px' : '700px';
 
   const handleSubmit: SubmitHandler<T> = (data) => {
     onSubmit(data);
