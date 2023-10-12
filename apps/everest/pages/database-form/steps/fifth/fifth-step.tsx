@@ -22,7 +22,7 @@ export const FifthStep = () => {
   const monitoringInstancesOptions = (monitoringInstances || []).map((instance) => instance.name);
 
   const getInstanceOptionLabel = (instanceName: string) => {
-    const instance = monitoringInstances?.find((instance) => instance.name === instanceName);
+    const instance = monitoringInstances?.find((inst) => inst.name === instanceName);
 
     return instance ? `${instance.name} (${instance.url})` : '';
   }
