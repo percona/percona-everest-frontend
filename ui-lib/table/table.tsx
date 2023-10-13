@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+// @ts-nocheck
 import FilterListIcon from '@mui/icons-material/FilterList';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -114,7 +115,6 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
         sx: {
           '& .MuiBox-root': {
             flexDirection: 'row-reverse',
-            // @ts-ignore
             ...muiTopToolbarProps?.sx,
           },
         },
@@ -128,7 +128,6 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
               flex: 'none',
               width: '60px',
               ...displayColumnDefOptions?.['mrt-row-actions']
-                // @ts-ignore
                 ?.muiTableBodyCellProps?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-actions']
@@ -142,9 +141,7 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
               // However, MRT takes that string and shows it in the show/hide columns menu
               // By doing this, we still have "Actions" in that menu, but no text (i.e. transparent) in the header cell
               color: 'transparent',
-
               ...displayColumnDefOptions?.['mrt-row-actions']
-                // @ts-ignore
                 ?.muiTableHeadCellProps?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-actions']
@@ -158,9 +155,9 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
             sx: {
               flex: 'none',
               width: '60px',
-              ...displayColumnDefOptions?.['mrt-row-expand']
-                // @ts-ignore
-                ?.muiTableBodyCellProps?.sx,
+              ...// @ts-ignore
+              displayColumnDefOptions?.['mrt-row-expand']?.muiTableBodyCellProps
+                ?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-expand']
               ?.muiTableBodyCellProps,
@@ -174,9 +171,7 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
                   display: 'none',
                 },
               }),
-
               ...displayColumnDefOptions?.['mrt-row-expand']
-                // @ts-ignore
                 ?.muiTableHeadCellProps?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-expand']

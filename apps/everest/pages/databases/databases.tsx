@@ -22,9 +22,5 @@ export const DatabasesPage = () => {
   const { clusters } = useContext(K8Context);
   const noKubernetesClusters = !clusters?.data?.length;
 
-  return noKubernetesClusters ? (
-    <NoKubernetes />
-  ) : (
-    <DbClusterView/>
-  );
+  return noKubernetesClusters ? <NoKubernetes /> : <DbClusterView />;
 };

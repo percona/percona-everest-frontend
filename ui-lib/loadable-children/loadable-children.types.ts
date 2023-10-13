@@ -1,4 +1,4 @@
-import { SkeletonProps } from "@mui/material";
+import { SkeletonProps } from '@mui/material';
 
 export type LoadableChildrenProps = {
   children: React.ReactNode;

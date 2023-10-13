@@ -9,12 +9,12 @@ export const BasicText = () => {
     <FormProvider {...methods}>
       <TextInput
         control={methods.control}
-        name='name'
-        label='Name'
+        name="name"
+        label="Name"
         textFieldProps={{
-          placeholder: 'Insert your name'
+          placeholder: 'Insert your name',
         }}
       />
     </FormProvider>
   );
-}
+};

@@ -3,16 +3,19 @@ description: A component that allows dynamic addition / removal of text input fi
 ---
 
 ### Component usage
+
 ```js
 const methods = useForm({
   defaultValues: {
-    people: [{
-      person: 'John'
-    }]
-  }
+    people: [
+      {
+        person: 'John',
+      },
+    ],
+  },
 });
 
 <FormProvider {...methods}>
-  <TextArray fieldName='people' fieldKey='person' placeholder='Person' />
-</FormProvider>
+  <TextArray fieldName="people" fieldKey="person" placeholder="Person" />
+</FormProvider>;
 ```
