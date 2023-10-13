@@ -37,7 +37,9 @@ export const useDatabasePageDefaultValues = (
   isFetching: boolean;
 } => {
   const { state } = useLocation();
-  const shouldRetrieveDbClusterData = (mode === 'edit' || mode === 'restoreFromBackup') && !!state?.selectedDbCluster
+  const shouldRetrieveDbClusterData =
+    (mode === 'edit' || mode === 'restoreFromBackup') &&
+    !!state?.selectedDbCluster;
   const {
     data: dbCluster,
     status: dbClusterRequestStatus,
@@ -48,18 +50,21 @@ export const useDatabasePageDefaultValues = (
     mode === 'new'
       ? DB_WIZARD_DEFAULTS
       : dbClusterRequestStatus === 'success'
-        ? DbClusterPayloadToFormValues(dbCluster, mode)
-        : { ...DB_WIZARD_DEFAULTS, [DbWizardFormFields.dbVersion]: '' }
+      ? DbClusterPayloadToFormValues(dbCluster, mode)
+      : { ...DB_WIZARD_DEFAULTS, [DbWizardFormFields.dbVersion]: '' }
   );
 
   useEffect(() => {
     // dbClusterRequestStatus === 'success' when the request is enabled, which only happens if shouldRetrieveDbClusterData === true
     // hence, no need to re-check mode and so on here
     if (dbClusterRequestStatus === 'success' && dbCluster)
-      setDefaultValues(
-        DbClusterPayloadToFormValues(dbCluster, mode)
-      );
+      setDefaultValues(DbClusterPayloadToFormValues(dbCluster, mode));
   }, [dbCluster, dbClusterRequestStatus]);
 
-  return { defaultValues, dbClusterData: dbCluster, dbClusterRequestStatus, isFetching };
+  return {
+    defaultValues,
+    dbClusterData: dbCluster,
+    dbClusterRequestStatus,
+    isFetching,
+  };
 };

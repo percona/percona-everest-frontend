@@ -82,7 +82,8 @@ export const DbClusterPayloadToFormValues = (
       : [{ sourceRange: '' }],
     [DbWizardFormFields.monitoring]:
       !!dbCluster?.spec?.monitoring?.monitoringConfigName,
-    [DbWizardFormFields.monitoringInstance]: dbCluster?.spec?.monitoring?.monitoringConfigName || '',
+    [DbWizardFormFields.monitoringInstance]:
+      dbCluster?.spec?.monitoring?.monitoringConfigName || '',
     [DbWizardFormFields.numberOfNodes]: `${dbCluster?.spec?.proxy?.replicas}`,
     [DbWizardFormFields.resourceSizePerNode]:
       matchFieldsValueToResourceSize(dbCluster),

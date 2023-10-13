@@ -19,18 +19,25 @@ export const FifthStep = () => {
   const { data: monitoringInstances, isFetching: monitoringInstancesLoading } =
     useMonitoringInstancesList();
 
-  const monitoringInstancesOptions = (monitoringInstances || []).map((instance) => instance.name);
+  const monitoringInstancesOptions = (monitoringInstances || []).map(
+    (instance) => instance.name
+  );
 
   const getInstanceOptionLabel = (instanceName: string) => {
-    const instance = monitoringInstances?.find((inst) => inst.name === instanceName);
+    const instance = monitoringInstances?.find(
+      (inst) => inst.name === instanceName
+    );
 
     return instance ? `${instance.name} (${instance.url})` : '';
-  }
+  };
 
   useEffect(() => {
     if (mode === 'new') {
       if (monitoring && monitoringInstances?.length) {
-        setValue(DbWizardFormFields.monitoringInstance, monitoringInstances[0].name);
+        setValue(
+          DbWizardFormFields.monitoringInstance,
+          monitoringInstances[0].name
+        );
       }
     }
     if (
@@ -38,7 +45,10 @@ export const FifthStep = () => {
       monitoringInstances?.length &&
       !monitoringInstance
     ) {
-      setValue(DbWizardFormFields.monitoringInstance, monitoringInstances[0].name);
+      setValue(
+        DbWizardFormFields.monitoringInstance,
+        monitoringInstances[0].name
+      );
     }
   }, [monitoring]);
 
@@ -62,7 +72,9 @@ export const FifthStep = () => {
             options={monitoringInstancesOptions}
             autoCompleteProps={{
               disableClearable: true,
-              renderOption: (props, option) => <li {...props}>{getInstanceOptionLabel(option)}</li>,
+              renderOption: (props, option) => (
+                <li {...props}>{getInstanceOptionLabel(option)}</li>
+              ),
             }}
           />
         )}

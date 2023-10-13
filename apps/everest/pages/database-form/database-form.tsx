@@ -73,8 +73,7 @@ export const DatabasePage = () => {
     dbClusterData,
     dbClusterRequestStatus,
     isFetching: loadingDefaultsForEdition,
-  } =
-    useDatabasePageDefaultValues(mode);
+  } = useDatabasePageDefaultValues(mode);
 
   const methods = useForm<DbWizardType>({
     mode: 'onChange',
@@ -86,10 +85,7 @@ export const DatabasePage = () => {
     reset,
     trigger,
     handleSubmit,
-    formState: {
-      errors,
-      isDirty,
-    },
+    formState: { errors, isDirty },
   } = methods;
 
   useEffect(() => {
@@ -223,15 +219,14 @@ export const DatabasePage = () => {
           />
         )}
         <Stack direction={isDesktop ? 'row' : 'column'}>
-          <form
-            style={{ flexGrow: 1 }}
-            onSubmit={handleSubmit(onSubmit)}
-          >
+          <form style={{ flexGrow: 1 }} onSubmit={handleSubmit(onSubmit)}>
             <Box>
               {(mode === 'new' ||
                 ((mode === 'edit' || mode === 'restoreFromBackup') &&
                   dbClusterRequestStatus === 'success')) &&
-                React.createElement(steps[activeStep], { loadingDefaultsForEdition })}
+                React.createElement(steps[activeStep], {
+                  loadingDefaultsForEdition,
+                })}
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
               <Button

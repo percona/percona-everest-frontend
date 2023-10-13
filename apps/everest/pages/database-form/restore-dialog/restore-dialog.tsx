@@ -70,10 +70,19 @@ export const RestoreDialog = ({
         </Alert>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus disabled={submitting} variant="text" onClick={() => setOpen(false)}>
+        <Button
+          autoFocus
+          disabled={submitting}
+          variant="text"
+          onClick={() => setOpen(false)}
+        >
           {Messages.reject}
         </Button>
-        <Button disabled={submitting} variant="contained" onClick={handleSubmit(onSubmit)}>
+        <Button
+          disabled={submitting}
+          variant="contained"
+          onClick={handleSubmit(onSubmit)}
+        >
           {Messages.accept}
         </Button>
       </DialogActions>

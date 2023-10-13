@@ -80,7 +80,7 @@ const formValuesToPayloadOverrides = (
       },
       monitoring: {
         ...(!!dbPayload.monitoring && {
-          monitoringConfigName: dbPayload?.monitoringInstance!
+          monitoringConfigName: dbPayload?.monitoringInstance!,
         }),
       },
       proxy: {

@@ -185,9 +185,7 @@ const advancedConfigurationsSchema = z
 const stepFiveSchema = z
   .object({
     monitoring: z.boolean(),
-    monitoringInstance: z
-      .string()
-      .nullable(),
+    monitoringInstance: z.string().nullable(),
   })
   .passthrough();
 
@@ -213,4 +211,4 @@ export type DbWizardMode = 'edit' | 'new' | 'restoreFromBackup';
 
 export type StepProps = {
   loadingDefaultsForEdition: boolean;
-}
+};
