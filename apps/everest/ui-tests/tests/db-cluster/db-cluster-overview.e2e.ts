@@ -20,18 +20,20 @@ test.describe('DB Cluster Overview', async () => {
         disk: 1,
         memory: 1,
         externalAccess: true,
-        sourceRanges: [{
-          sourceRange: 'http://192.168.1.1',
-        }],
+        sourceRanges: [
+          {
+            sourceRange: 'http://192.168.1.1',
+          },
+        ],
       },
-      kubernetesId,
+      kubernetesId
     );
   });
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/databases');
     await page.getByTestId('close-dialog-icon').click();
-  })
+  });
 
   test.afterAll(async ({ request }) => {
     await deleteDbClusterFn(request, kubernetesId, dbClusterName);
@@ -57,9 +59,9 @@ test.describe('DB Cluster Overview', async () => {
       page
         .getByTestId('overview-section')
         .filter({
-          hasText: 'External Access'
+          hasText: 'External Access',
         })
         .getByText('Enabled')
     ).toBeVisible();
-  })
+  });
 });

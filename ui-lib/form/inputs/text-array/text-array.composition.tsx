@@ -8,38 +8,51 @@ import { TextArray } from './text-array';
 export const WithoutLabel = () => {
   const methods = useForm({
     defaultValues: {
-      people: [{
-        person: 'John'
-      }]
-    }
+      people: [
+        {
+          person: 'John',
+        },
+      ],
+    },
   });
   return (
     <CompositionViewer themeOptions={baseThemeOptions}>
       <Box padding={1}>
         <FormProvider {...methods}>
-          <TextArray fieldName='people' fieldKey='person' placeholder='Person' />
+          <TextArray
+            fieldName="people"
+            fieldKey="person"
+            placeholder="Person"
+          />
         </FormProvider>
       </Box>
     </CompositionViewer>
   );
-}
+};
 
 export const WithLabel = () => {
   const methods = useForm({
     defaultValues: {
-      people: [{
-        person: 'John'
-      }]
-    }
+      people: [
+        {
+          person: 'John',
+        },
+      ],
+    },
   });
 
   return (
     <CompositionViewer themeOptions={baseThemeOptions}>
       <Box padding={1}>
         <FormProvider {...methods}>
-          <TextArray fieldName='people' fieldKey='person' label='People' placeholder='Person' />
+          <TextArray
+            fieldName="people"
+            fieldKey="person"
+            label="People"
+            placeholder="Person"
+          />
         </FormProvider>
       </Box>
     </CompositionViewer>
   );
-}
+};

@@ -70,7 +70,7 @@ describe('FormDialog', () => {
       <FormDialog
         isOpen
         closeModal={closeModal}
-        headerMessage='Test click'
+        headerMessage="Test click"
         onSubmit={jest.fn()}
         schema={schema}
         defaultValues={defaultValues}
@@ -80,7 +80,9 @@ describe('FormDialog', () => {
       </FormDialog>
     );
 
-    const backdrop = document.body.getElementsByClassName('MuiModal-backdrop').item(0);
+    const backdrop = document.body
+      .getElementsByClassName('MuiModal-backdrop')
+      .item(0);
 
     expect(backdrop).not.toBeNull();
     fireEvent.click(backdrop!);
@@ -95,7 +97,7 @@ describe('FormDialog', () => {
       <FormDialog
         isOpen
         closeModal={closeModal}
-        headerMessage='Test click'
+        headerMessage="Test click"
         onSubmit={jest.fn()}
         schema={schema}
         defaultValues={defaultValues}
@@ -105,11 +107,15 @@ describe('FormDialog', () => {
       </FormDialog>
     );
 
-    fireEvent.change(screen.getByTestId('text-input-name'), { target: { value: 'John' } });
+    fireEvent.change(screen.getByTestId('text-input-name'), {
+      target: { value: 'John' },
+    });
 
     await waitFor(() => screen.getByDisplayValue('John'));
 
-    const backdrop = document.body.getElementsByClassName('MuiModal-backdrop').item(0);
+    const backdrop = document.body
+      .getElementsByClassName('MuiModal-backdrop')
+      .item(0);
 
     expect(backdrop).not.toBeNull();
     fireEvent.click(backdrop!);

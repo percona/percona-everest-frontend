@@ -1,13 +1,24 @@
 import React from 'react';
 import { FieldError, useFieldArray, useFormContext } from 'react-hook-form';
-import { Button, IconButton, InputAdornment, Stack, Typography } from '@mui/material';
+import {
+  Button,
+  IconButton,
+  InputAdornment,
+  Stack,
+  Typography,
+} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { TextArrayProps } from './text-array.types';
 import { Messages } from './text-array.messages';
 
-export const TextArray = ({ fieldName, fieldKey, label, placeholder }: TextArrayProps) => {
+export const TextArray = ({
+  fieldName,
+  fieldKey,
+  label,
+  placeholder,
+}: TextArrayProps) => {
   const {
     control,
     formState: { errors },
@@ -18,11 +29,12 @@ export const TextArray = ({ fieldName, fieldKey, label, placeholder }: TextArray
   });
 
   const defaultFields = fields.length ? fields : [];
-  const error = (index: number): FieldError | undefined => errors?.[fieldName]?.[index]?.[fieldKey];
+  const error = (index: number): FieldError | undefined =>
+    errors?.[fieldName]?.[index]?.[fieldKey];
 
   return (
     <>
-      <Stack direction='row'>
+      <Stack direction="row">
         {label && (
           <Typography
             // @ts-ignore
@@ -40,7 +52,7 @@ export const TextArray = ({ fieldName, fieldKey, label, placeholder }: TextArray
           sx={{
             width: 'fit-content',
             alignSelf: 'end',
-            ml: 'auto'
+            ml: 'auto',
           }}
           onClick={() => {
             append({
@@ -65,7 +77,7 @@ export const TextArray = ({ fieldName, fieldKey, label, placeholder }: TextArray
               width: '100%',
               '&:not(:last-child)': {
                 mb: 1,
-              }
+              },
             },
             InputProps: {
               endAdornment: (
@@ -84,4 +96,4 @@ export const TextArray = ({ fieldName, fieldKey, label, placeholder }: TextArray
       ))}
     </>
   );
-}
+};

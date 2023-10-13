@@ -3,7 +3,12 @@ import { Button, Menu } from '@mui/material';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import { MenuButtonProps } from './menu-button.types';
 
-export const MenuButton = ({ children, buttonText, buttonProps, menuProps }: MenuButtonProps) => {
+export const MenuButton = ({
+  children,
+  buttonText,
+  buttonProps,
+  menuProps,
+}: MenuButtonProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = !!anchorEl;
 
@@ -26,7 +31,7 @@ export const MenuButton = ({ children, buttonText, buttonProps, menuProps }: Men
         onClick={handleClick}
         endIcon={<ArrowDropDownOutlinedIcon />}
         size="small"
-        variant='contained'
+        variant="contained"
         {...buttonProps}
       >
         {buttonText}
@@ -46,4 +51,4 @@ export const MenuButton = ({ children, buttonText, buttonProps, menuProps }: Men
       </Menu>
     </>
   );
-}
+};

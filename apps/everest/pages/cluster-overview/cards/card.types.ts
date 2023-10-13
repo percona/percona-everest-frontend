@@ -1,4 +1,4 @@
-import { DbType } from "@percona/ui-lib.db-toggle-card";
+import { DbType } from '@percona/ui-lib.db-toggle-card';
 
 export type OverviewCardProps = {
   loading?: boolean;

@@ -8,20 +8,10 @@ export const BasicToggleButtonGroup = () => {
 
   return (
     <FormProvider {...methods}>
-      <ToggleButtonGroupInput
-        name='numberOfNodes'
-        control={methods.control}>
-        <ToggleCard
-          value='1'
-        >
-          One node
-        </ToggleCard>
-        <ToggleCard
-          value='two'
-        >
-          Two nodes
-        </ToggleCard>
+      <ToggleButtonGroupInput name="numberOfNodes" control={methods.control}>
+        <ToggleCard value="1">One node</ToggleCard>
+        <ToggleCard value="two">Two nodes</ToggleCard>
       </ToggleButtonGroupInput>
     </FormProvider>
   );
-}
+};
