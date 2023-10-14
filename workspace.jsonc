@@ -70,6 +70,7 @@
         "eslint-plugin-react": "7.25.1",
         "material-react-table": "^1.14.0",
         "notistack": "^3.0.1",
+        "oidc-client-ts": "^2.3.0",
         "react-hook-form": "^7.46.2",
         "react-query": "^3.39.3",
         "style-loader": "^3.3.3",

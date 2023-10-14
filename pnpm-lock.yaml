@@ -127,6 +127,9 @@ importers:
       notistack:
         specifier: ^3.0.1
         version: 3.0.1(react-dom@17.0.2)(react@17.0.2)
+      oidc-client-ts:
+        specifier: ^2.3.0
+        version: 2.3.0
       react:
         specifier: ^17.0.0
         version: 17.0.2
@@ -602,7 +605,7 @@ importers:
         version: file:ui-lib/form/inputs/text(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.form.inputs.text-array':
         specifier: workspace:*
-        version: file:ui-lib/form/inputs/text-array(@mui/material@5.14.13)(@types/react@17.0.68)(react@17.0.2)
+        version: file:ui-lib/form/inputs/text-array(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.form.inputs.toggle-button-group':
         specifier: workspace:*
         version: file:ui-lib/form/inputs/toggle-button-group(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
@@ -620,10 +623,10 @@ importers:
         version: file:ui-lib/labeled-content(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.loadable-children':
         specifier: workspace:*
-        version: file:ui-lib/loadable-children(react@17.0.2)
+        version: file:ui-lib/loadable-children(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.menu-button':
         specifier: workspace:*
-        version: file:ui-lib/menu-button(@mui/material@5.14.13)(@types/react@17.0.68)(react@17.0.2)
+        version: file:ui-lib/menu-button(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
       '@percona/ui-lib.progress-bar':
         specifier: workspace:*
         version: file:ui-lib/progress-bar(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
@@ -805,7 +808,7 @@ importers:
         version: file:ui-lib/form/inputs/text(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.form.inputs.text-array':
         specifier: workspace:*
-        version: file:ui-lib/form/inputs/text-array(@mui/material@5.14.13)(@types/react@17.0.68)(react@17.0.2)
+        version: file:ui-lib/form/inputs/text-array(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.form.inputs.toggle-button-group':
         specifier: workspace:*
         version: file:ui-lib/form/inputs/toggle-button-group(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
@@ -823,10 +826,10 @@ importers:
         version: file:ui-lib/labeled-content(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.loadable-children':
         specifier: workspace:*
-        version: file:ui-lib/loadable-children(react@17.0.2)
+        version: file:ui-lib/loadable-children(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.menu-button':
         specifier: workspace:*
-        version: file:ui-lib/menu-button(@mui/material@5.14.13)(@types/react@17.0.68)(react@17.0.2)
+        version: file:ui-lib/menu-button(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
       '@percona/ui-lib.progress-bar':
         specifier: workspace:*
         version: file:ui-lib/progress-bar(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
@@ -962,7 +965,7 @@ importers:
         version: file:ui-lib/form/inputs/text(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.form.inputs.text-array':
         specifier: workspace:*
-        version: file:ui-lib/form/inputs/text-array(@mui/material@5.14.13)(@types/react@17.0.68)(react@17.0.2)
+        version: file:ui-lib/form/inputs/text-array(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.form.inputs.toggle-button-group':
         specifier: workspace:*
         version: file:ui-lib/form/inputs/toggle-button-group(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
@@ -980,10 +983,10 @@ importers:
         version: file:ui-lib/labeled-content(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.loadable-children':
         specifier: workspace:*
-        version: file:ui-lib/loadable-children(react@17.0.2)
+        version: file:ui-lib/loadable-children(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.menu-button':
         specifier: workspace:*
-        version: file:ui-lib/menu-button(@mui/material@5.14.13)(@types/react@17.0.68)(react@17.0.2)
+        version: file:ui-lib/menu-button(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
       '@percona/ui-lib.progress-bar':
         specifier: workspace:*
         version: file:ui-lib/progress-bar(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
@@ -1373,6 +1376,9 @@ importers:
       '@mui/icons-material':
         specifier: ^5.11.16
         version: 5.14.13(@mui/material@5.14.13)(@types/react@17.0.68)(react@17.0.2)
+      '@mui/material':
+        specifier: ^5.13.1
+        version: 5.14.13(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@17.0.68)(react-dom@17.0.2)(react@17.0.2)
       '@teambit/mdx.ui.mdx-scope-context':
         specifier: 1.0.0
         version: 1.0.0(react-dom@17.0.2)(react@17.0.2)
@@ -1625,6 +1631,9 @@ importers:
       '@mdx-js/react':
         specifier: ^1.6.22
         version: 1.6.22(react@17.0.2)
+      '@mui/material':
+        specifier: ^5.13.1
+        version: 5.14.13(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@17.0.68)(react-dom@17.0.2)(react@17.0.2)
       '@teambit/mdx.ui.mdx-scope-context':
         specifier: 1.0.0
         version: 1.0.0(react-dom@17.0.2)(react@17.0.2)
@@ -1665,6 +1674,9 @@ importers:
       '@mui/icons-material':
         specifier: ^5.11.16
         version: 5.14.13(@mui/material@5.14.13)(@types/react@17.0.68)(react@17.0.2)
+      '@mui/material':
+        specifier: ^5.13.1
+        version: 5.14.13(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@17.0.68)(react-dom@17.0.2)(react@17.0.2)
       '@teambit/mdx.ui.mdx-scope-context':
         specifier: 1.0.0
         version: 1.0.0(react-dom@17.0.2)(react@17.0.2)
@@ -4614,7 +4626,7 @@ packages:
       '@babel/core':
         optional: true
     dependencies:
-      '@babel/helper-module-transforms': 7.23.0(@babel/core@7.11.6)
+      '@babel/helper-module-transforms': 7.23.0(@babel/core@7.12.9)
       '@babel/helper-plugin-utils': 7.22.5
     dev: false
 
@@ -4684,7 +4696,7 @@ packages:
       '@babel/core':
         optional: true
     dependencies:
-      '@babel/helper-module-transforms': 7.23.0(@babel/core@7.11.6)
+      '@babel/helper-module-transforms': 7.23.0(@babel/core@7.12.9)
       '@babel/helper-plugin-utils': 7.22.5
       '@babel/helper-simple-access': 7.22.5
     dev: false
@@ -4744,7 +4756,7 @@ packages:
         optional: true
     dependencies:
       '@babel/helper-hoist-variables': 7.22.5
-      '@babel/helper-module-transforms': 7.23.0(@babel/core@7.11.6)
+      '@babel/helper-module-transforms': 7.23.0(@babel/core@7.12.9)
       '@babel/helper-plugin-utils': 7.22.5
       '@babel/helper-validator-identifier': 7.22.20
     dev: false
@@ -4806,7 +4818,7 @@ packages:
       '@babel/core':
         optional: true
     dependencies:
-      '@babel/helper-module-transforms': 7.23.0(@babel/core@7.11.6)
+      '@babel/helper-module-transforms': 7.23.0(@babel/core@7.12.9)
       '@babel/helper-plugin-utils': 7.22.5
     dev: false
 
@@ -5029,8 +5041,8 @@ packages:
       '@babel/compat-data': 7.22.20
       '@babel/helper-compilation-targets': 7.22.15
       '@babel/helper-plugin-utils': 7.22.5
-      '@babel/plugin-syntax-object-rest-spread': 7.8.3(@babel/core@7.11.6)
-      '@babel/plugin-transform-parameters': 7.22.15(@babel/core@7.11.6)
+      '@babel/plugin-syntax-object-rest-spread': 7.8.3(@babel/core@7.12.9)
+      '@babel/plugin-transform-parameters': 7.22.15(@babel/core@7.12.9)
     dev: false
 
   /@babel/plugin-transform-object-rest-spread@7.22.15(@babel/core@7.19.6):
@@ -6074,7 +6086,7 @@ packages:
       '@babel/plugin-syntax-logical-assignment-operators': 7.10.4(@babel/core@7.19.6)
       '@babel/plugin-syntax-nullish-coalescing-operator': 7.8.3(@babel/core@7.19.6)
       '@babel/plugin-syntax-numeric-separator': 7.10.4(@babel/core@7.19.6)
-      '@babel/plugin-syntax-object-rest-spread': 7.8.3(@babel/core@7.11.6)
+      '@babel/plugin-syntax-object-rest-spread': 7.8.3(@babel/core@7.12.9)
       '@babel/plugin-syntax-optional-catch-binding': 7.8.3(@babel/core@7.19.6)
       '@babel/plugin-syntax-optional-chaining': 7.8.3(@babel/core@7.19.6)
       '@babel/plugin-syntax-private-property-in-object': 7.14.5(@babel/core@7.19.6)
@@ -6113,7 +6125,7 @@ packages:
       '@babel/plugin-transform-object-super': 7.22.5(@babel/core@7.19.6)
       '@babel/plugin-transform-optional-catch-binding': 7.22.11(@babel/core@7.19.6)
       '@babel/plugin-transform-optional-chaining': 7.23.0(@babel/core@7.19.6)
-      '@babel/plugin-transform-parameters': 7.22.15(@babel/core@7.11.6)
+      '@babel/plugin-transform-parameters': 7.22.15(@babel/core@7.12.9)
       '@babel/plugin-transform-private-methods': 7.22.5(@babel/core@7.19.6)
       '@babel/plugin-transform-private-property-in-object': 7.22.11(@babel/core@7.19.6)
       '@babel/plugin-transform-property-literals': 7.22.5(@babel/core@7.19.6)
@@ -13639,6 +13651,10 @@ packages:
       randomfill: 1.0.4
     dev: false
 
+  /crypto-js@4.1.1:
+    resolution: {integrity: sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==}
+    dev: false
+
   /css-blank-pseudo@3.0.3(postcss@8.4.19):
     resolution: {integrity: sha512-VS90XWtsHGqoM0t4KpH053c4ehxZ2E6HtGI7x68YFV0pTo/QmkV/YFA+NnlvK8guxZVNWGQhVNJGC39Q8XF4OQ==}
     engines: {node: ^12 || ^14 || >=16}
@@ -17706,6 +17722,10 @@ packages:
       xmlbuilder: 15.1.1
     dev: false
 
+  /jwt-decode@3.1.2:
+    resolution: {integrity: sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==}
+    dev: false
+
   /keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
     dependencies:
@@ -18898,6 +18918,14 @@ packages:
 
   /obuf@1.1.2:
     resolution: {integrity: sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==}
+    dev: false
+
+  /oidc-client-ts@2.3.0:
+    resolution: {integrity: sha512-7RUKU+TJFQo+4X9R50IGJAIDF18uRBaFXyZn4VVCfwmwbSUhKcdDnw4zgeut3uEXkiD3NqURq+d88sDPxjf1FA==}
+    engines: {node: '>=12.13.0'}
+    dependencies:
+      crypto-js: 4.1.1
+      jwt-decode: 3.1.2
     dev: false
 
   /on-finished@2.4.1:
@@ -23310,16 +23338,20 @@ packages:
       '@mui/material': 5.14.13(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@17.0.68)(react-dom@17.0.2)(react@17.0.2)
       '@percona/design.theme-context-provider': file:design/theme-context-provider(@emotion/react@11.11.1)(@mui/material@5.14.13)(react@17.0.2)
       '@percona/design.themes.everest': file:design/themes/everest(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
+      '@percona/ui-lib.card': file:ui-lib/card(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
       '@percona/ui-lib.db-toggle-card': file:ui-lib/db-toggle-card(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
       '@percona/ui-lib.dialog-title': file:ui-lib/dialog-title(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.form.inputs.auto-complete': file:ui-lib/form/inputs/auto-complete(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.form.inputs.select': file:ui-lib/form/inputs/select(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.form.inputs.switch': file:ui-lib/form/inputs/switch(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.form.inputs.text': file:ui-lib/form/inputs/text(@mui/material@5.14.13)(react@17.0.2)
+      '@percona/ui-lib.form.inputs.text-array': file:ui-lib/form/inputs/text-array(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.form.inputs.toggle-button-group': file:ui-lib/form/inputs/toggle-button-group(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
       '@percona/ui-lib.icons.db': file:ui-lib/icons/db(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.icons.everest': file:ui-lib/icons/everest(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
       '@percona/ui-lib.icons.status': file:ui-lib/icons/status(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
+      '@percona/ui-lib.loadable-children': file:ui-lib/loadable-children(@mui/material@5.14.13)(react@17.0.2)
+      '@percona/ui-lib.menu-button': file:ui-lib/menu-button(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
       '@percona/ui-lib.stepper': file:ui-lib/stepper(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
       '@percona/ui-lib.table': file:ui-lib/table(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(react-dom@17.0.2)(react@17.0.2)
       '@percona/ui-lib.toggle-card': file:ui-lib/toggle-card(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
@@ -23698,22 +23730,31 @@ packages:
       react-hook-form: 7.47.0(react@17.0.2)
     dev: false
 
-  file:ui-lib/form/inputs/text-array(@mui/material@5.14.13)(@types/react@17.0.68)(react@17.0.2):
+  file:ui-lib/form/inputs/text-array(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(react@17.0.2):
     resolution: {directory: ui-lib/form/inputs/text-array, type: directory}
     id: file:ui-lib/form/inputs/text-array
     name: '@percona/ui-lib.form.inputs.text-array'
     peerDependencies:
+      '@mui/icons-material': '*'
+      '@mui/material': '*'
       react: '*'
     peerDependenciesMeta:
+      '@mui/icons-material':
+        optional: true
+      '@mui/material':
+        optional: true
       react:
         optional: true
     dependencies:
       '@mui/icons-material': 5.14.13(@mui/material@5.14.13)(@types/react@17.0.68)(react@17.0.2)
+      '@mui/material': 5.14.13(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@17.0.68)(react-dom@17.0.2)(react@17.0.2)
+      '@percona/design.composition-viewer': file:design/composition-viewer(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(react@17.0.2)
+      '@percona/design.themes.base': file:design/themes/base(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(react@17.0.2)
+      '@percona/ui-lib.form.inputs.text': file:ui-lib/form/inputs/text(@mui/material@5.14.13)(react@17.0.2)
       react: 17.0.2
       react-hook-form: 7.47.0(react@17.0.2)
     transitivePeerDependencies:
-      - '@mui/material'
-      - '@types/react'
+      - '@emotion/react'
     dev: false
 
   file:ui-lib/form/inputs/toggle-button-group(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2):
@@ -23823,34 +23864,47 @@ packages:
       react: 17.0.2
     dev: false
 
-  file:ui-lib/loadable-children(react@17.0.2):
+  file:ui-lib/loadable-children(@mui/material@5.14.13)(react@17.0.2):
     resolution: {directory: ui-lib/loadable-children, type: directory}
     id: file:ui-lib/loadable-children
     name: '@percona/ui-lib.loadable-children'
     peerDependencies:
+      '@mui/material': '*'
       react: '*'
     peerDependenciesMeta:
+      '@mui/material':
+        optional: true
       react:
         optional: true
     dependencies:
+      '@mui/material': 5.14.13(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@17.0.68)(react-dom@17.0.2)(react@17.0.2)
       react: 17.0.2
     dev: false
 
-  file:ui-lib/menu-button(@mui/material@5.14.13)(@types/react@17.0.68)(react@17.0.2):
+  file:ui-lib/menu-button(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2):
     resolution: {directory: ui-lib/menu-button, type: directory}
     id: file:ui-lib/menu-button
     name: '@percona/ui-lib.menu-button'
     peerDependencies:
+      '@mui/icons-material': '*'
+      '@mui/material': '*'
       react: '*'
     peerDependenciesMeta:
+      '@mui/icons-material':
+        optional: true
+      '@mui/material':
+        optional: true
       react:
         optional: true
     dependencies:
       '@mui/icons-material': 5.14.13(@mui/material@5.14.13)(@types/react@17.0.68)(react@17.0.2)
+      '@mui/material': 5.14.13(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@17.0.68)(react-dom@17.0.2)(react@17.0.2)
+      '@percona/design.composition-viewer': file:design/composition-viewer(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(react@17.0.2)
+      '@percona/design.themes.everest': file:design/themes/everest(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
       react: 17.0.2
     transitivePeerDependencies:
-      - '@mui/material'
-      - '@types/react'
+      - '@emotion/react'
+      - '@mui/utils'
     dev: false
 
   file:ui-lib/progress-bar(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2):
