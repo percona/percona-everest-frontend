@@ -139,6 +139,9 @@ importers:
       react-hook-form:
         specifier: ^7.46.2
         version: 7.47.0(react@17.0.2)
+      react-oidc-context:
+        specifier: ^2.3.1
+        version: 2.3.1(oidc-client-ts@2.3.0)(react@17.0.2)
       react-query:
         specifier: ^3.39.3
         version: 3.39.3(react-dom@17.0.2)(react@17.0.2)
@@ -212,6 +215,9 @@ importers:
       notistack:
         specifier: ^3.0.1
         version: 3.0.1(react-dom@17.0.2)(react@17.0.2)
+      oidc-client-ts:
+        specifier: ^2.3.0
+        version: 2.3.0
       react:
         specifier: ^17.0.0
         version: 17.0.2
@@ -669,6 +675,9 @@ importers:
       notistack:
         specifier: ^3.0.1
         version: 3.0.1(react-dom@17.0.2)(react@17.0.2)
+      oidc-client-ts:
+        specifier: ^2.3.0
+        version: 2.3.0
       react:
         specifier: ^17.0.0
         version: 17.0.2
@@ -20661,6 +20670,22 @@ packages:
       use-editable: 2.3.3(react@17.0.2)
     dev: false
 
+  /react-oidc-context@2.3.1(oidc-client-ts@2.3.0)(react@17.0.2):
+    resolution: {integrity: sha512-WdhmEU6odNzMk9pvOScxUkf6/1aduiI/nQryr7+iCl2VDnYLASDTIV/zy58KuK4VXG3fBaRKukc/mRpMjF9a3Q==}
+    engines: {node: '>=12.13.0'}
+    peerDependencies:
+      oidc-client-ts: '*'
+      react: '*'
+    peerDependenciesMeta:
+      oidc-client-ts:
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      oidc-client-ts: 2.3.0
+      react: 17.0.2
+    dev: false
+
   /react-query@3.39.3(react-dom@17.0.2)(react@17.0.2):
     resolution: {integrity: sha512-nLfLz7GiohKTJDuT4us4X3h/8unOh+00MLb2yJoGTPjxKs2bc1iDhkNx2bd5MKklXnOD3NrVZ+J2UXujA5In4g==}
     peerDependencies:
@@ -23362,6 +23387,7 @@ packages:
       date-fns: 2.30.0
       material-react-table: 1.15.0(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(react-dom@17.0.2)(react@17.0.2)
       notistack: 3.0.1(react-dom@17.0.2)(react@17.0.2)
+      oidc-client-ts: 2.3.0
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
       react-hook-form: 7.47.0(react@17.0.2)
