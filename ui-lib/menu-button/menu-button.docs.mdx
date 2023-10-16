@@ -3,11 +3,12 @@ description: MUI Menu through a button with an arrow down icon.
 ---
 
 ### Component usage
+
 ```js
-<MenuButton buttonText='Create backup'>
+<MenuButton buttonText="Create backup">
   {(handleClose) => [
     <MenuItem key="now">Now</MenuItem>,
-    <MenuItem key="schedule">Schedule</MenuItem>
+    <MenuItem key="schedule">Schedule</MenuItem>,
   ]}
 </MenuButton>
 ```

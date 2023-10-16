@@ -13,34 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import AddIcon from '@mui/icons-material/Add';
-import { Button } from '@mui/material';
 import React, { useContext } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 import { DbClusterView } from '../../components/db-cluster-view/DbClusterView';
 import { K8Context } from '../../contexts/kubernetes/kubernetes.context';
-import { Messages } from './databases.messages';
 import { NoKubernetes } from './no-kubernetes/no-kubernetes';
 
 export const DatabasesPage = () => {
   const { clusters } = useContext(K8Context);
   const noKubernetesClusters = !clusters?.data?.length;
 
-  return noKubernetesClusters ? (
-    <NoKubernetes />
-  ) : (
-    <DbClusterView
-      customHeader={
-        <Button
-          size="small"
-          startIcon={<AddIcon />}
-          component={RouterLink}
-          to="/databases/new"
-          variant="contained"
-        >
-          {Messages.createDatabase}
-        </Button>
-      }
-    />
-  );
+  return noKubernetesClusters ? <NoKubernetes /> : <DbClusterView />;
 };
