@@ -8,6 +8,7 @@ const authConfig: AuthProviderProps = {
   scope: 'openid profile email',
   response_type: 'code',
   response_mode: 'query',
+  loadUserInfo: true,
   // userStore: new WebStorageStateStore({ store: window.localStorage }),
   // onSigninCallback: () => {
   // }
