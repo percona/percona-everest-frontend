@@ -45,7 +45,7 @@ export const DotsMenu = ({ menuProps, options }: DotsMenuProps) => {
           'aria-labelledby': 'long-button',
         }}
         anchorEl={anchorEl}
-        open={!!open}
+        open={!!anchorEl}
         onClose={handleClose}
         {...menuProps}
       >
