@@ -41,14 +41,16 @@ export const FormDialog = <T extends FieldValues>({
     defaultValues,
     values,
   });
-  const { formState: { isDirty } } = methods;
+  const {
+    formState: { isDirty },
+  } = methods;
 
   const modalWidth = size === 'L' ? '480px' : size === 'XL' ? '640px' : '700px';
 
   const handleSubmit: SubmitHandler<T> = (data) => {
     onSubmit(data);
   };
-  
+
   const handleClose: ModalProps['onClose'] = (e, reason) => {
     if (reason === 'backdropClick') {
       if (!isDirty) {
@@ -57,9 +59,7 @@ export const FormDialog = <T extends FieldValues>({
     } else {
       closeModal();
     }
-  }
-
-
+  };
 
   return (
     <Dialog

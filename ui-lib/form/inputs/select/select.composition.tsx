@@ -8,14 +8,10 @@ export const BasicSelect = () => {
 
   return (
     <FormProvider {...methods}>
-      <SelectInput name='company' label='Company' control={methods.control}>
-        <MenuItem value='percona'>
-          Percona
-        </MenuItem>
-        <MenuItem value='other'>
-          Other
-        </MenuItem>
+      <SelectInput name="company" label="Company" control={methods.control}>
+        <MenuItem value="percona">Percona</MenuItem>
+        <MenuItem value="other">Other</MenuItem>
       </SelectInput>
     </FormProvider>
   );
-}
+};

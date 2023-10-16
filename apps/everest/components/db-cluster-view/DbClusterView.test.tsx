@@ -13,8 +13,8 @@ jest.mock('../../hooks/api/db-clusters/useDbClusters', () => ({
   useDbClusters: jest.fn().mockImplementation(() => ({
     combinedDataForTable: [],
     combinedDbClusters: [],
-    errorInAllClusters: true
-  }))
+    errorInAllClusters: true,
+  })),
 }));
 
 describe('DBClusterView', () => {
@@ -31,14 +31,16 @@ describe('DBClusterView', () => {
 
     expect(screen.getByTestId('add-db-cluster-button')).toBeInTheDocument();
     // The component is a Link, so we test by attribute
-    expect(screen.getByTestId('add-db-cluster-button').getAttribute('aria-disabled')).toBe('true');
+    expect(
+      screen.getByTestId('add-db-cluster-button').getAttribute('aria-disabled')
+    ).toBe('true');
   });
 
   it('should activate button when at least one k8s cluster is ok', () => {
     (useDbClusters as jest.Mock).mockImplementationOnce(() => ({
       combinedDataForTable: [],
       combinedDbClusters: [],
-      errorInAllClusters: false
+      errorInAllClusters: false,
     }));
 
     render(
@@ -49,10 +51,12 @@ describe('DBClusterView', () => {
           </K8ContextProvider>
         </MemoryRouter>
       </QueryClientProvider>
-    )
+    );
 
     expect(screen.getByTestId('add-db-cluster-button')).toBeInTheDocument();
 
-    expect(screen.getByTestId('add-db-cluster-button').getAttribute('aria-disabled')).toBeNull()
+    expect(
+      screen.getByTestId('add-db-cluster-button').getAttribute('aria-disabled')
+    ).toBeNull();
   });
 });

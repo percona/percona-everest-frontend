@@ -43,7 +43,19 @@
         "@hookform/resolvers": "^3.1.0",
         "@mui/icons-material": "^5.11.16",
         "@playwright/test": "^1.36.1",
+        "@teambit/defender.eslint-linter": "^1.0.8",
+        "@teambit/defender.jest-tester": "^1.0.5",
+        "@teambit/defender.prettier-formatter": "^1.0.2",
+        "@teambit/dependencies.modules.packages-excluder": "^1.0.4",
         "@teambit/eslint-config-bit-react": "~0.0.367",
+        "@teambit/mdx.ui.mdx-scope-context": "1.0.5",
+        "@teambit/preview.react-preview": "^1.0.8",
+        "@teambit/react.mounter": "^0.0.8",
+        "@teambit/react.react-env": "^1.0.15",
+        "@teambit/react.ui.docs-app": "^1.0.6",
+        "@teambit/typescript.typescript-compiler": "^2.0.7",
+        "@types/react": "^17.0.0",
+        "@types/react-dom": "^17.0.0",
         "@typescript-eslint/eslint-plugin": "5.35.1",
         "axios": "^1.4.0",
         "cron-time-generator": "^2.0.0",
@@ -54,32 +66,38 @@
         "eslint-plugin-import": "2.22.1",
         "eslint-plugin-jest": "24.4.0",
         "eslint-plugin-jsx-a11y": "6.4.1",
-        "eslint-plugin-mdx": "1.15.0",
+        "eslint-plugin-mdx": "2.2.0",
         "eslint-plugin-react": "7.25.1",
         "material-react-table": "^1.14.0",
         "notistack": "^3.0.1",
-        "react-hook-form": "^7.44.3",
+        "react-hook-form": "^7.46.2",
         "react-query": "^3.39.3",
         "style-loader": "^3.3.3",
         "zod": "^3.21.4"
       },
       "peerDependencies": {
-        "@emotion/react": "^11.11.0",
+        "@emotion/react": "^11.11.1",
         "@emotion/styled": "^11.11.0",
         "@mui/icons-material": "^5.11.16",
         "@mui/material": "^5.13.1",
         "@mui/utils": "^5.13.1",
         "@testing-library/react": "^12.1.5",
-        "react": "17.0.2",
-        "react-dom": "17.0.2",
-        "react-router-dom": "6.11.2"
+        "react": "^17.0.0",
+        "react-dom": "^17.0.0",
+        "react-router-dom": "6.16.0"
       }
     },
-    "linkCoreAspects": true
+    "linkCoreAspects": true,
+    "rootComponents": true,
+    "overrides": {
+      "react": "^17.0.0",
+      "react-dom": "^17.0.0",
+      "@teambit/react.mounter": "^0.0.8"
+    }
   },
   "teambit.generator/generator": {
     "envs": [
-      "percona.envs/percona-react-env"
+      "percona.envs/percona-custom-react-env"
     ]
   },
   /**

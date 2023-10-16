@@ -22,7 +22,6 @@ jobs:
     name: ESLint & format
     runs-on: ubuntu-20.04
     env:
-      BIT_TOKEN: ${{ secrets.BIT_TOKEN }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     strategy:
       matrix:
@@ -48,9 +47,6 @@ jobs:
       - name: add bvm bin folder to path
         run: echo "$HOME/bin" >> $GITHUB_PATH
 
-      - name: Set up bit config
-        run: bit config set user.token $BIT_TOKEN
-
       - name: Install dependencies
         run: make init
 
@@ -62,14 +58,13 @@ jobs:
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: 'chore: format files'
+          commit_message: 'chore: format files [skip ci]'
           file_pattern: ':(exclude)pnpm-lock.yaml'
   tests:
     name: Tests
     runs-on: ubuntu-20.04
     env:
       GOPRIVATE: github.com/percona,github.com/percona/percona-everest-backend,github.com/percona/percona-everest-cli,github.com/percona/everest-operator
-      BIT_TOKEN: ${{ secrets.BIT_TOKEN }}
     strategy:
       matrix:
         node-version: [16.x]
@@ -86,7 +81,6 @@ jobs:
           repository: percona/percona-everest-cli
           ref: 'main'
           path: percona-everest-cli
-          token: ${{ secrets.ROBOT_TOKEN }}
 
       - name: Checkout backend repo
         uses: percona-platform/checkout@v3
@@ -94,7 +88,6 @@ jobs:
           repository: percona/percona-everest-backend
           ref: 'main'
           path: percona-everest-backend
-          token: ${{ secrets.ROBOT_TOKEN }}
 
       - uses: pnpm/action-setup@v2
         with:
@@ -119,9 +112,6 @@ jobs:
 
       - name: add bvm bin folder to path
         run: echo "$HOME/bin" >> $GITHUB_PATH
-
-      - name: Set up bit config
-        run: bit config set user.token $BIT_TOKEN
 
       - name: Build Everest
         run: |
@@ -169,12 +159,15 @@ jobs:
           make init
           make local-env-up
           make build-debug
+          touch everest-backend.log
           make run-debug &> everest-backend.log &
 
-      - name: Run debug commands on failure
-        if: ${{ failure() }}
-        run: |
-          cat everest-backend.log
+      - name: Archive backend log
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: everest-backend.log
+          path: ./percona-everest-backend/everest-backend.log
 
       - name: Create KIND cluster
         uses: helm/kind-action@v1.8.0

@@ -38,11 +38,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install Bit Version Manager
-        run: npm i -g @teambit/bvm
-
-      - name: Install latest Bit version
-        run: bvm install 0.2.3
+      - name: Install Bit
+        run: | 
+          cd ${GITHUB_WORKSPACE}/percona-everest-frontend
+          make install-bit
 
       - name: Add bvm bin folder to path
         run: echo "$HOME/bin" >> $GITHUB_PATH
@@ -56,7 +55,7 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}/percona-everest-frontend
           bit install --recurring-install
-          bit snap
+          bit snap --build
           bit artifacts percona.apps/everest --out-dir build
           mkdir ${GITHUB_WORKSPACE}/front
           cp -rf build/percona.apps_everest/react-common-js/everest/public/* ${GITHUB_WORKSPACE}/front/
