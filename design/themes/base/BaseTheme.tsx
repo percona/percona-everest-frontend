@@ -1,5 +1,6 @@
 import { createTheme, PaletteMode, ThemeOptions } from '@mui/material';
 import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
 
 declare module '@mui/material/styles' {
@@ -237,8 +238,14 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
     button: {
       fontFamily: "'Poppins', sans-serif",
       textTransform: 'none',
-      lineHeight: '1',
+      lineHeight: '14px',
+      fontSize: '13px',
+      fontWeight: 500,
       letterSpacing: '0.025em',
+      [BaseTheme.breakpoints.up('lg')]: {
+        fontSize: '15px',
+        lineHeight: '16px',
+      },
     },
   },
   shadows: [

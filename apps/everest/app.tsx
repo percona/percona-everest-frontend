@@ -80,6 +80,7 @@ export const EverestApp = () => {
   }
 
   if (isAuthenticated) {
+    console.log(user);
     // setApiToken(user?.access_token || '');
 
     return (
