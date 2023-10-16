@@ -12,7 +12,9 @@ export const ClusterOverview = () => {
 
   const { data: dbCluster, isFetching: fetchingCluster } = useDbCluster(
     dbClusterName || '',
-    !!dbClusterName
+    {
+      enabled: !!dbClusterName,
+    }
   );
   const { data: dbClusterDetails, isFetching: fetchingClusterDetails } =
     useDbClusterCredentials(dbClusterName || '');
