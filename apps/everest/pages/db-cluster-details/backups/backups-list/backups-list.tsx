@@ -17,8 +17,10 @@ import {
   useDbBackups,
   useDeleteBackup,
 } from '../../../../hooks/api/backups/useBackups';
+import { useDbCluster } from '../../../../hooks/api/db-cluster/useDbCluster';
 import { useDbClusterRestore } from '../../../../hooks/api/restores/useDbClusterRestore';
 import { Backup, BackupStatus } from '../../../../types/backups.types';
+import { DbEngineType } from '../../../../types/dbEngines.types';
 import { OnDemandBackupModal } from '../on-demand-backup-modal/on-demand-backup-modal';
 import { ScheduledBackupModal } from '../scheduled-backup-modal/scheduled-backup-modal';
 import { BACKUP_STATUS_TO_BASE_STATUS } from './backups-list.constants';
@@ -44,6 +46,11 @@ export const BackupsList = () => {
   const { mutate: deleteBackup, isLoading: deletingBackup } = useDeleteBackup();
   const { mutate: restoreBackup, isLoading: restoringBackup } =
     useDbClusterRestore(dbClusterName!);
+  const { data: dbCluster } = useDbCluster(dbClusterName || '', {
+    enabled: !!dbClusterName,
+  });
+
+  const dbType = dbCluster?.spec?.engine?.type;
 
   const columns = useMemo<MRT_ColumnDef<Backup>[]>(
     () => [
@@ -185,12 +192,14 @@ export const BackupsList = () => {
               >
                 {Messages.now}
               </MenuItem>,
-              <MenuItem
-                onClick={() => handleScheduledBackup(handleClose)}
-                key="schedule"
-              >
-                {Messages.schedule}
-              </MenuItem>,
+              dbType !== DbEngineType.POSTGRESQL && (
+                <MenuItem
+                  onClick={() => handleScheduledBackup(handleClose)}
+                  key="schedule"
+                >
+                  {Messages.schedule}
+                </MenuItem>
+              ),
             ]}
           </MenuButton>
         )}
