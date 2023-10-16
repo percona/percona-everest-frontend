@@ -1,7 +1,8 @@
-import React from 'react';
-import { useTheme, Box, useMediaQuery } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
 import { kebabize } from '@percona/utils.string';
+import React from 'react';
+import { useActiveBreakpoint } from '../../hooks/utils/useActiveBreakpoint';
 import { SwitchOutlinedBoxProps } from './switch-outlined-box.types';
 
 const switchOutlinedBoxStyles = (theme) => ({
@@ -28,14 +29,13 @@ export const SwitchOutlinedBox = ({
   childrenSx,
 }: SwitchOutlinedBoxProps) => {
   const theme = useTheme();
-  const isLaptop = useMediaQuery(theme.breakpoints.down('lg'));
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { isTablet, isMobile } = useActiveBreakpoint();
 
   return children ? (
     <Box
       sx={{
         ...switchOutlinedBoxStyles(theme),
-        ...(isLaptop && {
+        ...(isTablet && {
           flexWrap: 'wrap',
         }),
         ...rootSx,
@@ -50,7 +50,7 @@ export const SwitchOutlinedBox = ({
         controllerProps={controllerProps}
         formControlLabelProps={{
           sx: {
-            ...(isLaptop && { minWidth: '320px' }),
+            ...(isTablet && { minWidth: '320px' }),
             ...(isMobile && { minWidth: 'none' }),
           },
           ...formControlLabelProps,
