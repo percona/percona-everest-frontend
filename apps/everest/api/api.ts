@@ -23,6 +23,10 @@ export const api = axios.create({
   baseURL: BASE_URL,
 });
 
+export const setApiToken = (token: string) => {
+  api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
+
 api.interceptors.response.use(
   (response) => response,
   (error) => {

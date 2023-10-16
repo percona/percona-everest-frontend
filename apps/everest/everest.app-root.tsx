@@ -15,6 +15,9 @@ import { Settings } from './pages/settings/settings';
 import { SettingsTabs } from './pages/settings/settings.types';
 import { StorageLocations } from './pages/settings/storage-locations/storage-locations';
 import { ClusterOverview } from './pages/cluster-overview/cluster-overview';
+import { AuthProvider } from 'react-oidc-context';
+import { authConfig } from './auth-config';
+import { getPreviousPath } from './utils/oidc';
 
 const router = createBrowserRouter([
   {
@@ -74,11 +77,17 @@ const router = createBrowserRouter([
           // },
         ],
       },
+      {
+        path: 'callback',
+        element: <Navigate to={getPreviousPath()} replace />,
+      },
     ],
   },
 ]);
 
 ReactDOM.render(
-  <RouterProvider router={router} />,
+  <AuthProvider {...authConfig}>
+    <RouterProvider router={router} />
+  </AuthProvider>,
   document.getElementById('root')
 );

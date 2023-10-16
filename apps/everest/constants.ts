@@ -37,3 +37,5 @@ export const BACKUP_STATE_TO_STATUS: Record<string, BackupStatus> = {
 };
 
 export const MAX_DB_CLUSTER_NAME_LENGTH = 22;
+
+export const PREVIOUS_PATH_STORAGE_KEY = 'everest-prev-path';

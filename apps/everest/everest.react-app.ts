@@ -46,7 +46,11 @@ const proxyModifier = (configMutator) => {
   const newWebpackConfig = {
     devServer: {
       proxy: {
-        '/v1': `http://localhost:${apiPort}`,
+        '/v1': {
+          target: 'https://127.0.0.1.nip.io',
+          changeOrigin: true,
+          secure: false
+        },
       },
     },
   };
