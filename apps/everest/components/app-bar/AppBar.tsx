@@ -9,7 +9,7 @@ import { useAuth } from 'react-oidc-context';
 
 export const AppBar = () => {
   const { activeBreakpoint, toggleOpen } = useContext(DrawerContext);
-  const { user } = useAuth();
+  const { user, signoutRedirect } = useAuth();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -72,7 +72,7 @@ export const AppBar = () => {
                 </Typography>
               </MenuItem>
               <Divider />
-              <MenuItem>
+              <MenuItem onClick={() => signoutRedirect()}>
                 <Typography variant='button' fontSize='14px'>
                   Logout
                 </Typography>
