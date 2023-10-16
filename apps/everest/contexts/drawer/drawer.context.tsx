@@ -1,4 +1,3 @@
-import { useTheme } from '@mui/material';
 import React, { createContext, useState } from 'react';
 import { useActiveBreakpoint } from '../../hooks/utils/useActiveBreakpoint';
 import { DrawerContextProps } from './drawer.context.types';
@@ -15,7 +14,6 @@ export const DrawerContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const theme = useTheme();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const toggleOpen = () => setDrawerOpen((val) => !val);
 

@@ -58,6 +58,8 @@ export const FormDialog = <T extends FieldValues>({
         return '640px';
       case 'XXL':
         return '700px';
+      default:
+        return '640px';
     }
   }, [size, isMobile]);
 
