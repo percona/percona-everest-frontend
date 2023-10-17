@@ -1,4 +1,4 @@
-export enum BackupsTabs {
+export enum DBClusterDetailsTabs {
   // TODO: uncomment when ready
   overview = 'overview',
   backups = 'backups',

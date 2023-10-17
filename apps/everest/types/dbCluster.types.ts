@@ -30,7 +30,7 @@ export enum DbClusterStatus {
   restoring = 'restoring',
 }
 
-interface Schedule {
+export interface Schedule {
   enabled: boolean;
   name: string;
   backupStorageName: string;

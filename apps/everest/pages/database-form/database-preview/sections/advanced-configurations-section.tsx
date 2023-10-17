@@ -1,12 +1,12 @@
 import React from 'react';
 import { PreviewContentText } from '../preview-section';
-import { SectionProps } from './section.types';
+import { AdvancedConfigurationType } from '../../database-form.types';
 
-export const PreviewSectionAdvancedConfigurations = ({
+export const AdvancedConfigurationsPreviewSection = ({
   externalAccess,
   engineParametersEnabled,
   engineParameters,
-}: SectionProps) => (
+}: AdvancedConfigurationType) => (
   <>
     <PreviewContentText
       text={`External access ${externalAccess ? 'enabled' : 'disabled'}`}

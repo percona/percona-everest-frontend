@@ -9,16 +9,16 @@ import { MRT_ColumnDef } from 'material-react-table';
 import React, { useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ConfirmDialog } from '../../../components/confirm-dialog/confirm-dialog';
-import { StatusField } from '../../../components/status-field/status-field';
-import { DATE_FORMAT } from '../../../constants';
+import { ConfirmDialog } from '../../../../components/confirm-dialog/confirm-dialog';
+import { StatusField } from '../../../../components/status-field/status-field';
+import { DATE_FORMAT } from '../../../../constants';
 import {
   BACKUPS_QUERY_KEY,
   useDbBackups,
   useDeleteBackup,
-} from '../../../hooks/api/backups/useBackups';
-import { useDbClusterRestore } from '../../../hooks/api/restores/useDbClusterRestore';
-import { Backup, BackupStatus } from '../../../types/backups.types';
+} from '../../../../hooks/api/backups/useBackups';
+import { useDbClusterRestore } from '../../../../hooks/api/restores/useDbClusterRestore';
+import { Backup, BackupStatus } from '../../../../types/backups.types';
 import { OnDemandBackupModal } from '../on-demand-backup-modal/on-demand-backup-modal';
 import { BACKUP_STATUS_TO_BASE_STATUS } from './backups-list.constants';
 import { Messages } from './backups-list.messages';

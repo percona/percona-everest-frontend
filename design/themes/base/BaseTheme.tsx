@@ -450,5 +450,24 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
         },
       },
     },
+    MuiAccordion: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          borderWidth: '1px',
+          borderStyle: 'solid',
+          borderColor: 'rgba(44, 50, 62, 0.25)', // TODO move into pallet =#2C323E 25%
+          borderRadius: theme.spacing(1),
+          backgroundColor: theme.palette.action.hover,
+          boxShadow: 'none',
+          '&:before': {
+            height: 0,
+          },
+          marginTop: '8px',
+          '&.Mui-expanded': {
+            marginTop: '8px',
+          },
+        }),
+      },
+    },
   },
 });
