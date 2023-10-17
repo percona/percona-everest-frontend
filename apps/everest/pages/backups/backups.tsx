@@ -1,13 +1,6 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import {
-  Box,
-  IconButton,
-  Skeleton,
-  Tab,
-  Tabs,
-  Typography,
-} from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { Box, IconButton, Tab, Tabs, Typography } from '@mui/material';
+import React from 'react';
 import {
   Link,
   Outlet,
@@ -15,38 +8,38 @@ import {
   useNavigate,
   useParams,
 } from 'react-router-dom';
-import { useDbClusters } from '../../hooks/api/db-clusters/useDbClusters';
-import { NoMatch } from '../404/NoMatch';
 import { Messages } from './backups.messages';
 import { BackupsTabs } from './backups.types';
 
 export const Backups = () => {
   const { dbClusterName } = useParams();
-  const [routeFound, setRouteFound] = useState(true);
-  const { combinedDataForTable, loadingAllClusters } = useDbClusters();
+  // TODO: uncomment after checking with Nuna if we want 404 here
+  // const [routeFound, setRouteFound] = useState(true);
+  // const { combinedDataForTable, loadingAllClusters } = useDbClusters();
   const routeMatch = useMatch('/databases/:dbClusterName/:tabs');
   const navigate = useNavigate();
   const currentTab = routeMatch?.params?.tabs;
 
-  useEffect(() => {
-    if (!loadingAllClusters) {
-      const dbNameExists = combinedDataForTable.find(
-        (cluster) => cluster.databaseName === dbClusterName
-      );
+  // TODO: uncomment after checking with Nuna if we want 404 here
+  // useEffect(() => {
+  //   if (!loadingAllClusters) {
+  //     const dbNameExists = combinedDataForTable.find(
+  //       (cluster) => cluster.databaseName === dbClusterName
+  //     );
 
-      if (!dbNameExists) {
-        setRouteFound(false);
-      }
-    }
-  }, [loadingAllClusters]);
+  //     if (!dbNameExists) {
+  //       setRouteFound(false);
+  //     }
+  //   }
+  // }, [loadingAllClusters]);
 
-  if (loadingAllClusters) {
-    return <Skeleton />;
-  }
+  // if (loadingAllClusters) {
+  //   return <Skeleton />;
+  // }
 
-  if (!routeFound) {
-    return <NoMatch />;
-  }
+  // if (!routeFound) {
+  //   return <NoMatch />;
+  // }
 
   return (
     <Box sx={{ width: '100%' }}>

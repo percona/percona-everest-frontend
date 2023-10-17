@@ -1,37 +1,32 @@
-import {
-  Box,
-  Button,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { NoMatchIcon } from '@percona/ui-lib.icons.no-match';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useActiveBreakpoint } from '../../hooks/utils/useActiveBreakpoint';
 import { Messages } from './NoMatch.messages';
 
 export const NoMatch = () => {
-  const theme = useTheme();
-  const isLaptop = useMediaQuery(theme.breakpoints.down('lg'));
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { isMobile, isTablet, isDesktop } = useActiveBreakpoint();
 
   return (
     <Box
       sx={{
-        height: isLaptop ? 'auto' : '435px',
-        width: isLaptop ? 'auto' : '980px',
-        mt: isLaptop ? (isMobile ? '13px' : '58px') : '150px',
-        mx: isLaptop ? (isMobile ? '13px' : '58px') : 'auto',
+        height: isDesktop ? '435px' : 'auto',
+        width: isDesktop ? '980px' : 'auto',
+        mt: isTablet ? '58px' : isMobile ? '13px' : '150px',
+        mx: isTablet ? '58px' : isMobile ? '13px' : 'auto',
         display: 'flex',
-        flexDirection: isLaptop ? 'column' : 'row',
+        flexDirection: isDesktop ? 'row' : 'column',
         justifyContent: 'center',
         alignItems: 'center',
       }}
     >
-      <NoMatchIcon
-        w={isMobile ? '300px' : '435px'}
-        h={isMobile ? '300px' : '435px'}
-      />
+      <Box>
+        <NoMatchIcon
+          w={isMobile ? '300px' : '435px'}
+          h={isMobile ? '300px' : '435px'}
+        />
+      </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         <Typography
           sx={{

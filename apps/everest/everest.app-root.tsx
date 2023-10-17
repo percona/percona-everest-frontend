@@ -81,10 +81,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: '*',
-    element: <NoMatch />,
-  },
 ]);
 
 ReactDOM.render(
