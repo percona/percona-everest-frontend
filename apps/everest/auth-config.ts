@@ -1,4 +1,5 @@
 import { AuthProviderProps } from 'react-oidc-context';
+import { WebStorageStateStore } from 'oidc-client-ts';
 
 const authConfig: AuthProviderProps = {
   authority: 'https://account.127.0.0.1.nip.io',
@@ -9,7 +10,7 @@ const authConfig: AuthProviderProps = {
   response_type: 'code',
   response_mode: 'query',
   loadUserInfo: true,
-  // userStore: new WebStorageStateStore({ store: window.localStorage }),
+  userStore: new WebStorageStateStore({ store: window.localStorage }),
   // onSigninCallback: () => {
   // }
 };
