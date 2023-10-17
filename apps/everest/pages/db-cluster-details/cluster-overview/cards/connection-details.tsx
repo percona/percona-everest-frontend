@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid } from '@mui/material';
 import { Card } from '@percona/ui-lib.card';
-import { HiddenPasswordToggle } from '../../../components/hidden-row/HiddenPasswordToggle';
+import { HiddenPasswordToggle } from '../../../../components/hidden-row';
 import { Messages } from '../cluster-overview.messages';
 import {
   OverviewSection,

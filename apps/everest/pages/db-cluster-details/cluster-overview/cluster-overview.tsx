@@ -1,10 +1,10 @@
 import { Stack } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import React from 'react';
-import { useDbCluster } from '../../hooks/api/db-cluster/useDbCluster';
-import { dbEngineToDbType } from '../../utils/db';
-import { ProxyExposeType } from '../../types/dbCluster.types';
-import { useDbClusterCredentials } from '../../hooks/api/db-cluster/useCreateDbCluster';
+import { useDbCluster } from '../../../hooks/api/db-cluster/useDbCluster';
+import { dbEngineToDbType } from '../../../utils/db';
+import { ProxyExposeType } from '../../../types/dbCluster.types';
+import { useDbClusterCredentials } from '../../../hooks/api/db-cluster/useCreateDbCluster';
 import { DatabaseDetails, ConnectionDetails } from './cards';
 
 export const ClusterOverview = () => {

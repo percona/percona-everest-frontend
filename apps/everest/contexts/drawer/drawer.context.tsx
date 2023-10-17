@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { useMediaQuery, useTheme } from '@mui/material';
+import { useActiveBreakpoint } from '../../hooks/utils/useActiveBreakpoint';
 import { DrawerContextProps } from './drawer.context.types';
 
 export const DrawerContext = createContext<DrawerContextProps>({
@@ -14,16 +14,10 @@ export const DrawerContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const theme = useTheme();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const toggleOpen = () => setDrawerOpen((val) => !val);
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
-  const activeBreakpoint = isMobile
-    ? 'mobile'
-    : isDesktop
-    ? 'desktop'
-    : 'tablet';
+
+  const { activeBreakpoint } = useActiveBreakpoint();
 
   return (
     <DrawerContext.Provider

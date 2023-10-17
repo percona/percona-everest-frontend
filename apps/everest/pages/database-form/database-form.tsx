@@ -28,7 +28,6 @@ import {
   StepLabel,
   Toolbar,
   Typography,
-  useMediaQuery,
   useTheme,
 } from '@mui/material';
 import { DialogTitle } from '@percona/ui-lib.dialog-title';
@@ -47,6 +46,7 @@ import { steps } from './steps';
 import { useCreateDbCluster } from '../../hooks/api/db-cluster/useCreateDbCluster';
 import { useUpdateDbCluster } from '../../hooks/api/db-cluster/useUpdateDbCluster';
 import { useSelectedKubernetesCluster } from '../../hooks/api/kubernetesClusters/useSelectedKubernetesCluster';
+import { useActiveBreakpoint } from '../../hooks/utils/useActiveBreakpoint';
 import { DatabasePreview } from './database-preview/database-preview';
 import { RestoreDialog } from './restore-dialog/restore-dialog';
 import { SixthStep } from './steps/sixth/sixth-step';
@@ -63,7 +63,7 @@ export const DatabasePage = () => {
   const { mutate: addDbCluster, isLoading: isCreating } = useCreateDbCluster();
   const { mutate: editDbCluster, isLoading: isUpdating } = useUpdateDbCluster();
   const { id } = useSelectedKubernetesCluster();
-  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
+  const { isDesktop } = useActiveBreakpoint();
   const navigate = useNavigate();
   const { state } = useLocation();
 

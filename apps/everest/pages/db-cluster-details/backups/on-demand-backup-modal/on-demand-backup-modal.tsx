@@ -3,12 +3,12 @@ import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import React, { useMemo } from 'react';
 import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { useBackupStorages } from '../../../hooks/api/backup-storages/useBackupStorages';
+import { useBackupStorages } from '../../../../hooks/api/backup-storages/useBackupStorages';
 import {
   BACKUPS_QUERY_KEY,
   useCreateBackupOnDemand,
-} from '../../../hooks/api/backups/useBackups';
-import { Messages } from '../backups.messages';
+} from '../../../../hooks/api/backups/useBackups';
+import { Messages } from '../../db-cluster-details.messages';
 import {
   BackupFields,
   BackupFormData,
@@ -16,7 +16,7 @@ import {
   OnDemandBackupModalProps,
   schema,
 } from './on-demand-backup-modal.types';
-import { FormDialog } from '../../../components/form-dialog/form-dialog';
+import { FormDialog } from '../../../../components/form-dialog';
 
 export const OnDemandBackupModal = ({
   open,
