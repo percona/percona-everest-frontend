@@ -18,6 +18,8 @@ import { ClusterOverview } from './pages/cluster-overview/cluster-overview';
 import { AuthProvider } from 'react-oidc-context';
 import { authConfig } from './auth-config';
 import { getPreviousPath } from './utils/oidc';
+import { ThemeContextProvider } from '@percona/design.theme-context-provider';
+import { everestThemeOptions } from '@percona/design.themes.everest';
 
 const router = createBrowserRouter([
   {
@@ -87,7 +89,9 @@ const router = createBrowserRouter([
 
 ReactDOM.render(
   <AuthProvider {...authConfig}>
-    <RouterProvider router={router} />
+    <ThemeContextProvider themeOptions={everestThemeOptions}>
+      <RouterProvider router={router} />
+    </ThemeContextProvider>
   </AuthProvider>,
   document.getElementById('root')
 );

@@ -14,8 +14,6 @@
 // limitations under the License.
 
 import React, { useEffect, useState } from 'react';
-import { ThemeContextProvider } from '@percona/design.theme-context-provider';
-import { everestThemeOptions } from '@percona/design.themes.everest';
 import { SnackbarProvider } from 'notistack';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -24,6 +22,7 @@ import { DrawerContextProvider } from './contexts/drawer/drawer.context';
 import { K8ContextProvider } from './contexts/kubernetes/kubernetes.context';
 import { Main } from './components/main/Main';
 import { setPreviousPath } from './utils/oidc';
+import { Login } from './components/login/Login';
 
 export const EverestApp = () => {
   const queryClient = new QueryClient({
@@ -45,24 +44,24 @@ export const EverestApp = () => {
   } = useAuth();
   const [hasTriedSignin, setHasTriedSignin] = useState(false);
 
-  useEffect(() => {
-    const signIn = async () => {
-      if (
-        !hasAuthParams()
-        && !isAuthenticated
-        && !activeNavigator
-        && !isLoading
-        && !hasTriedSignin
-      ) {
-        setPreviousPath();
-        await clearStaleState();
-        await signinRedirect();
-        setHasTriedSignin(true);
-      }
-    };
+  // useEffect(() => {
+  //   const signIn = async () => {
+  //     if (
+  //       !hasAuthParams()
+  //       && !isAuthenticated
+  //       && !activeNavigator
+  //       && !isLoading
+  //       && !hasTriedSignin
+  //     ) {
+  //       setPreviousPath();
+  //       await clearStaleState();
+  //       await signinRedirect();
+  //       setHasTriedSignin(true);
+  //     }
+  //   };
 
-    signIn();
-  }, [isAuthenticated, activeNavigator, isLoading, hasTriedSignin]);
+  //   signIn();
+  // }, [isAuthenticated, activeNavigator, isLoading, hasTriedSignin]);
 
   switch (activeNavigator) {
     case "signinSilent":
@@ -73,6 +72,7 @@ export const EverestApp = () => {
 
   if (isLoading) {
     console.log('Loading..');
+    return null;
   }
 
   if (error) {
@@ -87,11 +87,9 @@ export const EverestApp = () => {
       <SnackbarProvider maxSnack={3} preventDuplicate>
         <QueryClientProvider client={queryClient}>
           <K8ContextProvider>
-            <ThemeContextProvider themeOptions={everestThemeOptions}>
-              <DrawerContextProvider>
-                <Main />
-              </DrawerContextProvider>
-            </ThemeContextProvider>
+            <DrawerContextProvider>
+              <Main />
+            </DrawerContextProvider>
           </K8ContextProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
@@ -99,5 +97,5 @@ export const EverestApp = () => {
     );
   }
 
-  return null;
+  return <Login />;
 };
