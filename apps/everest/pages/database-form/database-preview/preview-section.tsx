@@ -1,12 +1,7 @@
-import React from 'react';
-import {
-  IconButton,
-  Stack,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import { IconButton, Stack, Typography, useTheme } from '@mui/material';
+import React from 'react';
+import { useActiveBreakpoint } from '../../../hooks/utils/useActiveBreakpoint';
 import {
   PreviewContentTextProps,
   PreviewSectionProps,
@@ -24,7 +19,7 @@ export const PreviewSection = ({
 }: PreviewSectionProps) => {
   const theme = useTheme();
   const showEdit = !active && hasBeenReached;
-  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
+  const { isDesktop } = useActiveBreakpoint();
 
   return (
     <Stack

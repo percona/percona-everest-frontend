@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -7,6 +7,7 @@ import {
   DialogActions,
   DialogContent,
   FormGroup,
+  ModalProps,
   Typography,
 } from '@mui/material';
 import { DialogTitle } from '@percona/ui-lib.dialog-title';
@@ -16,6 +17,7 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
+import { useActiveBreakpoint } from '../../hooks/utils/useActiveBreakpoint';
 import { FormDialogProps } from './form-dialog.types';
 
 export const FormDialog = <T extends FieldValues>({
@@ -40,21 +42,49 @@ export const FormDialog = <T extends FieldValues>({
     defaultValues,
     values,
   });
+  const {
+    formState: { isDirty },
+  } = methods;
+  const { isMobile } = useActiveBreakpoint();
+  const modalWidth = useMemo(() => {
+    if (isMobile) {
+      return '90%';
+    }
 
-  const modalWidth = size === 'L' ? '480px' : '640px';
+    switch (size) {
+      case 'L':
+        return '480px';
+      case 'XL':
+        return '640px';
+      case 'XXL':
+        return '700px';
+      default:
+        return '640px';
+    }
+  }, [size, isMobile]);
 
   const handleSubmit: SubmitHandler<T> = (data) => {
     onSubmit(data);
+  };
+
+  const handleClose: ModalProps['onClose'] = (e, reason) => {
+    if (reason === 'backdropClick') {
+      if (!isDirty) {
+        closeModal();
+      }
+    } else {
+      closeModal();
+    }
   };
 
   return (
     <Dialog
       PaperProps={{ sx: { minWidth: modalWidth } }}
       open={isOpen}
-      onClose={closeModal}
+      onClose={handleClose}
     >
       <DialogTitle onClose={closeModal}>{headerMessage}</DialogTitle>
-      <DialogContent sx={{ width: modalWidth }}>
+      <DialogContent>
         {/* @ts-ignore */}
         <Typography variant="subHead2">{subHead2}</Typography>
         <FormProvider {...methods}>

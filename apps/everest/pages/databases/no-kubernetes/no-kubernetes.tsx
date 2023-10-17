@@ -13,32 +13,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  Box,
-  Button,
-  Link,
-  List,
-  ListItem,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Box, Button, Link, List, ListItem, Typography } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Messages } from './no-kubernetes.messages';
 import { CodeBlock } from '../../../components/code-block/code-block';
 import { CodeCopyBlock } from '../../../components/code-copy-block/code-copy-block';
+import { useActiveBreakpoint } from '../../../hooks/utils/useActiveBreakpoint';
+import { Messages } from './no-kubernetes.messages';
 
 export const NoKubernetes = () => {
-  const theme = useTheme();
-  const isLaptop = useMediaQuery(theme.breakpoints.down('lg'));
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { isTablet, isMobile } = useActiveBreakpoint();
   const navigate = useNavigate();
 
   return (
     <Box
       sx={{
-        padding: isMobile ? 1 : isLaptop ? 2 : '52px 212px 52px 212px',
+        padding: isMobile ? 1 : isTablet ? 2 : '52px 212px 52px 212px',
         display: 'flex',
         flexDirection: 'column',
       }}

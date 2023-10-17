@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material';
-import React from 'react';
+import { default as React } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDbClusterCredentials } from '../../hooks/api/db-cluster/useCreateDbCluster';
 import { useDbCluster } from '../../hooks/api/db-cluster/useDbCluster';

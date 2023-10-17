@@ -17,10 +17,7 @@ import { useContext } from 'react';
 import { useQueries } from 'react-query';
 import { getDbClustersFn } from '../../../api/dbClusterApi';
 import { K8Context } from '../../../contexts/kubernetes/kubernetes.context';
-import {
-  DbCluster,
-  DbClusterStatus,
-} from '../../../types/dbCluster.types';
+import { DbCluster, DbClusterStatus } from '../../../types/dbCluster.types';
 import { KubernetesCluster } from '../../../types/kubernetes.types';
 import { DbClusterTableElement } from './dbCluster.type';
 
@@ -90,7 +87,9 @@ export const useDbClusters = () => {
 
   const loadingAllClusters = userQueries.every((cluster) => cluster.isLoading);
 
-  const errorInSomeClusters = userQueries.some((cluster) => cluster.error);
+  const errorInSomeClusters = userQueries.some((cluster) => !!cluster.error);
+
+  const errorInAllClusters = userQueries.every((cluster) => !!cluster.error);
 
   const combinedDataForTable: DbClusterTableElement[] = userQueries
     .map((cluster) =>
@@ -109,5 +108,6 @@ export const useDbClusters = () => {
     loadingAllClusters,
     errorInSomeClusters,
     combinedDbClusters,
+    errorInAllClusters,
   };
 };

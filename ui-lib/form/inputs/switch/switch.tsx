@@ -18,8 +18,10 @@ export const SwitchInput = ({
     <FormControlLabel
       label={
         <>
-          <Typography variant='body1'>{label}</Typography>
-          {labelCaption && <Typography variant='caption'>{labelCaption}</Typography>}
+          <Typography variant="body1">{label}</Typography>
+          {labelCaption && (
+            <Typography variant="caption">{labelCaption}</Typography>
+          )}
         </>
       }
       data-testid={`switch-input-${kebabize(name)}-label`}
