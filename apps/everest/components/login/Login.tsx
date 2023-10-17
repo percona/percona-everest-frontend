@@ -4,12 +4,19 @@ import { EverestMainIcon } from '@percona/ui-lib.icons.everest';
 import background from '../../assets/login_background.jpeg';
 import React from 'react';
 import { useAuth } from 'react-oidc-context';
+import { setPreviousPath } from '../../utils/oidc';
 
 export const Login = () => {
-  const { signinRedirect } = useAuth();
+  const { signinRedirect, clearStaleState } = useAuth();
+
+  const handleLoginClick = async () => {
+    setPreviousPath();
+    await clearStaleState();
+    await signinRedirect();
+  }
 
   return (
-    <Stack direction='row'>
+    <Stack direction='row' height='100vh'>
       <Stack my={16} mx={5} width='30%'>
         <EverestMainIcon style={{ fontSize: '96px' }} />
         <Typography variant='h4' mt={3}>
@@ -43,7 +50,7 @@ export const Login = () => {
             }}
           >
             <Typography variant='h6' mb={3}>Authenticate</Typography>
-            <Button size='large' variant='contained' sx={{ mb: 4 }} onClick={() => signinRedirect()}>
+            <Button size='large' variant='contained' sx={{ mb: 4 }} onClick={handleLoginClick}>
               Login
             </Button>
             <Divider flexItem>
