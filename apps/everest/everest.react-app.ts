@@ -13,6 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import { ReactAppOptions } from '@teambit/react';
+import { config } from 'dotenv';
+
+config({
+  path: __dirname + '/.env.webpack',
+});
 
 const titleAndFaviconModifier = (configMutator) => {
   // These are really hacky, but Bit doesn't seem to properly configure favicon using the "favicon" entry during dev mode
@@ -41,16 +46,30 @@ const titleAndFaviconModifier = (configMutator) => {
 };
 
 const proxyModifier = (configMutator) => {
-  const apiPort = process.env.API_PORT || '8080';
+  const target = process.env.DEV_PROXY_URL || `http://localhost:8080`;
 
   const newWebpackConfig = {
     devServer: {
       proxy: {
         '/v1': {
-          target: 'https://127.0.0.1.nip.io',
+          target,
           changeOrigin: true,
-          secure: false
+          secure: false,
         },
+        '/auth-config': {
+          bypass: (req, res) => {
+            if (req.url === '/auth-config') {
+              res.send({
+                auth: {
+                  web: {
+                    clientID: '236248997172457477@everest_test',
+                    url: 'https://account.127.0.0.1.nip.io',
+                  }
+                }
+              })
+            }
+          }
+        }
       },
     },
   };
