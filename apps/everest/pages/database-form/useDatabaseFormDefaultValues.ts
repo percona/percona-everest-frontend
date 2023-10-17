@@ -16,6 +16,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDbCluster } from '../../hooks/api/db-cluster/useDbCluster';
+import { useMonitoringInstancesList } from '../../hooks/api/monitoring/useMonitoringInstancesList';
 import {
   // Backup,
   DbCluster,
@@ -26,7 +27,6 @@ import {
   DbWizardMode,
   DbWizardType,
 } from './database-form.types';
-import { useMonitoringInstancesList } from '../../hooks/api/monitoring/useMonitoringInstancesList';
 import { DbClusterPayloadToFormValues } from './database-form.utils';
 
 export const useDatabasePageDefaultValues = (
@@ -37,11 +37,11 @@ export const useDatabasePageDefaultValues = (
   dbClusterStatus: 'error' | 'idle' | 'loading' | 'success';
 } => {
   const { state } = useLocation();
-  const { data, status } = useDbCluster(
-    state?.selectedDbCluster,
-    (mode === 'edit' || mode === 'restoreFromBackup') &&
-      !!state?.selectedDbCluster
-  );
+  const { data, status } = useDbCluster(state?.selectedDbCluster, {
+    enabled:
+      (mode === 'edit' || mode === 'restoreFromBackup') &&
+      !!state?.selectedDbCluster,
+  });
   const { data: monitoringInstances } = useMonitoringInstancesList(
     mode === 'edit'
   );

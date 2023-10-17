@@ -3,4 +3,4 @@ export type TextArrayProps = {
   fieldKey: string;
   label?: string;
   placeholder?: string;
-}
+};

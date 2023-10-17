@@ -31,9 +31,12 @@ export const StorageLocations = () => {
   const queryClient = useQueryClient();
 
   const { data: backupStorages = [], isFetching } = useBackupStorages();
-  const { mutate: createBackupStorage, isLoading: creatingBackupStorage } = useCreateBackupStorage();
-  const { mutate: editBackupStorage, isLoading: editingBackupStorage } = useEditBackupStorage();
-  const { mutate: deleteBackupStorage, isLoading: deletingBackupStorage } = useDeleteBackupStorage();
+  const { mutate: createBackupStorage, isLoading: creatingBackupStorage } =
+    useCreateBackupStorage();
+  const { mutate: editBackupStorage, isLoading: editingBackupStorage } =
+    useEditBackupStorage();
+  const { mutate: deleteBackupStorage, isLoading: deletingBackupStorage } =
+    useDeleteBackupStorage();
 
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
   const [selectedStorageName, setSelectedStorageName] = useState<string>('');
@@ -100,7 +103,10 @@ export const StorageLocations = () => {
   const handleCreateBackup = (data: BackupStorage) => {
     createBackupStorage(data, {
       onSuccess: (newLocation) => {
-        updateDataAfterCreate(queryClient, BACKUP_STORAGES_QUERY_KEY)(newLocation);
+        updateDataAfterCreate(
+          queryClient,
+          BACKUP_STORAGES_QUERY_KEY
+        )(newLocation);
         handleCloseModal();
       },
     });
@@ -126,7 +132,11 @@ export const StorageLocations = () => {
   const handleConfirmDelete = (backupStorageName: string) => {
     deleteBackupStorage(backupStorageName, {
       onSuccess: (_, locationName) => {
-        updateDataAfterDelete(queryClient, BACKUP_STORAGES_QUERY_KEY, 'name')(_, locationName)
+        updateDataAfterDelete(
+          queryClient,
+          BACKUP_STORAGES_QUERY_KEY,
+          'name'
+        )(_, locationName);
         handleCloseDeleteDialog();
       },
     });

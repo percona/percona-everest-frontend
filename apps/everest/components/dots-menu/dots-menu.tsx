@@ -20,7 +20,6 @@ import { DotsMenuProps } from './dots-menu.types';
 
 export const DotsMenu = ({ menuProps, options }: DotsMenuProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -46,7 +45,7 @@ export const DotsMenu = ({ menuProps, options }: DotsMenuProps) => {
           'aria-labelledby': 'long-button',
         }}
         anchorEl={anchorEl}
-        open={open}
+        open={!!anchorEl}
         onClose={handleClose}
         {...menuProps}
       >

@@ -13,28 +13,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React from 'react';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
-  AccordionSummary,
   AccordionDetails,
-  Typography,
-  Stack,
+  AccordionSummary,
   Box,
   Paper,
+  Stack,
+  Typography,
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useDbCluster } from '../../../../hooks/api/db-cluster/useDbCluster';
-import { Messages } from './scheduled-backups-list.messages';
-import { getTimeSelectionPreviewMessage } from '../../../database-form/database-preview/database.preview.messages';
-import { getFormValuesFromCronExpression } from '../../../../components/time-selection/time-selection.utils';
 import { DotsMenu } from '../../../../components/dots-menu/dots-menu';
 import { Option } from '../../../../components/dots-menu/dots-menu.types';
+import { getFormValuesFromCronExpression } from '../../../../components/time-selection/time-selection.utils';
+import { useDbCluster } from '../../../../hooks/api/db-cluster/useDbCluster';
+import { getTimeSelectionPreviewMessage } from '../../../database-form/database-preview/database.preview.messages';
+import { Messages } from './scheduled-backups-list.messages';
 
 export const ScheduledBackupsList = () => {
   const { dbClusterName } = useParams();
-  const { data } = useDbCluster(dbClusterName!, !!dbClusterName);
+  const { data } = useDbCluster(dbClusterName!, {
+    enabled: !!dbClusterName,
+    refetchInterval: 10 * 1000,
+  });
   const schedules = data && data?.spec?.backup?.schedules;
   const handleDelete = () => {
     // TODO delete

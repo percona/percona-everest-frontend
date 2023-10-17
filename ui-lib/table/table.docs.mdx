@@ -7,23 +7,23 @@ import { Table } from './table';
 Wrapper around MaterialReactTable adding custom design.
 
 ### Component usage
+
 ```js
 const data: Person[] = [{ firstName: 'Filip', lastName: 'Jones' }];
 
-const columns = useMemo<MRT_ColumnDef<Person>[]>(
-() => [
+const columns =
+  useMemo <
+  MRT_ColumnDef <
+  Person >
+  [] >
+  (() => [
     {
-    accessorKey: 'firstName',
-    header: 'First Name',
+      accessorKey: 'firstName',
+      header: 'First Name',
     },
     { accessorKey: 'lastName', header: 'Last Name' },
-],
-[]
-);
-  
-<Table
-    columns={columns}
-    data={data}
-/>
-```
+  ],
+  []);
 
+<Table columns={columns} data={data} />;
+```

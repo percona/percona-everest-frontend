@@ -33,7 +33,7 @@ export const EverestApp = () => {
   });
 
   return (
-    <SnackbarProvider maxSnack={3}>
+    <SnackbarProvider maxSnack={3} preventDuplicate>
       <QueryClientProvider client={queryClient}>
         <K8ContextProvider>
           <ThemeContextProvider themeOptions={everestThemeOptions}>
