@@ -21,4 +21,8 @@ export const Messages = {
     edit: 'Edit',
     delete: 'Delete',
   },
+  deleteModal: {
+    header: 'Delete schedule',
+    content: 'Are you sure you want to permanently delete this schedule?',
+  },
 };

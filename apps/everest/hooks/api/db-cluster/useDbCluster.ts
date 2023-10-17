@@ -28,7 +28,7 @@ export const useDbCluster = (
   const { id } = useSelectedKubernetesCluster();
 
   return useQuery<DbCluster, unknown, DbCluster>(
-    DB_CLUSTER_QUERY,
+    [DB_CLUSTER_QUERY, dbClusterName],
     () => getDbClusterFn(id, dbClusterName),
     {
       ...options,

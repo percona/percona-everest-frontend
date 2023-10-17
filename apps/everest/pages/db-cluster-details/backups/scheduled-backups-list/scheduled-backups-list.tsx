@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import React, { useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
@@ -23,34 +24,61 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import React from 'react';
 import { useParams } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
 import { DotsMenu } from '../../../../components/dots-menu/dots-menu';
 import { Option } from '../../../../components/dots-menu/dots-menu.types';
 import { getFormValuesFromCronExpression } from '../../../../components/time-selection/time-selection.utils';
-import { useDbCluster } from '../../../../hooks/api/db-cluster/useDbCluster';
+import {
+  DB_CLUSTER_QUERY,
+  useDbCluster,
+} from '../../../../hooks/api/db-cluster/useDbCluster';
 import { getTimeSelectionPreviewMessage } from '../../../database-form/database-preview/database.preview.messages';
 import { Messages } from './scheduled-backups-list.messages';
+import { ConfirmDialog } from '../../../../components/confirm-dialog/confirm-dialog';
+import { useDeleteSchedule } from '../../../../hooks/api/backups/useScheduledBackups';
 
 export const ScheduledBackupsList = () => {
   const { dbClusterName } = useParams();
+  const queryClient = useQueryClient();
+
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [selectedSchedule, setSelectedSchedule] = useState<string>('');
   const { data } = useDbCluster(dbClusterName!, {
     enabled: !!dbClusterName,
     refetchInterval: 10 * 1000,
   });
+  const { mutate: deleteSchedule, isLoading: deletingSchedule } =
+    useDeleteSchedule(dbClusterName);
   const schedules = data && data?.spec?.backup?.schedules;
-  const handleDelete = () => {
-    // TODO delete
+  const handleDelete = (scheduleName: string) => () => {
+    setSelectedSchedule(scheduleName);
+    setOpenDeleteDialog(true);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
+  };
+
+  const handleConfirmDelete = (scheduleName: string) => {
+    deleteSchedule(scheduleName, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: [DB_CLUSTER_QUERY, dbClusterName],
+        });
+        handleCloseDeleteDialog();
+      },
+    });
   };
 
   const handleEdit = () => {
     // TODO edit
   };
 
-  const options: Option[] = [
+  const options: (scheduleName: string) => Option[] = (scheduleName) => [
     {
       key: 'delete',
-      onClick: handleDelete,
+      onClick: handleDelete(scheduleName),
       children: Messages.menuItems.delete,
     },
     { key: 'edit', onClick: handleEdit, children: Messages.menuItems.edit },
@@ -58,61 +86,75 @@ export const ScheduledBackupsList = () => {
 
   return (
     <>
-      <Accordion sx={{ mt: 1 }} disabled={!schedules}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="scheduled-backups-content"
-          data-testid="scheduled-backups"
-        >
-          <Typography variant="body1">
-            {schedules
-              ? Messages.sectionHeader(schedules?.length)
-              : Messages.noSchedules}
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Stack useFlexGap spacing={1}>
-            {schedules &&
-              schedules.map((item) => (
-                <Paper
-                  key={`schedule-${item?.schedule}`}
-                  sx={{ py: 1, px: 2, borderRadius: 0 }}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}
+      {schedules && schedules?.length > 0 && (
+        <Accordion sx={{ mt: 1 }}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="scheduled-backups-content"
+            data-testid="scheduled-backups"
+          >
+            <Typography variant="body1">
+              {schedules
+                ? Messages.sectionHeader(schedules?.length)
+                : Messages.noSchedules}
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Stack useFlexGap spacing={1}>
+              {schedules &&
+                schedules.map((item) => (
+                  <Paper
+                    key={`schedule-${item?.schedule}`}
+                    sx={{ py: 1, px: 2, borderRadius: 0 }}
                   >
-                    <Box sx={{ width: '65%' }}>
-                      {' '}
-                      <Typography variant="subHead2">
-                        {getTimeSelectionPreviewMessage(
-                          getFormValuesFromCronExpression(item.schedule)
-                        )}
-                      </Typography>
-                    </Box>
-                    <Box sx={{ width: '30%' }}>
-                      {item?.retentionCopies
-                        ? `Retention copies: ${item.retentionCopies}`
-                        : '-'}
-                    </Box>
                     <Box
                       sx={{
-                        width: '5%',
-                        justifyContent: 'flex-end',
                         display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
                       }}
                     >
-                      <DotsMenu options={options} />
+                      <Box sx={{ width: '65%' }}>
+                        {' '}
+                        <Typography variant="subHead2">
+                          {getTimeSelectionPreviewMessage(
+                            getFormValuesFromCronExpression(item.schedule)
+                          )}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ width: '30%' }}>
+                        {item?.retentionCopies
+                          ? `Retention copies: ${item.retentionCopies}`
+                          : '-'}
+                      </Box>
+                      <Box
+                        sx={{
+                          width: '5%',
+                          justifyContent: 'flex-end',
+                          display: 'flex',
+                        }}
+                      >
+                        <DotsMenu options={options(item?.name)} />
+                      </Box>
                     </Box>
-                  </Box>
-                </Paper>
-              ))}
-          </Stack>
-        </AccordionDetails>
-      </Accordion>
+                  </Paper>
+                ))}
+            </Stack>
+          </AccordionDetails>
+        </Accordion>
+      )}
+      {openDeleteDialog && (
+        <ConfirmDialog
+          isOpen={openDeleteDialog}
+          selectedId={selectedSchedule}
+          closeModal={handleCloseDeleteDialog}
+          headerMessage={Messages.deleteModal.header}
+          handleConfirm={handleConfirmDelete}
+          disabledButtons={deletingSchedule}
+        >
+          {Messages.deleteModal.content}
+        </ConfirmDialog>
+      )}
     </>
   );
 };

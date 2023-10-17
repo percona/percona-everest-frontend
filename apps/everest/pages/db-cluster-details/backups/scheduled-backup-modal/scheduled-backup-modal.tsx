@@ -1,7 +1,7 @@
+import React, { useMemo } from 'react';
 import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { LabeledContent } from '@percona/ui-lib.labeled-content';
-import React, { useMemo } from 'react';
 import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { FormDialog } from '../../../../components/form-dialog';
@@ -32,7 +32,9 @@ export const ScheduledBackupModal = ({
   const handleSubmit = (data: ScheduledBackupFormData) => {
     createScheduledBackup(data, {
       onSuccess() {
-        queryClient.invalidateQueries([DB_CLUSTER_QUERY, dbClusterName]);
+        queryClient.invalidateQueries({
+          queryKey: [DB_CLUSTER_QUERY, dbClusterName],
+        });
         handleClose();
       },
     });
