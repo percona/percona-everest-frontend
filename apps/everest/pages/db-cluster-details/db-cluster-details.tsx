@@ -8,10 +8,10 @@ import {
   useNavigate,
   useParams,
 } from 'react-router-dom';
-import { Messages } from './backups.messages';
-import { BackupsTabs } from './backups.types';
+import { Messages } from './db-cluster-details.messages';
+import { DBClusterDetailsTabs } from './db-cluster-details.types';
 
-export const Backups = () => {
+export const DbClusterDetails = () => {
   const { dbClusterName } = useParams();
   const routeMatch = useMatch('/databases/:dbClusterName/:tabs');
   const navigate = useNavigate();
@@ -38,12 +38,12 @@ export const Backups = () => {
           allowScrollButtonsMobile
           aria-label="nav tabs"
         >
-          {Object.keys(BackupsTabs).map((item) => (
+          {Object.keys(DBClusterDetailsTabs).map((item) => (
             <Tab
               label={Messages[item]}
-              key={BackupsTabs[item]}
-              value={BackupsTabs[item]}
-              to={BackupsTabs[item]}
+              key={DBClusterDetailsTabs[item]}
+              value={DBClusterDetailsTabs[item]}
+              to={DBClusterDetailsTabs[item]}
               component={Link}
             />
           ))}

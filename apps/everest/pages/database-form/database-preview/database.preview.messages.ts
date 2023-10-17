@@ -14,11 +14,11 @@
 // limitations under the License.
 import { CronTime } from 'cron-time-generator';
 import {
+  TimeProps,
   TimeValue,
   timeValueHumanized,
 } from '../../../components/time-selection/time-selection.types';
 import { addZeroToSingleDigit } from '../../../components/time-selection/time-selection.utils';
-import { SectionProps } from './sections/section.types';
 
 // TODO re-add steps after API is ready
 export const Messages = {
@@ -32,8 +32,14 @@ export const Messages = {
   ],
 };
 
-export const getTimeSelectionPreviewMessage = (sectionProps: SectionProps) => {
-  const { minute, hour, amPm, onDay, weekDay, selectedTime } = sectionProps;
+export const getTimeSelectionPreviewMessage = ({
+  selectedTime,
+  minute,
+  hour,
+  amPm,
+  onDay,
+  weekDay,
+}: TimeProps) => {
   // TODO switch these lines after backup is supported and Zod schema is complete
   // const minuteWithZero = addZeroToSingleDigit(minute);
   const minuteWithZero = addZeroToSingleDigit(0);

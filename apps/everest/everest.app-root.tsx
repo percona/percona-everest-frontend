@@ -6,15 +6,15 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { EverestApp } from './app';
-import { Backups } from './pages/backups/backups';
-import { BackupsList } from './pages/backups/backups-list/backups-list';
-import { BackupsTabs } from './pages/backups/backups.types';
+import { DbClusterDetails } from './pages/db-cluster-details/db-cluster-details';
+import { DBClusterDetailsTabs } from './pages/db-cluster-details/db-cluster-details.types';
 import { DatabasePage } from './pages/database-form/database-form';
 import { DatabasesPage } from './pages/databases/databases';
 import { Settings } from './pages/settings/settings';
 import { SettingsTabs } from './pages/settings/settings.types';
 import { StorageLocations } from './pages/settings/storage-locations/storage-locations';
-import { ClusterOverview } from './pages/cluster-overview/cluster-overview';
+import { ClusterOverview } from './pages/db-cluster-details/cluster-overview/cluster-overview';
+import { Backups } from './pages/db-cluster-details/backups/backups';
 
 const router = createBrowserRouter([
   {
@@ -35,15 +35,15 @@ const router = createBrowserRouter([
       },
       {
         path: 'databases/:dbClusterName',
-        element: <Backups />,
+        element: <DbClusterDetails />,
         children: [
           {
             index: true,
-            path: BackupsTabs.backups,
-            element: <BackupsList />,
+            path: DBClusterDetailsTabs.backups,
+            element: <Backups />,
           },
           {
-            path: BackupsTabs.overview,
+            path: DBClusterDetailsTabs.overview,
             element: <ClusterOverview />,
           },
         ],
