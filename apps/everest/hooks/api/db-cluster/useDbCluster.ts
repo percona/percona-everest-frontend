@@ -13,20 +13,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { useQuery } from 'react-query';
+import { useQuery, UseQueryOptions } from 'react-query';
 import { DbCluster } from '../../../types/dbCluster.types';
 
 import { getDbClusterFn } from '../../../api/dbClusterApi';
 import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
 
-export const useDbCluster = (dbClusterName: string, enabled?: boolean) => {
+export const DB_CLUSTER_QUERY = 'dbCluster';
+
+export const useDbCluster = (
+  dbClusterName: string,
+  options?: UseQueryOptions<DbCluster>
+) => {
   const { id } = useSelectedKubernetesCluster();
 
   return useQuery<DbCluster, unknown, DbCluster>(
-    'dbCluster',
+    DB_CLUSTER_QUERY,
     () => getDbClusterFn(id, dbClusterName),
     {
-      enabled,
+      ...options,
     }
   );
 };
