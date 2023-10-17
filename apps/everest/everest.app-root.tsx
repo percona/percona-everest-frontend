@@ -7,10 +7,10 @@ import {
 } from 'react-router-dom';
 import { EverestApp } from './app';
 import { NoMatch } from './pages/404/NoMatch';
-import { Backups } from './pages/backups/backups';
-import { ClusterOverview } from './pages/cluster-overview/cluster-overview';
 import { DatabasePage } from './pages/database-form/database-form';
 import { DatabasesPage } from './pages/databases/databases';
+import { Backups } from './pages/db-cluster-details/backups/backups';
+import { ClusterOverview } from './pages/db-cluster-details/cluster-overview/cluster-overview';
 import { DbClusterDetails } from './pages/db-cluster-details/db-cluster-details';
 import { DBClusterDetailsTabs } from './pages/db-cluster-details/db-cluster-details.types';
 import { Settings } from './pages/settings/settings';
