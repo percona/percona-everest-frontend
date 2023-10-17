@@ -17,9 +17,12 @@ import {
   useDbBackups,
   useDeleteBackup,
 } from '../../../../hooks/api/backups/useBackups';
+import { useDbCluster } from '../../../../hooks/api/db-cluster/useDbCluster';
 import { useDbClusterRestore } from '../../../../hooks/api/restores/useDbClusterRestore';
 import { Backup, BackupStatus } from '../../../../types/backups.types';
+import { DbEngineType } from '../../../../types/dbEngines.types';
 import { OnDemandBackupModal } from '../on-demand-backup-modal/on-demand-backup-modal';
+import { ScheduledBackupModal } from '../scheduled-backup-modal/scheduled-backup-modal';
 import { BACKUP_STATUS_TO_BASE_STATUS } from './backups-list.constants';
 import { Messages } from './backups-list.messages';
 
@@ -34,6 +37,8 @@ export const BackupsList = () => {
   const queryClient = useQueryClient();
   const { dbClusterName } = useParams();
   const [openCreateBackupModal, setOpenCreateBackupModal] = useState(false);
+  const [openCreateScheduledBackupModal, setOpenCreateScheduledBackupModal] =
+    useState(false);
   const { data: backups = [] } = useDbBackups(dbClusterName!, {
     enabled: !!dbClusterName,
     refetchInterval: 10 * 1000,
@@ -41,6 +46,11 @@ export const BackupsList = () => {
   const { mutate: deleteBackup, isLoading: deletingBackup } = useDeleteBackup();
   const { mutate: restoreBackup, isLoading: restoringBackup } =
     useDbClusterRestore(dbClusterName!);
+  const { data: dbCluster } = useDbCluster(dbClusterName || '', {
+    enabled: !!dbClusterName,
+  });
+
+  const dbType = dbCluster?.spec?.engine?.type;
 
   const columns = useMemo<MRT_ColumnDef<Backup>[]>(
     () => [
@@ -157,6 +167,15 @@ export const BackupsList = () => {
     });
   };
 
+  const handleScheduledBackup = (handleClose: () => void) => {
+    setOpenCreateScheduledBackupModal(true);
+    handleClose();
+  };
+
+  const handleCloseScheduledBackupModal = () => {
+    setOpenCreateScheduledBackupModal(false);
+  };
+
   return (
     <>
       <Table
@@ -173,8 +192,14 @@ export const BackupsList = () => {
               >
                 {Messages.now}
               </MenuItem>,
-              // TODO: Uncomment when ready
-              // <MenuItem key="schedule">{Messages.schedule}</MenuItem>,
+              dbType !== DbEngineType.POSTGRESQL && (
+                <MenuItem
+                  onClick={() => handleScheduledBackup(handleClose)}
+                  key="schedule"
+                >
+                  {Messages.schedule}
+                </MenuItem>
+              ),
             ]}
           </MenuButton>
         )}
@@ -223,6 +248,10 @@ export const BackupsList = () => {
       <OnDemandBackupModal
         open={openCreateBackupModal}
         handleClose={handleCloseBackupModal}
+      />
+      <ScheduledBackupModal
+        open={openCreateScheduledBackupModal}
+        handleClose={handleCloseScheduledBackupModal}
       />
       {openDeleteDialog && (
         <ConfirmDialog

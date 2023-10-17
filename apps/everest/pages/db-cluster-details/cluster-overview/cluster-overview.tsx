@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material';
-import { default as React } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useDbClusterCredentials } from '../../../hooks/api/db-cluster/useCreateDbCluster';
 import { useDbCluster } from '../../../hooks/api/db-cluster/useDbCluster';
@@ -16,8 +16,10 @@ export const ClusterOverview = () => {
   // );
   const { data: dbCluster, isFetching: fetchingCluster } = useDbCluster(
     dbClusterName || '',
-    // TODO: uncomment after checking with Nuna if we want 404 here
-    !!dbClusterName //&& !!dbNameExists
+    {
+      // TODO: uncomment after checking with Nuna if we want 404 here
+      enabled: !!dbClusterName, //&& !!dbNameExists
+    }
   );
   const { data: dbClusterDetails, isFetching: fetchingClusterDetails } =
     useDbClusterCredentials(dbClusterName || '', {
