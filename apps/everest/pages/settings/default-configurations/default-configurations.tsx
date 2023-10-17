@@ -1,36 +1,30 @@
-import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Button, Stack, Typography } from '@mui/material';
+import { TextArray } from '@percona/ui-lib.form.inputs.text-array';
+import React from 'react';
 import {
-  Typography,
-  Stack,
-  Button,
-  useTheme,
-  useMediaQuery,
-} from '@mui/material';
-import {
+  FormProvider,
   SubmitHandler,
   useForm,
-  FormProvider,
   useWatch,
 } from 'react-hook-form';
-import { TextArray } from '@percona/ui-lib.form.inputs.text-array';
-import { Messages } from './default-configurations.messages';
-import {
-  DefaultConfigurationsFields,
-  defaultConfigurationsSchema,
-  DefaultConfigurationsType,
-} from './default-configurations.types';
+import { SwitchOutlinedBox } from '../../../components/switch-outlined-box/switch-oulined-box';
 import { TimeSelection } from '../../../components/time-selection/time-selection';
 import {
   AmPM,
   TimeValue,
   WeekDays,
 } from '../../../components/time-selection/time-selection.types';
-import { SwitchOutlinedBox } from '../../../components/switch-outlined-box/switch-oulined-box';
+import { useActiveBreakpoint } from '../../../hooks/utils/useActiveBreakpoint';
+import { Messages } from './default-configurations.messages';
+import {
+  DefaultConfigurationsFields,
+  defaultConfigurationsSchema,
+  DefaultConfigurationsType,
+} from './default-configurations.types';
 
 export const DefaultConfigurations = () => {
-  const theme = useTheme();
-  const isLaptop = useMediaQuery(theme.breakpoints.down('lg'));
+  const { isTablet } = useActiveBreakpoint();
 
   const methods = useForm<DefaultConfigurationsType>({
     mode: 'onChange',
@@ -95,7 +89,7 @@ export const DefaultConfigurations = () => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 2,
-                ...(isLaptop && {
+                ...(isTablet && {
                   justifyContent: 'start',
                   pl: '55px',
                   flexWrap: 'wrap',
@@ -114,11 +108,11 @@ export const DefaultConfigurations = () => {
                   <TimeSelection
                     sx={{
                       flexWrap: 'nowrap',
-                      ...(isLaptop && { flexWrap: 'wrap' }),
+                      ...(isTablet && { flexWrap: 'wrap' }),
                     }}
                     sxTimeFields={{
                       flexWrap: 'nowrap',
-                      ...(isLaptop && { flexWrap: 'wrap' }),
+                      ...(isTablet && { flexWrap: 'wrap' }),
                     }}
                   />
                 </>
@@ -133,7 +127,7 @@ export const DefaultConfigurations = () => {
                 flexDirection: 'column',
                 display: 'flex',
                 justifyContent: 'end',
-                ...(isLaptop && {
+                ...(isTablet && {
                   justifyContent: 'start',
                   pl: '55px',
                   flexWrap: 'wrap',
