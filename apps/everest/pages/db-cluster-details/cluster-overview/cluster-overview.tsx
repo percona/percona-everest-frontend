@@ -18,13 +18,13 @@ export const ClusterOverview = () => {
     dbClusterName || '',
     {
       // TODO: uncomment after checking with Nuna if we want 404 here
-      enabled: !!dbClusterName, //&& !!dbNameExists
+      enabled: !!dbClusterName, // && !!dbNameExists
     }
   );
   const { data: dbClusterDetails, isFetching: fetchingClusterDetails } =
     useDbClusterCredentials(dbClusterName || '', {
       // TODO: uncomment after checking with Nuna if we want 404 here
-      enabled: !!dbClusterName, //&& !!dbNameExists,
+      enabled: !!dbClusterName, // && !!dbNameExists,
     });
 
   return (
@@ -42,7 +42,7 @@ export const ClusterOverview = () => {
       {/* We force ! because while loading no info is shown */}
       <DatabaseDetails
         // TODO: uncomment after checking with Nuna if we want 404 here
-        loading={fetchingCluster} //|| loadingAllClusters}
+        loading={fetchingCluster} // || loadingAllClusters}
         type={dbEngineToDbType(dbCluster?.spec.engine.type!)}
         name={dbCluster?.metadata.name!}
         namespace={dbCluster?.metadata.namespace!}
@@ -57,7 +57,7 @@ export const ClusterOverview = () => {
       <ConnectionDetails
         loading={fetchingCluster}
         // TODO: uncomment after checking with Nuna if we want 404 here
-        loadingClusterDetails={fetchingClusterDetails} //|| loadingAllClusters}
+        loadingClusterDetails={fetchingClusterDetails} // || loadingAllClusters}
         hostname={dbCluster?.status?.hostname!}
         port={dbCluster?.status?.port!}
         username={dbClusterDetails?.username!}
