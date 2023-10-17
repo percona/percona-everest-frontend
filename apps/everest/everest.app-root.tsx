@@ -16,10 +16,11 @@ import { SettingsTabs } from './pages/settings/settings.types';
 import { StorageLocations } from './pages/settings/storage-locations/storage-locations';
 import { ClusterOverview } from './pages/cluster-overview/cluster-overview';
 import { AuthProvider } from 'react-oidc-context';
-import { authConfig } from './auth-config';
+import { authConfigBuilder } from './auth-config';
 import { getPreviousPath } from './utils/oidc';
 import { ThemeContextProvider } from '@percona/design.theme-context-provider';
 import { everestThemeOptions } from '@percona/design.themes.everest';
+import { AuthConfigFetcher } from './components/auth-config-fetcher/AuthConfigFetcher';
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
             path: SettingsTabs.storageLocations,
             element: <StorageLocations />,
           },
+          {
+            index: true,
+            element: <Navigate to={SettingsTabs.storageLocations} replace />,
+          },
           // {
           //   path: SettingsTabs.monitoringEndpoints,
           //   element: <MonitoringEndpoints />,
@@ -88,10 +93,14 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.render(
-  <AuthProvider {...authConfig}>
-    <ThemeContextProvider themeOptions={everestThemeOptions}>
-      <RouterProvider router={router} />
-    </ThemeContextProvider>
-  </AuthProvider>,
+  <AuthConfigFetcher>
+    {({ auth: { web: { clientID, url } } }) => (
+      <AuthProvider {...authConfigBuilder(url, clientID)}>
+        <ThemeContextProvider themeOptions={everestThemeOptions}>
+          <RouterProvider router={router} />
+        </ThemeContextProvider>
+      </AuthProvider>
+    )}
+  </AuthConfigFetcher>,
   document.getElementById('root')
 );

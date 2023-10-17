@@ -13,15 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { SnackbarProvider } from 'notistack';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { hasAuthParams, useAuth } from 'react-oidc-context';
+import { useAuth } from 'react-oidc-context';
 import { DrawerContextProvider } from './contexts/drawer/drawer.context';
 import { K8ContextProvider } from './contexts/kubernetes/kubernetes.context';
 import { Main } from './components/main/Main';
-import { setPreviousPath } from './utils/oidc';
 import { Login } from './components/login/Login';
 
 export const EverestApp = () => {
@@ -39,29 +38,7 @@ export const EverestApp = () => {
     activeNavigator,
     error,
     user,
-    signinRedirect,
-    clearStaleState,
   } = useAuth();
-  const [hasTriedSignin, setHasTriedSignin] = useState(false);
-
-  // useEffect(() => {
-  //   const signIn = async () => {
-  //     if (
-  //       !hasAuthParams()
-  //       && !isAuthenticated
-  //       && !activeNavigator
-  //       && !isLoading
-  //       && !hasTriedSignin
-  //     ) {
-  //       setPreviousPath();
-  //       await clearStaleState();
-  //       await signinRedirect();
-  //       setHasTriedSignin(true);
-  //     }
-  //   };
-
-  //   signIn();
-  // }, [isAuthenticated, activeNavigator, isLoading, hasTriedSignin]);
 
   switch (activeNavigator) {
     case "signinSilent":

@@ -9,7 +9,7 @@ export const getPreviousPath = () => {
 
 export const setPreviousPath = () => {
   const prevPath = window.location.pathname + window.location.search + window.location.hash;
-  if (prevPath.startsWith(authConfig.redirect_uri!)) {
+  if (prevPath.startsWith(authConfig!.redirect_uri!)) {
     return;
   }
 
