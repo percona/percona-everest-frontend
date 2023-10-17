@@ -28,7 +28,7 @@ test.describe('No match (404) page', () => {
     if (closeIcon) {
       await closeIcon.click();
     }
-    const button = page.getByTestId('create-database-button');
+    const button = page.getByTestId('add-db-cluster-button');
 
     await expect(button).toBeVisible();
   });
