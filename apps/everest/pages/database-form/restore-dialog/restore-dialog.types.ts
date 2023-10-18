@@ -20,4 +20,5 @@ export type RestoreDialogProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onSubmit: SubmitHandler<DbWizardType>;
+  submitting: boolean;
 };
