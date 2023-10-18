@@ -49,7 +49,7 @@ const deletedScheduleToDbClusterPayload = (
   scheduleName: string,
   dbCluster: DbCluster
 ): DbCluster => {
-  const schedules = dbCluster?.spec?.backup?.schedules;
+  const schedules = dbCluster?.spec?.backup?.schedules || [];
   const filteredSchedules = schedules.filter(
     (item) => item?.name !== scheduleName
   );
