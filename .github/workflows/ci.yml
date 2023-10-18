@@ -114,6 +114,8 @@ jobs:
         run: echo "$HOME/bin" >> $GITHUB_PATH
 
       - name: Build Everest
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
         run: |
           cd ${GITHUB_WORKSPACE}/percona-everest-frontend
           make init
