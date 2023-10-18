@@ -10,6 +10,7 @@ import { useBackupStorages } from '../../../../hooks/api/backup-storages/useBack
 import { useCreateScheduledBackup } from '../../../../hooks/api/backups/useScheduledBackups';
 import { DB_CLUSTER_QUERY } from '../../../../hooks/api/db-cluster/useDbCluster';
 import { Messages } from '../../db-cluster-details.messages';
+import { NoStoragesModal } from '../no-storages-modal/no-storages-modal';
 import {
   BackupFields,
   defaultValuesFc,
@@ -40,6 +41,17 @@ export const ScheduledBackupModal = ({
 
   const values = useMemo(() => defaultValuesFc(), [open]);
 
+  if (!backupStorages.length) {
+    return (
+      <NoStoragesModal
+        isOpen={open}
+        subHead={Messages.schedulesBackupModal.subHead}
+        closeModal={handleClose}
+        size={'XXL'}
+      />
+    );
+  }
+
   return (
     <FormDialog
       isOpen={open}
@@ -51,7 +63,7 @@ export const ScheduledBackupModal = ({
       schema={schema}
       values={values}
       size="XXL"
-      subHead2={Messages.onDemandBackupModal.subHead}
+      subHead2={Messages.schedulesBackupModal.subHead}
     >
       <TextInput
         name={BackupFields.name}
