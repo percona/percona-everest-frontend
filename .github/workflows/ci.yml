@@ -121,8 +121,8 @@ jobs:
           mkdir front
           make init
           bit snap --build
-          bit artifacts percona.apps/everest --out-dir ./build
-          cp -rf ./build/percona.apps_everest/artifacts/apps/react-common-js/everest/public/* ./front/
+          bit artifacts percona.apps/everest --out-dir ./everest-build
+          cp -rf ./everest-build/percona.apps_everest/artifacts/apps/react-common-js/everest/public/* ./front/
           find ${GITHUB_WORKSPACE} -type d -name "everest-build"
 
       - name: Run Everest
@@ -200,3 +200,11 @@ jobs:
         with:
           name: playwright-report
           path: ./percona-everest-frontend/apps/everest/ui-tests/playwright-report/
+
+      - name: Archive report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: everest-build
+          path: ./percona-everest-frontend/everest-build
+
