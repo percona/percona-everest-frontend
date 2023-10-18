@@ -32,9 +32,7 @@ export const ScheduledBackupModal = ({
   const handleSubmit = (data: ScheduledBackupFormData) => {
     createScheduledBackup(data, {
       onSuccess() {
-        queryClient.invalidateQueries({
-          queryKey: [DB_CLUSTER_QUERY, dbClusterName],
-        });
+        queryClient.invalidateQueries([DB_CLUSTER_QUERY, dbClusterName]);
         handleClose();
       },
     });
