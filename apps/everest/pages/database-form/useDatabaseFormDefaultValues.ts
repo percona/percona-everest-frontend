@@ -44,7 +44,7 @@ export const useDatabasePageDefaultValues = (
     data: dbCluster,
     status: dbClusterRequestStatus,
     isFetching,
-  } = useDbCluster(state?.selectedDbCluster, shouldRetrieveDbClusterData);
+  } = useDbCluster(state?.selectedDbCluster, { enabled: shouldRetrieveDbClusterData });
 
   const [defaultValues, setDefaultValues] = useState<DbWizardType>(
     mode === 'new'

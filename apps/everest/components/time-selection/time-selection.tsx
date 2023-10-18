@@ -36,7 +36,7 @@ export const TimeSelection = ({
   );
 
   return (
-    <>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       <Box
         sx={{
           display: 'flex',
@@ -78,6 +78,6 @@ export const TimeSelection = ({
       {showInfoAlert && (
         <Alert severity="info">{Messages.infoText(timeInfoText)}</Alert>
       )}
-    </>
+    </Box>
   );
 };
