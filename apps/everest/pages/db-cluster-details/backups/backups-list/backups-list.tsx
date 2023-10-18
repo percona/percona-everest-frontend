@@ -175,15 +175,6 @@ export const BackupsList = () => {
     });
   };
 
-  const handleScheduledBackup = (handleClose: () => void) => {
-    setOpenCreateScheduledBackupModal(true);
-    handleClose();
-  };
-
-  const handleCloseScheduledBackupModal = () => {
-    setOpenCreateScheduledBackupModal(false);
-  };
-
   return (
     <>
       <Table
