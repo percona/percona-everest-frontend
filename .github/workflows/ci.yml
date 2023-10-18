@@ -118,9 +118,11 @@ jobs:
           NODE_OPTIONS: "--max_old_space_size=4096"
         run: |
           cd ${GITHUB_WORKSPACE}/percona-everest-frontend
+          mkdir front
           make init
           bit snap --build
-          bit artifacts percona.apps/everest --out-dir ./everest-build
+          bit artifacts percona.apps/everest --out-dir ./build
+          cp -rf ./build/percona.apps_everest/artifacts/apps/react-common-js/everest/public/* ./front/
           find ${GITHUB_WORKSPACE} -type d -name "everest-build"
 
       - name: Run Everest
