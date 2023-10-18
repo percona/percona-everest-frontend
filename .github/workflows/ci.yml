@@ -118,8 +118,8 @@ jobs:
           cd ${GITHUB_WORKSPACE}/percona-everest-frontend
           make init
           bit snap
-          bit artifacts percona.apps/everest --out-dir ./build
-          ls -R .
+          bit artifacts percona.apps/everest --out-dir ./everest-build
+          find -d ${GITHUB_WORKSPACE} -name "everest-build"
 
       - name: Run Everest
         run: |
