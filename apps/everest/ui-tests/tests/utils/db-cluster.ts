@@ -25,7 +25,7 @@ import { getClusterDetailedInfo } from './storage-class';
 export const createDbClusterFn = async (
   request: APIRequestContext,
   customOptions?: Partial<DbWizardType>,
-  kubernetesId?: string,
+  kubernetesId?: string
 ) => {
   const k8sClusterId = kubernetesId || (await getK8sClusters(request))[0].id;
   const dbEngines = await getEnginesVersions(request, k8sClusterId);
