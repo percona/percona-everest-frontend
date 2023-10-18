@@ -55,7 +55,8 @@ export const createDbClusterFn = async (
   //     },
   // };
 
-  const payload: DbCluster = {apiVersion: 'everest.percona.com/v1alpha1',
+  const payload: DbCluster = {
+    apiVersion: 'everest.percona.com/v1alpha1',
     kind: 'DatabaseCluster',
     metadata: {
       name: customOptions?.dbName || 'db-cluster-test-ui',
@@ -142,7 +143,7 @@ export const deleteDbClusterFn = async (
   clusterName: string
 ) => {
   const deleteResponse = await request.delete(
-      `/v1/kubernetes/${kubernetesId}/database-clusters/${clusterName}`
+    `/v1/kubernetes/${kubernetesId}/database-clusters/${clusterName}`
   );
   expect(deleteResponse.ok()).toBeTruthy();
 };
