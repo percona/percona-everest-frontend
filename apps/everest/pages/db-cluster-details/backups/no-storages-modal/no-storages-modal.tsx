@@ -7,45 +7,22 @@ import {
   Typography,
 } from '@mui/material';
 import { DialogTitle } from '@percona/ui-lib.dialog-title';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useActiveBreakpoint } from '../../../../hooks/utils/useActiveBreakpoint';
 import { Messages } from '../../db-cluster-details.messages';
-
-interface NoStoragesModalProps {
-  isOpen: boolean;
-  closeModal: () => void;
-  subHead: string;
-  size: 'L' | 'XL' | 'XXL';
-}
+import { NoStoragesModalProps } from './no-storages-modal.type';
 
 export const NoStoragesModal = ({
   isOpen,
   closeModal,
   subHead,
-  size,
 }: NoStoragesModalProps) => {
   const { isMobile } = useActiveBreakpoint();
-  const modalWidth = useMemo(() => {
-    if (isMobile) {
-      return '90%';
-    }
-
-    switch (size) {
-      case 'L':
-        return '480px';
-      case 'XL':
-        return '640px';
-      case 'XXL':
-        return '700px';
-      default:
-        return '640px';
-    }
-  }, [size, isMobile]);
 
   return (
     <Dialog
-      PaperProps={{ sx: { minWidth: modalWidth } }}
+      PaperProps={{ sx: { minWidth: isMobile ? '90%' : '640px' } }}
       open={isOpen}
       onClose={closeModal}
     >

@@ -47,7 +47,6 @@ export const ScheduledBackupModal = ({
         isOpen={open}
         subHead={Messages.schedulesBackupModal.subHead}
         closeModal={handleClose}
-        size={'XXL'}
       />
     );
   }

@@ -45,7 +45,6 @@ export const OnDemandBackupModal = ({
         isOpen={open}
         subHead={Messages.onDemandBackupModal.subHead}
         closeModal={handleClose}
-        size={'XXL'}
       />
     );
   }
