@@ -25,13 +25,13 @@ import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
 import { useDbEngines } from '../../../../hooks/api/db-engines/useDbEngines';
 import { DbEngineToolStatus } from '../../../../types/dbEngines.types';
 import { dbEngineToDbType, dbTypeToDbEngine } from '../../../../utils/db';
-import { DbWizardFormFields } from '../../database-form.types';
+import { DbWizardFormFields, StepProps } from '../../database-form.types';
 import { Messages } from './first-step.messages';
 import { generateShortUID } from './utils';
 import { useKubernetesClusterInfo } from '../../../../hooks/api/kubernetesClusters/useKubernetesClusterInfo';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 
-export const FirstStep = () => {
+export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
   const { watch, setValue, getFieldState } = useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
@@ -158,7 +158,7 @@ export const FirstStep = () => {
           label={Messages.labels.dbName}
           textFieldProps={{
             placeholder: Messages.placeholders.dbName,
-            disabled: mode === 'edit',
+            disabled: mode === 'edit' || loadingDefaultsForEdition,
           }}
         />
         {/* <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
@@ -227,7 +227,7 @@ export const FirstStep = () => {
           options={clusterInfo?.storageClassNames || []}
           autoCompleteProps={{
             disableClearable: true,
-            disabled: mode === 'edit',
+            disabled: mode === 'edit' || loadingDefaultsForEdition,
           }}
         />
       </FormGroup>

@@ -34,6 +34,7 @@ export const RestoreDialog = ({
   open,
   setOpen,
   onSubmit,
+  submitting,
 }: RestoreDialogProps) => {
   const { handleSubmit, watch } = useFormContext();
   const { state } = useLocation();
@@ -69,10 +70,19 @@ export const RestoreDialog = ({
         </Alert>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus variant="text" onClick={() => setOpen(false)}>
+        <Button
+          autoFocus
+          disabled={submitting}
+          variant="text"
+          onClick={() => setOpen(false)}
+        >
           {Messages.reject}
         </Button>
-        <Button variant="contained" onClick={handleSubmit(onSubmit)}>
+        <Button
+          disabled={submitting}
+          variant="contained"
+          onClick={handleSubmit(onSubmit)}
+        >
           {Messages.accept}
         </Button>
       </DialogActions>

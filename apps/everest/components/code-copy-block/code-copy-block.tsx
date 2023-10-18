@@ -13,16 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React from 'react';
-import {
-  Alert,
-  useMediaQuery,
-  useTheme,
-  IconButton,
-  Button,
-} from '@mui/material';
-import { enqueueSnackbar } from 'notistack';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { Alert, Button, IconButton } from '@mui/material';
+import { enqueueSnackbar } from 'notistack';
+import React from 'react';
+import { useActiveBreakpoint } from '../../hooks/utils/useActiveBreakpoint';
 import { Messages } from './code-copy-block.messages';
 import { CodeCopyBlockProps } from './code-copy-block.types';
 
@@ -37,8 +32,7 @@ export const CodeCopyBlock = ({
       variant: 'success',
     });
   };
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { isMobile } = useActiveBreakpoint();
 
   return (
     <Alert

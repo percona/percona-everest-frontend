@@ -13,12 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { SubmitHandler } from 'react-hook-form';
-import { DbWizardType } from '../database-form.types';
-
-export type RestoreDialogProps = {
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  onSubmit: SubmitHandler<DbWizardType>;
-  submitting: boolean;
+export const Messages = {
+  sectionHeader: (schedulesNumber: number) =>
+    `${schedulesNumber} ${schedulesNumber > 1 ? 'schedules' : 'schedule'}`,
+  noSchedules: 'No schedules',
+  menuItems: {
+    edit: 'Edit',
+    delete: 'Delete',
+  },
 };

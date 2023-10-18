@@ -6,21 +6,21 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { EverestApp } from './app';
-import { Backups } from './pages/backups/backups';
-import { BackupsList } from './pages/backups/backups-list/backups-list';
-import { BackupsTabs } from './pages/backups/backups.types';
+import { DbClusterDetails } from './pages/db-cluster-details/db-cluster-details';
+import { DBClusterDetailsTabs } from './pages/db-cluster-details/db-cluster-details.types';
 import { DatabasePage } from './pages/database-form/database-form';
 import { DatabasesPage } from './pages/databases/databases';
 import { Settings } from './pages/settings/settings';
 import { SettingsTabs } from './pages/settings/settings.types';
 import { StorageLocations } from './pages/settings/storage-locations/storage-locations';
-import { ClusterOverview } from './pages/cluster-overview/cluster-overview';
+import { ClusterOverview } from './pages/db-cluster-details/cluster-overview/cluster-overview';
 import { AuthProvider } from 'react-oidc-context';
 import { authConfigBuilder } from './auth-config';
 import { getPreviousPath } from './utils/oidc';
 import { ThemeContextProvider } from '@percona/design.theme-context-provider';
 import { everestThemeOptions } from '@percona/design.themes.everest';
 import { AuthConfigFetcher } from './components/auth-config-fetcher/AuthConfigFetcher';
+import { Backups } from './pages/db-cluster-details/backups/backups';
 
 const router = createBrowserRouter([
   {
@@ -41,15 +41,15 @@ const router = createBrowserRouter([
       },
       {
         path: 'databases/:dbClusterName',
-        element: <Backups />,
+        element: <DbClusterDetails />,
         children: [
           {
             index: true,
-            path: BackupsTabs.backups,
-            element: <BackupsList />,
+            path: DBClusterDetailsTabs.backups,
+            element: <Backups />,
           },
           {
-            path: BackupsTabs.overview,
+            path: DBClusterDetailsTabs.overview,
             element: <ClusterOverview />,
           },
         ],

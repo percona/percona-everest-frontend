@@ -22,6 +22,11 @@ import { z } from 'zod';
 import { IP_REGEX, MAX_DB_CLUSTER_NAME_LENGTH } from '../../constants';
 import { Messages } from './database-form.messages';
 import { ResourceSize } from './steps/second/second-step.types';
+import {
+  AmPM,
+  TimeValue,
+  WeekDays,
+} from '../../components/time-selection/time-selection.types';
 
 export enum DbWizardFormFields {
   dbName = 'dbName',
@@ -115,48 +120,48 @@ const stepTwoSchema = z
   })
   .passthrough();
 
-// const stepThreeSchema = z
-//   .object({
-//     backupsEnabled: z.boolean(),
-//     // pitrEnabled: z.boolean(),
-//     // pitrTime: z.string(),
-//     storageLocation: z
-//       .string()
-//       .or(
-//         z.object({
-//           name: z.string(),
-//         })
-//       )
-//       .nullable()
-//       .superRefine((input, ctx) => {
-//         if (
-//           (!input || typeof input === 'string' || !input.name) &&
-//           input !== null
-//         ) {
-//           ctx.addIssue({
-//             code: z.ZodIssueCode.custom,
-//             message: Messages.errors.storageLocation.invalid,
-//           });
-//         }
-//       }),
-//     selectedTime: z.nativeEnum(TimeValue),
-//     minuteHour: z.number().optional(),
-//     minute: z.number().optional(),
-//     hour: z.number().optional(),
-//     amPm: z.nativeEnum(AmPM).optional(),
-//     weekDay: z.nativeEnum(WeekDays).optional(),
-//     onDay: z.number().optional(),
-//   })
-//   .passthrough()
-//   .superRefine(({ backupsEnabled, storageLocation }, ctx) => {
-//     if (backupsEnabled && !storageLocation) {
-//       ctx.addIssue({
-//         code: z.ZodIssueCode.custom,
-//         path: [DbWizardFormFields.storageLocation],
-//         message: Messages.errors.storageLocation.invalid,
-//       });
-//     }
-//   });
+const backupsStepSchema = z
+  .object({
+    backupsEnabled: z.boolean(),
+    // pitrEnabled: z.boolean(),
+    // pitrTime: z.string(),
+    storageLocation: z
+      .string()
+      .or(
+        z.object({
+          name: z.string(),
+        })
+      )
+      .nullable()
+      .superRefine((input, ctx) => {
+        if (
+          (!input || typeof input === 'string' || !input.name) &&
+          input !== null
+        ) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: Messages.errors.storageLocation.invalid,
+          });
+        }
+      }),
+    selectedTime: z.nativeEnum(TimeValue),
+    minuteHour: z.number().optional(),
+    minute: z.number().optional(),
+    hour: z.number().optional(),
+    amPm: z.nativeEnum(AmPM).optional(),
+    weekDay: z.nativeEnum(WeekDays).optional(),
+    onDay: z.number().optional(),
+  })
+  .passthrough()
+  .superRefine(({ backupsEnabled, storageLocation }, ctx) => {
+    if (backupsEnabled && !storageLocation) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: [DbWizardFormFields.storageLocation],
+        message: Messages.errors.storageLocation.invalid,
+      });
+    }
+  });
 
 const advancedConfigurationsSchema = z
   .object({
@@ -185,16 +190,7 @@ const advancedConfigurationsSchema = z
 const stepFiveSchema = z
   .object({
     monitoring: z.boolean(),
-    monitoringInstance: z
-      .string()
-      .or(
-        z.object({
-          type: z.string().optional(),
-          url: z.string().optional(),
-          name: z.string().optional(),
-        })
-      )
-      .nullable(),
+    monitoringInstance: z.string().nullable(),
   })
   .passthrough();
 
@@ -214,6 +210,15 @@ const superset = stepOneSchema
   .and(advancedConfigurationsSchema)
   .and(stepFiveSchema);
 
+export type AdvancedConfigurationType = z.infer<
+  typeof advancedConfigurationsSchema
+>;
+export type BackupsStepType = z.infer<typeof backupsStepSchema>;
+
 export type DbWizardType = z.infer<typeof superset>;
 
 export type DbWizardMode = 'edit' | 'new' | 'restoreFromBackup';
+
+export type StepProps = {
+  loadingDefaultsForEdition: boolean;
+};

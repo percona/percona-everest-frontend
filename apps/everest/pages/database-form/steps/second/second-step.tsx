@@ -1,23 +1,18 @@
-import {
-  Box,
-  FormGroup,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Box, FormGroup, Typography } from '@mui/material';
+import { DbType } from '@percona/ui-lib.db-toggle-card';
 import { ToggleButtonGroupInput } from '@percona/ui-lib.form.inputs.toggle-button-group';
 import { ToggleCard } from '@percona/ui-lib.toggle-card';
 import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { DbType } from '@percona/ui-lib.db-toggle-card';
+import { useKubernetesClusterResourcesInfo } from '../../../../hooks/api/kubernetesClusters/useKubernetesClusterResourcesInfo';
+import { useActiveBreakpoint } from '../../../../hooks/utils/useActiveBreakpoint';
+import { DbWizardFormFields } from '../../database-form.types';
+import { useDatabasePageMode } from '../../useDatabasePageMode';
+import { ResourceInput } from './resource-input/resource-input';
 import { DEFAULT_SIZES, NODES_DB_TYPE_MAP } from './second-step.const';
 import { Messages } from './second-step.messages';
 import { ResourceSize } from './second-step.types';
 import { humanizeResourceSizeMap } from './second-step.utils';
-import { DbWizardFormFields } from '../../database-form.types';
-import { useDatabasePageMode } from '../../useDatabasePageMode';
-import { useKubernetesClusterResourcesInfo } from '../../../../hooks/api/kubernetesClusters/useKubernetesClusterResourcesInfo';
-import { ResourceInput } from './resource-input/resource-input';
 
 export const SecondStep = () => {
   const { watch, setValue, setError, clearErrors } = useFormContext();
@@ -25,8 +20,7 @@ export const SecondStep = () => {
   const { data: resourcesInfo, isFetching: resourcesInfoLoading } =
     useKubernetesClusterResourcesInfo();
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { isMobile } = useActiveBreakpoint();
   const checkResourceText = (
     value: string | number | undefined,
     units: string,

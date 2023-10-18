@@ -1,14 +1,14 @@
 import { PreviewSectionFive } from './section-five';
-import { PreviewSectionAdvancedConfigurations } from './section-advanced-configurations';
+import { AdvancedConfigurationsPreviewSection } from './advanced-configurations-section';
 import { PreviewSectionOne } from './section-one';
-import { PreviewSectionThree } from './section-three';
+import { BackupsPreviewSection } from './backups-section';
 import { PreviewSectionTwo } from './section-two';
 
 export {
   PreviewSectionOne,
   PreviewSectionTwo,
-  PreviewSectionThree,
-  PreviewSectionAdvancedConfigurations,
+  BackupsPreviewSection,
+  AdvancedConfigurationsPreviewSection,
   PreviewSectionFive,
 };
 
@@ -17,6 +17,6 @@ export const previewSections = [
   PreviewSectionOne,
   PreviewSectionTwo,
   // PreviewSectionThree,
-  PreviewSectionAdvancedConfigurations,
-  // PreviewSectionFive,
+  AdvancedConfigurationsPreviewSection,
+  PreviewSectionFive,
 ];
