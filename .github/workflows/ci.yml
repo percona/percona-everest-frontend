@@ -119,7 +119,7 @@ jobs:
           make init
           bit snap
           bit artifacts percona.apps/everest --out-dir ./everest-build
-          find / -type d -name "everest-build"
+          find ${GITHUB_WORKSPACE} -type d -name "everest-build"
 
       - name: Run Everest
         run: |
