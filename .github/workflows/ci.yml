@@ -117,13 +117,12 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}/percona-everest-frontend
           make init
-          cd apps/everest
-          make build
+          bit build everest
 
       - name: Run Everest
         run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-frontend/apps/everest
-          make run-skip-watch &
+          cd ${GITHUB_WORKSPACE}/percona-everest-frontend
+          bit run everest --skip-watch &
           sleep 30s
 
       - name: Set up Go release
