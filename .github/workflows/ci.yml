@@ -118,7 +118,9 @@ jobs:
           cd ${GITHUB_WORKSPACE}/percona-everest-frontend
           make init
           cd apps/everest
-          make build
+          bit snap
+          bit artifacts percona.apps/everest --out-dir build
+          ls -R ./build
 
       - name: Run Everest
         run: |
