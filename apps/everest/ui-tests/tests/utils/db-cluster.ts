@@ -15,11 +15,7 @@
 
 import { APIRequestContext, expect } from '@playwright/test';
 import { DbType } from '@percona/ui-lib.db-toggle-card';
-import {
-  DbCluster,
-  ProxyExposeType,
-  Schedule,
-} from '../../../types/dbCluster.types';
+import { DbCluster, ProxyExposeType } from '../../../types/dbCluster.types';
 import { dbTypeToDbEngine } from '../../../utils/db';
 import { DbWizardType } from '../../../pages/database-form/database-form.types';
 import { getEnginesVersions } from './database-engines';
@@ -27,18 +23,13 @@ import { getK8sClusters } from './k8s-clusters';
 import { getClusterDetailedInfo } from './storage-class';
 
 export const createDbClusterFn = async (
-  request: APIRequestContext,
-  // TODO change type to DbWizardType after https://jira.percona.com/browse/EVEREST-485
-  customOptions?: Partial<
-    DbWizardType & {
-      schedules: Schedule[];
-    }
-  >,
-  kubernetesId?: string
+    request: APIRequestContext,
+    customOptions?: Partial<DbWizardType>,
+    kubernetesId?: string
 ) => {
   const k8sClusterId = kubernetesId || (await getK8sClusters(request))[0].id;
   const dbEngines = await getEnginesVersions(request, k8sClusterId);
-  const dbType = (customOptions?.dbType as DbType) || DbType.Mysql;
+  const dbType = customOptions?.dbType || DbType.Mysql;
   const dbEngineType = dbTypeToDbEngine(dbType);
   const dbTypeVersions = dbEngines[dbEngineType];
   const dbClusterInfo = await getClusterDetailedInfo(request, k8sClusterId);
@@ -68,15 +59,25 @@ export const createDbClusterFn = async (
     apiVersion: 'everest.percona.com/v1alpha1',
     kind: 'DatabaseCluster',
     metadata: {
-      name: (customOptions?.dbName as string) || 'db-cluster-test-ui',
+      name: customOptions?.dbName || 'db-cluster-test-ui',
     },
     spec: {
-      backup: {
-        enabled: (customOptions?.backupsEnabled as boolean) || false,
-        ...(customOptions?.backupsEnabled && {
-          schedules: customOptions?.schedules,
-        }),
-      },
+      // backup: {
+      //   enabled: dbPayload.backupsEnabled,
+      //   ...(dbPayload.backupsEnabled && {
+      //     schedules: [
+      //       {
+      //         enabled: true,
+      //         name: '',
+      //         backupStorageName:
+      //           typeof dbPayload.storageLocation === 'string'
+      //             ? dbPayload.storageLocation
+      //             : dbPayload.storageLocation!.name,
+      //         schedule: backupSchedule,
+      //       },
+      //     ],
+      //   }),
+      // },
       engine: {
         type: dbEngineType,
         version: customOptions?.dbVersion || lastVersion,
@@ -107,14 +108,14 @@ export const createDbClusterFn = async (
         replicas: +(customOptions?.numberOfNodes || 1),
         expose: {
           type: customOptions?.externalAccess
-            ? ProxyExposeType.external
-            : ProxyExposeType.internal,
+              ? ProxyExposeType.external
+              : ProxyExposeType.internal,
           ...(!!customOptions?.externalAccess &&
-            customOptions?.sourceRanges && {
-              ipSourceRanges: customOptions?.sourceRanges.flatMap((source) =>
-                source.sourceRange ? [source.sourceRange] : []
-              ),
-            }),
+              customOptions?.sourceRanges && {
+                ipSourceRanges: customOptions?.sourceRanges.flatMap((source) =>
+                    source.sourceRange ? [source.sourceRange] : []
+                ),
+              }),
         },
       },
       // TODO return for backups tests
@@ -127,22 +128,22 @@ export const createDbClusterFn = async (
   };
 
   const response = await request.post(
-    `/v1/kubernetes/${k8sClusterId}/database-clusters`,
-    {
-      data: payload,
-    }
+      `/v1/kubernetes/${k8sClusterId}/database-clusters`,
+      {
+        data: payload,
+      }
   );
 
   expect(response.ok()).toBeTruthy();
 };
 
 export const deleteDbClusterFn = async (
-  request: APIRequestContext,
-  kubernetesId: string,
-  clusterName: string
+    request: APIRequestContext,
+    kubernetesId: string,
+    clusterName: string
 ) => {
   const deleteResponse = await request.delete(
-    `/v1/kubernetes/${kubernetesId}/database-clusters/${clusterName}`
+      `/v1/kubernetes/${kubernetesId}/database-clusters/${clusterName}`
   );
   expect(deleteResponse.ok()).toBeTruthy();
 };
