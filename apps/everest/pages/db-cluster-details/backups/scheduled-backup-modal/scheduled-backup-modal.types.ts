@@ -32,7 +32,6 @@ export const defaultValuesFc = () => ({
 export const schema = z.object({
   [BackupFields.name]: z.string().nonempty(),
   selectedTime: z.nativeEnum(TimeValue),
-  minuteHour: z.number().optional(),
   minute: z.number().optional(),
   hour: z.number().optional(),
   amPm: z.nativeEnum(AmPM).optional(),
