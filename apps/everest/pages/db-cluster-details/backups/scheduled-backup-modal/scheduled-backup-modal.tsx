@@ -17,24 +17,19 @@ import React, { useContext, useMemo } from 'react';
 import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { FormDialog } from '../../../../components/form-dialog';
-import { TimeSelection } from '../../../../components/time-selection/time-selection';
 import { useBackupStorages } from '../../../../hooks/api/backup-storages/useBackupStorages';
-import { useCreateScheduledBackup } from '../../../../hooks/api/backups/useScheduledBackups';
-import { DB_CLUSTER_QUERY } from '../../../../hooks/api/db-cluster/useDbCluster';
-import { Messages } from '../../db-cluster-details.messages';
+import { Messages as CommonMessages } from '../../db-cluster-details.messages';
 import { NoStoragesModal } from '../no-storages-modal/no-storages-modal';
 import {
   DB_CLUSTER_QUERY,
   useDbCluster,
 } from '../../../../hooks/api/db-cluster/useDbCluster';
 import { Messages } from './scheduled-backup-modal.messages';
-import {
-  ScheduleFormData,
-  schema,
-} from './scheduled-backup-modal.types';
+import { ScheduleFormData, schema } from './scheduled-backup-modal.types';
 import { ScheduleModalContext } from './context/schedule-modal.context';
 import { scheduleModalDefaultValues } from './scheduled-backup-modal-utils';
 import { ScheduledBackupModalForm } from './scheduled-backup-modal-form/scheduled-backup-modal-form';
+import { useUpdateSchedules } from '../../../../hooks/api/backups/useScheduledBackups';
 
 export const ScheduledBackupModal = () => {
   const queryClient = useQueryClient();
@@ -46,9 +41,9 @@ export const ScheduledBackupModal = () => {
     setOpenScheduleModal,
   } = useContext(ScheduleModalContext);
 
-    const { data: backupStorages = [] } = useBackupStorages();
+  const { data: backupStorages = [] } = useBackupStorages();
 
-    const { data: dbCluster } = useDbCluster(dbClusterName!, {
+  const { data: dbCluster } = useDbCluster(dbClusterName!, {
     enabled: !!dbClusterName && mode === 'edit',
   });
   const { mutate: updateScheduledBackup, isLoading } = useUpdateSchedules(
@@ -88,7 +83,7 @@ export const ScheduledBackupModal = () => {
     return (
       <NoStoragesModal
         isOpen={openScheduleModal}
-        subHead={Messages.schedulesBackupModal.subHead}
+        subHead={CommonMessages.schedulesBackupModal.subHead}
         closeModal={handleCloseScheduledBackupModal}
       />
     );
@@ -118,7 +113,7 @@ export const ScheduledBackupModal = () => {
         size="XXL"
         data-testId="scheduled-backup-modal"
       >
-       <ScheduledBackupModalForm/>
+        <ScheduledBackupModalForm />
       </FormDialog>
     )
   );

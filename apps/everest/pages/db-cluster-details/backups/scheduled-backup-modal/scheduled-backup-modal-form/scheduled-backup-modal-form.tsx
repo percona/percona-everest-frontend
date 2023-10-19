@@ -18,13 +18,13 @@ import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { LabeledContent } from '@percona/ui-lib.labeled-content';
 import { useParams } from 'react-router-dom';
+import { useFormContext } from 'react-hook-form';
 import { TimeSelection } from '../../../../../components/time-selection/time-selection';
 import { useBackupStorages } from '../../../../../hooks/api/backup-storages/useBackupStorages';
 import { useDbCluster } from '../../../../../hooks/api/db-cluster/useDbCluster';
 import { Messages } from '../scheduled-backup-modal.messages';
 import { ScheduleFields } from '../scheduled-backup-modal.types';
 import { ScheduleModalContext } from '../context/schedule-modal.context';
-import { useFormContext } from 'react-hook-form';
 
 export const ScheduledBackupModalForm = () => {
   const { watch } = useFormContext();
