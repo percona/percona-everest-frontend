@@ -29,7 +29,7 @@ import {
 } from './scheduled-backup-modal.types';
 import { ScheduleModalContext } from './context/schedule-modal.context';
 import { scheduleModalDefaultValues } from './scheduled-backup-modal-utils';
-import { ScheduledBackupModalForm } from './scheduled-backup-modal-form';
+import { ScheduledBackupModalForm } from './scheduled-backup-modal-form/scheduled-backup-modal-form';
 
 export const ScheduledBackupModal = () => {
   const queryClient = useQueryClient();
@@ -101,7 +101,7 @@ export const ScheduledBackupModal = () => {
         size="XXL"
         data-testId="scheduled-backup-modal"
       >
-        <ScheduledBackupModalForm />
+       <ScheduledBackupModalForm/>
       </FormDialog>
     )
   );
