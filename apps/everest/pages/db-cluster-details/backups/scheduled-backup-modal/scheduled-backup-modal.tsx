@@ -25,7 +25,10 @@ import {
   useDbCluster,
 } from '../../../../hooks/api/db-cluster/useDbCluster';
 import { Messages } from './scheduled-backup-modal.messages';
-import { ScheduleFormData, schema } from './scheduled-backup-modal.types';
+import {
+  ScheduleFormData,
+  schema,
+} from './scheduled-backup-modal-form/scheduled-backup-modal-form.types';
 import { ScheduleModalContext } from './context/schedule-modal.context';
 import { scheduleModalDefaultValues } from './scheduled-backup-modal-utils';
 import { ScheduledBackupModalForm } from './scheduled-backup-modal-form/scheduled-backup-modal-form';

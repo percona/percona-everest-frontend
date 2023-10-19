@@ -17,7 +17,7 @@ import { Schedule } from '../../../../types/dbCluster.types';
 import {
   ScheduleFields,
   ScheduleFormData,
-} from './scheduled-backup-modal.types';
+} from './scheduled-backup-modal-form/scheduled-backup-modal-form.types';
 import { generateShortUID } from '../../../database-form/steps/first/utils';
 import { TIME_SELECTION_DEFAULTS } from '../../../database-form/database-form.constants';
 import { getFormValuesFromCronExpression } from '../../../../components/time-selection/time-selection.utils';
@@ -31,7 +31,7 @@ export const scheduleModalDefaultValues = (
     const formValues = getFormValuesFromCronExpression(schedule);
     return {
       [ScheduleFields.name]: name || '',
-      [ScheduleFields.storageLocation]: backupStorageName || '',
+      [ScheduleFields.storageLocation]: { name: backupStorageName } || null,
       ...formValues,
     };
   }

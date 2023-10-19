@@ -23,7 +23,7 @@ import { TimeSelection } from '../../../../../components/time-selection/time-sel
 import { useBackupStorages } from '../../../../../hooks/api/backup-storages/useBackupStorages';
 import { useDbCluster } from '../../../../../hooks/api/db-cluster/useDbCluster';
 import { Messages } from '../scheduled-backup-modal.messages';
-import { ScheduleFields } from '../scheduled-backup-modal.types';
+import { ScheduleFields } from './scheduled-backup-modal-form.types';
 import { ScheduleModalContext } from '../context/schedule-modal.context';
 
 export const ScheduledBackupModalForm = () => {

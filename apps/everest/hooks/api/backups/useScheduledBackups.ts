@@ -1,7 +1,7 @@
 import { useMutation, UseMutationOptions } from 'react-query';
 import { updateDbClusterFn } from '../../../api/dbClusterApi';
 import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils';
-import { ScheduleFormData } from '../../../pages/db-cluster-details/backups/scheduled-backup-modal/scheduled-backup-modal.types';
+import { ScheduleFormData } from '../../../pages/db-cluster-details/backups/scheduled-backup-modal/scheduled-backup-modal-form/scheduled-backup-modal-form.types';
 import { DbCluster, Schedule } from '../../../types/dbCluster.types';
 import { useDbCluster } from '../db-cluster/useDbCluster';
 import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';

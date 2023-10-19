@@ -18,7 +18,7 @@ import {
   AmPM,
   TimeValue,
   WeekDays,
-} from '../../../../components/time-selection/time-selection.types';
+} from '../../../../../components/time-selection/time-selection.types';
 
 export enum ScheduleFields {
   name = 'name',
@@ -49,7 +49,10 @@ export const schema = z.object({
     )
     .nullable()
     .superRefine((input, ctx) => {
-      if (!input || typeof input === 'string' || !input.name) {
+      if (
+        (!input || typeof input === 'string' || !input.name) &&
+        input !== null
+      ) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message:
