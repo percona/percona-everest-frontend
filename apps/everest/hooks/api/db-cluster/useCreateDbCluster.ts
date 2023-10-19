@@ -98,10 +98,7 @@ const formValuesToPayloadMapping = (
       },
       monitoring: {
         ...(!!dbPayload.monitoring && {
-          monitoringConfigName:
-            typeof dbPayload.monitoringInstance === 'string'
-              ? dbPayload.monitoringInstance
-              : dbPayload?.monitoringInstance!.name,
+          monitoringConfigName: dbPayload?.monitoringInstance!,
         }),
       },
       proxy: {

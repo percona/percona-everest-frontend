@@ -18,5 +18,5 @@ export const previewSections = [
   PreviewSectionTwo,
   // PreviewSectionThree,
   AdvancedConfigurationsPreviewSection,
-  // PreviewSectionFive,
+  PreviewSectionFive,
 ];

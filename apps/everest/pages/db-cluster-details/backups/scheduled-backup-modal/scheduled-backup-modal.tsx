@@ -17,7 +17,12 @@ import React, { useContext, useMemo } from 'react';
 import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { FormDialog } from '../../../../components/form-dialog';
-import { useUpdateSchedules } from '../../../../hooks/api/backups/useScheduledBackups';
+import { TimeSelection } from '../../../../components/time-selection/time-selection';
+import { useBackupStorages } from '../../../../hooks/api/backup-storages/useBackupStorages';
+import { useCreateScheduledBackup } from '../../../../hooks/api/backups/useScheduledBackups';
+import { DB_CLUSTER_QUERY } from '../../../../hooks/api/db-cluster/useDbCluster';
+import { Messages } from '../../db-cluster-details.messages';
+import { NoStoragesModal } from '../no-storages-modal/no-storages-modal';
 import {
   DB_CLUSTER_QUERY,
   useDbCluster,
@@ -41,7 +46,9 @@ export const ScheduledBackupModal = () => {
     setOpenScheduleModal,
   } = useContext(ScheduleModalContext);
 
-  const { data: dbCluster } = useDbCluster(dbClusterName!, {
+    const { data: backupStorages = [] } = useBackupStorages();
+
+    const { data: dbCluster } = useDbCluster(dbClusterName!, {
     enabled: !!dbClusterName && mode === 'edit',
   });
   const { mutate: updateScheduledBackup, isLoading } = useUpdateSchedules(
@@ -76,6 +83,16 @@ export const ScheduledBackupModal = () => {
       scheduleModalDefaultValues(mode, selectedSchedule),
     [mode, selectedSchedule, openScheduleModal]
   );
+
+  if (!backupStorages.length) {
+    return (
+      <NoStoragesModal
+        isOpen={openScheduleModal}
+        subHead={Messages.schedulesBackupModal.subHead}
+        closeModal={handleCloseScheduledBackupModal}
+      />
+    );
+  }
 
   return (
     openScheduleModal && (

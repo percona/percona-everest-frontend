@@ -17,6 +17,9 @@ permissions:
   pull-requests: write
   repository-projects: read
 
+env:
+  NODE_OPTIONS: "—-max_old_space_size=4096"
+
 jobs:
   lint:
     name: ESLint & format
@@ -117,13 +120,12 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}/percona-everest-frontend
           make init
-          cd apps/everest
-          make build
+          bit build everest
 
       - name: Run Everest
         run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-frontend/apps/everest
-          make run-skip-watch &
+          cd ${GITHUB_WORKSPACE}/percona-everest-frontend
+          bit run everest --skip-watch &
           sleep 30s
 
       - name: Set up Go release
@@ -135,23 +137,6 @@ jobs:
         run: |
           go version
           echo "GO_VERSION=$(go version)" >> $GITHUB_ENV
-
-      - name: Enable Go modules cache
-        uses: percona-platform/cache@v3
-        with:
-          path: ~/go/pkg/mod
-          key: ${{ matrix.os }}-go-${{ matrix.go-version }}-modules-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ matrix.os }}-go-${{ matrix.go-version }}-modules-
-
-      - name: Enable Go build cache
-        uses: percona-platform/cache@v3
-        with:
-          path: ~/.cache/go-build
-          key: ${{ matrix.os }}-go-${{ matrix.go-version }}-build-${{ github.ref }}-${{ hashFiles('**') }}
-          restore-keys: |
-            ${{ matrix.os }}-go-${{ matrix.go-version }}-build-${{ github.ref }}-
-            ${{ matrix.os }}-go-${{ matrix.go-version }}-build-
 
       - name: Run Everest backend
         run: |

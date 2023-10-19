@@ -190,16 +190,7 @@ const advancedConfigurationsSchema = z
 const stepFiveSchema = z
   .object({
     monitoring: z.boolean(),
-    monitoringInstance: z
-      .string()
-      .or(
-        z.object({
-          type: z.string().optional(),
-          url: z.string().optional(),
-          name: z.string().optional(),
-        })
-      )
-      .nullable(),
+    monitoringInstance: z.string().nullable(),
   })
   .passthrough();
 
@@ -227,3 +218,7 @@ export type BackupsStepType = z.infer<typeof backupsStepSchema>;
 export type DbWizardType = z.infer<typeof superset>;
 
 export type DbWizardMode = 'edit' | 'new' | 'restoreFromBackup';
+
+export type StepProps = {
+  loadingDefaultsForEdition: boolean;
+};
