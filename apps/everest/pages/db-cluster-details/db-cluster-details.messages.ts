@@ -7,6 +7,16 @@ export const Messages = {
     headerMessage: 'Create Backup',
     submitMessage: 'Create',
   },
+  schedulesBackupModal: {
+    subHead:
+      'Create a task that takes regular backups of this database, according to the schedule that you specify.',
+  },
+  noStorages: {
+    alert:
+      'You don’t have any storage location set yet. Please set one before you proceed.',
+    submitButton: 'Go go settings',
+    cancel: 'Cancel',
+  },
   backups: 'Backups',
   overview: 'Overview',
 };
