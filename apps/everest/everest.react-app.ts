@@ -13,11 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import { ReactAppOptions } from '@teambit/react';
-import { config } from 'dotenv';
-
-config({
-  path: __dirname + '/.env.webpack',
-});
+const webpack = require('webpack');
 
 const titleAndFaviconModifier = (configMutator) => {
   // These are really hacky, but Bit doesn't seem to properly configure favicon using the "favicon" entry during dev mode
@@ -45,9 +41,8 @@ const titleAndFaviconModifier = (configMutator) => {
   return configMutator;
 };
 
-const proxyModifier = (configMutator) => {
-  const target = process.env.DEV_PROXY_URL || `http://localhost:8080`;
-
+const devServerModifier = (configMutator) => {
+  const target = process.env.API_URL || 'http://localhost:8080';
   const newWebpackConfig = {
     devServer: {
       proxy: {
@@ -56,20 +51,6 @@ const proxyModifier = (configMutator) => {
           changeOrigin: true,
           secure: false,
         },
-        '/auth-config': {
-          bypass: (req, res) => {
-            if (req.url === '/auth-config') {
-              res.send({
-                auth: {
-                  web: {
-                    clientID: '236248997172457477@everest_test',
-                    url: 'https://account.127.0.0.1.nip.io',
-                  }
-                }
-              })
-            }
-          }
-        }
       },
     },
   };
@@ -100,15 +81,29 @@ const cssLoaderModifider = (configMutator) => {
   return configMutator;
 };
 
+const pluginModifier = (configMutator) => {
+  const host = process.env.HOSTNAME || 'http://localhost';
+  const port = process.env.BIT_RUN_PORT || 3000;
+
+  let hostUrl = `${host}:${port}`;
+
+  configMutator.addPlugin(new webpack.EnvironmentPlugin({
+    HOST_URL: process.env.NODE_ENV === 'development' ? hostUrl : null,
+  }));
+
+  return configMutator;
+}
+
 export const EverestApp: ReactAppOptions = {
   name: 'everest',
   entry: [require.resolve('./everest.app-root')],
   favicon: require.resolve('./favicon.ico'),
   webpackTransformers: [
     titleAndFaviconModifier,
-    proxyModifier,
+    devServerModifier,
     outputModifier,
     cssLoaderModifider,
+    pluginModifier,
   ],
 };
 

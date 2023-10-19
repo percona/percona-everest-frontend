@@ -18,9 +18,18 @@ bit start
 
 # Running a particular app (e.g. Everest)
 
+By default, apps run on localhost:3000.
+If you're using a different host for some reason, change `HOSTNAME` accordingly,
+as it might be needed (e.g. OIDC `redirect_uri`, etc.).
+
 ```bash
-cd apps/<app-name>
-make run
+# DEFAULTS
+# APP=everest -> Bit app name
+# HOSTNAME=http://localhost -> Your hostname
+# BIT_RUN_PORT=3000 -> Port where to run the app
+# API_URL=http://localhost:8080 -> Port where the API is running
+
+make run APP=<app-name> HOST=<host> BIT_RUN_PORT=<bit-port> API_URL=<api-url>
 ```
 
 # Run unit tests for app
@@ -40,11 +49,3 @@ make test-ui
 cd apps/<app-name>
 make build
 ```
-
-# Env variables
-Add a `.env.webpack` file to `apps/everest` to change these configurations:
-```bash
-# DEFAULTS TO http://localhost:8080
-DEV_PROXY_URL=<PATH_TO_EVEREST_BACKEND>
-```
-Any change to these vars must be followed by `bit compile --delete-dist-dir` before `bit run`.

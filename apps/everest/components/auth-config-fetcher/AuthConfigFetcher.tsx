@@ -6,12 +6,13 @@ type AuthConfigPayload = {
     web: {
       clientID: string;
       url: string;
+      issuer: string;
     }
   }
 }
 
 const fetchAuthConfig = async () => {
-  const response = await axios.get<AuthConfigPayload>('/auth-config');
+  const response = await axios.get<AuthConfigPayload>('/v1/public/configuration');
 
   return response.data;
 }
@@ -31,12 +32,8 @@ export const AuthConfigFetcher = ({ children }: { children: (config: AuthConfigP
   }, []);
 
   if (authConfig === null) {
-    console.log('NO CONFIG STILL');
     return null;
   }
-
-  console.log('CONFIG DONE; RENDER');
-  console.log(authConfig);
 
   return <>{children(authConfig)}</>;
 }

@@ -94,8 +94,8 @@ const router = createBrowserRouter([
 
 ReactDOM.render(
   <AuthConfigFetcher>
-    {({ auth: { web: { clientID, url } } }) => (
-      <AuthProvider {...authConfigBuilder(url, clientID)}>
+    {({ auth: { web: { clientID, issuer, url } } }) => (
+      <AuthProvider {...authConfigBuilder(issuer, clientID, url)}>
         <ThemeContextProvider themeOptions={everestThemeOptions}>
           <RouterProvider router={router} />
         </ThemeContextProvider>

@@ -22,6 +22,7 @@ import { DrawerContextProvider } from './contexts/drawer/drawer.context';
 import { K8ContextProvider } from './contexts/kubernetes/kubernetes.context';
 import { Main } from './components/main/Main';
 import { Login } from './components/login/Login';
+import { setApiToken } from './api/api';
 
 export const EverestApp = () => {
   const queryClient = new QueryClient({
@@ -58,7 +59,7 @@ export const EverestApp = () => {
 
   if (isAuthenticated) {
     console.log(user);
-    // setApiToken(user?.access_token || '');
+    setApiToken(user?.access_token || ''); 
 
     return (
       <SnackbarProvider maxSnack={3} preventDuplicate>

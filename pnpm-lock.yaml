@@ -97,9 +97,6 @@ importers:
       date-fns:
         specifier: ^2.30.0
         version: 2.30.0
-      dotenv:
-        specifier: ^16.3.1
-        version: 16.3.1
       eslint-import-resolver-node:
         specifier: 0.3.6
         version: 0.3.6
@@ -206,9 +203,6 @@ importers:
       date-fns:
         specifier: ^2.30.0
         version: 2.30.0
-      dotenv:
-        specifier: ^16.3.1
-        version: 16.3.1
       graphql:
         specifier: 14.7.0
         version: 14.7.0
@@ -672,9 +666,6 @@ importers:
       date-fns:
         specifier: ^2.30.0
         version: 2.30.0
-      dotenv:
-        specifier: ^16.3.1
-        version: 16.3.1
       graphql:
         specifier: 14.7.0
         version: 14.7.0
@@ -23395,6 +23386,7 @@ packages:
       '@percona/ui-lib.icons.db': file:ui-lib/icons/db(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.icons.everest': file:ui-lib/icons/everest(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
       '@percona/ui-lib.icons.status': file:ui-lib/icons/status(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
+      '@percona/ui-lib.labeled-content': file:ui-lib/labeled-content(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.loadable-children': file:ui-lib/loadable-children(@mui/material@5.14.13)(react@17.0.2)
       '@percona/ui-lib.menu-button': file:ui-lib/menu-button(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
       '@percona/ui-lib.stepper': file:ui-lib/stepper(@emotion/react@11.11.1)(@mui/icons-material@5.14.13)(@mui/material@5.14.13)(@mui/utils@5.14.13)(react@17.0.2)
