@@ -105,6 +105,14 @@ export const BackupsList = () => {
     setOpenCreateBackupModal(true);
     handleClose();
   };
+  const handleScheduledBackup = (handleClose: () => void) => {
+    setOpenCreateScheduledBackupModal(true);
+    handleClose();
+  };
+
+  const handleCloseScheduledBackupModal = () => {
+    setOpenCreateScheduledBackupModal(false);
+  };
 
   const handleCloseBackupModal = () => {
     setOpenCreateBackupModal(false);
@@ -165,15 +173,6 @@ export const BackupsList = () => {
         backupStorageName: selectedBackupStorage,
       },
     });
-  };
-
-  const handleScheduledBackup = (handleClose: () => void) => {
-    setOpenCreateScheduledBackupModal(true);
-    handleClose();
-  };
-
-  const handleCloseScheduledBackupModal = () => {
-    setOpenCreateScheduledBackupModal(false);
   };
 
   return (
