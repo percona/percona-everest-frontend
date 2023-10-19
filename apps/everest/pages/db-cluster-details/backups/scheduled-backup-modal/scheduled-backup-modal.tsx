@@ -53,11 +53,13 @@ export const ScheduledBackupModal = () => {
   const schedules =
     (mode === 'edit' && dbCluster && dbCluster?.spec?.backup?.schedules) || [];
 
-  const selectedSchedule = useMemo(() => {
-    if (mode === 'edit' && schedules) {
-      return schedules.find((item) => item?.name === selectedScheduleName);
-    }
-  }, [mode, openScheduleModal, schedules, selectedScheduleName]);
+  const selectedSchedule = useMemo(
+    () =>
+      mode === 'edit' &&
+      schedules &&
+      schedules.find((item) => item?.name === selectedScheduleName),
+    [mode, openScheduleModal, schedules, selectedScheduleName]
+  );
 
   const handleCloseScheduledBackupModal = () => {
     setOpenScheduleModal(false);

@@ -33,7 +33,6 @@ export const Backups = () => {
     () => dbCluster?.spec?.engine?.type,
     [dbCluster?.spec?.engine?.type]
   );
-  console.log('Backups');
 
   return (
     <ScheduleModalContextProvider>

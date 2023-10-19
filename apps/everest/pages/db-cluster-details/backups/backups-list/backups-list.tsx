@@ -36,7 +36,6 @@ import { useDbCluster } from '../../../../hooks/api/db-cluster/useDbCluster';
 import { useDbClusterRestore } from '../../../../hooks/api/restores/useDbClusterRestore';
 import { Backup, BackupStatus } from '../../../../types/backups.types';
 import { DbEngineType } from '../../../../types/dbEngines.types';
-import { OnDemandBackupModal } from '../on-demand-backup-modal/on-demand-backup-modal';
 import { BACKUP_STATUS_TO_BASE_STATUS } from './backups-list.constants';
 import { Messages } from './backups-list.messages';
 import { ScheduleModalContext } from '../scheduled-backup-modal/context/schedule-modal.context';
