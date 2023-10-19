@@ -19,10 +19,25 @@ export const FifthStep = () => {
   const { data: monitoringInstances, isFetching: monitoringInstancesLoading } =
     useMonitoringInstancesList();
 
+  const monitoringInstancesOptions = (monitoringInstances || []).map(
+    (instance) => instance.name
+  );
+
+  const getInstanceOptionLabel = (instanceName: string) => {
+    const instance = monitoringInstances?.find(
+      (inst) => inst.name === instanceName
+    );
+
+    return instance ? `${instance.name} (${instance.url})` : '';
+  };
+
   useEffect(() => {
     if (mode === 'new') {
       if (monitoring && monitoringInstances?.length) {
-        setValue(DbWizardFormFields.monitoringInstance, monitoringInstances[0]);
+        setValue(
+          DbWizardFormFields.monitoringInstance,
+          monitoringInstances[0].name
+        );
       }
     }
     if (
@@ -30,7 +45,10 @@ export const FifthStep = () => {
       monitoringInstances?.length &&
       !monitoringInstance
     ) {
-      setValue(DbWizardFormFields.monitoringInstance, monitoringInstances[0]);
+      setValue(
+        DbWizardFormFields.monitoringInstance,
+        monitoringInstances[0].name
+      );
     }
   }, [monitoring]);
 
@@ -51,13 +69,12 @@ export const FifthStep = () => {
             name={DbWizardFormFields.monitoringInstance}
             label={Messages.monitoringInstanceLabel}
             loading={monitoringInstancesLoading}
-            options={monitoringInstances || []}
+            options={monitoringInstancesOptions}
             autoCompleteProps={{
               disableClearable: true,
-              getOptionLabel: (option) =>
-                typeof option === 'string'
-                  ? option
-                  : `${option.name} (${option.url})`,
+              renderOption: (props, option) => (
+                <li {...props}>{getInstanceOptionLabel(option)}</li>
+              ),
             }}
           />
         )}
