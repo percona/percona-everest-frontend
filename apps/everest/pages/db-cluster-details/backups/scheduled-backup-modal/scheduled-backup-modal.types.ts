@@ -1,18 +1,26 @@
+// percona-everest-frontend
+// Copyright (C) 2023 Percona LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 import z from 'zod';
 import {
   AmPM,
   TimeValue,
   WeekDays,
 } from '../../../../components/time-selection/time-selection.types';
-import { TIME_SELECTION_DEFAULTS } from '../../../database-form/database-form.constants';
-import { generateShortUID } from '../../../database-form/steps/first/utils';
 
-export type OnDemandBackupModalProps = {
-  open: boolean;
-  handleClose: () => void;
-};
-
-export enum BackupFields {
+export enum ScheduleFields {
   name = 'name',
   storageLocation = 'storageLocation',
   selectedTime = 'selectedTime',
@@ -23,14 +31,8 @@ export enum BackupFields {
   onDay = 'onDay',
 }
 
-export const defaultValuesFc = () => ({
-  [BackupFields.name]: `backup-${generateShortUID()}`,
-  [BackupFields.storageLocation]: '',
-  ...TIME_SELECTION_DEFAULTS,
-});
-
 export const schema = z.object({
-  [BackupFields.name]: z.string().nonempty(),
+  [ScheduleFields.name]: z.string().nonempty(),
   selectedTime: z.nativeEnum(TimeValue),
   minuteHour: z.number().optional(),
   minute: z.number().optional(),
@@ -38,7 +40,7 @@ export const schema = z.object({
   amPm: z.nativeEnum(AmPM).optional(),
   weekDay: z.nativeEnum(WeekDays).optional(),
   onDay: z.number().optional(),
-  [BackupFields.storageLocation]: z
+  [ScheduleFields.storageLocation]: z
     .string()
     .or(
       z.object({
@@ -57,4 +59,4 @@ export const schema = z.object({
     }),
 });
 
-export type ScheduledBackupFormData = z.infer<typeof schema>;
+export type ScheduleFormData = z.infer<typeof schema>;

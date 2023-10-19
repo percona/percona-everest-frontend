@@ -13,12 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDbCluster } from '../../../hooks/api/db-cluster/useDbCluster';
 import { DbEngineType } from '../../../types/dbEngines.types';
 import { BackupsList } from './backups-list/backups-list';
 import { ScheduledBackupsList } from './scheduled-backups-list/scheduled-backups-list';
+import { ScheduleModalContextProvider } from './scheduled-backup-modal/context/schedule-modal.context';
+import { ScheduledBackupModal } from './scheduled-backup-modal/scheduled-backup-modal';
 
 export const Backups = () => {
   const { dbClusterName } = useParams();
@@ -27,12 +29,19 @@ export const Backups = () => {
     enabled: !!dbClusterName,
   });
 
-  const dbType = dbCluster?.spec?.engine?.type;
+  const dbType = useMemo(
+    () => dbCluster?.spec?.engine?.type,
+    [dbCluster?.spec?.engine?.type]
+  );
+  console.log('Backups');
 
   return (
-    <>
-      {dbType !== DbEngineType.POSTGRESQL && <ScheduledBackupsList />}
-      <BackupsList />
-    </>
+    <ScheduleModalContextProvider>
+      <>
+        {dbType !== DbEngineType.POSTGRESQL && <ScheduledBackupsList />}
+        <BackupsList />
+        <ScheduledBackupModal />
+      </>
+    </ScheduleModalContextProvider>
   );
 };
