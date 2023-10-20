@@ -26,8 +26,6 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
     e.stopPropagation();
   };
 
-  console.log('testt');
-
   useEffect(() => {
     const hideColumnsIcon = document.querySelector(
       '[aria-label="Show/Hide columns"]'
