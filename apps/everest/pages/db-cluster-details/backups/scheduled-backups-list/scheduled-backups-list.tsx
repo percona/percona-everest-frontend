@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
@@ -37,6 +37,7 @@ import { getTimeSelectionPreviewMessage } from '../../../database-form/database-
 import { Messages } from './scheduled-backups-list.messages';
 import { ConfirmDialog } from '../../../../components/confirm-dialog/confirm-dialog';
 import { useDeleteSchedule } from '../../../../hooks/api/backups/useScheduledBackups';
+import { ScheduleModalContext } from '../backup.context';
 
 export const ScheduledBackupsList = () => {
   const { dbClusterName } = useParams();
@@ -44,6 +45,11 @@ export const ScheduledBackupsList = () => {
 
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [selectedSchedule, setSelectedSchedule] = useState<string>('');
+  const {
+    setMode: setScheduleModalMode,
+    setSelectedScheduleName: setSelectedScheduleToModalContext,
+    setOpenScheduleModal,
+  } = useContext(ScheduleModalContext);
   const { data } = useDbCluster(dbClusterName!, {
     enabled: !!dbClusterName,
     refetchInterval: 10 * 1000,
@@ -71,8 +77,16 @@ export const ScheduledBackupsList = () => {
     });
   };
 
-  const handleEdit = () => {
-    // TODO edit
+  const handleEdit = (scheduleName: string) => () => {
+    if (setScheduleModalMode) {
+      setScheduleModalMode('edit');
+    }
+    if (setSelectedScheduleToModalContext) {
+      setSelectedScheduleToModalContext(scheduleName);
+    }
+    if (setOpenScheduleModal) {
+      setOpenScheduleModal(true);
+    }
   };
 
   const options: (scheduleName: string) => Option[] = (scheduleName) => [
@@ -81,7 +95,11 @@ export const ScheduledBackupsList = () => {
       onClick: handleDelete(scheduleName),
       children: Messages.menuItems.delete,
     },
-    { key: 'edit', onClick: handleEdit, children: Messages.menuItems.edit },
+    {
+      key: 'edit',
+      onClick: handleEdit(scheduleName),
+      children: Messages.menuItems.edit,
+    },
   ];
 
   return (

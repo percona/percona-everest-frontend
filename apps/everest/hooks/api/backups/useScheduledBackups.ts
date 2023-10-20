@@ -1,14 +1,15 @@
 import { useMutation, UseMutationOptions } from 'react-query';
 import { updateDbClusterFn } from '../../../api/dbClusterApi';
 import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils';
-import { ScheduledBackupFormData } from '../../../pages/db-cluster-details/backups/scheduled-backup-modal/scheduled-backup-modal.types';
-import { DbCluster } from '../../../types/dbCluster.types';
+import { ScheduleFormData } from '../../../pages/db-cluster-details/backups/scheduled-backup-modal/scheduled-backup-modal-form/scheduled-backup-modal-form.types';
+import { DbCluster, Schedule } from '../../../types/dbCluster.types';
 import { useDbCluster } from '../db-cluster/useDbCluster';
 import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
 
-const newBackupScheduleFormValuesToDbClusterPayload = (
-  dbPayload: ScheduledBackupFormData,
-  dbCluster: DbCluster
+const backupScheduleFormValuesToDbClusterPayload = (
+  dbPayload: ScheduleFormData,
+  dbCluster: DbCluster,
+  mode: 'edit' | 'new'
 ): DbCluster => {
   const { selectedTime, minute, hour, amPm, onDay, weekDay, name } = dbPayload;
   const backupSchedule = getCronExpressionFromFormValues({
@@ -19,6 +20,42 @@ const newBackupScheduleFormValuesToDbClusterPayload = (
     onDay,
     weekDay,
   });
+  let schedulesPayload: Schedule[] = [];
+  if (mode === 'new') {
+    schedulesPayload = [
+      ...(dbCluster.spec.backup?.schedules ?? []),
+      {
+        enabled: true,
+        name,
+        backupStorageName:
+          typeof dbPayload.storageLocation === 'string'
+            ? dbPayload.storageLocation
+            : dbPayload.storageLocation!.name,
+        schedule: backupSchedule,
+      },
+    ];
+  }
+
+  if (mode === 'edit') {
+    const newSchedulesArray = dbCluster?.spec?.backup?.schedules && [
+      ...dbCluster?.spec?.backup?.schedules,
+    ];
+    const editedScheduleIndex = newSchedulesArray?.findIndex(
+      (item) => item.name === name
+    );
+    if (newSchedulesArray && editedScheduleIndex !== undefined) {
+      newSchedulesArray[editedScheduleIndex] = {
+        enabled: true,
+        name,
+        backupStorageName:
+          typeof dbPayload.storageLocation === 'string'
+            ? dbPayload.storageLocation
+            : dbPayload.storageLocation!.name,
+        schedule: backupSchedule,
+      };
+      schedulesPayload = newSchedulesArray;
+    }
+  }
 
   return {
     apiVersion: 'everest.percona.com/v1alpha1',
@@ -28,18 +65,7 @@ const newBackupScheduleFormValuesToDbClusterPayload = (
       ...dbCluster?.spec,
       backup: {
         enabled: true,
-        schedules: [
-          ...(dbCluster.spec.backup?.schedules ?? []),
-          {
-            enabled: true,
-            name,
-            backupStorageName:
-              typeof dbPayload.storageLocation === 'string'
-                ? dbPayload.storageLocation
-                : dbPayload.storageLocation!.name,
-            schedule: backupSchedule,
-          },
-        ],
+        schedules: schedulesPayload,
       },
     },
   };
@@ -68,18 +94,20 @@ const deletedScheduleToDbClusterPayload = (
   };
 };
 
-export const useCreateScheduledBackup = (
+export const useUpdateSchedules = (
   dbClusterName: string,
-  options?: UseMutationOptions<any, unknown, ScheduledBackupFormData, unknown>
+  mode: 'new' | 'edit',
+  options?: UseMutationOptions<any, unknown, ScheduleFormData, unknown>
 ) => {
   const { id: clusterId } = useSelectedKubernetesCluster();
   const { data: dbCluster } = useDbCluster(dbClusterName);
 
   return useMutation(
-    (dbPayload: ScheduledBackupFormData) => {
-      const payload = newBackupScheduleFormValuesToDbClusterPayload(
+    (dbPayload: ScheduleFormData) => {
+      const payload = backupScheduleFormValuesToDbClusterPayload(
         dbPayload,
-        dbCluster!
+        dbCluster!,
+        mode
       );
       return updateDbClusterFn(clusterId, dbClusterName, payload);
     },
@@ -88,7 +116,7 @@ export const useCreateScheduledBackup = (
 };
 
 export const useDeleteSchedule = (
-  dbClusterName: string,
+  dbClusterName?: string,
   options?: UseMutationOptions<any, unknown, string, unknown>
 ) => {
   const { id: clusterId } = useSelectedKubernetesCluster();

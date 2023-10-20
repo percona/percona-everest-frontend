@@ -1,90 +1,123 @@
-import React, { useMemo } from 'react';
-import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
-import { TextInput } from '@percona/ui-lib.form.inputs.text';
-import { LabeledContent } from '@percona/ui-lib.labeled-content';
+// percona-everest-frontend
+// Copyright (C) 2023 Percona LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+import React, { useContext, useMemo } from 'react';
 import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { FormDialog } from '../../../../components/form-dialog';
-import { TimeSelection } from '../../../../components/time-selection/time-selection';
 import { useBackupStorages } from '../../../../hooks/api/backup-storages/useBackupStorages';
-import { useCreateScheduledBackup } from '../../../../hooks/api/backups/useScheduledBackups';
-import { DB_CLUSTER_QUERY } from '../../../../hooks/api/db-cluster/useDbCluster';
-import { Messages } from '../../db-cluster-details.messages';
+import { Messages as CommonMessages } from '../../db-cluster-details.messages';
 import { NoStoragesModal } from '../no-storages-modal/no-storages-modal';
 import {
-  BackupFields,
-  defaultValuesFc,
-  OnDemandBackupModalProps,
-  ScheduledBackupFormData,
+  DB_CLUSTER_QUERY,
+  useDbCluster,
+} from '../../../../hooks/api/db-cluster/useDbCluster';
+import { Messages } from './scheduled-backup-modal.messages';
+import {
+  ScheduleFormData,
   schema,
-} from './scheduled-backup-modal.types';
+} from './scheduled-backup-modal-form/scheduled-backup-modal-form.types';
+import { scheduleModalDefaultValues } from './scheduled-backup-modal-utils';
+import { ScheduledBackupModalForm } from './scheduled-backup-modal-form/scheduled-backup-modal-form';
+import { useUpdateSchedules } from '../../../../hooks/api/backups/useScheduledBackups';
+import { ScheduleModalContext } from '../backup.context';
 
-export const ScheduledBackupModal = ({
-  open,
-  handleClose,
-}: OnDemandBackupModalProps) => {
+export const ScheduledBackupModal = () => {
   const queryClient = useQueryClient();
   const { dbClusterName } = useParams();
-  const { mutate: createScheduledBackup, isLoading } = useCreateScheduledBackup(
-    dbClusterName!
-  );
-  const { data: backupStorages = [], isFetching } = useBackupStorages();
+  const {
+    mode,
+    selectedScheduleName,
+    openScheduleModal,
+    setOpenScheduleModal,
+  } = useContext(ScheduleModalContext);
 
-  const handleSubmit = (data: ScheduledBackupFormData) => {
-    createScheduledBackup(data, {
+  const { data: backupStorages = [] } = useBackupStorages();
+
+  const { data: dbCluster } = useDbCluster(dbClusterName!, {
+    enabled: !!dbClusterName && mode === 'edit',
+  });
+  const { mutate: updateScheduledBackup, isLoading } = useUpdateSchedules(
+    dbClusterName!,
+    mode
+  );
+  const schedules =
+    (mode === 'edit' && dbCluster && dbCluster?.spec?.backup?.schedules) || [];
+
+  const selectedSchedule = useMemo(
+    () =>
+      mode === 'edit' &&
+      schedules &&
+      schedules.find((item) => item?.name === selectedScheduleName),
+    [mode, openScheduleModal, schedules, selectedScheduleName]
+  );
+
+  const handleCloseScheduledBackupModal = () => {
+    if (setOpenScheduleModal) {
+      setOpenScheduleModal(false);
+    }
+  };
+
+  const handleSubmit = (data: ScheduleFormData) => {
+    updateScheduledBackup(data, {
       onSuccess() {
         queryClient.invalidateQueries([DB_CLUSTER_QUERY, dbClusterName]);
-        handleClose();
+        handleCloseScheduledBackupModal();
       },
     });
   };
 
-  const values = useMemo(() => defaultValuesFc(), [open]);
+  const values = useMemo(
+    () => scheduleModalDefaultValues(mode, selectedSchedule),
+    [mode, selectedSchedule, openScheduleModal]
+  );
 
   if (!backupStorages.length) {
     return (
       <NoStoragesModal
-        isOpen={open}
-        subHead={Messages.schedulesBackupModal.subHead}
-        closeModal={handleClose}
+        isOpen={openScheduleModal}
+        subHead={CommonMessages.schedulesBackupModal.subHead}
+        closeModal={handleCloseScheduledBackupModal}
       />
     );
   }
 
   return (
     <FormDialog
-      isOpen={open}
-      closeModal={handleClose}
-      headerMessage={Messages.onDemandBackupModal.headerMessage}
+      isOpen={openScheduleModal}
+      closeModal={handleCloseScheduledBackupModal}
+      headerMessage={
+        mode === 'new'
+          ? Messages.createSchedule.headerMessage
+          : Messages.editSchedule.headerMessage
+      }
       onSubmit={handleSubmit}
       submitting={isLoading}
-      submitMessage={Messages.onDemandBackupModal.submitMessage}
+      submitMessage={
+        mode === 'new'
+          ? Messages.createSchedule.submitMessage
+          : Messages.editSchedule.submitMessage
+      }
       schema={schema}
-      values={values}
+      {...(mode === 'edit' && { values })}
+      defaultValues={values}
+      {...(mode === 'new' && { subHead2: Messages.createSchedule.subhead })}
       size="XXL"
-      subHead2={Messages.schedulesBackupModal.subHead}
+      data-testId="scheduled-backup-modal"
     >
-      <TextInput
-        name={BackupFields.name}
-        label={Messages.onDemandBackupModal.backupName}
-        isRequired
-      />
-      <LabeledContent label="Repeats">
-        <TimeSelection showInfoAlert />
-      </LabeledContent>
-
-      <AutoCompleteInput
-        name={BackupFields.storageLocation}
-        label={Messages.onDemandBackupModal.backupStorage}
-        loading={isFetching}
-        options={backupStorages}
-        autoCompleteProps={{
-          isOptionEqualToValue: (option, value) => option.name === value.name,
-          getOptionLabel: (option) =>
-            typeof option === 'string' ? option : option.name,
-        }}
-        isRequired
-      />
+      <ScheduledBackupModalForm />
     </FormDialog>
   );
 };

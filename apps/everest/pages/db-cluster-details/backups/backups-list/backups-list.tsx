@@ -1,3 +1,19 @@
+// percona-everest-frontend
+// Copyright (C) 2023 Percona LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+import React, { useMemo, useState, useContext } from 'react';
 import { Delete } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
@@ -6,7 +22,6 @@ import { MenuButton } from '@percona/ui-lib.menu-button';
 import { Table } from '@percona/ui-lib.table';
 import { format } from 'date-fns';
 import { MRT_ColumnDef } from 'material-react-table';
-import React, { useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ConfirmDialog } from '../../../../components/confirm-dialog/confirm-dialog';
@@ -21,24 +36,24 @@ import { useDbCluster } from '../../../../hooks/api/db-cluster/useDbCluster';
 import { useDbClusterRestore } from '../../../../hooks/api/restores/useDbClusterRestore';
 import { Backup, BackupStatus } from '../../../../types/backups.types';
 import { DbEngineType } from '../../../../types/dbEngines.types';
-import { OnDemandBackupModal } from '../on-demand-backup-modal/on-demand-backup-modal';
-import { ScheduledBackupModal } from '../scheduled-backup-modal/scheduled-backup-modal';
 import { BACKUP_STATUS_TO_BASE_STATUS } from './backups-list.constants';
 import { Messages } from './backups-list.messages';
+import { OnDemandBackupModal } from '../on-demand-backup-modal/on-demand-backup-modal';
+import { ScheduleModalContext } from '../backup.context';
 
 export const BackupsList = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { dbClusterName } = useParams();
+
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openRestoreDialog, setOpenRestoreDialog] = useState(false);
   const [openRestoreToNewDbDialog, setOpenRestoreToNewDbDialog] =
     useState(false);
   const [selectedBackup, setSelectedBackup] = useState('');
   const [selectedBackupStorage, setSelectedBackupStorage] = useState('');
-  const queryClient = useQueryClient();
-  const { dbClusterName } = useParams();
   const [openCreateBackupModal, setOpenCreateBackupModal] = useState(false);
-  const [openCreateScheduledBackupModal, setOpenCreateScheduledBackupModal] =
-    useState(false);
+
   const { data: backups = [] } = useDbBackups(dbClusterName!, {
     enabled: !!dbClusterName,
     refetchInterval: 10 * 1000,
@@ -49,6 +64,9 @@ export const BackupsList = () => {
   const { data: dbCluster } = useDbCluster(dbClusterName || '', {
     enabled: !!dbClusterName,
   });
+
+  const { setMode: setScheduleModalMode, setOpenScheduleModal } =
+    useContext(ScheduleModalContext);
 
   const dbType = dbCluster?.spec?.engine?.type;
 
@@ -106,12 +124,9 @@ export const BackupsList = () => {
     handleClose();
   };
   const handleScheduledBackup = (handleClose: () => void) => {
-    setOpenCreateScheduledBackupModal(true);
+    setScheduleModalMode('new');
+    setOpenScheduleModal(true);
     handleClose();
-  };
-
-  const handleCloseScheduledBackupModal = () => {
-    setOpenCreateScheduledBackupModal(false);
   };
 
   const handleCloseBackupModal = () => {
@@ -247,10 +262,6 @@ export const BackupsList = () => {
       <OnDemandBackupModal
         open={openCreateBackupModal}
         handleClose={handleCloseBackupModal}
-      />
-      <ScheduledBackupModal
-        open={openCreateScheduledBackupModal}
-        handleClose={handleCloseScheduledBackupModal}
       />
       {openDeleteDialog && (
         <ConfirmDialog

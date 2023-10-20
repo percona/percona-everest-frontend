@@ -104,6 +104,8 @@ export const getFormValuesFromCronExpression = (cron: string) => {
     dayOfWeek: +parts[4],
   };
 
+  // TODO during working on EVEREST-485 move DbWizardFormField and ScheduledFormField to "TimeFields" to avoid duplicating
+
   return {
     [DbWizardFormFields.minute]: !Number.isNaN(cronObj.minute)
       ? cronObj.minute

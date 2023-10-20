@@ -86,7 +86,7 @@ export const FormDialog = <T extends FieldValues>({
       <DialogTitle onClose={closeModal}>{headerMessage}</DialogTitle>
       <DialogContent>
         {/* @ts-ignore */}
-        <Typography variant="subHead2">{subHead2}</Typography>
+        {subHead2 && <Typography variant="subHead2">{subHead2}</Typography>}
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(handleSubmit)}>
             <FormGroup>{children}</FormGroup>
