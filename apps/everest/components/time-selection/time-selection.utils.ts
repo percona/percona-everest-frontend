@@ -19,8 +19,8 @@ import { DbWizardFormFields } from '../../pages/database-form/database-form.type
 import { Messages } from './time-selection.messages';
 import { AmPM, TimeProps, TimeValue, WeekDays } from './time-selection.types';
 
-export const addZeroToSingleDigit = (value: number) => {
-  return value.toString().padStart(2, '0');
+export const addZeroToSingleDigit = (value: number | undefined) => {
+  return value?.toString().padStart(2, '0');
 };
 
 export const getTimeText = (

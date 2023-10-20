@@ -126,5 +126,6 @@
   "percona.ui-lib/dialog-title": {},
   "percona.ui-lib/menu-button": {},
   "percona.ui-lib/form/inputs/text-array": {},
-  "percona.ui-lib/loadable-children": {}
+  "percona.ui-lib/loadable-children": {},
+  "percona.ui-lib/icons/no-match": {}
 }

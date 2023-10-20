@@ -185,7 +185,7 @@
         }
     },
     "form/inputs/text-array": {
-        "scope": "",
+        "scope": "percona.ui-lib",
         "version": "0.3.0",
         "defaultScope": "percona.ui-lib",
         "mainFile": "index.ts",
@@ -274,10 +274,10 @@
         "mainFile": "index.ts",
         "rootDir": "ui-lib/icons/no-match",
         "config": {
+            "percona.envs/percona-custom-react-env": {},
             "teambit.envs/envs": {
-                "env": "percona.envs/percona-react-env"
-            },
-            "percona.envs/percona-react-env": {}
+                "env": "percona.envs/percona-custom-react-env"
+            }
         }
     },
     "icons/status": {
@@ -316,7 +316,7 @@
     },
     "loadable-children": {
         "scope": "",
-        "version": "",
+        "version": "97f88031fd92f28ed520c2c29d5a2b4d3c89443f",
         "defaultScope": "percona.ui-lib",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/loadable-children",
@@ -328,7 +328,7 @@
         }
     },
     "menu-button": {
-        "scope": "",
+        "scope": "percona.ui-lib",
         "version": "0.3.0",
         "defaultScope": "percona.ui-lib",
         "mainFile": "index.ts",
@@ -347,7 +347,7 @@
     },
     "percona-custom-react-env": {
         "scope": "",
-        "version": "",
+        "version": "2fcf5f6255754a0c7650bd3408f87e6bdd641b0b",
         "defaultScope": "percona.envs",
         "mainFile": "index.ts",
         "rootDir": "envs/percona-custom-react-env",

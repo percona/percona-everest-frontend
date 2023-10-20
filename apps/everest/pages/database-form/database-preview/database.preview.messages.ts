@@ -40,9 +40,8 @@ export const getTimeSelectionPreviewMessage = ({
   onDay,
   weekDay,
 }: TimeProps) => {
-  // TODO switch these lines after backup is supported and Zod schema is complete
-  // const minuteWithZero = addZeroToSingleDigit(minute);
-  const minuteWithZero = addZeroToSingleDigit(0);
+  const minuteWithZero = addZeroToSingleDigit(minute);
+
   switch (selectedTime) {
     case TimeValue.hours:
       return `Every hour at minute ${minute}`;
