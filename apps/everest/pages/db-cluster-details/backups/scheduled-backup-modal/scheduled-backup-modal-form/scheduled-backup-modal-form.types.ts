@@ -52,7 +52,6 @@ export const schema = z.object({
       "The name shouldn't start with a hyphen or a number."
     ),
   selectedTime: z.nativeEnum(TimeValue),
-  minuteHour: z.number().optional(),
   minute: z.number().optional(),
   hour: z.number().optional(),
   amPm: z.nativeEnum(AmPM).optional(),
