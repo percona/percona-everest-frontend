@@ -19,8 +19,8 @@ import {
   TimeValue,
   WeekDays,
 } from '../../../../../components/time-selection/time-selection.types';
-import { MAX_RFC_1123_NAME_LENGTH } from "../../../../../constants";
-import { Messages } from "../scheduled-backup-modal.messages";
+import { MAX_RFC_1123_NAME_LENGTH } from '../../../../../constants';
+import { Messages } from '../scheduled-backup-modal.messages';
 
 export enum ScheduleFields {
   name = 'name',
@@ -38,15 +38,19 @@ const doesNotStartWithDash = /^[^0-9-]/;
 const doesNotEndWithDash = /[^-]$/;
 
 export const schema = z.object({
-  [ScheduleFields.name]: z.string().nonempty().max(MAX_RFC_1123_NAME_LENGTH, Messages.scheduleName.tooLong).regex(
+  [ScheduleFields.name]: z
+    .string()
+    .nonempty()
+    .max(MAX_RFC_1123_NAME_LENGTH, Messages.scheduleName.tooLong)
+    .regex(
       doesNotContainerAnythingButAlphanumericAndDash,
       `The schedule name should not exceed ${MAX_RFC_1123_NAME_LENGTH} characters.`
-  )
-      .regex(doesNotEndWithDash, "The name shouldn't end with a hyphen.")
-      .regex(
-          doesNotStartWithDash,
-          "The name shouldn't start with a hyphen or a number."
-      ),
+    )
+    .regex(doesNotEndWithDash, "The name shouldn't end with a hyphen.")
+    .regex(
+      doesNotStartWithDash,
+      "The name shouldn't start with a hyphen or a number."
+    ),
   selectedTime: z.nativeEnum(TimeValue),
   minuteHour: z.number().optional(),
   minute: z.number().optional(),
