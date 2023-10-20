@@ -22,7 +22,7 @@ import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedK
 export const DB_CLUSTER_QUERY = 'dbCluster';
 
 export const useDbCluster = (
-  dbClusterName: string,
+  dbClusterName?: string,
   options?: UseQueryOptions<DbCluster>
 ) => {
   const { id } = useSelectedKubernetesCluster();

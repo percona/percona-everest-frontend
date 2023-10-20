@@ -29,10 +29,10 @@ import {
   ScheduleFormData,
   schema,
 } from './scheduled-backup-modal-form/scheduled-backup-modal-form.types';
-import { ScheduleModalContext } from './context/schedule-modal.context';
 import { scheduleModalDefaultValues } from './scheduled-backup-modal-utils';
 import { ScheduledBackupModalForm } from './scheduled-backup-modal-form/scheduled-backup-modal-form';
 import { useUpdateSchedules } from '../../../../hooks/api/backups/useScheduledBackups';
+import { ScheduleModalContext } from '../backup.context';
 
 export const ScheduledBackupModal = () => {
   const queryClient = useQueryClient();
@@ -65,7 +65,9 @@ export const ScheduledBackupModal = () => {
   );
 
   const handleCloseScheduledBackupModal = () => {
-    setOpenScheduleModal(false);
+    if (setOpenScheduleModal) {
+      setOpenScheduleModal(false);
+    }
   };
 
   const handleSubmit = (data: ScheduleFormData) => {
@@ -78,9 +80,7 @@ export const ScheduledBackupModal = () => {
   };
 
   const values = useMemo(
-    () =>
-      openScheduleModal === true &&
-      scheduleModalDefaultValues(mode, selectedSchedule),
+    () => scheduleModalDefaultValues(mode, selectedSchedule),
     [mode, selectedSchedule, openScheduleModal]
   );
 
@@ -95,31 +95,29 @@ export const ScheduledBackupModal = () => {
   }
 
   return (
-    openScheduleModal && (
-      <FormDialog
-        isOpen={openScheduleModal}
-        closeModal={handleCloseScheduledBackupModal}
-        headerMessage={
-          mode === 'new'
-            ? Messages.createSchedule.headerMessage
-            : Messages.editSchedule.headerMessage
-        }
-        onSubmit={handleSubmit}
-        submitting={isLoading}
-        submitMessage={
-          mode === 'new'
-            ? Messages.createSchedule.submitMessage
-            : Messages.editSchedule.submitMessage
-        }
-        schema={schema}
-        {...(mode === 'edit' && { values })}
-        defaultValues={values}
-        {...(mode === 'new' && { subHead2: Messages.createSchedule.subhead })}
-        size="XXL"
-        data-testId="scheduled-backup-modal"
-      >
-        <ScheduledBackupModalForm />
-      </FormDialog>
-    )
+    <FormDialog
+      isOpen={openScheduleModal}
+      closeModal={handleCloseScheduledBackupModal}
+      headerMessage={
+        mode === 'new'
+          ? Messages.createSchedule.headerMessage
+          : Messages.editSchedule.headerMessage
+      }
+      onSubmit={handleSubmit}
+      submitting={isLoading}
+      submitMessage={
+        mode === 'new'
+          ? Messages.createSchedule.submitMessage
+          : Messages.editSchedule.submitMessage
+      }
+      schema={schema}
+      {...(mode === 'edit' && { values })}
+      defaultValues={values}
+      {...(mode === 'new' && { subHead2: Messages.createSchedule.subhead })}
+      size="XXL"
+      data-testId="scheduled-backup-modal"
+    >
+      <ScheduledBackupModalForm />
+    </FormDialog>
   );
 };

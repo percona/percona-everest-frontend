@@ -23,32 +23,34 @@ const backupScheduleFormValuesToDbClusterPayload = (
   let schedulesPayload: Schedule[] = [];
   if (mode === 'new') {
     schedulesPayload = [
-        ...(dbCluster.spec.backup?.schedules ?? []),
-        {
-          enabled: true,
-          name,
-          backupStorageName:
-            typeof dbPayload.storageLocation === 'string'
-              ? dbPayload.storageLocation
-              : dbPayload.storageLocation!.name,
-          schedule: backupSchedule,
-        },
-      ];
+      ...(dbCluster.spec.backup?.schedules ?? []),
+      {
+        enabled: true,
+        name,
+        backupStorageName:
+          typeof dbPayload.storageLocation === 'string'
+            ? dbPayload.storageLocation
+            : dbPayload.storageLocation!.name,
+        schedule: backupSchedule,
+      },
+    ];
   }
 
   if (mode === 'edit') {
-    const newSchedulesArray = dbCluster?.spec?.backup?.schedules && [...dbCluster?.spec?.backup?.schedules];
+    const newSchedulesArray = dbCluster?.spec?.backup?.schedules && [
+      ...dbCluster?.spec?.backup?.schedules,
+    ];
     const editedScheduleIndex = newSchedulesArray?.findIndex(
       (item) => item.name === name
     );
-    if (newSchedulesArray && editedScheduleIndex) {
+    if (newSchedulesArray && editedScheduleIndex !== undefined) {
       newSchedulesArray[editedScheduleIndex] = {
         enabled: true,
         name,
         backupStorageName:
-            typeof dbPayload.storageLocation === 'string'
-                ? dbPayload.storageLocation
-                : dbPayload.storageLocation!.name,
+          typeof dbPayload.storageLocation === 'string'
+            ? dbPayload.storageLocation
+            : dbPayload.storageLocation!.name,
         schedule: backupSchedule,
       };
       schedulesPayload = newSchedulesArray;
@@ -114,7 +116,7 @@ export const useUpdateSchedules = (
 };
 
 export const useDeleteSchedule = (
-  dbClusterName: string,
+  dbClusterName?: string,
   options?: UseMutationOptions<any, unknown, string, unknown>
 ) => {
   const { id: clusterId } = useSelectedKubernetesCluster();

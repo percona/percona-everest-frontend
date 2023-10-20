@@ -37,7 +37,7 @@ import { getTimeSelectionPreviewMessage } from '../../../database-form/database-
 import { Messages } from './scheduled-backups-list.messages';
 import { ConfirmDialog } from '../../../../components/confirm-dialog/confirm-dialog';
 import { useDeleteSchedule } from '../../../../hooks/api/backups/useScheduledBackups';
-import { ScheduleModalContext } from '../scheduled-backup-modal/context/schedule-modal.context';
+import { ScheduleModalContext } from '../backup.context';
 
 export const ScheduledBackupsList = () => {
   const { dbClusterName } = useParams();
@@ -78,9 +78,15 @@ export const ScheduledBackupsList = () => {
   };
 
   const handleEdit = (scheduleName: string) => () => {
-    setScheduleModalMode('edit');
-    setSelectedScheduleToModalContext(scheduleName);
-    setOpenScheduleModal(true);
+    if (setScheduleModalMode) {
+      setScheduleModalMode('edit');
+    }
+    if (setSelectedScheduleToModalContext) {
+      setSelectedScheduleToModalContext(scheduleName);
+    }
+    if (setOpenScheduleModal) {
+      setOpenScheduleModal(true);
+    }
   };
 
   const options: (scheduleName: string) => Option[] = (scheduleName) => [
