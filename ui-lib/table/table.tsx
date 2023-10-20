@@ -88,6 +88,7 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
       enableDensityToggle={false}
       enableFullScreenToggle={false}
       enableSorting={!!data.length}
+      autoResetAll={false}
       icons={{
         KeyboardDoubleArrowDownIcon: (propsIcon) =>
           data.length ? (
