@@ -24,6 +24,9 @@ export const Messages = {
     headerMessage: 'Edit schedules',
     submitMessage: 'Save',
   },
-  scheduleName: 'Schedule name',
+  scheduleName: {
+    label: 'Schedule name',
+    tooLong: 'The schedule name is too long',
+  },
   storageLocation: 'Storage location',
 };

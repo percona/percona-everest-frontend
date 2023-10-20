@@ -52,14 +52,14 @@ export const ScheduledBackupModalForm = () => {
       {mode === 'new' && (
         <TextInput
           name={ScheduleFields.name}
-          label={Messages.scheduleName}
+          label={Messages.scheduleName.label}
           isRequired
         />
       )}
       {mode === 'edit' && (
         <AutoCompleteInput
           name={ScheduleFields.name}
-          label={Messages.scheduleName}
+          label={Messages.scheduleName.label}
           options={schedulesNamesList}
           isRequired
         />
