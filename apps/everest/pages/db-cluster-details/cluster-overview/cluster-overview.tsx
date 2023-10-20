@@ -9,15 +9,23 @@ import { ConnectionDetails, DatabaseDetails } from './cards';
 
 export const ClusterOverview = () => {
   const { dbClusterName } = useParams();
-
+  // TODO: uncomment after checking with Nuna if we want 404 here
+  // const { combinedDataForTable, loadingAllClusters } = useDbClusters();
+  // const dbNameExists = combinedDataForTable.find(
+  //   (cluster) => cluster.databaseName === dbClusterName
+  // );
   const { data: dbCluster, isFetching: fetchingCluster } = useDbCluster(
     dbClusterName || '',
     {
-      enabled: !!dbClusterName,
+      // TODO: uncomment after checking with Nuna if we want 404 here
+      enabled: !!dbClusterName, // && !!dbNameExists
     }
   );
   const { data: dbClusterDetails, isFetching: fetchingClusterDetails } =
-    useDbClusterCredentials(dbClusterName || '');
+    useDbClusterCredentials(dbClusterName || '', {
+      // TODO: uncomment after checking with Nuna if we want 404 here
+      enabled: !!dbClusterName, // && !!dbNameExists,
+    });
 
   return (
     <Stack
@@ -33,7 +41,8 @@ export const ClusterOverview = () => {
     >
       {/* We force ! because while loading no info is shown */}
       <DatabaseDetails
-        loading={fetchingCluster}
+        // TODO: uncomment after checking with Nuna if we want 404 here
+        loading={fetchingCluster} // || loadingAllClusters}
         type={dbEngineToDbType(dbCluster?.spec.engine.type!)}
         name={dbCluster?.metadata.name!}
         namespace={dbCluster?.metadata.namespace!}
@@ -47,7 +56,8 @@ export const ClusterOverview = () => {
       />
       <ConnectionDetails
         loading={fetchingCluster}
-        loadingClusterDetails={fetchingClusterDetails}
+        // TODO: uncomment after checking with Nuna if we want 404 here
+        loadingClusterDetails={fetchingClusterDetails} // || loadingAllClusters}
         hostname={dbCluster?.status?.hostname!}
         port={dbCluster?.status?.port!}
         username={dbClusterDetails?.username!}

@@ -1,6 +1,6 @@
-import { createTheme, PaletteMode, ThemeOptions } from '@mui/material';
 import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/600.css';
+import { createTheme, PaletteMode, ThemeOptions } from '@mui/material';
 
 declare module '@mui/material/styles' {
   interface TypeAction {
