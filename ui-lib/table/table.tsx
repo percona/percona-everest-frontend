@@ -26,6 +26,8 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
     e.stopPropagation();
   };
 
+  console.log('testt');
+
   useEffect(() => {
     const hideColumnsIcon = document.querySelector(
       '[aria-label="Show/Hide columns"]'
@@ -88,6 +90,7 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
       enableDensityToggle={false}
       enableFullScreenToggle={false}
       enableSorting={!!data.length}
+      autoResetAll={false}
       icons={{
         KeyboardDoubleArrowDownIcon: (propsIcon) =>
           data.length ? (
