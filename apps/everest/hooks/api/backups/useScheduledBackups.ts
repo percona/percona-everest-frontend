@@ -20,10 +20,9 @@ const backupScheduleFormValuesToDbClusterPayload = (
     onDay,
     weekDay,
   });
-  const schedulesPayload: Schedule[] = [];
+  let schedulesPayload: Schedule[] = [];
   if (mode === 'new') {
-    schedulesPayload.push(
-      ...[
+    schedulesPayload = [
         ...(dbCluster.spec.backup?.schedules ?? []),
         {
           enabled: true,
@@ -34,25 +33,26 @@ const backupScheduleFormValuesToDbClusterPayload = (
               : dbPayload.storageLocation!.name,
           schedule: backupSchedule,
         },
-      ]
-    );
+      ];
   }
 
   if (mode === 'edit') {
-    const newSchedulesArray = [...dbCluster?.spec?.backup?.schedules];
+    const newSchedulesArray = dbCluster?.spec?.backup?.schedules && [...dbCluster?.spec?.backup?.schedules];
     const editedScheduleIndex = newSchedulesArray?.findIndex(
       (item) => item.name === name
     );
-    newSchedulesArray[editedScheduleIndex] = {
-      enabled: true,
-      name,
-      backupStorageName:
-        typeof dbPayload.storageLocation === 'string'
-          ? dbPayload.storageLocation
-          : dbPayload.storageLocation!.name,
-      schedule: backupSchedule,
-    };
-    schedulesPayload.push(...newSchedulesArray);
+    if (newSchedulesArray && editedScheduleIndex) {
+      newSchedulesArray[editedScheduleIndex] = {
+        enabled: true,
+        name,
+        backupStorageName:
+            typeof dbPayload.storageLocation === 'string'
+                ? dbPayload.storageLocation
+                : dbPayload.storageLocation!.name,
+        schedule: backupSchedule,
+      };
+      schedulesPayload = newSchedulesArray;
+    }
   }
 
   return {
