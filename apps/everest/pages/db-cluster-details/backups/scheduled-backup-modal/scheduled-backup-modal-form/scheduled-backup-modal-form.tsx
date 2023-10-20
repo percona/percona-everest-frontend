@@ -24,7 +24,7 @@ import { useBackupStorages } from '../../../../../hooks/api/backup-storages/useB
 import { useDbCluster } from '../../../../../hooks/api/db-cluster/useDbCluster';
 import { Messages } from '../scheduled-backup-modal.messages';
 import { ScheduleFields } from './scheduled-backup-modal-form.types';
-import { ScheduleModalContext } from '../../backup.context';
+import { ScheduleModalContext } from '../context/schedule-modal.context';
 
 export const ScheduledBackupModalForm = () => {
   const { watch } = useFormContext();

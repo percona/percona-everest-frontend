@@ -32,7 +32,7 @@ import {
 import { scheduleModalDefaultValues } from './scheduled-backup-modal-utils';
 import { ScheduledBackupModalForm } from './scheduled-backup-modal-form/scheduled-backup-modal-form';
 import { useUpdateSchedules } from '../../../../hooks/api/backups/useScheduledBackups';
-import { ScheduleModalContext } from '../backup.context';
+import { ScheduleModalContext } from './context/schedule-modal.context';
 
 export const ScheduledBackupModal = () => {
   const queryClient = useQueryClient();

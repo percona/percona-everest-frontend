@@ -13,14 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React from 'react';
-import { ScheduleModalContextProvider } from './scheduled-backup-modal/context/schedule-modal.context';
-import { BackupsWrapper } from './backups-wrapper/backups-wrapper';
-
-export const Backups = () => {
-  return (
-    <ScheduleModalContextProvider>
-      <BackupsWrapper />
-    </ScheduleModalContextProvider>
-  );
+export type ScheduleModalContextType = {
+  mode?: 'new' | 'edit';
+  setMode?: React.Dispatch<React.SetStateAction<'new' | 'edit'>>;
+  selectedScheduleName?: string;
+  setSelectedScheduleName?: React.Dispatch<React.SetStateAction<string>>;
+  openScheduleModal?: boolean;
+  setOpenScheduleModal?: React.Dispatch<React.SetStateAction<boolean>>;
 };

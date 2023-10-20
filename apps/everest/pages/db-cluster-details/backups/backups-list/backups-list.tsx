@@ -39,7 +39,7 @@ import { DbEngineType } from '../../../../types/dbEngines.types';
 import { BACKUP_STATUS_TO_BASE_STATUS } from './backups-list.constants';
 import { Messages } from './backups-list.messages';
 import { OnDemandBackupModal } from '../on-demand-backup-modal/on-demand-backup-modal';
-import { ScheduleModalContext } from '../backup.context';
+import { ScheduleModalContext } from '../scheduled-backup-modal/context/schedule-modal.context';
 
 export const BackupsList = () => {
   const navigate = useNavigate();
