@@ -13,9 +13,34 @@ import { DBClusterDetailsTabs } from './db-cluster-details.types';
 
 export const DbClusterDetails = () => {
   const { dbClusterName } = useParams();
+  // TODO: uncomment after checking with Nuna if we want 404 here
+  // const [routeFound, setRouteFound] = useState(true);
+  // const { combinedDataForTable, loadingAllClusters } = useDbClusters();
   const routeMatch = useMatch('/databases/:dbClusterName/:tabs');
   const navigate = useNavigate();
   const currentTab = routeMatch?.params?.tabs;
+
+  // TODO: uncomment after checking with Nuna if we want 404 here
+  // useEffect(() => {
+  //   if (!loadingAllClusters) {
+  //     const dbNameExists = combinedDataForTable.find(
+  //       (cluster) => cluster.databaseName === dbClusterName
+  //     );
+
+  //     if (!dbNameExists) {
+  //       setRouteFound(false);
+  //     }
+  //   }
+  // }, [loadingAllClusters]);
+
+  // if (loadingAllClusters) {
+  //   return <Skeleton />;
+  // }
+
+  // if (!routeFound) {
+  //   return <NoMatch />;
+  // }
+
   return (
     <Box sx={{ width: '100%' }}>
       <Box
