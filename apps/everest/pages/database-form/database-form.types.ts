@@ -19,14 +19,14 @@ import { z } from 'zod';
 //   TimeValue,
 //   WeekDays,
 // } from '../../components/time-selection/time-selection.types';
-import { IP_REGEX, MAX_DB_CLUSTER_NAME_LENGTH } from '../../constants';
-import { Messages } from './database-form.messages';
-import { ResourceSize } from './steps/second/second-step.types';
 import {
   AmPM,
   TimeValue,
   WeekDays,
 } from '../../components/time-selection/time-selection.types';
+import { IP_REGEX, MAX_DB_CLUSTER_NAME_LENGTH } from '../../constants';
+import { Messages } from './database-form.messages';
+import { ResourceSize } from './steps/second/second-step.types';
 
 export enum DbWizardFormFields {
   dbName = 'dbName',
@@ -145,7 +145,6 @@ const backupsStepSchema = z
         }
       }),
     selectedTime: z.nativeEnum(TimeValue),
-    minuteHour: z.number().optional(),
     minute: z.number().optional(),
     hour: z.number().optional(),
     amPm: z.nativeEnum(AmPM).optional(),
