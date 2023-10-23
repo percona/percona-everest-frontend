@@ -88,7 +88,7 @@ module.exports.default = {
     outputModifier,
     cssLoaderModifider,
   ],
-}
+};
 
 // export const EverestApp: ReactAppOptions = {
 //   name: 'everest',
