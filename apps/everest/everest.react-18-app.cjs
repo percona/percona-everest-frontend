@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { ReactAppOptions } from '@teambit/react';
+// import { ReactAppOptions } from '@teambit/react';
 
 const titleAndFaviconModifier = (configMutator) => {
   // These are really hacky, but Bit doesn't seem to properly configure favicon using the "favicon" entry during dev mode
@@ -74,10 +74,11 @@ const cssLoaderModifider = (configMutator) => {
     use: ['style-loader', 'css-loader'],
   });
 
+  console.log(JSON.stringify(configMutator.raw, undefined, 4));
   return configMutator;
 };
 
-export const EverestApp: ReactAppOptions = {
+module.exports.default = {
   name: 'everest',
   entry: [require.resolve('./everest.app-root')],
   favicon: require.resolve('./favicon.ico'),
@@ -87,6 +88,18 @@ export const EverestApp: ReactAppOptions = {
     outputModifier,
     cssLoaderModifider,
   ],
-};
+}
 
-export default EverestApp;
+// export const EverestApp: ReactAppOptions = {
+//   name: 'everest',
+//   entry: [require.resolve('./everest.app-root')],
+//   favicon: require.resolve('./favicon.ico'),
+//   webpackTransformers: [
+//     titleAndFaviconModifier,
+//     proxyModifier,
+//     outputModifier,
+//     cssLoaderModifider,
+//   ],
+// };
+
+// export default EverestApp;
