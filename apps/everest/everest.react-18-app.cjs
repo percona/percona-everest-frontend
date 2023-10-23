@@ -74,7 +74,6 @@ const cssLoaderModifider = (configMutator) => {
     use: ['style-loader', 'css-loader'],
   });
 
-  console.log(JSON.stringify(configMutator.raw, undefined, 4));
   return configMutator;
 };
 
