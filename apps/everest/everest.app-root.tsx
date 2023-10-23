@@ -5,7 +5,7 @@ import {
   Navigate,
   RouterProvider,
 } from 'react-router-dom';
-import { EverestApp } from './app';
+import { Everest } from './app';
 import { NoMatch } from './pages/404/NoMatch';
 import { DatabasePage } from './pages/database-form/database-form';
 import { DatabasesPage } from './pages/databases/databases';
@@ -20,7 +20,7 @@ import { StorageLocations } from './pages/settings/storage-locations/storage-loc
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <EverestApp />,
+    element: <Everest />,
     children: [
       {
         path: 'databases',
