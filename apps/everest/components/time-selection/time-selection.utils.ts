@@ -55,7 +55,13 @@ export const getCronExpressionFromFormValues = (
   const parsedDay = Number(onDay);
 
   const hour24 =
-    amPm === AmPM.PM ? (parsedHour === 12 ? 0 : parsedHour + 12) : parsedHour;
+    amPm === AmPM.PM
+      ? parsedHour === 12
+        ? parsedHour
+        : parsedHour + 12
+      : parsedHour === 12
+      ? 0
+      : parsedHour;
 
   switch (selectedTime) {
     case TimeValue.hours:
@@ -71,10 +77,9 @@ export const getCronExpressionFromFormValues = (
   }
 };
 
-const getAmPm = (hour: number): AmPM =>
-  hour === 0 || hour > 12 ? AmPM.PM : AmPM.AM;
+const getAmPm = (hour: number): AmPM => (hour >= 12 ? AmPM.PM : AmPM.AM);
 const getHour12 = (hour24: number): number =>
-  hour24 === 12 ? hour24 : hour24 % 12;
+  hour24 === 12 || hour24 === 0 ? 12 : hour24 % 12;
 const getWeekDayByNumber = (weekDay: number): WeekDays =>
   Object.values(WeekDays)[weekDay];
 
