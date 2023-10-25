@@ -57,6 +57,12 @@ const proxyModifier = (configMutator) => {
 };
 
 const outputModifier = (configMutator) => {
+  configMutator.merge({
+    output: {
+      publicPath: '/',
+    },
+  });
+
   if (configMutator.raw.mode === 'production') {
     configMutator.merge({
       output: {
