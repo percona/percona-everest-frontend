@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { HOURS_AM_PM, MINUTES } from '../time-selection.constants';
 import { Messages } from '../time-selection.messages';
-import { AmPM } from '../time-selection.types';
+import {AmPM, TimeSelectionFields} from '../time-selection.types';
 import { addZeroToSingleDigit } from '../time-selection.utils';
 
 export const TimeFields = () => {
@@ -24,7 +24,7 @@ export const TimeFields = () => {
       {/* @ts-ignore */}
       <Typography variant="sectionHeading">{Messages.at}</Typography>
       <SelectInput
-        name="hour"
+        name={TimeSelectionFields.hour}
         control={control}
         selectFieldProps={{
           sx: { minWidth: '80px' },
@@ -37,7 +37,7 @@ export const TimeFields = () => {
         ))}
       </SelectInput>
       <SelectInput
-        name="minute"
+        name={TimeSelectionFields.minute}
         control={control}
         selectFieldProps={{
           sx: { minWidth: '80px' },
@@ -50,7 +50,7 @@ export const TimeFields = () => {
         ))}
       </SelectInput>
       <SelectInput
-        name="amPm"
+        name={TimeSelectionFields.amPm}
         control={control}
         selectFieldProps={{
           sx: { minWidth: '80px' },

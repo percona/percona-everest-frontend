@@ -4,6 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { MINUTES } from '../time-selection.constants';
 import { Messages } from '../time-selection.messages';
+import {TimeSelectionFields} from "../time-selection.types";
 
 export const HoursField = () => {
   const { control } = useFormContext();
@@ -13,7 +14,7 @@ export const HoursField = () => {
       {/* @ts-ignore */}
       <Typography variant="sectionHeading">{Messages.onMinute}</Typography>
       <SelectInput
-        name="minute"
+        name={TimeSelectionFields.minute}
         control={control}
         selectFieldProps={{
           sx: { minWidth: '80px' },

@@ -4,6 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { DAYS_MONTH } from '../time-selection.constants';
 import { Messages } from '../time-selection.messages';
+import {TimeSelectionFields} from "../time-selection.types";
 
 export const MonthsField = () => {
   const { control } = useFormContext();
@@ -12,7 +13,7 @@ export const MonthsField = () => {
       {/* @ts-ignore */}
       <Typography variant="sectionHeading">{Messages.onDay}</Typography>
       <SelectInput
-        name="onDay"
+        name={TimeSelectionFields.onDay}
         control={control}
         selectFieldProps={{
           sx: { minWidth: '80px' },

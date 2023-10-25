@@ -12,7 +12,9 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 import { Theme, SxProps } from '@mui/material';
+import { timeSelectionSchema } from "./time-selection.schema";
 
 export enum WeekDays {
   // don't change the order of the days, the list is used in getWeekDayByNumber function
@@ -30,6 +32,15 @@ export const weekDaysPlural = (day: WeekDays) => `${day}s`;
 export enum AmPM {
   AM = 'AM',
   PM = 'PM',
+}
+
+export enum TimeSelectionFields {
+  selectedTime = 'selectedTime',
+  minute = 'minute',
+  hour = 'hour',
+  amPm = 'amPm',
+  weekDay = 'weekDay',
+  onDay = 'onDay',
 }
 
 export enum TimeValue {
@@ -58,3 +69,5 @@ export type TimeProps = {
   onDay?: number;
   weekDay?: WeekDays;
 };
+
+export type TimeSelectionData = z.infer<typeof timeSelectionSchema>;

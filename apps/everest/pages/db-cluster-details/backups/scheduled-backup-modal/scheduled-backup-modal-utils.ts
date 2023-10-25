@@ -14,13 +14,11 @@
 // limitations under the License.
 
 import { Schedule } from '../../../../types/dbCluster.types';
-import {
-  ScheduleFields,
-  ScheduleFormData,
-} from './scheduled-backup-modal-form/scheduled-backup-modal-form.types';
 import { generateShortUID } from '../../../database-form/steps/first/utils';
 import { TIME_SELECTION_DEFAULTS } from '../../../database-form/database-form.constants';
 import { getFormValuesFromCronExpression } from '../../../../components/time-selection/time-selection.utils';
+import {ScheduleFormData} from "../../../../components/schedule-form/schedule-form.schema";
+import {ScheduleFormFields} from "../../../../components/schedule-form/schedule-form.types";
 
 export const scheduleModalDefaultValues = (
   mode: 'new' | 'edit',
@@ -30,14 +28,14 @@ export const scheduleModalDefaultValues = (
     const { name, backupStorageName, schedule } = selectedSchedule;
     const formValues = getFormValuesFromCronExpression(schedule);
     return {
-      [ScheduleFields.name]: name || '',
-      [ScheduleFields.storageLocation]: { name: backupStorageName } || null,
+      [ScheduleFormFields.scheduleName]: name || '',
+      [ScheduleFormFields.storageLocation]: { name: backupStorageName } || null,
       ...formValues,
     };
   }
   return {
-    [ScheduleFields.name]: `backup-${generateShortUID()}`,
-    [ScheduleFields.storageLocation]: '',
+    [ScheduleFormFields.scheduleName]: `backup-${generateShortUID()}`,
+    [ScheduleFormFields.storageLocation]: '',
     ...TIME_SELECTION_DEFAULTS,
   };
 };
