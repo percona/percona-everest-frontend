@@ -182,6 +182,9 @@ importers:
       '@mui/material':
         specifier: ^5.13.1
         version: 5.14.14(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@17.0.69)(react-dom@17.0.2)(react@17.0.2)
+      '@playwright/test':
+        specifier: ^1.36.1
+        version: 1.39.0
       '@teambit/mdx.ui.mdx-scope-context':
         specifier: 1.0.0
         version: 1.0.0(react-dom@17.0.2)(react@17.0.2)
@@ -614,7 +617,7 @@ importers:
         version: file:ui-lib/icons/everest(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
       '@percona/ui-lib.icons.no-match':
         specifier: workspace:*
-        version: file:ui-lib/icons/no-match(react@17.0.2)
+        version: file:ui-lib/icons/no-match(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
       '@percona/ui-lib.icons.status':
         specifier: workspace:*
         version: file:ui-lib/icons/status(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
@@ -642,6 +645,9 @@ importers:
       '@percona/utils.string':
         specifier: workspace:*
         version: file:utils/string
+      '@playwright/test':
+        specifier: ^1.36.1
+        version: 1.39.0
       '@teambit/mdx.ui.mdx-scope-context':
         specifier: 1.0.0
         version: 1.0.0(react-dom@17.0.2)(react@17.0.2)
@@ -822,7 +828,7 @@ importers:
         version: file:ui-lib/icons/everest(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
       '@percona/ui-lib.icons.no-match':
         specifier: workspace:*
-        version: file:ui-lib/icons/no-match(react@17.0.2)
+        version: file:ui-lib/icons/no-match(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
       '@percona/ui-lib.icons.status':
         specifier: workspace:*
         version: file:ui-lib/icons/status(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
@@ -984,7 +990,7 @@ importers:
         version: file:ui-lib/icons/everest(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
       '@percona/ui-lib.icons.no-match':
         specifier: workspace:*
-        version: file:ui-lib/icons/no-match(react@17.0.2)
+        version: file:ui-lib/icons/no-match(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
       '@percona/ui-lib.icons.status':
         specifier: workspace:*
         version: file:ui-lib/icons/status(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
@@ -23376,6 +23382,7 @@ packages:
       '@mui/material': 5.14.14(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@17.0.69)(react-dom@17.0.2)(react@17.0.2)
       '@percona/design.theme-context-provider': file:design/theme-context-provider(@emotion/react@11.11.1)(@mui/material@5.14.14)(react@17.0.2)
       '@percona/design.themes.everest': file:design/themes/everest(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
+      '@percona/ui-lib.card': file:ui-lib/card(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
       '@percona/ui-lib.db-toggle-card': file:ui-lib/db-toggle-card(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
       '@percona/ui-lib.dialog-title': file:ui-lib/dialog-title(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(react@17.0.2)
       '@percona/ui-lib.form.inputs.auto-complete': file:ui-lib/form/inputs/auto-complete(@mui/material@5.14.14)(react@17.0.2)
@@ -23386,12 +23393,16 @@ packages:
       '@percona/ui-lib.form.inputs.toggle-button-group': file:ui-lib/form/inputs/toggle-button-group(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
       '@percona/ui-lib.icons.db': file:ui-lib/icons/db(@mui/material@5.14.14)(react@17.0.2)
       '@percona/ui-lib.icons.everest': file:ui-lib/icons/everest(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
+      '@percona/ui-lib.icons.no-match': file:ui-lib/icons/no-match(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
       '@percona/ui-lib.icons.status': file:ui-lib/icons/status(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
+      '@percona/ui-lib.labeled-content': file:ui-lib/labeled-content(@mui/material@5.14.14)(react@17.0.2)
+      '@percona/ui-lib.loadable-children': file:ui-lib/loadable-children(@mui/material@5.14.14)(react@17.0.2)
       '@percona/ui-lib.menu-button': file:ui-lib/menu-button(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
       '@percona/ui-lib.stepper': file:ui-lib/stepper(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
       '@percona/ui-lib.table': file:ui-lib/table(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(react-dom@17.0.2)(react@17.0.2)
       '@percona/ui-lib.toggle-card': file:ui-lib/toggle-card(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
       '@percona/utils.string': file:utils/string
+      '@playwright/test': 1.39.0
       axios: 1.5.1
       cron-time-generator: 2.0.1
       css-mediaquery: 0.1.2
@@ -23860,7 +23871,7 @@ packages:
       - '@mui/utils'
     dev: false
 
-  file:ui-lib/icons/no-match(react@17.0.2):
+  file:ui-lib/icons/no-match(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2):
     resolution: {directory: ui-lib/icons/no-match, type: directory}
     id: file:ui-lib/icons/no-match
     name: '@percona/ui-lib.icons.no-match'
@@ -23870,7 +23881,14 @@ packages:
       react:
         optional: true
     dependencies:
+      '@percona/design.composition-viewer': file:design/composition-viewer(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(react@17.0.2)
+      '@percona/design.themes.everest': file:design/themes/everest(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2)
       react: 17.0.2
+    transitivePeerDependencies:
+      - '@emotion/react'
+      - '@mui/icons-material'
+      - '@mui/material'
+      - '@mui/utils'
     dev: false
 
   file:ui-lib/icons/status(@emotion/react@11.11.1)(@mui/icons-material@5.14.14)(@mui/material@5.14.14)(@mui/utils@5.14.14)(react@17.0.2):

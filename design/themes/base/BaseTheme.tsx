@@ -1,8 +1,46 @@
 import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/600.css';
 import { createTheme, PaletteMode, ThemeOptions } from '@mui/material';
+import { tooltipClasses } from '@mui/material/Tooltip';
 
 declare module '@mui/material/styles' {
+  interface Theme {
+    customColors: {
+      darkMode: {
+        surfaces: {
+          backdrop: string;
+          default: string;
+          high: string;
+        };
+      };
+      lightMode: {
+        surfaces: {
+          backdrop: string;
+          default: string;
+          low: string;
+        };
+      };
+    };
+  }
+
+  interface ThemeOptions {
+    customColors: {
+      darkMode: {
+        surfaces: {
+          backdrop: string;
+          default: string;
+          high: string;
+        };
+      };
+      lightMode: {
+        surfaces: {
+          backdrop: string;
+          default: string;
+          low: string;
+        };
+      };
+    };
+  }
   interface TypeAction {
     focusVisible: string;
     focusVisibleOpacity: number;
@@ -123,6 +161,22 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
             paper: '#2C323E',
           },
         }),
+  },
+  customColors: {
+    darkMode: {
+      surfaces: {
+        backdrop: '#2C323E',
+        default: '#2C323E',
+        high: '#3A4151',
+      },
+    },
+    lightMode: {
+      surfaces: {
+        backdrop: 'rgba(44, 50, 62, 0.75)',
+        default: '#FFFFFF',
+        low: '#F0F1F4',
+      },
+    },
   },
   typography: {
     h1: {
@@ -437,6 +491,38 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
       styleOverrides: {
         root: {
           padding: BaseTheme.spacing(2),
+        },
+      },
+    },
+    MuiTooltip: {
+      defaultProps: {
+        PopperProps: {
+          sx: (theme) =>
+            mode === 'light'
+              ? {
+                  [`& .${tooltipClasses.tooltip}`]: {
+                    backgroundColor: theme.customColors.darkMode.surfaces.high,
+                  },
+                  [`& .${tooltipClasses.arrow}`]: {
+                    color: theme.customColors.darkMode.surfaces.high,
+                  },
+                }
+              : {
+                  [`& .${tooltipClasses.tooltip}`]: {
+                    backgroundColor: theme.customColors.lightMode.surfaces.low,
+                  },
+                  [`& .${tooltipClasses.arrow}`]: {
+                    color: theme.customColors.lightMode.surfaces.low,
+                  },
+                },
+          modifiers: [
+            {
+              name: 'offset',
+              options: {
+                offset: [0, -5],
+              },
+            },
+          ],
         },
       },
     },
