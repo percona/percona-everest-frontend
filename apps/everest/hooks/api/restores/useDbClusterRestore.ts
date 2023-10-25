@@ -16,6 +16,7 @@
 import { useMutation, UseMutationOptions } from 'react-query';
 import { createDbClusterRestore } from '../../../api/restores';
 import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
+import { generateShortUID } from '../../../pages/database-form/steps/first/utils';
 
 export type RestoreFormData = {
   backupName: string;
@@ -32,7 +33,7 @@ export const useDbClusterRestore = (
         apiVersion: 'everest.percona.com/v1alpha1',
         kind: 'DatabaseClusterRestore',
         metadata: {
-          name: `restore-${formData.backupName}`,
+          name: `restore-${generateShortUID()}`,
         },
         spec: {
           dbClusterName,
