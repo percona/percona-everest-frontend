@@ -50,10 +50,10 @@ jobs:
       - name: Add bvm bin folder to path
         run: echo "$HOME/bin" >> $GITHUB_PATH
 
-      - name: Set up bit config
-        env:
-          BIT_TOKEN: ${{ secrets.BIT_TOKEN }}
-        run: bit config set user.token $BIT_TOKEN
+      # - name: Set up bit config
+      #   env:
+      #     BIT_TOKEN: ${{ secrets.BIT_TOKEN }}
+      #   run: bit config set user.token $BIT_TOKEN
 
       - name: Build Everest Frontend app
         run: |
