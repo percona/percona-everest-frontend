@@ -53,8 +53,14 @@ export const ScheduledBackupModal = () => {
     dbClusterName!,
     mode
   );
-  const schedules =
-    (mode === 'edit' && dbCluster && dbCluster?.spec?.backup?.schedules) || [];
+
+  const schedules = (dbCluster && dbCluster?.spec?.backup?.schedules) || [];
+  const schedulesNamesList =
+    (schedules && schedules.map((item) => item?.name)) || [];
+  const sheduledBackupSchema = useMemo(
+    () => schema(schedulesNamesList, mode),
+    [schedulesNamesList, mode]
+  );
 
   const selectedSchedule = useMemo(
     () =>
@@ -110,7 +116,7 @@ export const ScheduledBackupModal = () => {
           ? Messages.createSchedule.submitMessage
           : Messages.editSchedule.submitMessage
       }
-      schema={schema}
+      schema={sheduledBackupSchema}
       {...(mode === 'edit' && { values })}
       defaultValues={values}
       {...(mode === 'new' && { subHead2: Messages.createSchedule.subhead })}
