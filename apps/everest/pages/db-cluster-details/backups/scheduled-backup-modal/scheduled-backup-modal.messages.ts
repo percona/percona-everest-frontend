@@ -26,7 +26,8 @@ export const Messages = {
   },
   scheduleName: {
     label: 'Schedule name',
-    tooLong: 'The schedule name is too long',
+    tooLong: 'The schedule name is too long.',
+    duplicate: 'You already have the schedule with the same name.',
   },
   storageLocation: 'Storage location',
 };

@@ -43,7 +43,7 @@ export const FormDialog = <T extends FieldValues>({
     values,
   });
   const {
-    formState: { isDirty },
+    formState: { isDirty, isValid },
   } = methods;
   const { isMobile } = useActiveBreakpoint();
   const modalWidth = useMemo(() => {
@@ -100,7 +100,7 @@ export const FormDialog = <T extends FieldValues>({
         <Button
           variant="contained"
           onClick={methods.handleSubmit(handleSubmit)}
-          disabled={submitting}
+          disabled={submitting || !isValid}
         >
           {submitMessage}
         </Button>

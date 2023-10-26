@@ -37,46 +37,52 @@ const doesNotContainerAnythingButAlphanumericAndDash = /^[a-z0-9-]+$/;
 const doesNotStartWithDash = /^[^0-9-]/;
 const doesNotEndWithDash = /[^-]$/;
 
-export const schema = z.object({
-  [ScheduleFields.name]: z
-    .string()
-    .nonempty()
-    .max(MAX_SCHEDULE_NAME_LENGTH, Messages.scheduleName.tooLong)
-    .regex(
-      doesNotContainerAnythingButAlphanumericAndDash,
-      `The schedule name should not exceed ${MAX_SCHEDULE_NAME_LENGTH} characters.`
-    )
-    .regex(doesNotEndWithDash, "The name shouldn't end with a hyphen.")
-    .regex(
-      doesNotStartWithDash,
-      "The name shouldn't start with a hyphen or a number."
-    ),
-  selectedTime: z.nativeEnum(TimeValue),
-  minute: z.number().optional(),
-  hour: z.number().optional(),
-  amPm: z.nativeEnum(AmPM).optional(),
-  weekDay: z.nativeEnum(WeekDays).optional(),
-  onDay: z.number().optional(),
-  [ScheduleFields.storageLocation]: z
-    .string()
-    .or(
-      z.object({
-        name: z.string(),
-      })
-    )
-    .nullable()
-    .superRefine((input, ctx) => {
-      if (
-        (!input || typeof input === 'string' || !input.name) &&
-        input !== null
-      ) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message:
-            'Invalid option. Please make sure you added a storage location and select it from the dropdown.',
-        });
-      }
-    }),
-});
+export const schema = (schedulesNamesList: string[], mode?: 'edit' | 'new') =>
+  z.object({
+    [ScheduleFields.name]: z
+      .string()
+      .nonempty()
+      .max(MAX_SCHEDULE_NAME_LENGTH, Messages.scheduleName.tooLong)
+      .regex(
+        doesNotContainerAnythingButAlphanumericAndDash,
+        `The schedule name should not exceed ${MAX_SCHEDULE_NAME_LENGTH} characters.`
+      )
+      .regex(doesNotEndWithDash, "The name shouldn't end with a hyphen.")
+      .regex(
+        doesNotStartWithDash,
+        "The name shouldn't start with a hyphen or a number."
+      )
+      .superRefine((input, ctx) => {
+        if (mode==='new' && !!schedulesNamesList.find((item) => item === input)) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: Messages.scheduleName.duplicate,
+          });
+        }
+      }),
+    selectedTime: z.nativeEnum(TimeValue),
+    minute: z.number().optional(),
+    hour: z.number().optional(),
+    amPm: z.nativeEnum(AmPM).optional(),
+    weekDay: z.nativeEnum(WeekDays).optional(),
+    onDay: z.number().optional(),
+    [ScheduleFields.storageLocation]: z
+      .string()
+      .or(
+        z.object({
+          name: z.string(),
+        })
+      )
+      .nullable()
+      .superRefine((input, ctx) => {
+        if (!input || typeof input === 'string' || !input.name) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message:
+              'Invalid option. Please make sure you added a storage location and select it from the dropdown.',
+          });
+        }
+      }),
+  });
 
-export type ScheduleFormData = z.infer<typeof schema>;
+export type ScheduleFormData = z.infer<ReturnType<typeof schema>>;
