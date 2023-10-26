@@ -53,7 +53,10 @@ export const schema = (schedulesNamesList: string[], mode?: 'edit' | 'new') =>
         "The name shouldn't start with a hyphen or a number."
       )
       .superRefine((input, ctx) => {
-        if (mode==='new' && !!schedulesNamesList.find((item) => item === input)) {
+        if (
+          mode === 'new' &&
+          !!schedulesNamesList.find((item) => item === input)
+        ) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             message: Messages.scheduleName.duplicate,

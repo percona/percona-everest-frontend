@@ -54,7 +54,7 @@ export const ScheduledBackupModal = () => {
     mode
   );
 
-  const schedules = (dbCluster && dbCluster?.spec?.backup?.schedules) || [];
+  const schedules = dbCluster && dbCluster?.spec?.backup?.schedules || [];
   const schedulesNamesList =
     (schedules && schedules.map((item) => item?.name)) || [];
   const sheduledBackupSchema = useMemo(
