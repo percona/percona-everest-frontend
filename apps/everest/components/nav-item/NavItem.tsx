@@ -1,15 +1,14 @@
 import {
+  Box,
   IconButton,
-  Link,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   Tooltip,
 } from '@mui/material';
-import { tooltipClasses } from '@mui/material/Tooltip';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { NavItemProps } from './NavItem.types';
 
 export const NavItem = ({
@@ -20,6 +19,13 @@ export const NavItem = ({
   onClick,
   ...listItemProps
 }: NavItemProps) => {
+  const navigate = useNavigate();
+
+  const redirect = (to: string) => {
+    navigate(to);
+    onClick();
+  };
+
   return (
     <ListItem disablePadding sx={{ display: 'block' }} {...listItemProps}>
       {open ? (
@@ -28,7 +34,7 @@ export const NavItem = ({
           to={to}
           sx={{
             minHeight: 48,
-            justifyContent: open ? 'initial' : 'center',
+            justifyContent: 'initial',
             px: 2.5,
           }}
           onClick={onClick}
@@ -36,55 +42,33 @@ export const NavItem = ({
           <ListItemIcon
             sx={{
               minWidth: 0,
-              mr: open ? 3 : 'auto',
+              mr: 3,
               justifyContent: 'center',
             }}
           >
             {React.createElement(icon)}
           </ListItemIcon>
-          <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+
+          <ListItemText primary={text} />
         </ListItemButton>
       ) : (
-        <Tooltip
+        <Box
           sx={{
-            '& .MuiTooltip-popper': {
-              backgroundColor: 'yellow',
-              color: 'rgba(255, 0, 0, 0.87)',
-              // boxShadow: theme.shadows[1],
-              fontSize: 11,
-            },
-            [`& .${tooltipClasses.arrow}`]: {
-              color: 'red',
-            },
+            display: 'flex',
+            alignItems: 'center',
+            minHeight: 48,
+            px: '12px',
           }}
-          title={
-            <Link
-              sx={{ cursor: 'pointer' }}
-              href="https://mui.com/material-ui/react-link/"
-            >
-              text
-            </Link>
-          }
-          placement="right"
-          arrow
         >
-          <ListItemIcon
-            sx={{
-              minWidth: 0,
-              mr: open ? 3 : 'auto',
-              justifyContent: 'center',
-            }}
-          >
+          <Tooltip title={text} placement="right" arrow>
             <IconButton
-              LinkComponent={NavLink}
-              href={to}
-              onClick={onClick}
-              sx={{ p: '15px' }}
+              sx={{ color: 'rgba(0, 0, 0, 0.54)' }}
+              onClick={() => redirect(to)}
             >
               {React.createElement(icon)}
             </IconButton>
-          </ListItemIcon>
-        </Tooltip>
+          </Tooltip>
+        </Box>
       )}
     </ListItem>
   );

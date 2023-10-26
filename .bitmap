@@ -552,19 +552,6 @@
             }
         }
     },
-    "tooltip": {
-        "scope": "",
-        "version": "",
-        "defaultScope": "percona.ui-lib",
-        "mainFile": "index.ts",
-        "rootDir": "ui-lib/tooltip",
-        "config": {
-            "percona.envs/percona-custom-react-env": {},
-            "teambit.envs/envs": {
-                "env": "percona.envs/percona-custom-react-env"
-            }
-        }
-    },
     "utils/palette-theme-viewer": {
         "scope": "percona.design",
         "version": "0.0.3",

@@ -502,6 +502,10 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
               ? {
                   [`& .${tooltipClasses.tooltip}`]: {
                     backgroundColor: theme.customColors.darkMode.surfaces.high,
+                    boxShadow: '0px 3px 5px 2px rgba(0, 0, 0, 0.4)',
+                    fontWeight: '450',
+                    fontSize: '12px',
+                    lineHeight: '15px',
                   },
                   [`& .${tooltipClasses.arrow}`]: {
                     color: theme.customColors.darkMode.surfaces.high,
@@ -510,6 +514,10 @@ export const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
               : {
                   [`& .${tooltipClasses.tooltip}`]: {
                     backgroundColor: theme.customColors.lightMode.surfaces.low,
+                    boxShadow: '0px 3px 5px 2px rgba(0, 0, 0, 0.4)',
+                    fontWeight: '450',
+                    fontSize: '12px',
+                    lineHeight: '15px',
                   },
                   [`& .${tooltipClasses.arrow}`]: {
                     color: theme.customColors.lightMode.surfaces.low,
