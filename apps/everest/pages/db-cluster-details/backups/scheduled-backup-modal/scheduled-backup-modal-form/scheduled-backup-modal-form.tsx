@@ -36,11 +36,9 @@ export const ScheduledBackupModalForm = () => {
     enabled: !!dbClusterName && mode === 'edit',
   });
 
-  const schedules =
-    (mode === 'edit' && dbCluster && dbCluster?.spec?.backup?.schedules) || [];
+  const schedules = (dbCluster && dbCluster?.spec?.backup?.schedules) || [];
   const schedulesNamesList =
-    mode === 'edit' && schedules && schedules.map((item) => item?.name);
-
+    (schedules && schedules.map((item) => item?.name)) || [];
   const scheduleName = watch(ScheduleFields.name);
 
   useEffect(() => {
