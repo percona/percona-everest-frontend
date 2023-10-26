@@ -19,7 +19,8 @@ export const Messages = {
     numberOfNodes: (numberOfNodes?: number) =>
       `Number of nodes: ${numberOfNodes}`,
     cpu: (cpu?: string | number) => `CPU: ${cpu}`,
-
+    memory: (memory: string | number) => `Memory: ${memory}`,
+    disk: (disk: string | number) => `Disk: ${disk}`,
     enabled: `Enabled`,
     disabled: `Disabled`,
   },
