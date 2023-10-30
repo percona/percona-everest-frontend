@@ -21,8 +21,8 @@ export const NavItem = ({
 }: NavItemProps) => {
   const navigate = useNavigate();
 
-  const redirect = (to: string) => {
-    navigate(to);
+  const redirect = (redirectUrl: string) => {
+    navigate(redirectUrl);
     onClick();
   };
 
