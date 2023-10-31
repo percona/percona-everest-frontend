@@ -16,17 +16,21 @@
 import React, { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDbCluster } from '../../../hooks/api/db-cluster/useDbCluster';
+import { useDbClusters } from '../../../hooks/api/db-clusters/useDbClusters';
 import { DbEngineType } from '../../../types/dbEngines.types';
-import { BackupsList } from './backups-list/backups-list';
-import { ScheduledBackupsList } from './scheduled-backups-list/scheduled-backups-list';
-import { ScheduledBackupModal } from './scheduled-backup-modal/scheduled-backup-modal';
 import { ScheduleModalContext } from './backup.context';
+import { BackupsList } from './backups-list/backups-list';
+import { ScheduledBackupModal } from './scheduled-backup-modal/scheduled-backup-modal';
+import { ScheduledBackupsList } from './scheduled-backups-list/scheduled-backups-list';
 
 export const Backups = () => {
   const { dbClusterName } = useParams();
-
+  const { combinedDataForTable, loadingAllClusters } = useDbClusters();
+  const dbNameExists = combinedDataForTable.find(
+    (cluster) => cluster.databaseName === dbClusterName
+  );
   const { data: dbCluster } = useDbCluster(dbClusterName || '', {
-    enabled: !!dbClusterName,
+    enabled: !!dbClusterName && !!dbNameExists,
   });
 
   const [mode, setMode] = useState<'new' | 'edit'>('new');
@@ -49,11 +53,13 @@ export const Backups = () => {
         setSelectedScheduleName,
       }}
     >
-      <>
-        {dbType !== DbEngineType.POSTGRESQL && <ScheduledBackupsList />}
-        <BackupsList />
-        {openScheduleModal && <ScheduledBackupModal />}
-      </>
+      {dbNameExists && (
+        <>
+          {dbType !== DbEngineType.POSTGRESQL && <ScheduledBackupsList />}
+          <BackupsList />
+          {openScheduleModal && <ScheduledBackupModal />}
+        </>
+      )}
     </ScheduleModalContext.Provider>
   );
 };
