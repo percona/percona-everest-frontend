@@ -291,7 +291,7 @@ export const DbClusterView = () => {
             sx: {
               ...(!isDetailPanel && {
                 cursor: 'pointer', // you might want to change the cursor too when adding an onClick
-              })
+              }),
             },
           })}
           renderTopToolbarCustomActions={() => (
