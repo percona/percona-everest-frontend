@@ -316,7 +316,7 @@
     },
     "loadable-children": {
         "scope": "",
-        "version": "97f88031fd92f28ed520c2c29d5a2b4d3c89443f",
+        "version": "",
         "defaultScope": "percona.ui-lib",
         "mainFile": "index.ts",
         "rootDir": "ui-lib/loadable-children",
@@ -347,7 +347,7 @@
     },
     "percona-custom-react-env": {
         "scope": "",
-        "version": "2fcf5f6255754a0c7650bd3408f87e6bdd641b0b",
+        "version": "",
         "defaultScope": "percona.envs",
         "mainFile": "index.ts",
         "rootDir": "envs/percona-custom-react-env",
