@@ -11,6 +11,8 @@ export type DatabaseDetailsOverviewCardProps = {
   version: string;
   numberOfNodes: number;
   cpu: number | string;
+  memory: number | string;
+  disk: number | string;
   externalAccess: boolean;
   monitoring: boolean;
 } & OverviewCardProps;
