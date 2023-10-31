@@ -25,7 +25,7 @@ import { ScheduledBackupsList } from './scheduled-backups-list/scheduled-backups
 
 export const Backups = () => {
   const { dbClusterName } = useParams();
-  const { combinedDataForTable, loadingAllClusters } = useDbClusters();
+  const { combinedDataForTable } = useDbClusters();
   const dbNameExists = combinedDataForTable.find(
     (cluster) => cluster.databaseName === dbClusterName
   );
