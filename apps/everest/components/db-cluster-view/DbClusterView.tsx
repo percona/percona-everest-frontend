@@ -284,7 +284,9 @@ export const DbClusterView = () => {
           renderDetailPanel={({ row }) => <ExpandedRow row={row} />}
           muiTableBodyRowProps={({ row, isDetailPanel }) => ({
             onClick: () => {
-              !isDetailPanel && navigate(`/databases/${row.original.databaseName}/overview`);
+              if (!isDetailPanel) {
+                navigate(`/databases/${row.original.databaseName}/overview`);
+              }
             },
             sx: {
               ...(!isDetailPanel && {
