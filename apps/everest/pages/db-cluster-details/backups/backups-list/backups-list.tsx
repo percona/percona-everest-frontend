@@ -196,6 +196,14 @@ export const BackupsList = () => {
         noDataMessage={Messages.noData}
         data={backups}
         columns={columns}
+        initialState={{
+          sorting: [
+            {
+              id: 'created',
+              desc: true,
+            },
+          ],
+        }}
         renderTopToolbarCustomActions={() => (
           <MenuButton buttonText={Messages.createBackup}>
             {/* MUI Menu does not like fragments and asks for arrays instead */}

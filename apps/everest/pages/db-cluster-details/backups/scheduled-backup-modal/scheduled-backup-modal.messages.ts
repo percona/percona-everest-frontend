@@ -12,4 +12,22 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-export { Everest } from './app';
+
+export const Messages = {
+  createSchedule: {
+    headerMessage: 'Create schedule',
+    subhead:
+      'Create a task that takes regular backups of this database, according to the schedule that you specify.',
+    submitMessage: 'Create',
+  },
+  editSchedule: {
+    headerMessage: 'Edit schedules',
+    submitMessage: 'Save',
+  },
+  scheduleName: {
+    label: 'Schedule name',
+    tooLong: 'The schedule name is too long.',
+    duplicate: 'You already have a schedule with the same name.',
+  },
+  storageLocation: 'Storage location',
+};

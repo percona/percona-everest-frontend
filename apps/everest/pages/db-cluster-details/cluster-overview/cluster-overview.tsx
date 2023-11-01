@@ -49,6 +49,8 @@ export const ClusterOverview = () => {
         version={dbCluster?.spec.engine.version!}
         numberOfNodes={dbCluster?.spec.engine.replicas!}
         cpu={dbCluster?.spec.engine.resources?.cpu!}
+        memory={dbCluster?.spec.engine.resources?.memory!}
+        disk={dbCluster?.spec.engine.storage.size!}
         externalAccess={
           dbCluster?.spec.proxy.expose.type === ProxyExposeType.external
         }

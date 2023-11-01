@@ -21,16 +21,17 @@ import { useBackupStorages } from '../../../../hooks/api/backup-storages/useBack
 import { Messages as CommonMessages } from '../../db-cluster-details.messages';
 import { NoStoragesModal } from '../no-storages-modal/no-storages-modal';
 import {
-  DB_CLUSTER_QUERY,
-  useDbCluster,
-} from '../../../../hooks/api/db-cluster/useDbCluster';
-import { Messages } from "../../../../components/schedule-form/schedule-form.messages";
-import { scheduleModalDefaultValues } from './scheduled-backup-modal-utils';
-import { ScheduledBackupModalForm } from './scheduled-backup-modal-form/scheduled-backup-modal-form';
-import { useUpdateSchedules } from '../../../../hooks/api/backups/useScheduledBackups';
-import { ScheduleModalContext } from '../backup.context';
+  BackupFields,
+  defaultValuesFc,
+  OnDemandBackupModalProps,
+  ScheduledBackupFormData,
+  schema,
+} from './scheduled-backup-modal.types';
 
-export const ScheduledBackupModal = () => {
+export const ScheduledBackupModal = ({
+  open,
+  handleClose,
+}: OnDemandBackupModalProps) => {
   const queryClient = useQueryClient();
   const { dbClusterName } = useParams();
   const {
@@ -49,8 +50,15 @@ export const ScheduledBackupModal = () => {
     dbClusterName!,
     mode
   );
-  const schedules =
-    (mode === 'edit' && dbCluster && dbCluster?.spec?.backup?.schedules) || [];
+
+  const schedules = (dbCluster && dbCluster?.spec?.backup?.schedules) || [];
+  const schedulesNamesList =
+    (schedules && schedules.map((item) => item?.name)) || [];
+  const sheduledBackupSchema = useMemo(
+    () => schema(schedulesNamesList, mode),
+    [schedulesNamesList, mode]
+  );
+  const { data: backupStorages = [], isFetching } = useBackupStorages();
 
   const selectedSchedule = useMemo(
     () =>
@@ -96,20 +104,20 @@ export const ScheduledBackupModal = () => {
       closeModal={handleCloseScheduledBackupModal}
       headerMessage={
         mode === 'new'
-          ? Messages.createScheduleModal.headerMessage
-          : Messages.editScheduleModal.headerMessage
+          ? Messages.createSchedule.headerMessage
+          : Messages.editSchedule.headerMessage
       }
       onSubmit={handleSubmit}
       submitting={isLoading}
       submitMessage={
         mode === 'new'
-          ? Messages.createScheduleModal.submitMessage
-          : Messages.editScheduleModal.submitMessage
+          ? Messages.createSchedule.submitMessage
+          : Messages.editSchedule.submitMessage
       }
-      schema={scheduleFormSchema}
+      schema={sheduledBackupSchema}
       {...(mode === 'edit' && { values })}
       defaultValues={values}
-      {...(mode === 'new' && { subHead2: Messages.createScheduleModal.subhead })}
+      {...(mode === 'new' && { subHead2: Messages.createSchedule.subhead })}
       size="XXL"
       data-testId="scheduled-backup-modal"
     >

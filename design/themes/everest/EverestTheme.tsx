@@ -50,6 +50,22 @@ export const everestThemeOptions = (mode: PaletteMode): ThemeOptions => {
             },
           }),
     },
+    customColors: {
+      darkMode: {
+        surfaces: {
+          backdrop: '#2C323E',
+          default: '#2C323E',
+          high: '#3A4151',
+        },
+      },
+      lightMode: {
+        surfaces: {
+          backdrop: 'rgba(44, 50, 62, 0.75)',
+          default: '#FFFFFF',
+          low: '#F0F1F4',
+        },
+      },
+    },
     components: {
       MuiIconButton: {
         defaultProps: {
