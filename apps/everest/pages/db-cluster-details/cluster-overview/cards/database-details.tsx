@@ -32,6 +32,8 @@ export const DatabaseDetails = ({
   version,
   numberOfNodes,
   cpu,
+  memory,
+  disk,
   externalAccess,
   monitoring,
 }: DatabaseDetailsOverviewCardProps) => (
@@ -62,6 +64,12 @@ export const DatabaseDetails = ({
             {Messages.fields.numberOfNodes(numberOfNodes)}
           </OverviewSectionText>
           <OverviewSectionText>{Messages.fields.cpu(cpu)}</OverviewSectionText>
+          <OverviewSectionText>
+            {Messages.fields.memory(memory)}
+          </OverviewSectionText>
+          <OverviewSectionText>
+            {Messages.fields.disk(disk)}
+          </OverviewSectionText>
         </OverviewSection>
         <OverviewSection
           title={Messages.titles.externalAccess}
