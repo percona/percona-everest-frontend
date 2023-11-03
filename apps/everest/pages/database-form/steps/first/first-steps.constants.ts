@@ -1,4 +1,4 @@
-import { DbType } from "@percona/ui-lib.db-toggle-card";
+import { DbType } from '@percona/ui-lib.db-toggle-card';
 
 export const DEFAULT_NODES: Record<DbType, string> = {
   [DbType.Mongo]: '3',

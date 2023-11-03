@@ -43,7 +43,11 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
   const mode = useDatabasePageMode();
 
   useEffect(() => {
-    if (mode === 'new' && clusterInfo?.storageClassNames && clusterInfo?.storageClassNames.length > 0) {
+    if (
+      mode === 'new' &&
+      clusterInfo?.storageClassNames &&
+      clusterInfo?.storageClassNames.length > 0
+    ) {
       setValue(
         DbWizardFormFields.storageClass,
         clusterInfo?.storageClassNames[0]
@@ -98,7 +102,9 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
       return;
     }
     const { isTouched: nameTouched } = getFieldState(DbWizardFormFields.dbName);
-    const { isTouched: nodesTouched } = getFieldState(DbWizardFormFields.numberOfNodes);
+    const { isTouched: nodesTouched } = getFieldState(
+      DbWizardFormFields.numberOfNodes
+    );
 
     if (!nameTouched && mode === 'new') {
       setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`, {
@@ -112,7 +118,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
       const numberOfNodes: string = getValues(DbWizardFormFields.numberOfNodes);
 
       if (!NODES_DB_TYPE_MAP[dbType].find((nodes) => nodes === numberOfNodes)) {
-        setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[dbType]);  
+        setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[dbType]);
       }
     } else {
       setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[dbType]);

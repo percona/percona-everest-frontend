@@ -1,12 +1,12 @@
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { IconButton, Stack, Typography, useTheme } from '@mui/material';
 import React from 'react';
+import { kebabize } from '@percona/utils.string';
 import { useActiveBreakpoint } from '../../../hooks/utils/useActiveBreakpoint';
 import {
   PreviewContentTextProps,
   PreviewSectionProps,
 } from './database-preview.types';
-import { kebabize } from '@percona/utils.string';
 
 export const PreviewSection = ({
   title,
@@ -62,7 +62,9 @@ export const PreviewSection = ({
               top: theme.spacing(-1),
             }}
             onClick={onEditClick}
-            data-testid={`button-edit-preview-${kebabize(title.replace(/\s/g, ''))}`}
+            data-testid={`button-edit-preview-${kebabize(
+              title.replace(/\s/g, '')
+            )}`}
           >
             <EditOutlinedIcon
               fontSize="small"
