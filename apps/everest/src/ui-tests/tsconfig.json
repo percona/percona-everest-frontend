@@ -1,0 +1,30 @@
+{
+  "include": ["./**/*.e2e.*"],
+  "compilerOptions": {
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "paths": {
+      "@/hooks/*": ["../hooks/*"],
+      "@/contexts/*": ["../contexts/*"],
+      "@/components/*": ["../components/*"],
+      "@/pages/*": ["../pages/*"],
+      "@/types/*": ["../types/*"],
+      "@/utils/*": ["../utils/*"],
+      "@/constants": ["../constants.ts"],
+      "@/api/*": ["../src/api/*"],
+      "@percona/ui-lib": ["../../../packages/ui-lib/src"],
+      "@percona/design": ["../../../packages/design/src"],
+      "@percona/types": ["../../../packages/types/src"],
+      "@percona/utils": ["../../../packages/utils/src"],
+    },
+    "noEmit": false,
+    "allowImportingTsExtensions": false,
+    "target": "ES2020",
+    "module": "ESNext",
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
+    "sourceMap": true,
+    "outDir": "../tests-out",
+  }
+}
