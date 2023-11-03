@@ -6,5 +6,8 @@
   "license": "MIT",
   "devDependencies": {
     "turbo": "^1.10.16"
+  },
+  "scripts": {
+    "build": "turbo build"
   }
 }
