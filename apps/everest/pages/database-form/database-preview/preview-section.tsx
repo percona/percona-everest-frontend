@@ -6,6 +6,7 @@ import {
   PreviewContentTextProps,
   PreviewSectionProps,
 } from './database-preview.types';
+import { kebabize } from '@percona/utils.string';
 
 export const PreviewSection = ({
   title,
@@ -61,6 +62,7 @@ export const PreviewSection = ({
               top: theme.spacing(-1),
             }}
             onClick={onEditClick}
+            data-testid={`button-edit-preview-${kebabize(title.replace(/\s/g, ''))}`}
           >
             <EditOutlinedIcon
               fontSize="small"
