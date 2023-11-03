@@ -35,5 +35,5 @@
       "@percona/utils": ["../../packages/utils/src"],
     }
   },
-  "include": ["./src", "playwright.config.ts"]
+  "include": ["./src", "playwright.config.ts", "ui-tests"]
 }

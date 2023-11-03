@@ -29,7 +29,7 @@ const __dirname = path.dirname(__filename);
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: path.join(__dirname, 'src/tests-out'),
+  testDir: path.join(__dirname, 'tests-out'),
   outputDir: './test-results',
   testMatch: /.*\.e2e\.(js|ts)x?/,
   /* Run tests in files in parallel */
