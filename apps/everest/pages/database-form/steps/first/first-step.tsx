@@ -30,6 +30,7 @@ import { Messages } from './first-step.messages';
 import { generateShortUID } from './utils';
 import { useKubernetesClusterInfo } from '../../../../hooks/api/kubernetesClusters/useKubernetesClusterInfo';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
+import { DEFAULT_NODES } from './first-steps.constants';
 
 export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
   const { watch, setValue, getFieldState } = useFormContext();
@@ -41,7 +42,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
   const mode = useDatabasePageMode();
 
   useEffect(() => {
-    if (mode === 'new' && clusterInfo?.storageClassNames.length > 0) {
+    if (mode === 'new' && clusterInfo?.storageClassNames && clusterInfo?.storageClassNames.length > 0) {
       setValue(
         DbWizardFormFields.storageClass,
         clusterInfo?.storageClassNames[0]
@@ -95,12 +96,19 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     if (!dbType) {
       return;
     }
-    const { isTouched } = getFieldState(DbWizardFormFields.dbName);
+    const { isTouched: nameTouched } = getFieldState(DbWizardFormFields.dbName);
+    const { isTouched: nodesTouched } = getFieldState(DbWizardFormFields.numberOfNodes);
 
-    if (!isTouched && mode === 'new') {
+    if (!nameTouched && mode === 'new') {
       setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`, {
         shouldValidate: true,
       });
+    }
+
+    console.log(DEFAULT_NODES[dbType]);
+    console.log(nodesTouched);
+    if (!nodesTouched) {
+      setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[dbType]);
     }
 
     const newVersions = dbEngines.find((engine) => engine.type === dbEngine);
