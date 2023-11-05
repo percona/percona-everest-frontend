@@ -13,7 +13,7 @@ export default defineConfig({
   plugins: [tsconfigPaths({ root: '.' }), react()],
   server: {
     watch: {
-      ignored: '**/ui-tests/**/*',
+      ignored: '.e2e/**/*.*',
     },
     proxy: {
       '/v1': `http://localhost:${process.env.API_PORT || '8080'}`,

@@ -17,8 +17,8 @@ import {
   AmPM,
   TimeValue,
   WeekDays,
-} from '@/components/time-selection/time-selection.types';
-import { IP_REGEX } from '@/constants';
+} from 'components/time-selection/time-selection.types';
+import { IP_REGEX } from 'consts';
 import { Messages } from './default-configurations.messages';
 
 export enum DefaultConfigurationsFields {

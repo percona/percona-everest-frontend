@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { KubernetesClusterList } from '../../types/kubernetes.types';
+import { KubernetesClusterList } from '../../shared-types/kubernetes.types';
 
 export const getKubernetesClustersFn =
   async (): Promise<KubernetesClusterList> => {

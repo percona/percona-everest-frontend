@@ -5,7 +5,7 @@ import {
 } from '@percona/ui-lib';
 import { DbType } from '@percona/types';
 import { DbTypeIconProviderProps } from '../dbClusterView.types';
-import { DbEngineType } from '@/types/dbEngines.types';
+import { DbEngineType } from 'shared-types/dbEngines.types';
 
 export const DbTypeIconProvider = ({ dbType }: DbTypeIconProviderProps) => {
   // In case users sent db type instead of engine

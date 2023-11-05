@@ -16,7 +16,7 @@
 import { UseMutationOptions, useMutation } from 'react-query';
 import { DbWizardType } from '../../../pages/database-form/database-form.types';
 import { updateDbClusterFn } from '../../../api/dbClusterApi';
-import { DbCluster, ProxyExposeType } from '../../../types/dbCluster.types';
+import { DbCluster, ProxyExposeType } from '../../../shared-types/dbCluster.types';
 // import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils';
 
 type UpdateDbClusterArgType = {

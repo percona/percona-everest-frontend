@@ -14,8 +14,8 @@
 // limitations under the License.
 
 import { useContext } from 'react';
-import { DbClusterView } from '@/components/db-cluster-view/DbClusterView';
-import { K8Context } from '@/contexts/kubernetes/kubernetes.context';
+import { DbClusterView } from 'components/db-cluster-view/DbClusterView';
+import { K8Context } from 'contexts/kubernetes/kubernetes.context';
 import { NoKubernetes } from './no-kubernetes/no-kubernetes';
 
 export const DatabasesPage = () => {

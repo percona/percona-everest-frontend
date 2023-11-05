@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import { DialogTitle } from '@percona/ui-lib';
 import { Link } from 'react-router-dom';
-import { useActiveBreakpoint } from '@/hooks/utils/useActiveBreakpoint';
+import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
 import { Messages } from '../../db-cluster-details.messages';
 import { NoStoragesModalProps } from './no-storages-modal.type';
 

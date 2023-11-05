@@ -1,10 +1,10 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { TestWrapper } from '@/utils/test';
+import { TestWrapper } from 'utils/test';
 import { FifthStep } from './fifth-step';
 
-vi.mock('@/hooks/api/monitoring/useMonitoringInstancesList');
+vi.mock('hooks/api/monitoring/useMonitoringInstancesList');
 
 const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
   const methods = useForm({

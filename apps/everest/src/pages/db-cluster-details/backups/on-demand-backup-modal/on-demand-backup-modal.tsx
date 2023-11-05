@@ -2,12 +2,12 @@ import { TextInput, AutoCompleteInput } from '@percona/ui-lib';
 import { useMemo } from 'react';
 import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { FormDialog } from '@/components/form-dialog';
-import { useBackupStorages } from '@/hooks/api/backup-storages/useBackupStorages';
+import { FormDialog } from 'components/form-dialog';
+import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages';
 import {
   BACKUPS_QUERY_KEY,
   useCreateBackupOnDemand,
-} from '@/hooks/api/backups/useBackups';
+} from 'hooks/api/backups/useBackups';
 import { Messages } from '../../db-cluster-details.messages';
 import { NoStoragesModal } from '../no-storages-modal/no-storages-modal';
 import {

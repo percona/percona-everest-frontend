@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { render, screen } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { TestWrapper } from '@/utils/test';
+import { TestWrapper } from 'utils/test';
 import { SwitchOutlinedBox } from './switch-oulined-box';
 import { Mock } from 'vitest';
 

@@ -16,14 +16,14 @@
 import { useContext, useMemo } from 'react';
 import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { FormDialog } from '@/components/form-dialog';
-import { useBackupStorages } from '@/hooks/api/backup-storages/useBackupStorages';
+import { FormDialog } from 'components/form-dialog';
+import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages';
 import { Messages as CommonMessages } from '../../db-cluster-details.messages';
 import { NoStoragesModal } from '../no-storages-modal/no-storages-modal';
 import {
   DB_CLUSTER_QUERY,
   useDbCluster,
-} from '@/hooks/api/db-cluster/useDbCluster';
+} from 'hooks/api/db-cluster/useDbCluster';
 import { Messages } from './scheduled-backup-modal.messages';
 import {
   ScheduleFormData,
@@ -31,7 +31,7 @@ import {
 } from './scheduled-backup-modal-form/scheduled-backup-modal-form.types';
 import { scheduleModalDefaultValues } from './scheduled-backup-modal-utils';
 import { ScheduledBackupModalForm } from './scheduled-backup-modal-form/scheduled-backup-modal-form';
-import { useUpdateSchedules } from '@/hooks/api/backups/useScheduledBackups';
+import { useUpdateSchedules } from 'hooks/api/backups/useScheduledBackups';
 import { ScheduleModalContext } from '../backup.context';
 
 export const ScheduledBackupModal = () => {

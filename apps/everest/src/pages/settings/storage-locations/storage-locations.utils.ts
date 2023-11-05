@@ -1,4 +1,4 @@
-import { StorageType } from '@/types/backupStorages.types';
+import { StorageType } from 'shared-types/backupStorages.types';
 import { Messages } from './storage-locations.messages';
 
 export const convertStoragesType = (value: StorageType) =>

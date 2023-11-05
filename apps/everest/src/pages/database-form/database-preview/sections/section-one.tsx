@@ -1,5 +1,5 @@
+import { beautifyDbTypeName } from '@percona/utils';
 import { PreviewContentText } from '../preview-section';
-import { beautifyDbTypeName } from '@/utils/db';
 import { SectionProps } from './section.types';
 
 export const PreviewSectionOne = ({

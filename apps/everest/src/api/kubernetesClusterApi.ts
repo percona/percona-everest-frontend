@@ -17,7 +17,7 @@ import {
   GetKubernetesClusterInfoPayload,
   GetKubernetesClusterResourcesInfoPayload,
   KubernetesClusterList,
-} from '../types/kubernetes.types';
+} from '../shared-types/kubernetes.types';
 
 export const getKubernetesClustersFn = async () => {
   const response = await api.get<KubernetesClusterList>('kubernetes');

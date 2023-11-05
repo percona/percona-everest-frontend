@@ -14,7 +14,7 @@
 // limitations under the License.
 import { useQuery } from 'react-query';
 import { getMonitoringInstancesFn } from '../../../api/monitoring';
-import { MonitoringInstanceList } from '../../../types/monitoring.types';
+import { MonitoringInstanceList } from '../../../shared-types/monitoring.types';
 
 export const useMonitoringInstancesList = (enabled?: boolean) =>
   useQuery<MonitoringInstanceList>(

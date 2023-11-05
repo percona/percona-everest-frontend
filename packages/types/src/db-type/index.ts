@@ -4,4 +4,10 @@ enum DbType {
   Mysql = 'mysql',
 }
 
-export default DbType;
+enum DbEngineType {
+  PSMDB = 'psmdb',
+  PXC = 'pxc',
+  POSTGRESQL = 'postgresql',
+}
+
+export { DbType, DbEngineType };

@@ -23,7 +23,7 @@ import {
 import {
   BackupStorage,
   GetBackupStoragesPayload,
-} from '../../../types/backupStorages.types';
+} from '../../../shared-types/backupStorages.types';
 
 export const BACKUP_STORAGES_QUERY_KEY = 'backupStorages';
 

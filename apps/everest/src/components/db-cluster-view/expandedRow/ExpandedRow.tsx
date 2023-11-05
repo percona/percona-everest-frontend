@@ -15,11 +15,11 @@
 
 import { Box, Skeleton, Typography } from '@mui/material';
 import { MRT_Row } from 'material-react-table';
-import { DbClusterTableElement } from '@/hooks/api/db-clusters/dbCluster.type';
-import { ProxyExposeType } from '@/types/dbCluster.types';
+import { DbClusterTableElement } from 'hooks/api/db-clusters/dbCluster.type';
+import { ProxyExposeType } from 'shared-types/dbCluster.types';
 import { Messages } from '../dbClusterView.messages';
 import { LabelValue } from './LabelValue';
-import { useDbClusterCredentials } from '@/hooks/api/db-cluster/useCreateDbCluster';
+import { useDbClusterCredentials } from 'hooks/api/db-cluster/useCreateDbCluster';
 import { HiddenPasswordToggle } from '../../hidden-row';
 
 export const ExpandedRow = ({

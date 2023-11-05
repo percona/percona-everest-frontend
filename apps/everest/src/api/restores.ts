@@ -1,4 +1,4 @@
-import { RestorePayload } from '../types/restores.types';
+import { RestorePayload } from '../shared-types/restores.types';
 import { api } from './api';
 
 export const createDbClusterRestore = async (

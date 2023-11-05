@@ -4,17 +4,17 @@ import {
   Navigate,
   RouterProvider,
 } from 'react-router-dom';
-import App from './App.tsx'
-import { DatabasesPage, } from '@/pages/databases/databases.tsx';
-import { NoMatch } from '@/pages/404/NoMatch.tsx';
-import { DatabasePage } from '@/pages/database-form/database-form.tsx';
-import { Backups } from '@/pages/db-cluster-details/backups/backups.tsx';
-import { ClusterOverview } from '@/pages/db-cluster-details/cluster-overview/cluster-overview.tsx';
-import { DbClusterDetails } from '@/pages/db-cluster-details/db-cluster-details.tsx';
-import { DBClusterDetailsTabs } from '@/pages/db-cluster-details/db-cluster-details.types.ts';
-import { Settings } from '@/pages/settings/settings.tsx';
-import { SettingsTabs } from '@/pages/settings/settings.types.ts';
-import { StorageLocations } from '@/pages/settings/storage-locations/storage-locations.tsx';
+import App from './App'
+import { DatabasesPage, } from 'pages/databases/databases';
+import { NoMatch } from 'pages/404/NoMatch';
+import { DatabasePage } from 'pages/database-form/database-form';
+import { Backups } from 'pages/db-cluster-details/backups/backups';
+import { ClusterOverview } from 'pages/db-cluster-details/cluster-overview/cluster-overview';
+import { DbClusterDetails } from 'pages/db-cluster-details/db-cluster-details';
+import { DBClusterDetailsTabs } from 'pages/db-cluster-details/db-cluster-details.types';
+import { Settings } from 'pages/settings/settings';
+import { SettingsTabs } from 'pages/settings/settings.types';
+import { StorageLocations } from 'pages/settings/storage-locations/storage-locations';
 
 const router = createBrowserRouter([
   {

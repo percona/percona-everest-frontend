@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { DbType } from '@percona/types';
-import { TestWrapper } from '@/utils/test';
+import { TestWrapper } from 'utils/test';
 import { FirstStep } from './first-step';
 import { DbWizardFormFields } from '../../database-form.types';
 
@@ -10,8 +10,8 @@ vi.mock('./utils', () => ({
   generateShortUID: vi.fn(() => '123'),
 }));
 
-vi.mock('@/hooks/api/db-engines/useDbEngines');
-vi.mock('@/hooks/api/kubernetesClusters/useKubernetesClusterInfo');
+vi.mock('hooks/api/db-engines/useDbEngines');
+vi.mock('hooks/api/kubernetesClusters/useKubernetesClusterInfo');
 
 interface FormProviderWrapperProps {
   handleSubmit: () => void;

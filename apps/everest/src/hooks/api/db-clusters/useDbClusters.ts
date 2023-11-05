@@ -17,8 +17,8 @@ import { useContext } from 'react';
 import { useQueries } from 'react-query';
 import { getDbClustersFn } from '../../../api/dbClusterApi';
 import { K8Context } from '../../../contexts/kubernetes/kubernetes.context';
-import { DbCluster, DbClusterStatus } from '../../../types/dbCluster.types';
-import { KubernetesCluster } from '../../../types/kubernetes.types';
+import { DbCluster, DbClusterStatus } from '../../../shared-types/dbCluster.types';
+import { KubernetesCluster } from '../../../shared-types/kubernetes.types';
 import { DbClusterTableElement } from './dbCluster.type';
 
 export const DB_CLUSTERS_QUERY_KEY = 'dbClusters';

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { StorageType } from '@/types/backupStorages.types';
+import { StorageType } from 'shared-types/backupStorages.types';
 
 export enum StorageLocationsFields {
   name = 'name',

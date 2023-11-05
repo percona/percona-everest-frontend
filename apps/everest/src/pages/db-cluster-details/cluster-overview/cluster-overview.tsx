@@ -1,9 +1,9 @@
 import { Stack } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { useDbClusterCredentials } from '@/hooks/api/db-cluster/useCreateDbCluster';
-import { useDbCluster } from '@/hooks/api/db-cluster/useDbCluster';
-import { ProxyExposeType } from '@/types/dbCluster.types';
-import { dbEngineToDbType } from '@/utils/db';
+import { useDbClusterCredentials } from 'hooks/api/db-cluster/useCreateDbCluster';
+import { useDbCluster } from 'hooks/api/db-cluster/useDbCluster';
+import { ProxyExposeType } from 'shared-types/dbCluster.types';
+import { dbEngineToDbType } from '@percona/utils';
 import { ConnectionDetails, DatabaseDetails } from './cards';
 
 export const ClusterOverview = () => {

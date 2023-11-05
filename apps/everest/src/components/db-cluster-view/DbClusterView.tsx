@@ -27,18 +27,18 @@ import { enqueueSnackbar } from 'notistack';
 import { useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDeleteDbCluster } from '@/hooks/api/db-cluster/useDeleteDbCluster';
-import { usePausedDbCluster } from '@/hooks/api/db-cluster/usePausedDbCluster';
-import { useRestartDbCluster } from '@/hooks/api/db-cluster/useRestartDbCluster';
-import { DbClusterTableElement } from '@/hooks/api/db-clusters/dbCluster.type';
+import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
+import { usePausedDbCluster } from 'hooks/api/db-cluster/usePausedDbCluster';
+import { useRestartDbCluster } from 'hooks/api/db-cluster/useRestartDbCluster';
+import { DbClusterTableElement } from 'hooks/api/db-clusters/dbCluster.type';
 import {
   DB_CLUSTERS_QUERY_KEY,
   ExtraDbCluster,
   useDbClusters,
-} from '@/hooks/api/db-clusters/useDbClusters';
-import { useSelectedKubernetesCluster } from '@/hooks/api/kubernetesClusters/useSelectedKubernetesCluster';
-import { DbClusterStatus } from '@/types/dbCluster.types';
-import { DbEngineType } from '@/types/dbEngines.types';
+} from 'hooks/api/db-clusters/useDbClusters';
+import { useSelectedKubernetesCluster } from 'hooks/api/kubernetesClusters/useSelectedKubernetesCluster';
+import { DbClusterStatus } from 'shared-types/dbCluster.types';
+import { DbEngineType } from 'shared-types/dbEngines.types';
 import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
 import { StatusField } from '../status-field/status-field';
 import { DB_CLUSTER_STATUS_TO_BASE_STATUS } from './DbClusterView.constants';

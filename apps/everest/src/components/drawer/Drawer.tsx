@@ -11,7 +11,7 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 import { DRAWER_WIDTH, ROUTES } from './Drawer.constants';
 import { closedMixin, openedMixin } from './Drawer.utils';
 import { NavItem } from '../nav-item/NavItem';
-import { DrawerContext } from '@/contexts/drawer/drawer.context';
+import { DrawerContext } from 'contexts/drawer/drawer.context';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',

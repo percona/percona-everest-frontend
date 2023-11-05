@@ -15,7 +15,7 @@
 import StorageIcon from '@mui/icons-material/Storage';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { EverestRoute } from './Drawer.types';
-import { SettingsTabs } from '@/pages/settings/settings.types';
+import { SettingsTabs } from 'pages/settings/settings.types';
 
 export const DRAWER_WIDTH = 200;
 

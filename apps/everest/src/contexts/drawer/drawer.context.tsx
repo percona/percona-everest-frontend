@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { useActiveBreakpoint } from '@/hooks/utils/useActiveBreakpoint';
+import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
 import { DrawerContextProps } from './drawer.context.types';
 
 export const DrawerContext = createContext<DrawerContextProps>({

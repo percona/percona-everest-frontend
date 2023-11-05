@@ -24,7 +24,7 @@ import {
   TimeValue,
   WeekDays,
 } from '../../components/time-selection/time-selection.types';
-import { IP_REGEX, MAX_DB_CLUSTER_NAME_LENGTH } from '../../constants';
+import { IP_REGEX, MAX_DB_CLUSTER_NAME_LENGTH } from '../../consts';
 import { Messages } from './database-form.messages';
 import { ResourceSize } from './steps/second/second-step.types';
 

@@ -18,7 +18,7 @@ import {
   DbEngineStatus,
   EngineToolPayload,
   GetDbEnginesPayload,
-} from '../../../types/dbEngines.types';
+} from '../../../shared-types/dbEngines.types';
 import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
 import { getDbEnginesFn } from '../../../api/dbEngineApi';
 

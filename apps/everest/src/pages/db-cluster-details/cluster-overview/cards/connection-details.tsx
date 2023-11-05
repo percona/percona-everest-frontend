@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
 import { Card } from '@percona/ui-lib';
-import { HiddenPasswordToggle } from '@/components/hidden-row';
+import { HiddenPasswordToggle } from 'components/hidden-row';
 import { Messages } from '../cluster-overview.messages';
 import {
   OverviewSection,

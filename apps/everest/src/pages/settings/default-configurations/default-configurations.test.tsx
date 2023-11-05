@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { TestWrapper } from '@/utils/test';
+import { TestWrapper } from 'utils/test';
 import { DefaultConfigurations } from './default-configurations';
 import { Messages } from './default-configurations.messages';
 

@@ -15,8 +15,8 @@
 
 import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDbCluster } from '@/hooks/api/db-cluster/useDbCluster';
-import { DbEngineType } from '@/types/dbEngines.types';
+import { useDbCluster } from 'hooks/api/db-cluster/useDbCluster';
+import { DbEngineType } from 'shared-types/dbEngines.types';
 import { BackupsList } from './backups-list/backups-list';
 import { ScheduledBackupsList } from './scheduled-backups-list/scheduled-backups-list';
 import { ScheduledBackupModal } from './scheduled-backup-modal/scheduled-backup-modal';

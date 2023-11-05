@@ -15,11 +15,11 @@
 
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useDbCluster } from '@/hooks/api/db-cluster/useDbCluster';
+import { useDbCluster } from 'hooks/api/db-cluster/useDbCluster';
 import {
   // Backup,
   DbCluster,
-} from '@/types/dbCluster.types';
+} from 'shared-types/dbCluster.types';
 import { DB_WIZARD_DEFAULTS } from './database-form.constants';
 import {
   DbWizardFormFields,

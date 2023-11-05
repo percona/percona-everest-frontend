@@ -1,4 +1,4 @@
-import { BackupPayload, GetBackupPayload } from '@/types/backups.types';
+import { BackupPayload, GetBackupPayload } from 'shared-types/backups.types';
 import { api } from './api';
 
 export const getBackupsFn = async (

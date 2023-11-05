@@ -26,17 +26,17 @@ import {
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useQueryClient } from 'react-query';
-import { DotsMenu } from '@/components/dots-menu/dots-menu';
-import { Option } from '@/components/dots-menu/dots-menu.types';
-import { getFormValuesFromCronExpression } from '@/components/time-selection/time-selection.utils';
+import { DotsMenu } from 'components/dots-menu/dots-menu';
+import { Option } from 'components/dots-menu/dots-menu.types';
+import { getFormValuesFromCronExpression } from 'components/time-selection/time-selection.utils';
 import {
   DB_CLUSTER_QUERY,
   useDbCluster,
-} from '@/hooks/api/db-cluster/useDbCluster';
-import { getTimeSelectionPreviewMessage } from '@/pages/database-form/database-preview/database.preview.messages';
+} from 'hooks/api/db-cluster/useDbCluster';
+import { getTimeSelectionPreviewMessage } from 'pages/database-form/database-preview/database.preview.messages';
 import { Messages } from './scheduled-backups-list.messages';
-import { ConfirmDialog } from '@/components/confirm-dialog/confirm-dialog';
-import { useDeleteSchedule } from '@/hooks/api/backups/useScheduledBackups';
+import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
+import { useDeleteSchedule } from 'hooks/api/backups/useScheduledBackups';
 import { ScheduleModalContext } from '../backup.context';
 
 export const ScheduledBackupsList = () => {

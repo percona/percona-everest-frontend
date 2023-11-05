@@ -17,7 +17,7 @@ import {
   DbCluster,
   GetDbClusterCredentialsPayload,
   GetDbClusterPayload,
-} from '../types/dbCluster.types';
+} from '../shared-types/dbCluster.types';
 
 export const createDbClusterFn = async (data: DbCluster, clusterId: string) => {
   const response = await api.post(

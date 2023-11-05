@@ -1,4 +1,4 @@
-import { BackupStorage } from '@/types/backupStorages.types';
+import { BackupStorage } from 'shared-types/backupStorages.types';
 
 export interface CreateEditModalStorageProps {
   open: boolean;

@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import CronTime from 'cron-time-generator';
-import { TIME_SELECTION_DEFAULTS } from '@/pages/database-form/database-form.constants';
-import { DbWizardFormFields } from '@/pages/database-form/database-form.types';
+import { TIME_SELECTION_DEFAULTS } from 'pages/database-form/database-form.constants';
+import { DbWizardFormFields } from 'pages/database-form/database-form.types';
 import { Messages } from './time-selection.messages';
 import { AmPM, TimeProps, TimeValue, WeekDays } from './time-selection.types';
 

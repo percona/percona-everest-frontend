@@ -30,10 +30,10 @@ import {
   DbCluster,
   GetDbClusterCredentialsPayload,
   ProxyExposeType,
-} from '../../../types/dbCluster.types';
+} from '../../../shared-types/dbCluster.types';
 import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
 // import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils';
-import { dbTypeToDbEngine } from '../../../utils/db';
+import { dbTypeToDbEngine } from '@percona/utils';
 // import {TimeValue, WeekDays} from "../../components/time-selection/time-selection.types";
 
 type CreateDbClusterArgType = {

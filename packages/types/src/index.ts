@@ -1,1 +1,1 @@
-export { default as DbType } from './db-type';
+export * from './db-type';

@@ -16,7 +16,7 @@
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Alert, Button, IconButton } from '@mui/material';
 import { enqueueSnackbar } from 'notistack';
-import { useActiveBreakpoint } from '@/hooks/utils/useActiveBreakpoint';
+import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
 import { Messages } from './code-copy-block.messages';
 import { CodeCopyBlockProps } from './code-copy-block.types';
 

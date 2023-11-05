@@ -14,7 +14,7 @@
 // limitations under the License.
 
 import { DbType } from '@percona/types';
-import { DbEngineType } from '@/types/dbEngines.types';
+import { DbEngineType } from 'shared-types/dbEngines.types';
 
 export interface DbTypeIconProviderProps {
   dbType: DbEngineType | DbType;

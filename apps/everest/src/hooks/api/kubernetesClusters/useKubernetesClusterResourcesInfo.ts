@@ -18,7 +18,7 @@ import { useSelectedKubernetesCluster } from './useSelectedKubernetesCluster';
 import {
   GetKubernetesClusterResourcesInfoPayload,
   KubernetesClusterResourcesInfo,
-} from '../../../types/kubernetes.types';
+} from '../../../shared-types/kubernetes.types';
 
 export const useKubernetesClusterResourcesInfo = () => {
   const { id } = useSelectedKubernetesCluster();

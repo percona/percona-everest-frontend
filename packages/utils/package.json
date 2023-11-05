@@ -2,7 +2,7 @@
   "name": "@percona/utils",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/cjs/index.js",
+  "main": "dist/esm/index.js",
   "module": "dist/esm/index.js",
   "type": "module",
   "types": "dist/index.d.ts",
@@ -14,6 +14,7 @@
   "license": "ISC",
   "devDependencies": {
     "@percona/tsconfig": "workspace:*",
+    "@percona/types": "workspace:*",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.5",

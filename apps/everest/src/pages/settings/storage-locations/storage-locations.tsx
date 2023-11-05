@@ -4,24 +4,24 @@ import { Table } from '@percona/ui-lib';
 import { type MRT_ColumnDef } from 'material-react-table';
 import { useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
-import { ConfirmDialog } from '@/components/confirm-dialog/confirm-dialog';
-import { LabelValue } from '@/components/db-cluster-view/expandedRow/LabelValue';
+import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
+import { LabelValue } from 'components/db-cluster-view/expandedRow/LabelValue';
 import {
   BACKUP_STORAGES_QUERY_KEY,
   useBackupStorages,
   useCreateBackupStorage,
   useDeleteBackupStorage,
   useEditBackupStorage,
-} from '@/hooks/api/backup-storages/useBackupStorages';
+} from 'hooks/api/backup-storages/useBackupStorages';
 import {
   BackupStorage,
   StorageType,
-} from '@/types/backupStorages.types';
+} from 'shared-types/backupStorages.types';
 import {
   updateDataAfterCreate,
   updateDataAfterDelete,
   updateDataAfterEdit,
-} from '@/utils/generalOptimisticDataUpdate';
+} from 'utils/generalOptimisticDataUpdate';
 import { CreateEditModalStorage } from './createEditModal/create-edit-modal';
 import { Messages } from './storage-locations.messages';
 import { StorageLocationsFields } from './storage-locations.types';

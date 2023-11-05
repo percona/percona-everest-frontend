@@ -16,7 +16,7 @@ import {
   DbEngineStatus,
   DbEngineType,
   GetDbEnginesPayload,
-} from '../../types/dbEngines.types';
+} from '../../shared-types/dbEngines.types';
 
 export const getDbEnginesFn = async (): Promise<GetDbEnginesPayload> => {
   return {

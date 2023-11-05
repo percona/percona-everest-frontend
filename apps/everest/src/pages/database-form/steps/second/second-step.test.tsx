@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { DbType } from '@percona/types';
-import { TestWrapper } from '@/utils/test';
+import { TestWrapper } from 'utils/test';
 import { SecondStep } from './second-step';
 import { ResourceSize } from './second-step.types';
 import { DEFAULT_SIZES } from './second-step.const';
@@ -10,10 +10,10 @@ import { DbWizardFormFields, DbWizardType } from '../../database-form.types';
 import { Mock } from 'vitest';
 
 vi.mock(
-  '@/hooks/api/kubernetesClusters/useSelectedKubernetesCluster'
+  'hooks/api/kubernetesClusters/useSelectedKubernetesCluster'
 );
 vi.mock(
-  '@/hooks/api/kubernetesClusters/useKubernetesClusterResourcesInfo'
+  'hooks/api/kubernetesClusters/useKubernetesClusterResourcesInfo'
 );
 
 interface FormProviderWrapperProps {

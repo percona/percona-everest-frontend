@@ -15,7 +15,7 @@
 import {
   INVALID_SOURCE_RANGE_ERROR,
   SOURCE_RANGE_PLACEHOLDER,
-} from '@/constants';
+} from 'consts';
 
 // limitations under the License.
 export const Messages = {

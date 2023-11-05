@@ -15,8 +15,8 @@
 
 import { ResourceSize } from './second-step.types';
 import { DEFAULT_SIZES } from './second-step.const';
-import { DbCluster } from '@/types/dbCluster.types';
-import { memoryParser } from '@/utils/k8ResourceParser';
+import { DbCluster } from 'shared-types/dbCluster.types';
+import { memoryParser } from 'utils/k8ResourceParser';
 
 const humanizedResourceSizeMap: Record<ResourceSize, string> = {
   [ResourceSize.small]: 'Small',

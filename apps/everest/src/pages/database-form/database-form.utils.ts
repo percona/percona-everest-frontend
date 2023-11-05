@@ -13,18 +13,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { DbCluster, ProxyExposeType } from '@/types/dbCluster.types';
+import { DbCluster, ProxyExposeType } from 'shared-types/dbCluster.types';
 import {
   DbWizardFormFields,
   DbWizardMode,
   DbWizardType,
 } from './database-form.types';
-import { dbEngineToDbType } from '@/utils/db';
+import { dbEngineToDbType } from '@percona/utils';
 import { matchFieldsValueToResourceSize } from './steps/second/second-step.utils';
-import { cpuParser, memoryParser } from '@/utils/k8ResourceParser';
+import { cpuParser, memoryParser } from 'utils/k8ResourceParser';
 import { generateShortUID } from './steps/first/utils';
-import { MAX_DB_CLUSTER_NAME_LENGTH } from '@/constants';
-// import { getFormValuesFromCronExpression } from '@/components/time-selection/time-selection.utils';
+import { MAX_DB_CLUSTER_NAME_LENGTH } from 'consts';
+// import { getFormValuesFromCronExpression } from 'components/time-selection/time-selection.utils';
 
 // EVEREST-334
 // const getBackupInfo = (backup: Backup) => {

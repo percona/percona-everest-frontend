@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { DbWizardFormFields } from '../../database-form.types';
 import { Messages } from './fifth-step.messages';
-import { useMonitoringInstancesList } from '@/hooks/api/monitoring/useMonitoringInstancesList';
+import { useMonitoringInstancesList } from 'hooks/api/monitoring/useMonitoringInstancesList';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 
 export const FifthStep = () => {

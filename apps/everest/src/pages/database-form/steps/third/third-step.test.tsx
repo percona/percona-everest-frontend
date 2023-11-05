@@ -1,11 +1,11 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { TestWrapper } from '@/utils/test';
+import { TestWrapper } from 'utils/test';
 import { ThirdStep } from './third-step';
-import { TimeValue } from '@/components/time-selection/time-selection.types';
+import { TimeValue } from 'components/time-selection/time-selection.types';
 
-vi.mock('@/hooks/api/backup-storages/useBackupStorages');
+vi.mock('hooks/api/backup-storages/useBackupStorages');
 
 const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
   const methods = useForm({

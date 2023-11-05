@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
@@ -21,19 +22,11 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@/hooks/*": ["./src/hooks/*"],
-      "@/contexts/*": ["./src/contexts/*"],
-      "@/components/*": ["./src/components/*"],
-      "@/pages/*": ["./src/pages/*"],
-      "@/types/*": ["./src/types/*"],
-      "@/utils/*": ["./src/utils/*"],
-      "@/constants": ["./src/constants.ts"],
-      "@/api/*": ["./src/api/*"],
-      "@percona/ui-lib": ["../../packages/ui-lib/src"],
-      "@percona/design": ["../../packages/design/src"],
-      "@percona/types": ["../../packages/types/src"],
-      "@percona/utils": ["../../packages/utils/src"],
+      "@percona/ui-lib": ["../../../packages/ui-lib/src"],
+      "@percona/design": ["../../../packages/design/src"],
+      "@percona/types": ["../../../packages/types/src"],
+      "@percona/utils": ["../../../packages/utils/src"],
     }
   },
-  "include": ["./src", "playwright.config.ts"]
+  "include": ["./src"]
 }

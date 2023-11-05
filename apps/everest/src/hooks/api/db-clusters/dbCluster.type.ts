@@ -15,8 +15,8 @@
 import {
   DbClusterStatus,
   ProxyExposeType,
-} from '../../../types/dbCluster.types';
-import { DbEngineType } from '../../../types/dbEngines.types';
+} from '../../../shared-types/dbCluster.types';
+import { DbEngineType } from '../../../shared-types/dbEngines.types';
 
 export interface DbClusterTableElement {
   status: DbClusterStatus;

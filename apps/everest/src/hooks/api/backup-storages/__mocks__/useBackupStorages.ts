@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { StorageType } from '@/types/backupStorages.types';
+import { StorageType } from 'shared-types/backupStorages.types';
 
 export const useBackupStorages = () => ({
   data: [

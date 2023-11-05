@@ -14,7 +14,7 @@
 // limitations under the License.
 
 import { useQuery, UseQueryOptions } from 'react-query';
-import { DbCluster } from '../../../types/dbCluster.types';
+import { DbCluster } from '../../../shared-types/dbCluster.types';
 
 import { getDbClusterFn } from '../../../api/dbClusterApi';
 import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';

@@ -1,8 +1,8 @@
 import { screen, render, fireEvent } from '@testing-library/react';
-import { TestWrapper, resizeScreenSize } from '@/utils/test';
+import { TestWrapper, resizeScreenSize } from 'utils/test';
 import { AppBar } from '../app-bar/AppBar';
 import { Drawer } from './Drawer';
-import { DrawerContextProvider } from '@/contexts/drawer/drawer.context';
+import { DrawerContextProvider } from 'contexts/drawer/drawer.context';
 
 const BarAndDrawer = () => (
   <DrawerContextProvider>

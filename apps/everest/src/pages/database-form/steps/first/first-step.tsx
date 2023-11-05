@@ -19,13 +19,13 @@ import { useEffect, useState } from 'react';
 import { DbToggleCard, SelectInput, TextInput, ToggleButtonGroupInput, AutoCompleteInput } from '@percona/ui-lib';
 import { DbType } from '@percona/types';
 import { useFormContext } from 'react-hook-form';
-import { useDbEngines } from '@/hooks/api/db-engines/useDbEngines';
-import { DbEngineToolStatus } from '@/types/dbEngines.types';
-import { dbEngineToDbType, dbTypeToDbEngine } from '@/utils/db';
+import { useDbEngines } from 'hooks/api/db-engines/useDbEngines';
+import { DbEngineToolStatus } from 'shared-types/dbEngines.types';
+import { dbEngineToDbType, dbTypeToDbEngine } from '@percona/utils';
 import { DbWizardFormFields, StepProps } from '../../database-form.types';
 import { Messages } from './first-step.messages';
 import { generateShortUID } from './utils';
-import { useKubernetesClusterInfo } from '@/hooks/api/kubernetesClusters/useKubernetesClusterInfo';
+import { useKubernetesClusterInfo } from 'hooks/api/kubernetesClusters/useKubernetesClusterInfo';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 
 export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {

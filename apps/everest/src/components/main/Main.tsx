@@ -10,9 +10,9 @@ import {
 } from '@mui/material';
 import { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
-import { DrawerContext } from '@/contexts/drawer/drawer.context';
-import { K8Context } from '@/contexts/kubernetes/kubernetes.context';
-import useLocalStorage from '@/hooks/utils/useLocalStorage';
+import { DrawerContext } from 'contexts/drawer/drawer.context';
+import { K8Context } from 'contexts/kubernetes/kubernetes.context';
+import useLocalStorage from 'hooks/utils/useLocalStorage';
 import { AppBar } from '../app-bar/AppBar';
 import { Drawer } from '../drawer/Drawer';
 import { WelcomeDialog } from '../welcome-dialog/welcome-dialog';

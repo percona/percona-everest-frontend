@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 import {
   GetKubernetesClusterInfoPayload,
   KubernetesClusterInfo,
-} from '../../../types/kubernetes.types';
+} from '../../../shared-types/kubernetes.types';
 import { getKubernetesClusterInfoFn } from '../../../api/kubernetesClusterApi';
 import { useSelectedKubernetesCluster } from './useSelectedKubernetesCluster';
 

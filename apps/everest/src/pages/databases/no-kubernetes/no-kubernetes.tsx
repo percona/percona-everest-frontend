@@ -15,9 +15,9 @@
 
 import { Box, Button, Link, List, ListItem, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { CodeBlock } from '@/components/code-block/code-block';
-import { CodeCopyBlock } from '@/components/code-copy-block/code-copy-block';
-import { useActiveBreakpoint } from '@/hooks/utils/useActiveBreakpoint';
+import { CodeBlock } from 'components/code-block/code-block';
+import { CodeCopyBlock } from 'components/code-copy-block/code-copy-block';
+import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
 import { Messages } from './no-kubernetes.messages';
 
 export const NoKubernetes = () => {

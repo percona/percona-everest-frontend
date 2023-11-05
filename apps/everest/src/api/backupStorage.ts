@@ -15,7 +15,7 @@
 import {
   BackupStorage,
   GetBackupStoragesPayload,
-} from '../types/backupStorages.types';
+} from '../shared-types/backupStorages.types';
 import { api } from './api';
 
 export const getBackupStoragesFn = async () => {

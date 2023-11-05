@@ -21,7 +21,7 @@ import {
   OverviewSectionText,
 } from '../overview-section/overview-section';
 import { DatabaseDetailsOverviewCardProps } from './card.types';
-import { beautifyDbTypeName } from '../../../../utils/db';
+import { beautifyDbTypeName } from '@percona/utils';
 
 export const DatabaseDetails = ({
   loading,

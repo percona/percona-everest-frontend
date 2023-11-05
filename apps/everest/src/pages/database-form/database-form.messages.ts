@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { INVALID_SOURCE_RANGE_ERROR } from '../../constants';
+import { INVALID_SOURCE_RANGE_ERROR } from '../../consts';
 
 export const Messages = {
   previous: 'Previous',

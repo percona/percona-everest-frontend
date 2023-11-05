@@ -313,6 +313,9 @@ importers:
       '@percona/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
+      '@percona/types':
+        specifier: workspace:*
+        version: link:../types
       '@rollup/plugin-commonjs':
         specifier: ^25.0.7
         version: 25.0.7(rollup@4.1.5)

@@ -18,8 +18,8 @@ import {
   AmPM,
   TimeValue,
   WeekDays,
-} from '@/components/time-selection/time-selection.types';
-import { MAX_SCHEDULE_NAME_LENGTH } from '@/constants';
+} from 'components/time-selection/time-selection.types';
+import { MAX_SCHEDULE_NAME_LENGTH } from 'consts';
 import { Messages } from '../scheduled-backup-modal.messages';
 
 export enum ScheduleFields {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { TestWrapper } from '@/utils/test';
+import { TestWrapper } from 'utils/test';
 import { AdvancedConfigurations } from './advanced-configurations';
 
 const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {

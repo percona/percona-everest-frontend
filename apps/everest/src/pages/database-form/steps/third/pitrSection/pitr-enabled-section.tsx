@@ -1,7 +1,7 @@
 import { InputAdornment, OutlinedInput, Typography } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Messages } from '../third-step.messages';
-import { Messages as TimeSelectionMessages } from '@/components/time-selection/time-selection.messages';
+import { Messages as TimeSelectionMessages } from 'components/time-selection/time-selection.messages';
 
 export const PitrEnabledSection = () => {
   const { control } = useFormContext();

@@ -17,7 +17,7 @@ import {
   DbEngineStatus,
   DbEngineToolStatus,
   DbEngineType,
-} from '@/types/dbEngines.types';
+} from 'shared-types/dbEngines.types';
 
 export const useDbEngines = (): { isFetching: boolean; data: DbEngine[] } => ({
   data: [

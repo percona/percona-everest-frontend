@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "vite --port 3000",
     "test": "vitest",
-    "pre-e2e": "tsc --incremental --noImplicitAny false -p ui-tests/tsconfig.json && tsc-alias -p ui-tests/tsconfig.json --debug",
-    "e2e": "playwright test",
-    "build": "tsc && vite build",
+    "pre-e2e": "tsc --incremental --noImplicitAny false -p .e2e/tsconfig.json && tsc-alias -p .e2e/tsconfig.json",
+    "e2e": "pnpm pre-e2e && cd .e2e && playwright test",
+    "build": "tsc --incremental && vite build --emptyOutDir",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

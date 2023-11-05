@@ -1,6 +1,6 @@
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { IconButton, Stack, Typography, useTheme } from '@mui/material';
-import { useActiveBreakpoint } from '@/hooks/utils/useActiveBreakpoint';
+import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
 import {
   PreviewContentTextProps,
   PreviewSectionProps,

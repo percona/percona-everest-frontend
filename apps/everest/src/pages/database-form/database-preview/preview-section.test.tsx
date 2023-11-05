@@ -1,5 +1,5 @@
 import { screen, render, fireEvent } from '@testing-library/react';
-import { TestWrapper } from '@/utils/test';
+import { TestWrapper } from 'utils/test';
 import { PreviewSection } from './preview-section';
 
 describe('PreviewSection', () => {
