@@ -13,7 +13,7 @@ export default defineConfig({
   plugins: [tsconfigPaths({ root: '.' }), react()],
   server: {
     watch: {
-      ignored: '.e2e/**/*.*',
+      ignored: path.resolve(__dirname, '.e2e/**/*.*'),
     },
     proxy: {
       '/v1': `http://localhost:${process.env.API_PORT || '8080'}`,
