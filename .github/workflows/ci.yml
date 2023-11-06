@@ -84,13 +84,7 @@ jobs:
     env:
       GOPRIVATE: github.com/percona,github.com/percona/percona-everest-backend,github.com/percona/percona-everest-cli,github.com/percona/everest-operator
     steps:
-      - name: Checkout FE repo
-        uses: percona-platform/checkout@v3
-        with:
-          repository: percona/percona-everest-frontend
-          ref: 'main'
-          path: percona-everest-frontend
-
+      - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -100,20 +94,21 @@ jobs:
         with:
           node-version: 16.x
           cache: 'pnpm'
+          cache-dependency-path: 'pnpm-workspace.yaml'
 
       - name: Checkout CLI repo
         uses: percona-platform/checkout@v3
         with:
           repository: percona/percona-everest-cli
           ref: 'main'
-          path: percona-everest-cli
+          path: ${GITHUB_WORKSPACE}/percona-everest-cli
 
       - name: Checkout backend repo
         uses: percona-platform/checkout@v3
         with:
           repository: percona/percona-everest-backend
           ref: 'main'
-          path: percona-everest-backend
+          path: ${GITHUB_WORKSPACE}/percona-everest-backend
 
       - name: Configure git for private modules
         env:
