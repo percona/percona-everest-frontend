@@ -36,7 +36,7 @@ export const ThirdStep = () => {
         name: backupStorages[0].name,
       });
     }
-  }, [backupStorages]);
+  }, [backupStorages, mode, setValue]);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>

@@ -3,7 +3,7 @@ import { Stack, Typography } from '@mui/material';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { DatabasePreviewProps } from './database-preview.types';
 import { DbWizardType } from '../database-form.types';
-import { previewSections } from './sections';
+import { previewSections } from './sections/constants';
 import { Messages } from './database.preview.messages';
 import { PreviewSection } from './preview-section';
 
@@ -34,8 +34,6 @@ export const DatabasePreview = ({
       <Typography variant="overline">{Messages.title}</Typography>
       <Stack>
         {previewSections.map((Section, idx) => (
-          // The array is static, we can disable the rule
-          // eslint-disable-next-line react/no-array-index-key
           <React.Fragment key={`section-${idx + 1}`}>
             <PreviewSection
               order={idx + 1}

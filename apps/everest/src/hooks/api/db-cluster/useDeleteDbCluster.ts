@@ -21,7 +21,7 @@ type DeleteDbClusterArgType = {
   dbClusterName: string;
 };
 export const useDeleteDbCluster = (
-  options?: UseMutationOptions<any, unknown, DeleteDbClusterArgType, unknown>
+  options?: UseMutationOptions<unknown, unknown, DeleteDbClusterArgType, unknown>
 ) => {
   return useMutation(
     ({ k8sClusterId, dbClusterName }: DeleteDbClusterArgType) =>

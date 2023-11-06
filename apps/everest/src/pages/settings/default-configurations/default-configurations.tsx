@@ -56,7 +56,6 @@ export const DefaultConfigurations = () => {
   });
 
   const onSubmit: SubmitHandler<DefaultConfigurationsType> = (data) => {
-    /* eslint-disable no-console */
     console.log(data);
   };
 

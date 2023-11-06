@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React from 'react';
 import mediaQuery from 'css-mediaquery';
 import { MemoryRouter } from 'react-router-dom';

@@ -35,7 +35,7 @@ export const useBackupStorages = () => {
 };
 
 export const useCreateBackupStorage = (
-  options?: UseMutationOptions<any, unknown, BackupStorage, unknown>
+  options?: UseMutationOptions<unknown, unknown, BackupStorage, unknown>
 ) => {
   return useMutation(
     (payload: BackupStorage) => createBackupStorageFn(payload),
@@ -44,7 +44,7 @@ export const useCreateBackupStorage = (
 };
 
 export const useEditBackupStorage = (
-  options?: UseMutationOptions<any, unknown, BackupStorage, unknown>
+  options?: UseMutationOptions<unknown, unknown, BackupStorage, unknown>
 ) => {
   return useMutation((payload: BackupStorage) => editBackupStorageFn(payload), {
     ...options,
@@ -52,7 +52,7 @@ export const useEditBackupStorage = (
 };
 
 export const useDeleteBackupStorage = (
-  options?: UseMutationOptions<any, unknown, string, unknown>
+  options?: UseMutationOptions<unknown, unknown, string, unknown>
 ) => {
   return useMutation((payload: string) => deleteBackupStorageFn(payload), {
     ...options,

@@ -36,7 +36,7 @@ export const OnDemandBackupModal = ({
     });
   };
 
-  const values = useMemo(() => defaultValuesFc(), [open]);
+  const values = useMemo(() => defaultValuesFc(), []);
 
   if (!backupStorages.length) {
     return (

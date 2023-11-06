@@ -43,7 +43,7 @@ export const ScheduledBackupModalForm = () => {
     if (mode === 'edit' && setSelectedScheduleName) {
       setSelectedScheduleName(scheduleName);
     }
-  }, [scheduleName]);
+  }, [scheduleName, mode, setSelectedScheduleName]);
 
   return (
     <>

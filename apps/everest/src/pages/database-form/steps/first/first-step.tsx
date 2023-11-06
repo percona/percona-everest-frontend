@@ -44,7 +44,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
         clusterInfo?.storageClassNames[0]
       );
     }
-  }, [clusterInfo]);
+  }, [clusterInfo, mode, setValue]);
 
   // TODO change to api request's result
   // const k8sNamespacesOptions = [
@@ -86,7 +86,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
         );
       }
     }
-  }, [dbEngines]);
+  }, [dbEngines, mode, setValue, dbType]);
 
   useEffect(() => {
     if (!dbType) {
@@ -122,7 +122,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
       );
     }
     setDbVersions(newVersions);
-  }, [dbType, dbEngines, mode]);
+  }, [dbType, dbEngines, mode, setValue, getFieldState, dbEngine, dbVersion]);
 
   return (
     <>

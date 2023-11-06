@@ -49,7 +49,7 @@ export const FifthStep = () => {
         monitoringInstances[0].name
       );
     }
-  }, [monitoring]);
+  }, [monitoring, mode, monitoringInstances, monitoringInstance, setValue]);
 
   return (
     <>

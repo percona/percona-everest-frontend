@@ -16,6 +16,7 @@ import { Control, UseControllerProps } from 'react-hook-form';
 import { FormControlLabelProps, SxProps, Theme } from '@mui/material';
 
 export type SwitchOutlinedBoxProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control?: Control<any>;
   controllerProps?: UseControllerProps;
   formControlLabelProps?: FormControlLabelProps;

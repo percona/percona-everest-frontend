@@ -100,7 +100,7 @@ export const DatabasePage = () => {
     if (mode === 'edit' || mode === 'restoreFromBackup') {
       reset(defaultValues);
     }
-  }, [defaultValues]);
+  }, [defaultValues, isDirty, reset, mode]);
 
   const firstStep = activeStep === 0;
 

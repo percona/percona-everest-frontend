@@ -104,7 +104,7 @@ const formValuesToPayloadOverrides = (
 };
 
 export const useUpdateDbCluster = (
-  options?: UseMutationOptions<any, unknown, UpdateDbClusterArgType, unknown>
+  options?: UseMutationOptions<unknown, unknown, UpdateDbClusterArgType, unknown>
 ) => {
   return useMutation(
     ({ dbPayload, k8sClusterId, dbCluster }: UpdateDbClusterArgType) => {

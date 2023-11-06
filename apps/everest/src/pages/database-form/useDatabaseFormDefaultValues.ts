@@ -62,7 +62,7 @@ export const useDatabasePageDefaultValues = (
     // hence, no need to re-check mode and so on here
     if (dbClusterRequestStatus === 'success' && dbCluster)
       setDefaultValues(DbClusterPayloadToFormValues(dbCluster, mode));
-  }, [dbCluster, dbClusterRequestStatus]);
+  }, [dbCluster, dbClusterRequestStatus, mode]);
 
   return {
     defaultValues,

@@ -82,13 +82,13 @@ export const SecondStep = () => {
         DEFAULT_SIZES[resourceSizePerNode].memory
       );
     }
-  }, [resourceSizePerNode]);
+  }, [resourceSizePerNode, mode, setValue]);
 
   useEffect(() => {
     if (diskCapacityExceeded) {
       setError(DbWizardFormFields.disk, { type: 'custom' });
     } else clearErrors(DbWizardFormFields.disk);
-  }, [diskCapacityExceeded]);
+  }, [diskCapacityExceeded, clearErrors, setError]);
 
   useEffect(() => {
     if (
@@ -97,7 +97,7 @@ export const SecondStep = () => {
     ) {
       setValue(DbWizardFormFields.resourceSizePerNode, ResourceSize.custom);
     }
-  }, [cpu, resourceSizePerNode]);
+  }, [cpu, resourceSizePerNode, setValue]);
 
   useEffect(() => {
     if (
@@ -106,7 +106,7 @@ export const SecondStep = () => {
     ) {
       setValue(DbWizardFormFields.resourceSizePerNode, ResourceSize.custom);
     }
-  }, [disk, resourceSizePerNode]);
+  }, [disk, resourceSizePerNode, setValue]);
 
   useEffect(() => {
     if (
@@ -115,7 +115,7 @@ export const SecondStep = () => {
     ) {
       setValue(DbWizardFormFields.resourceSizePerNode, ResourceSize.custom);
     }
-  }, [memory, resourceSizePerNode]);
+  }, [memory, resourceSizePerNode, setValue]);
 
   return (
     <>

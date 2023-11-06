@@ -127,7 +127,7 @@ const formValuesToPayloadMapping = (
 };
 
 export const useCreateDbCluster = (
-  options?: UseMutationOptions<any, unknown, CreateDbClusterArgType, unknown>
+  options?: UseMutationOptions<unknown, unknown, CreateDbClusterArgType, unknown>
 ) => {
   return useMutation(
     ({ dbPayload, id, backupDataSource }: CreateDbClusterArgType) =>

@@ -44,7 +44,7 @@ export const useDbBackups = (
 
 export const useCreateBackupOnDemand = (
   dbClusterName: string,
-  options?: UseMutationOptions<any, unknown, BackupFormData, unknown>
+  options?: UseMutationOptions<unknown, unknown, BackupFormData, unknown>
 ) => {
   const { id: clusterId } = useSelectedKubernetesCluster();
   return useMutation(
@@ -68,7 +68,7 @@ export const useCreateBackupOnDemand = (
 };
 
 export const useDeleteBackup = (
-  options?: UseMutationOptions<any, unknown, string, unknown>
+  options?: UseMutationOptions<unknown, unknown, string, unknown>
 ) => {
   const { id } = useSelectedKubernetesCluster();
   return useMutation((backupName: string) => deleteBackupFn(id, backupName), {

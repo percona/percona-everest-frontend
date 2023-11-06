@@ -24,7 +24,7 @@ export type RestoreFormData = {
 
 export const useDbClusterRestore = (
   dbClusterName: string,
-  options?: UseMutationOptions<any, unknown, RestoreFormData, unknown>
+  options?: UseMutationOptions<unknown, unknown, RestoreFormData, unknown>
 ) => {
   const { id: clusterId } = useSelectedKubernetesCluster();
   return useMutation(
