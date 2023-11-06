@@ -13,10 +13,7 @@ import {
   useDeleteBackupStorage,
   useEditBackupStorage,
 } from 'hooks/api/backup-storages/useBackupStorages';
-import {
-  BackupStorage,
-  StorageType,
-} from 'shared-types/backupStorages.types';
+import { BackupStorage, StorageType } from 'shared-types/backupStorages.types';
 import {
   updateDataAfterCreate,
   updateDataAfterDelete,

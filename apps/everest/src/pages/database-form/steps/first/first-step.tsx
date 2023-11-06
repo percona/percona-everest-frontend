@@ -16,7 +16,13 @@
 import { FormGroup, MenuItem, Skeleton, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-import { DbToggleCard, SelectInput, TextInput, ToggleButtonGroupInput, AutoCompleteInput } from '@percona/ui-lib';
+import {
+  DbToggleCard,
+  SelectInput,
+  TextInput,
+  ToggleButtonGroupInput,
+  AutoCompleteInput,
+} from '@percona/ui-lib';
 import { DbType } from '@percona/types';
 import { useFormContext } from 'react-hook-form';
 import { useDbEngines } from 'hooks/api/db-engines/useDbEngines';
@@ -38,7 +44,11 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
   const mode = useDatabasePageMode();
 
   useEffect(() => {
-    if (mode === 'new' && clusterInfo?.storageClassNames && clusterInfo.storageClassNames.length > 0) {
+    if (
+      mode === 'new' &&
+      clusterInfo?.storageClassNames &&
+      clusterInfo.storageClassNames.length > 0
+    ) {
       setValue(
         DbWizardFormFields.storageClass,
         clusterInfo?.storageClassNames[0]

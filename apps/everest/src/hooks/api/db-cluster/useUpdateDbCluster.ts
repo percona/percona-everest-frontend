@@ -16,7 +16,10 @@
 import { UseMutationOptions, useMutation } from 'react-query';
 import { DbWizardType } from '../../../pages/database-form/database-form.types';
 import { updateDbClusterFn } from '../../../api/dbClusterApi';
-import { DbCluster, ProxyExposeType } from '../../../shared-types/dbCluster.types';
+import {
+  DbCluster,
+  ProxyExposeType,
+} from '../../../shared-types/dbCluster.types';
 // import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils';
 
 type UpdateDbClusterArgType = {
@@ -104,7 +107,12 @@ const formValuesToPayloadOverrides = (
 };
 
 export const useUpdateDbCluster = (
-  options?: UseMutationOptions<unknown, unknown, UpdateDbClusterArgType, unknown>
+  options?: UseMutationOptions<
+    unknown,
+    unknown,
+    UpdateDbClusterArgType,
+    unknown
+  >
 ) => {
   return useMutation(
     ({ dbPayload, k8sClusterId, dbCluster }: UpdateDbClusterArgType) => {

@@ -1,8 +1,7 @@
-import { defineConfig } from 'vitest/config'
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react-swc';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import * as path from 'path';
-
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,10 +12,10 @@ export default defineConfig({
     },
     proxy: {
       '/v1': `http://localhost:${process.env.API_PORT || '8080'}`,
-    }
+    },
   },
   build: {
-    assetsDir: 'static'
+    assetsDir: 'static',
   },
   test: {
     globals: true,
@@ -27,11 +26,11 @@ export default defineConfig({
   ...(process.env.NODE_ENV !== 'production' && {
     resolve: {
       alias: {
-        "@percona/ui-lib": path.resolve(__dirname, '../../packages/ui-lib/src'),
-        "@percona/design": path.resolve(__dirname, '../../packages/design/src'),
-        "@percona/utils": path.resolve(__dirname, '../../packages/utils/src'),
-        "@percona/types": path.resolve(__dirname, '../../packages/types/src'),
-      }
-    }
+        '@percona/ui-lib': path.resolve(__dirname, '../../packages/ui-lib/src'),
+        '@percona/design': path.resolve(__dirname, '../../packages/design/src'),
+        '@percona/utils': path.resolve(__dirname, '../../packages/utils/src'),
+        '@percona/types': path.resolve(__dirname, '../../packages/types/src'),
+      },
+    },
   }),
-})
+});

@@ -10,7 +10,7 @@
       "@percona/ui-lib": ["../../../packages/ui-lib/src"],
       "@percona/design": ["../../../packages/design/src"],
       "@percona/types": ["../../../packages/types/src"],
-      "@percona/utils": ["../../../packages/utils/src"],
+      "@percona/utils": ["../../../packages/utils/src"]
     },
     "noEmit": false,
     "allowImportingTsExtensions": false,
@@ -19,6 +19,6 @@
     "esModuleInterop": true,
     "moduleResolution": "Node",
     "sourceMap": true,
-    "outDir": "./tests-out",
+    "outDir": "./tests-out"
   }
 }

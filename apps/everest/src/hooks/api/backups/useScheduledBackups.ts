@@ -38,7 +38,7 @@ const backupScheduleFormValuesToDbClusterPayload = (
 
   if (mode === 'edit') {
     const newSchedulesArray = dbCluster?.spec?.backup?.schedules && [
-      ...dbCluster?.spec?.backup?.schedules || [],
+      ...(dbCluster?.spec?.backup?.schedules || []),
     ];
     const editedScheduleIndex = newSchedulesArray?.findIndex(
       (item) => item.name === name

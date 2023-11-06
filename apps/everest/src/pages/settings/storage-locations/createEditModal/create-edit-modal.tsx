@@ -3,10 +3,7 @@ import { TextInput, SelectInput } from '@percona/ui-lib';
 import { useMemo } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { FormDialog } from 'components/form-dialog/form-dialog';
-import {
-  BackupStorage,
-  StorageType,
-} from 'shared-types/backupStorages.types';
+import { BackupStorage, StorageType } from 'shared-types/backupStorages.types';
 import { Messages } from '../storage-locations.messages';
 import {
   storageLocationDefaultValues,

@@ -9,12 +9,8 @@ import { DEFAULT_SIZES } from './second-step.const';
 import { DbWizardFormFields, DbWizardType } from '../../database-form.types';
 import { Mock } from 'vitest';
 
-vi.mock(
-  'hooks/api/kubernetesClusters/useSelectedKubernetesCluster'
-);
-vi.mock(
-  'hooks/api/kubernetesClusters/useKubernetesClusterResourcesInfo'
-);
+vi.mock('hooks/api/kubernetesClusters/useSelectedKubernetesCluster');
+vi.mock('hooks/api/kubernetesClusters/useKubernetesClusterResourcesInfo');
 
 interface FormProviderWrapperProps {
   handleSubmit: Mock;

@@ -23,7 +23,12 @@ type PausedDBClusterArgType = {
 };
 
 export const useRestartDbCluster = (
-  options?: UseMutationOptions<unknown, unknown, PausedDBClusterArgType, unknown>
+  options?: UseMutationOptions<
+    unknown,
+    unknown,
+    PausedDBClusterArgType,
+    unknown
+  >
 ) => {
   return useMutation(
     ({ k8sClusterId, dbCluster }: PausedDBClusterArgType) => {

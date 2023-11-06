@@ -105,9 +105,7 @@ export const createDbClusterFn = async (
       proxy: {
         replicas: +(customOptions?.numberOfNodes || 1),
         expose: {
-          type: customOptions?.externalAccess
-            ? 'external'
-            : 'internal',
+          type: customOptions?.externalAccess ? 'external' : 'internal',
           ...(!!customOptions?.externalAccess &&
             customOptions?.sourceRanges && {
               ipSourceRanges: customOptions?.sourceRanges.flatMap((source) =>

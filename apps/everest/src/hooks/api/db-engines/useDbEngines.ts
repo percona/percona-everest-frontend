@@ -49,26 +49,28 @@ export const useDbEngines = () => {
               };
 
               // @ts-ignore
-              ['backup', 'engine', 'proxy'].forEach((toolName: keyof typeof availableVersions) => {
-                if (
-                  !availableVersions ||
-                  !Object.keys(availableVersions).length ||
-                  !availableVersions[toolName]
-                ) {
-                  return;
-                }
+              ['backup', 'engine', 'proxy'].forEach(
+                (toolName: keyof typeof availableVersions) => {
+                  if (
+                    !availableVersions ||
+                    !Object.keys(availableVersions).length ||
+                    !availableVersions[toolName]
+                  ) {
+                    return;
+                  }
 
-                const tool: Record<string, EngineToolPayload> =
-                  availableVersions[toolName];
-                const versions = Object.keys(tool);
+                  const tool: Record<string, EngineToolPayload> =
+                    availableVersions[toolName];
+                  const versions = Object.keys(tool);
 
-                versions.forEach((version) => {
-                  result.availableVersions[toolName].push({
-                    version,
-                    ...tool[version],
+                  versions.forEach((version) => {
+                    result.availableVersions[toolName].push({
+                      version,
+                      ...tool[version],
+                    });
                   });
-                });
-              });
+                }
+              );
 
               return result;
             }

@@ -54,8 +54,14 @@ export const ScheduledBackupModal = () => {
     mode
   );
 
-  const schedules = useMemo(() => (dbCluster && dbCluster?.spec?.backup?.schedules) || [], [dbCluster]);
-  const schedulesNamesList = useMemo(() => (schedules && schedules.map((item) => item?.name)) || [], [schedules]);
+  const schedules = useMemo(
+    () => (dbCluster && dbCluster?.spec?.backup?.schedules) || [],
+    [dbCluster]
+  );
+  const schedulesNamesList = useMemo(
+    () => (schedules && schedules.map((item) => item?.name)) || [],
+    [schedules]
+  );
   const sheduledBackupSchema = useMemo(
     () => schema(schedulesNamesList, mode),
     [schedulesNamesList, mode]
@@ -84,14 +90,11 @@ export const ScheduledBackupModal = () => {
     });
   };
 
-  const values = useMemo(
-    () => {
-      if (selectedSchedule) {
-        scheduleModalDefaultValues(mode, selectedSchedule)
-      }
-    },
-    [mode, selectedSchedule]
-  );
+  const values = useMemo(() => {
+    if (selectedSchedule) {
+      scheduleModalDefaultValues(mode, selectedSchedule);
+    }
+  }, [mode, selectedSchedule]);
 
   if (!backupStorages.length) {
     return (

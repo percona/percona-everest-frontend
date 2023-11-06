@@ -6,7 +6,7 @@ const moveFiles = (sourceDir, targetDir) => {
   return new Promise((resolve, reject) => {
     fs.readdir(sourceDir, (err, files) => {
       if (err) {
-        reject(err)
+        reject(err);
         return;
       }
 
@@ -38,7 +38,7 @@ const moveFiles = (sourceDir, targetDir) => {
       });
     });
   });
-}
+};
 
 const checkDistEnvVarAndMove = async () => {
   const envDir = process.env.EVEREST_OUT_DIR;
@@ -50,7 +50,7 @@ const checkDistEnvVarAndMove = async () => {
 
     fs.rmSync(outDir, { force: true, recursive: true });
     fs.mkdirSync(outDir);
-    await moveFiles('./dist', outDir).catch((err) => console.log(err))
+    await moveFiles('./dist', outDir).catch((err) => console.log(err));
     fs.rmSync('./dist', { force: true, recursive: true });
   }
 };
