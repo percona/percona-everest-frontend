@@ -84,10 +84,12 @@ jobs:
     env:
       GOPRIVATE: github.com/percona,github.com/percona/percona-everest-backend,github.com/percona/percona-everest-cli,github.com/percona/everest-operator
     steps:
-      - uses: actions/download-artifact@v3
+      - name: Checkout FE repo
+        uses: percona-platform/checkout@v3
         with:
-          name: my-checkout-${{ github.run_id }}
-          path: ./percona-everest-frontend
+          repository: percona/percona-everest-frontend
+          ref: 'main'
+          path: percona-everest-frontend
 
       - name: Checkout CLI repo
         uses: percona-platform/checkout@v3
@@ -108,9 +110,21 @@ jobs:
           ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         run: git config --global url."https://percona-platform-robot:${ROBOT_TOKEN}@github.com".insteadOf "https://github.com"
 
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Use Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-workspace.yaml'
+
       - name: Run Everest
         run: |
           cd ${GITHUB_WORKSPACE}/percona-everest-frontend
+          make init
           pnpm --filter "@percona/everest" dev &
           sleep 10s
 
