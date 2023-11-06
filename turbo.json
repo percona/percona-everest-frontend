@@ -5,13 +5,22 @@
       "persistent": true,
       "cache": false
     },
+    "rm-build-dir": {
+      "cache": false
+    },
     "build": {
       "dependsOn": [
+        "^rm-build-dir",
         "^build"
       ],
       "outputs": [
         "dist/**"
       ]
+    },
+    "move-build": {
+      "dependsOn": ["^move-build"],
+      "persistent": true,
+      "cache": false
     }
   }
 }

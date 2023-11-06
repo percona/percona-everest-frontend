@@ -8,6 +8,6 @@
     "turbo": "^1.10.16"
   },
   "scripts": {
-    "build": "turbo build"
+    "build": "turbo run build && turbo run move-build"
   }
 }

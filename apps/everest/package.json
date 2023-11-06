@@ -10,7 +10,9 @@
     "e2e": "pnpm pre-e2e && cd .e2e && playwright test",
     "build": "tsc --incremental && vite build --emptyOutDir",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "rm-build-dir": "rm -rf dist",
+    "move-build": "node ./move-build.js"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
+    "rm-build-dir": "rm -rf dist",
     "build": "rollup -c"
   },
   "devDependencies": {

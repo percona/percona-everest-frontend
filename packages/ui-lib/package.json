@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "test": "jest",
+    "rm-build-dir": "rm -rf dist",
     "build": "rollup -c"
   },
   "main": "dist/esm/index.js",
