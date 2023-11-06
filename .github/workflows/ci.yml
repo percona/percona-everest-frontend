@@ -100,7 +100,6 @@ jobs:
         with:
           node-version: 16.x
           cache: 'pnpm'
-          cache-dependency-path: ${{github.workspace}}/percona-everest-frontend/pnpm-workspace.yaml
 
       - name: Checkout CLI repo
         uses: percona-platform/checkout@v3
