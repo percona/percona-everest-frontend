@@ -6,17 +6,21 @@
       "cache": false
     },
     "rm-build-dir": {
-      "cache": false
+      "cache": false,
+      "dependsOn": [
+        "^rm-build-dir"
+      ]
     },
     "test": {
-      "cache": false
+      "cache": false,
+      "dependsOn": ["build"]
     },
     "lint": {
       "cache": false
     },
     "build": {
       "dependsOn": [
-        "^rm-build-dir",
+        "rm-build-dir",
         "^build"
       ],
       "outputs": [
