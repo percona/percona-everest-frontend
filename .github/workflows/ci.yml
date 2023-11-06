@@ -36,7 +36,7 @@ jobs:
       with:
         node-version: 16.x
         cache: 'pnpm'
-        cache-dependency-path: '**/pnpm-workspace.yaml'
+        cache-dependency-path: 'pnpm-workspace.yaml'
 
     - name: Install dependencies
       run: make init
@@ -57,7 +57,7 @@ jobs:
       with:
         node-version: 16.x
         cache: 'pnpm'
-        cache-dependency-path: '**/pnpm-workspace.yaml'
+        cache-dependency-path: 'pnpm-workspace.yaml'
 
     - name: lint
       if:  matrix.action == 'lint'
@@ -84,6 +84,13 @@ jobs:
     env:
       GOPRIVATE: github.com/percona,github.com/percona/percona-everest-backend,github.com/percona/percona-everest-cli,github.com/percona/everest-operator
     steps:
+      - name: Checkout FE repo
+        uses: percona-platform/checkout@v3
+        with:
+          repository: percona/percona-everest-frontend
+          ref: 'main'
+          path: percona-everest-frontend
+
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -93,14 +100,7 @@ jobs:
         with:
           node-version: 16.x
           cache: 'pnpm'
-          cache-dependency-path: '**/pnpm-workspace.yaml'
-
-      - name: Checkout FE repo
-        uses: percona-platform/checkout@v3
-        with:
-          repository: percona/percona-everest-frontend
-          ref: 'main'
-          path: percona-everest-frontend
+          cache-dependency-path: ${{github.workspace}}/percona-everest-frontend/pnpm-workspace.yaml
 
       - name: Checkout CLI repo
         uses: percona-platform/checkout@v3
