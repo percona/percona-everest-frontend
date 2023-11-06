@@ -30,7 +30,8 @@ export const createBackupStorageFn = async (formData: BackupStorage) => {
 };
 
 export const editBackupStorageFn = async (formData: BackupStorage) => {
-  const { ...editableFormData } = formData;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { name, type, ...editableFormData } = formData;
   const response = await api.patch(
     `backup-storages/${formData.name}`,
     editableFormData
