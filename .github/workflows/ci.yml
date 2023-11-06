@@ -60,19 +60,19 @@ jobs:
         cache-dependency-path: 'pnpm-workspace.yaml'
 
     - name: lint
-      if:  ${{ matrix.lint }}
+      if:  ${{ matrix.action }} == 'lint'
       run: |
         make init
         make lint
 
     - name: test
-      if:  ${{ matrix.test }}
+      if:  ${{ matrix.action }} == 'test'
       run: |
         make init
         make test
 
     - name: build
-      if:  ${{ matrix.build }}
+      if:  ${{ matrix.action }} == 'build'
       run: | 
         make init
         make build
