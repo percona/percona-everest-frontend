@@ -24,7 +24,7 @@ export default defineConfig({
     setupFiles: 'src/setupTests.ts',
   },
   // During prod the libs will be built, so no need to point to src
-  ...(process.env.NODE_ENV === 'development' && {
+  ...(process.env.NODE_ENV !== 'production' && {
     resolve: {
       alias: {
         "@percona/ui-lib": path.resolve(__dirname, '../../packages/ui-lib/src'),
