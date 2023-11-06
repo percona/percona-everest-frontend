@@ -36,6 +36,7 @@ jobs:
       with:
         node-version: 16.x
         cache: 'pnpm'
+        cache-dependency-path: 'pnpm-workspace.yaml'
 
     - name: Install dependencies
       run: make init
@@ -43,7 +44,10 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: checkout-${{ github.run_id }}
-        path: ${{ github.workspace }}/**/*
+        path: |
+          ${{ github.workspace }}/**/*
+          !${{ github.workspace }}/node_modules
+        
 
   CI_checks:
     runs-on: ubuntu-latest
@@ -58,15 +62,21 @@ jobs:
 
     - name: lint
       if:  ${{ matrix.lint }}
-      run: make lint
+      run: |
+        make init
+        make lint
 
     - name: test
       if:  ${{ matrix.test }}
-      run: make test
+      run: |
+        make init
+        make test
 
     - name: build
       if:  ${{ matrix.build }}
-      run: make build
+      run: | 
+        make init
+        make build
 
   E2E:
     name: E2E Tests
