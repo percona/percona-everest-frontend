@@ -95,10 +95,15 @@ jobs:
           ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         run: git config --global url."https://percona-platform-robot:${ROBOT_TOKEN}@github.com".insteadOf "https://github.com"
 
+      - name: Install FE deps
+        run: |
+          cd ${GITHUB_WORKSPACE}/percona-everest-frontend
+          make init
+
       - name: FE Unit tests
         run: |
           cd ${GITHUB_WORKSPACE}/percona-everest-frontend
-          pnpm test
+          make test
 
       - name: Build Everest
         run: |
