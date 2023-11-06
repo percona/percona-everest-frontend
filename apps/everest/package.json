@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 3000",
-    "test": "vitest",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "pre-e2e": "tsc --incremental --noImplicitAny false -p .e2e/tsconfig.json && tsc-alias -p .e2e/tsconfig.json",
     "e2e": "pnpm pre-e2e && cd .e2e && playwright test",
     "build": "tsc --incremental && vite build --emptyOutDir",

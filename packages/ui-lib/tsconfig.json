@@ -13,5 +13,5 @@
     "declaration": true,
     "declarationDir": "typings",
     "types": ["jest", "@testing-library/jest-dom"]
-  },
+  }
 }

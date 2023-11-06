@@ -8,6 +8,9 @@
     "rm-build-dir": {
       "cache": false
     },
+    "test": {
+      "cache": false
+    },
     "build": {
       "dependsOn": [
         "^rm-build-dir",

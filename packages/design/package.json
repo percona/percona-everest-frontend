@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "jest",
     "rm-build-dir": "rm -rf dist",
     "build": "rollup -c"
   },
