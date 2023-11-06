@@ -21,48 +21,63 @@ env:
   NODE_OPTIONS: "—-max_old_space_size=4096"
 
 jobs:
-  lint:
-    name: ESLint
+  checkout_code:
+    name: Checkout Code
     runs-on: ubuntu-20.04
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    strategy:
-      matrix:
-        node-version: [16.x]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - uses: actions/checkout@v3
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 8
 
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
+    - name: Use Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+        cache: 'pnpm'
 
-      - name: Use Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
+    - name: Install dependencies
+      run: make init
 
-      - name: Install dependencies
-        run: make init
+    - uses: actions/upload-artifact@v3
+      with:
+        name: checkout-${{ github.run_id }}
+        path: ${{ github.workspace }}/**/*
 
-      - name: Run linter
-        run: make lint
+  CI_checks:
+    runs-on: ubuntu-latest
+    needs: checkout_code
+    strategy:
+      matrix:
+        action: [lint, test, build]
+    steps:
+    - uses: actions/download-artifact@v3
+      with:
+        name: my-checkout-${{ github.run_id }}
 
-  tests:
-    name: Tests
+    - name: lint
+      if:  ${{ matrix.lint }}
+      run: make lint
+
+    - name: test
+      if:  ${{ matrix.test }}
+      run: make test
+
+    - name: build
+      if:  ${{ matrix.build }}
+      run: make build
+
+  E2E:
+    name: E2E Tests
+    needs: checkout_code
     runs-on: ubuntu-20.04
     env:
       GOPRIVATE: github.com/percona,github.com/percona/percona-everest-backend,github.com/percona/percona-everest-cli,github.com/percona/everest-operator
-    strategy:
-      matrix:
-        node-version: [16.x]
-        go-version: [1.20.x]
     steps:
-      - name: Checkout FE code
-        uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
         with:
+          name: my-checkout-${{ github.run_id }}
           path: ./percona-everest-frontend
 
       - name: Checkout CLI repo
@@ -79,36 +94,10 @@ jobs:
           ref: 'main'
           path: percona-everest-backend
 
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
-      - name: Use Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-          cache-dependency-path: '**/pnpm-lock.yaml'
-
       - name: Configure git for private modules
         env:
           ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         run: git config --global url."https://percona-platform-robot:${ROBOT_TOKEN}@github.com".insteadOf "https://github.com"
-
-      - name: Install FE deps
-        run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-frontend
-          make init
-
-      - name: FE Unit tests
-        run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-frontend
-          make test
-
-      - name: Build Everest
-        run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-frontend
-          make build
 
       - name: Run Everest
         run: |
@@ -119,7 +108,7 @@ jobs:
       - name: Set up Go release
         uses: percona-platform/setup-go@v4
         with:
-          go-version: ${{ matrix.go-version }}
+          go-version: 1.20.x
 
       - name: Set GO_VERSION environment variable
         run: |
