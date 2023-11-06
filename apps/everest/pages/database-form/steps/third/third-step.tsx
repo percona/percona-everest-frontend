@@ -25,7 +25,7 @@ import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { Messages } from './third-step.messages';
 
 export const ThirdStep = () => {
-  const { control, watch, setValue } = useFormContext();
+  const { control, watch } = useFormContext();
   const mode = useDatabasePageMode();
   const backupsEnabled: boolean = watch(DbWizardFormFields.backupsEnabled);
   // const pitrEnabled: boolean = watch(DbWizardFormFields.pitrEnabled);
