@@ -119,7 +119,7 @@ jobs:
         with:
           node-version: 16.x
           cache: 'pnpm'
-          cache-dependency-path: 'pnpm-workspace.yaml'
+          cache-dependency-path: ${GITHUB_WORKSPACE}/percona-everest-frontend/pnpm-workspace.yaml
 
       - name: Run Everest
         run: |
