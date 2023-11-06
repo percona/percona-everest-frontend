@@ -22,7 +22,7 @@ env:
 
 jobs:
   lint:
-    name: ESLint & format
+    name: ESLint
     runs-on: ubuntu-20.04
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -44,25 +44,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
-      - name: Install Bit
-        run: make install-bit
-
-      - name: add bvm bin folder to path
-        run: echo "$HOME/bin" >> $GITHUB_PATH
-
       - name: Install dependencies
         run: make init
 
       - name: Run linter
         run: make lint
 
-      - name: Run formatter
-        run: make format
-
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: 'chore: format files [skip ci]'
-          file_pattern: ':(exclude)pnpm-lock.yaml'
   tests:
     name: Tests
     runs-on: ubuntu-20.04
@@ -108,25 +95,21 @@ jobs:
           ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         run: git config --global url."https://percona-platform-robot:${ROBOT_TOKEN}@github.com".insteadOf "https://github.com"
 
-      - name: Install Bit
+      - name: FE Unit tests
         run: |
           cd ${GITHUB_WORKSPACE}/percona-everest-frontend
-          make install-bit
-
-      - name: add bvm bin folder to path
-        run: echo "$HOME/bin" >> $GITHUB_PATH
+          pnpm test
 
       - name: Build Everest
         run: |
           cd ${GITHUB_WORKSPACE}/percona-everest-frontend
-          make init
-          bit build everest
+          make build
 
       - name: Run Everest
         run: |
           cd ${GITHUB_WORKSPACE}/percona-everest-frontend
-          bit run everest --skip-watch &
-          sleep 30s
+          pnpm --filter "@percona/everest" dev &
+          sleep 10s
 
       - name: Set up Go release
         uses: percona-platform/setup-go@v4
@@ -173,18 +156,18 @@ jobs:
       - name: Run integration tests
         run: |
           cd ${GITHUB_WORKSPACE}/percona-everest-frontend/apps/everest
-          make test-ui
+          pnpm --filter "@percona/everest" e2e
 
       - name: Archive test results
         if: always()
         uses: actions/upload-artifact@v3
         with:
           name: test-results
-          path: ./percona-everest-frontend/apps/everest/ui-tests/test-results/
+          path: ./percona-everest-frontend/apps/everest/.e2e/test-results/
 
       - name: Archive report
         if: always()
         uses: actions/upload-artifact@v3
         with:
           name: playwright-report
-          path: ./percona-everest-frontend/apps/everest/ui-tests/playwright-report/
+          path: ./percona-everest-frontend/apps/everest/.e2e/playwright-report/

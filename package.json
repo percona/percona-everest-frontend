@@ -9,6 +9,7 @@
   },
   "scripts": {
     "test": "turbo run test",
+    "lint": "turbo run lint",
     "build": "turbo run build && turbo run move-build"
   }
 }

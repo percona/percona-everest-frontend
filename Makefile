@@ -6,3 +6,6 @@ test:
 
 build:
 	pnpm build
+
+lint:
+	pnpm lint
