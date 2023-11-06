@@ -48,8 +48,8 @@ export const useDbEngines = () => {
                 },
               };
 
-              // @ts-ignore
               ['backup', 'engine', 'proxy'].forEach(
+                // @ts-ignore
                 (toolName: keyof typeof availableVersions) => {
                   if (
                     !availableVersions ||
