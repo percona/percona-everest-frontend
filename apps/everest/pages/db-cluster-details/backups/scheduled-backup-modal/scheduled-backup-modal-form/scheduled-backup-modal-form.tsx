@@ -13,18 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React, { useContext, useEffect } from 'react';
 import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { LabeledContent } from '@percona/ui-lib.labeled-content';
-import { useParams } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
+import { AutoCompleteAutoFill } from '../../../../../components/auto-complete-auto-fill/auto-complete-auto-fill';
 import { TimeSelection } from '../../../../../components/time-selection/time-selection';
 import { useBackupStorages } from '../../../../../hooks/api/backup-storages/useBackupStorages';
 import { useDbCluster } from '../../../../../hooks/api/db-cluster/useDbCluster';
+import { ScheduleModalContext } from '../../backup.context';
 import { Messages } from '../scheduled-backup-modal.messages';
 import { ScheduleFields } from './scheduled-backup-modal-form.types';
-import { ScheduleModalContext } from '../../backup.context';
 
 export const ScheduledBackupModalForm = () => {
   const { watch } = useFormContext();
@@ -68,16 +69,12 @@ export const ScheduledBackupModalForm = () => {
         <TimeSelection showInfoAlert />
       </LabeledContent>
 
-      <AutoCompleteInput
+      <AutoCompleteAutoFill
         name={ScheduleFields.storageLocation}
         label={Messages.storageLocation}
         loading={isFetching}
         options={backupStorages}
-        autoCompleteProps={{
-          isOptionEqualToValue: (option, value) => option.name === value.name,
-          getOptionLabel: (option) =>
-            typeof option === 'string' ? option : option.name,
-        }}
+        enableFillFirst={mode === 'new'}
         isRequired
       />
     </>
