@@ -157,6 +157,12 @@ importers:
         specifier: ^5.14.15
         version: 5.14.15(@types/react@18.2.33)(react@18.2.0)
     devDependencies:
+      '@percona/eslint-config-react':
+        specifier: workspace:*
+        version: link:../eslint-config-react
+      '@percona/prettier-config':
+        specifier: workspace:*
+        version: link:../prettier-config
       '@percona/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig

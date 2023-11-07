@@ -7,7 +7,7 @@ import dts from "rollup-plugin-dts";
 import postcss from "rollup-plugin-postcss";
 
 import { terser } from "rollup-plugin-terser";
-import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import peerDepsExternal from "rollup-plugin-peer-deps-external";
 
 // import packageJson from `./package.json`;
 
@@ -29,12 +29,18 @@ export default [
       postcss(),
       terser(),
     ],
-    external: ["react", "react-dom", "@mui/material", "@emotion/react", "@emotion/styled"]
+    external: [
+      "react",
+      "react-dom",
+      "@mui/material",
+      "@emotion/react",
+      "@emotion/styled",
+    ],
   },
   {
     input: "dist/esm/typings/index.d.ts",
     output: [{ file: "dist/index.d.ts", format: "esm" }],
     plugins: [dts()],
-    external: [/\.css$/], // telling rollup anything that is .css aren't part of type exports 
+    external: [/\.css$/], // telling rollup anything that is .css aren't part of type exports
   },
-]
+];
