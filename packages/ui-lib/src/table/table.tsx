@@ -116,6 +116,7 @@ function Table<T extends Record<string, any>>(props: TableProps<T>) {
         sx: {
           '& .MuiBox-root': {
             flexDirection: 'row-reverse',
+            // prettier-ignore
             // @ts-ignore
             ...muiTopToolbarProps?.sx,
           },
@@ -130,7 +131,9 @@ function Table<T extends Record<string, any>>(props: TableProps<T>) {
               flex: 'none',
               width: '60px',
               ...// @ts-ignore
+              // prettier-ignore
               displayColumnDefOptions?.['mrt-row-actions']
+                // @ts-ignore
                 ?.muiTableBodyCellProps?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-actions']
@@ -145,7 +148,9 @@ function Table<T extends Record<string, any>>(props: TableProps<T>) {
               // By doing this, we still have "Actions" in that menu, but no text (i.e. transparent) in the header cell
               color: 'transparent',
               ...// @ts-ignore
+              // prettier-ignore
               displayColumnDefOptions?.['mrt-row-actions']
+              // @ts-ignore
                 ?.muiTableHeadCellProps?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-actions']
@@ -160,8 +165,9 @@ function Table<T extends Record<string, any>>(props: TableProps<T>) {
               flex: 'none',
               width: '60px',
               ...// @ts-ignore
-              // @ts-ignore
+              // prettier-ignore
               displayColumnDefOptions?.['mrt-row-expand']?.muiTableBodyCellProps
+                // @ts-ignore
                 ?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-expand']
@@ -177,7 +183,9 @@ function Table<T extends Record<string, any>>(props: TableProps<T>) {
                 },
               }),
               ...// @ts-ignore
+              // prettier-ignore
               displayColumnDefOptions?.['mrt-row-expand']?.muiTableHeadCellProps
+              // @ts-ignore
                 ?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-expand']
