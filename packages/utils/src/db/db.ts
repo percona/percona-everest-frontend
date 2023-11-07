@@ -1,4 +1,4 @@
-import { DbType, DbEngineType } from '@percona/types';
+import { DbType, DbEngineType } from "@percona/types";
 
 export const dbEngineToDbType = (dbEngine: DbEngineType): DbType => {
   switch (dbEngine) {
@@ -25,10 +25,10 @@ export const dbTypeToDbEngine = (dbType: DbType): DbEngineType => {
 export const beautifyDbTypeName = (dbType: DbType): string => {
   switch (dbType) {
     case DbType.Mongo:
-      return 'MongoDB';
+      return "MongoDB";
     case DbType.Mysql:
-      return 'MySQL';
+      return "MySQL";
     default:
-      return 'PostgreSQL';
+      return "PostgreSQL";
   }
 };

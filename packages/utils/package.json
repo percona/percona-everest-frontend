@@ -7,6 +7,8 @@
   "type": "module",
   "types": "dist/index.d.ts",
   "scripts": {
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --fix",
+    "format": "prettier .  --write",
     "rm-build-dir": "rm -rf dist",
     "build": "rollup -c"
   },
@@ -14,7 +16,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@percona/prettier-config": "workspace:*",
     "@percona/tsconfig": "workspace:*",
+    "@percona/eslint-config-react": "workspace:*",
     "@percona/types": "workspace:*",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
