@@ -30,9 +30,11 @@ import { Messages } from './first-step.messages';
 import { generateShortUID } from './utils';
 import { useKubernetesClusterInfo } from '../../../../hooks/api/kubernetesClusters/useKubernetesClusterInfo';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
+import { DEFAULT_NODES } from './first-steps.constants';
+import { NODES_DB_TYPE_MAP } from '../../database-form.constants';
 
 export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
-  const { watch, setValue, getFieldState } = useFormContext();
+  const { watch, setValue, getFieldState, getValues } = useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
   const { data: clusterInfo, isFetching: clusterInfoFetching } =
@@ -41,7 +43,11 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
   const mode = useDatabasePageMode();
 
   useEffect(() => {
-    if (mode === 'new' && clusterInfo?.storageClassNames.length > 0) {
+    if (
+      mode === 'new' &&
+      clusterInfo?.storageClassNames &&
+      clusterInfo?.storageClassNames.length > 0
+    ) {
       setValue(
         DbWizardFormFields.storageClass,
         clusterInfo?.storageClassNames[0]
@@ -95,12 +101,27 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     if (!dbType) {
       return;
     }
-    const { isTouched } = getFieldState(DbWizardFormFields.dbName);
+    const { isTouched: nameTouched } = getFieldState(DbWizardFormFields.dbName);
+    const { isTouched: nodesTouched } = getFieldState(
+      DbWizardFormFields.numberOfNodes
+    );
 
-    if (!isTouched && mode === 'new') {
+    if (!nameTouched && mode === 'new') {
       setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`, {
         shouldValidate: true,
       });
+    }
+
+    // We need to check if the previously selected number of nodes exists for the current DB type
+    // E.g. 2 nodes is only possible for PG
+    if (nodesTouched) {
+      const numberOfNodes: string = getValues(DbWizardFormFields.numberOfNodes);
+
+      if (!NODES_DB_TYPE_MAP[dbType].find((nodes) => nodes === numberOfNodes)) {
+        setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[dbType]);
+      }
+    } else {
+      setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[dbType]);
     }
 
     const newVersions = dbEngines.find((engine) => engine.type === dbEngine);

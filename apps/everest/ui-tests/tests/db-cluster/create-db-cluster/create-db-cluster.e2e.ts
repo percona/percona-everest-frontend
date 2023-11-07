@@ -77,6 +77,7 @@ test.describe('DB Cluster creation', () => {
       clusterName
     );
     await page.getByTestId('db-wizard-continue-button').click();
+    await expect(page.getByText('Number of nodes: 3')).toBeVisible();
 
     await resourcesStepCheck(page);
     await page.getByTestId('db-wizard-continue-button').click();
@@ -88,8 +89,23 @@ test.describe('DB Cluster creation', () => {
     await advancedConfigurationStepCheck(page);
     await page.getByTestId('db-wizard-continue-button').click();
 
+    // Test the mechanism for default number of nodes
+    await page.getByTestId('button-edit-preview-basic-information').click();
+    await page.getByTestId('postgresql-toggle-button').click();
+    await expect(page.getByText('Number of nodes: 2')).toBeVisible();
+    // Now we change the number of nodes
+    await page.getByTestId('button-edit-preview-resources').click();
+    await page.getByTestId('toggle-button-nodes-3').click();
+    await page.getByTestId('toggle-button-nodes-2').click();
+    await page.getByTestId('button-edit-preview-basic-information').click();
+    // Because 2 nodes is not valid for MongoDB, the default will be picked
+    await page.getByTestId('mongodb-toggle-button').click();
+    await expect(page.getByText('Number of nodes: 3')).toBeVisible();
+    await page.getByTestId('button-edit-preview-monitoring').click();
+
     // await monitoringStepCheck(page, monitoringInstancesList);
     await page.getByTestId('db-wizard-submit-button').click();
+
     await expect(page.getByTestId('db-wizard-goto-db-clusters')).toBeVisible();
     await expect(
       page.getByText('Awesome! Your database is being created!')
