@@ -96,6 +96,12 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-workspace.yaml'
 
+      - name: Run Everest
+        run: |
+          make init
+          pnpm --filter "@percona/everest" dev &
+          sleep 10s
+
       - name: Checkout CLI repo
         uses: percona-platform/checkout@v3
         with:
@@ -114,13 +120,6 @@ jobs:
         env:
           ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         run: git config --global url."https://percona-platform-robot:${ROBOT_TOKEN}@github.com".insteadOf "https://github.com"
-
-      - name: Run Everest
-        run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-frontend
-          make init
-          pnpm --filter "@percona/everest" dev &
-          sleep 10s
 
       - name: Set up Go release
         uses: percona-platform/setup-go@v4
