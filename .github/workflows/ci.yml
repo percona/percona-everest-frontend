@@ -85,11 +85,11 @@ jobs:
         git diff --exit-code || echo "::set-output name=changes::true"
 
     - name: Commit and push changes
-      if: steps.check_changes.outputs.changes == 'true'
+      if: steps.check_changes.outputs.changes == 'true' && github.event_name == 'pull_request'
       run: |
         git add .
         git commit -m "chore: lint [skip ci]"
-        git push
+        git push origin ${{ github.head_ref }}
 
   E2E:
     name: E2E Tests
