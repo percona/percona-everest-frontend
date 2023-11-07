@@ -57,3 +57,9 @@ export const DB_WIZARD_DEFAULTS: DefaultValues<DbWizardType> = {
   [DbWizardFormFields.disk]: DEFAULT_SIZES.small.disk,
   [DbWizardFormFields.memory]: DEFAULT_SIZES.small.memory,
 };
+
+export const NODES_DB_TYPE_MAP: Record<DbType, string[]> = {
+  [DbType.Mongo]: ['1', '3', '5'],
+  [DbType.Mysql]: ['1', '3', '5'],
+  [DbType.Postresql]: ['1', '2', '3'],
+};

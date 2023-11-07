@@ -21,7 +21,6 @@ export const resourcesStepCheck = async (page) => {
       name: 'Configure the resources your new database will have access to.',
     })
   ).toBeVisible();
-  await page.getByTestId('toggle-button-nodes-3').click();
   await page.getByTestId('toggle-button-large').click();
   await page.getByTestId('text-input-cpu').fill('0.6');
   await page.getByTestId('text-input-disk').fill('150');

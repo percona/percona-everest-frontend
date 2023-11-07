@@ -8,10 +8,11 @@ import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
 import { DbWizardFormFields } from '../../database-form.types';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { ResourceInput } from './resource-input/resource-input';
-import { DEFAULT_SIZES, NODES_DB_TYPE_MAP } from './second-step.const';
+import { DEFAULT_SIZES } from './second-step.const';
 import { Messages } from './second-step.messages';
 import { ResourceSize } from './second-step.types';
 import { humanizeResourceSizeMap } from './second-step.utils';
+import { NODES_DB_TYPE_MAP } from '../../database-form.constants';
 
 export const SecondStep = () => {
   const { watch, setValue, setError, clearErrors } = useFormContext();
