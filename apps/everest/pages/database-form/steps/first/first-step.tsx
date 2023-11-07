@@ -83,9 +83,16 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
   }, [dbEngines]);
 
   useEffect(() => {
-    const { isTouched: storageClassTouched } = getFieldState(DbWizardFormFields.storageClass);
+    const { isTouched: storageClassTouched } = getFieldState(
+      DbWizardFormFields.storageClass
+    );
 
-    if (!storageClassTouched && mode === 'new' && clusterInfo?.storageClassNames && clusterInfo.storageClassNames.length > 0) {
+    if (
+      !storageClassTouched &&
+      mode === 'new' &&
+      clusterInfo?.storageClassNames &&
+      clusterInfo.storageClassNames.length > 0
+    ) {
       setValue(
         DbWizardFormFields.storageClass,
         clusterInfo?.storageClassNames[0]
@@ -98,7 +105,9 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
       return;
     }
     const { isTouched: nameTouched } = getFieldState(DbWizardFormFields.dbName);
-    const { isDirty: dbVersionDirty } = getFieldState(DbWizardFormFields.dbVersion);
+    const { isDirty: dbVersionDirty } = getFieldState(
+      DbWizardFormFields.dbVersion
+    );
 
     if (!nameTouched && mode === 'new') {
       setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`, {
@@ -109,7 +118,11 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     const newVersions = dbEngines.find((engine) => engine.type === dbEngine);
 
     // Safety check
-    if (dbVersionDirty || !newVersions || !newVersions.availableVersions.engine.length) {
+    if (
+      dbVersionDirty ||
+      !newVersions ||
+      !newVersions.availableVersions.engine.length
+    ) {
       return;
     }
 
