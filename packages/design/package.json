@@ -21,7 +21,7 @@
     "@mui/utils": "^5.14.15"
   },
   "devDependencies": {
-    "@percona/tsconfig": "workspace:*",
+    "@percona/configs": "workspace:*",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.5",

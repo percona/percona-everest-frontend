@@ -1,5 +1,5 @@
 {
-  "extends": "@percona/tsconfig/react-library.json",
+  "extends": "@percona/configs/tsconfig/react-library.json",
   "include": [
     "src"
   ],

@@ -136,6 +136,8 @@ importers:
         specifier: ^0.34.6
         version: 0.34.6(jsdom@22.1.0)
 
+  packages/configs: {}
+
   packages/design:
     dependencies:
       '@emotion/react':
@@ -154,9 +156,9 @@ importers:
         specifier: ^5.14.15
         version: 5.14.15(@types/react@18.2.33)(react@18.2.0)
     devDependencies:
-      '@percona/tsconfig':
+      '@percona/configs':
         specifier: workspace:*
-        version: link:../tsconfig
+        version: link:../configs
       '@rollup/plugin-commonjs':
         specifier: ^25.0.7
         version: 25.0.7(rollup@4.1.5)
@@ -191,13 +193,11 @@ importers:
         specifier: ^7.0.2
         version: 7.0.2(rollup@4.1.5)
 
-  packages/tsconfig: {}
-
   packages/types:
     devDependencies:
-      '@percona/tsconfig':
+      '@percona/configs':
         specifier: workspace:*
-        version: link:../tsconfig
+        version: link:../configs
       '@rollup/plugin-commonjs':
         specifier: ^25.0.7
         version: 25.0.7(rollup@4.1.5)
@@ -256,9 +256,9 @@ importers:
         specifier: ^7.47.0
         version: 7.47.0(react@18.2.0)
     devDependencies:
-      '@percona/tsconfig':
+      '@percona/configs':
         specifier: workspace:*
-        version: link:../tsconfig
+        version: link:../configs
       '@rollup/plugin-commonjs':
         specifier: ^25.0.7
         version: 25.0.7(rollup@4.1.5)
@@ -277,6 +277,9 @@ importers:
       jsdom:
         specifier: ^22.1.0
         version: 22.1.0
+      prettier:
+        specifier: ^3.0.3
+        version: 3.0.3
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -310,9 +313,9 @@ importers:
 
   packages/utils:
     devDependencies:
-      '@percona/tsconfig':
+      '@percona/configs':
         specifier: workspace:*
-        version: link:../tsconfig
+        version: link:../configs
       '@percona/types':
         specifier: workspace:*
         version: link:../types
