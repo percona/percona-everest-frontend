@@ -282,12 +282,16 @@ export const DbClusterView = () => {
             </MenuItem>,
           ]}
           renderDetailPanel={({ row }) => <ExpandedRow row={row} />}
-          muiTableBodyRowProps={({ row }) => ({
+          muiTableBodyRowProps={({ row, isDetailPanel }) => ({
             onClick: () => {
-              navigate(`/databases/${row.original.databaseName}/overview`);
+              if (!isDetailPanel) {
+                navigate(`/databases/${row.original.databaseName}/overview`);
+              }
             },
             sx: {
-              cursor: 'pointer', // you might want to change the cursor too when adding an onClick
+              ...(!isDetailPanel && {
+                cursor: 'pointer', // you might want to change the cursor too when adding an onClick
+              }),
             },
           })}
           renderTopToolbarCustomActions={() => (
