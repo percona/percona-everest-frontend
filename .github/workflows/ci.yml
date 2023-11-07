@@ -21,8 +21,8 @@ env:
   NODE_OPTIONS: "—-max_old_space_size=4096"
 
 jobs:
-  checkout_code:
-    name: Checkout Code
+  cache_pnpm:
+    name: Install and Cache PNPM
     runs-on: ubuntu-20.04
 
     steps:
@@ -43,7 +43,7 @@ jobs:
 
   CI_checks:
     runs-on: ubuntu-latest
-    needs: checkout_code
+    needs: cache_pnpm
     strategy:
       matrix:
         action: ['lint', 'test', 'build']
@@ -79,12 +79,14 @@ jobs:
 
   E2E:
     name: E2E Tests
-    needs: checkout_code
+    needs: cache_pnpm
     runs-on: ubuntu-20.04
     env:
       GOPRIVATE: github.com/percona,github.com/percona/percona-everest-backend,github.com/percona/percona-everest-cli,github.com/percona/everest-operator
     steps:
       - uses: actions/checkout@v3
+        with:
+          path: FE
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -94,27 +96,26 @@ jobs:
         with:
           node-version: 16.x
           cache: 'pnpm'
-          cache-dependency-path: 'pnpm-workspace.yaml'
+          cache-dependency-path: FE/pnpm-workspace.yaml
 
       - name: Run Everest
         run: |
           make init
           pnpm --filter "@percona/everest" dev &
-          sleep 10s
 
       - name: Checkout CLI repo
         uses: percona-platform/checkout@v3
         with:
           repository: percona/percona-everest-cli
           ref: 'main'
-          path: ${GITHUB_WORKSPACE}/percona-everest-cli
+          path: CLI
 
       - name: Checkout backend repo
         uses: percona-platform/checkout@v3
         with:
           repository: percona/percona-everest-backend
           ref: 'main'
-          path: ${GITHUB_WORKSPACE}/percona-everest-backend
+          path: BE
 
       - name: Configure git for private modules
         env:
@@ -133,7 +134,7 @@ jobs:
 
       - name: Run Everest backend
         run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-backend
+          cd BE
           make init
           make local-env-up
           touch everest-backend.log
@@ -160,12 +161,12 @@ jobs:
 
       - name: Run Provisioning
         run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-cli
+          cd CLI
           go run cmd/everest/main.go install operators --backup.enable=false --everest.endpoint=http://127.0.0.1:8080 --monitoring.enable=false --name=minikube --operator.mongodb=true --operator.postgresql=true --operator.xtradb-cluster=true --skip-wizard --namespace test-everest
 
       - name: Run integration tests
         run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-frontend/apps/everest
+          cd FE/apps/everest
           pnpm --filter "@percona/everest" e2e
 
       - name: Archive test results
@@ -173,11 +174,11 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: test-results
-          path: ./percona-everest-frontend/apps/everest/.e2e/test-results/
+          path: FE/apps/everest/.e2e/test-results/
 
       - name: Archive report
         if: always()
         uses: actions/upload-artifact@v3
         with:
           name: playwright-report
-          path: ./percona-everest-frontend/apps/everest/.e2e/playwright-report/
+          path: FE/apps/everest/.e2e/playwright-report/
