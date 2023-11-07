@@ -17,6 +17,10 @@ permissions:
   pull-requests: write
   repository-projects: read
 
+concurrency:
+  group: CI-group-${{ github.repository }}
+  cancel-in-progress: true
+
 env:
   NODE_OPTIONS: "—-max_old_space_size=4096"
 
@@ -87,7 +91,7 @@ jobs:
     - uses: stefanzweifel/git-auto-commit-action@v5
       if: steps.check_changes.outputs.changes == 'true' && github.event_name == 'pull_request'
       with:
-        commit_message: "chore: lint/format [skip ci]"
+        commit_message: "chore: lint/format"
 
   E2E:
     name: E2E Tests
