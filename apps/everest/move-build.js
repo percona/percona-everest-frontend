@@ -44,12 +44,12 @@ const checkDistEnvVarAndMove = async () => {
   const envDir = process.env.EVEREST_OUT_DIR;
 
   if (envDir) {
-    const outDir = path.join(process.cwd(), '../..', envDir);
+    const outDir = path.isAbsolute(envDir) ? envDir : path.join(process.cwd(), '../..', envDir);
 
     console.log(`Outputting Everest files to: ${outDir}`);
 
     fs.rmSync(outDir, { force: true, recursive: true });
-    fs.mkdirSync(outDir);
+    fs.mkdirSync(outDir, { recursive: true });
     await moveFiles('./dist', outDir).catch((err) => console.log(err));
     fs.rmSync('./dist', { force: true, recursive: true });
   }
