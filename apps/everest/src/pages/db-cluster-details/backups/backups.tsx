@@ -21,7 +21,7 @@ import { DbEngineType } from 'shared-types/dbEngines.types';
 import { ScheduleModalContext } from './backup.context';
 import { BackupsList } from './backups-list/backups-list';
 import { ScheduledBackupModal } from './scheduled-backup-modal/scheduled-backup-modal';
-import { ScheduledBackupsList } from './scheduled-backups-list/scheduled-backups-list'
+import { ScheduledBackupsList } from './scheduled-backups-list/scheduled-backups-list';
 
 export const Backups = () => {
   const { dbClusterName } = useParams();
