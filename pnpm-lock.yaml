@@ -136,24 +136,6 @@ importers:
         specifier: ^0.34.6
         version: 0.34.6(jsdom@22.1.0)
 
-  packages/configs:
-    dependencies:
-      '@typescript-eslint/parser':
-        specifier: ^6.0.0
-        version: 6.9.0(eslint@8.52.0)(typescript@5.2.2)
-      eslint:
-        specifier: ^8.45.0
-        version: 8.52.0
-      eslint-config-prettier:
-        specifier: ^9.0.0
-        version: 9.0.0(eslint@8.52.0)
-      eslint-plugin-react-hooks:
-        specifier: ^4.6.0
-        version: 4.6.0(eslint@8.52.0)
-      eslint-plugin-react-refresh:
-        specifier: ^0.4.3
-        version: 0.4.3(eslint@8.52.0)
-
   packages/design:
     dependencies:
       '@emotion/react':
@@ -172,9 +154,9 @@ importers:
         specifier: ^5.14.15
         version: 5.14.15(@types/react@18.2.33)(react@18.2.0)
     devDependencies:
-      '@percona/configs':
+      '@percona/tsconfig':
         specifier: workspace:*
-        version: link:../configs
+        version: link:../tsconfig
       '@rollup/plugin-commonjs':
         specifier: ^25.0.7
         version: 25.0.7(rollup@4.1.5)
@@ -233,11 +215,13 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
 
+  packages/tsconfig: {}
+
   packages/types:
     devDependencies:
-      '@percona/configs':
+      '@percona/tsconfig':
         specifier: workspace:*
-        version: link:../configs
+        version: link:../tsconfig
       '@rollup/plugin-commonjs':
         specifier: ^25.0.7
         version: 25.0.7(rollup@4.1.5)
@@ -296,15 +280,15 @@ importers:
         specifier: ^7.47.0
         version: 7.47.0(react@18.2.0)
     devDependencies:
-      '@percona/configs':
-        specifier: workspace:*
-        version: link:../configs
       '@percona/eslint-config-react':
         specifier: workspace:*
         version: link:../eslint-config-react
       '@percona/prettier-config':
         specifier: workspace:*
         version: link:../prettier-config
+      '@percona/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       '@rollup/plugin-commonjs':
         specifier: ^25.0.7
         version: 25.0.7(rollup@4.1.5)
@@ -362,9 +346,9 @@ importers:
 
   packages/utils:
     devDependencies:
-      '@percona/configs':
+      '@percona/tsconfig':
         specifier: workspace:*
-        version: link:../configs
+        version: link:../tsconfig
       '@percona/types':
         specifier: workspace:*
         version: link:../types
