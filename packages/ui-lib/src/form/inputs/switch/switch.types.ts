@@ -21,7 +21,7 @@ import { Control, UseControllerProps } from 'react-hook-form';
 type FormControlLabelProps = MuiFormControlLabelProps;
 
 export type SwitchInputProps = {
-  control?: Control<any>;
+  control?: Control;
   controllerProps?: UseControllerProps;
   formControlLabelProps?: Omit<FormControlLabelProps, 'control' | 'label'>;
   name: string;

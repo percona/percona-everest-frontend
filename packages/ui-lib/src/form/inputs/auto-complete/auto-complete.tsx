@@ -40,7 +40,6 @@ function AutoCompleteInput<T>({
                 ...params.inputProps,
                 ...textFieldProps?.inputProps,
               }}
-              // eslint-disable-next-line react/jsx-no-duplicate-props
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (

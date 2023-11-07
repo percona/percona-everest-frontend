@@ -14,6 +14,7 @@
 // limitations under the License.
 import { type MaterialReactTableProps } from 'material-react-table';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface TableProps<T extends Record<string, any>>
   extends MaterialReactTableProps<T> {
   noDataMessage: string;

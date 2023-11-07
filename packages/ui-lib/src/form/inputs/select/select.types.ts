@@ -17,7 +17,7 @@ import { SelectProps } from '@mui/material';
 import { Control, UseControllerProps } from 'react-hook-form';
 
 export type SelectInputProps = {
-  control?: Control<any>;
+  control?: Control;
   controllerProps?: UseControllerProps;
   name: string;
   label?: string;

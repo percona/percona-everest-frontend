@@ -17,7 +17,7 @@ import { LabeledContentProps } from '../../../labeled-content';
 import { Control, UseControllerProps } from 'react-hook-form';
 
 export type ToggleButtonGroupInputProps = {
-  control?: Control<any>;
+  control?: Control;
   name: string;
   label?: string;
   labelProps?: LabeledContentProps;

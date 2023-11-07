@@ -1,2 +1,4 @@
-export { default } from './no-match';
-export * from './no-match.types';
+import { type NoMatchIconProps } from './no-match.types';
+export { default as NoMatchIcon} from './no-match';
+
+export {  NoMatchIconProps };

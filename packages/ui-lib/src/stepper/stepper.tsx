@@ -40,7 +40,6 @@ const Stepper = ({
         ...sx,
       }}
       {...props}
-      // eslint-disable-next-line react/jsx-fragments
       connector={noConnector ? <Fragment /> : connector}
     />
   );

@@ -19,7 +19,7 @@ import { Control, UseControllerProps } from 'react-hook-form';
 export type AutoCompleteInputProps<T> = {
   name: string;
   options: T[];
-  control?: Control<any>;
+  control?: Control;
   controllerProps?: UseControllerProps;
   label?: string;
   labelProps?: LabeledContentProps;

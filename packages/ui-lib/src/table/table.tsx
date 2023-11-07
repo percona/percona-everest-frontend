@@ -1,4 +1,3 @@
-// @ts-nocheck
 import FilterListIcon from '@mui/icons-material/FilterList';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -10,6 +9,7 @@ import { useEffect } from 'react';
 import { ICONS_OPACITY } from './table.constants';
 import { TableProps } from './table.types';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Table<T extends Record<string, any>>(props: TableProps<T>) {
   const {
     data,

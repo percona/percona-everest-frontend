@@ -25,11 +25,13 @@ const ToggleButtonGroupInput = ({
           exclusive
           data-testid={`toggle-button-group-input-${kebabize(name)}`}
           onChange={(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             event: React.MouseEvent<HTMLElement> | any,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             value: any
           ) => {
             if (value !== null) {
-              /* eslint-disable no-param-reassign */
+               
               event.target.value = value;
               field.onChange(event);
             }

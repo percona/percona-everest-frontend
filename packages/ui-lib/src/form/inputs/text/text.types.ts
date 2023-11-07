@@ -18,7 +18,7 @@ import { LabeledContentProps } from '../../../labeled-content';
 import { Control, UseControllerProps } from 'react-hook-form';
 
 export type TextInputProps = {
-  control?: Control<any>;
+  control?: Control;
   controllerProps?: UseControllerProps;
   name: string;
   label?: string;
