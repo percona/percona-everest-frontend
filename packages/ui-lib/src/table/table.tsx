@@ -89,7 +89,8 @@ function Table<T extends Record<string, any>>(props: TableProps<T>) {
       enableSorting={!!data.length}
       autoResetAll={false}
       icons={{
-        KeyboardDoubleArrowDownIcon: (propsIcon) =>
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        KeyboardDoubleArrowDownIcon: (propsIcon: any) =>
           data.length ? (
             <KeyboardDoubleArrowDownIcon {...propsIcon} />
           ) : (
@@ -115,6 +116,7 @@ function Table<T extends Record<string, any>>(props: TableProps<T>) {
         sx: {
           '& .MuiBox-root': {
             flexDirection: 'row-reverse',
+            // @ts-ignore
             ...muiTopToolbarProps?.sx,
           },
         },
@@ -128,6 +130,7 @@ function Table<T extends Record<string, any>>(props: TableProps<T>) {
               flex: 'none',
               width: '60px',
               ...displayColumnDefOptions?.['mrt-row-actions']
+                // @ts-ignore
                 ?.muiTableBodyCellProps?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-actions']
@@ -142,6 +145,7 @@ function Table<T extends Record<string, any>>(props: TableProps<T>) {
               // By doing this, we still have "Actions" in that menu, but no text (i.e. transparent) in the header cell
               color: 'transparent',
               ...displayColumnDefOptions?.['mrt-row-actions']
+                // @ts-ignore
                 ?.muiTableHeadCellProps?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-actions']
@@ -157,6 +161,7 @@ function Table<T extends Record<string, any>>(props: TableProps<T>) {
               width: '60px',
               ...// @ts-ignore
               displayColumnDefOptions?.['mrt-row-expand']?.muiTableBodyCellProps
+                // @ts-ignore
                 ?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-expand']
@@ -172,6 +177,7 @@ function Table<T extends Record<string, any>>(props: TableProps<T>) {
                 },
               }),
               ...displayColumnDefOptions?.['mrt-row-expand']
+                // @ts-ignore
                 ?.muiTableHeadCellProps?.sx,
             },
             ...displayColumnDefOptions?.['mrt-row-expand']
