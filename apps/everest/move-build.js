@@ -44,7 +44,9 @@ const checkDistEnvVarAndMove = async () => {
   const envDir = process.env.EVEREST_OUT_DIR;
 
   if (envDir) {
-    const outDir = path.isAbsolute(envDir) ? envDir : path.join(process.cwd(), '../..', envDir);
+    const outDir = path.isAbsolute(envDir)
+      ? envDir
+      : path.join(process.cwd(), '../..', envDir);
 
     console.log(`Outputting Everest files to: ${outDir}`);
 
