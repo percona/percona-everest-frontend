@@ -46,7 +46,6 @@ const StepperWithoutConnectors = () => {
           {steps.map(({ label }, index) => {
             const stepProps: { completed?: boolean } = {};
             return (
-               
               <Step key={`${label}_${index}`} {...stepProps}>
                 <StepLabel />
               </Step>

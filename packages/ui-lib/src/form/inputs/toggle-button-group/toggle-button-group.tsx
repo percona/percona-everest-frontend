@@ -31,7 +31,6 @@ const ToggleButtonGroupInput = ({
             value: any
           ) => {
             if (value !== null) {
-               
               event.target.value = value;
               field.onChange(event);
             }
