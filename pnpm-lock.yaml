@@ -78,6 +78,9 @@ importers:
         specifier: ^3.22.4
         version: 3.22.4
     devDependencies:
+      '@percona/eslint-config-react':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config-react
       '@playwright/test':
         specifier: ^1.39.0
         version: 1.39.0
