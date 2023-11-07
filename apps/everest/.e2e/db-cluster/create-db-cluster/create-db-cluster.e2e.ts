@@ -90,6 +90,8 @@ test.describe('DB Cluster creation', () => {
 
     // Test the mechanism for default number of nodes
     await page.getByTestId('button-edit-preview-basic-information').click();
+    // Here we test that version wasn't reset to default
+    await expect(page.getByText('Version: 5.0.7-6')).toBeVisible();
     await page.getByTestId('postgresql-toggle-button').click();
     await expect(page.getByText('Number of nodes: 2')).toBeVisible();
     // Now we change the number of nodes

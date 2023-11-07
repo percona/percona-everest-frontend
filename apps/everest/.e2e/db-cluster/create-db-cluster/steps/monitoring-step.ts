@@ -13,10 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { expect } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 import { testMonitoringName2 } from '../../../utils/monitoring-instance';
 
-export const monitoringStepCheck = async (page, monitoringInstancesList) => {
+export const monitoringStepCheck = async (page: Page, monitoringInstancesList) => {
   await expect(page.getByRole('heading', { name: 'Monitoring' })).toBeVisible();
   await page.getByLabel('Enable monitoring').check();
 

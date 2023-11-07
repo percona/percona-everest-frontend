@@ -13,9 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { expect } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 
-export const resourcesStepCheck = async (page) => {
+export const resourcesStepCheck = async (page: Page) => {
   await expect(
     page.getByRole('heading', {
       name: 'Configure the resources your new database will have access to.',

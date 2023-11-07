@@ -13,10 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { expect } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 
 export const basicInformationStepCheck = async (
-  page,
+  page: Page,
   engineVersions,
   storageClasses,
   clusterName
@@ -45,7 +45,7 @@ export const basicInformationStepCheck = async (
     ).toBeVisible()
   );
 
-  await page.getByRole('option').first().click();
+  await page.getByRole('option').filter({ hasText: '5.0.7-6'}).click();
   await page.getByTestId('text-input-db-name').fill(clusterName);
   await page.getByTestId('text-input-storage-class').click();
 

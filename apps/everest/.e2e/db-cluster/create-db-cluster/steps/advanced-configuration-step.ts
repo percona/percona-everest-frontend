@@ -13,10 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { expect } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 // import {SOURCE_RANGE_PLACEHOLDER} from "../../../../../constants";
 
-export const advancedConfigurationStepCheck = async (page) => {
+export const advancedConfigurationStepCheck = async (page: Page) => {
   await expect(
     page.getByRole('heading', { name: 'Advanced Configurations' })
   ).toBeVisible();
