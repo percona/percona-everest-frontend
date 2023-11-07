@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { render } from "@testing-library/react";
+import { useState } from 'react';
+import { render } from '@testing-library/react';
 import { ThemeContextProvider, everestThemeOptions } from '@percona/design';
-import { Box, Button, Step, StepLabel, Typography } from "@mui/material";
-import Stepper from ".";
+import { Box, Button, Step, StepLabel, Typography } from '@mui/material';
+import Stepper from '.';
 
 const StepperWithoutConnectors = () => {
   const steps = [

@@ -93,6 +93,6 @@ const Card = ({
       </CardContent>
     </MuiCard>
   );
-}
+};
 
 export default Card;

@@ -1,6 +1,10 @@
 import { useTheme } from '@mui/material';
 import SvgIcon from '@mui/material/SvgIcon';
-import { IconsProps, StatusIconProps, StatusIconProviderProps } from './status.types';
+import {
+  IconsProps,
+  StatusIconProps,
+  StatusIconProviderProps,
+} from './status.types';
 
 const StatusIconProvider = ({
   LightIconGeneral,

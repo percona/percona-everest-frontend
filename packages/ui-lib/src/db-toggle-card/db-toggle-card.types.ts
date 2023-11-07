@@ -14,6 +14,6 @@
 // limitations under the License.
 
 import { DbType } from '@percona/types';
-import { ToggleCardProps } from "../toggle-card";
+import { ToggleCardProps } from '../toggle-card';
 
 export type DbToggleCardProps = { value: DbType } & ToggleCardProps;

@@ -57,6 +57,6 @@ const ProgressBar = ({
       />
     </Box>
   );
-}
+};
 
 export default ProgressBar;

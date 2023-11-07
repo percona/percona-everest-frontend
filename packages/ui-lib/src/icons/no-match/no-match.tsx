@@ -1,4 +1,4 @@
-import { NoMatchIconProps } from ".";
+import { NoMatchIconProps } from '.';
 
 const NoMatchIcon = ({ w, h }: NoMatchIconProps) => {
   return (
