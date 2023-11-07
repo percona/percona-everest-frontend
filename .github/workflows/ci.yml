@@ -46,7 +46,7 @@ jobs:
     needs: cache_pnpm
     strategy:
       matrix:
-        action: ['lint', 'test', 'build']
+        action: ['lint', 'format', 'test', 'build']
     steps:
     - uses: actions/checkout@v3
     - uses: pnpm/action-setup@v2
@@ -65,6 +65,10 @@ jobs:
       if:  matrix.action == 'lint'
       run: make lint
 
+    - name: format
+      if:  matrix.action == 'format'
+      run: make format
+
     - name: test
       if:  matrix.action == 'test'
       run: make test
@@ -72,6 +76,20 @@ jobs:
     - name: build
       if:  matrix.action == 'build'
       run: make build
+
+    - name: Check for changes
+      id: check_changes
+      run: |
+        git config --global user.email "ci-bot@percona.com"
+        git config --global user.name "CI Bot"
+        git diff --exit-code || echo "::set-output name=changes::true"
+
+    - name: Commit and push changes
+      if: steps.check_changes.outputs.changes == 'true'
+      run: |
+        git add .
+        git commit -m "chore: lint [skip ci]"
+        git push
 
   E2E:
     name: E2E Tests

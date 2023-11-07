@@ -17,6 +17,9 @@
     "lint": {
       "cache": false
     },
+    "format": {
+      "cache": false
+    },
     "build": {
       "dependsOn": [
         "rm-build-dir",
