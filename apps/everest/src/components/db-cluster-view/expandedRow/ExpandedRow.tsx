@@ -79,7 +79,7 @@ export const ExpandedRow = ({
             <LabelValue label="Username" value={data?.username} />
             <LabelValue
               label="Password"
-              value={<HiddenPasswordToggle value={data?.password || ''} />}
+              value={<HiddenPasswordToggle showCopy value={data?.password || ''} />}
             />
           </>
         )}

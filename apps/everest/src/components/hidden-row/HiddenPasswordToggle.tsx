@@ -18,14 +18,17 @@ import { Box, IconButton, Typography } from '@mui/material';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import { Messages } from './HiddenPasswordToggle.messages';
+import { CopyToClipboardButton } from '@percona/ui-lib';
 
 type HideRowProps = {
   value: string;
   fixedAsteriskLength?: boolean;
+  showCopy?: boolean;
 };
 export const HiddenPasswordToggle = ({
   value,
   fixedAsteriskLength = true,
+  showCopy = false,
 }: HideRowProps) => {
   const [show, setShow] = useState(false);
   const formattedValue = show
@@ -63,15 +66,11 @@ export const HiddenPasswordToggle = ({
       <IconButton
         onClick={toggle}
         aria-label={`visibility-${show ? 'off' : 'on'}`}
-        sx={{
-          mt: show ? 0 : -1
-          // position: 'absolute',
-          // top: (theme) => theme.spacing(-1),
-          // right: 0,
-        }}
+        sx={{ mt: -1 }}
       >
         {show ? <VisibilityOutlinedIcon /> : <VisibilityOffOutlinedIcon />}
       </IconButton>
+      {showCopy && <CopyToClipboardButton buttonSx={{ mt: -1 }}  textToCopy={value} />}
     </Box>
   );
 };
