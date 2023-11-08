@@ -14,7 +14,10 @@
 // limitations under the License.
 
 import { INVALID_SOURCE_RANGE_ERROR } from '../../constants';
-import {errorMessages, tooLongErrorMessage} from "../../utils/common-validation";
+import {
+  errorMessages,
+  tooLongErrorMessage,
+} from '../../utils/common-validation';
 
 export const Messages = {
   previous: 'Previous',

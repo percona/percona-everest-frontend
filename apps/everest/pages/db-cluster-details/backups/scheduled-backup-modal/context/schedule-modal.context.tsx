@@ -16,7 +16,9 @@
 import React, { createContext, useState } from 'react';
 import { ScheduleModalContextType } from './schedule-modal.context.types';
 
-export const ScheduleModalContext = createContext<ScheduleModalContextType>({});
+export const ScheduleModalContext = createContext<ScheduleModalContextType>({
+  mode: 'new',
+});
 
 export const ScheduleModalContextProvider = ({
   children,

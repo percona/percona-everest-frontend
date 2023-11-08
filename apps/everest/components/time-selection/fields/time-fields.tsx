@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { HOURS_AM_PM, MINUTES } from '../time-selection.constants';
 import { Messages } from '../time-selection.messages';
-import {AmPM, TimeSelectionFields} from '../time-selection.types';
+import { AmPM, TimeSelectionFields } from '../time-selection.types';
 import { addZeroToSingleDigit } from '../time-selection.utils';
 
 export const TimeFields = () => {

@@ -14,13 +14,18 @@
 // limitations under the License.
 
 import z from 'zod';
-import { AmPM, TimeSelectionFields, TimeValue, WeekDays } from "./time-selection.types";
+import {
+  AmPM,
+  TimeSelectionFields,
+  TimeValue,
+  WeekDays,
+} from './time-selection.types';
 
 export const timeSelectionSchema = z.object({
-    [TimeSelectionFields.selectedTime]: z.nativeEnum(TimeValue),
-    [TimeSelectionFields.minute]: z.number().optional(),
-    [TimeSelectionFields.hour]: z.number().optional(),
-    [TimeSelectionFields.amPm]: z.nativeEnum(AmPM).optional(),
-    [TimeSelectionFields.weekDay]: z.nativeEnum(WeekDays).optional(),
-    [TimeSelectionFields.onDay]: z.number().optional()
+  [TimeSelectionFields.selectedTime]: z.nativeEnum(TimeValue),
+  [TimeSelectionFields.minute]: z.number().optional(),
+  [TimeSelectionFields.hour]: z.number().optional(),
+  [TimeSelectionFields.amPm]: z.nativeEnum(AmPM).optional(),
+  [TimeSelectionFields.weekDay]: z.nativeEnum(WeekDays).optional(),
+  [TimeSelectionFields.onDay]: z.number().optional(),
 });

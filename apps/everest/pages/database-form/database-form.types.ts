@@ -194,18 +194,17 @@ const stepFiveSchema = z
   .passthrough();
 
 // Each position of the array is the validation schema for a given step
-// TODO re-add steps after API is ready
 export const dbWizardSchema = [
   stepOneSchema,
   stepTwoSchema,
-  // stepThreeSchema,
+  backupsStepSchema,
   advancedConfigurationsSchema,
   stepFiveSchema,
 ];
 
 const superset = stepOneSchema
   .and(stepTwoSchema)
-  // .and(stepThreeSchema)
+  .and(backupsStepSchema)
   .and(advancedConfigurationsSchema)
   .and(stepFiveSchema);
 

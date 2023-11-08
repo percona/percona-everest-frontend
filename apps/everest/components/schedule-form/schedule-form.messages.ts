@@ -13,22 +13,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { errorMessages } from "../../utils/common-validation";
+import { errorMessages } from '../../utils/common-validation';
 
 export const Messages = {
-    createScheduleModal: {
-        headerMessage: 'Create schedule',
-        subhead:
-            'Create a task that takes regular backups of this database, according to the schedule that you specify.',
-        submitMessage: 'Create',
-    },
-    editScheduleModal: {
-        headerMessage: 'Edit schedules',
-        submitMessage: 'Save',
-    },
-    scheduleName: {
-        label: 'Schedule name',
-        tooLong: errorMessages.tooLong('schedule'),
-    },
-    storageLocation: 'Storage location',
+  createScheduleModal: {
+    headerMessage: 'Create schedule',
+    subhead:
+      'Create a task that takes regular backups of this database, according to the schedule that you specify.',
+    submitMessage: 'Create',
+  },
+  editScheduleModal: {
+    headerMessage: 'Edit schedules',
+    submitMessage: 'Save',
+  },
+  scheduleName: {
+    label: 'Schedule name',
+    tooLong: errorMessages.tooLong('schedule'),
+  },
+  storageLocation: 'Storage location',
 };

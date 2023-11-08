@@ -8,10 +8,10 @@ import { TimeFields } from './fields/time-fields';
 import { WeeksField } from './fields/weeks-field';
 import { Messages } from './time-selection.messages';
 import {
-    TimeSelectionFields,
-    TimeSelectionProps,
-    TimeValue,
-    timeValueHumanized,
+  TimeSelectionFields,
+  TimeSelectionProps,
+  TimeValue,
+  timeValueHumanized,
 } from './time-selection.types';
 import { getTimeText } from './time-selection.utils';
 

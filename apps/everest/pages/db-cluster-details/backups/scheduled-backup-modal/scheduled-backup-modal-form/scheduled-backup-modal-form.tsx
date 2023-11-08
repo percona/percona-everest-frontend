@@ -14,17 +14,13 @@
 // limitations under the License.
 
 import React, { useContext, useEffect } from 'react';
-import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
-import { TextInput } from '@percona/ui-lib.form.inputs.text';
-import { LabeledContent } from '@percona/ui-lib.labeled-content';
 import { useParams } from 'react-router-dom';
 import { useFormContext } from 'react-hook-form';
-import { TimeSelection } from '../../../../../components/time-selection/time-selection';
 import { useBackupStorages } from '../../../../../hooks/api/backup-storages/useBackupStorages';
 import { useDbCluster } from '../../../../../hooks/api/db-cluster/useDbCluster';
-import { Messages } from '../scheduled-backup-modal.messages';
-import { ScheduleFields } from './scheduled-backup-modal-form.types';
-import { ScheduleModalContext } from '../../backup.context';
+import { ScheduleForm } from '../../../../../components/schedule-form/schedule-form';
+import { ScheduleFormFields } from '../../../../../components/schedule-form/schedule-form.types';
+import { ScheduleModalContext } from '../context/schedule-modal.context';
 
 export const ScheduledBackupModalForm = () => {
   const { watch } = useFormContext();
@@ -37,9 +33,7 @@ export const ScheduledBackupModalForm = () => {
   });
 
   const schedules = (dbCluster && dbCluster?.spec?.backup?.schedules) || [];
-  const schedulesNamesList =
-    (schedules && schedules.map((item) => item?.name)) || [];
-  const scheduleName = watch(ScheduleFields.name);
+  const scheduleName = watch(ScheduleFormFields.scheduleName);
 
   useEffect(() => {
     if (mode === 'edit' && setSelectedScheduleName) {
@@ -48,38 +42,11 @@ export const ScheduledBackupModalForm = () => {
   }, [scheduleName]);
 
   return (
-    <>
-      {mode === 'new' && (
-        <TextInput
-          name={ScheduleFields.name}
-          label={Messages.scheduleName.label}
-          isRequired
-        />
-      )}
-      {mode === 'edit' && (
-        <AutoCompleteInput
-          name={ScheduleFields.name}
-          label={Messages.scheduleName.label}
-          options={schedulesNamesList}
-          isRequired
-        />
-      )}
-      <LabeledContent label="Repeats">
-        <TimeSelection showInfoAlert />
-      </LabeledContent>
-
-      <AutoCompleteInput
-        name={ScheduleFields.storageLocation}
-        label={Messages.storageLocation}
-        loading={isFetching}
-        options={backupStorages}
-        autoCompleteProps={{
-          isOptionEqualToValue: (option, value) => option.name === value.name,
-          getOptionLabel: (option) =>
-            typeof option === 'string' ? option : option.name,
-        }}
-        isRequired
-      />
-    </>
+    <ScheduleForm
+      mode={mode}
+      schedules={schedules}
+      storageLocationFetching={isFetching}
+      storageLocationOptions={backupStorages}
+    />
   );
 };

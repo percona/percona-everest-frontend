@@ -20,18 +20,21 @@ import { FormDialog } from '../../../../components/form-dialog';
 import { useBackupStorages } from '../../../../hooks/api/backup-storages/useBackupStorages';
 import { Messages as CommonMessages } from '../../db-cluster-details.messages';
 import { NoStoragesModal } from '../no-storages-modal/no-storages-modal';
+import { ScheduleModalContext } from './context/schedule-modal.context';
 import {
-  BackupFields,
-  defaultValuesFc,
-  OnDemandBackupModalProps,
-  ScheduledBackupFormData,
+  DB_CLUSTER_QUERY,
+  useDbCluster,
+} from '../../../../hooks/api/db-cluster/useDbCluster';
+import { useUpdateSchedules } from '../../../../hooks/api/backups/useScheduledBackups';
+import { scheduleModalDefaultValues } from './scheduled-backup-modal-utils';
+import { Messages } from './scheduled-backup-modal.messages';
+import { ScheduledBackupModalForm } from './scheduled-backup-modal-form/scheduled-backup-modal-form';
+import {
+  ScheduleFormData,
   schema,
-} from './scheduled-backup-modal.types';
+} from '../../../../components/schedule-form/schedule-form.schema';
 
-export const ScheduledBackupModal = ({
-  open,
-  handleClose,
-}: OnDemandBackupModalProps) => {
+export const ScheduledBackupModal = () => {
   const queryClient = useQueryClient();
   const { dbClusterName } = useParams();
   const {
@@ -58,7 +61,6 @@ export const ScheduledBackupModal = ({
     () => schema(schedulesNamesList, mode),
     [schedulesNamesList, mode]
   );
-  const { data: backupStorages = [], isFetching } = useBackupStorages();
 
   const selectedSchedule = useMemo(
     () =>
@@ -121,7 +123,7 @@ export const ScheduledBackupModal = ({
       size="XXL"
       data-testId="scheduled-backup-modal"
     >
-      <ScheduledBackupModalForm />
+      {mode && <ScheduledBackupModalForm />}
     </FormDialog>
   );
 };

@@ -17,55 +17,60 @@ import React from 'react';
 import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
 import { TextInput } from '@percona/ui-lib.form.inputs.text';
 import { LabeledContent } from '@percona/ui-lib.labeled-content';
-import {BackupStorage} from "../../types/backupStorages.types";
-import {Schedule} from "../../types/dbCluster.types";
-import {TimeSelection} from "../time-selection/time-selection";
-import { ScheduleFormFields } from "./schedule-form.types";
-import { Messages } from "./schedule-form.messages";
+import { BackupStorage } from '../../types/backupStorages.types';
+import { Schedule } from '../../types/dbCluster.types';
+import { TimeSelection } from '../time-selection/time-selection';
+import { ScheduleFormFields } from './schedule-form.types';
+import { Messages } from './schedule-form.messages';
 
 type ScheduleFormProps = {
-    mode: 'new'|'edit';
-    schedules: Schedule[];
-    storageLocationFetching: boolean;
-    storageLocationOptions:  BackupStorage[];
+  mode: 'new' | 'edit';
+  schedules: Schedule[];
+  storageLocationFetching: boolean;
+  storageLocationOptions: BackupStorage[];
 };
-export const ScheduleForm = ({mode, schedules, storageLocationFetching, storageLocationOptions}: ScheduleFormProps) => {
-    console.log('render ScheduleForm');
-    const schedulesNamesList: string[] = schedules.map(item => item?.name);
+export const ScheduleForm = ({
+  mode,
+  schedules,
+  storageLocationFetching,
+  storageLocationOptions,
+}: ScheduleFormProps) => {
+  const schedulesNamesList =
+    (schedules && schedules.map((item) => item?.name)) || [];
 
-    return (
-        <>
-            {mode === 'new' && (
-                <TextInput
-                    name={ScheduleFormFields.scheduleName}
-                    label={Messages.scheduleName.label}
-                    isRequired
-                />
-            )}
-            {mode === 'edit' && (
-                <AutoCompleteInput
-                    name={ScheduleFormFields.scheduleName}
-                    label={Messages.scheduleName.label}
-                    options={schedulesNamesList}
-                    isRequired
-                />
-            )}
-            <LabeledContent label="Repeats">
-                <TimeSelection showInfoAlert />
-            </LabeledContent>
+  return (
+    <>
+      {mode === 'new' && (
+        <TextInput
+          name={ScheduleFormFields.scheduleName}
+          label={Messages.scheduleName.label}
+          isRequired
+        />
+      )}
+      {mode === 'edit' && (
+        <AutoCompleteInput
+          name={ScheduleFormFields.scheduleName}
+          label={Messages.scheduleName.label}
+          options={schedulesNamesList}
+          isRequired
+        />
+      )}
+      <LabeledContent label="Repeats">
+        <TimeSelection showInfoAlert />
+      </LabeledContent>
 
-            <AutoCompleteInput
-                name={ScheduleFormFields.storageLocation}
-                label={Messages.storageLocation}
-                loading={storageLocationFetching}
-                options={storageLocationOptions}
-                autoCompleteProps={{
-                    isOptionEqualToValue: (option, value) => option.name === value.name,
-                    getOptionLabel: (option) =>
-                        typeof option === 'string' ? option : option.name,
-                }}
-                isRequired
-            />
-        </>
-    );
+      <AutoCompleteInput
+        name={ScheduleFormFields.storageLocation}
+        label={Messages.storageLocation}
+        loading={storageLocationFetching}
+        options={storageLocationOptions}
+        autoCompleteProps={{
+          isOptionEqualToValue: (option, value) => option.name === value.name,
+          getOptionLabel: (option) =>
+            typeof option === 'string' ? option : option.name,
+        }}
+        isRequired
+      />
+    </>
+  );
 };

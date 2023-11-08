@@ -1,17 +1,18 @@
 import { useMutation, UseMutationOptions } from 'react-query';
 import { updateDbClusterFn } from '../../../api/dbClusterApi';
 import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils';
-import { ScheduleFormData } from '../../../pages/db-cluster-details/backups/scheduled-backup-modal/scheduled-backup-modal-form/scheduled-backup-modal-form.types';
 import { DbCluster, Schedule } from '../../../types/dbCluster.types';
 import { useDbCluster } from '../db-cluster/useDbCluster';
 import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
+import { ScheduleFormData } from '../../../components/schedule-form/schedule-form.schema';
 
 const backupScheduleFormValuesToDbClusterPayload = (
   dbPayload: ScheduleFormData,
   dbCluster: DbCluster,
   mode: 'edit' | 'new'
 ): DbCluster => {
-  const { selectedTime, minute, hour, amPm, onDay, weekDay, name } = dbPayload;
+  const { selectedTime, minute, hour, amPm, onDay, weekDay, scheduleName } =
+    dbPayload;
   const backupSchedule = getCronExpressionFromFormValues({
     selectedTime,
     minute,
@@ -26,7 +27,7 @@ const backupScheduleFormValuesToDbClusterPayload = (
       ...(dbCluster.spec.backup?.schedules ?? []),
       {
         enabled: true,
-        name,
+        name: scheduleName,
         backupStorageName:
           typeof dbPayload.storageLocation === 'string'
             ? dbPayload.storageLocation

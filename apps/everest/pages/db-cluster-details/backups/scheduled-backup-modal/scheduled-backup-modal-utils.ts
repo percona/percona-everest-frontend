@@ -17,8 +17,8 @@ import { Schedule } from '../../../../types/dbCluster.types';
 import { generateShortUID } from '../../../database-form/steps/first/utils';
 import { TIME_SELECTION_DEFAULTS } from '../../../database-form/database-form.constants';
 import { getFormValuesFromCronExpression } from '../../../../components/time-selection/time-selection.utils';
-import {ScheduleFormData} from "../../../../components/schedule-form/schedule-form.schema";
-import {ScheduleFormFields} from "../../../../components/schedule-form/schedule-form.types";
+import { ScheduleFormData } from '../../../../components/schedule-form/schedule-form.schema';
+import { ScheduleFormFields } from '../../../../components/schedule-form/schedule-form.types';
 
 export const scheduleModalDefaultValues = (
   mode: 'new' | 'edit',

@@ -15,16 +15,15 @@
 
 import React, { useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
-import { AutoCompleteInput } from '@percona/ui-lib.form.inputs.auto-complete';
 import { SwitchInput } from '@percona/ui-lib.form.inputs.switch';
 import { useFormContext } from 'react-hook-form';
-import { TimeSelection } from '../../../../components/time-selection/time-selection';
 import { useBackupStorages } from '../../../../hooks/api/backup-storages/useBackupStorages';
 import { DbWizardFormFields } from '../../database-form.types';
-import { Messages } from './third-step.messages';
+import { Messages } from './backups.messages';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
+import { ScheduleForm } from '../../../../components/schedule-form/schedule-form';
 
-export const ThirdStep = () => {
+export const Backups = () => {
   const { control, watch, setValue } = useFormContext();
   const mode = useDatabasePageMode();
   const backupsEnabled: boolean = watch(DbWizardFormFields.backupsEnabled);
@@ -38,6 +37,7 @@ export const ThirdStep = () => {
       });
     }
   }, [backupStorages]);
+  const schedules = mode === 'new' ? [] : []; //TODO 485
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -50,23 +50,13 @@ export const ThirdStep = () => {
       />
       {backupsEnabled && (
         <>
-          {/* @ts-ignore */}
-          <Typography variant="sectionHeading">
-            {Messages.repeatsEvery}
-          </Typography>
-          <TimeSelection showInfoAlert />
-          <AutoCompleteInput
-            name={DbWizardFormFields.storageLocation}
-            label={Messages.storageLocation}
-            loading={isFetching}
-            options={backupStorages}
-            autoCompleteProps={{
-              isOptionEqualToValue: (option, value) =>
-                option.name === value.name,
-              getOptionLabel: (option) =>
-                typeof option === 'string' ? option : option.name,
-            }}
+          <ScheduleForm
+            mode="new"
+            schedules={schedules}
+            storageLocationFetching={isFetching}
+            storageLocationOptions={backupStorages}
           />
+
           {/* <Typography variant="h6">{Messages.pitr}</Typography>
           <Typography variant="caption">{Messages.captionPitr}</Typography>
           <SwitchInput

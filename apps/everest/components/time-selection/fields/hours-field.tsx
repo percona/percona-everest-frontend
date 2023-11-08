@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { SelectInput } from '@percona/ui-lib.form.inputs.select';
 import { MINUTES } from '../time-selection.constants';
 import { Messages } from '../time-selection.messages';
-import {TimeSelectionFields} from "../time-selection.types";
+import { TimeSelectionFields } from '../time-selection.types';
 
 export const HoursField = () => {
   const { control } = useFormContext();
