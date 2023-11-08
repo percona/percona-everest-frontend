@@ -1,42 +1,32 @@
-# Install bit
+# Pre-Requisites
 
-```bash
-make install-bit
-```
+Make sure PNPM is installed: https://pnpm.io/installation
 
 # Install dependencies
 
 ```bash
-make init
+pnpm install
 ```
 
-# Running Bit with compositions
+# Run everest in development mode
+```bash
+pnpm --filter "@percona/everest" dev
+```
+
+This will trigger the `dev` script from the `@percona/everest` workspace.
+More about PNPM filtering here: https://pnpm.io/filtering
+
+# Build packages
+```bash
+pnpm build
+```
+
+By default, Everest dist folder will be placed within `apps/everest`. This can be changed using the `EVEREST_OUT_DIR` env var, for example:
 
 ```bash
-bit start
+EVEREST_OUT_DIR=my-dist pnpm build
 ```
 
-# Running a particular app (e.g. Everest)
+The path for this env var is relative to the repo root, so here `my-dist` would be placed at root level.
 
-```bash
-cd apps/<app-name>
-make run
-```
-
-# Run unit tests for app
-```bash
-cd apps/<app-name>
-make test
-```
-
-# Run E2E tests for app
-```bash
-cd apps/<app-name>
-make test-ui
-```
-
-# Build app
-```bash
-cd apps/<app-name>
-make build
-```
+We use Turborepo (https://turbo.build/repo) for orchestratrion and caching across different packages.

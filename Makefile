@@ -1,19 +1,18 @@
-install-bit:
-	npm i -g @teambit/bvm
-	bvm install 1.1.0
-
 init:
-	bit install --recurring-install
+	pnpm install
 
 test:
-	bit test
+	pnpm test
+
+build:
+	pnpm build
 
 lint:
-	bit lint --fix
+	pnpm lint
 
 format:
-	bit format
+	pnpm format
 
-# Note: this will build every component. If you want to just build an app, cd into it and run the proper make build command
-build:
-	bit build
+# This might change in the future if we have more apps, but for now keep it simple
+dev:
+	pnpm --filter "@percona/everest" dev
