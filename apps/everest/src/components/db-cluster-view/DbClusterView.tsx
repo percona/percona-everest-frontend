@@ -64,14 +64,16 @@ export const DbClusterView = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const isPaused = (status: DbClusterStatus) =>
-    status === DbClusterStatus.paused || status === DbClusterStatus.pausing;
+  const isPaused = (dbClusterName: string) =>
+    combinedDbClusters.find(
+      (dbCluster) => dbCluster.metadata.name === dbClusterName
+    )?.spec.paused;
 
   const handleDbSuspendOrResumed = (
-    status: DbClusterStatus,
+    _status: DbClusterStatus,
     dbClusterName: string
   ) => {
-    const shouldBePaused = !isPaused(status);
+    const shouldBePaused = !isPaused(dbClusterName);
     const dbCluster = combinedDbClusters.find(
       (item) => item.metadata.name === dbClusterName
     );
@@ -275,7 +277,7 @@ export const DbClusterView = () => {
               sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
             >
               <PauseCircleOutline />{' '}
-              {isPaused(row.original.status)
+              {isPaused(row.original.databaseName)
                 ? Messages.menuItems.resume
                 : Messages.menuItems.suspend}
             </MenuItem>,
