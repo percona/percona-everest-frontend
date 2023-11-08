@@ -14,7 +14,7 @@
 // limitations under the License.
 
 import z from 'zod';
-import { MAX_SCHEDULE_NAME_LENGTH } from "../../consts.ts";
+import { MAX_SCHEDULE_NAME_LENGTH } from '../../consts.ts';
 import { Messages } from '../../pages/db-cluster-details/backups/scheduled-backup-modal/scheduled-backup-modal.messages';
 import {
   AmPM,

@@ -15,7 +15,7 @@
 
 import { useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
-import { SwitchInput } from "@percona/ui-lib";
+import { SwitchInput } from '@percona/ui-lib';
 import { useFormContext } from 'react-hook-form';
 import { useBackupStorages } from '../../../../hooks/api/backup-storages/useBackupStorages';
 import { DbWizardFormFields } from '../../database-form.types';

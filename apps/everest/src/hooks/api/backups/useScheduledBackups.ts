@@ -4,7 +4,7 @@ import { getCronExpressionFromFormValues } from 'components/time-selection/time-
 import { DbCluster, Schedule } from 'shared-types/dbCluster.types';
 import { useDbCluster } from '../db-cluster/useDbCluster';
 import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
-import { ScheduleFormData } from "../../../components/schedule-form/schedule-form.schema.ts";
+import { ScheduleFormData } from '../../../components/schedule-form/schedule-form.schema.ts';
 
 const backupScheduleFormValuesToDbClusterPayload = (
   dbPayload: ScheduleFormData,

@@ -1,12 +1,12 @@
 import z from 'zod';
 
 const tooLongErrorMessage = (fieldName: string) =>
-    `The ${fieldName} name is too long\'`;
+  `The ${fieldName} name is too long\'`;
 
 export const errorMessages = {
-    tooLong: (value: string) => tooLongErrorMessage(value),
-    doesNotEndWithDash: "The name shouldn't end with a hyphen.",
-    doesNotStartWithDash: "The name shouldn't start with a hyphen or a number.",
+  tooLong: (value: string) => tooLongErrorMessage(value),
+  doesNotEndWithDash: "The name shouldn't end with a hyphen.",
+  doesNotStartWithDash: "The name shouldn't start with a hyphen or a number.",
 };
 
 export const doesNotContainerAnythingButAlphanumericAndDash = /^[a-z0-9-]+$/;
@@ -17,12 +17,12 @@ export const doesNotEndWithDash = /[^-]$/;
 // TODO check messages with Catalina
 
 export const rfc_123_schema = (fieldName: string, maxLength: number) =>
-    z
-        .string()
-        .regex(
-            doesNotContainerAnythingButAlphanumericAndDash,
-            `The ${fieldName} name should not exceed ${maxLength} characters.`
-        )
-        .regex(doesNotEndWithDash, errorMessages.doesNotEndWithDash)
-        .regex(doesNotStartWithDash, errorMessages.doesNotStartWithDash)
-        .trim();
+  z
+    .string()
+    .regex(
+      doesNotContainerAnythingButAlphanumericAndDash,
+      `The ${fieldName} name should not exceed ${maxLength} characters.`
+    )
+    .regex(doesNotEndWithDash, errorMessages.doesNotEndWithDash)
+    .regex(doesNotStartWithDash, errorMessages.doesNotStartWithDash)
+    .trim();

@@ -16,9 +16,9 @@
 import { TimeSelection } from '../time-selection/time-selection';
 import { ScheduleFormFields } from './schedule-form.types.ts';
 import { Messages } from './schedule-form.messages.ts';
-import { Schedule} from "../../shared-types/dbCluster.types.ts";
-import { BackupStorage} from "../../shared-types/backupStorages.types.ts";
-import { AutoCompleteInput, LabeledContent, TextInput } from "@percona/ui-lib";
+import { Schedule } from '../../shared-types/dbCluster.types.ts';
+import { BackupStorage } from '../../shared-types/backupStorages.types.ts';
+import { AutoCompleteInput, LabeledContent, TextInput } from '@percona/ui-lib';
 
 type ScheduleFormProps = {
   mode: 'new' | 'edit';

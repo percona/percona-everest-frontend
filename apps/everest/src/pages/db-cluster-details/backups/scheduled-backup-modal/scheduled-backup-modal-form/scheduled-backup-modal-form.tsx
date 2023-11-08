@@ -13,15 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
-import {useParams} from "react-router-dom";
-import {useFormContext} from "react-hook-form";
-import {useContext, useEffect} from "react";
-import {ScheduleModalContext} from "../context/schedule-modal.context.tsx";
-import {useBackupStorages} from "../../../../../hooks/api/backup-storages/useBackupStorages.ts";
-import {useDbCluster} from "../../../../../hooks/api/db-cluster/useDbCluster.ts";
-import {ScheduleFormFields} from "../../../../../components/schedule-form/schedule-form.types.ts";
-import {ScheduleForm} from "../../../../../components/schedule-form/schedule-form.tsx";
+import { useParams } from 'react-router-dom';
+import { useFormContext } from 'react-hook-form';
+import { useContext, useEffect } from 'react';
+import { ScheduleModalContext } from '../context/schedule-modal.context.tsx';
+import { useBackupStorages } from '../../../../../hooks/api/backup-storages/useBackupStorages.ts';
+import { useDbCluster } from '../../../../../hooks/api/db-cluster/useDbCluster.ts';
+import { ScheduleFormFields } from '../../../../../components/schedule-form/schedule-form.types.ts';
+import { ScheduleForm } from '../../../../../components/schedule-form/schedule-form.tsx';
 
 export const ScheduledBackupModalForm = () => {
   const { watch } = useFormContext();
