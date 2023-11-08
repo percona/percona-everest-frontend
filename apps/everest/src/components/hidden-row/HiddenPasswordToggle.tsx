@@ -14,7 +14,7 @@
 // limitations under the License.
 
 import { useState } from 'react';
-import { Box, IconButton } from '@mui/material';
+import { Box, IconButton, Typography } from '@mui/material';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import { Messages } from './HiddenPasswordToggle.messages';
@@ -43,28 +43,31 @@ export const HiddenPasswordToggle = ({
       sx={{
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'center',
-        gap: 2,
-        position: 'relative',
+        alignItems: 'flex-start',
+        minHeight: '45px'
       }}
     >
-      <Box
+      <Typography variant='body2' sx={{ wordBreak: 'break-all', pt: 0.5 }}>
+        {formattedValue}
+      </Typography>
+      {/* <Box
         data-testid="hidden-row"
         sx={{
           mt: '3px',
           wordBreak: 'break-all',
-          flex: '0 0 70%',
+          // flex: '0 0 70%',
         }}
       >
         {formattedValue}
-      </Box>
+      </Box> */}
       <IconButton
         onClick={toggle}
         aria-label={`visibility-${show ? 'off' : 'on'}`}
         sx={{
-          position: 'absolute',
-          top: (theme) => theme.spacing(-1),
-          right: 0,
+          mt: show ? 0 : -1
+          // position: 'absolute',
+          // top: (theme) => theme.spacing(-1),
+          // right: 0,
         }}
       >
         {show ? <VisibilityOutlinedIcon /> : <VisibilityOffOutlinedIcon />}
