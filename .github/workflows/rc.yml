@@ -44,6 +44,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
+          cache: 'pnpm'
+          cache-dependency-path: percona-everest-frontend/pnpm-lock.yaml
 
       - name: Build Everest Frontend app
         run: |
