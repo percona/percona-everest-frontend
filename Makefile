@@ -12,3 +12,6 @@ lint:
 
 format:
 	pnpm format
+
+run-everest:
+	pnpm --filter "@percona/everest" dev
