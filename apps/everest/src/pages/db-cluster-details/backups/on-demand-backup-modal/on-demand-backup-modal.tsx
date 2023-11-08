@@ -1,8 +1,9 @@
-import { TextInput, AutoCompleteInput } from '@percona/ui-lib';
+import { TextInput } from '@percona/ui-lib';
 import { useMemo } from 'react';
 import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { FormDialog } from 'components/form-dialog';
+import { AutoCompleteAutoFill } from 'components/auto-complete-auto-fill/auto-complete-auto-fill';
 import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages';
 import {
   BACKUPS_QUERY_KEY,
@@ -66,16 +67,12 @@ export const OnDemandBackupModal = ({
         label={Messages.onDemandBackupModal.backupName}
         isRequired
       />
-      <AutoCompleteInput
+      <AutoCompleteAutoFill
         name={BackupFields.storageLocation}
         label={Messages.onDemandBackupModal.backupStorage}
         loading={isFetching}
         options={backupStorages}
-        autoCompleteProps={{
-          isOptionEqualToValue: (option, value) => option.name === value.name,
-          getOptionLabel: (option) =>
-            typeof option === 'string' ? option : option.name,
-        }}
+        enableFillFirst
         isRequired
       />
     </FormDialog>
