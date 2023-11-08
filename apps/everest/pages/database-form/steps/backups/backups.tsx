@@ -56,7 +56,6 @@ export const Backups = () => {
             storageLocationFetching={isFetching}
             storageLocationOptions={backupStorages}
           />
-
           {/* <Typography variant="h6">{Messages.pitr}</Typography>
           <Typography variant="caption">{Messages.captionPitr}</Typography>
           <SwitchInput
