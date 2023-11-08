@@ -1,11 +1,3 @@
 {
-  "extends": "./node_modules/@teambit/react/typescript/tsconfig.json",
-  // "include": ["types"],
-  "compilerOptions": {
-    "noEmit": true,
-  //"strict": true
-  },
-  "exclude": [
-    "dist"
-  ]
+  "extends": "./packages/tsconfig/base.json"
 }
