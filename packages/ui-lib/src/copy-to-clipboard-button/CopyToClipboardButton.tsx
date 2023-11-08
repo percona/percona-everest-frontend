@@ -1,10 +1,14 @@
-import { useState } from "react";
-import { IconButton } from "@mui/material";
+import { useState } from 'react';
+import { IconButton } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
-import { CopyToClipboardButtonProps } from "./CopyToClipboardButton.types";
+import { CopyToClipboardButtonProps } from './CopyToClipboardButton.types';
 
-const CopyToClipboardButton = ({ textToCopy, buttonSx, iconSx }: CopyToClipboardButtonProps) => {
+const CopyToClipboardButton = ({
+  textToCopy,
+  buttonSx,
+  iconSx,
+}: CopyToClipboardButtonProps) => {
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
@@ -14,7 +18,7 @@ const CopyToClipboardButton = ({ textToCopy, buttonSx, iconSx }: CopyToClipboard
     setTimeout(() => {
       setOpen(false);
     }, 1500);
-  }
+  };
 
   return (
     <Tooltip

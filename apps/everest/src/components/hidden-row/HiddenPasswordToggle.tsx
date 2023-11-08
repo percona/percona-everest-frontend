@@ -47,10 +47,10 @@ export const HiddenPasswordToggle = ({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'flex-start',
-        minHeight: '45px'
+        minHeight: '45px',
       }}
     >
-      <Typography variant='body2' sx={{ wordBreak: 'break-all', pt: 0.5 }}>
+      <Typography variant="body2" sx={{ wordBreak: 'break-all', pt: 0.5 }}>
         {formattedValue}
       </Typography>
       <IconButton
@@ -60,7 +60,9 @@ export const HiddenPasswordToggle = ({
       >
         {show ? <VisibilityOutlinedIcon /> : <VisibilityOffOutlinedIcon />}
       </IconButton>
-      {showCopy && <CopyToClipboardButton buttonSx={{ mt: -1 }}  textToCopy={value} />}
+      {showCopy && (
+        <CopyToClipboardButton buttonSx={{ mt: -1 }} textToCopy={value} />
+      )}
     </Box>
   );
 };
