@@ -16,7 +16,10 @@
 import { Page, expect } from '@playwright/test';
 import { testMonitoringName2 } from '../../../utils/monitoring-instance';
 
-export const monitoringStepCheck = async (page: Page, monitoringInstancesList) => {
+export const monitoringStepCheck = async (
+  page: Page,
+  monitoringInstancesList
+) => {
   await expect(page.getByRole('heading', { name: 'Monitoring' })).toBeVisible();
   await page.getByLabel('Enable monitoring').check();
 
