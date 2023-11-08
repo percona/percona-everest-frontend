@@ -18,6 +18,7 @@
   "files": [
     "dist"
   ],
+  "prettier": "@percona/prettier-config",
   "dependencies": {
     "@fontsource/poppins": "^5.0.8",
     "@mui/utils": "^5.14.15"

@@ -1,50 +1,50 @@
-import { PaletteMode } from "@mui/material";
-import { ThemeOptions } from "@mui/material/styles";
-import { deepmerge } from "@mui/utils";
-import baseThemeOptions from "../base";
+import { PaletteMode } from '@mui/material';
+import { ThemeOptions } from '@mui/material/styles';
+import { deepmerge } from '@mui/utils';
+import baseThemeOptions from '../base';
 
 const everestThemeOptions = (mode: PaletteMode): ThemeOptions => {
   const newOptions: ThemeOptions = {
     palette: {
       mode,
-      ...(mode === "light"
+      ...(mode === 'light'
         ? {
             primary: {
-              main: "#0E5FB5",
-              dark: "#0B4A8C",
-              light: "#127AE8",
-              contrastText: "#FFFFFF",
+              main: '#0E5FB5',
+              dark: '#0B4A8C',
+              light: '#127AE8',
+              contrastText: '#FFFFFF',
             },
             action: {
-              hover: "rgba(18, 119, 227, 0.04)",
+              hover: 'rgba(18, 119, 227, 0.04)',
               hoverOpacity: 0.04,
-              selected: "rgba(18, 119, 227, 0.08)",
+              selected: 'rgba(18, 119, 227, 0.08)',
               selectedOpacity: 0.08,
-              focus: "rgba(18, 119, 227, 0.12)",
+              focus: 'rgba(18, 119, 227, 0.12)',
               focusOpacity: 0.12,
-              focusVisible: "rgba(18, 119, 227, 0.3)",
+              focusVisible: 'rgba(18, 119, 227, 0.3)',
               focusVisibleOpacity: 0.3,
-              outlinedBorder: "rgba(18, 119, 227, 0.5)",
+              outlinedBorder: 'rgba(18, 119, 227, 0.5)',
               outlinedBorderOpacity: 0.5,
             },
           }
         : {
             primary: {
-              main: "#62AEFF",
-              dark: "#1486FF",
-              light: "#B6D9FF",
-              contrastText: "#000000",
+              main: '#62AEFF',
+              dark: '#1486FF',
+              light: '#B6D9FF',
+              contrastText: '#000000',
             },
             action: {
-              hover: "rgba(46, 147, 255, 0.08)",
+              hover: 'rgba(46, 147, 255, 0.08)',
               hoverOpacity: 0.08,
-              selected: "rgba(46, 147, 255, 0.12)",
+              selected: 'rgba(46, 147, 255, 0.12)',
               selectedOpacity: 0.12,
-              focus: "rgba(46, 147, 255, 0.15)",
+              focus: 'rgba(46, 147, 255, 0.15)',
               focusOpacity: 0.15,
-              focusVisible: "rgba(46, 147, 255, 0.3)",
+              focusVisible: 'rgba(46, 147, 255, 0.3)',
               focusVisibleOpacity: 0.3,
-              outlinedBorder: "rgba(46, 147, 255, 0.5)",
+              outlinedBorder: 'rgba(46, 147, 255, 0.5)',
               outlinedBorderOpacity: 0.5,
             },
           }),
@@ -52,16 +52,16 @@ const everestThemeOptions = (mode: PaletteMode): ThemeOptions => {
     customColors: {
       darkMode: {
         surfaces: {
-          backdrop: "#2C323E",
-          default: "#2C323E",
-          high: "#3A4151",
+          backdrop: '#2C323E',
+          default: '#2C323E',
+          high: '#3A4151',
         },
       },
       lightMode: {
         surfaces: {
-          backdrop: "rgba(44, 50, 62, 0.75)",
-          default: "#FFFFFF",
-          low: "#F0F1F4",
+          backdrop: 'rgba(44, 50, 62, 0.75)',
+          default: '#FFFFFF',
+          low: '#F0F1F4',
         },
       },
     },
@@ -73,22 +73,22 @@ const everestThemeOptions = (mode: PaletteMode): ThemeOptions => {
         styleOverrides: {
           root: ({ theme, ownerState }) => ({
             color: theme.palette.text.primary,
-            ...(ownerState.color === "primary" && {
+            ...(ownerState.color === 'primary' && {
               color: theme.palette.primary.main,
             }),
-            "&:hover": {
+            '&:hover': {
               backgroundColor: theme.palette.action.selected,
             },
-            "&:focus": {
+            '&:focus': {
               backgroundColor: theme.palette.action.focusVisible,
             },
-            ...(ownerState.size === "large" && {
+            ...(ownerState.size === 'large' && {
               svg: {
                 width: 40,
                 height: 40,
               },
             }),
-            ...(ownerState.size === "small" && {
+            ...(ownerState.size === 'small' && {
               svg: {
                 width: 20,
                 height: 20,
@@ -107,8 +107,8 @@ const everestThemeOptions = (mode: PaletteMode): ThemeOptions => {
       MuiToggleButtonGroup: {
         styleOverrides: {
           root: ({ theme }) => ({
-            [theme.breakpoints.down("sm")]: {
-              flexDirection: "column",
+            [theme.breakpoints.down('sm')]: {
+              flexDirection: 'column',
             },
           }),
         },
