@@ -49,6 +49,7 @@ export const HiddenPasswordToggle = ({
         alignItems: 'flex-start',
         minHeight: '45px'
       }}
+      data-testid="hidden-row"
     >
       <Typography variant='body2' sx={{ wordBreak: 'break-all', pt: 0.5 }}>
         {formattedValue}
