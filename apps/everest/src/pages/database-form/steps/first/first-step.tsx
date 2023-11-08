@@ -260,7 +260,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
           name={DbWizardFormFields.storageClass}
           label={Messages.labels.storageClass}
           loading={clusterInfoFetching}
-          options={[...(clusterInfo?.storageClassNames || []), 'my-class']}
+          options={clusterInfo?.storageClassNames || []}
           autoCompleteProps={{
             disableClearable: true,
             disabled: mode === 'edit' || loadingDefaultsForEdition,
