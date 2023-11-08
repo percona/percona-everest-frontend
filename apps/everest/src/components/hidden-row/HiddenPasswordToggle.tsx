@@ -53,16 +53,6 @@ export const HiddenPasswordToggle = ({
       <Typography variant='body2' sx={{ wordBreak: 'break-all', pt: 0.5 }}>
         {formattedValue}
       </Typography>
-      {/* <Box
-        data-testid="hidden-row"
-        sx={{
-          mt: '3px',
-          wordBreak: 'break-all',
-          // flex: '0 0 70%',
-        }}
-      >
-        {formattedValue}
-      </Box> */}
       <IconButton
         onClick={toggle}
         aria-label={`visibility-${show ? 'off' : 'on'}`}
