@@ -1,7 +1,7 @@
-import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react-swc';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import * as path from 'path';
+import tsconfigPaths from 'vite-tsconfig-paths';
+import { defineConfig } from 'vitest/config';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,6 +13,7 @@ export default defineConfig({
     proxy: {
       '/v1': `http://localhost:${process.env.API_PORT || '8080'}`,
     },
+    open: true,
   },
   build: {
     assetsDir: 'static',
