@@ -5,7 +5,8 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "turbo": "^1.10.16"
+    "turbo": "^1.10.16",
+    "typescript": "^5.2.2"
   },
   "scripts": {
     "test": "turbo run test",
