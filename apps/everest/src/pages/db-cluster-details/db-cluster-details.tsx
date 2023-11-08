@@ -72,7 +72,14 @@ export const DbClusterDetails = () => {
         </IconButton>
         <Typography variant="h4">{dbClusterName}</Typography>
       </Box>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 1 }}>
+      <Box
+        sx={{
+          borderBottom: 1,
+          borderColor: 'divider',
+          mb: 1,
+          width: 'fit-content',
+        }}
+      >
         <Tabs
           value={currentTab}
           variant="scrollable"
