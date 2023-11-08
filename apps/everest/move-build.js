@@ -2,43 +2,16 @@
 import * as path from 'path';
 import * as fs from 'fs';
 
-const moveFiles = (sourceDir, targetDir) => {
-  return new Promise((resolve, reject) => {
-    fs.readdir(sourceDir, (err, files) => {
-      if (err) {
-        reject(err);
-        return;
+function copyFolderSync(from, to) {
+  fs.mkdirSync(to);
+  fs.readdirSync(from).forEach(element => {
+      if (fs.lstatSync(path.join(from, element)).isFile()) {
+          fs.copyFileSync(path.join(from, element), path.join(to, element));
+      } else {
+          copyFolderSync(path.join(from, element), path.join(to, element));
       }
-
-      files.forEach((file) => {
-        const oldPath = path.join(sourceDir, file);
-        const newPath = path.join(targetDir, file);
-        const stat = fs.lstatSync(oldPath);
-
-        if (stat.isDirectory()) {
-          moveFiles(oldPath, targetDir)
-            .then(() => {
-              if (files.indexOf(file) === files.length - 1) {
-                resolve();
-              }
-            })
-            .catch((err) => reject(err));
-        } else if (stat.isFile()) {
-          fs.rename(oldPath, newPath, (err) => {
-            if (err) {
-              reject(err);
-              return;
-            }
-
-            if (files.indexOf(file) === files.length - 1) {
-              resolve();
-            }
-          });
-        }
-      });
-    });
   });
-};
+}
 
 const checkDistEnvVarAndMove = async () => {
   const envDir = process.env.EVEREST_OUT_DIR;
@@ -51,8 +24,7 @@ const checkDistEnvVarAndMove = async () => {
     console.log(`Outputting Everest files to: ${outDir}`);
 
     fs.rmSync(outDir, { force: true, recursive: true });
-    fs.mkdirSync(outDir, { recursive: true });
-    await moveFiles('./dist', outDir).catch((err) => console.log(err));
+    copyFolderSync('./dist', outDir);
     fs.rmSync('./dist', { force: true, recursive: true });
   }
 };
