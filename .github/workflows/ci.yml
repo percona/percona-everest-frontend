@@ -21,19 +21,90 @@ env:
   NODE_OPTIONS: "—-max_old_space_size=4096"
 
 jobs:
-  lint:
-    name: ESLint & format
+  cache_pnpm:
+    name: Cache PNPM
     runs-on: ubuntu-20.04
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    strategy:
-      matrix:
-        node-version: [16.x]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.ROBOT_TOKEN }}
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 8
 
+    - name: Use Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+        cache: 'pnpm'
+        cache-dependency-path: 'pnpm-lock.yaml'
+
+    - name: Install dependencies
+      run: make init
+
+  CI_checks:
+    runs-on: ubuntu-latest
+    needs: cache_pnpm
+    strategy:
+      matrix:
+        action: ['lint', 'format', 'test', 'build']
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.ROBOT_TOKEN }}
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 8
+    - name: Use Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+        cache: 'pnpm'
+        cache-dependency-path: 'pnpm-lock.yaml'
+
+    - run: make init
+
+    - name: lint
+      if:  matrix.action == 'lint'
+      run: make lint
+
+    - name: format
+      if:  matrix.action == 'format'
+      run: make format
+
+    - name: test
+      if:  matrix.action == 'test'
+      run: make test
+
+    - name: build
+      if:  matrix.action == 'build'
+      run: make build
+
+    - name: Check for changes
+      id: check_changes
+      run: |
+        git config --global user.email "ci-bot@percona.com"
+        git config --global user.name "CI Bot"
+        git diff --exit-code || echo "::set-output name=changes::true"
+
+    - uses: stefanzweifel/git-auto-commit-action@v5
+      if: steps.check_changes.outputs.changes == 'true' && github.event_name == 'pull_request'
+      with:
+        commit_message: "chore: lint/format"
+        token: ${{ secrets.ROBOT_TOKEN }}
+
+  E2E:
+    name: E2E Tests
+    needs: cache_pnpm
+    runs-on: ubuntu-20.04
+    env:
+      GOPRIVATE: github.com/percona,github.com/percona/percona-everest-backend,github.com/percona/percona-everest-cli,github.com/percona/everest-operator
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: FE
+          token: ${{ secrets.ROBOT_TOKEN }}
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -41,97 +112,39 @@ jobs:
       - name: Use Node
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16.x
           cache: 'pnpm'
+          cache-dependency-path: FE/pnpm-lock.yaml
 
-      - name: Install Bit
-        run: make install-bit
-
-      - name: add bvm bin folder to path
-        run: echo "$HOME/bin" >> $GITHUB_PATH
-
-      - name: Install dependencies
-        run: make init
-
-      - name: Run linter
-        run: make lint
-
-      - name: Run formatter
-        run: make format
-
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: 'chore: format files [skip ci]'
-          file_pattern: ':(exclude)pnpm-lock.yaml'
-  tests:
-    name: Tests
-    runs-on: ubuntu-20.04
-    env:
-      GOPRIVATE: github.com/percona,github.com/percona/percona-everest-backend,github.com/percona/percona-everest-cli,github.com/percona/everest-operator
-    strategy:
-      matrix:
-        node-version: [16.x]
-        go-version: [1.20.x]
-    steps:
-      - name: Checkout FE code
-        uses: actions/checkout@v3
-        with:
-          path: ./percona-everest-frontend
+      - name: Run Everest
+        run: |
+          cd FE
+          make init
+          pnpm --filter "@percona/everest" dev &
 
       - name: Checkout CLI repo
         uses: percona-platform/checkout@v3
         with:
           repository: percona/percona-everest-cli
           ref: 'main'
-          path: percona-everest-cli
+          path: CLI
 
       - name: Checkout backend repo
         uses: percona-platform/checkout@v3
         with:
           repository: percona/percona-everest-backend
           ref: 'main'
-          path: percona-everest-backend
-
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
-      - name: Use Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-          cache-dependency-path: '**/pnpm-lock.yaml'
+          path: BE
 
       - name: Configure git for private modules
         env:
           ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         run: git config --global url."https://percona-platform-robot:${ROBOT_TOKEN}@github.com".insteadOf "https://github.com"
 
-      - name: Install Bit
-        run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-frontend
-          make install-bit
-
-      - name: add bvm bin folder to path
-        run: echo "$HOME/bin" >> $GITHUB_PATH
-
-      - name: Build Everest
-        run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-frontend
-          make init
-          bit build everest
-
-      - name: Run Everest
-        run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-frontend
-          bit run everest --skip-watch &
-          sleep 30s
-
       - name: Set up Go release
         uses: percona-platform/setup-go@v4
         with:
-          go-version: ${{ matrix.go-version }}
+          go-version: 1.20.x
 
       - name: Set GO_VERSION environment variable
         run: |
@@ -140,7 +153,7 @@ jobs:
 
       - name: Run Everest backend
         run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-backend
+          cd BE
           make init
           make local-env-up
           touch everest-backend.log
@@ -151,7 +164,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: everest-backend.log
-          path: ./percona-everest-backend/everest-backend.log
+          path: BE/everest-backend.log
 
       - name: Create KIND cluster
         uses: helm/kind-action@v1.8.0
@@ -167,24 +180,24 @@ jobs:
 
       - name: Run Provisioning
         run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-cli
+          cd CLI
           go run cmd/everest/main.go install operators --backup.enable=false --everest.endpoint=http://127.0.0.1:8080 --monitoring.enable=false --name=minikube --operator.mongodb=true --operator.postgresql=true --operator.xtradb-cluster=true --skip-wizard --namespace test-everest
 
       - name: Run integration tests
         run: |
-          cd ${GITHUB_WORKSPACE}/percona-everest-frontend/apps/everest
-          make test-ui
+          cd FE
+          pnpm --filter "@percona/everest" e2e
 
       - name: Archive test results
         if: always()
         uses: actions/upload-artifact@v3
         with:
           name: test-results
-          path: ./percona-everest-frontend/apps/everest/ui-tests/test-results/
+          path: FE/apps/everest/.e2e/test-results/
 
       - name: Archive report
         if: always()
         uses: actions/upload-artifact@v3
         with:
           name: playwright-report
-          path: ./percona-everest-frontend/apps/everest/ui-tests/playwright-report/
+          path: FE/apps/everest/.e2e/playwright-report/
