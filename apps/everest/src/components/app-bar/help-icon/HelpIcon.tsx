@@ -31,6 +31,7 @@ const AppBarHelpIcon = () => {
         aria-haspopup="true"
         onClick={handleMenu}
         sx={{ color: 'text.secondary' }}
+        data-testid="help-appbar-button"
       >
         <HelpIcon />
       </IconButton>
