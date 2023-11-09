@@ -16,6 +16,7 @@
     "rm-build-dir": "rm -rf dist",
     "move-build": "node ./move-build.js"
   },
+  "prettier": "@percona/prettier-config",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -41,6 +42,7 @@
   },
   "devDependencies": {
     "@percona/eslint-config-react": "workspace:*",
+    "@percona/prettier-config": "workspace:*",
     "@playwright/test": "^1.39.0",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.0.0",
