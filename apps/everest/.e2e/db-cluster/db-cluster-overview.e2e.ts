@@ -52,7 +52,9 @@ test.describe('DB Cluster Overview', async () => {
     await expect(page.getByText('Type: MySQL')).toBeVisible();
     await expect(page.getByText(`Name: ${dbClusterName}`)).toBeVisible();
     await expect(page.getByText('Number of nodes: 1')).toBeVisible();
-    await expect(page.getByText('CPU: 600m').or(page.getByText('CPU: 0.6'))).toBeVisible();
+    await expect(
+      page.getByText('CPU: 600m').or(page.getByText('CPU: 0.6'))
+    ).toBeVisible();
     await expect(page.getByText('Disk: 1G')).toBeVisible();
     await expect(page.getByText('Memory: 1G')).toBeVisible();
 
