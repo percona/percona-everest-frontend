@@ -86,7 +86,7 @@ export const ScheduledBackupModal = () => {
 
   const values = useMemo(
     () => scheduleModalDefaultValues(mode, selectedSchedule),
-    [mode, selectedSchedule, openScheduleModal]
+    [mode, selectedSchedule]
   );
 
   if (!backupStorages.length) {
