@@ -1,2 +1,2 @@
-export { default as kebabize } from "./string";
-export * from "./db";
+export { default as kebabize } from './string';
+export * from './db';
