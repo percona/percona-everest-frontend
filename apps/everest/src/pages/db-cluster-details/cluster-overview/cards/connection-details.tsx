@@ -23,7 +23,9 @@ export const ConnectionDetails = ({
       <Grid container spacing={2}>
         <OverviewSection title={Messages.titles.host} loading={loading}>
           <OverviewSectionText>
-          {hostname.split(',').map((host) => <div key={host}>{host}</div>)}
+            {hostname.split(',').map((host) => (
+              <div key={host}>{host}</div>
+            ))}
           </OverviewSectionText>
         </OverviewSection>
         <OverviewSection title={Messages.titles.port} loading={loading}>

@@ -21,7 +21,11 @@ export const OverviewSection = ({
 );
 
 export const OverviewSectionText = ({ children }: OverviewSectionTextProps) => (
-  <Typography color="text.secondary" variant="caption" sx={{ wordBreak: 'break-word' }}>
+  <Typography
+    color="text.secondary"
+    variant="caption"
+    sx={{ wordBreak: 'break-word' }}
+  >
     {children}
   </Typography>
 );
