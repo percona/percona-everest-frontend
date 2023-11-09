@@ -56,8 +56,8 @@ export const ScheduledBackupModal = () => {
   );
 
   const schedules = (dbCluster && dbCluster?.spec?.backup?.schedules) || [];
-  const schedulesNamesList =
-    (schedules && schedules.map((item) => item?.name)) || [];
+  const schedulesNamesList = schedules.map((item) => item?.name);
+
   const sheduledBackupSchema = useMemo(
     () => schema(schedulesNamesList, mode),
     [schedulesNamesList, mode]
@@ -69,7 +69,7 @@ export const ScheduledBackupModal = () => {
         return schedules.find((item) => item?.name === selectedScheduleName);
       }
     },
-    [mode, openScheduleModal, schedules, selectedScheduleName]
+    [mode, schedules, selectedScheduleName]
   );
 
   const handleCloseScheduledBackupModal = () => {
