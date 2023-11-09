@@ -55,7 +55,7 @@ export const ClusterOverview = () => {
       <ConnectionDetails
         loading={fetchingCluster}
         loadingClusterDetails={fetchingClusterDetails || loadingAllClusters}
-        hostname={dbCluster?.status?.hostname!}
+        hostname={dbCluster?.status?.hostname}
         port={dbCluster?.status?.port!}
         username={dbClusterDetails?.username!}
         password={dbClusterDetails?.password!}
