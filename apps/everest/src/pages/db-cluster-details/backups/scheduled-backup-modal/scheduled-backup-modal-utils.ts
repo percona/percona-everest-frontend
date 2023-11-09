@@ -24,7 +24,7 @@ import { getFormValuesFromCronExpression } from 'components/time-selection/time-
 
 export const scheduleModalDefaultValues = (
   mode: 'new' | 'edit',
-  selectedSchedule: Schedule
+  selectedSchedule?: Schedule
 ): ScheduleFormData => {
   if (mode === 'edit' && selectedSchedule) {
     const { name, backupStorageName, schedule } = selectedSchedule;
