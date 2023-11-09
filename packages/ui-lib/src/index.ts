@@ -47,3 +47,5 @@ export * from './progress-bar';
 
 export { default as Table } from './table';
 export * from './table';
+
+export { default as CopyToClipboardButton } from './copy-to-clipboard-button';

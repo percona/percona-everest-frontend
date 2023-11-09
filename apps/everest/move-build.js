@@ -16,7 +16,7 @@ function copyFolderSync(from, to) {
 const checkDistEnvVarAndMove = async () => {
   const envDir = process.env.EVEREST_OUT_DIR;
 
-  if (envDir) {
+  if (!!envDir) {
     const outDir = path.isAbsolute(envDir)
       ? envDir
       : path.join(process.cwd(), '../..', envDir);
