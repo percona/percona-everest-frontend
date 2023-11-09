@@ -38,7 +38,7 @@ export const ConnectionDetails = ({
           loading={loadingClusterDetails}
         >
           <OverviewSectionText>
-            <HiddenPasswordToggle value={password} />
+            <HiddenPasswordToggle showCopy value={password} />
           </OverviewSectionText>
         </OverviewSection>
       </Grid>
