@@ -289,7 +289,10 @@ export const DatabasePage = () => {
               variant="permanent"
               anchor="right"
               sx={{
-                width: '25%',
+                // MuiDrawer-paper will take 25% of the whole screen because it has a "fixed" positioning
+                // Hence, we must use vw here to have the same calculation
+                // We subtract the padding
+                width: (theme) => `calc(25vw - ${theme.spacing(4)})`,
                 flexShrink: 0,
                 ml: 3,
                 [`& .MuiDrawer-paper`]: {
