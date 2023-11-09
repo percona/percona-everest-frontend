@@ -1,4 +1,5 @@
 import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
 import { createTheme, PaletteMode, ThemeOptions } from '@mui/material';
 import { tooltipClasses } from '@mui/material/Tooltip';
@@ -52,6 +53,7 @@ declare module '@mui/material/styles' {
     subHead1: React.CSSProperties;
     subHead2: React.CSSProperties;
     helperText: React.CSSProperties;
+    menuText: React.CSSProperties;
   }
 
   interface TypographyVariantsOptions {
@@ -59,6 +61,7 @@ declare module '@mui/material/styles' {
     subHead1: React.CSSProperties;
     subHead2: React.CSSProperties;
     helperText: React.CSSProperties;
+    menuText: React.CSSProperties;
   }
 }
 
@@ -68,6 +71,7 @@ declare module '@mui/material/Typography' {
     subHead1: true;
     subHead2: true;
     helperText: true;
+    menuText: true;
   }
 }
 
@@ -275,6 +279,11 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
       fontWeight: 450,
       fontSize: '12px',
       lineHeight: '15px',
+    },
+    menuText: {
+      fontWeight: 500,
+      fontSize: '16px',
+      lineHeight: '20px',
     },
     body1: {
       fontWeight: 400,
