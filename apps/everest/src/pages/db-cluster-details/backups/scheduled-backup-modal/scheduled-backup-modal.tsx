@@ -44,6 +44,8 @@ export const ScheduledBackupModal = () => {
     setOpenScheduleModal,
   } = useContext(ScheduleModalContext);
 
+  console.log('RENDER MODAL');
+
   const { data: backupStorages = [] } = useBackupStorages();
 
   const { data: dbCluster } = useDbCluster(dbClusterName!, {
@@ -99,7 +101,7 @@ export const ScheduledBackupModal = () => {
   if (!backupStorages.length) {
     return (
       <NoStoragesModal
-        isOpen={!openScheduleModal}
+        isOpen={!!openScheduleModal}
         subHead={CommonMessages.schedulesBackupModal.subHead}
         closeModal={handleCloseScheduledBackupModal}
       />
@@ -108,7 +110,7 @@ export const ScheduledBackupModal = () => {
 
   return (
     <FormDialog
-      isOpen={!openScheduleModal}
+      isOpen={!!openScheduleModal}
       closeModal={handleCloseScheduledBackupModal}
       headerMessage={
         mode === 'new'
