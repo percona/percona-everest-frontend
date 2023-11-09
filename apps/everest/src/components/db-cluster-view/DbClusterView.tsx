@@ -19,152 +19,41 @@ import {
   PauseCircleOutline,
   PlayArrowOutlined,
 } from '@mui/icons-material';
-import { Box, Button, MenuItem, Stack } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { Box, Button, MenuItem, Stack } from '@mui/material';
 import { Table } from '@percona/ui-lib';
-import { type MRT_ColumnDef } from 'material-react-table';
-import { enqueueSnackbar } from 'notistack';
-import { useMemo, useState } from 'react';
-import { useQueryClient } from 'react-query';
-import { Link, useNavigate } from 'react-router-dom';
+import { useBackupsActions } from 'hooks/api/backups/useBackupsActions';
 import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
-import { usePausedDbCluster } from 'hooks/api/db-cluster/usePausedDbCluster';
-import { useRestartDbCluster } from 'hooks/api/db-cluster/useRestartDbCluster';
 import { DbClusterTableElement } from 'hooks/api/db-clusters/dbCluster.type';
-import {
-  DB_CLUSTERS_QUERY_KEY,
-  ExtraDbCluster,
-  useDbClusters,
-} from 'hooks/api/db-clusters/useDbClusters';
-import { useSelectedKubernetesCluster } from 'hooks/api/kubernetesClusters/useSelectedKubernetesCluster';
+import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
+import { type MRT_ColumnDef } from 'material-react-table';
+import { useMemo } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { DbClusterStatus } from 'shared-types/dbCluster.types';
 import { DbEngineType } from 'shared-types/dbEngines.types';
 import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
 import { StatusField } from '../status-field/status-field';
 import { DB_CLUSTER_STATUS_TO_BASE_STATUS } from './DbClusterView.constants';
-import { Messages } from './dbClusterView.messages';
 import { beautifyDbClusterStatus } from './DbClusterView.utils';
+import { Messages } from './dbClusterView.messages';
 import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
 
 export const DbClusterView = () => {
-  const [selectedDbCluster, setSelectedDbCluster] = useState<string>('');
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const { combinedDataForTable, loadingAllClusters, errorInAllClusters } =
+    useDbClusters();
+  const { isLoading: deletingCluster } = useDeleteDbCluster();
   const {
-    combinedDataForTable,
-    loadingAllClusters,
-    combinedDbClusters,
-    errorInAllClusters,
-  } = useDbClusters();
-  const { mutate: deleteDbCluster, isLoading: deletingCluster } =
-    useDeleteDbCluster();
-  const { mutate: suspendDbCluster } = usePausedDbCluster();
-  const { mutate: restartDbCluster } = useRestartDbCluster();
-  const { id: k8sClusterId } = useSelectedKubernetesCluster();
+    selectedDbCluster,
+    openDeleteDialog,
+    handleConfirmDelete,
+    handleDbRestart,
+    handleDbSuspendOrResumed,
+    handleDeleteDbCluster,
+    handleCloseDeleteDialog,
+    isPaused,
+  } = useBackupsActions();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-
-  const isPaused = (dbClusterName: string) =>
-    combinedDbClusters.find(
-      (dbCluster) => dbCluster.metadata.name === dbClusterName
-    )?.spec.paused;
-
-  const handleDbSuspendOrResumed = (
-    _status: DbClusterStatus,
-    dbClusterName: string
-  ) => {
-    const shouldBePaused = !isPaused(dbClusterName);
-    const dbCluster = combinedDbClusters.find(
-      (item) => item.metadata.name === dbClusterName
-    );
-    if (dbCluster) {
-      suspendDbCluster(
-        { shouldBePaused, k8sClusterId, dbCluster },
-        {
-          onSuccess: (updatedObject) => {
-            queryClient.setQueryData(
-              [DB_CLUSTERS_QUERY_KEY, k8sClusterId],
-              (oldData: ExtraDbCluster[] = []) =>
-                oldData.map((value) =>
-                  value.dbCluster.metadata.name === updatedObject.metadata.name
-                    ? {
-                        dbCluster: updatedObject,
-                        k8sClusterName: value.k8sClusterName,
-                      }
-                    : value
-                )
-            );
-            enqueueSnackbar(
-              shouldBePaused
-                ? Messages.responseMessages.pause
-                : Messages.responseMessages.resume,
-              {
-                variant: 'success',
-              }
-            );
-          },
-        }
-      );
-    }
-  };
-
-  const handleDbRestart = (dbClusterName: string) => {
-    const dbCluster = combinedDbClusters.find(
-      (item) => item.metadata.name === dbClusterName
-    );
-    if (dbCluster) {
-      restartDbCluster(
-        { k8sClusterId, dbCluster },
-        {
-          onSuccess: (updatedObject) => {
-            queryClient.setQueryData(
-              [DB_CLUSTERS_QUERY_KEY, k8sClusterId],
-              (oldData: ExtraDbCluster[] = []) =>
-                oldData.map((value) =>
-                  value.dbCluster.metadata.name === updatedObject.metadata.name
-                    ? {
-                        dbCluster: updatedObject,
-                        k8sClusterName: value.k8sClusterName,
-                      }
-                    : value
-                )
-            );
-            enqueueSnackbar(Messages.responseMessages.restart, {
-              variant: 'success',
-            });
-          },
-        }
-      );
-    }
-  };
-
-  const handleDeleteDbCluster = (dbClusterName: string) => {
-    setSelectedDbCluster(dbClusterName);
-    setOpenDeleteDialog(true);
-  };
-
-  const handleCloseDeleteDialog = () => {
-    setOpenDeleteDialog(false);
-  };
-
-  const handleConfirmDelete = (dbClusterName: string) => {
-    deleteDbCluster(
-      { k8sClusterId, dbClusterName },
-      {
-        onSuccess: (_, variables) => {
-          queryClient.setQueryData(
-            [DB_CLUSTERS_QUERY_KEY, k8sClusterId],
-            (oldData?: ExtraDbCluster[]) =>
-              (oldData || []).filter(
-                (value) =>
-                  value.dbCluster.metadata.name !== variables.dbClusterName
-              )
-          );
-          handleCloseDeleteDialog();
-        },
-      }
-    );
-  };
 
   const columns = useMemo<MRT_ColumnDef<DbClusterTableElement>[]>(
     () => [

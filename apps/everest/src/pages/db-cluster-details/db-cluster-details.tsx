@@ -1,6 +1,8 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import {
   Box,
+  Button,
   IconButton,
   Skeleton,
   Tab,
@@ -64,13 +66,25 @@ export const DbClusterDetails = () => {
           display: 'flex',
           gap: 1,
           alignItems: 'center',
+          justifyContent: 'space-between',
           mb: 1,
         }}
       >
-        <IconButton onClick={() => navigate('/databases')}>
-          <ArrowBackIosIcon sx={{ pl: '10px' }} fontSize="large" />
-        </IconButton>
-        <Typography variant="h4">{dbClusterName}</Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 1,
+            alignItems: 'center',
+          }}
+        >
+          <IconButton onClick={() => navigate('/databases')}>
+            <ArrowBackIosIcon sx={{ pl: '10px' }} fontSize="large" />
+          </IconButton>
+          <Typography variant="h4">{dbClusterName}</Typography>
+        </Box>
+        <Button variant="text" size="large" endIcon={<ArrowDropDownIcon />}>
+          Actions
+        </Button>
       </Box>
       <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 1 }}>
         <Tabs
