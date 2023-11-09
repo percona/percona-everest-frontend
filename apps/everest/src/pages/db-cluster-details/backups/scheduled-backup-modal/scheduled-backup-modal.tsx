@@ -63,14 +63,11 @@ export const ScheduledBackupModal = () => {
     [schedulesNamesList, mode]
   );
 
-  const selectedSchedule = useMemo(
-    () => {
-      if (mode === 'edit') {
-        return schedules.find((item) => item?.name === selectedScheduleName);
-      }
-    },
-    [mode, openScheduleModal, schedules, selectedScheduleName]
-  );
+  const selectedSchedule = useMemo(() => {
+    if (mode === 'edit') {
+      return schedules.find((item) => item?.name === selectedScheduleName);
+    }
+  }, [mode, openScheduleModal, schedules, selectedScheduleName]);
 
   const handleCloseScheduledBackupModal = () => {
     if (setOpenScheduleModal) {
