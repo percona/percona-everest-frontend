@@ -44,8 +44,6 @@ export const ScheduledBackupModal = () => {
     setOpenScheduleModal,
   } = useContext(ScheduleModalContext);
 
-  console.log('RENDER MODAL');
-
   const { data: backupStorages = [] } = useBackupStorages();
 
   const { data: dbCluster } = useDbCluster(dbClusterName!, {
