@@ -8,9 +8,11 @@ import {
   Typography,
 } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
+import { useVersion } from 'hooks/api/version/useVersion';
 
 const AppBarHelpIcon = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { data: versionData } = useVersion();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -41,7 +43,7 @@ const AppBarHelpIcon = () => {
       >
         <MenuItem>
           <Typography variant="helperText" color="text.secondary">
-            Everest v0.5
+            {`Everest v${versionData?.version}`}
           </Typography>
         </MenuItem>
         <Divider />
