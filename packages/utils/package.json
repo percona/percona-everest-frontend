@@ -15,6 +15,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "prettier": "@percona/prettier-config",
   "devDependencies": {
     "@percona/prettier-config": "workspace:*",
     "@percona/tsconfig": "workspace:*",

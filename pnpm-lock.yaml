@@ -84,6 +84,9 @@ importers:
       '@percona/eslint-config-react':
         specifier: workspace:*
         version: link:../../packages/eslint-config-react
+      '@percona/prettier-config':
+        specifier: workspace:*
+        version: link:../../packages/prettier-config
       '@playwright/test':
         specifier: ^1.39.0
         version: 1.39.0

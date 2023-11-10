@@ -22,7 +22,7 @@ import { TIME_SELECTION_DEFAULTS } from '../../../database-form/database-form.co
 
 export const scheduleModalDefaultValues = (
   mode: 'new' | 'edit',
-  selectedSchedule: Schedule
+  selectedSchedule?: Schedule
 ): ScheduleFormData => {
   if (mode === 'edit' && selectedSchedule) {
     const { name, backupStorageName, schedule } = selectedSchedule;
