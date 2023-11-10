@@ -132,7 +132,9 @@ test.describe('DB Cluster creation', () => {
     expect(addedCluster).not.toBeUndefined();
     expect(addedCluster?.spec.engine.type).toBe('psmdb');
     expect(addedCluster?.spec.engine.replicas).toBe(3);
-    expect(addedCluster?.spec.engine.resources?.cpu.toString()).toBe('600m');
+    expect(['600m', '0.6']).toContain(
+      addedCluster?.spec.engine.resources?.cpu.toString()
+    );
     expect(addedCluster?.spec.engine.resources?.memory.toString()).toBe('32G');
     expect(addedCluster?.spec.engine.storage.size.toString()).toBe('150G');
     expect(addedCluster?.spec.proxy.expose.type).toBe('internal');

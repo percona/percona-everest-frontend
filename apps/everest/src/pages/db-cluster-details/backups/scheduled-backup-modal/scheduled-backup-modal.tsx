@@ -49,31 +49,25 @@ export const ScheduledBackupModal = () => {
   const { data: dbCluster } = useDbCluster(dbClusterName!, {
     enabled: !!dbClusterName && mode === 'edit',
   });
+
   const { mutate: updateScheduledBackup, isLoading } = useUpdateSchedules(
     dbClusterName!,
     mode
   );
 
-  const schedules = useMemo(
-    () => (dbCluster && dbCluster?.spec?.backup?.schedules) || [],
-    [dbCluster]
-  );
-  const schedulesNamesList = useMemo(
-    () => (schedules && schedules.map((item) => item?.name)) || [],
-    [schedules]
-  );
+  const schedules = (dbCluster && dbCluster?.spec?.backup?.schedules) || [];
+  const schedulesNamesList = schedules.map((item) => item?.name);
+
   const sheduledBackupSchema = useMemo(
     () => schema(schedulesNamesList, mode),
     [schedulesNamesList, mode]
   );
 
-  const selectedSchedule = useMemo(
-    () =>
-      mode === 'edit' &&
-      schedules &&
-      schedules.find((item) => item?.name === selectedScheduleName),
-    [mode, schedules, selectedScheduleName]
-  );
+  const selectedSchedule = useMemo(() => {
+    if (mode === 'edit') {
+      return schedules.find((item) => item?.name === selectedScheduleName);
+    }
+  }, [mode, schedules, selectedScheduleName]);
 
   const handleCloseScheduledBackupModal = () => {
     if (setOpenScheduleModal) {
@@ -90,16 +84,15 @@ export const ScheduledBackupModal = () => {
     });
   };
 
-  const values = useMemo(() => {
-    if (selectedSchedule) {
-      scheduleModalDefaultValues(mode, selectedSchedule);
-    }
-  }, [mode, selectedSchedule]);
+  const values = useMemo(
+    () => scheduleModalDefaultValues(mode, selectedSchedule),
+    [mode, selectedSchedule]
+  );
 
   if (!backupStorages.length) {
     return (
       <NoStoragesModal
-        isOpen={!openScheduleModal}
+        isOpen={!!openScheduleModal}
         subHead={CommonMessages.schedulesBackupModal.subHead}
         closeModal={handleCloseScheduledBackupModal}
       />
@@ -108,7 +101,7 @@ export const ScheduledBackupModal = () => {
 
   return (
     <FormDialog
-      isOpen={!openScheduleModal}
+      isOpen={!!openScheduleModal}
       closeModal={handleCloseScheduledBackupModal}
       headerMessage={
         mode === 'new'
@@ -124,7 +117,6 @@ export const ScheduledBackupModal = () => {
       }
       schema={sheduledBackupSchema}
       {...(mode === 'edit' && { values })}
-      // @ts-ignore
       defaultValues={values}
       {...(mode === 'new' && { subHead2: Messages.createSchedule.subhead })}
       size="XXL"
