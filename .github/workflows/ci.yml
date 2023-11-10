@@ -116,11 +116,6 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: FE/pnpm-lock.yaml
 
-      - name: Run Everest
-        run: |
-          cd FE
-          make init
-          pnpm --filter "@percona/everest" dev &
 
       - name: Checkout CLI repo
         uses: percona-platform/checkout@v3
@@ -162,6 +157,12 @@ jobs:
       - name: Expose Everest backend
         run: |
           kubectl port-forward -n percona-everest deployment/percona-everest 8080:8080 &
+
+      - name: Run Everest
+        run: |
+          cd FE
+          make init
+          pnpm --filter "@percona/everest" dev &
 
       - name: Run integration tests
         run: |
