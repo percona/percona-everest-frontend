@@ -1,6 +1,7 @@
 import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/600.css';
-import { createTheme, PaletteMode, ThemeOptions } from '@mui/material';
+import { ComponentsOverrides, createTheme, PaletteMode, ThemeOptions } from '@mui/material';
+import { DatePickerToolbarClassKey } from '@mui/x-date-pickers/DatePicker';
 import { tooltipClasses } from '@mui/material/Tooltip';
 
 declare module '@mui/material/styles' {
@@ -52,6 +53,8 @@ declare module '@mui/material/styles' {
     subHead1: React.CSSProperties;
     subHead2: React.CSSProperties;
     helperText: React.CSSProperties;
+    inputText: React.CSSProperties;
+    inputLabel: React.CSSProperties;
   }
 
   interface TypographyVariantsOptions {
@@ -59,6 +62,18 @@ declare module '@mui/material/styles' {
     subHead1: React.CSSProperties;
     subHead2: React.CSSProperties;
     helperText: React.CSSProperties;
+    inputText: React.CSSProperties;
+    inputLabel: React.CSSProperties;
+  }
+
+  interface ComponentNameToClassKey {
+    MuiDateCalendar: DatePickerToolbarClassKey;
+  }
+
+  interface Components<Theme = unknown> {
+    MuiDateCalendar?: {
+      styleOverrides?: ComponentsOverrides<Theme>['MuiDateCalendar'];
+    }
   }
 }
 
@@ -68,6 +83,8 @@ declare module '@mui/material/Typography' {
     subHead1: true;
     subHead2: true;
     helperText: true;
+    inputText: true;
+    inputLabel: true;
   }
 }
 
@@ -294,6 +311,14 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
       lineHeight: '1',
       letterSpacing: '0.025em',
     },
+    inputText: {
+      fontSize: '16px',
+      fontWeight: 400,
+    },
+    inputLabel: {
+      fontSize: '12px',
+      fontWeight: 500,
+    }
   },
   shadows: [
     'none',
@@ -563,6 +588,29 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
         }),
       },
     },
+    MuiDateCalendar: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          '.MuiPickersCalendarHeader-root': {
+            marginTop: theme.spacing(2),
+            marginBottom: theme.spacing(2),
+          },
+          '.MuiPickersCalendarHeader-label': {
+            fontSize: theme.typography.inputText.fontSize,
+            fontWeight: theme.typography.inputText.fontWeight,
+          },
+          '.MuiDayCalendar-weekDayLabel': {
+            fontSize: theme.typography.helperText.fontSize,
+            fontWeight: theme.typography.helperText.fontWeight,
+            color: theme.palette.text.disabled,
+          },
+          '.MuiPickersDay-root': {
+            fontSize: theme.typography.body2.fontSize,
+            fontWeight: theme.typography.body2.fontWeight,
+          }
+        })
+      }
+    }
   },
 });
 
