@@ -41,8 +41,8 @@ import {
   GetDbClusterPayload,
 } from 'shared-types/dbCluster.types';
 import { DbEngineType } from 'shared-types/dbEngines.types';
-import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
-import { StatusField } from '../status-field/status-field';
+import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
+import { StatusField } from 'components/status-field/status-field';
 import { DB_CLUSTER_STATUS_TO_BASE_STATUS } from './DbClusterView.constants';
 import { Messages } from './dbClusterView.messages';
 import {
