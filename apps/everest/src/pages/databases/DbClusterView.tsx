@@ -55,10 +55,8 @@ import { ExpandedRow } from './expandedRow/ExpandedRow';
 export const DbClusterView = () => {
   const [selectedDbCluster, setSelectedDbCluster] = useState<string>('');
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const {
-    data: dbClusters = [],
-    isLoading: dbClustersLoading,
-  } = useDbClusters();
+  const { data: dbClusters = [], isLoading: dbClustersLoading } =
+    useDbClusters();
   const { mutate: deleteDbCluster, isLoading: deletingCluster } =
     useDeleteDbCluster();
   const { mutate: suspendDbCluster } = usePausedDbCluster();
