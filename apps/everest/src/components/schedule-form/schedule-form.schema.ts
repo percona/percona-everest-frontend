@@ -15,19 +15,34 @@
 
 import z from 'zod';
 import { MAX_SCHEDULE_NAME_LENGTH } from '../../consts.ts';
-import { Messages } from '../../pages/db-cluster-details/backups/scheduled-backup-modal/scheduled-backup-modal.messages';
-import {
-  AmPM,
-  TimeValue,
-  WeekDays,
-} from '../time-selection/time-selection.types';
+import { Messages } from './schedule-form.messages.ts';
 import { ScheduleFormFields } from './schedule-form.types.ts';
 import { rfc_123_schema } from '../../utils/common-validation';
+import { timeSelectionSchemaObject } from '../time-selection/time-selection.schema.ts';
+
+export const storageLocationScheduleFormSchema = {
+  [ScheduleFormFields.storageLocation]: z
+    .string()
+    .or(
+      z.object({
+        name: z.string(),
+      })
+    )
+    .nullable()
+    .superRefine((input, ctx) => {
+      if (!input || typeof input === 'string' || !input.name) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: Messages.storageLocation.invalidOption,
+        });
+      }
+    }),
+};
 
 export const schema = (schedulesNamesList: string[], mode?: 'edit' | 'new') =>
   z.object({
     [ScheduleFormFields.scheduleName]: rfc_123_schema(
-      Messages.scheduleName.label.toLowerCase(),
+      `${Messages.scheduleName.label.toLowerCase()} name`,
       MAX_SCHEDULE_NAME_LENGTH
     )
       .nonempty()
@@ -43,29 +58,8 @@ export const schema = (schedulesNamesList: string[], mode?: 'edit' | 'new') =>
           });
         }
       }),
-    selectedTime: z.nativeEnum(TimeValue),
-    minute: z.number().optional(),
-    hour: z.number().optional(),
-    amPm: z.nativeEnum(AmPM).optional(),
-    weekDay: z.nativeEnum(WeekDays).optional(),
-    onDay: z.number().optional(),
-    [ScheduleFormFields.storageLocation]: z
-      .string()
-      .or(
-        z.object({
-          name: z.string(),
-        })
-      )
-      .nullable()
-      .superRefine((input, ctx) => {
-        if (!input || typeof input === 'string' || !input.name) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message:
-              'Invalid option. Please make sure you added a storage location and select it from the dropdown.',
-          });
-        }
-      }),
+    ...timeSelectionSchemaObject,
+    ...storageLocationScheduleFormSchema,
   });
 
 export type ScheduleFormData = z.infer<ReturnType<typeof schema>>;

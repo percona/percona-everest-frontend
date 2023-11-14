@@ -14,13 +14,13 @@
 // limitations under the License.
 
 import { UseMutationOptions, useMutation } from 'react-query';
-import { DbWizardType } from '../../../pages/database-form/database-form.types';
 import { updateDbClusterFn } from '../../../api/dbClusterApi';
 import {
   DbCluster,
   ProxyExposeType,
 } from '../../../shared-types/dbCluster.types';
-// import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils';
+import { DbWizardType } from '../../../pages/database-form/database-form.schema.ts';
+import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils.ts';
 
 type UpdateDbClusterArgType = {
   dbPayload: DbWizardType;
@@ -28,19 +28,41 @@ type UpdateDbClusterArgType = {
   dbCluster: DbCluster;
 };
 
+const getSchedules = (
+  dbCluster: DbCluster,
+  dbPayload: DbWizardType,
+  backupSchedule: string
+) => {
+  const schedules = dbCluster?.spec?.backup?.schedules;
+  if (!!schedules && schedules.length > 1) {
+    return schedules;
+  } else
+    return [
+      {
+        enabled: true,
+        name: dbPayload?.scheduleName,
+        backupStorageName:
+          typeof dbPayload.storageLocation === 'string'
+            ? dbPayload.storageLocation
+            : dbPayload.storageLocation!.name,
+        schedule: backupSchedule,
+      },
+    ];
+};
+
 const formValuesToPayloadOverrides = (
   dbPayload: DbWizardType,
   dbCluster: DbCluster
 ): DbCluster => {
-  // const { selectedTime, minute, hour, amPm, onDay, weekDay } = dbPayload;
-  // const backupSchedule = getCronExpressionFromFormValues({
-  //   selectedTime,
-  //   minute,
-  //   hour,
-  //   amPm,
-  //   onDay,
-  //   weekDay,
-  // });
+  const { selectedTime, minute, hour, amPm, onDay, weekDay } = dbPayload;
+  const backupSchedule = getCronExpressionFromFormValues({
+    selectedTime,
+    minute,
+    hour,
+    amPm,
+    onDay,
+    weekDay,
+  });
 
   return {
     apiVersion: 'everest.percona.com/v1alpha1',
@@ -48,21 +70,12 @@ const formValuesToPayloadOverrides = (
     metadata: dbCluster.metadata,
     spec: {
       ...dbCluster?.spec,
-      // backup: {
-      //   enabled: dbPayload.backupsEnabled,
-      //   ...(dbPayload.backupsEnabled && {
-      //     schedules: [
-      //       {
-      //         enabled: true,
-      //         name: '',
-      //         backupStorageName:
-      //           typeof dbPayload.storageLocation === 'string'
-      //             ? dbPayload.storageLocation
-      //             : dbPayload.storageLocation!.name,
-      //         schedule: backupSchedule,
-      //       },
-      //     ],
-      //   }),
+      backup: {
+        enabled: dbPayload.backupsEnabled,
+        ...(dbPayload.backupsEnabled && {
+          schedules: getSchedules(dbCluster, dbPayload, backupSchedule),
+        }),
+      },
       engine: {
         ...dbCluster.spec.engine,
         version: dbPayload.dbVersion,

@@ -13,11 +13,53 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//TODO 485
+import { useMemo, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDbCluster } from 'hooks/api/db-cluster/useDbCluster';
+import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
+import { DbEngineType } from 'shared-types/dbEngines.types';
+import { BackupsList } from './backups-list/backups-list';
+import { ScheduledBackupModal } from './scheduled-backup-modal/scheduled-backup-modal';
+import { ScheduledBackupsList } from './scheduled-backups-list/scheduled-backups-list';
+import { ScheduleModalContext } from './backups.context.ts';
+
 export const Backups = () => {
+  const { dbClusterName } = useParams();
+  const { combinedDataForTable } = useDbClusters();
+  const dbNameExists = combinedDataForTable.find(
+    (cluster) => cluster.databaseName === dbClusterName
+  );
+  const { data: dbCluster } = useDbCluster(dbClusterName || '', {
+    enabled: !!dbClusterName && !!dbNameExists,
+  });
+
+  const [mode, setMode] = useState<'new' | 'edit'>('new');
+  const [openScheduleModal, setOpenScheduleModal] = useState(false);
+  const [selectedScheduleName, setSelectedScheduleName] = useState<string>('');
+
+  const dbType = useMemo(
+    () => dbCluster?.spec?.engine?.type,
+    [dbCluster?.spec?.engine?.type]
+  );
+
   return (
-    <ScheduleModalContextProvider>
-      <BackupsWrapper />
-    </ScheduleModalContextProvider>
+    <ScheduleModalContext.Provider
+      value={{
+        mode,
+        setMode,
+        openScheduleModal,
+        setOpenScheduleModal,
+        selectedScheduleName,
+        setSelectedScheduleName,
+      }}
+    >
+      {dbNameExists && (
+        <>
+          {dbType !== DbEngineType.POSTGRESQL && <ScheduledBackupsList />}
+          <BackupsList />
+          {openScheduleModal && <ScheduledBackupModal />}
+        </>
+      )}
+    </ScheduleModalContext.Provider>
   );
 };

@@ -19,9 +19,10 @@ import {
   TimeValue,
   WeekDays,
 } from '../../components/time-selection/time-selection.types';
-import { DbWizardFormFields, DbWizardType } from './database-form.types';
+import { DbWizardFormFields } from './database-form.types';
 import { DEFAULT_SIZES } from './steps/second/second-step.const';
 import { ResourceSize } from './steps/second/second-step.types';
+import { DbWizardType } from './database-form.schema.ts';
 
 // TODO re-add steps after API is ready
 export const TIME_SELECTION_DEFAULTS = {
@@ -34,11 +35,12 @@ export const TIME_SELECTION_DEFAULTS = {
 };
 
 export const DB_WIZARD_DEFAULTS: DefaultValues<DbWizardType> = {
-  [DbWizardFormFields.backupsEnabled]: true,
+  // TODO should be changed to true after  https://jira.percona.com/browse/EVEREST-509
+  [DbWizardFormFields.backupsEnabled]: false,
   // [DbWizardFormFields.pitrEnabled]: true,
   // [DbWizardFormFields.pitrTime]: '60',
   // @ts-ignore
-  [DbWizardFormFields.storageLocation]: null,
+  [DbWizardFormFields.storageLocation]: {},
   ...TIME_SELECTION_DEFAULTS,
   [DbWizardFormFields.dbType]: '' as DbType,
   [DbWizardFormFields.dbName]: '',

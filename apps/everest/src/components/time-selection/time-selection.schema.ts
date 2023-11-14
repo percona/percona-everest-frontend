@@ -21,11 +21,12 @@ import {
   WeekDays,
 } from './time-selection.types';
 
-export const timeSelectionSchema = z.object({
+export const timeSelectionSchemaObject = {
   [TimeSelectionFields.selectedTime]: z.nativeEnum(TimeValue),
   [TimeSelectionFields.minute]: z.number().optional(),
   [TimeSelectionFields.hour]: z.number().optional(),
   [TimeSelectionFields.amPm]: z.nativeEnum(AmPM).optional(),
   [TimeSelectionFields.weekDay]: z.nativeEnum(WeekDays).optional(),
   [TimeSelectionFields.onDay]: z.number().optional(),
-});
+};
+export const timeSelectionSchema = z.object(timeSelectionSchemaObject);

@@ -35,11 +35,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Messages } from './database-form.messages';
-import {
-  DbWizardFormFields,
-  dbWizardSchema,
-  DbWizardType,
-} from './database-form.types';
+import { DbWizardFormFields } from './database-form.types';
 import { steps } from './steps';
 
 import { useCreateDbCluster } from '../../hooks/api/db-cluster/useCreateDbCluster';
@@ -51,6 +47,8 @@ import { RestoreDialog } from './restore-dialog/restore-dialog';
 import { SixthStep } from './steps/sixth/sixth-step';
 import { useDatabasePageDefaultValues } from './useDatabaseFormDefaultValues';
 import { useDatabasePageMode } from './useDatabasePageMode';
+import { DbWizardType } from './database-form.schema.ts';
+import { useDBValidationSchema } from './useDBValidationSchema.ts';
 
 export const DatabasePage = () => {
   const theme = useTheme();
@@ -58,7 +56,7 @@ export const DatabasePage = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [closeModalIsOpen, setModalIsOpen] = useState(false);
   const [restoreFromBackupModal, setRestoreFromBackupModal] = useState(false);
-  const currentValidationSchema = dbWizardSchema[activeStep];
+
   const { mutate: addDbCluster, isLoading: isCreating } = useCreateDbCluster();
   const { mutate: editDbCluster, isLoading: isUpdating } = useUpdateDbCluster();
   const { id } = useSelectedKubernetesCluster();
@@ -74,9 +72,15 @@ export const DatabasePage = () => {
     isFetching: loadingDefaultsForEdition,
   } = useDatabasePageDefaultValues(mode);
 
+  const validationSchema = useDBValidationSchema(
+    activeStep,
+    mode,
+    dbClusterData
+  );
+
   const methods = useForm<DbWizardType>({
     mode: 'onChange',
-    resolver: zodResolver(currentValidationSchema),
+    resolver: zodResolver(validationSchema),
     // @ts-ignore
     defaultValues,
   });

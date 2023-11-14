@@ -21,7 +21,7 @@ import { BackupStorage } from '../../shared-types/backupStorages.types.ts';
 import { AutoCompleteInput, LabeledContent, TextInput } from '@percona/ui-lib';
 
 type ScheduleFormProps = {
-  mode: 'new' | 'edit';
+  mode: 'new' | 'edit' | 'editDbWizard' | 'newDbWizard';
   schedules: Schedule[];
   storageLocationFetching: boolean;
   storageLocationOptions: BackupStorage[];
@@ -37,10 +37,15 @@ export const ScheduleForm = ({
 
   return (
     <>
-      {mode === 'new' && (
+      {(mode === 'new' ||
+        mode === 'newDbWizard' ||
+        mode === 'editDbWizard') && (
         <TextInput
           name={ScheduleFormFields.scheduleName}
           label={Messages.scheduleName.label}
+          textFieldProps={{
+            disabled: mode === 'editDbWizard' && schedules?.length === 1,
+          }}
           isRequired
         />
       )}
@@ -58,7 +63,7 @@ export const ScheduleForm = ({
 
       <AutoCompleteInput
         name={ScheduleFormFields.storageLocation}
-        label={Messages.storageLocation}
+        label={Messages.storageLocation.label}
         loading={storageLocationFetching}
         options={storageLocationOptions}
         autoCompleteProps={{

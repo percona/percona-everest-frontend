@@ -13,49 +13,65 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { useEffect } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Alert, Box, Typography } from '@mui/material';
 import { SwitchInput } from '@percona/ui-lib';
 import { useFormContext } from 'react-hook-form';
-import { useBackupStorages } from '../../../../hooks/api/backup-storages/useBackupStorages';
 import { DbWizardFormFields } from '../../database-form.types';
 import { Messages } from './backups.messages.ts';
-import { useDatabasePageMode } from '../../useDatabasePageMode';
-import { ScheduleForm } from '../../../../components/schedule-form/schedule-form.tsx';
+import { ScheduleBackupSection } from './schedule-section/schedule-section.tsx';
+import { useDatabasePageDefaultValues } from '../../useDatabaseFormDefaultValues.ts';
+import { useDatabasePageMode } from '../../useDatabasePageMode.ts';
+import { DbType } from '@percona/types';
+import { useEffect } from 'react';
 
 export const Backups = () => {
-  const { control, watch, setValue } = useFormContext();
   const mode = useDatabasePageMode();
-  const backupsEnabled: boolean = watch(DbWizardFormFields.backupsEnabled);
-  // const pitrEnabled: boolean = watch(DbWizardFormFields.pitrEnabled);
-  const { data: backupStorages = [], isFetching } = useBackupStorages();
+  const { control, watch, setValue } = useFormContext();
+  const { dbClusterData } = useDatabasePageDefaultValues(mode);
 
+  const [backupsEnabled, dbType] = watch([
+    DbWizardFormFields.backupsEnabled,
+    DbWizardFormFields.dbType,
+  ]);
+
+  // TODO should be removed after https://jira.percona.com/browse/EVEREST-509 + DEFAULT_VALUES should be changed from false to true for all databases
   useEffect(() => {
-    if (mode === 'new' && backupStorages?.length > 0) {
-      setValue(DbWizardFormFields.storageLocation, {
-        name: backupStorages[0].name,
-      });
+    if (dbType !== DbType.Postresql) {
+      setValue(DbWizardFormFields.backupsEnabled, true);
     }
-  }, [backupStorages]);
-  const schedules = mode === 'new' ? [] : []; //TODO 485
+  }, [dbType]);
+
+  // const pitrEnabled: boolean = watch(DbWizardFormFields.pitrEnabled);
+
+  const schedules =
+    mode === 'new' ? [] : dbClusterData?.spec?.backup?.schedules || [];
+  const multiSchedules =
+    mode === 'edit' && !!schedules && schedules?.length > 1;
+  const scheduleDisabled = multiSchedules || dbType === DbType.Postresql;
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+    // gap was removed because we haven't gaps in the other pages
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <Typography variant="h5">{Messages.backups}</Typography>
       <Typography variant="subtitle2">{Messages.captionBackups}</Typography>
       <SwitchInput
         control={control}
         label={Messages.enableBackups}
         name={DbWizardFormFields.backupsEnabled}
+        switchFieldProps={{
+          disabled: dbType === DbType.Postresql,
+        }}
+        sx={{ mt: 1 }}
       />
       {backupsEnabled && (
         <>
-          <ScheduleForm
-            mode="new"
-            schedules={schedules}
-            storageLocationFetching={isFetching}
-            storageLocationOptions={backupStorages}
-          />
+          {(mode === 'new' || mode === 'restoreFromBackup') && (
+            <Alert severity="info">{Messages.youCanAddMoreSchedules}</Alert>
+          )}
+          {multiSchedules && (
+            <Alert severity="info">{Messages.youHaveMultipleSchedules}</Alert>
+          )}
+          {!scheduleDisabled && <ScheduleBackupSection />}
           {/* <Typography variant="h6">{Messages.pitr}</Typography>
           <Typography variant="caption">{Messages.captionPitr}</Typography>
           <SwitchInput

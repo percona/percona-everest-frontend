@@ -9,7 +9,7 @@ import {
   deleteBackupFn,
   getBackupsFn,
 } from '../../../api/backups';
-import { BackupFormData } from '../../../pages/db-cluster-details/backups/on-demand-backup-modal/on-demand-backup-modal.types';
+import { BackupFormData } from '../../../pages/db-cluster-details/backups/backups-list/on-demand-backup-modal/on-demand-backup-modal.types';
 import { Backup, GetBackupPayload } from '../../../shared-types/backups.types';
 import { mapBackupState } from '../../../utils/backups';
 import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';

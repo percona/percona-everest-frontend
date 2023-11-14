@@ -13,14 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React, { useMemo, useContext } from 'react';
+import { useMemo, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDbCluster } from '../../../../hooks/api/db-cluster/useDbCluster';
-import { DbEngineType } from '../../../../types/dbEngines.types';
 import { ScheduledBackupsList } from '../scheduled-backups-list/scheduled-backups-list';
 import { BackupsList } from '../backups-list/backups-list';
 import { ScheduledBackupModal } from '../scheduled-backup-modal/scheduled-backup-modal';
-import { ScheduleModalContext } from '../scheduled-backup-modal/context/schedule-modal.context.tsx';
+import { ScheduleModalContext } from '../backups.context.ts';
+import { DbEngineType } from '@percona/types';
 
 export const BackupsWrapper = () => {
   const { dbClusterName } = useParams();

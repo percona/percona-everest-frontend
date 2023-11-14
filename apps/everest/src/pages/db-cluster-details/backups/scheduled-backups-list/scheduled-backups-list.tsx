@@ -37,7 +37,7 @@ import { getTimeSelectionPreviewMessage } from 'pages/database-form/database-pre
 import { Messages } from './scheduled-backups-list.messages';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
 import { useDeleteSchedule } from 'hooks/api/backups/useScheduledBackups';
-import { ScheduleModalContext } from '../backup.context';
+import { ScheduleModalContext } from '../backups.context.ts';
 
 export const ScheduledBackupsList = () => {
   const { dbClusterName } = useParams();

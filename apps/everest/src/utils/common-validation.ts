@@ -1,7 +1,7 @@
 import z from 'zod';
 
 const tooLongErrorMessage = (fieldName: string) =>
-  `The ${fieldName} name is too long\'`;
+  `The ${fieldName} name is too long`;
 
 export const errorMessages = {
   tooLong: (value: string) => tooLongErrorMessage(value),
@@ -21,7 +21,7 @@ export const rfc_123_schema = (fieldName: string, maxLength: number) =>
     .string()
     .regex(
       doesNotContainerAnythingButAlphanumericAndDash,
-      `The ${fieldName} name should not exceed ${maxLength} characters.`
+      `The ${fieldName} should not exceed ${maxLength} characters.`
     )
     .regex(doesNotEndWithDash, errorMessages.doesNotEndWithDash)
     .regex(doesNotStartWithDash, errorMessages.doesNotStartWithDash)

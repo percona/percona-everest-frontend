@@ -16,19 +16,14 @@
 import { errorMessages } from '../../utils/common-validation';
 
 export const Messages = {
-  createScheduleModal: {
-    headerMessage: 'Create schedule',
-    subhead:
-      'Create a task that takes regular backups of this database, according to the schedule that you specify.',
-    submitMessage: 'Create',
-  },
-  editScheduleModal: {
-    headerMessage: 'Edit schedules',
-    submitMessage: 'Save',
-  },
   scheduleName: {
     label: 'Schedule name',
     tooLong: errorMessages.tooLong('schedule'),
+    duplicate: 'You already have a schedule with the same name.',
   },
-  storageLocation: 'Storage location',
+  storageLocation: {
+    label: 'Storage location',
+    invalidOption:
+      'Invalid option. Please make sure you added a storage location and select it from the dropdown',
+  },
 };

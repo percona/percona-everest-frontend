@@ -25,14 +25,15 @@ import {
   useDbCluster,
 } from 'hooks/api/db-cluster/useDbCluster';
 import { Messages } from './scheduled-backup-modal.messages';
-import {
-  ScheduleFormData,
-  schema,
-} from './scheduled-backup-modal-form/scheduled-backup-modal-form.types';
+
 import { scheduleModalDefaultValues } from './scheduled-backup-modal-utils';
 import { ScheduledBackupModalForm } from './scheduled-backup-modal-form/scheduled-backup-modal-form';
 import { useUpdateSchedules } from 'hooks/api/backups/useScheduledBackups';
-import { ScheduleModalContext } from '../backup.context';
+import { ScheduleModalContext } from '../backups.context.ts';
+import {
+  ScheduleFormData,
+  schema,
+} from '../../../../components/schedule-form/schedule-form.schema.ts';
 
 export const ScheduledBackupModal = () => {
   const queryClient = useQueryClient();
