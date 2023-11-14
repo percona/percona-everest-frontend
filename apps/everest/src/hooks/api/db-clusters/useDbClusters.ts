@@ -15,10 +15,7 @@
 
 import { useQuery } from 'react-query';
 import { getDbClustersFn } from 'api/dbClusterApi';
-import {
-  DbCluster,
-  GetDbClusterPayload,
-} from 'shared-types/dbCluster.types';
+import { DbCluster, GetDbClusterPayload } from 'shared-types/dbCluster.types';
 
 export const DB_CLUSTERS_QUERY_KEY = 'dbClusters';
 
@@ -28,9 +25,10 @@ export const useDbClusters = () => {
     () => getDbClustersFn(),
     {
       refetchInterval: 5 * 1000,
-      select: ({ items }) => items.map(({ ...props }) => ({
-        ...props
-      }))
+      select: ({ items }) =>
+        items.map(({ ...props }) => ({
+          ...props,
+        })),
     }
   );
 };

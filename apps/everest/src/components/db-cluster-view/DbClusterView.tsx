@@ -35,13 +35,20 @@ import {
   DB_CLUSTERS_QUERY_KEY,
   useDbClusters,
 } from 'hooks/api/db-clusters/useDbClusters';
-import { DbCluster, DbClusterStatus, GetDbClusterPayload } from 'shared-types/dbCluster.types';
+import {
+  DbCluster,
+  DbClusterStatus,
+  GetDbClusterPayload,
+} from 'shared-types/dbCluster.types';
 import { DbEngineType } from 'shared-types/dbEngines.types';
 import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
 import { StatusField } from '../status-field/status-field';
 import { DB_CLUSTER_STATUS_TO_BASE_STATUS } from './DbClusterView.constants';
 import { Messages } from './dbClusterView.messages';
-import { beautifyDbClusterStatus, convertDbClusterPayloadToTableFormat } from './DbClusterView.utils';
+import {
+  beautifyDbClusterStatus,
+  convertDbClusterPayloadToTableFormat,
+} from './DbClusterView.utils';
 import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
 
@@ -60,10 +67,14 @@ export const DbClusterView = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const tableData = useMemo(() => convertDbClusterPayloadToTableFormat(dbClusters), [dbClusters]);
+  const tableData = useMemo(
+    () => convertDbClusterPayloadToTableFormat(dbClusters),
+    [dbClusters]
+  );
 
   const isPaused = (dbClusterName: string) =>
-    dbClusters.find((dbCluster) => dbCluster.metadata.name === dbClusterName)?.status?.status === DbClusterStatus.paused;
+    dbClusters.find((dbCluster) => dbCluster.metadata.name === dbClusterName)
+      ?.status?.status === DbClusterStatus.paused;
 
   const handleDbSuspendOrResumed = (
     _status: DbClusterStatus,
@@ -81,17 +92,20 @@ export const DbClusterView = () => {
           onSuccess: (updatedObject: DbCluster) => {
             queryClient.setQueryData<GetDbClusterPayload | undefined>(
               DB_CLUSTERS_QUERY_KEY,
-              (oldData) =>
-                {
-                  if (!oldData) {
-                    return undefined;
-                  }
-
-                  return {
-                    ...oldData,
-                    items: oldData.items.map((value) => value.metadata.name === updatedObject.metadata.name ? updatedObject : value)
-                  };
+              (oldData) => {
+                if (!oldData) {
+                  return undefined;
                 }
+
+                return {
+                  ...oldData,
+                  items: oldData.items.map((value) =>
+                    value.metadata.name === updatedObject.metadata.name
+                      ? updatedObject
+                      : value
+                  ),
+                };
+              }
             );
             enqueueSnackbar(
               shouldBePaused
@@ -119,15 +133,18 @@ export const DbClusterView = () => {
           onSuccess: (updatedObject: DbCluster) => {
             queryClient.setQueryData<GetDbClusterPayload | undefined>(
               DB_CLUSTERS_QUERY_KEY,
-              (oldData) =>
-              {
+              (oldData) => {
                 if (!oldData) {
                   return undefined;
                 }
 
                 return {
                   ...oldData,
-                  items: oldData.items.map((value) => value.metadata.name === updatedObject.metadata.name ? updatedObject : value)
+                  items: oldData.items.map((value) =>
+                    value.metadata.name === updatedObject.metadata.name
+                      ? updatedObject
+                      : value
+                  ),
                 };
               }
             );
@@ -163,7 +180,9 @@ export const DbClusterView = () => {
 
               return {
                 ...oldData,
-                items: oldData.items.filter((value) => value.metadata.name !== variables.dbClusterName)
+                items: oldData.items.filter(
+                  (value) => value.metadata.name !== variables.dbClusterName
+                ),
               };
             }
           );

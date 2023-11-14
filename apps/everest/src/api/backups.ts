@@ -1,4 +1,8 @@
-import { BackupPayload, GetBackupsPayload, SingleBackupPayload } from 'shared-types/backups.types';
+import {
+  BackupPayload,
+  GetBackupsPayload,
+  SingleBackupPayload,
+} from 'shared-types/backups.types';
 import { api } from './api';
 
 export const getBackupsFn = async (dbClusterName: string) => {

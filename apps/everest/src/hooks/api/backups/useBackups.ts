@@ -10,7 +10,11 @@ import {
   getBackupsFn,
 } from 'api/backups';
 import { BackupFormData } from 'pages/db-cluster-details/backups/on-demand-backup-modal/on-demand-backup-modal.types';
-import { Backup, BackupStatus, GetBackupsPayload } from 'shared-types/backups.types';
+import {
+  Backup,
+  BackupStatus,
+  GetBackupsPayload,
+} from 'shared-types/backups.types';
 import { mapBackupState } from 'utils/backups';
 
 export const BACKUPS_QUERY_KEY = 'backups';
@@ -29,7 +33,9 @@ export const useDbBackups = (
             name,
             created: status?.created ? new Date(status.created) : null,
             completed: status?.completed ? new Date(status.completed) : null,
-            state: status ? mapBackupState(status?.state) : BackupStatus.UNKNOWN,
+            state: status
+              ? mapBackupState(status?.state)
+              : BackupStatus.UNKNOWN,
             dbClusterName,
             backupStorageName,
           })

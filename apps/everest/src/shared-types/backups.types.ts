@@ -11,7 +11,7 @@ export type SingleBackupPayload = {
     dbClusterName: string;
     backupStorageName: string;
   };
-}
+};
 
 export type GetBackupsPayload = {
   items: Array<SingleBackupPayload>;
