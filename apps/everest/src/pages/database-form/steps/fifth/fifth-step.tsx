@@ -1,4 +1,4 @@
-import { FormGroup, Typography } from '@mui/material';
+import { Alert, FormGroup, Typography } from '@mui/material';
 import { SwitchInput, AutoCompleteInput } from '@percona/ui-lib';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -55,6 +55,12 @@ export const FifthStep = () => {
     <>
       <Typography variant="h5">{Messages.monitoring}</Typography>
       <Typography variant="subtitle2">{Messages.caption}</Typography>
+      {!monitoringInstances?.length && (
+        <Alert severity="info" sx={{ mt: 1 }}>
+          Database monitoring is currently disabled because monitoring endpoints were not configured during installation.
+          To enable database monitoring, run the `everestctl install` command to reinstall Everest.
+        </Alert>
+      )}
       <FormGroup sx={{ mt: 2 }}>
         <SwitchInput
           label={Messages.monitoringEnabled}
