@@ -15,7 +15,7 @@ import {
   useNavigate,
   useParams,
 } from 'react-router-dom';
-import { useDbClusters } from '../../hooks/api/db-clusters/useDbClusters';
+import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
 import { NoMatch } from '../404/NoMatch';
 import { Messages } from './db-cluster-details.messages';
 import { DBClusterDetailsTabs } from './db-cluster-details.types';
@@ -23,24 +23,24 @@ import { DBClusterDetailsTabs } from './db-cluster-details.types';
 export const DbClusterDetails = () => {
   const { dbClusterName } = useParams();
   const [routeFound, setRouteFound] = useState(true);
-  const { combinedDataForTable, loadingAllClusters } = useDbClusters();
+  const { data = [], isLoading } = useDbClusters();
   const routeMatch = useMatch('/databases/:dbClusterName/:tabs');
   const navigate = useNavigate();
   const currentTab = routeMatch?.params?.tabs;
 
   useEffect(() => {
-    if (!loadingAllClusters) {
-      const dbNameExists = combinedDataForTable.find(
-        (cluster) => cluster.databaseName === dbClusterName
+    if (!isLoading) {
+      const dbNameExists = data.find(
+        (cluster) => cluster.metadata.name === dbClusterName
       );
 
       if (!dbNameExists) {
         setRouteFound(false);
       }
     }
-  }, [loadingAllClusters, combinedDataForTable, dbClusterName]);
+  }, [isLoading, data, dbClusterName]);
 
-  if (loadingAllClusters) {
+  if (isLoading) {
     return (
       <>
         <Skeleton variant="rectangular" />

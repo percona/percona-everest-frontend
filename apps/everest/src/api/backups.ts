@@ -1,32 +1,24 @@
 import { BackupPayload, GetBackupPayload } from 'shared-types/backups.types';
 import { api } from './api';
 
-export const getBackupsFn = async (
-  clusterId: string,
-  dbClusterName: string
-) => {
+export const getBackupsFn = async (dbClusterName: string) => {
   const response = await api.get<GetBackupPayload>(
-    `kubernetes/${clusterId}/database-clusters/${dbClusterName}/backups`
+    `/database-clusters/${dbClusterName}/backups`
   );
 
   return response.data;
 };
 
-export const createBackupOnDemand = async (
-  clusterId: string,
-  payload: BackupPayload
-) => {
+export const createBackupOnDemand = async (payload: BackupPayload) => {
   const response = await api.post<GetBackupPayload>(
-    `kubernetes/${clusterId}/database-cluster-backups`,
+    `/database-cluster-backups`,
     payload
   );
   return response.data;
 };
 
-export const deleteBackupFn = async (clusterId: string, backupName: string) => {
-  const response = await api.delete(
-    `kubernetes/${clusterId}/database-cluster-backups/${backupName}`
-  );
+export const deleteBackupFn = async (backupName: string) => {
+  const response = await api.delete(`/database-cluster-backups/${backupName}`);
 
   return response.data;
 };

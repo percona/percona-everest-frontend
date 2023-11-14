@@ -15,15 +15,14 @@
 import {
   DbClusterStatus,
   ProxyExposeType,
-} from '../../../shared-types/dbCluster.types';
-import { DbEngineType } from '../../../shared-types/dbEngines.types';
+} from 'shared-types/dbCluster.types';
+import { DbEngineType } from 'shared-types/dbEngines.types';
 
 export interface DbClusterTableElement {
   status: DbClusterStatus;
   dbType: DbEngineType;
   dbVersion: string;
   backupsEnabled: boolean;
-  kubernetesCluster: string;
   databaseName: string;
   cpu: string | number;
   memory: string | number;

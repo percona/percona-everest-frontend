@@ -11,12 +11,12 @@ import {
 import { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
 import { DrawerContext } from 'contexts/drawer/drawer.context';
-import { K8Context } from 'contexts/kubernetes/kubernetes.context';
 import useLocalStorage from 'hooks/utils/useLocalStorage';
 import { AppBar } from '../app-bar/AppBar';
 import { Drawer } from '../drawer/Drawer';
 import { WelcomeDialog } from '../welcome-dialog/welcome-dialog';
 import { Messages } from './Main.messages';
+import { useKubernetesClusterInfo } from 'hooks/api/kubernetesClusters/useKubernetesClusterInfo';
 
 export const Main = () => {
   const theme = useTheme();
@@ -25,16 +25,14 @@ export const Main = () => {
     true
   );
   const { activeBreakpoint } = useContext(DrawerContext);
-  const { clusters } = useContext(K8Context);
-  const isFetching = !!clusters?.isFetching;
-  const badResult = !!clusters?.isError;
+  const { isFetching, isError, refetch } = useKubernetesClusterInfo('initial-k8-info');
 
   const handleCloseWelcomeDialog = () => {
     setOpenWelcomeDialogLS(false);
   };
 
   const handleClick = () => {
-    clusters?.refetch();
+    refetch();
   };
 
   const drawerWidth = theme.breakpoints.up('sm')
@@ -65,7 +63,7 @@ export const Main = () => {
             <Skeleton />
             <Skeleton variant="rectangular" />
           </>
-        ) : badResult ? (
+        ) : isError ? (
           <Stack alignItems="center">
             <Typography variant="subtitle1">
               {Messages.somethingWrong}

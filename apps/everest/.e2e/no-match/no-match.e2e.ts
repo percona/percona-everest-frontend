@@ -14,14 +14,9 @@
 // limitations under the License.
 
 import { expect, test } from '@playwright/test';
-import { getK8sClusters } from '../utils/k8s-clusters';
 import { checkNoMatchPage } from '../utils/no-match';
 
 test.describe('No match (404) page', () => {
-  test.beforeAll(async ({ request }) => {
-    await getK8sClusters(request);
-  });
-
   test('databases page successfully loaded', async ({ page }) => {
     await page.goto('/databases');
     const closeIcon = page.getByTestId('close-dialog-icon');

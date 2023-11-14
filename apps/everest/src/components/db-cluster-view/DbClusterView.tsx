@@ -33,17 +33,15 @@ import { useRestartDbCluster } from 'hooks/api/db-cluster/useRestartDbCluster';
 import { DbClusterTableElement } from 'hooks/api/db-clusters/dbCluster.type';
 import {
   DB_CLUSTERS_QUERY_KEY,
-  ExtraDbCluster,
   useDbClusters,
 } from 'hooks/api/db-clusters/useDbClusters';
-import { useSelectedKubernetesCluster } from 'hooks/api/kubernetesClusters/useSelectedKubernetesCluster';
-import { DbClusterStatus } from 'shared-types/dbCluster.types';
+import { DbCluster, DbClusterStatus, GetDbClusterPayload } from 'shared-types/dbCluster.types';
 import { DbEngineType } from 'shared-types/dbEngines.types';
 import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
 import { StatusField } from '../status-field/status-field';
 import { DB_CLUSTER_STATUS_TO_BASE_STATUS } from './DbClusterView.constants';
 import { Messages } from './dbClusterView.messages';
-import { beautifyDbClusterStatus } from './DbClusterView.utils';
+import { beautifyDbClusterStatus, convertDbClusterPayloadToTableFormat } from './DbClusterView.utils';
 import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
 
@@ -51,48 +49,49 @@ export const DbClusterView = () => {
   const [selectedDbCluster, setSelectedDbCluster] = useState<string>('');
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const {
-    combinedDataForTable,
-    loadingAllClusters,
-    combinedDbClusters,
-    errorInAllClusters,
+    data: dbClusters = [],
+    isLoading: dbClustersLoading,
+    isError: dbClustersError,
   } = useDbClusters();
   const { mutate: deleteDbCluster, isLoading: deletingCluster } =
     useDeleteDbCluster();
   const { mutate: suspendDbCluster } = usePausedDbCluster();
   const { mutate: restartDbCluster } = useRestartDbCluster();
-  const { id: k8sClusterId } = useSelectedKubernetesCluster();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
+  const tableData = useMemo(() => convertDbClusterPayloadToTableFormat(dbClusters), [dbClusters]);
+
   const isPaused = (dbClusterName: string) =>
-    combinedDbClusters.find(
-      (dbCluster) => dbCluster.metadata.name === dbClusterName
-    )?.spec.paused;
+    dbClusters.find((dbCluster) => dbCluster.metadata.name === dbClusterName)?.status?.status === DbClusterStatus.paused;
 
   const handleDbSuspendOrResumed = (
     _status: DbClusterStatus,
     dbClusterName: string
   ) => {
     const shouldBePaused = !isPaused(dbClusterName);
-    const dbCluster = combinedDbClusters.find(
+    const dbCluster = dbClusters.find(
       (item) => item.metadata.name === dbClusterName
     );
+
     if (dbCluster) {
       suspendDbCluster(
-        { shouldBePaused, k8sClusterId, dbCluster },
+        { shouldBePaused, dbCluster },
         {
-          onSuccess: (updatedObject) => {
-            queryClient.setQueryData(
-              [DB_CLUSTERS_QUERY_KEY, k8sClusterId],
-              (oldData: ExtraDbCluster[] = []) =>
-                oldData.map((value) =>
-                  value.dbCluster.metadata.name === updatedObject.metadata.name
-                    ? {
-                        dbCluster: updatedObject,
-                        k8sClusterName: value.k8sClusterName,
-                      }
-                    : value
-                )
+          onSuccess: (updatedObject: DbCluster) => {
+            queryClient.setQueryData<GetDbClusterPayload | undefined>(
+              DB_CLUSTERS_QUERY_KEY,
+              (oldData) =>
+                {
+                  if (!oldData) {
+                    return undefined;
+                  }
+
+                  return {
+                    ...oldData,
+                    items: oldData.items.map((value) => value.metadata.name === updatedObject.metadata.name ? updatedObject : value)
+                  };
+                }
             );
             enqueueSnackbar(
               shouldBePaused
@@ -109,25 +108,28 @@ export const DbClusterView = () => {
   };
 
   const handleDbRestart = (dbClusterName: string) => {
-    const dbCluster = combinedDbClusters.find(
+    const dbCluster = dbClusters.find(
       (item) => item.metadata.name === dbClusterName
     );
+
     if (dbCluster) {
       restartDbCluster(
-        { k8sClusterId, dbCluster },
+        { dbCluster },
         {
-          onSuccess: (updatedObject) => {
-            queryClient.setQueryData(
-              [DB_CLUSTERS_QUERY_KEY, k8sClusterId],
-              (oldData: ExtraDbCluster[] = []) =>
-                oldData.map((value) =>
-                  value.dbCluster.metadata.name === updatedObject.metadata.name
-                    ? {
-                        dbCluster: updatedObject,
-                        k8sClusterName: value.k8sClusterName,
-                      }
-                    : value
-                )
+          onSuccess: (updatedObject: DbCluster) => {
+            queryClient.setQueryData<GetDbClusterPayload | undefined>(
+              DB_CLUSTERS_QUERY_KEY,
+              (oldData) =>
+              {
+                if (!oldData) {
+                  return undefined;
+                }
+
+                return {
+                  ...oldData,
+                  items: oldData.items.map((value) => value.metadata.name === updatedObject.metadata.name ? updatedObject : value)
+                };
+              }
             );
             enqueueSnackbar(Messages.responseMessages.restart, {
               variant: 'success',
@@ -149,16 +151,21 @@ export const DbClusterView = () => {
 
   const handleConfirmDelete = (dbClusterName: string) => {
     deleteDbCluster(
-      { k8sClusterId, dbClusterName },
+      { dbClusterName },
       {
         onSuccess: (_, variables) => {
-          queryClient.setQueryData(
-            [DB_CLUSTERS_QUERY_KEY, k8sClusterId],
-            (oldData?: ExtraDbCluster[]) =>
-              (oldData || []).filter(
-                (value) =>
-                  value.dbCluster.metadata.name !== variables.dbClusterName
-              )
+          queryClient.setQueryData<GetDbClusterPayload | undefined>(
+            DB_CLUSTERS_QUERY_KEY,
+            (oldData) => {
+              if (!oldData) {
+                return undefined;
+              }
+
+              return {
+                ...oldData,
+                items: oldData.items.filter((value) => value.metadata.name !== variables.dbClusterName)
+              };
+            }
           );
           handleCloseDeleteDialog();
         },
@@ -228,9 +235,9 @@ export const DbClusterView = () => {
       <Box sx={{ width: '100%' }}>
         <Table
           noDataMessage={Messages.dbCluster.noData}
-          state={{ isLoading: loadingAllClusters }}
+          state={{ isLoading: dbClustersLoading }}
           columns={columns}
-          data={combinedDataForTable}
+          data={tableData}
           enableRowActions
           renderRowActionMenuItems={({ row, closeMenu }) => [
             // TODO: finish when design is ready
@@ -302,7 +309,7 @@ export const DbClusterView = () => {
               component={Link}
               to="/databases/new"
               variant="contained"
-              disabled={errorInAllClusters}
+              disabled={dbClustersError}
               data-testid="add-db-cluster-button"
             >
               {Messages.createDatabase}

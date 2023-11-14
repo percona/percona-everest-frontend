@@ -18,16 +18,13 @@ import {
   DbEngineStatus,
   EngineToolPayload,
   GetDbEnginesPayload,
-} from '../../../shared-types/dbEngines.types';
-import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
-import { getDbEnginesFn } from '../../../api/dbEngineApi';
+} from 'shared-types/dbEngines.types';
+import { getDbEnginesFn } from 'api/dbEngineApi';
 
 export const useDbEngines = () => {
-  const { id } = useSelectedKubernetesCluster();
-
   return useQuery<GetDbEnginesPayload, unknown, DbEngine[]>(
     'dbEngines',
-    () => getDbEnginesFn(id),
+    () => getDbEnginesFn(),
     {
       select: ({ items = [] }) =>
         items

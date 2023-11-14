@@ -13,14 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { useContext } from 'react';
 import { DbClusterView } from 'components/db-cluster-view/DbClusterView';
-import { K8Context } from 'contexts/kubernetes/kubernetes.context';
 import { NoKubernetes } from './no-kubernetes/no-kubernetes';
+import { useKubernetesClusterInfo } from 'hooks/api/kubernetesClusters/useKubernetesClusterInfo';
 
 export const DatabasesPage = () => {
-  const { clusters } = useContext(K8Context);
-  const noKubernetesClusters = !clusters?.data?.length;
+  const { isError } = useKubernetesClusterInfo('dblist-k8-info');
 
-  return noKubernetesClusters ? <NoKubernetes /> : <DbClusterView />;
+  return isError ? <NoKubernetes /> : <DbClusterView />;
 };

@@ -2,18 +2,15 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { DbClusterView } from './DbClusterView';
-import { K8ContextProvider } from '../../contexts/kubernetes/kubernetes.context';
-import { useDbClusters } from '../../hooks/api/db-clusters/useDbClusters';
+import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
 import { Mock } from 'vitest';
 
 const queryClient = new QueryClient();
 
-vi.mock('../../hooks/api/kubernetesClusters/useSelectedKubernetesCluster');
-vi.mock('../../hooks/api/db-clusters/useDbClusters', () => ({
+vi.mock('hooks/api/db-clusters/useDbClusters', () => ({
   useDbClusters: vi.fn().mockImplementation(() => ({
-    combinedDataForTable: [],
-    combinedDbClusters: [],
-    errorInAllClusters: true,
+    data: [],
+    error: true,
   })),
 }));
 
@@ -22,9 +19,7 @@ describe('DBClusterView', () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <K8ContextProvider>
-            <DbClusterView />
-          </K8ContextProvider>
+          <DbClusterView />
         </MemoryRouter>
       </QueryClientProvider>
     );
@@ -38,17 +33,14 @@ describe('DBClusterView', () => {
 
   it('should activate button when at least one k8s cluster is ok', () => {
     (useDbClusters as Mock).mockImplementationOnce(() => ({
-      combinedDataForTable: [],
-      combinedDbClusters: [],
-      errorInAllClusters: false,
+      data: [],
+      error: false,
     }));
 
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <K8ContextProvider>
-            <DbClusterView />
-          </K8ContextProvider>
+          <DbClusterView />
         </MemoryRouter>
       </QueryClientProvider>
     );
