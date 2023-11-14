@@ -1,4 +1,5 @@
 import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
 import { ComponentsOverrides, createTheme, PaletteMode, ThemeOptions } from '@mui/material';
 import { DatePickerToolbarClassKey } from '@mui/x-date-pickers/DatePicker';
