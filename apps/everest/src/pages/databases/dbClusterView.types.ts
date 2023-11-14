@@ -12,9 +12,25 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { UseQueryResult } from 'react-query';
-import { KubernetesClusterList } from '../../shared-types/kubernetes.types';
 
-export type KubernetesContextType = {
-  clusters?: UseQueryResult<KubernetesClusterList, unknown>;
-};
+import { DbType } from '@percona/types';
+import { DbClusterStatus, ProxyExposeType } from 'shared-types/dbCluster.types';
+import { DbEngineType } from 'shared-types/dbEngines.types';
+
+export interface DbTypeIconProviderProps {
+  dbType: DbEngineType | DbType;
+}
+
+export interface DbClusterTableElement {
+  status: DbClusterStatus;
+  dbType: DbEngineType;
+  dbVersion: string;
+  backupsEnabled: boolean;
+  databaseName: string;
+  cpu: string | number;
+  memory: string | number;
+  storage: string | number;
+  hostName: string;
+  port?: number;
+  exposetype: ProxyExposeType;
+}

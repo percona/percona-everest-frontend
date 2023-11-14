@@ -1,14 +1,8 @@
 import { RestorePayload } from '../shared-types/restores.types';
 import { api } from './api';
 
-export const createDbClusterRestore = async (
-  clusterId: string,
-  data: RestorePayload
-) => {
-  const response = await api.post(
-    `kubernetes/${clusterId}/database-cluster-restores`,
-    data
-  );
+export const createDbClusterRestore = async (data: RestorePayload) => {
+  const response = await api.post(`/database-cluster-restores`, data);
 
   return response.data;
 };

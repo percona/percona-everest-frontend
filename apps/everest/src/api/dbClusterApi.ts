@@ -19,62 +19,44 @@ import {
   GetDbClusterPayload,
 } from '../shared-types/dbCluster.types';
 
-export const createDbClusterFn = async (data: DbCluster, clusterId: string) => {
-  const response = await api.post(
-    `kubernetes/${clusterId}/database-clusters`,
-    data
-  );
+export const createDbClusterFn = async (data: DbCluster) => {
+  const response = await api.post(`database-clusters`, data);
 
   return response.data;
 };
 
 export const updateDbClusterFn = async (
-  k8sClusterId: string,
   dbClusterName: string,
   data: DbCluster
 ) => {
-  const response = await api.put(
-    `kubernetes/${k8sClusterId}/database-clusters/${dbClusterName}`,
-    data
-  );
+  const response = await api.put(`database-clusters/${dbClusterName}`, data);
 
   return response.data;
 };
 
-export const getDbClustersFn = async (clusterId: string) => {
-  const response = await api.get<GetDbClusterPayload>(
-    `kubernetes/${clusterId}/database-clusters`
-  );
+export const getDbClustersFn = async () => {
+  const response = await api.get<GetDbClusterPayload>(`database-clusters`);
   return response.data;
 };
 
-export const getDbClusterCredentialsFn = async (
-  clusterId: string,
-  dbClusterName: string
-) => {
+export const getDbClusterCredentialsFn = async (dbClusterName: string) => {
   const response = await api.get<GetDbClusterCredentialsPayload>(
-    `/kubernetes/${clusterId}/database-clusters/${dbClusterName}/credentials`
+    `database-clusters/${dbClusterName}/credentials`
   );
 
   return response.data;
 };
 
-export const getDbClusterFn = async (
-  k8sClusterId: string,
-  dbClusterName: string
-) => {
+export const getDbClusterFn = async (dbClusterName: string) => {
   const response = await api.get<DbCluster>(
-    `kubernetes/${k8sClusterId}/database-clusters/${dbClusterName}`
+    `database-clusters/${dbClusterName}`
   );
   return response.data;
 };
 
-export const deleteDbClusterFn = async (
-  k8sClusterId: string,
-  dbClusterName: string
-) => {
+export const deleteDbClusterFn = async (dbClusterName: string) => {
   const response = await api.delete<DbCluster>(
-    `kubernetes/${k8sClusterId}/database-clusters/${dbClusterName}`
+    `database-clusters/${dbClusterName}`
   );
   return response.data;
 };

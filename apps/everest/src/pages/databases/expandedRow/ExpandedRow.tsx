@@ -20,23 +20,15 @@ import { ProxyExposeType } from 'shared-types/dbCluster.types';
 import { Messages } from '../dbClusterView.messages';
 import { LabelValue } from './LabelValue';
 import { useDbClusterCredentials } from 'hooks/api/db-cluster/useCreateDbCluster';
-import { HiddenPasswordToggle } from '../../hidden-row';
+import { HiddenPasswordToggle } from 'components/hidden-row';
 
 export const ExpandedRow = ({
   row,
 }: {
   row: MRT_Row<DbClusterTableElement>;
 }) => {
-  const {
-    cpu,
-    kubernetesCluster,
-    memory,
-    storage,
-    exposetype,
-    databaseName,
-    hostName,
-    port,
-  } = row.original;
+  const { cpu, memory, storage, exposetype, databaseName, hostName, port } =
+    row.original;
   const isExpanded = row.getIsExpanded();
   const { isLoading, isFetching, data } = useDbClusterCredentials(
     databaseName,
@@ -93,10 +85,6 @@ export const ExpandedRow = ({
         >
           {Messages.expandedRow.dbClusterParams}
         </Typography>
-        <LabelValue
-          label={Messages.expandedRow.k8sCluster}
-          value={kubernetesCluster}
-        />
         <LabelValue label={Messages.expandedRow.cpu} value={cpu} />
         <LabelValue label={Messages.expandedRow.memory} value={memory} />
         <LabelValue label={Messages.expandedRow.disk} value={storage} />

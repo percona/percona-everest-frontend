@@ -15,7 +15,6 @@
 
 import { expect, test } from '@playwright/test';
 import { getEnginesVersions } from '../../utils/database-engines';
-import { getK8sClusters } from '../../utils/k8s-clusters';
 import { getClusterDetailedInfo } from '../../utils/storage-class';
 import { advancedConfigurationStepCheck } from './steps/advanced-configuration-step';
 import { backupsStepCheck } from './steps/backups-step';
@@ -23,7 +22,6 @@ import { basicInformationStepCheck } from './steps/basic-information-step';
 import { resourcesStepCheck } from './steps/resources-step';
 
 test.describe('DB Cluster creation', () => {
-  let kubernetesId;
   let engineVersions = {
     pxc: [],
     psmdb: [],
@@ -33,14 +31,9 @@ test.describe('DB Cluster creation', () => {
   // let monitoringInstancesList = [];
 
   test.beforeAll(async ({ request }) => {
-    const kuberneteslist = await getK8sClusters(request);
-    kubernetesId = kuberneteslist[0].id;
-    engineVersions = await getEnginesVersions(request, kubernetesId);
+    engineVersions = await getEnginesVersions(request);
 
-    const { storageClassNames = [] } = await getClusterDetailedInfo(
-      request,
-      kubernetesId
-    );
+    const { storageClassNames = [] } = await getClusterDetailedInfo(request);
     storageClasses = storageClassNames;
 
     // monitoringInstancesList = await getMonitoringInstanceList(request);
@@ -112,9 +105,7 @@ test.describe('DB Cluster creation', () => {
       page.getByText('Awesome! Your database is being created!')
     ).toBeVisible();
 
-    const response = await request.get(
-      `/v1/kubernetes/${kubernetesId}/database-clusters`
-    );
+    const response = await request.get('/v1/database-clusters');
 
     expect(response.ok()).toBeTruthy();
     // TODO replace with correct payload typings from GET DB Clusters
@@ -125,7 +116,7 @@ test.describe('DB Cluster creation', () => {
     );
 
     const deleteResponse = await request.delete(
-      `/v1/kubernetes/${kubernetesId}/database-clusters/${addedCluster?.metadata.name}`
+      `/v1/database-clusters/${addedCluster?.metadata.name}`
     );
     expect(deleteResponse.ok()).toBeTruthy();
 

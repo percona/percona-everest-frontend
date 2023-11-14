@@ -15,10 +15,8 @@
 import { GetDbEnginesPayload } from '../shared-types/dbEngines.types';
 import { api } from './api';
 
-export const getDbEnginesFn = async (clusterId: string) => {
-  const response = await api.get<GetDbEnginesPayload>(
-    `kubernetes/${clusterId}/database-engines`
-  );
+export const getDbEnginesFn = async () => {
+  const response = await api.get<GetDbEnginesPayload>(`/database-engines`);
 
   return response.data;
 };
