@@ -58,7 +58,6 @@ export const DbClusterView = () => {
   const {
     data: dbClusters = [],
     isLoading: dbClustersLoading,
-    isError: dbClustersError,
   } = useDbClusters();
   const { mutate: deleteDbCluster, isLoading: deletingCluster } =
     useDeleteDbCluster();
@@ -328,7 +327,6 @@ export const DbClusterView = () => {
               component={Link}
               to="/databases/new"
               variant="contained"
-              disabled={dbClustersError}
               data-testid="add-db-cluster-button"
             >
               {Messages.createDatabase}
