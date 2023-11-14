@@ -1,13 +1,12 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { TestWrapper } from '../../../../utils/test';
+import { TestWrapper } from 'utils/test';
 import { Backups } from './backups.tsx';
-import { TimeValue } from '../../../../components/time-selection/time-selection.types';
+import { TimeValue } from 'components/time-selection/time-selection.types';
 
-jest.mock('../../../../hooks/api/backup-storages/useBackupStorages');
+vi.mock('hooks/api/backup-storages/useBackupStorages');
 
-//TODO 485
 const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
   const methods = useForm({
     defaultValues: {
@@ -60,7 +59,7 @@ describe('ThirdStep', () => {
   //   render(
   //     <TestWrapper>
   //       <FormProviderWrapper>
-  //         <Backups />
+  //         <ThirdStep />
   //       </FormProviderWrapper>
   //     </TestWrapper>
   //   );
@@ -80,7 +79,7 @@ describe('ThirdStep', () => {
   // //   render(
   // //     <TestWrapper>
   // //       <FormProviderWrapper>
-  // //         <Backups />
+  // //         <ThirdStep />
   // //       </FormProviderWrapper>
   // //     </TestWrapper>
   // //   );
@@ -96,7 +95,7 @@ describe('ThirdStep', () => {
   // //   render(
   // //     <TestWrapper>
   // //       <FormProviderWrapper>
-  // //         <Backups />
+  // //         <ThirdStep />
   // //       </FormProviderWrapper>
   // //     </TestWrapper>
   // //   );
@@ -115,7 +114,7 @@ describe('ThirdStep', () => {
   //   render(
   //     <TestWrapper>
   //       <FormProviderWrapper>
-  //         <Backups />
+  //         <ThirdStep />
   //       </FormProviderWrapper>
   //     </TestWrapper>
   //   );
@@ -141,7 +140,7 @@ describe('ThirdStep', () => {
   //   render(
   //     <TestWrapper>
   //       <FormProviderWrapper>
-  //         <Backups />
+  //         <ThirdStep />
   //       </FormProviderWrapper>
   //     </TestWrapper>
   //   );
@@ -173,7 +172,7 @@ describe('ThirdStep', () => {
   //   render(
   //     <TestWrapper>
   //       <FormProviderWrapper>
-  //         <Backups />
+  //         <ThirdStep />
   //       </FormProviderWrapper>
   //     </TestWrapper>
   //   );
@@ -203,7 +202,7 @@ describe('ThirdStep', () => {
   //   render(
   //     <TestWrapper>
   //       <FormProviderWrapper>
-  //         <Backups />
+  //         <ThirdStep />
   //       </FormProviderWrapper>
   //     </TestWrapper>
   //   );
