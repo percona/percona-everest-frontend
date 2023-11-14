@@ -1,8 +1,8 @@
-import { BackupPayload, GetBackupPayload } from 'shared-types/backups.types';
+import { BackupPayload, GetBackupsPayload, SingleBackupPayload } from 'shared-types/backups.types';
 import { api } from './api';
 
 export const getBackupsFn = async (dbClusterName: string) => {
-  const response = await api.get<GetBackupPayload>(
+  const response = await api.get<GetBackupsPayload>(
     `/database-clusters/${dbClusterName}/backups`
   );
 
@@ -10,7 +10,7 @@ export const getBackupsFn = async (dbClusterName: string) => {
 };
 
 export const createBackupOnDemand = async (payload: BackupPayload) => {
-  const response = await api.post<GetBackupPayload>(
+  const response = await api.post<SingleBackupPayload>(
     `/database-cluster-backups`,
     payload
   );

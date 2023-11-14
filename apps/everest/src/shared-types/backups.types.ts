@@ -1,18 +1,20 @@
-export type GetBackupPayload = {
-  items: Array<{
-    metadata: {
-      name: string;
-    };
-    status: {
-      created: string;
-      completed: string;
-      state: string;
-    };
-    spec: {
-      dbClusterName: string;
-      backupStorageName: string;
-    };
-  }>;
+export type SingleBackupPayload = {
+  metadata: {
+    name: string;
+  };
+  status?: {
+    created: string;
+    completed: string;
+    state: string;
+  };
+  spec: {
+    dbClusterName: string;
+    backupStorageName: string;
+  };
+}
+
+export type GetBackupsPayload = {
+  items: Array<SingleBackupPayload>;
 };
 
 export type Backup = {

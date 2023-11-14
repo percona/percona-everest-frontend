@@ -18,6 +18,7 @@ import {
   OnDemandBackupModalProps,
   schema,
 } from './on-demand-backup-modal.types';
+import { GetBackupsPayload, SingleBackupPayload } from 'shared-types/backups.types';
 
 export const OnDemandBackupModal = ({
   open,
@@ -30,8 +31,17 @@ export const OnDemandBackupModal = ({
   const { data: backupStorages = [], isFetching } = useBackupStorages();
   const handleSubmit = (data: BackupFormData) => {
     createBackupOnDemand(data, {
-      onSuccess() {
-        queryClient.invalidateQueries([BACKUPS_QUERY_KEY, dbClusterName]);
+      onSuccess(newBackup: SingleBackupPayload) {
+        queryClient.setQueryData<GetBackupsPayload | undefined>([BACKUPS_QUERY_KEY, dbClusterName], (oldData) => {
+          if (!oldData) {
+            return undefined;
+          }
+
+          return {
+            items: [newBackup, ...oldData.items]
+          };
+          
+        })
         handleClose();
       },
     });
