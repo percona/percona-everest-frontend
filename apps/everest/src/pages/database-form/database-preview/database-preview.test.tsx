@@ -2,10 +2,10 @@ import React from 'react';
 import { screen, render, fireEvent, waitFor } from '@testing-library/react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { DbType } from '@percona/types';
-import { DbWizardType } from '../database-form.types';
 import { DB_WIZARD_DEFAULTS } from '../database-form.constants';
 import { TestWrapper } from '../../../utils/test';
 import { DatabasePreview } from './database-preview';
+import { DbWizardType } from '../database-form.schema.ts';
 
 const FormProviderWrapper = ({
   children,
