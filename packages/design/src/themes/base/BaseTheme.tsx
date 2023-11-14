@@ -1,7 +1,12 @@
 import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
-import { ComponentsOverrides, createTheme, PaletteMode, ThemeOptions } from '@mui/material';
+import {
+  ComponentsOverrides,
+  createTheme,
+  PaletteMode,
+  ThemeOptions,
+} from '@mui/material';
 import { DatePickerToolbarClassKey } from '@mui/x-date-pickers/DatePicker';
 import { tooltipClasses } from '@mui/material/Tooltip';
 
@@ -74,7 +79,7 @@ declare module '@mui/material/styles' {
   interface Components<Theme = unknown> {
     MuiDateCalendar?: {
       styleOverrides?: ComponentsOverrides<Theme>['MuiDateCalendar'];
-    }
+    };
   }
 }
 
@@ -319,7 +324,7 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
     inputLabel: {
       fontSize: '12px',
       fontWeight: 500,
-    }
+    },
   },
   shadows: [
     'none',
@@ -608,10 +613,10 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
           '.MuiPickersDay-root': {
             fontSize: theme.typography.body2.fontSize,
             fontWeight: theme.typography.body2.fontWeight,
-          }
-        })
-      }
-    }
+          },
+        }),
+      },
+    },
   },
 });
 
