@@ -71,15 +71,15 @@ export const Backups = () => {
             <Alert severity="info">{Messages.youHaveMultipleSchedules}</Alert>
           )}
           {!scheduleDisabled && <ScheduleBackupSection />}
-          {/* <Typography variant="h6">{Messages.pitr}</Typography>
+        </>
+      )}
+      {/* <Typography variant="h6">{Messages.pitr}</Typography>
           <Typography variant="caption">{Messages.captionPitr}</Typography>
           <SwitchInput
             label={Messages.enablePitr}
             name={DbWizardFormFields.pitrEnabled}
           /> */}
-          {/* {pitrEnabled && <PitrEnabledSection />} */}
-        </>
-      )}
+      {/* {pitrEnabled && <PitrEnabledSection />} */}
     </Box>
   );
 };
