@@ -22,7 +22,7 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Button, MenuItem, Stack } from '@mui/material';
 import { Table } from '@percona/ui-lib';
-import { useBackupsActions } from 'hooks/api/backups/useBackupsActions';
+import { useDbActions } from 'hooks/api/db-cluster/useDbActions';
 import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
 import { DbClusterTableElement } from 'hooks/api/db-clusters/dbCluster.type';
 import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
@@ -52,7 +52,7 @@ export const DbClusterView = () => {
     handleDeleteDbCluster,
     handleCloseDeleteDialog,
     isPaused,
-  } = useBackupsActions();
+  } = useDbActions();
   const navigate = useNavigate();
 
   const columns = useMemo<MRT_ColumnDef<DbClusterTableElement>[]>(
@@ -157,10 +157,7 @@ export const DbClusterView = () => {
               key={3}
               disabled={row.original.status === DbClusterStatus.pausing}
               onClick={() => {
-                handleDbSuspendOrResumed(
-                  row.original.status,
-                  row.original.databaseName
-                );
+                handleDbSuspendOrResumed(row.original.databaseName);
                 closeMenu();
               }}
               sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}

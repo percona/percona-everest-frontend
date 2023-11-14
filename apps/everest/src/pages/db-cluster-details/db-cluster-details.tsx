@@ -1,8 +1,6 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import {
   Box,
-  Button,
   IconButton,
   Skeleton,
   Tab,
@@ -19,6 +17,7 @@ import {
 } from 'react-router-dom';
 import { useDbClusters } from '../../hooks/api/db-clusters/useDbClusters';
 import { NoMatch } from '../404/NoMatch';
+import { DbActionButton } from './db-action-button';
 import { Messages } from './db-cluster-details.messages';
 import { DBClusterDetailsTabs } from './db-cluster-details.types';
 
@@ -82,9 +81,7 @@ export const DbClusterDetails = () => {
           </IconButton>
           <Typography variant="h4">{dbClusterName}</Typography>
         </Box>
-        <Button variant="text" size="large" endIcon={<ArrowDropDownIcon />}>
-          Actions
-        </Button>
+        <DbActionButton />
       </Box>
       <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 1 }}>
         <Tabs

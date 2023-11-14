@@ -11,9 +11,8 @@ import { useSelectedKubernetesCluster } from 'hooks/api/kubernetesClusters/useSe
 import { enqueueSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useQueryClient } from 'react-query';
-import { DbClusterStatus } from 'shared-types/dbCluster.types';
 
-export const useBackupsActions = () => {
+export const useDbActions = () => {
   const [selectedDbCluster, setSelectedDbCluster] = useState<string>('');
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const { combinedDbClusters } = useDbClusters();
@@ -29,10 +28,7 @@ export const useBackupsActions = () => {
       (dbCluster) => dbCluster.metadata.name === dbClusterName
     )?.spec.paused;
 
-  const handleDbSuspendOrResumed = (
-    _status: DbClusterStatus,
-    dbClusterName: string
-  ) => {
+  const handleDbSuspendOrResumed = (dbClusterName: string) => {
     const shouldBePaused = !isPaused(dbClusterName);
     const dbCluster = combinedDbClusters.find(
       (item) => item.metadata.name === dbClusterName
