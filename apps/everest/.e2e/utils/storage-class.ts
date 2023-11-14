@@ -16,7 +16,7 @@
 import { APIRequestContext, expect } from '@playwright/test';
 
 export const getClusterDetailedInfo = async (request: APIRequestContext) => {
-  const clusterInfo = await request.get('cluster-info');
+  const clusterInfo = await request.get('/v1/cluster-info');
   expect(clusterInfo.ok()).toBeTruthy();
   return clusterInfo.json();
 };
