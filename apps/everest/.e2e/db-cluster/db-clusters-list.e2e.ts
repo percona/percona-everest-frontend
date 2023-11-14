@@ -16,15 +16,9 @@
 // import { DbType } from '@percona/types';
 import { test } from '@playwright/test';
 import { createDbClusterFn } from '../utils/db-cluster';
-import { getK8sClusters } from '../utils/k8s-clusters';
 
 test.describe('DB Cluster List', () => {
-  let kubernetesId: string;
   const mySQLName = 'mysql-test-ui';
-
-  test.beforeAll(async ({ request }) => {
-    kubernetesId = (await getK8sClusters(request))[0].id;
-  });
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/databases');
@@ -35,15 +29,11 @@ test.describe('DB Cluster List', () => {
   });
 
   test('DB clusters Delete Action', async ({ page, request }) => {
-    await createDbClusterFn(
-      request,
-      {
-        dbName: mySQLName,
-        dbType: 'mysql',
-        numberOfNodes: '1',
-      },
-      kubernetesId
-    );
+    await createDbClusterFn(request, {
+      dbName: mySQLName,
+      dbType: 'mysql',
+      numberOfNodes: '1',
+    });
     // TODO waiting of adding dbCluster function is not necessary but would be good
 
     const rows = await page.getByRole('row');

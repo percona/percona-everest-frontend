@@ -18,7 +18,6 @@ import { updateDbClusterFn } from '../../../api/dbClusterApi';
 import { DbCluster } from '../../../shared-types/dbCluster.types';
 
 type PausedDBClusterArgType = {
-  k8sClusterId: string;
   dbCluster: DbCluster;
 };
 
@@ -31,7 +30,7 @@ export const useRestartDbCluster = (
   >
 ) => {
   return useMutation(
-    ({ k8sClusterId, dbCluster }: PausedDBClusterArgType) => {
+    ({ dbCluster }: PausedDBClusterArgType) => {
       const payload: DbCluster = {
         ...dbCluster,
         metadata: {
@@ -41,11 +40,7 @@ export const useRestartDbCluster = (
           },
         },
       };
-      return updateDbClusterFn(
-        k8sClusterId,
-        dbCluster?.metadata?.name,
-        payload
-      );
+      return updateDbClusterFn(dbCluster?.metadata?.name, payload);
     },
     { ...options }
   );

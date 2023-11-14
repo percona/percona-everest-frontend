@@ -19,7 +19,6 @@ import { DbCluster } from '../../../shared-types/dbCluster.types';
 
 type PausedDBClusterArgType = {
   shouldBePaused: boolean;
-  k8sClusterId: string;
   dbCluster: DbCluster;
 };
 
@@ -32,7 +31,7 @@ export const usePausedDbCluster = (
   >
 ) => {
   return useMutation(
-    ({ shouldBePaused, k8sClusterId, dbCluster }: PausedDBClusterArgType) => {
+    ({ shouldBePaused, dbCluster }: PausedDBClusterArgType) => {
       const dbClusterName = dbCluster?.metadata?.name;
       const payload: DbCluster = {
         ...dbCluster,
@@ -41,7 +40,7 @@ export const usePausedDbCluster = (
           paused: shouldBePaused,
         },
       };
-      return updateDbClusterFn(k8sClusterId, dbClusterName, payload);
+      return updateDbClusterFn(dbClusterName, payload);
     },
     { ...options }
   );

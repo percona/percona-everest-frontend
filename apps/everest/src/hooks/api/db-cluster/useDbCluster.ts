@@ -17,7 +17,6 @@ import { useQuery, UseQueryOptions } from 'react-query';
 import { DbCluster } from '../../../shared-types/dbCluster.types';
 
 import { getDbClusterFn } from '../../../api/dbClusterApi';
-import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
 
 export const DB_CLUSTER_QUERY = 'dbCluster';
 
@@ -25,11 +24,9 @@ export const useDbCluster = (
   dbClusterName: string,
   options?: UseQueryOptions<DbCluster>
 ) => {
-  const { id } = useSelectedKubernetesCluster();
-
   return useQuery<DbCluster, unknown, DbCluster>(
     [DB_CLUSTER_QUERY, dbClusterName],
-    () => getDbClusterFn(id, dbClusterName),
+    () => getDbClusterFn(dbClusterName),
     {
       ...options,
     }

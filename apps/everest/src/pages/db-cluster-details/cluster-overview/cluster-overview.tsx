@@ -9,9 +9,9 @@ import { ConnectionDetails, DatabaseDetails } from './cards';
 
 export const ClusterOverview = () => {
   const { dbClusterName } = useParams();
-  const { combinedDataForTable, loadingAllClusters } = useDbClusters();
-  const dbNameExists = combinedDataForTable.find(
-    (cluster) => cluster.databaseName === dbClusterName
+  const { data = [], isLoading } = useDbClusters();
+  const dbNameExists = data.find(
+    (cluster) => cluster.metadata.name === dbClusterName
   );
   const { data: dbCluster, isFetching: fetchingCluster } = useDbCluster(
     dbClusterName || '',
@@ -38,7 +38,7 @@ export const ClusterOverview = () => {
     >
       {/* We force ! because while loading no info is shown */}
       <DatabaseDetails
-        loading={fetchingCluster || loadingAllClusters}
+        loading={fetchingCluster || isLoading}
         type={dbEngineToDbType(dbCluster?.spec.engine.type!)}
         name={dbCluster?.metadata.name!}
         namespace={dbCluster?.metadata.namespace!}
@@ -54,8 +54,8 @@ export const ClusterOverview = () => {
       />
       <ConnectionDetails
         loading={fetchingCluster}
-        loadingClusterDetails={fetchingClusterDetails || loadingAllClusters}
-        hostname={dbCluster?.status?.hostname}
+        loadingClusterDetails={fetchingClusterDetails || isLoading}
+        hostname={dbCluster?.status?.hostname!}
         port={dbCluster?.status?.port!}
         username={dbClusterDetails?.username!}
         password={dbClusterDetails?.password!}

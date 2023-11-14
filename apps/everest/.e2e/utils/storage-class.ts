@@ -15,13 +15,8 @@
 
 import { APIRequestContext, expect } from '@playwright/test';
 
-export const getClusterDetailedInfo = async (
-  request: APIRequestContext,
-  clusterId: string
-) => {
-  const clusterInfo = await request.get(
-    `/v1/kubernetes/${clusterId}/cluster-info`
-  );
+export const getClusterDetailedInfo = async (request: APIRequestContext) => {
+  const clusterInfo = await request.get('/v1/cluster-info');
   expect(clusterInfo.ok()).toBeTruthy();
   return clusterInfo.json();
 };

@@ -4,7 +4,6 @@ import { getCronExpressionFromFormValues } from 'components/time-selection/time-
 import { ScheduleFormData } from 'pages/db-cluster-details/backups/scheduled-backup-modal/scheduled-backup-modal-form/scheduled-backup-modal-form.types';
 import { DbCluster, Schedule } from 'shared-types/dbCluster.types';
 import { useDbCluster } from '../db-cluster/useDbCluster';
-import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
 
 const backupScheduleFormValuesToDbClusterPayload = (
   dbPayload: ScheduleFormData,
@@ -99,7 +98,6 @@ export const useUpdateSchedules = (
   mode: 'new' | 'edit',
   options?: UseMutationOptions<unknown, unknown, ScheduleFormData, unknown>
 ) => {
-  const { id: clusterId } = useSelectedKubernetesCluster();
   const { data: dbCluster } = useDbCluster(dbClusterName);
 
   return useMutation(
@@ -109,7 +107,7 @@ export const useUpdateSchedules = (
         dbCluster!,
         mode
       );
-      return updateDbClusterFn(clusterId, dbClusterName, payload);
+      return updateDbClusterFn(dbClusterName, payload);
     },
     { ...options }
   );
@@ -119,7 +117,6 @@ export const useDeleteSchedule = (
   dbClusterName: string,
   options?: UseMutationOptions<unknown, unknown, string, unknown>
 ) => {
-  const { id: clusterId } = useSelectedKubernetesCluster();
   const { data: dbCluster } = useDbCluster(dbClusterName);
 
   return useMutation(
@@ -128,7 +125,7 @@ export const useDeleteSchedule = (
         scheduleName,
         dbCluster!
       );
-      return updateDbClusterFn(clusterId, dbClusterName, payload);
+      return updateDbClusterFn(dbClusterName, payload);
     },
     { ...options }
   );

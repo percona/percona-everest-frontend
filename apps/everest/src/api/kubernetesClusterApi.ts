@@ -16,28 +16,17 @@ import { api } from './api';
 import {
   GetKubernetesClusterInfoPayload,
   GetKubernetesClusterResourcesInfoPayload,
-  KubernetesClusterList,
 } from '../shared-types/kubernetes.types';
 
-export const getKubernetesClustersFn = async () => {
-  const response = await api.get<KubernetesClusterList>('kubernetes');
+export const getKubernetesClusterInfoFn = async () => {
+  const response =
+    await api.get<GetKubernetesClusterInfoPayload>(`cluster-info`);
 
   return response.data;
 };
 
-export const getKubernetesClusterInfoFn = async (clusterId: string) => {
-  const response = await api.get<GetKubernetesClusterInfoPayload>(
-    `kubernetes/${clusterId}/cluster-info`
-  );
-
-  return response.data;
-};
-
-export const getKubernetesClusterResourcesInfo = async (
-  k8sClusterId: string
-) => {
-  const response = await api.get<GetKubernetesClusterResourcesInfoPayload>(
-    `/kubernetes/${k8sClusterId}/resources`
-  );
+export const getKubernetesClusterResourcesInfo = async () => {
+  const response =
+    await api.get<GetKubernetesClusterResourcesInfoPayload>(`resources`);
   return response.data;
 };

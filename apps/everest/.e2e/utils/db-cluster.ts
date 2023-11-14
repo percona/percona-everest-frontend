@@ -17,20 +17,17 @@ import { APIRequestContext, expect } from '@playwright/test';
 // import { DbType } from '@percona/types';
 import { dbTypeToDbEngine } from '@percona/utils';
 import { getEnginesVersions } from './database-engines';
-import { getK8sClusters } from './k8s-clusters';
 import { getClusterDetailedInfo } from './storage-class';
 
 export const createDbClusterFn = async (
   request: APIRequestContext,
-  customOptions?,
-  kubernetesId?: string
+  customOptions?
 ) => {
-  const k8sClusterId = kubernetesId || (await getK8sClusters(request))[0].id;
-  const dbEngines = await getEnginesVersions(request, k8sClusterId);
+  const dbEngines = await getEnginesVersions(request);
   const dbType = customOptions?.dbType || 'mysql';
   const dbEngineType = dbTypeToDbEngine(dbType);
   const dbTypeVersions = dbEngines[dbEngineType];
-  const dbClusterInfo = await getClusterDetailedInfo(request, k8sClusterId);
+  const dbClusterInfo = await getClusterDetailedInfo(request);
   const storageClassNames = dbClusterInfo?.storageClassNames[0];
   const lastVersion = dbTypeVersions[dbTypeVersions.length - 1];
 
@@ -123,23 +120,19 @@ export const createDbClusterFn = async (
     },
   };
 
-  const response = await request.post(
-    `/v1/kubernetes/${k8sClusterId}/database-clusters`,
-    {
-      data: payload,
-    }
-  );
+  const response = await request.post('/v1/database-clusters', {
+    data: payload,
+  });
 
   expect(response.ok()).toBeTruthy();
 };
 
 export const deleteDbClusterFn = async (
   request: APIRequestContext,
-  kubernetesId: string,
   clusterName: string
 ) => {
   const deleteResponse = await request.delete(
-    `/v1/kubernetes/${kubernetesId}/database-clusters/${clusterName}`
+    `/v1/database-clusters/${clusterName}`
   );
   expect(deleteResponse.ok()).toBeTruthy();
 };
