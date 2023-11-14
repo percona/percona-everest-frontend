@@ -31,8 +31,6 @@ import {
   TIME_SELECTION_DEFAULTS,
 } from './database-form.constants.ts';
 
-// import { getFormValuesFromCronExpression } from 'components/time-selection/time-selection.utils';
-
 const getScheduleInfo = (backup?: Backup) => {
   if (backup?.enabled) {
     const schedules = backup?.schedules;

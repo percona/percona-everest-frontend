@@ -31,11 +31,9 @@ import {
   ProxyExposeType,
 } from '../../../shared-types/dbCluster.types';
 import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
-// import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils';
 import { dbTypeToDbEngine } from '@percona/utils';
 import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils.ts';
 import { DbWizardType } from '../../../pages/database-form/database-form.schema.ts';
-// import {TimeValue, WeekDays} from "../../components/time-selection/time-selection.types";
 
 type CreateDbClusterArgType = {
   dbPayload: DbWizardType;

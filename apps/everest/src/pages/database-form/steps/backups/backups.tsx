@@ -50,7 +50,6 @@ export const Backups = () => {
   const scheduleDisabled = multiSchedules || dbType === DbType.Postresql;
 
   return (
-    // gap was removed because we haven't gaps in the other pages
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <Typography variant="h5">{Messages.backups}</Typography>
       <Typography variant="subtitle2">{Messages.captionBackups}</Typography>
