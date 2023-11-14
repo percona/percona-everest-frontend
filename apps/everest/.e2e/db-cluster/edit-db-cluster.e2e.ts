@@ -14,12 +14,10 @@
 // limitations under the License.
 
 import { test } from '@playwright/test';
-// import { getK8sClusters } from '../utils/k8s-clusters';
 // import { getEnginesVersions } from '../utils/database-engines';
 // import { getClusterDetailedInfo } from '../utils/storage-class';
 
 test.skip('DB Cluster creation', () => {
-  // let kubernetesId;
   // let engineVersions = {
   //   pxc: [],
   //   psmdb: [],
@@ -28,11 +26,9 @@ test.skip('DB Cluster creation', () => {
   // let storageClasses = [];
 
   test.beforeAll(async () => {
-    // kubernetesId = (await getK8sClusters(request))[0].id;
-    // engineVersions = await getEnginesVersions(request, kubernetesId);
+    // engineVersions = await getEnginesVersions(request);
     // const { storageClassNames = [] } = await getClusterDetailedInfo(
-    //   request,
-    //   kubernetesId
+    //   request
     // );
     // storageClasses = storageClassNames;
     // TODO createDbCluster(request);

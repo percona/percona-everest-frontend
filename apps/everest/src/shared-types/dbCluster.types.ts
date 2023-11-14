@@ -93,22 +93,27 @@ export interface StatusSpec {
   port: number;
 }
 
+export interface DbClusterMetadata {
+  name: string;
+  namespace?: string;
+  annotations?: {
+    'everest.percona.com/restart'?: string;
+  };
+}
+
 export interface DbCluster {
   apiVersion: string;
   kind: 'DatabaseCluster';
-  metadata: {
-    name: string;
-    namespace?: string;
-    annotations?: {
-      'everest.percona.com/restart'?: string;
-    };
-  };
+  metadata: DbClusterMetadata;
   spec: Spec;
   status?: StatusSpec;
 }
 
 export type GetDbClusterPayload = {
+  apiVersion: string;
   items: Array<DbCluster>;
+  kind: 'DatabaseCluster';
+  metadata: DbClusterMetadata;
 };
 
 export type ClusterCredentials = {

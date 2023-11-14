@@ -1,32 +1,24 @@
 import { test, expect } from '@playwright/test';
 import { createDbClusterFn, deleteDbClusterFn } from '../utils/db-cluster';
-import { getK8sClusters } from '../utils/k8s-clusters';
 
 test.describe('DB Cluster Overview', async () => {
   const dbClusterName = 'cluster-overview-test';
-  let kubernetesId: string;
 
   test.beforeAll(async ({ request }) => {
-    kubernetesId = (await getK8sClusters(request))[0].id;
-
-    await createDbClusterFn(
-      request,
-      {
-        dbName: dbClusterName,
-        dbType: 'mysql',
-        numberOfNodes: '1',
-        cpu: 0.6,
-        disk: 1,
-        memory: 1,
-        externalAccess: true,
-        sourceRanges: [
-          {
-            sourceRange: 'http://192.168.1.1',
-          },
-        ],
-      },
-      kubernetesId
-    );
+    await createDbClusterFn(request, {
+      dbName: dbClusterName,
+      dbType: 'mysql',
+      numberOfNodes: '1',
+      cpu: 0.6,
+      disk: 1,
+      memory: 1,
+      externalAccess: true,
+      sourceRanges: [
+        {
+          sourceRange: 'http://192.168.1.1',
+        },
+      ],
+    });
   });
 
   test.beforeEach(async ({ page }) => {
@@ -35,7 +27,7 @@ test.describe('DB Cluster Overview', async () => {
   });
 
   test.afterAll(async ({ request }) => {
-    await deleteDbClusterFn(request, kubernetesId, dbClusterName);
+    await deleteDbClusterFn(request, dbClusterName);
   });
 
   test('Overview information', async ({ page }) => {

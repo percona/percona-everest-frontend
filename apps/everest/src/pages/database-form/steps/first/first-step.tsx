@@ -41,7 +41,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
   const { data: clusterInfo, isFetching: clusterInfoFetching } =
-    useKubernetesClusterInfo();
+    useKubernetesClusterInfo('wizard-k8-info');
 
   const mode = useDatabasePageMode();
 
