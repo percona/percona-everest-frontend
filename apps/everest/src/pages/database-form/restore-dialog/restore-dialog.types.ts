@@ -14,7 +14,7 @@
 // limitations under the License.
 
 import { SubmitHandler } from 'react-hook-form';
-import { DbWizardType } from '../database-form.types';
+import { DbWizardType } from '../database-form.schema.ts';
 
 export type RestoreDialogProps = {
   open: boolean;

@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { DefaultValues } from 'react-hook-form';
+
 import { DbType } from '@percona/types';
 import {
   AmPM,
@@ -34,7 +34,7 @@ export const TIME_SELECTION_DEFAULTS = {
   [DbWizardFormFields.onDay]: 1,
 };
 
-export const DB_WIZARD_DEFAULTS: DefaultValues<DbWizardType> = {
+export const DB_WIZARD_DEFAULTS: DbWizardType = {
   // TODO should be changed to true after  https://jira.percona.com/browse/EVEREST-509
   [DbWizardFormFields.backupsEnabled]: false,
   // [DbWizardFormFields.pitrEnabled]: true,

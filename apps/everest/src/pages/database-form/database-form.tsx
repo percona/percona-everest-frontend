@@ -47,7 +47,7 @@ import { SixthStep } from './steps/sixth/sixth-step';
 import { useDatabasePageDefaultValues } from './useDatabaseFormDefaultValues';
 import { useDatabasePageMode } from './useDatabasePageMode';
 import { DbWizardType } from './database-form.schema.ts';
-import { useDBValidationSchema } from './useDBValidationSchema.ts';
+import { useDbValidationSchema } from './useDbValidationSchema.ts';
 
 export const DatabasePage = () => {
   const theme = useTheme();
@@ -70,7 +70,7 @@ export const DatabasePage = () => {
     isFetching: loadingDefaultsForEdition,
   } = useDatabasePageDefaultValues(mode);
 
-  const validationSchema = useDBValidationSchema(
+  const validationSchema = useDbValidationSchema(
     activeStep,
     mode,
     dbClusterData
@@ -143,6 +143,7 @@ export const DatabasePage = () => {
       if (errors[DbWizardFormFields.disk] && activeStep === 1) {
         isStepValid = false;
       } else {
+        console.log(errors);
         isStepValid = await trigger();
       }
       if (isStepValid) {

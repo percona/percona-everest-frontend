@@ -20,8 +20,8 @@ const backupsWithScheduleValidationObject = {
     `${ScheduleFormMessages.scheduleName.label.toLowerCase()} name`,
     MAX_SCHEDULE_NAME_LENGTH
   )
-    .nonempty()
-    .max(MAX_SCHEDULE_NAME_LENGTH, ScheduleFormMessages.scheduleName.tooLong),
+    .max(MAX_SCHEDULE_NAME_LENGTH, ScheduleFormMessages.scheduleName.tooLong)
+    .optional(),
   ...timeSelectionSchemaObject,
   ...storageLocationScheduleFormSchema,
 };

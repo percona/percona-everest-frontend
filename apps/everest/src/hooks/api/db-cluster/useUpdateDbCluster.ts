@@ -21,6 +21,7 @@ import {
 } from '../../../shared-types/dbCluster.types';
 import { DbWizardType } from '../../../pages/database-form/database-form.schema.ts';
 import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils.ts';
+import { generateShortUID } from '../../../pages/database-form/steps/first/utils.ts';
 
 type UpdateDbClusterArgType = {
   dbPayload: DbWizardType;
@@ -39,7 +40,7 @@ const getSchedules = (
     return [
       {
         enabled: true,
-        name: dbPayload?.scheduleName,
+        name: dbPayload?.scheduleName || `backup-${generateShortUID()}`,
         backupStorageName:
           typeof dbPayload.storageLocation === 'string'
             ? dbPayload.storageLocation
