@@ -7,21 +7,23 @@ import { FifthStep } from './fifth-step';
 const mocks = vi.hoisted(() => {
   return {
     useMonitoringInstancesList: vi.fn().mockReturnValue({
-      data: [{
-        type: 'type1',
-        url: '127.0.0.1',
-        name: 'PMM-local'
-      }]
+      data: [
+        {
+          type: 'type1',
+          url: '127.0.0.1',
+          name: 'PMM-local',
+        },
+      ],
     }),
-  }
-})
+  };
+});
 
 vi.mock('hooks/api/monitoring/useMonitoringInstancesList', () => ({
   useMonitoringInstancesList: mocks.useMonitoringInstancesList,
 }));
 
 vi.mock('../../useDatabasePageMode', () => ({
-  useDatabasePageMode: () => 'new'
+  useDatabasePageMode: () => 'new',
 }));
 
 const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
@@ -43,9 +45,13 @@ describe('AdvancedConfigurations', () => {
     );
 
     expect(screen.getByTestId('switch-input-monitoring')).toBeInTheDocument();
-    expect(screen.getByTestId('switch-input-monitoring')).not.toHaveAttribute('aria-disabled')
+    expect(screen.getByTestId('switch-input-monitoring')).not.toHaveAttribute(
+      'aria-disabled'
+    );
     expect(screen.queryByTestId('monitoring-warning')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('text-input-monitoring-instance')).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('text-input-monitoring-instance')
+    ).not.toBeInTheDocument();
   });
 
   it('should render remaining fields when monitoring is on', () => {
@@ -57,15 +63,16 @@ describe('AdvancedConfigurations', () => {
       </TestWrapper>
     );
 
-    
     expect(screen.getByTestId('switch-input-monitoring')).toBeInTheDocument();
     fireEvent.click(screen.getByTestId('switch-input-monitoring'));
-    expect(screen.getByTestId('text-input-monitoring-instance')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('text-input-monitoring-instance')
+    ).toBeInTheDocument();
   });
 
   it('should disable toggle when no monitoring instances defined', async () => {
     mocks.useMonitoringInstancesList.mockReturnValue({
-      data: []
+      data: [],
     });
 
     render(
@@ -76,8 +83,11 @@ describe('AdvancedConfigurations', () => {
       </TestWrapper>
     );
 
-    
     expect(screen.queryByTestId('monitoring-warning')).toBeInTheDocument();
-    await waitFor(() => expect(screen.getByTestId('switch-input-monitoring')).toHaveAttribute('aria-disabled'));
+    await waitFor(() =>
+      expect(screen.getByTestId('switch-input-monitoring')).toHaveAttribute(
+        'aria-disabled'
+      )
+    );
   });
 });

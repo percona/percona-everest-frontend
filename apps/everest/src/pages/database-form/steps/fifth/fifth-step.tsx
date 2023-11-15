@@ -16,7 +16,6 @@ export const FifthStep = () => {
   const { data: monitoringInstances, isFetching: monitoringInstancesLoading } =
     useMonitoringInstancesList();
 
-
   const monitoringInstancesOptions = (monitoringInstances || []).map(
     (instance) => instance.name
   );
@@ -31,7 +30,7 @@ export const FifthStep = () => {
 
   useEffect(() => {
     const selectedInstance = getValues(DbWizardFormFields.monitoringInstance);
-  
+
     if (mode === 'new') {
       if (monitoring && monitoringInstances?.length) {
         setValue(
@@ -58,8 +57,9 @@ export const FifthStep = () => {
       <Typography variant="subtitle2">{Messages.caption}</Typography>
       {!monitoringInstances?.length && (
         <Alert severity="info" sx={{ mt: 1 }} data-testid="monitoring-warning">
-          Database monitoring is currently disabled because monitoring endpoints were not configured during installation.
-          To enable database monitoring, run the `everestctl install` command to reinstall Everest.
+          Database monitoring is currently disabled because monitoring endpoints
+          were not configured during installation. To enable database
+          monitoring, run the `everestctl install` command to reinstall Everest.
         </Alert>
       )}
       <FormGroup sx={{ mt: 2 }}>
