@@ -2,22 +2,26 @@ import { TextInput } from '@percona/ui-lib';
 import { useMemo } from 'react';
 import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { FormDialog } from '../../../../../components/form-dialog';
-import { AutoCompleteAutoFill } from '../../../../../components/auto-complete-auto-fill/auto-complete-auto-fill.tsx';
-import { useBackupStorages } from '../../../../../hooks/api/backup-storages/useBackupStorages.ts';
+import { FormDialog } from 'components/form-dialog';
+import { AutoCompleteAutoFill } from 'components/auto-complete-auto-fill/auto-complete-auto-fill';
+import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages';
 import {
   BACKUPS_QUERY_KEY,
   useCreateBackupOnDemand,
-} from '../../../../../hooks/api/backups/useBackups.ts';
-import { Messages } from '../../../db-cluster-details.messages.ts';
-import { NoStoragesModal } from '../../no-storages-modal/no-storages-modal.tsx';
+} from 'hooks/api/backups/useBackups';
+import { Messages } from '../../db-cluster-details.messages';
+import { NoStoragesModal } from '../no-storages-modal/no-storages-modal';
 import {
   BackupFields,
   BackupFormData,
   defaultValuesFc,
   OnDemandBackupModalProps,
   schema,
-} from './on-demand-backup-modal.types.ts';
+} from './on-demand-backup-modal.types';
+import {
+  GetBackupsPayload,
+  SingleBackupPayload,
+} from 'shared-types/backups.types';
 
 export const OnDemandBackupModal = ({
   open,
@@ -30,8 +34,19 @@ export const OnDemandBackupModal = ({
   const { data: backupStorages = [], isFetching } = useBackupStorages();
   const handleSubmit = (data: BackupFormData) => {
     createBackupOnDemand(data, {
-      onSuccess() {
-        queryClient.invalidateQueries([BACKUPS_QUERY_KEY, dbClusterName]);
+      onSuccess(newBackup: SingleBackupPayload) {
+        queryClient.setQueryData<GetBackupsPayload | undefined>(
+          [BACKUPS_QUERY_KEY, dbClusterName],
+          (oldData) => {
+            if (!oldData) {
+              return undefined;
+            }
+
+            return {
+              items: [newBackup, ...oldData.items],
+            };
+          }
+        );
         handleClose();
       },
     });

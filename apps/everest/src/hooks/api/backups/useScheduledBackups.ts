@@ -42,12 +42,12 @@ const backupScheduleFormValuesToDbClusterPayload = (
       ...(dbCluster?.spec?.backup?.schedules || []),
     ];
     const editedScheduleIndex = newSchedulesArray?.findIndex(
-      (item) => item.name === name
+      (item) => item.name === scheduleName
     );
     if (newSchedulesArray && editedScheduleIndex !== undefined) {
       newSchedulesArray[editedScheduleIndex] = {
         enabled: true,
-        name,
+          name: scheduleName,
         backupStorageName:
           typeof dbPayload.storageLocation === 'string'
             ? dbPayload.storageLocation
@@ -100,7 +100,6 @@ export const useUpdateSchedules = (
   mode: 'new' | 'edit',
   options?: UseMutationOptions<unknown, unknown, ScheduleFormData, unknown>
 ) => {
-  const { id: clusterId } = useSelectedKubernetesCluster();
   const { data: dbCluster } = useDbCluster(dbClusterName);
 
   return useMutation(
@@ -110,7 +109,7 @@ export const useUpdateSchedules = (
         dbCluster!,
         mode
       );
-      return updateDbClusterFn(clusterId, dbClusterName, payload);
+      return updateDbClusterFn(dbClusterName, payload);
     },
     { ...options }
   );
@@ -120,7 +119,6 @@ export const useDeleteSchedule = (
   dbClusterName: string,
   options?: UseMutationOptions<unknown, unknown, string, unknown>
 ) => {
-  const { id: clusterId } = useSelectedKubernetesCluster();
   const { data: dbCluster } = useDbCluster(dbClusterName);
 
   return useMutation(
@@ -129,7 +127,7 @@ export const useDeleteSchedule = (
         scheduleName,
         dbCluster!
       );
-      return updateDbClusterFn(clusterId, dbClusterName, payload);
+      return updateDbClusterFn(dbClusterName, payload);
     },
     { ...options }
   );

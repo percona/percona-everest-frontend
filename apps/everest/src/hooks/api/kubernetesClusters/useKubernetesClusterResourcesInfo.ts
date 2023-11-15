@@ -13,21 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import { useQuery } from 'react-query';
-import { getKubernetesClusterResourcesInfo } from '../../../api/kubernetesClusterApi';
-import { useSelectedKubernetesCluster } from './useSelectedKubernetesCluster';
+import { getKubernetesClusterResourcesInfo } from 'api/kubernetesClusterApi';
 import {
   GetKubernetesClusterResourcesInfoPayload,
   KubernetesClusterResourcesInfo,
-} from '../../../shared-types/kubernetes.types';
+} from 'shared-types/kubernetes.types';
 
 export const useKubernetesClusterResourcesInfo = () => {
-  const { id } = useSelectedKubernetesCluster();
-
   return useQuery<
     GetKubernetesClusterResourcesInfoPayload,
     unknown,
     KubernetesClusterResourcesInfo
-  >(`${id}-cluster-resources-info`, () =>
-    getKubernetesClusterResourcesInfo(id)
-  );
+  >(`cluster-resources-info`, () => getKubernetesClusterResourcesInfo());
 };

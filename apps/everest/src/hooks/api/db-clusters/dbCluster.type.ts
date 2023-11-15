@@ -12,18 +12,14 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import {
-  DbClusterStatus,
-  ProxyExposeType,
-} from '../../../shared-types/dbCluster.types';
-import { DbEngineType } from '../../../shared-types/dbEngines.types';
+import { DbClusterStatus, ProxyExposeType } from 'shared-types/dbCluster.types';
+import { DbEngineType } from 'shared-types/dbEngines.types';
 
 export interface DbClusterTableElement {
   status: DbClusterStatus;
   dbType: DbEngineType;
   dbVersion: string;
   backupsEnabled: boolean;
-  kubernetesCluster: string;
   databaseName: string;
   cpu: string | number;
   memory: string | number;

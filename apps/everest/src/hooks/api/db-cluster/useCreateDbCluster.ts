@@ -30,14 +30,12 @@ import {
   GetDbClusterCredentialsPayload,
   ProxyExposeType,
 } from '../../../shared-types/dbCluster.types';
-import { useSelectedKubernetesCluster } from '../kubernetesClusters/useSelectedKubernetesCluster';
 import { dbTypeToDbEngine } from '@percona/utils';
 import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils.ts';
 import { DbWizardType } from '../../../pages/database-form/database-form.schema.ts';
 
 type CreateDbClusterArgType = {
   dbPayload: DbWizardType;
-  id: string;
   backupDataSource?: DataSource;
 };
 
@@ -134,10 +132,9 @@ export const useCreateDbCluster = (
   >
 ) => {
   return useMutation(
-    ({ dbPayload, id, backupDataSource }: CreateDbClusterArgType) =>
+    ({ dbPayload, backupDataSource }: CreateDbClusterArgType) =>
       createDbClusterFn(
-        formValuesToPayloadMapping(dbPayload, backupDataSource),
-        id
+        formValuesToPayloadMapping(dbPayload, backupDataSource)
       ),
     { ...options }
   );
@@ -147,11 +144,9 @@ export const useDbClusterCredentials = (
   dbClusterName: string,
   options?: UseQueryOptions<ClusterCredentials>
 ) => {
-  const { id } = useSelectedKubernetesCluster();
-
   return useQuery<GetDbClusterCredentialsPayload, unknown, ClusterCredentials>(
     `cluster-credentials-${dbClusterName}`,
-    () => getDbClusterCredentialsFn(id, dbClusterName),
+    () => getDbClusterCredentialsFn(dbClusterName),
     { ...options }
   );
 };

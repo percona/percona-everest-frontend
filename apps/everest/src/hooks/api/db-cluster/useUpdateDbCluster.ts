@@ -24,7 +24,6 @@ import { getCronExpressionFromFormValues } from '../../../components/time-select
 
 type UpdateDbClusterArgType = {
   dbPayload: DbWizardType;
-  k8sClusterId: string;
   dbCluster: DbCluster;
 };
 
@@ -128,10 +127,10 @@ export const useUpdateDbCluster = (
   >
 ) => {
   return useMutation(
-    ({ dbPayload, k8sClusterId, dbCluster }: UpdateDbClusterArgType) => {
+    ({ dbPayload, dbCluster }: UpdateDbClusterArgType) => {
       const dbClusterName = dbCluster?.metadata?.name;
       const payload = formValuesToPayloadOverrides(dbPayload, dbCluster);
-      return updateDbClusterFn(k8sClusterId, dbClusterName, payload);
+      return updateDbClusterFn(dbClusterName, payload);
     },
     { ...options }
   );

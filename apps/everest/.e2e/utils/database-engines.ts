@@ -15,27 +15,19 @@
 
 import { APIRequestContext, expect } from '@playwright/test';
 
-export const getEnginesList = async (
-  request: APIRequestContext,
-  kubernetesId: string
-) => {
-  const enginesList = await request.get(
-    `/v1/kubernetes/${kubernetesId}/database-engines`
-  );
+export const getEnginesList = async (request: APIRequestContext) => {
+  const enginesList = await request.get('/v1/database-engines');
   expect(enginesList.ok()).toBeTruthy();
   return (await enginesList.json()).items;
 };
-export const getEnginesVersions = async (
-  request: APIRequestContext,
-  kubernetesId: string
-) => {
+export const getEnginesVersions = async (request: APIRequestContext) => {
   const engineVersions = {
     pxc: [],
     psmdb: [],
     postgresql: [],
   };
 
-  const engines = await getEnginesList(request, kubernetesId);
+  const engines = await getEnginesList(request);
   engines.forEach((engine) => {
     const { type } = engine.spec;
 
