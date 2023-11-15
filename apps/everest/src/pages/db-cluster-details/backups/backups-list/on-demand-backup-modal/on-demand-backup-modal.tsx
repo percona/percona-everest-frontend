@@ -9,8 +9,6 @@ import {
   BACKUPS_QUERY_KEY,
   useCreateBackupOnDemand,
 } from 'hooks/api/backups/useBackups';
-import { Messages } from '../../db-cluster-details.messages';
-import { NoStoragesModal } from '../no-storages-modal/no-storages-modal';
 import {
   BackupFields,
   BackupFormData,
@@ -22,6 +20,8 @@ import {
   GetBackupsPayload,
   SingleBackupPayload,
 } from 'shared-types/backups.types';
+import { Messages } from '../../../db-cluster-details.messages.ts';
+import { NoStoragesModal } from '../../no-storages-modal/no-storages-modal.tsx';
 
 export const OnDemandBackupModal = ({
   open,
