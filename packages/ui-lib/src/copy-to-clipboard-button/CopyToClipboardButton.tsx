@@ -10,28 +10,47 @@ const CopyToClipboardButton = ({
   iconSx,
 }: CopyToClipboardButtonProps) => {
   const [open, setOpen] = useState(false);
+  const clipboardAvailable = !!navigator.clipboard;
 
   const handleClick = () => {
-    navigator.clipboard.writeText(textToCopy);
-    setOpen(true);
+    if (clipboardAvailable) {
+      navigator.clipboard.writeText(textToCopy);
+      setOpen(true);
 
-    setTimeout(() => {
-      setOpen(false);
-    }, 1500);
+      setTimeout(() => {
+        setOpen(false);
+      }, 1500);
+    }
   };
 
   return (
     <Tooltip
+      {...(clipboardAvailable && {
+        disableHoverListener: true,
+        open,
+      })}
+      disableFocusListener
+      disableTouchListener
       PopperProps={{
         disablePortal: true,
       }}
-      open={open}
-      disableFocusListener
-      disableHoverListener
-      disableTouchListener
-      title="Copied to clipboard!"
+      title={
+        clipboardAvailable
+          ? 'Copied to clipboard!'
+          : 'Copy action not available'
+      }
     >
-      <IconButton sx={buttonSx} onClick={handleClick}>
+      <IconButton
+        component="div"
+        sx={{
+          ...buttonSx,
+          '&.Mui-disabled': {
+            pointerEvents: 'auto',
+          },
+        }}
+        onClick={handleClick}
+        disabled={!clipboardAvailable}
+      >
         <ContentCopyOutlinedIcon sx={iconSx} />
       </IconButton>
     </Tooltip>
