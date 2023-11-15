@@ -6,6 +6,7 @@ import { Backups } from './backups.tsx';
 import { TimeValue } from 'components/time-selection/time-selection.types';
 
 vi.mock('hooks/api/backup-storages/useBackupStorages');
+vi.mock('hooks/api/db-cluster/useDbCluster');
 
 const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
   const methods = useForm({

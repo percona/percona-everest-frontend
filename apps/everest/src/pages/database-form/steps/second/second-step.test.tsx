@@ -6,8 +6,9 @@ import { TestWrapper } from 'utils/test';
 import { SecondStep } from './second-step';
 import { ResourceSize } from './second-step.types';
 import { DEFAULT_SIZES } from './second-step.const';
-import { DbWizardFormFields, DbWizardType } from '../../database-form.types';
+import { DbWizardFormFields } from '../../database-form.types';
 import { Mock } from 'vitest';
+import { DbWizardType } from '../../database-form.schema.ts';
 
 vi.mock('hooks/api/kubernetesClusters/useSelectedKubernetesCluster');
 vi.mock('hooks/api/kubernetesClusters/useKubernetesClusterResourcesInfo');

@@ -30,7 +30,10 @@ export const storageLocationScheduleFormSchema = {
     )
     .nullable()
     .superRefine((input, ctx) => {
-      if (!input || typeof input === 'string' || !input.name) {
+      if (
+        (!input || typeof input === 'string' || !input.name) &&
+        input !== null
+      ) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message: Messages.storageLocation.invalidOption,

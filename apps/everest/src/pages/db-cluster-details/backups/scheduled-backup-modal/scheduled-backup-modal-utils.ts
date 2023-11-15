@@ -35,7 +35,7 @@ export const scheduleModalDefaultValues = (
   }
   return {
     [ScheduleFormFields.scheduleName]: `backup-${generateShortUID()}`,
-    [ScheduleFormFields.storageLocation]: '',
+    [ScheduleFormFields.storageLocation]: null,
     ...TIME_SELECTION_DEFAULTS,
   };
 };

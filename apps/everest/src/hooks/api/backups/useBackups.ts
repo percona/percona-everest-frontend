@@ -9,13 +9,13 @@ import {
   deleteBackupFn,
   getBackupsFn,
 } from 'api/backups';
-import { BackupFormData } from 'pages/db-cluster-details/backups/on-demand-backup-modal/on-demand-backup-modal.types';
 import {
   Backup,
   BackupStatus,
   GetBackupsPayload,
 } from 'shared-types/backups.types';
 import { mapBackupState } from 'utils/backups';
+import { BackupFormData } from '../../../pages/db-cluster-details/backups/backups-list/on-demand-backup-modal/on-demand-backup-modal.types.ts';
 
 export const BACKUPS_QUERY_KEY = 'backups';
 
@@ -49,10 +49,9 @@ export const useCreateBackupOnDemand = (
   dbClusterName: string,
   options?: UseMutationOptions<unknown, unknown, BackupFormData, unknown>
 ) => {
-  const { id: clusterId } = useSelectedKubernetesCluster();
   return useMutation(
     (formData: BackupFormData) =>
-      createBackupOnDemand(clusterId, {
+      createBackupOnDemand({
         apiVersion: 'everest.percona.com/v1alpha1',
         kind: 'DatabaseClusterBackup',
         metadata: {
@@ -73,8 +72,7 @@ export const useCreateBackupOnDemand = (
 export const useDeleteBackup = (
   options?: UseMutationOptions<unknown, unknown, string, unknown>
 ) => {
-  const { id } = useSelectedKubernetesCluster();
-  return useMutation((backupName: string) => deleteBackupFn(id, backupName), {
+  return useMutation((backupName: string) => deleteBackupFn(backupName), {
     ...options,
   });
 };

@@ -40,7 +40,7 @@ export const DB_WIZARD_DEFAULTS: DefaultValues<DbWizardType> = {
   // [DbWizardFormFields.pitrEnabled]: true,
   // [DbWizardFormFields.pitrTime]: '60',
   // @ts-ignore
-  [DbWizardFormFields.storageLocation]: {},
+  [DbWizardFormFields.storageLocation]: null,
   ...TIME_SELECTION_DEFAULTS,
   [DbWizardFormFields.dbType]: '' as DbType,
   [DbWizardFormFields.dbName]: '',
