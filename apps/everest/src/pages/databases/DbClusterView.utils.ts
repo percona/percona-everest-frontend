@@ -12,8 +12,9 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { DbClusterStatus } from 'shared-types/dbCluster.types';
+import { DbCluster, DbClusterStatus } from 'shared-types/dbCluster.types';
 import { Messages } from './dbClusterView.messages';
+import { DbClusterTableElement } from './dbClusterView.types';
 
 const DB_CLUSTER_STATUS_HUMANIFIED: Record<DbClusterStatus, string> = {
   [DbClusterStatus.ready]: Messages.statusProvider.up,
@@ -28,3 +29,20 @@ const DB_CLUSTER_STATUS_HUMANIFIED: Record<DbClusterStatus, string> = {
 
 export const beautifyDbClusterStatus = (status: DbClusterStatus): string =>
   DB_CLUSTER_STATUS_HUMANIFIED[status] || Messages.statusProvider.unknown;
+
+export const convertDbClusterPayloadToTableFormat = (
+  data: DbCluster[]
+): DbClusterTableElement[] =>
+  data.map((cluster) => ({
+    status: cluster.status ? cluster.status.status : DbClusterStatus.unknown,
+    dbType: cluster.spec.engine.type,
+    dbVersion: cluster.spec.engine.version || '',
+    backupsEnabled: !!cluster.spec.backup?.enabled,
+    databaseName: cluster.metadata.name,
+    cpu: cluster.spec.engine.resources?.cpu || '',
+    memory: cluster.spec.engine.resources?.memory || '',
+    storage: cluster.spec.engine.storage.size,
+    hostName: cluster.status ? cluster.status.hostname : '',
+    exposetype: cluster.spec.proxy.expose.type,
+    port: cluster.status?.port,
+  }));

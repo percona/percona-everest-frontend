@@ -5,7 +5,7 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import App from './App';
-import { DatabasesPage } from 'pages/databases/databases';
+import { DbClusterView } from 'pages/databases/DbClusterView';
 import { NoMatch } from 'pages/404/NoMatch';
 import { DatabasePage } from 'pages/database-form/database-form';
 import { Backups } from 'pages/db-cluster-details/backups/backups';
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'databases',
-        element: <DatabasesPage />,
+        element: <DbClusterView />,
       },
       {
         path: 'databases/new',
