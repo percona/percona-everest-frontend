@@ -60,7 +60,9 @@ export const Backups = () => {
         switchFieldProps={{
           disabled: dbType === DbType.Postresql,
         }}
-        sx={{ mt: 1 }}
+        formControlLabelProps={{
+          sx: { my: 1 },
+        }}
       />
       {backupsEnabled && (
         <>
