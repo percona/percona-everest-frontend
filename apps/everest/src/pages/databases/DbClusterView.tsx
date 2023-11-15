@@ -22,6 +22,8 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Button, MenuItem, Stack } from '@mui/material';
 import { Table } from '@percona/ui-lib';
+import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
+import { StatusField } from 'components/status-field/status-field';
 import { useDbActions } from 'hooks/api/db-cluster/useDbActions';
 import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
 import { DbClusterTableElement } from 'hooks/api/db-clusters/dbCluster.type';
@@ -31,17 +33,23 @@ import { useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DbClusterStatus } from 'shared-types/dbCluster.types';
 import { DbEngineType } from 'shared-types/dbEngines.types';
-import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
-import { StatusField } from '../status-field/status-field';
 import { DB_CLUSTER_STATUS_TO_BASE_STATUS } from './DbClusterView.constants';
-import { beautifyDbClusterStatus } from './DbClusterView.utils';
+import {
+  beautifyDbClusterStatus,
+  convertDbClusterPayloadToTableFormat,
+} from './DbClusterView.utils';
 import { Messages } from './dbClusterView.messages';
 import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
 
 export const DbClusterView = () => {
-  const { combinedDataForTable, loadingAllClusters, errorInAllClusters } =
+  const { data: dbClusters = [], isLoading: dbClustersLoading } =
     useDbClusters();
+  const tableData = useMemo(
+    () => convertDbClusterPayloadToTableFormat(dbClusters),
+    [dbClusters]
+  );
+
   const { isLoading: deletingCluster } = useDeleteDbCluster();
   const {
     selectedDbCluster,
@@ -117,9 +125,9 @@ export const DbClusterView = () => {
       <Box sx={{ width: '100%' }}>
         <Table
           noDataMessage={Messages.dbCluster.noData}
-          state={{ isLoading: loadingAllClusters }}
+          state={{ isLoading: dbClustersLoading }}
           columns={columns}
-          data={combinedDataForTable}
+          data={tableData}
           enableRowActions
           renderRowActionMenuItems={({ row, closeMenu }) => [
             // TODO: finish when design is ready
@@ -188,7 +196,6 @@ export const DbClusterView = () => {
               component={Link}
               to="/databases/new"
               variant="contained"
-              disabled={errorInAllClusters}
               data-testid="add-db-cluster-button"
             >
               {Messages.createDatabase}

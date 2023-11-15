@@ -5,7 +5,7 @@ import { type MRT_ColumnDef } from 'material-react-table';
 import { useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
-import { LabelValue } from 'components/db-cluster-view/expandedRow/LabelValue';
+import { LabelValue } from 'pages/databases/expandedRow/LabelValue';
 import {
   BACKUP_STORAGES_QUERY_KEY,
   useBackupStorages,

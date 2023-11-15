@@ -7,9 +7,9 @@ import {
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
-import { Messages } from 'components/db-cluster-view/dbClusterView.messages';
 import { useDbActions } from 'hooks/api/db-cluster/useDbActions';
 import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
+import { Messages } from 'pages/databases/dbClusterView.messages';
 import React, { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Messages as ClusterDetailsMessages } from './db-cluster-details.messages';
@@ -66,7 +66,7 @@ export const DbActionButton = () => {
             component={Link}
             to="/databases/edit"
             state={{ selectedDbCluster: dbClusterName }}
-            sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
+            sx={{ display: 'flex', gap: 1, alignItems: 'center' }}
           >
             <BorderColor fontSize="small" /> {Messages.menuItems.edit}
           </MenuItem>
@@ -77,7 +77,7 @@ export const DbActionButton = () => {
               handleDeleteDbCluster(dbClusterName!);
               closeMenu();
             }}
-            sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
+            sx={{ display: 'flex', gap: 1, alignItems: 'center' }}
           >
             <DeleteOutline /> {Messages.menuItems.delete}
           </MenuItem>
@@ -87,7 +87,7 @@ export const DbActionButton = () => {
               handleDbRestart(dbClusterName!);
               closeMenu();
             }}
-            sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
+            sx={{ display: 'flex', gap: 1, alignItems: 'center' }}
           >
             <PlayArrowOutlined /> {Messages.menuItems.restart}
           </MenuItem>
@@ -97,7 +97,7 @@ export const DbActionButton = () => {
               handleDbSuspendOrResumed(dbClusterName!);
               closeMenu();
             }}
-            sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
+            sx={{ display: 'flex', gap: 1, alignItems: 'center' }}
           >
             <PauseCircleOutline />{' '}
             {isPaused(dbClusterName!)
