@@ -19,14 +19,11 @@ import {
   PauseCircleOutline,
   PlayArrowOutlined,
 } from '@mui/icons-material';
-import { Box, Button, MenuItem, Stack } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { Box, Button, MenuItem, Stack } from '@mui/material';
 import { Table } from '@percona/ui-lib';
-import { type MRT_ColumnDef } from 'material-react-table';
-import { enqueueSnackbar } from 'notistack';
-import { useMemo, useState } from 'react';
-import { useQueryClient } from 'react-query';
-import { Link, useNavigate } from 'react-router-dom';
+import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
+import { StatusField } from 'components/status-field/status-field';
 import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
 import { usePausedDbCluster } from 'hooks/api/db-cluster/usePausedDbCluster';
 import { useRestartDbCluster } from 'hooks/api/db-cluster/useRestartDbCluster';
@@ -35,20 +32,23 @@ import {
   DB_CLUSTERS_QUERY_KEY,
   useDbClusters,
 } from 'hooks/api/db-clusters/useDbClusters';
+import { type MRT_ColumnDef } from 'material-react-table';
+import { enqueueSnackbar } from 'notistack';
+import { useMemo, useState } from 'react';
+import { useQueryClient } from 'react-query';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   DbCluster,
   DbClusterStatus,
   GetDbClusterPayload,
 } from 'shared-types/dbCluster.types';
 import { DbEngineType } from 'shared-types/dbEngines.types';
-import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
-import { StatusField } from 'components/status-field/status-field';
 import { DB_CLUSTER_STATUS_TO_BASE_STATUS } from './DbClusterView.constants';
-import { Messages } from './dbClusterView.messages';
 import {
   beautifyDbClusterStatus,
   convertDbClusterPayloadToTableFormat,
 } from './DbClusterView.utils';
+import { Messages } from './dbClusterView.messages';
 import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
 
@@ -71,7 +71,7 @@ export const DbClusterView = () => {
 
   const isPaused = (dbClusterName: string) =>
     dbClusters.find((dbCluster) => dbCluster.metadata.name === dbClusterName)
-      ?.status?.status === DbClusterStatus.paused;
+      ?.spec.paused;
 
   const handleDbSuspendOrResumed = (
     _status: DbClusterStatus,
