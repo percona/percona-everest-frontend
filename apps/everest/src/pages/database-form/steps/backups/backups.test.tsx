@@ -26,7 +26,7 @@ const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
   return <FormProvider {...methods}>{children}</FormProvider>;
 };
 
-describe('ThirdStep', () => {
+describe('BackupsStep', () => {
   it('should render nothing when backups are disabled', () => {
     render(
       <TestWrapper>
