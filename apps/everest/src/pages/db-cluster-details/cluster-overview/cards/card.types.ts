@@ -19,7 +19,8 @@ export type DatabaseDetailsOverviewCardProps = {
 
 export type ConnectionDetailsOverviewCardProps = {
   loadingClusterDetails: boolean;
-  hostname: string;
+  // Since we do hostname.split, we must do proper checks
+  hostname?: string;
   port: number;
   username: string;
   password: string;

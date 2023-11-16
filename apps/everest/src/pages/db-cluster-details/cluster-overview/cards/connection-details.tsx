@@ -11,7 +11,7 @@ import { ConnectionDetailsOverviewCardProps } from './card.types';
 export const ConnectionDetails = ({
   loading,
   loadingClusterDetails,
-  hostname,
+  hostname = '',
   port,
   username,
   password,
@@ -22,7 +22,11 @@ export const ConnectionDetails = ({
     content={
       <Grid container spacing={2}>
         <OverviewSection title={Messages.titles.host} loading={loading}>
-          <OverviewSectionText>{hostname}</OverviewSectionText>
+          <OverviewSectionText>
+            {hostname.split(',').map((host) => (
+              <div key={host}>{host}</div>
+            ))}
+          </OverviewSectionText>
         </OverviewSection>
         <OverviewSection title={Messages.titles.port} loading={loading}>
           <OverviewSectionText>{port}</OverviewSectionText>
