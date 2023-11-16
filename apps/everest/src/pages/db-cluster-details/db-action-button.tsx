@@ -2,16 +2,16 @@ import {
   BorderColor,
   DeleteOutline,
   PauseCircleOutline,
-  PlayArrowOutlined,
 } from '@mui/icons-material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
 import { useDbActions } from 'hooks/api/db-cluster/useDbActions';
 import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
 import { Messages } from 'pages/databases/dbClusterView.messages';
 import React, { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Messages as ClusterDetailsMessages } from './db-cluster-details.messages';
 export const DbActionButton = () => {
   const { dbClusterName } = useParams();
@@ -27,7 +27,6 @@ export const DbActionButton = () => {
     handleCloseDeleteDialog,
     isPaused,
   } = useDbActions();
-  const navigate = useNavigate();
   const { isLoading: deletingCluster } = useDeleteDbCluster();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -37,8 +36,7 @@ export const DbActionButton = () => {
   };
 
   const handleDelete = (dbName: string) => {
-    handleConfirmDelete(dbName);
-    navigate('/databases');
+    handleConfirmDelete(dbName, '/databases');
   };
   return (
     <Box>
@@ -66,9 +64,50 @@ export const DbActionButton = () => {
             component={Link}
             to="/databases/edit"
             state={{ selectedDbCluster: dbClusterName }}
-            sx={{ display: 'flex', gap: 1, alignItems: 'center' }}
+            sx={{
+              display: 'flex',
+              gap: 1,
+              alignItems: 'center',
+              px: 2,
+              py: '10px',
+            }}
           >
             <BorderColor fontSize="small" /> {Messages.menuItems.edit}
+          </MenuItem>
+          <MenuItem
+            key={2}
+            onClick={() => {
+              handleDbRestart(dbClusterName!);
+              closeMenu();
+            }}
+            sx={{
+              display: 'flex',
+              gap: 1,
+              alignItems: 'center',
+              px: 2,
+              py: '10px',
+            }}
+          >
+            <RestartAltIcon /> {Messages.menuItems.restart}
+          </MenuItem>
+          <MenuItem
+            key={3}
+            onClick={() => {
+              handleDbSuspendOrResumed(dbClusterName!);
+              closeMenu();
+            }}
+            sx={{
+              display: 'flex',
+              gap: 1,
+              alignItems: 'center',
+              px: 2,
+              py: '10px',
+            }}
+          >
+            <PauseCircleOutline />{' '}
+            {isPaused(dbClusterName!)
+              ? Messages.menuItems.resume
+              : Messages.menuItems.suspend}
           </MenuItem>
           <MenuItem
             data-testid={`${dbClusterName}-delete`}
@@ -77,32 +116,15 @@ export const DbActionButton = () => {
               handleDeleteDbCluster(dbClusterName!);
               closeMenu();
             }}
-            sx={{ display: 'flex', gap: 1, alignItems: 'center' }}
+            sx={{
+              display: 'flex',
+              gap: 1,
+              alignItems: 'center',
+              px: 2,
+              py: '10px',
+            }}
           >
             <DeleteOutline /> {Messages.menuItems.delete}
-          </MenuItem>
-          <MenuItem
-            key={2}
-            onClick={() => {
-              handleDbRestart(dbClusterName!);
-              closeMenu();
-            }}
-            sx={{ display: 'flex', gap: 1, alignItems: 'center' }}
-          >
-            <PlayArrowOutlined /> {Messages.menuItems.restart}
-          </MenuItem>
-          <MenuItem
-            key={3}
-            onClick={() => {
-              handleDbSuspendOrResumed(dbClusterName!);
-              closeMenu();
-            }}
-            sx={{ display: 'flex', gap: 1, alignItems: 'center' }}
-          >
-            <PauseCircleOutline />{' '}
-            {isPaused(dbClusterName!)
-              ? Messages.menuItems.resume
-              : Messages.menuItems.suspend}
           </MenuItem>
         </Menu>
       </Box>

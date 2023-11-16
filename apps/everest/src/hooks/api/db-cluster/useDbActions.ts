@@ -9,6 +9,7 @@ import { enqueueSnackbar } from 'notistack';
 import { Messages } from 'pages/databases/dbClusterView.messages';
 import { useState } from 'react';
 import { useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { DbCluster, GetDbClusterPayload } from 'shared-types/dbCluster.types';
 
 export const useDbActions = () => {
@@ -18,7 +19,7 @@ export const useDbActions = () => {
   const { mutate: deleteDbCluster } = useDeleteDbCluster();
   const { mutate: suspendDbCluster } = usePausedDbCluster();
   const { mutate: restartDbCluster } = useRestartDbCluster();
-
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const isPaused = (dbClusterName: string) =>
@@ -108,11 +109,15 @@ export const useDbActions = () => {
     setOpenDeleteDialog(true);
   };
 
-  const handleCloseDeleteDialog = () => {
+  const handleCloseDeleteDialog = (redirect?: string) => {
     setOpenDeleteDialog(false);
+
+    if (redirect) {
+      navigate(redirect);
+    }
   };
 
-  const handleConfirmDelete = (dbClusterName: string) => {
+  const handleConfirmDelete = (dbClusterName: string, redirect?: string) => {
     deleteDbCluster(
       { dbClusterName },
       {
@@ -132,7 +137,7 @@ export const useDbActions = () => {
               };
             }
           );
-          handleCloseDeleteDialog();
+          handleCloseDeleteDialog(redirect);
         },
       }
     );

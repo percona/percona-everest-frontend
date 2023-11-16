@@ -17,9 +17,9 @@ import {
   BorderColor,
   DeleteOutline,
   PauseCircleOutline,
-  PlayArrowOutlined,
 } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { Box, Button, MenuItem, Stack } from '@mui/material';
 import { Table } from '@percona/ui-lib';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
@@ -136,20 +136,16 @@ export const DbClusterView = () => {
               component={Link}
               to="/databases/edit"
               state={{ selectedDbCluster: row.original.databaseName! }}
-              sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
+              sx={{
+                m: 0,
+                display: 'flex',
+                gap: 1,
+                alignItems: 'center',
+                px: 2,
+                py: '10px',
+              }}
             >
               <BorderColor fontSize="small" /> {Messages.menuItems.edit}
-            </MenuItem>,
-            <MenuItem
-              data-testid={`${row.original?.databaseName}-delete`}
-              key={1}
-              onClick={() => {
-                handleDeleteDbCluster(row.original.databaseName!);
-                closeMenu();
-              }}
-              sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
-            >
-              <DeleteOutline /> {Messages.menuItems.delete}
             </MenuItem>,
             <MenuItem
               key={2}
@@ -157,9 +153,16 @@ export const DbClusterView = () => {
                 handleDbRestart(row.original.databaseName);
                 closeMenu();
               }}
-              sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
+              sx={{
+                m: 0,
+                display: 'flex',
+                gap: 1,
+                alignItems: 'center',
+                px: 2,
+                py: '10px',
+              }}
             >
-              <PlayArrowOutlined /> {Messages.menuItems.restart}
+              <RestartAltIcon /> {Messages.menuItems.restart}
             </MenuItem>,
             <MenuItem
               key={3}
@@ -168,12 +171,37 @@ export const DbClusterView = () => {
                 handleDbSuspendOrResumed(row.original.databaseName);
                 closeMenu();
               }}
-              sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
+              sx={{
+                m: 0,
+                display: 'flex',
+                gap: 1,
+                alignItems: 'center',
+                px: 2,
+                py: '10px',
+              }}
             >
               <PauseCircleOutline />{' '}
               {isPaused(row.original.databaseName)
                 ? Messages.menuItems.resume
                 : Messages.menuItems.suspend}
+            </MenuItem>,
+            <MenuItem
+              data-testid={`${row.original?.databaseName}-delete`}
+              key={1}
+              onClick={() => {
+                handleDeleteDbCluster(row.original.databaseName!);
+                closeMenu();
+              }}
+              sx={{
+                m: 0,
+                display: 'flex',
+                gap: 1,
+                alignItems: 'center',
+                px: 2,
+                py: '10px',
+              }}
+            >
+              <DeleteOutline /> {Messages.menuItems.delete}
             </MenuItem>,
           ]}
           renderDetailPanel={({ row }) => <ExpandedRow row={row} />}
