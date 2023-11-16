@@ -3,9 +3,7 @@ import { AlertColor, Theme } from '@mui/material';
 export const getFontColorForAlertSeverity = (
   severity: AlertColor = 'success',
   theme: Theme
-): string => {
-  return theme.palette[severity].contrastText;
-};
+): string => theme.palette[severity].contrastText;
 
 export const getBorderColorForAlertSeverity = (
   severity: AlertColor = 'success',
