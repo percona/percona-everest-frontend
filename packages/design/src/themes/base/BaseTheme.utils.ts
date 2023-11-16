@@ -25,15 +25,4 @@ export const getBorderColorForAlertSeverity = (
 export const getBackgroundColorForAlertSeverity = (
   severity: AlertColor = 'success',
   theme: Theme
-): string => {
-  switch (severity) {
-    case 'success':
-      return theme.palette.success.main;
-    case 'info':
-      return theme.palette.info.main;
-    case 'warning':
-      return theme.palette.warning.main;
-    case 'error':
-      return theme.palette.error.main;
-  }
-};
+): string => theme.palette[severity].main;
