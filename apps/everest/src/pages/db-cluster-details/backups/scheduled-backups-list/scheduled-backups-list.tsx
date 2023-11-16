@@ -15,6 +15,7 @@
 
 import { useState, useContext } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { BorderColor, DeleteOutline } from '@mui/icons-material';
 import {
   Accordion,
   AccordionDetails,
@@ -94,11 +95,13 @@ export const ScheduledBackupsList = () => {
       key: 'edit',
       onClick: handleEdit(scheduleName),
       children: Messages.menuItems.edit,
+      icon: BorderColor,
     },
     {
       key: 'delete',
       onClick: handleDelete(scheduleName),
       children: Messages.menuItems.delete,
+      icon: DeleteOutline,
     },
   ];
 
