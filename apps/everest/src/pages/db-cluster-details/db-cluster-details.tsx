@@ -83,7 +83,14 @@ export const DbClusterDetails = () => {
         </Box>
         <DbActionButton />
       </Box>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 1 }}>
+      <Box
+        sx={{
+          borderBottom: 1,
+          borderColor: 'divider',
+          mb: 1,
+          width: 'fit-content',
+        }}
+      >
         <Tabs
           value={currentTab}
           variant="scrollable"
