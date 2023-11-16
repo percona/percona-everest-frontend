@@ -4,16 +4,7 @@ export const getFontColorForAlertSeverity = (
   severity: AlertColor = 'success',
   theme: Theme
 ): string => {
-  switch (severity) {
-    case 'success':
-      return theme.palette.success.contrastText;
-    case 'info':
-      return theme.palette.info.contrastText;
-    case 'warning':
-      return theme.palette.warning.contrastText;
-    case 'error':
-      return theme.palette.error.contrastText;
-  }
+  return theme.palette[severity].contrastText;
 };
 
 export const getBorderColorForAlertSeverity = (
