@@ -651,7 +651,7 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
           color: `${getFontColorForAlertSeverity(severity, theme)} !important`,
         }),
         message: ({ theme, ownerState: { severity } }) => ({
-          color: `${getFontColorForAlertSeverity(severity, theme)}`,
+          color: getFontColorForAlertSeverity(severity, theme),
         }),
       },
     },
