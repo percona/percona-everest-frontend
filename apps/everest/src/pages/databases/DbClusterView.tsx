@@ -17,154 +17,51 @@ import {
   BorderColor,
   DeleteOutline,
   PauseCircleOutline,
-  PlayArrowOutlined,
 } from '@mui/icons-material';
-import { Box, Button, MenuItem, Stack } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { Box, Button, MenuItem, Stack } from '@mui/material';
 import { Table } from '@percona/ui-lib';
-import { type MRT_ColumnDef } from 'material-react-table';
-import { enqueueSnackbar } from 'notistack';
-import { useMemo, useState } from 'react';
-import { useQueryClient } from 'react-query';
-import { Link, useNavigate } from 'react-router-dom';
+import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
+import { StatusField } from 'components/status-field/status-field';
+import { useDbActions } from 'hooks/api/db-cluster/useDbActions';
 import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
-import { usePausedDbCluster } from 'hooks/api/db-cluster/usePausedDbCluster';
-import { useRestartDbCluster } from 'hooks/api/db-cluster/useRestartDbCluster';
 import { DbClusterTableElement } from 'hooks/api/db-clusters/dbCluster.type';
-import {
-  DB_CLUSTERS_QUERY_KEY,
-  ExtraDbCluster,
-  useDbClusters,
-} from 'hooks/api/db-clusters/useDbClusters';
-import { useSelectedKubernetesCluster } from 'hooks/api/kubernetesClusters/useSelectedKubernetesCluster';
+import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
+import { type MRT_ColumnDef } from 'material-react-table';
+import { useMemo } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { DbClusterStatus } from 'shared-types/dbCluster.types';
 import { DbEngineType } from 'shared-types/dbEngines.types';
-import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
-import { StatusField } from '../status-field/status-field';
 import { DB_CLUSTER_STATUS_TO_BASE_STATUS } from './DbClusterView.constants';
+import {
+  beautifyDbClusterStatus,
+  convertDbClusterPayloadToTableFormat,
+} from './DbClusterView.utils';
 import { Messages } from './dbClusterView.messages';
-import { beautifyDbClusterStatus } from './DbClusterView.utils';
 import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
 
 export const DbClusterView = () => {
-  const [selectedDbCluster, setSelectedDbCluster] = useState<string>('');
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const { data: dbClusters = [], isLoading: dbClustersLoading } =
+    useDbClusters();
+  const tableData = useMemo(
+    () => convertDbClusterPayloadToTableFormat(dbClusters),
+    [dbClusters]
+  );
+
+  const { isLoading: deletingCluster } = useDeleteDbCluster();
   const {
-    combinedDataForTable,
-    loadingAllClusters,
-    combinedDbClusters,
-    errorInAllClusters,
-  } = useDbClusters();
-  const { mutate: deleteDbCluster, isLoading: deletingCluster } =
-    useDeleteDbCluster();
-  const { mutate: suspendDbCluster } = usePausedDbCluster();
-  const { mutate: restartDbCluster } = useRestartDbCluster();
-  const { id: k8sClusterId } = useSelectedKubernetesCluster();
+    selectedDbCluster,
+    openDeleteDialog,
+    handleConfirmDelete,
+    handleDbRestart,
+    handleDbSuspendOrResumed,
+    handleDeleteDbCluster,
+    handleCloseDeleteDialog,
+    isPaused,
+  } = useDbActions();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-
-  const isPaused = (dbClusterName: string) =>
-    combinedDbClusters.find(
-      (dbCluster) => dbCluster.metadata.name === dbClusterName
-    )?.spec.paused;
-
-  const handleDbSuspendOrResumed = (
-    _status: DbClusterStatus,
-    dbClusterName: string
-  ) => {
-    const shouldBePaused = !isPaused(dbClusterName);
-    const dbCluster = combinedDbClusters.find(
-      (item) => item.metadata.name === dbClusterName
-    );
-    if (dbCluster) {
-      suspendDbCluster(
-        { shouldBePaused, k8sClusterId, dbCluster },
-        {
-          onSuccess: (updatedObject) => {
-            queryClient.setQueryData(
-              [DB_CLUSTERS_QUERY_KEY, k8sClusterId],
-              (oldData: ExtraDbCluster[] = []) =>
-                oldData.map((value) =>
-                  value.dbCluster.metadata.name === updatedObject.metadata.name
-                    ? {
-                        dbCluster: updatedObject,
-                        k8sClusterName: value.k8sClusterName,
-                      }
-                    : value
-                )
-            );
-            enqueueSnackbar(
-              shouldBePaused
-                ? Messages.responseMessages.pause
-                : Messages.responseMessages.resume,
-              {
-                variant: 'success',
-              }
-            );
-          },
-        }
-      );
-    }
-  };
-
-  const handleDbRestart = (dbClusterName: string) => {
-    const dbCluster = combinedDbClusters.find(
-      (item) => item.metadata.name === dbClusterName
-    );
-    if (dbCluster) {
-      restartDbCluster(
-        { k8sClusterId, dbCluster },
-        {
-          onSuccess: (updatedObject) => {
-            queryClient.setQueryData(
-              [DB_CLUSTERS_QUERY_KEY, k8sClusterId],
-              (oldData: ExtraDbCluster[] = []) =>
-                oldData.map((value) =>
-                  value.dbCluster.metadata.name === updatedObject.metadata.name
-                    ? {
-                        dbCluster: updatedObject,
-                        k8sClusterName: value.k8sClusterName,
-                      }
-                    : value
-                )
-            );
-            enqueueSnackbar(Messages.responseMessages.restart, {
-              variant: 'success',
-            });
-          },
-        }
-      );
-    }
-  };
-
-  const handleDeleteDbCluster = (dbClusterName: string) => {
-    setSelectedDbCluster(dbClusterName);
-    setOpenDeleteDialog(true);
-  };
-
-  const handleCloseDeleteDialog = () => {
-    setOpenDeleteDialog(false);
-  };
-
-  const handleConfirmDelete = (dbClusterName: string) => {
-    deleteDbCluster(
-      { k8sClusterId, dbClusterName },
-      {
-        onSuccess: (_, variables) => {
-          queryClient.setQueryData(
-            [DB_CLUSTERS_QUERY_KEY, k8sClusterId],
-            (oldData?: ExtraDbCluster[]) =>
-              (oldData || []).filter(
-                (value) =>
-                  value.dbCluster.metadata.name !== variables.dbClusterName
-              )
-          );
-          handleCloseDeleteDialog();
-        },
-      }
-    );
-  };
 
   const columns = useMemo<MRT_ColumnDef<DbClusterTableElement>[]>(
     () => [
@@ -228,9 +125,9 @@ export const DbClusterView = () => {
       <Box sx={{ width: '100%' }}>
         <Table
           noDataMessage={Messages.dbCluster.noData}
-          state={{ isLoading: loadingAllClusters }}
+          state={{ isLoading: dbClustersLoading }}
           columns={columns}
-          data={combinedDataForTable}
+          data={tableData}
           enableRowActions
           renderRowActionMenuItems={({ row, closeMenu }) => [
             // TODO: finish when design is ready
@@ -239,9 +136,54 @@ export const DbClusterView = () => {
               component={Link}
               to="/databases/edit"
               state={{ selectedDbCluster: row.original.databaseName! }}
-              sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
+              sx={{
+                m: 0,
+                display: 'flex',
+                gap: 1,
+                alignItems: 'center',
+                px: 2,
+                py: '10px',
+              }}
             >
               <BorderColor fontSize="small" /> {Messages.menuItems.edit}
+            </MenuItem>,
+            <MenuItem
+              key={2}
+              onClick={() => {
+                handleDbRestart(row.original.databaseName);
+                closeMenu();
+              }}
+              sx={{
+                m: 0,
+                display: 'flex',
+                gap: 1,
+                alignItems: 'center',
+                px: 2,
+                py: '10px',
+              }}
+            >
+              <RestartAltIcon /> {Messages.menuItems.restart}
+            </MenuItem>,
+            <MenuItem
+              key={3}
+              disabled={row.original.status === DbClusterStatus.pausing}
+              onClick={() => {
+                handleDbSuspendOrResumed(row.original.databaseName);
+                closeMenu();
+              }}
+              sx={{
+                m: 0,
+                display: 'flex',
+                gap: 1,
+                alignItems: 'center',
+                px: 2,
+                py: '10px',
+              }}
+            >
+              <PauseCircleOutline />{' '}
+              {isPaused(row.original.databaseName)
+                ? Messages.menuItems.resume
+                : Messages.menuItems.suspend}
             </MenuItem>,
             <MenuItem
               data-testid={`${row.original?.databaseName}-delete`}
@@ -250,36 +192,16 @@ export const DbClusterView = () => {
                 handleDeleteDbCluster(row.original.databaseName!);
                 closeMenu();
               }}
-              sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
+              sx={{
+                m: 0,
+                display: 'flex',
+                gap: 1,
+                alignItems: 'center',
+                px: 2,
+                py: '10px',
+              }}
             >
               <DeleteOutline /> {Messages.menuItems.delete}
-            </MenuItem>,
-            <MenuItem
-              key={2}
-              onClick={() => {
-                handleDbRestart(row.original.databaseName);
-                closeMenu();
-              }}
-              sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
-            >
-              <PlayArrowOutlined /> {Messages.menuItems.restart}
-            </MenuItem>,
-            <MenuItem
-              key={3}
-              disabled={row.original.status === DbClusterStatus.pausing}
-              onClick={() => {
-                handleDbSuspendOrResumed(
-                  row.original.status,
-                  row.original.databaseName
-                );
-                closeMenu();
-              }}
-              sx={{ m: 0, display: 'flex', gap: 1, alignItems: 'center' }}
-            >
-              <PauseCircleOutline />{' '}
-              {isPaused(row.original.databaseName)
-                ? Messages.menuItems.resume
-                : Messages.menuItems.suspend}
             </MenuItem>,
           ]}
           renderDetailPanel={({ row }) => <ExpandedRow row={row} />}
@@ -302,7 +224,6 @@ export const DbClusterView = () => {
               component={Link}
               to="/databases/new"
               variant="contained"
-              disabled={errorInAllClusters}
               data-testid="add-db-cluster-button"
             >
               {Messages.createDatabase}

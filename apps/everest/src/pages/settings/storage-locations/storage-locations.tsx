@@ -1,11 +1,7 @@
 import { Add, Delete, Edit } from '@mui/icons-material';
 import { Box, Button, MenuItem } from '@mui/material';
 import { Table } from '@percona/ui-lib';
-import { type MRT_ColumnDef } from 'material-react-table';
-import { useMemo, useState } from 'react';
-import { useQueryClient } from 'react-query';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
-import { LabelValue } from 'components/db-cluster-view/expandedRow/LabelValue';
 import {
   BACKUP_STORAGES_QUERY_KEY,
   useBackupStorages,
@@ -13,6 +9,10 @@ import {
   useDeleteBackupStorage,
   useEditBackupStorage,
 } from 'hooks/api/backup-storages/useBackupStorages';
+import { type MRT_ColumnDef } from 'material-react-table';
+import { LabelValue } from 'pages/databases/expandedRow/LabelValue';
+import { useMemo, useState } from 'react';
+import { useQueryClient } from 'react-query';
 import { BackupStorage, StorageType } from 'shared-types/backupStorages.types';
 import {
   updateDataAfterCreate,
@@ -172,7 +172,7 @@ export const StorageLocations = () => {
               handleOpenEditModal(row.original);
               closeMenu();
             }}
-            sx={{ m: 0, display: 'flex', gap: 1 }}
+            sx={{ m: 0, display: 'flex', gap: 1, px: 2, py: '10px' }}
           >
             <Edit /> {Messages.edit}
           </MenuItem>,
@@ -182,7 +182,7 @@ export const StorageLocations = () => {
               handleDeleteBackup(row.original.name);
               closeMenu();
             }}
-            sx={{ m: 0, display: 'flex', gap: 1 }}
+            sx={{ m: 0, display: 'flex', gap: 1, px: 2, py: '10px' }}
           >
             <Delete />
             {Messages.delete}

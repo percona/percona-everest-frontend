@@ -1,14 +1,20 @@
-import { screen, render, fireEvent } from '@testing-library/react';
+import { screen, render, fireEvent, waitFor } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { TestWrapper, resizeScreenSize } from 'utils/test';
 import { AppBar } from '../app-bar/AppBar';
 import { Drawer } from './Drawer';
 import { DrawerContextProvider } from 'contexts/drawer/drawer.context';
 
+const queryClient = new QueryClient();
+vi.mock('hooks/api/version/useVersion');
+
 const BarAndDrawer = () => (
-  <DrawerContextProvider>
-    <AppBar />
-    <Drawer />
-  </DrawerContextProvider>
+  <QueryClientProvider client={queryClient}>
+    <DrawerContextProvider>
+      <AppBar />
+      <Drawer />
+    </DrawerContextProvider>
+  </QueryClientProvider>
 );
 
 describe('Drawer', () => {
@@ -116,5 +122,19 @@ describe('Drawer', () => {
     expect(
       screen.queryByTestId('KeyboardDoubleArrowLeftIcon')
     ).toBeInTheDocument();
+  });
+
+  it('should show the version', async () => {
+    render(
+      <TestWrapper>
+        <BarAndDrawer />
+      </TestWrapper>
+    );
+
+    fireEvent.click(screen.getByTestId('help-appbar-button'));
+
+    await waitFor(() =>
+      expect(screen.getByRole('presentation')).toBeInTheDocument()
+    );
   });
 });

@@ -69,7 +69,6 @@ const DrawerContent = ({ open }: { open: boolean }) => {
             key={to}
           />
         ))}
-        ´
       </List>
     </>
   );

@@ -116,11 +116,6 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: FE/pnpm-lock.yaml
 
-      - name: Run Everest
-        run: |
-          cd FE
-          make init
-          pnpm --filter "@percona/everest" dev &
 
       - name: Checkout CLI repo
         uses: percona-platform/checkout@v3
@@ -128,13 +123,6 @@ jobs:
           repository: percona/percona-everest-cli
           ref: 'main'
           path: CLI
-
-      - name: Checkout backend repo
-        uses: percona-platform/checkout@v3
-        with:
-          repository: percona/percona-everest-backend
-          ref: 'main'
-          path: BE
 
       - name: Configure git for private modules
         env:
@@ -151,14 +139,6 @@ jobs:
           go version
           echo "GO_VERSION=$(go version)" >> $GITHUB_ENV
 
-      - name: Run Everest backend
-        run: |
-          cd BE
-          make init
-          make local-env-up
-          touch everest-backend.log
-          SECRETS_ROOT_KEY=$(openssl rand -base64 32) make run-debug &> everest-backend.log &
-
       - name: Archive backend log
         if: failure()
         uses: actions/upload-artifact@v3
@@ -169,19 +149,20 @@ jobs:
       - name: Create KIND cluster
         uses: helm/kind-action@v1.8.0
 
-      - name: Wait for EVEREST BE to be available
-        timeout-minutes: 15
-        run: |
-          while ! curl -sSf http://127.0.0.1:8080 > /dev/null; do
-            echo "Waiting for EVEREST BE..."
-            sleep 15
-          done
-          echo "EVEREST BE is available."
-
       - name: Run Provisioning
         run: |
           cd CLI
-          go run cmd/everest/main.go install operators --backup.enable=false --everest.endpoint=http://127.0.0.1:8080 --monitoring.enable=false --name=minikube --operator.mongodb=true --operator.postgresql=true --operator.xtradb-cluster=true --skip-wizard --namespace test-everest
+          go run cmd/everest/main.go install --monitoring.enable=false --name=minikube --operator.mongodb=true --operator.postgresql=true --operator.xtradb-cluster=true --skip-wizard --namespace percona-everest
+
+      - name: Expose Everest backend
+        run: |
+          kubectl port-forward -n percona-everest deployment/percona-everest 8080:8080 &
+
+      - name: Run Everest
+        run: |
+          cd FE
+          make init
+          pnpm --filter "@percona/everest" dev &
 
       - name: Run integration tests
         run: |

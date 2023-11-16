@@ -15,13 +15,8 @@
 
 import { APIRequestContext, expect } from '@playwright/test';
 
-export const getDBClustersList = async (
-  request: APIRequestContext,
-  kubernetesId
-) => {
-  const response = await request.get(
-    `/v1/kubernetes/${kubernetesId}/database-clusters`
-  );
+export const getDBClustersList = async (request: APIRequestContext) => {
+  const response = await request.get('/v1/database-clusters');
 
   expect(response.ok()).toBeTruthy();
   return response.json();

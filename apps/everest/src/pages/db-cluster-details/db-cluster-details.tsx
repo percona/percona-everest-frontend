@@ -15,32 +15,33 @@ import {
   useNavigate,
   useParams,
 } from 'react-router-dom';
-import { useDbClusters } from '../../hooks/api/db-clusters/useDbClusters';
+import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
 import { NoMatch } from '../404/NoMatch';
+import { DbActionButton } from './db-action-button';
 import { Messages } from './db-cluster-details.messages';
 import { DBClusterDetailsTabs } from './db-cluster-details.types';
 
 export const DbClusterDetails = () => {
   const { dbClusterName } = useParams();
   const [routeFound, setRouteFound] = useState(true);
-  const { combinedDataForTable, loadingAllClusters } = useDbClusters();
+  const { data = [], isLoading } = useDbClusters();
   const routeMatch = useMatch('/databases/:dbClusterName/:tabs');
   const navigate = useNavigate();
   const currentTab = routeMatch?.params?.tabs;
 
   useEffect(() => {
-    if (!loadingAllClusters) {
-      const dbNameExists = combinedDataForTable.find(
-        (cluster) => cluster.databaseName === dbClusterName
+    if (!isLoading) {
+      const dbNameExists = data.find(
+        (cluster) => cluster.metadata.name === dbClusterName
       );
 
       if (!dbNameExists) {
         setRouteFound(false);
       }
     }
-  }, [loadingAllClusters, combinedDataForTable, dbClusterName]);
+  }, [isLoading, data, dbClusterName]);
 
-  if (loadingAllClusters) {
+  if (isLoading) {
     return (
       <>
         <Skeleton variant="rectangular" />
@@ -64,13 +65,23 @@ export const DbClusterDetails = () => {
           display: 'flex',
           gap: 1,
           alignItems: 'center',
+          justifyContent: 'space-between',
           mb: 1,
         }}
       >
-        <IconButton onClick={() => navigate('/databases')}>
-          <ArrowBackIosIcon sx={{ pl: '10px' }} fontSize="large" />
-        </IconButton>
-        <Typography variant="h4">{dbClusterName}</Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 1,
+            alignItems: 'center',
+          }}
+        >
+          <IconButton onClick={() => navigate('/databases')}>
+            <ArrowBackIosIcon sx={{ pl: '10px' }} fontSize="large" />
+          </IconButton>
+          <Typography variant="h4">{dbClusterName}</Typography>
+        </Box>
+        <DbActionButton />
       </Box>
       <Box
         sx={{

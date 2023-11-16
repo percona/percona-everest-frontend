@@ -44,7 +44,6 @@ import { steps } from './steps';
 
 import { useCreateDbCluster } from '../../hooks/api/db-cluster/useCreateDbCluster';
 import { useUpdateDbCluster } from '../../hooks/api/db-cluster/useUpdateDbCluster';
-import { useSelectedKubernetesCluster } from '../../hooks/api/kubernetesClusters/useSelectedKubernetesCluster';
 import { useActiveBreakpoint } from '../../hooks/utils/useActiveBreakpoint';
 import { DatabasePreview } from './database-preview/database-preview';
 import { RestoreDialog } from './restore-dialog/restore-dialog';
@@ -61,7 +60,6 @@ export const DatabasePage = () => {
   const currentValidationSchema = dbWizardSchema[activeStep];
   const { mutate: addDbCluster, isLoading: isCreating } = useCreateDbCluster();
   const { mutate: editDbCluster, isLoading: isUpdating } = useUpdateDbCluster();
-  const { id } = useSelectedKubernetesCluster();
   const { isDesktop } = useActiveBreakpoint();
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -109,7 +107,6 @@ export const DatabasePage = () => {
       addDbCluster(
         {
           dbPayload: data,
-          id,
           ...(mode === 'restoreFromBackup' && {
             backupDataSource: {
               dbClusterBackupName: state?.backupName,
@@ -126,7 +123,7 @@ export const DatabasePage = () => {
     }
     if (mode === 'edit' && dbClusterData) {
       editDbCluster(
-        { k8sClusterId: id, dbPayload: data, dbCluster: dbClusterData },
+        { dbPayload: data, dbCluster: dbClusterData },
         {
           onSuccess: () => {
             setFormSubmitted(true);
@@ -289,7 +286,10 @@ export const DatabasePage = () => {
               variant="permanent"
               anchor="right"
               sx={{
-                width: '25%',
+                // MuiDrawer-paper will take 25% of the whole screen because it has a "fixed" positioning
+                // Hence, we must use vw here to have the same calculation
+                // We subtract the padding
+                width: (theme) => `calc(25vw - ${theme.spacing(4)})`,
                 flexShrink: 0,
                 ml: 3,
                 [`& .MuiDrawer-paper`]: {
