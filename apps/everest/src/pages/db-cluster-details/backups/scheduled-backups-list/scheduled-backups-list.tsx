@@ -122,7 +122,7 @@ export const ScheduledBackupsList = () => {
               {schedules &&
                 schedules.map((item) => (
                   <Paper
-                    key={`schedule-${item?.schedule}`}
+                    key={`schedule-${item?.name}`}
                     sx={{ py: 1, px: 2, borderRadius: 0 }}
                   >
                     <Box
