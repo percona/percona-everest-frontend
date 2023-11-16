@@ -91,14 +91,14 @@ export const ScheduledBackupsList = () => {
 
   const options: (scheduleName: string) => Option[] = (scheduleName) => [
     {
-      key: 'delete',
-      onClick: handleDelete(scheduleName),
-      children: Messages.menuItems.delete,
-    },
-    {
       key: 'edit',
       onClick: handleEdit(scheduleName),
       children: Messages.menuItems.edit,
+    },
+    {
+      key: 'delete',
+      onClick: handleDelete(scheduleName),
+      children: Messages.menuItems.delete,
     },
   ];
 
