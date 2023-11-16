@@ -17,5 +17,5 @@ export const Messages = {
   caption:
     'Monitor the health of your database to detect issues quickly and improve its performance.',
   monitoringEnabled: 'Enable monitoring',
-  monitoringInstanceLabel: 'Set database engine parameters',
+  monitoringInstanceLabel: 'Monitoring endpoint URL',
 };

@@ -1,4 +1,4 @@
-import { FormGroup, Typography } from '@mui/material';
+import { Alert, FormGroup, Typography } from '@mui/material';
 import { SwitchInput, AutoCompleteInput } from '@percona/ui-lib';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -8,10 +8,8 @@ import { useMonitoringInstancesList } from 'hooks/api/monitoring/useMonitoringIn
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 
 export const FifthStep = () => {
-  const { watch } = useFormContext();
+  const { watch, getValues } = useFormContext();
   const monitoring = watch(DbWizardFormFields.monitoring);
-  const monitoringInstance = watch(DbWizardFormFields.monitoringInstance);
-
   const mode = useDatabasePageMode();
   const { setValue } = useFormContext();
 
@@ -31,6 +29,8 @@ export const FifthStep = () => {
   };
 
   useEffect(() => {
+    const selectedInstance = getValues(DbWizardFormFields.monitoringInstance);
+
     if (mode === 'new') {
       if (monitoring && monitoringInstances?.length) {
         setValue(
@@ -42,19 +42,26 @@ export const FifthStep = () => {
     if (
       (mode === 'edit' || mode === 'restoreFromBackup') &&
       monitoringInstances?.length &&
-      !monitoringInstance
+      !selectedInstance
     ) {
       setValue(
         DbWizardFormFields.monitoringInstance,
         monitoringInstances[0].name
       );
     }
-  }, [monitoring, mode, monitoringInstances, monitoringInstance, setValue]);
+  }, [monitoring]);
 
   return (
     <>
       <Typography variant="h5">{Messages.monitoring}</Typography>
       <Typography variant="subtitle2">{Messages.caption}</Typography>
+      {!monitoringInstances?.length && (
+        <Alert severity="info" sx={{ mt: 1 }} data-testid="monitoring-warning">
+          Database monitoring is currently disabled because monitoring endpoints
+          were not configured during installation. To enable database
+          monitoring, run the `everestctl install` command to reinstall Everest.
+        </Alert>
+      )}
       <FormGroup sx={{ mt: 2 }}>
         <SwitchInput
           label={Messages.monitoringEnabled}
