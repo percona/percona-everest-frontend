@@ -18,6 +18,7 @@ function Table<T extends Record<string, any>>(props: TableProps<T>) {
     muiTopToolbarProps,
     displayColumnDefOptions,
     noDataMessage,
+    emptyFilterResultsMessage = 'No data found',
     hideExpandAllIcon,
   } = props;
 
@@ -68,7 +69,7 @@ function Table<T extends Record<string, any>>(props: TableProps<T>) {
 
   return (
     <MaterialReactTable
-      renderEmptyRowsFallback={() => (
+      renderEmptyRowsFallback={({ table: { getPreFilteredRowModel } }) => (
         <Alert
           severity="info"
           sx={{
@@ -78,7 +79,10 @@ function Table<T extends Record<string, any>>(props: TableProps<T>) {
             marginBottom: 1,
           }}
         >
-          {noDataMessage}
+          {/* This means there was data before filtering, so we show the message of empty filtering result */}
+          {getPreFilteredRowModel().rows.length > 0
+            ? emptyFilterResultsMessage
+            : noDataMessage}
         </Alert>
       )}
       layoutMode="grid"
