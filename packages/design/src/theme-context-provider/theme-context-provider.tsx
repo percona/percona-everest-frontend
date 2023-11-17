@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { PaletteMode, createTheme } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,23 +9,18 @@ const ThemeContextProvider = ({
   children,
   themeOptions,
 }: ThemeContextProviderProps) => {
-  const [mode, setMode] = useState<PaletteMode>('light');
-  const colorMode = useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-      },
-    }),
-    []
-  );
+  const [colorMode, setColorMode] = useState<PaletteMode>('light');
+  const toggleColorMode = useCallback(() => {
+    setColorMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+  }, []);
 
   const theme = useMemo(
-    () => createTheme(themeOptions(mode)),
-    [mode, themeOptions]
+    () => createTheme(themeOptions(colorMode)),
+    [colorMode, themeOptions]
   );
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
+    <ColorModeContext.Provider value={{ colorMode, toggleColorMode }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {children}
