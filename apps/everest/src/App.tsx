@@ -20,7 +20,10 @@ const App = () => {
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <SnackbarProvider maxSnack={3} preventDuplicate>
         <QueryClientProvider client={queryClient}>
-          <ThemeContextProvider themeOptions={everestThemeOptions}>
+          <ThemeContextProvider
+            themeOptions={everestThemeOptions}
+            saveColorModeOnLocalStorage
+          >
             <DrawerContextProvider>
               <Main />
             </DrawerContextProvider>

@@ -12,7 +12,7 @@ import { ColorModeContext } from '@percona/design';
 
 const AppBarUserIcon = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const colorModeContext = useContext(ColorModeContext);
+  const { colorMode, toggleColorMode } = useContext(ColorModeContext);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -45,7 +45,12 @@ const AppBarUserIcon = () => {
         <MenuItem>
           <FormGroup>
             <FormControlLabel
-              control={<Switch onClick={colorModeContext.toggleColorMode} />}
+              control={
+                <Switch
+                  checked={colorMode === 'dark'}
+                  onChange={toggleColorMode}
+                />
+              }
               label="Dark mode"
             />
           </FormGroup>
