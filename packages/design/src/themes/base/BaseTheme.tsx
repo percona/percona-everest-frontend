@@ -8,46 +8,18 @@ import {
   ThemeOptions,
 } from '@mui/material';
 import { DatePickerToolbarClassKey } from '@mui/x-date-pickers/DatePicker';
-import { tooltipClasses } from '@mui/material/Tooltip';
 
 declare module '@mui/material/styles' {
-  interface Theme {
-    customColors: {
-      darkMode: {
-        surfaces: {
-          backdrop: string;
-          default: string;
-          high: string;
-        };
-      };
-      lightMode: {
-        surfaces: {
-          backdrop: string;
-          default: string;
-          low: string;
-        };
-      };
+  interface PaletteOptions {
+    surfaces?: {
+      default?: string;
+      backdrop?: string;
+      high?: string;
+      low?: string;
     };
   }
 
-  interface ThemeOptions {
-    customColors: {
-      darkMode: {
-        surfaces: {
-          backdrop: string;
-          default: string;
-          high: string;
-        };
-      };
-      lightMode: {
-        surfaces: {
-          backdrop: string;
-          default: string;
-          low: string;
-        };
-      };
-    };
-  }
+  interface Palette extends PaletteOptions {}
   interface TypeAction {
     focusVisible: string;
     focusVisibleOpacity: number;
@@ -143,6 +115,11 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
             default: '#FFFFFF',
             paper: '#FFFFFF',
           },
+          surfaces: {
+            default: '#2C323E',
+            backdrop: 'rgba(44, 50, 62, 0.75)',
+            low: '#F0F1F4',
+          },
         }
       : {
           error: {
@@ -186,23 +163,12 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
             default: '#2C323E',
             paper: '#2C323E',
           },
+          surfaces: {
+            backdrop: '#2C323E',
+            default: '#2C323E',
+            high: '#3A4151',
+          },
         }),
-  },
-  customColors: {
-    darkMode: {
-      surfaces: {
-        backdrop: '#2C323E',
-        default: '#2C323E',
-        high: '#3A4151',
-      },
-    },
-    lightMode: {
-      surfaces: {
-        backdrop: 'rgba(44, 50, 62, 0.75)',
-        default: '#FFFFFF',
-        low: '#F0F1F4',
-      },
-    },
   },
   typography: {
     h1: {
@@ -536,32 +502,32 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
     MuiTooltip: {
       defaultProps: {
         PopperProps: {
-          sx: (theme) =>
-            mode === 'light'
-              ? {
-                  [`& .${tooltipClasses.tooltip}`]: {
-                    backgroundColor: theme.customColors.darkMode.surfaces.high,
-                    boxShadow: '0px 3px 5px 2px rgba(0, 0, 0, 0.4)',
-                    fontWeight: '450',
-                    fontSize: '12px',
-                    lineHeight: '15px',
-                  },
-                  [`& .${tooltipClasses.arrow}`]: {
-                    color: theme.customColors.darkMode.surfaces.high,
-                  },
-                }
-              : {
-                  [`& .${tooltipClasses.tooltip}`]: {
-                    backgroundColor: theme.customColors.lightMode.surfaces.low,
-                    boxShadow: '0px 3px 5px 2px rgba(0, 0, 0, 0.4)',
-                    fontWeight: '450',
-                    fontSize: '12px',
-                    lineHeight: '15px',
-                  },
-                  [`& .${tooltipClasses.arrow}`]: {
-                    color: theme.customColors.lightMode.surfaces.low,
-                  },
-                },
+          // sx: (theme) =>
+          //   mode === 'light'
+          //     ? {
+          //         [`& .${tooltipClasses.tooltip}`]: {
+          //           backgroundColor: theme.palette.surfaces.low,
+          //           boxShadow: '0px 3px 5px 2px rgba(0, 0, 0, 0.4)',
+          //           fontWeight: '450',
+          //           fontSize: '12px',
+          //           lineHeight: '15px',
+          //         },
+          //         [`& .${tooltipClasses.arrow}`]: {
+          //           color: theme.palette.surfaces.low,
+          //         },
+          //       }
+          //     : {
+          //         [`& .${tooltipClasses.tooltip}`]: {
+          //           backgroundColor: theme.palette.surfaces.high,
+          //           boxShadow: '0px 3px 5px 2px rgba(0, 0, 0, 0.4)',
+          //           fontWeight: '450',
+          //           fontSize: '12px',
+          //           lineHeight: '15px',
+          //         },
+          //         [`& .${tooltipClasses.arrow}`]: {
+          //           color: theme.palette.surfaces.high,
+          //         },
+          //       },
           modifiers: [
             {
               name: 'offset',
