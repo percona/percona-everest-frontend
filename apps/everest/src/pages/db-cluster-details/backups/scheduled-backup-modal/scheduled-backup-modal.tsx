@@ -33,7 +33,7 @@ import { ScheduleModalContext } from '../backups.context.ts';
 import {
   ScheduleFormData,
   schema,
-} from '../../../../components/schedule-form/schedule-form-schema.ts';
+} from 'components/schedule-form/schedule-form-schema.ts';
 
 export const ScheduledBackupModal = () => {
   const queryClient = useQueryClient();

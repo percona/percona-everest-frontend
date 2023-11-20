@@ -15,7 +15,7 @@
 
 import { useMemo, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDbCluster } from '../../../../hooks/api/db-cluster/useDbCluster';
+import { useDbCluster } from 'hooks/api/db-cluster/useDbCluster';
 import { ScheduledBackupsList } from '../scheduled-backups-list/scheduled-backups-list';
 import { BackupsList } from '../backups-list/backups-list';
 import { ScheduledBackupModal } from '../scheduled-backup-modal/scheduled-backup-modal';

@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
-import { ScheduleForm } from '../../../../../components/schedule-form/schedule-form.tsx';
-import { useBackupStorages } from '../../../../../hooks/api/backup-storages/useBackupStorages.ts';
+import { ScheduleForm } from 'components/schedule-form/schedule-form.tsx';
+import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages.ts';
 import { useEffect } from 'react';
 import { DbWizardFormFields } from '../../../database-form.types.ts';
 import { useDatabasePageMode } from '../../../useDatabasePageMode.ts';

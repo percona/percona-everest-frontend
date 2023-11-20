@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { ProxyExposeType } from '../../../../shared-types/dbCluster.types.ts';
-import { DbEngineType } from '../../../../shared-types/dbEngines.types.ts';
+import { ProxyExposeType } from 'shared-types/dbCluster.types.ts';
+import { DbEngineType } from 'shared-types/dbEngines.types.ts';
 
 export const useDbCluster = () => ({
   data: [

@@ -19,21 +19,18 @@ import {
   useQuery,
   UseQueryOptions,
 } from 'react-query';
-import {
-  createDbClusterFn,
-  getDbClusterCredentialsFn,
-} from '../../../api/dbClusterApi';
+import { createDbClusterFn, getDbClusterCredentialsFn } from 'api/dbClusterApi';
 import {
   ClusterCredentials,
   DataSource,
   DbCluster,
   GetDbClusterCredentialsPayload,
   ProxyExposeType,
-} from '../../../shared-types/dbCluster.types';
+} from 'shared-types/dbCluster.types';
 import { dbTypeToDbEngine } from '@percona/utils';
-import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils.ts';
-import { DbWizardType } from '../../../pages/database-form/database-form-schema.ts';
-import { generateShortUID } from '../../../pages/database-form/steps/first/utils.ts';
+import { getCronExpressionFromFormValues } from 'components/time-selection/time-selection.utils.ts';
+import { DbWizardType } from 'pages/database-form/database-form-schema.ts';
+import { generateShortUID } from 'pages/database-form/steps/first/utils.ts';
 
 type CreateDbClusterArgType = {
   dbPayload: DbWizardType;

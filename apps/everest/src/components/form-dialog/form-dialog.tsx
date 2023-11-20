@@ -16,7 +16,7 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
-import { useActiveBreakpoint } from '../../hooks/utils/useActiveBreakpoint';
+import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
 import { FormDialogProps } from './form-dialog.types';
 import { kebabize } from '@percona/utils';
 

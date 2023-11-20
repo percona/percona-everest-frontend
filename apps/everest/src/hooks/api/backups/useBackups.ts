@@ -15,7 +15,7 @@ import {
   GetBackupsPayload,
 } from 'shared-types/backups.types';
 import { mapBackupState } from 'utils/backups';
-import { BackupFormData } from '../../../pages/db-cluster-details/backups/backups-list/on-demand-backup-modal/on-demand-backup-modal.types.ts';
+import { BackupFormData } from 'pages/db-cluster-details/backups/backups-list/on-demand-backup-modal/on-demand-backup-modal.types.ts';
 
 export const BACKUPS_QUERY_KEY = 'backups';
 

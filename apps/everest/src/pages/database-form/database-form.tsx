@@ -38,9 +38,9 @@ import { Messages } from './database-form.messages';
 import { DbWizardFormFields } from './database-form.types';
 import { steps } from './steps';
 
-import { useCreateDbCluster } from '../../hooks/api/db-cluster/useCreateDbCluster';
-import { useUpdateDbCluster } from '../../hooks/api/db-cluster/useUpdateDbCluster';
-import { useActiveBreakpoint } from '../../hooks/utils/useActiveBreakpoint';
+import { useCreateDbCluster } from 'hooks/api/db-cluster/useCreateDbCluster';
+import { useUpdateDbCluster } from 'hooks/api/db-cluster/useUpdateDbCluster';
+import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
 import { DatabasePreview } from './database-preview/database-preview';
 import { RestoreDialog } from './restore-dialog/restore-dialog';
 import { SixthStep } from './steps/sixth/sixth-step';

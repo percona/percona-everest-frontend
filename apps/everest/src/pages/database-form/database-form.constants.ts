@@ -18,7 +18,7 @@ import {
   AmPM,
   TimeValue,
   WeekDays,
-} from '../../components/time-selection/time-selection.types';
+} from 'components/time-selection/time-selection.types';
 import { DbWizardFormFields } from './database-form.types';
 import { DEFAULT_SIZES } from './steps/second/second-step.const';
 import { ResourceSize } from './steps/second/second-step.types';

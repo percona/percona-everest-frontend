@@ -14,14 +14,11 @@
 // limitations under the License.
 
 import { UseMutationOptions, useMutation } from 'react-query';
-import { updateDbClusterFn } from '../../../api/dbClusterApi';
-import {
-  DbCluster,
-  ProxyExposeType,
-} from '../../../shared-types/dbCluster.types';
-import { DbWizardType } from '../../../pages/database-form/database-form-schema.ts';
-import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils.ts';
-import { generateShortUID } from '../../../pages/database-form/steps/first/utils.ts';
+import { updateDbClusterFn } from 'api/dbClusterApi';
+import { DbCluster, ProxyExposeType } from 'shared-types/dbCluster.types';
+import { DbWizardType } from 'pages/database-form/database-form-schema.ts';
+import { getCronExpressionFromFormValues } from 'components/time-selection/time-selection.utils.ts';
+import { generateShortUID } from 'pages/database-form/steps/first/utils.ts';
 
 type UpdateDbClusterArgType = {
   dbPayload: DbWizardType;

@@ -14,7 +14,7 @@
 // limitations under the License.
 
 import { useMutation, UseMutationOptions } from 'react-query';
-import { deleteDbClusterFn } from '../../../api/dbClusterApi';
+import { deleteDbClusterFn } from 'api/dbClusterApi';
 
 type DeleteDbClusterArgType = {
   dbClusterName: string;

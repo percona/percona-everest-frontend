@@ -13,10 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { ScheduleFormFields } from '../../../../components/schedule-form/schedule-form.types';
-import { Schedule } from '../../../../shared-types/dbCluster.types.ts';
-import { ScheduleFormData } from '../../../../components/schedule-form/schedule-form-schema.ts';
-import { getFormValuesFromCronExpression } from '../../../../components/time-selection/time-selection.utils.ts';
+import { ScheduleFormFields } from 'components/schedule-form/schedule-form.types';
+import { Schedule } from 'shared-types/dbCluster.types.ts';
+import { ScheduleFormData } from 'components/schedule-form/schedule-form-schema.ts';
+import { getFormValuesFromCronExpression } from 'components/time-selection/time-selection.utils.ts';
 import { generateShortUID } from '../../../database-form/steps/first/utils.ts';
 import { TIME_SELECTION_DEFAULTS } from '../../../database-form/database-form.constants.ts';
 
