@@ -19,4 +19,5 @@ export const Messages = {
   },
   backups: 'Backups',
   overview: 'Overview',
+  dbActions: 'Actions',
 };

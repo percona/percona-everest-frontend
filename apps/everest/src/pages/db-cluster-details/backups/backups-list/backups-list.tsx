@@ -236,7 +236,7 @@ export const BackupsList = () => {
               handleRestoreBackup(row.original.name);
               closeMenu();
             }}
-            sx={{ m: 0, display: 'flex', gap: 1 }}
+            sx={{ m: 0, display: 'flex', gap: 1, px: 2, py: '10px' }}
           >
             <RestartAltIcon />
             {Messages.restore}
@@ -251,7 +251,7 @@ export const BackupsList = () => {
               );
               closeMenu();
             }}
-            sx={{ m: 0, display: 'flex', gap: 1 }}
+            sx={{ m: 0, display: 'flex', gap: 1, px: 2, py: '10px' }}
           >
             <AddIcon />
             {Messages.restoreToNewDb}
@@ -262,7 +262,7 @@ export const BackupsList = () => {
               handleDeleteBackup(row.original.name);
               closeMenu();
             }}
-            sx={{ m: 0, display: 'flex', gap: 1 }}
+            sx={{ m: 0, display: 'flex', gap: 1, px: 2, py: '10px' }}
           >
             <Delete />
             {Messages.delete}

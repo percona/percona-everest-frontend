@@ -59,6 +59,7 @@ declare module '@mui/material/styles' {
     subHead1: React.CSSProperties;
     subHead2: React.CSSProperties;
     helperText: React.CSSProperties;
+    menuText: React.CSSProperties;
     inputText: React.CSSProperties;
     inputLabel: React.CSSProperties;
   }
@@ -68,6 +69,7 @@ declare module '@mui/material/styles' {
     subHead1: React.CSSProperties;
     subHead2: React.CSSProperties;
     helperText: React.CSSProperties;
+    menuText: React.CSSProperties;
     inputText: React.CSSProperties;
     inputLabel: React.CSSProperties;
   }
@@ -89,6 +91,7 @@ declare module '@mui/material/Typography' {
     subHead1: true;
     subHead2: true;
     helperText: true;
+    menuText: true;
     inputText: true;
     inputLabel: true;
   }
@@ -298,6 +301,11 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
       fontWeight: 450,
       fontSize: '12px',
       lineHeight: '15px',
+    },
+    menuText: {
+      fontWeight: 500,
+      fontSize: '16px',
+      lineHeight: '20px',
     },
     body1: {
       fontWeight: 400,
