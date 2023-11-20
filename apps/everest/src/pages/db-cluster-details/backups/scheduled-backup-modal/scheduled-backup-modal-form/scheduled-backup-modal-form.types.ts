@@ -41,11 +41,11 @@ export const schema = (schedulesNamesList: string[], mode?: 'edit' | 'new') =>
   z.object({
     [ScheduleFields.name]: z
       .string()
-      .nonempty()
+      .min(1)
       .max(MAX_SCHEDULE_NAME_LENGTH, Messages.scheduleName.tooLong)
       .regex(
         doesNotContainerAnythingButAlphanumericAndDash,
-        `The schedule name should not exceed ${MAX_SCHEDULE_NAME_LENGTH} characters.`
+        `The schedule name should only contain lowercase letters, numbers and hyphens.`
       )
       .regex(doesNotEndWithDash, "The name shouldn't end with a hyphen.")
       .regex(
