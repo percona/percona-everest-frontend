@@ -211,6 +211,7 @@ export const BackupsList = () => {
               <MenuItem
                 key="now"
                 onClick={() => handleManualBackup(handleClose)}
+                data-testid="now-menu-item"
               >
                 {Messages.now}
               </MenuItem>,
@@ -218,6 +219,7 @@ export const BackupsList = () => {
                 <MenuItem
                   onClick={() => handleScheduledBackup(handleClose)}
                   key="schedule"
+                  data-testid="schedule-menu-item"
                 >
                   {Messages.schedule}
                 </MenuItem>

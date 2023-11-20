@@ -19,6 +19,7 @@ import { Messages } from './schedule-form.messages.ts';
 import { Schedule } from '../../shared-types/dbCluster.types.ts';
 import { BackupStorage } from '../../shared-types/backupStorages.types.ts';
 import { AutoCompleteInput, LabeledContent, TextInput } from '@percona/ui-lib';
+import { AutoCompleteAutoFill } from '../auto-complete-auto-fill/auto-complete-auto-fill.tsx';
 
 type ScheduleFormProps = {
   mode: 'new' | 'edit' | 'editDbWizard' | 'newDbWizard';
@@ -61,7 +62,7 @@ export const ScheduleForm = ({
         <TimeSelection showInfoAlert />
       </LabeledContent>
 
-      <AutoCompleteInput
+      <AutoCompleteAutoFill
         name={ScheduleFormFields.storageLocation}
         label={Messages.storageLocation.label}
         loading={storageLocationFetching}
@@ -72,6 +73,7 @@ export const ScheduleForm = ({
             typeof option === 'string' ? option : option.name,
         }}
         isRequired
+        enableFillFirst={mode === 'new'}
       />
     </>
   );

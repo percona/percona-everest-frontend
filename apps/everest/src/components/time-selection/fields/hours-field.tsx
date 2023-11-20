@@ -17,9 +17,10 @@ export const HoursField = () => {
         selectFieldProps={{
           sx: { minWidth: '80px' },
         }}
+        data-testid="hours-field"
       >
         {MINUTES.map((value) => (
-          <MenuItem key={value} value={value}>
+          <MenuItem key={value} value={value} data-testid={value}>
             {value}
           </MenuItem>
         ))}

@@ -19,9 +19,10 @@ export const WeeksField = () => {
         selectFieldProps={{
           sx: { minWidth: '120px' },
         }}
+        data-testid="weeks-field"
       >
         {Object.values(WeekDays).map((value) => (
-          <MenuItem key={value} value={value}>
+          <MenuItem key={value} value={value} data-testid={value}>
             {weekDaysPlural(value)}
           </MenuItem>
         ))}

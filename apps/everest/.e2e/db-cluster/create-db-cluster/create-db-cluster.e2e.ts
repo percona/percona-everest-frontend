@@ -76,7 +76,7 @@ test.describe('DB Cluster creation', () => {
 
     // TODO uncomment step tests inside function
     await backupsStepCheck();
-    // await page.getByTestId('db-wizard-continue-button').click();
+    await page.getByTestId('db-wizard-continue-button').click();
 
     await advancedConfigurationStepCheck(page);
     await page.getByTestId('db-wizard-continue-button').click();

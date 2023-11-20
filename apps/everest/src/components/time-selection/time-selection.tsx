@@ -54,7 +54,7 @@ export const TimeSelection = ({
           }}
         >
           {Object.values(TimeValue).map((value) => (
-            <MenuItem key={value} value={value}>
+            <MenuItem key={value} value={value} data-testid={`${value}-option`}>
               {timeValueHumanized[value]}
             </MenuItem>
           ))}

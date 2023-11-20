@@ -16,9 +16,10 @@ export const MonthsField = () => {
         selectFieldProps={{
           sx: { minWidth: '80px' },
         }}
+        data-testid="select-field"
       >
         {DAYS_MONTH.map((value) => (
-          <MenuItem key={value} value={value}>
+          <MenuItem key={value} value={value} data-testid={value}>
             {value}
           </MenuItem>
         ))}

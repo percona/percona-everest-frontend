@@ -124,6 +124,7 @@ export const ScheduledBackupsList = () => {
                   <Paper
                     key={`schedule-${item?.schedule}`}
                     sx={{ py: 1, px: 2, borderRadius: 0 }}
+                    data-testid={`schedule-${item?.schedule}`}
                   >
                     <Box
                       sx={{
@@ -151,6 +152,7 @@ export const ScheduledBackupsList = () => {
                           justifyContent: 'flex-end',
                           display: 'flex',
                         }}
+                        data-testid="schedule-dots-menu"
                       >
                         <DotsMenu options={options(item?.name)} />
                       </Box>
