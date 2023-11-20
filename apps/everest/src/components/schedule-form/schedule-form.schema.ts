@@ -45,8 +45,7 @@ export const storageLocationScheduleFormSchema = {
 export const schema = (schedulesNamesList: string[], mode?: 'edit' | 'new') =>
   z.object({
     [ScheduleFormFields.scheduleName]: rfc_123_schema(
-      `${Messages.scheduleName.label.toLowerCase()} name`,
-      MAX_SCHEDULE_NAME_LENGTH
+      `${Messages.scheduleName.label.toLowerCase()} name`
     )
       .nonempty()
       .max(MAX_SCHEDULE_NAME_LENGTH, Messages.scheduleName.tooLong)
