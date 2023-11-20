@@ -108,6 +108,9 @@ export const DbClusterDetails = () => {
               // @ts-ignore
               to={DBClusterDetailsTabs[item]}
               component={Link}
+              data-testid={`${
+                DBClusterDetailsTabs[item as DBClusterDetailsTabs]
+              }`}
             />
           ))}
         </Tabs>

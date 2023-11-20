@@ -18,10 +18,10 @@ import { useParams } from 'react-router-dom';
 import { useDbCluster } from 'hooks/api/db-cluster/useDbCluster';
 import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
 import { DbEngineType } from 'shared-types/dbEngines.types';
-import { ScheduleModalContext } from './backup.context';
 import { BackupsList } from './backups-list/backups-list';
 import { ScheduledBackupModal } from './scheduled-backup-modal/scheduled-backup-modal';
 import { ScheduledBackupsList } from './scheduled-backups-list/scheduled-backups-list';
+import { ScheduleModalContext } from './backups.context.ts';
 
 export const Backups = () => {
   const { dbClusterName } = useParams();

@@ -19,21 +19,18 @@ import {
   useQuery,
   UseQueryOptions,
 } from 'react-query';
-import {
-  createDbClusterFn,
-  getDbClusterCredentialsFn,
-} from '../../../api/dbClusterApi';
-import { DbWizardType } from '../../../pages/database-form/database-form.types';
+import { createDbClusterFn, getDbClusterCredentialsFn } from 'api/dbClusterApi';
 import {
   ClusterCredentials,
   DataSource,
   DbCluster,
   GetDbClusterCredentialsPayload,
   ProxyExposeType,
-} from '../../../shared-types/dbCluster.types';
-// import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils';
+} from 'shared-types/dbCluster.types';
 import { dbTypeToDbEngine } from '@percona/utils';
-// import {TimeValue, WeekDays} from "../../components/time-selection/time-selection.types";
+import { getCronExpressionFromFormValues } from 'components/time-selection/time-selection.utils.ts';
+import { DbWizardType } from 'pages/database-form/database-form-schema.ts';
+import { generateShortUID } from 'pages/database-form/steps/first/utils.ts';
 
 type CreateDbClusterArgType = {
   dbPayload: DbWizardType;
@@ -44,15 +41,15 @@ const formValuesToPayloadMapping = (
   dbPayload: DbWizardType,
   backupDataSource?: DataSource
 ): DbCluster => {
-  // const { selectedTime, minute, hour, amPm, onDay, weekDay } = dbPayload;
-  // const backupSchedule = getCronExpressionFromFormValues({
-  //   selectedTime,
-  //   minute,
-  //   hour,
-  //   amPm,
-  //   onDay,
-  //   weekDay,
-  // });
+  const { selectedTime, minute, hour, amPm, onDay, weekDay } = dbPayload;
+  const backupSchedule = getCronExpressionFromFormValues({
+    selectedTime,
+    minute,
+    hour,
+    amPm,
+    onDay,
+    weekDay,
+  });
 
   // TODO re-add payload after API is ready
   const dbClusterPayload: DbCluster = {
@@ -62,22 +59,22 @@ const formValuesToPayloadMapping = (
       name: dbPayload.dbName,
     },
     spec: {
-      // backup: {
-      //   enabled: dbPayload.backupsEnabled,
-      //   ...(dbPayload.backupsEnabled && {
-      //     schedules: [
-      //       {
-      //         enabled: true,
-      //         name: '',
-      //         backupStorageName:
-      //           typeof dbPayload.storageLocation === 'string'
-      //             ? dbPayload.storageLocation
-      //             : dbPayload.storageLocation!.name,
-      //         schedule: backupSchedule,
-      //       },
-      //     ],
-      //   }),
-      // },
+      backup: {
+        enabled: dbPayload.backupsEnabled,
+        ...(dbPayload.backupsEnabled && {
+          schedules: [
+            {
+              enabled: true,
+              name: dbPayload?.scheduleName || `backup-${generateShortUID()}`,
+              backupStorageName:
+                typeof dbPayload.storageLocation === 'string'
+                  ? dbPayload.storageLocation
+                  : dbPayload.storageLocation!.name,
+              schedule: backupSchedule,
+            },
+          ],
+        }),
+      },
       engine: {
         type: dbTypeToDbEngine(dbPayload.dbType),
         version: dbPayload.dbVersion,
