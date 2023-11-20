@@ -27,16 +27,7 @@ const backupsWithScheduleValidationObject = {
 
 export const backupsValidationSchema = z
   .object(backupsValidationObject)
-  .passthrough()
-  .superRefine(({ backupsEnabled, storageLocation }, ctx) => {
-    if (backupsEnabled && !storageLocation) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: [DbWizardFormFields.storageLocation],
-        message: Messages.errors.storageLocation.invalid,
-      });
-    }
-  });
+  .passthrough();
 
 export const backupsWithScheduleValidationSchema = z
   .object(backupsWithScheduleValidationObject)
