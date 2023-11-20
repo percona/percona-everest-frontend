@@ -143,7 +143,6 @@ export const DatabasePage = () => {
       if (errors[DbWizardFormFields.disk] && activeStep === 1) {
         isStepValid = false;
       } else {
-        console.log(errors);
         isStepValid = await trigger();
       }
       if (isStepValid) {

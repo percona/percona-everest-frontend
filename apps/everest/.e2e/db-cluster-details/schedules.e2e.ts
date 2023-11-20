@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// import { DbType } from '@percona/types';
 import { expect, test } from '@playwright/test';
 import { createDbClusterFn, deleteDbClusterFn } from '../utils/db-cluster';
 import { DBClusterDetailsTabs } from '../../src/pages/db-cluster-details/db-cluster-details.types';

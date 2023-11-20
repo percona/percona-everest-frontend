@@ -14,7 +14,6 @@
 // limitations under the License.
 
 import { APIRequestContext, expect } from '@playwright/test';
-// import { DbType } from '@percona/types';
 import { dbTypeToDbEngine } from '@percona/utils';
 import { getEnginesVersions } from './database-engines';
 import { getClusterDetailedInfo } from './storage-class';
