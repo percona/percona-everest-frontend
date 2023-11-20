@@ -24,7 +24,7 @@ import { matchFieldsValueToResourceSize } from './steps/second/second-step.utils
 import { cpuParser, memoryParser } from 'utils/k8ResourceParser';
 import { generateShortUID } from './steps/first/utils';
 import { MAX_DB_CLUSTER_NAME_LENGTH } from 'consts';
-import { DbWizardType } from './database-form.schema.ts';
+import { DbWizardType } from './database-form-schema.ts';
 import { getFormValuesFromCronExpression } from '../../components/time-selection/time-selection.utils.ts';
 import {
   DB_WIZARD_DEFAULTS,

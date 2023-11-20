@@ -15,7 +15,7 @@
 
 import z from 'zod';
 import { Theme, SxProps } from '@mui/material';
-import { timeSelectionSchema } from './time-selection.schema';
+import { timeSelectionSchema } from './time-selection-schema.ts';
 
 export enum WeekDays {
   // don't change the order of the days, the list is used in getWeekDayByNumber function

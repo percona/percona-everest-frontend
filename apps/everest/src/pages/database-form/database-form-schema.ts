@@ -10,7 +10,7 @@ import {
   BackupsValidationSchemaType,
   backupsWithScheduleValidationSchema,
   BackupsWithScheduleValidationSchemaType,
-} from './steps/backups/backups.schema.ts';
+} from './steps/backups/backups-schema.ts';
 
 const resourceToNumber = (minimum = 0) =>
   z.union([z.string().nonempty(), z.number()]).pipe(
@@ -24,10 +24,7 @@ const resourceToNumber = (minimum = 0) =>
 const stepOneSchema = z
   .object({
     [DbWizardFormFields.dbType]: z.nativeEnum(DbType),
-    [DbWizardFormFields.dbName]: rfc_123_schema(
-      'database name',
-      MAX_DB_CLUSTER_NAME_LENGTH
-    )
+    [DbWizardFormFields.dbName]: rfc_123_schema('database name')
       .max(MAX_DB_CLUSTER_NAME_LENGTH, Messages.errors.dbName.tooLong)
       .nonempty(),
     // [DbWizardFormFields.k8sNamespace]: z.string().nonempty(),

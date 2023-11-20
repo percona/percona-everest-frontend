@@ -1,5 +1,5 @@
 import { PreviewContentText } from '../preview-section';
-import { AdvancedConfigurationType } from '../../database-form.schema.ts';
+import { AdvancedConfigurationType } from '../../database-form-schema.ts';
 
 export const AdvancedConfigurationsPreviewSection = ({
   externalAccess,

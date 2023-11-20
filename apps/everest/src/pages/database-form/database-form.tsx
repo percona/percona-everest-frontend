@@ -46,7 +46,7 @@ import { RestoreDialog } from './restore-dialog/restore-dialog';
 import { SixthStep } from './steps/sixth/sixth-step';
 import { useDatabasePageDefaultValues } from './useDatabaseFormDefaultValues';
 import { useDatabasePageMode } from './useDatabasePageMode';
-import { DbWizardType } from './database-form.schema.ts';
+import { DbWizardType } from './database-form-schema.ts';
 import { useDbValidationSchema } from './useDbValidationSchema.ts';
 
 export const DatabasePage = () => {

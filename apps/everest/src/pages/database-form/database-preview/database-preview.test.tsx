@@ -5,7 +5,7 @@ import { DbType } from '@percona/types';
 import { DB_WIZARD_DEFAULTS } from '../database-form.constants';
 import { TestWrapper } from '../../../utils/test';
 import { DatabasePreview } from './database-preview';
-import { DbWizardType } from '../database-form.schema.ts';
+import { DbWizardType } from '../database-form-schema.ts';
 
 const FormProviderWrapper = ({
   children,

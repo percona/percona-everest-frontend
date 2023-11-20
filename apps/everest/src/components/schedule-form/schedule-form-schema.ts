@@ -18,7 +18,7 @@ import { MAX_SCHEDULE_NAME_LENGTH } from '../../consts.ts';
 import { Messages } from './schedule-form.messages.ts';
 import { ScheduleFormFields } from './schedule-form.types.ts';
 import { rfc_123_schema } from '../../utils/common-validation';
-import { timeSelectionSchemaObject } from '../time-selection/time-selection.schema.ts';
+import { timeSelectionSchemaObject } from '../time-selection/time-selection-schema.ts';
 
 export const storageLocationScheduleFormSchema = {
   [ScheduleFormFields.storageLocation]: z

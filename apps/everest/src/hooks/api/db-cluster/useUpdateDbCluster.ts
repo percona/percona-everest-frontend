@@ -19,7 +19,7 @@ import {
   DbCluster,
   ProxyExposeType,
 } from '../../../shared-types/dbCluster.types';
-import { DbWizardType } from '../../../pages/database-form/database-form.schema.ts';
+import { DbWizardType } from '../../../pages/database-form/database-form-schema.ts';
 import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils.ts';
 import { generateShortUID } from '../../../pages/database-form/steps/first/utils.ts';
 

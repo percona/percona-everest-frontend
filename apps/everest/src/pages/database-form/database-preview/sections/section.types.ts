@@ -1,3 +1,3 @@
-import { DbWizardType } from '../../database-form.schema.ts';
+import { DbWizardType } from '../../database-form-schema.ts';
 
 export type SectionProps = DbWizardType;

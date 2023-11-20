@@ -3,8 +3,8 @@ import { ScheduleFormFields } from '../../../../components/schedule-form/schedul
 import { rfc_123_schema } from '../../../../utils/common-validation.ts';
 import { Messages as ScheduleFormMessages } from '../../../../components/schedule-form/schedule-form.messages.ts';
 import { MAX_SCHEDULE_NAME_LENGTH } from '../../../../consts.ts';
-import { timeSelectionSchemaObject } from '../../../../components/time-selection/time-selection.schema.ts';
-import { storageLocationScheduleFormSchema } from '../../../../components/schedule-form/schedule-form.schema.ts';
+import { timeSelectionSchemaObject } from '../../../../components/time-selection/time-selection-schema.ts';
+import { storageLocationScheduleFormSchema } from '../../../../components/schedule-form/schedule-form-schema.ts';
 import { DbWizardFormFields } from '../../database-form.types.ts';
 import { Messages } from '../../database-form.messages.ts';
 
@@ -17,8 +17,7 @@ const backupsValidationObject = {
 const backupsWithScheduleValidationObject = {
   ...backupsValidationObject,
   [ScheduleFormFields.scheduleName]: rfc_123_schema(
-    `${ScheduleFormMessages.scheduleName.label.toLowerCase()} name`,
-    MAX_SCHEDULE_NAME_LENGTH
+    `${ScheduleFormMessages.scheduleName.label.toLowerCase()} name`
   )
     .max(MAX_SCHEDULE_NAME_LENGTH, ScheduleFormMessages.scheduleName.tooLong)
     .optional(),

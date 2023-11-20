@@ -5,7 +5,7 @@ import { DatabasePreviewProps } from './database-preview.types';
 import { previewSections } from './sections/constants';
 import { Messages } from './database.preview.messages';
 import { PreviewSection } from './preview-section';
-import { DbWizardType } from '../database-form.schema.ts';
+import { DbWizardType } from '../database-form-schema.ts';
 
 export const DatabasePreview = ({
   activeStep,

@@ -22,7 +22,7 @@ import {
 import { DbWizardFormFields } from './database-form.types';
 import { DEFAULT_SIZES } from './steps/second/second-step.const';
 import { ResourceSize } from './steps/second/second-step.types';
-import { DbWizardType } from './database-form.schema.ts';
+import { DbWizardType } from './database-form-schema.ts';
 
 // TODO re-add steps after API is ready
 export const TIME_SELECTION_DEFAULTS = {

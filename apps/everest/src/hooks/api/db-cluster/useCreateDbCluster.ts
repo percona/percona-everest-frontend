@@ -32,7 +32,7 @@ import {
 } from '../../../shared-types/dbCluster.types';
 import { dbTypeToDbEngine } from '@percona/utils';
 import { getCronExpressionFromFormValues } from '../../../components/time-selection/time-selection.utils.ts';
-import { DbWizardType } from '../../../pages/database-form/database-form.schema.ts';
+import { DbWizardType } from '../../../pages/database-form/database-form-schema.ts';
 import { generateShortUID } from '../../../pages/database-form/steps/first/utils.ts';
 
 type CreateDbClusterArgType = {
