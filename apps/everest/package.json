@@ -32,6 +32,7 @@
     "cron-time-generator": "^2.0.1",
     "css-mediaquery": "^0.1.2",
     "date-fns": "^2.30.0",
+    "dotenv": "^16.3.1",
     "material-react-table": "^1.15.1",
     "notistack": "^3.0.1",
     "react": "^18.2.0",
