@@ -15,7 +15,8 @@
 
 import { StorageType } from 'shared-types/backupStorages.types';
 
-export const useBackupStorages = () => ({
+// was moved as separate object to avoid recreation since the original use of useQuery caches the data
+const backupStorageMockData = {
   data: [
     {
       id: 'backup-storage-1',
@@ -25,4 +26,6 @@ export const useBackupStorages = () => ({
       region: 'Us',
     },
   ],
-});
+};
+
+export const useBackupStorages = () => backupStorageMockData;

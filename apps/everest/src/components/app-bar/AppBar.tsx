@@ -3,7 +3,7 @@ import { Box, IconButton, AppBar as MuiAppBar, Toolbar } from '@mui/material';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import { EverestHorizontalIcon } from '@percona/ui-lib';
 import { Link } from 'react-router-dom';
-import { DrawerContext } from '../../contexts/drawer/drawer.context';
+import { DrawerContext } from 'contexts/drawer/drawer.context';
 import AppBarHelpIcon from './help-icon/HelpIcon';
 import AppBarUserIcon from './user-icon/UserIcon';
 

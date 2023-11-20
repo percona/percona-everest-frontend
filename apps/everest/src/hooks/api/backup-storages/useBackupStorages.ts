@@ -19,11 +19,11 @@ import {
   deleteBackupStorageFn,
   editBackupStorageFn,
   getBackupStoragesFn,
-} from '../../../api/backupStorage';
+} from 'api/backupStorage';
 import {
   BackupStorage,
   GetBackupStoragesPayload,
-} from '../../../shared-types/backupStorages.types';
+} from 'shared-types/backupStorages.types';
 
 export const BACKUP_STORAGES_QUERY_KEY = 'backupStorages';
 

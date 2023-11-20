@@ -37,7 +37,7 @@ import { getTimeSelectionPreviewMessage } from 'pages/database-form/database-pre
 import { Messages } from './scheduled-backups-list.messages';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
 import { useDeleteSchedule } from 'hooks/api/backups/useScheduledBackups';
-import { ScheduleModalContext } from '../backup.context';
+import { ScheduleModalContext } from '../backups.context.ts';
 
 export const ScheduledBackupsList = () => {
   const { dbClusterName } = useParams();
@@ -124,6 +124,7 @@ export const ScheduledBackupsList = () => {
                   <Paper
                     key={`schedule-${item?.schedule}`}
                     sx={{ py: 1, px: 2, borderRadius: 0 }}
+                    data-testid={`schedule-${item?.schedule}`}
                   >
                     <Box
                       sx={{
@@ -151,6 +152,7 @@ export const ScheduledBackupsList = () => {
                           justifyContent: 'flex-end',
                           display: 'flex',
                         }}
+                        data-testid="schedule-dots-menu"
                       >
                         <DotsMenu options={options(item?.name)} />
                       </Box>

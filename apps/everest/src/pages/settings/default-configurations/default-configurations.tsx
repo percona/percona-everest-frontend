@@ -7,14 +7,14 @@ import {
   useForm,
   useWatch,
 } from 'react-hook-form';
-import { SwitchOutlinedBox } from '../../../components/switch-outlined-box/switch-oulined-box';
-import { TimeSelection } from '../../../components/time-selection/time-selection';
+import { SwitchOutlinedBox } from 'components/switch-outlined-box/switch-oulined-box';
+import { TimeSelection } from 'components/time-selection/time-selection';
 import {
   AmPM,
   TimeValue,
   WeekDays,
-} from '../../../components/time-selection/time-selection.types';
-import { useActiveBreakpoint } from '../../../hooks/utils/useActiveBreakpoint';
+} from 'components/time-selection/time-selection.types';
+import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
 import { Messages } from './default-configurations.messages';
 import {
   DefaultConfigurationsFields,

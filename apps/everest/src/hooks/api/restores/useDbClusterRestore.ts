@@ -14,8 +14,8 @@
 // limitations under the License.
 
 import { useMutation, UseMutationOptions } from 'react-query';
-import { createDbClusterRestore } from '../../../api/restores';
-import { generateShortUID } from '../../../pages/database-form/steps/first/utils';
+import { createDbClusterRestore } from 'api/restores';
+import { generateShortUID } from 'pages/database-form/steps/first/utils';
 
 export type RestoreFormData = {
   backupName: string;
