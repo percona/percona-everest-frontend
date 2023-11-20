@@ -42,7 +42,7 @@ const AppBarHelpIcon = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem>
+        <MenuItem sx={{ cursor: 'text', userSelect: 'text' }}>
           <Typography variant="helperText" color="text.secondary">
             {`Everest v${versionData?.version}`}
           </Typography>
