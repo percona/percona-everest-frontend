@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Stack, Typography } from '@mui/material';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { DatabasePreviewProps } from './database-preview.types';
-import { DbWizardType } from '../database-form.types';
 import { previewSections } from './sections/constants';
 import { Messages } from './database.preview.messages';
 import { PreviewSection } from './preview-section';
+import { DbWizardType } from '../database-form-schema.ts';
 
 export const DatabasePreview = ({
   activeStep,

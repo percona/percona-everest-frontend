@@ -13,22 +13,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { useContext, useEffect } from 'react';
-import { AutoCompleteInput, TextInput, LabeledContent } from '@percona/ui-lib';
 import { useParams } from 'react-router-dom';
 import { useFormContext } from 'react-hook-form';
-import { TimeSelection } from 'components/time-selection/time-selection';
-import { AutoCompleteAutoFill } from 'components/auto-complete-auto-fill/auto-complete-auto-fill';
-import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages';
-import { useDbCluster } from 'hooks/api/db-cluster/useDbCluster';
-import { ScheduleModalContext } from '../../backup.context';
-import { Messages } from '../scheduled-backup-modal.messages';
-import { ScheduleFields } from './scheduled-backup-modal-form.types';
+import { useContext, useEffect } from 'react';
+import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages.ts';
+import { useDbCluster } from 'hooks/api/db-cluster/useDbCluster.ts';
+import { ScheduleFormFields } from 'components/schedule-form/schedule-form.types.ts';
+import { ScheduleForm } from 'components/schedule-form/schedule-form.tsx';
+import { ScheduleModalContext } from '../../backups.context.ts';
 
 export const ScheduledBackupModalForm = () => {
   const { watch } = useFormContext();
   const { dbClusterName } = useParams();
-  const { mode, setSelectedScheduleName } = useContext(ScheduleModalContext);
+  const { mode = 'new', setSelectedScheduleName } =
+    useContext(ScheduleModalContext);
 
   const { data: backupStorages = [], isFetching } = useBackupStorages();
   const { data: dbCluster } = useDbCluster(dbClusterName!, {
@@ -36,9 +34,7 @@ export const ScheduledBackupModalForm = () => {
   });
 
   const schedules = (dbCluster && dbCluster?.spec?.backup?.schedules) || [];
-  const schedulesNamesList =
-    (schedules && schedules.map((item) => item?.name)) || [];
-  const scheduleName = watch(ScheduleFields.name);
+  const scheduleName = watch(ScheduleFormFields.scheduleName);
 
   useEffect(() => {
     if (mode === 'edit' && setSelectedScheduleName) {
@@ -47,34 +43,11 @@ export const ScheduledBackupModalForm = () => {
   }, [scheduleName, mode, setSelectedScheduleName]);
 
   return (
-    <>
-      {mode === 'new' && (
-        <TextInput
-          name={ScheduleFields.name}
-          label={Messages.scheduleName.label}
-          isRequired
-        />
-      )}
-      {mode === 'edit' && (
-        <AutoCompleteInput
-          name={ScheduleFields.name}
-          label={Messages.scheduleName.label}
-          options={schedulesNamesList}
-          isRequired
-        />
-      )}
-      <LabeledContent label="Repeats">
-        <TimeSelection showInfoAlert />
-      </LabeledContent>
-
-      <AutoCompleteAutoFill
-        name={ScheduleFields.storageLocation}
-        label={Messages.storageLocation}
-        loading={isFetching}
-        options={backupStorages}
-        enableFillFirst={mode === 'new'}
-        isRequired
-      />
-    </>
+    <ScheduleForm
+      mode={mode}
+      schedules={schedules}
+      storageLocationFetching={isFetching}
+      storageLocationOptions={backupStorages}
+    />
   );
 };

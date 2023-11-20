@@ -14,8 +14,8 @@
 // limitations under the License.
 
 import { UseMutationOptions, useMutation } from 'react-query';
-import { updateDbClusterFn } from '../../../api/dbClusterApi';
-import { DbCluster } from '../../../shared-types/dbCluster.types';
+import { updateDbClusterFn } from 'api/dbClusterApi';
+import { DbCluster } from 'shared-types/dbCluster.types';
 
 type PausedDBClusterArgType = {
   dbCluster: DbCluster;

@@ -2,10 +2,11 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { TestWrapper } from 'utils/test';
-import { ThirdStep } from './third-step';
+import { Backups } from './backups.tsx';
 import { TimeValue } from 'components/time-selection/time-selection.types';
 
 vi.mock('hooks/api/backup-storages/useBackupStorages');
+vi.mock('hooks/api/db-cluster/useDbCluster');
 
 const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
   const methods = useForm({
@@ -26,12 +27,12 @@ const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
   return <FormProvider {...methods}>{children}</FormProvider>;
 };
 
-describe('ThirdStep', () => {
+describe('BackupsStep', () => {
   it('should render nothing when backups are disabled', () => {
     render(
       <TestWrapper>
         <FormProviderWrapper>
-          <ThirdStep />
+          <Backups />
         </FormProviderWrapper>
       </TestWrapper>
     );

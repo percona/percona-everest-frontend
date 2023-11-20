@@ -16,7 +16,7 @@ import { api } from './api';
 import {
   GetKubernetesClusterInfoPayload,
   GetKubernetesClusterResourcesInfoPayload,
-} from '../shared-types/kubernetes.types';
+} from 'shared-types/kubernetes.types';
 
 export const getKubernetesClusterInfoFn = async () => {
   const response =
