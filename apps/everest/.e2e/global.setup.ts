@@ -14,6 +14,13 @@
 // limitations under the License.
 
 import { test as setup } from '@playwright/test';
+const {
+  EVEREST_LOCATION_BUCKET_NAME,
+  EVEREST_LOCATION_ACCESS_KEY,
+  EVEREST_LOCATION_SECRET_KEY,
+  EVEREST_LOCATION_REGION,
+  EVEREST_LOCATION_URL,
+} = process.env;
 
 setup('Backup storage', async ({ request }) => {
   await request.post('/v1/backup-storages/', {
@@ -21,11 +28,11 @@ setup('Backup storage', async ({ request }) => {
       name: 'ui-dev',
       description: 'CI test bucket',
       type: 's3',
-      bucketName: 'backup-test',
-      secretKey: 'mySecretKey',
-      accessKey: 'myAccessKey',
-      url: 'https://s3.us-west-2.amazonaws.com',
-      region: 'us-west-2',
+      bucketName: EVEREST_LOCATION_BUCKET_NAME,
+      secretKey: EVEREST_LOCATION_SECRET_KEY,
+      accessKey: EVEREST_LOCATION_ACCESS_KEY,
+      url: EVEREST_LOCATION_URL,
+      region: EVEREST_LOCATION_REGION,
     },
   });
 });
