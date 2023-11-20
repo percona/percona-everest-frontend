@@ -500,43 +500,21 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
       },
     },
     MuiTooltip: {
-      defaultProps: {
-        PopperProps: {
-          // sx: (theme) =>
-          //   mode === 'light'
-          //     ? {
-          //         [`& .${tooltipClasses.tooltip}`]: {
-          //           backgroundColor: theme.palette.surfaces.low,
-          //           boxShadow: '0px 3px 5px 2px rgba(0, 0, 0, 0.4)',
-          //           fontWeight: '450',
-          //           fontSize: '12px',
-          //           lineHeight: '15px',
-          //         },
-          //         [`& .${tooltipClasses.arrow}`]: {
-          //           color: theme.palette.surfaces.low,
-          //         },
-          //       }
-          //     : {
-          //         [`& .${tooltipClasses.tooltip}`]: {
-          //           backgroundColor: theme.palette.surfaces.high,
-          //           boxShadow: '0px 3px 5px 2px rgba(0, 0, 0, 0.4)',
-          //           fontWeight: '450',
-          //           fontSize: '12px',
-          //           lineHeight: '15px',
-          //         },
-          //         [`& .${tooltipClasses.arrow}`]: {
-          //           color: theme.palette.surfaces.high,
-          //         },
-          //       },
-          modifiers: [
-            {
-              name: 'offset',
-              options: {
-                offset: [0, -5],
-              },
-            },
-          ],
-        },
+      styleOverrides: {
+        tooltip: ({ theme }) => ({
+          ...theme.typography.helperText,
+          boxShadow: theme.shadows[8],
+          color: theme.palette.text.primary,
+          ...(theme.palette.surfaces && {
+            backgroundColor:
+              theme.palette.surfaces[mode == 'light' ? 'low' : 'high'],
+          }),
+        }),
+        arrow: ({ theme }) => ({
+          ...(theme.palette.surfaces && {
+            color: theme.palette.surfaces[mode == 'light' ? 'low' : 'high'],
+          }),
+        }),
       },
     },
     MuiFormControlLabel: {
