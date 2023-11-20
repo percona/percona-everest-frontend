@@ -9,6 +9,11 @@ import {
 } from '@mui/material';
 import { DatePickerToolbarClassKey } from '@mui/x-date-pickers/DatePicker';
 import { tooltipClasses } from '@mui/material/Tooltip';
+import {
+  getBackgroundColorForAlertSeverity,
+  getBorderColorForAlertSeverity,
+  getFontColorForAlertSeverity,
+} from './BaseTheme.utils';
 
 declare module '@mui/material/styles' {
   interface Theme {
@@ -106,9 +111,9 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
       ? {
           error: {
             light: '#CE3C3C',
-            main: '#BA1A1A',
+            main: '#FFECE9',
             dark: '#9F0000',
-            contrastText: '#FFFFFF',
+            contrastText: '#B10810',
           },
           warning: {
             main: '#FFF2B2',
@@ -116,13 +121,13 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
           },
           info: {
             light: '#127AE8',
-            main: '#0E5FB5',
+            main: '#E7F3FF',
             dark: '#0B4A8C',
-            contrastText: '#FFFFFF',
+            contrastText: '#0056CB',
           },
           success: {
             light: '#127AE8',
-            main: 'rgba(231, 246, 241, 1)',
+            main: '#E7F6F1',
             dark: '#0B4A8C',
             contrastText: '#00745B',
           },
@@ -147,21 +152,21 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
       : {
           error: {
             light: '#FFCCC5',
-            main: '#FFB4AB',
+            main: '#CC352E',
             dark: '#F7948C',
-            contrastText: '#522625',
+            contrastText: '#FFFFFF',
           },
           warning: {
             light: '#FAE7C1',
-            main: '#F5CC78',
+            main: '#F5CC00',
             dark: '#E1B252',
-            contrastText: '#42361D',
+            contrastText: '#665500',
           },
           info: {
             light: '#B6D9FF',
-            main: '#93C7FF',
+            main: '#0070E5',
             dark: '#62AEFF',
-            contrastText: '#0C335D',
+            contrastText: '#FFFFFF',
           },
           success: {
             light: '#A0EADC',
@@ -622,6 +627,31 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
             fontSize: theme.typography.body2.fontSize,
             fontWeight: theme.typography.body2.fontWeight,
           },
+        }),
+      },
+    },
+    MuiAlertTitle: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          ...theme.typography.h6,
+        }),
+      },
+    },
+    MuiAlert: {
+      styleOverrides: {
+        root: ({ theme, ownerState: { severity } }) => ({
+          ...theme.typography.body2,
+          borderRadius: '4px',
+          borderWidth: '1px',
+          borderStyle: 'solid',
+          borderColor: getBorderColorForAlertSeverity(severity, theme),
+          backgroundColor: getBackgroundColorForAlertSeverity(severity, theme),
+        }),
+        icon: ({ theme, ownerState: { severity } }) => ({
+          color: `${getFontColorForAlertSeverity(severity, theme)} !important`,
+        }),
+        message: ({ theme, ownerState: { severity } }) => ({
+          color: getFontColorForAlertSeverity(severity, theme),
         }),
       },
     },

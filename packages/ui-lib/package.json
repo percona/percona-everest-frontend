@@ -27,12 +27,13 @@
     "@percona/utils": "workspace:*",
     "@types/react": "^18.2.15",
     "material-react-table": "^1.15.1",
+    "notistack": "^3.0.1",
     "react-hook-form": "^7.47.0"
   },
   "devDependencies": {
+    "@percona/eslint-config-react": "workspace:*",
     "@percona/prettier-config": "workspace:*",
     "@percona/tsconfig": "workspace:*",
-    "@percona/eslint-config-react": "workspace:*",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.5",
