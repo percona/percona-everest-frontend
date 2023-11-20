@@ -14,6 +14,7 @@
 // limitations under the License.
 
 import { test as setup } from '@playwright/test';
+import 'dotenv/config';
 const {
   EVEREST_LOCATION_BUCKET_NAME,
   EVEREST_LOCATION_ACCESS_KEY,
