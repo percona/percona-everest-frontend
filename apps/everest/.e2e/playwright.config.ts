@@ -62,11 +62,13 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      testDir: '.',
       name: 'setup',
       testMatch: /global.setup\.ts/,
       teardown: 'teardown',
     },
     {
+      testDir: '.',
       name: 'teardown',
       testMatch: /global\.teardown\.ts/,
     },
