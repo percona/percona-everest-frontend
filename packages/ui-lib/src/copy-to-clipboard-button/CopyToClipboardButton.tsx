@@ -37,7 +37,7 @@ const CopyToClipboardButton = ({
       title={
         clipboardAvailable
           ? 'Copied to clipboard!'
-          : 'Copy action not available'
+          : 'Clipboard access is restricted in unsecured contexts. Switch to HTTPS or localhost, or copy the content manually.'
       }
     >
       <IconButton
