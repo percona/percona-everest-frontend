@@ -10,7 +10,7 @@ const ToggleCard = ({ children, sx, ...props }: ToggleCardProps) => {
       sx={{
         backgroundColor: 'background.default',
         boxShadow: 4,
-        color: 'black',
+        color: theme.palette.text.primary,
         textTransform: 'none',
         border: 'none',
         ':hover, &.Mui-selected:hover': {
@@ -19,7 +19,6 @@ const ToggleCard = ({ children, sx, ...props }: ToggleCardProps) => {
         '&.Mui-selected': {
           outlineStyle: 'solid',
           outlineWidth: '2px',
-          // @ts-ignore
           outlineColor: theme.palette.action.outlinedBorder,
           backgroundColor: 'background.default',
         },
