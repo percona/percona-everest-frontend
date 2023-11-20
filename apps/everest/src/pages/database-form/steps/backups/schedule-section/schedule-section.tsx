@@ -29,7 +29,8 @@ export const ScheduleBackupSection = () => {
         name: backupStorages[0].name,
       });
     }
-  }, [backupStorages, mode, setValue, storageLocationField]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [backupStorages, mode]);
 
   const schedules =
     mode === 'new' ? [] : dbClusterData?.spec?.backup?.schedules || [];
@@ -50,6 +51,7 @@ export const ScheduleBackupSection = () => {
         }
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const scheduleFormMode =

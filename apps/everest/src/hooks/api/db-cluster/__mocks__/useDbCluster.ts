@@ -30,6 +30,7 @@ export const useDbCluster = () => ({
         monitoring: {},
         backup: {
           enabled: false,
+          schedules: [],
         },
         engine: {
           config:

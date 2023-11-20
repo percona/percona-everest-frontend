@@ -68,6 +68,7 @@ const formValuesToPayloadOverrides = (
     spec: {
       ...dbCluster?.spec,
       backup: {
+        ...dbCluster?.spec?.backup,
         enabled: dbPayload.backupsEnabled,
         ...(dbPayload.backupsEnabled && {
           schedules: getSchedules(dbCluster, dbPayload, backupSchedule),
