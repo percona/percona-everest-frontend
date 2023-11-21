@@ -3,7 +3,16 @@ import { AlertColor, Theme } from '@mui/material';
 export const getFontColorForAlertSeverity = (
   severity: AlertColor = 'success',
   theme: Theme
-): string => theme.palette[severity].contrastText;
+): string => {
+  // TODO Generalize logic after update on PEAK side
+  if (severity === 'error') {
+    return theme.palette.mode === 'light'
+      ? theme.palette.error.dark
+      : theme.palette.error.contrastText;
+  }
+
+  return theme.palette[severity].contrastText;
+};
 
 export const getBorderColorForAlertSeverity = (
   severity: AlertColor = 'success',
@@ -18,11 +27,20 @@ export const getBorderColorForAlertSeverity = (
     case 'warning':
       return mode === 'light' ? 'rgba(133, 110, 0, 0.20)' : '#F5CC00';
     case 'error':
-      return mode === 'light' ? 'rgba(177, 8, 16, 0.20)' : '#CC352E';
+      return mode === 'light' ? 'rgba(177, 8, 16, 0.20)' : '';
   }
 };
 
 export const getBackgroundColorForAlertSeverity = (
   severity: AlertColor = 'success',
   theme: Theme
-): string => theme.palette[severity].main;
+): string => {
+  // TODO Generalize logic after update on PEAK side
+  if (severity === 'error') {
+    return theme.palette.mode === 'light'
+      ? theme.palette.error.soft!
+      : theme.palette.error.main;
+  }
+
+  return theme.palette[severity].main;
+};
