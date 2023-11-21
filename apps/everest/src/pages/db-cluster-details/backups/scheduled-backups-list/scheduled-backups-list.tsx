@@ -15,6 +15,7 @@
 
 import { useState, useContext } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { BorderColor, DeleteOutline } from '@mui/icons-material';
 import {
   Accordion,
   AccordionDetails,
@@ -91,14 +92,16 @@ export const ScheduledBackupsList = () => {
 
   const options: (scheduleName: string) => Option[] = (scheduleName) => [
     {
-      key: 'delete',
-      onClick: handleDelete(scheduleName),
-      children: Messages.menuItems.delete,
-    },
-    {
       key: 'edit',
       onClick: handleEdit(scheduleName),
       children: Messages.menuItems.edit,
+      icon: BorderColor,
+    },
+    {
+      key: 'delete',
+      onClick: handleDelete(scheduleName),
+      children: Messages.menuItems.delete,
+      icon: DeleteOutline,
     },
   ];
 
@@ -122,7 +125,7 @@ export const ScheduledBackupsList = () => {
               {schedules &&
                 schedules.map((item) => (
                   <Paper
-                    key={`schedule-${item?.schedule}`}
+                    key={`schedule-${item?.name}`}
                     sx={{ py: 1, px: 2, borderRadius: 0 }}
                     data-testid={`schedule-${item?.schedule}`}
                   >
