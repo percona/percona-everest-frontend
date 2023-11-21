@@ -8,6 +8,7 @@ import { TimeFields } from './fields/time-fields';
 import { WeeksField } from './fields/weeks-field';
 import { Messages } from './time-selection.messages';
 import {
+  TimeSelectionFields,
   TimeSelectionProps,
   TimeValue,
   timeValueHumanized,
@@ -20,12 +21,12 @@ export const TimeSelection = ({
   sxTimeFields,
 }: TimeSelectionProps) => {
   const { watch } = useFormContext();
-  const selectedTime: TimeValue = watch('selectedTime');
-  const minute: number = watch('minute');
-  const hour: number = watch('hour');
-  const amPm: string = watch('amPm');
-  const weekDay: string = watch('weekDay');
-  const onDay: number = watch('onDay');
+  const selectedTime: TimeValue = watch(TimeSelectionFields.selectedTime);
+  const minute: number = watch(TimeSelectionFields.minute);
+  const hour: number = watch(TimeSelectionFields.hour);
+  const amPm: string = watch(TimeSelectionFields.amPm);
+  const weekDay: string = watch(TimeSelectionFields.weekDay);
+  const onDay: number = watch(TimeSelectionFields.onDay);
 
   const timeInfoText = useMemo(
     () =>
@@ -53,7 +54,7 @@ export const TimeSelection = ({
           }}
         >
           {Object.values(TimeValue).map((value) => (
-            <MenuItem key={value} value={value}>
+            <MenuItem key={value} value={value} data-testid={`${value}-option`}>
               {timeValueHumanized[value]}
             </MenuItem>
           ))}

@@ -12,16 +12,17 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { DefaultValues } from 'react-hook-form';
+
 import { DbType } from '@percona/types';
 import {
   AmPM,
   TimeValue,
   WeekDays,
-} from '../../components/time-selection/time-selection.types';
-import { DbWizardFormFields, DbWizardType } from './database-form.types';
+} from 'components/time-selection/time-selection.types';
+import { DbWizardFormFields } from './database-form.types';
 import { DEFAULT_SIZES } from './steps/second/second-step.const';
 import { ResourceSize } from './steps/second/second-step.types';
+import { DbWizardType } from './database-form-schema.ts';
 
 // TODO re-add steps after API is ready
 export const TIME_SELECTION_DEFAULTS = {
@@ -33,8 +34,9 @@ export const TIME_SELECTION_DEFAULTS = {
   [DbWizardFormFields.onDay]: 1,
 };
 
-export const DB_WIZARD_DEFAULTS: DefaultValues<DbWizardType> = {
-  [DbWizardFormFields.backupsEnabled]: true,
+export const DB_WIZARD_DEFAULTS: DbWizardType = {
+  // TODO should be changed to true after  https://jira.percona.com/browse/EVEREST-509
+  [DbWizardFormFields.backupsEnabled]: false,
   // [DbWizardFormFields.pitrEnabled]: true,
   // [DbWizardFormFields.pitrTime]: '60',
   // @ts-ignore

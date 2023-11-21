@@ -1,7 +1,7 @@
 import { Box, useTheme, Theme } from '@mui/material';
 import { SwitchInput } from '@percona/ui-lib';
 import { kebabize } from '@percona/utils';
-import { useActiveBreakpoint } from '../../hooks/utils/useActiveBreakpoint';
+import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
 import { SwitchOutlinedBoxProps } from './switch-outlined-box.types';
 
 const switchOutlinedBoxStyles = (theme: Theme) => ({
