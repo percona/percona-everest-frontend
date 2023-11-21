@@ -25,6 +25,13 @@ declare module '@mui/material/styles' {
   }
 
   interface Palette extends PaletteOptions {}
+  interface SimplePaletteColorOptions {
+    soft?: string;
+  }
+
+  interface PaletteColor {
+    soft?: string;
+  }
   interface TypeAction {
     focusVisible: string;
     focusVisibleOpacity: number;
@@ -82,10 +89,11 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
     ...(mode === 'light'
       ? {
           error: {
-            light: '#CE3C3C',
-            main: '#FFECE9',
-            dark: '#9F0000',
-            contrastText: '#B10810',
+            light: '#CC352E',
+            main: '#B10810',
+            dark: '#920000',
+            contrastText: '#ffffff',
+            soft: '#FFECE9',
           },
           warning: {
             main: '#FFF2B2',
@@ -128,9 +136,9 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
         }
       : {
           error: {
-            light: '#FFCCC5',
+            light: '#E2584D',
             main: '#CC352E',
-            dark: '#F7948C',
+            dark: '#B10810',
             contrastText: '#FFFFFF',
           },
           warning: {
