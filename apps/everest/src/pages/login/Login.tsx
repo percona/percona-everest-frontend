@@ -67,6 +67,7 @@ const Login = () => {
               <FormProvider {...methods}>
                 <TextInput
                   textFieldProps={{
+                    type: 'password',
                     label: 'Password',
                     fullWidth: true,
                     sx: { mb: 2 },
