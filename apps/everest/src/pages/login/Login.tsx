@@ -1,0 +1,88 @@
+import { Box, Button, Stack, Typography } from '@mui/material';
+import { Card, EverestMainIcon, TextInput } from '@percona/ui-lib';
+import { FormProvider, useForm } from 'react-hook-form';
+
+const Login = () => {
+  const methods = useForm();
+
+  return (
+    <Stack flexDirection="row" height="100vh">
+      <Stack py={16} px={5} width="35%">
+        <EverestMainIcon sx={{ fontSize: '110px', mb: 3 }} />
+        <Typography variant="h4" mb={3}>
+          Welcome to Percona Everest, your ultimate destination for database
+          excellence!
+        </Typography>
+        <Typography mb={3}>
+          With Percona Everest, you have the power to effortlessly deploy and
+          masterfully manage your databases. Say goodbye to database complexity
+          and hello to streamlined data operations.
+        </Typography>
+        <Typography>
+          Explore the possibilities, and let's conquer the database Everest
+          together!
+        </Typography>
+      </Stack>
+      <Box
+        width="65%"
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundImage: "url('static/login_bg.svg')",
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+        }}
+      >
+        <Card
+          dataTestId="foo"
+          sx={{
+            width: '400px',
+            py: 1,
+            px: 3,
+          }}
+          content={
+            <Stack alignItems="center">
+              <Typography variant="h6" mb={3}>
+                Log in
+              </Typography>
+              <Typography variant="caption" mb={2}>
+                Insert the password you have received during the installation in
+                your terminal.
+              </Typography>
+              <FormProvider {...methods}>
+                <TextInput
+                  textFieldProps={{
+                    label: 'Password',
+                    fullWidth: true,
+                    sx: { mb: 2 },
+                  }}
+                  name="password"
+                />
+                <Button variant="contained" fullWidth>
+                  Log in
+                </Button>
+              </FormProvider>
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                mt={4}
+                mb={1.5}
+              >
+                By submitting my personal information, I acknowledge that
+                Percona will communicate with me about its products and
+                services. I understand that I can unsubscribe from these
+                communications in accordance with the Percona Privacy Policy.
+              </Typography>
+              <Button variant="text" sx={{ alignSelf: 'flex-start' }}>
+                Reset password
+              </Button>
+            </Stack>
+          }
+        />
+      </Box>
+    </Stack>
+  );
+};
+
+export default Login;
