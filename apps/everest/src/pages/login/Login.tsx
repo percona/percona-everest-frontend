@@ -1,9 +1,23 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
-import { Card, EverestMainIcon, TextInput } from '@percona/ui-lib';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  Stack,
+  Typography,
+} from '@mui/material';
+import { Card, EverestMainIcon, TextInput, DialogTitle } from '@percona/ui-lib';
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 const Login = () => {
   const methods = useForm();
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleClick = () => setModalOpen(true);
+  const handleClose = () => setModalOpen(false);
 
   return (
     <Stack flexDirection="row" height="100vh">
@@ -74,13 +88,31 @@ const Login = () => {
                 services. I understand that I can unsubscribe from these
                 communications in accordance with the Percona Privacy Policy.
               </Typography>
-              <Button variant="text" sx={{ alignSelf: 'flex-start' }}>
+              <Button
+                onClick={handleClick}
+                variant="text"
+                sx={{ alignSelf: 'flex-start' }}
+              >
                 Reset password
               </Button>
             </Stack>
           }
         />
       </Box>
+      <Dialog open={modalOpen} onClose={handleClose}>
+        <DialogTitle onClose={handleClose}>Reset password</DialogTitle>
+        <DialogContent>
+          <DialogContentText variant="body1" color="text.primary">
+            Use your terminal to reset your password. Lorem ipsum dolor sit amet
+            adipiscing consecteur.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} variant="contained">
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Stack>
   );
 };
