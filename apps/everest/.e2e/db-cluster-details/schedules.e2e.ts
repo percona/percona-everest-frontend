@@ -17,6 +17,7 @@ import { expect, test } from '@playwright/test';
 import { createDbClusterFn, deleteDbClusterFn } from '../utils/db-cluster';
 import { DBClusterDetailsTabs } from '../../src/pages/db-cluster-details/db-cluster-details.types';
 import { clickCreateSchedule } from './schedules.utils';
+import { findDbAndClickRow } from '../utils/db-clusters-list';
 
 test.describe.serial('Schedules List', () => {
   let scheduleName = 'test-name';
@@ -41,20 +42,13 @@ test.describe.serial('Schedules List', () => {
       await closeIcon.click();
     }
 
-    const rows = await page.getByRole('row');
-    const mySQLrow = rows.filter({ hasText: mySQLName });
+    await findDbAndClickRow(page, mySQLName);
 
-    await page
-      .getByTestId(`${mySQLName}-status`)
-      .filter({ hasText: 'Initializing' });
-
-    await mySQLrow.click();
     const backupsTab = await page.getByTestId(DBClusterDetailsTabs.backups);
     await backupsTab.click();
 
-    const scheduledBackupsAccordion =
-      await page.getByTestId('scheduled-backups');
-    expect(scheduledBackupsAccordion).toBeFalsy;
+    const scheduledBackupsAccordion = page.getByTestId('scheduled-backups');
+    await expect(scheduledBackupsAccordion).not.toBeVisible();
 
     await clickCreateSchedule(page);
 
@@ -62,7 +56,7 @@ test.describe.serial('Schedules List', () => {
     const createScheduleText = createDialog.filter({
       hasText: 'Create schedule',
     });
-    expect(createScheduleText).toBeVisible();
+    await expect(createScheduleText).toBeVisible();
 
     const scheduleNameField = await page.getByTestId(
       'text-input-schedule-name'
@@ -88,7 +82,7 @@ test.describe.serial('Schedules List', () => {
     expect(page.getByText('1 schedule')).toBeTruthy();
   });
 
-  test('Create schedule with duplicate name show validation error', async ({
+  test('Creating schedule with duplicate name shows validation error', async ({
     page,
   }) => {
     await page.goto(`/databases/${mySQLName}/backups`);
