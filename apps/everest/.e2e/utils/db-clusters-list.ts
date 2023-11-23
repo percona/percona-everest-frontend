@@ -13,11 +13,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { APIRequestContext, expect } from '@playwright/test';
+import { APIRequestContext, expect, Page } from '@playwright/test';
 
 export const getDBClustersList = async (request: APIRequestContext) => {
   const response = await request.get('/v1/database-clusters');
 
   expect(response.ok()).toBeTruthy();
   return response.json();
+};
+
+export const findDbAndClickRow = async (page: Page, dbName: string) => {
+  const dbRow = page.getByRole('row').filter({ hasText: dbName });
+  page.getByTestId(`${dbName}-status`).filter({ hasText: 'Initializing' });
+
+  await dbRow.click();
+};
+
+export const findDbAndClickActions = async (page: Page, dbName: string) => {
+  page.getByTestId(`${dbName}-status`).filter({ hasText: 'Initializing' });
+
+  // cluster actions menu click
+  await page
+    .locator('.MuiTableRow-root')
+    .filter({ hasText: dbName })
+    .getByTestId('MoreHorizIcon')
+    .click();
 };
