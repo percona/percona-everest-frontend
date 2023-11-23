@@ -29,6 +29,7 @@ function AutoCompleteInput<T>({
           onChange={(_, newValue) => {
             field.onChange(newValue);
           }}
+          data-testid={`${kebabize(name)}-autocomplete`}
           // We might generalize this in the future, if we think renderInput should be defined from the outside
           renderInput={(params) => (
             <TextField
