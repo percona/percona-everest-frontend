@@ -67,13 +67,27 @@ test.describe.serial('Schedules List', () => {
     const scheduleNameField = await page.getByTestId(
       'text-input-schedule-name'
     );
-    const storageLocationField = await page.getByTestId(
+    expect(scheduleNameField).not.toBeEmpty();
+    scheduleNameField.fill(scheduleName);
+    const storageLocationField = page.getByTestId(
       'text-input-storage-location'
     );
-    expect(scheduleNameField).not.toBeEmpty();
-    expect(storageLocationField).not.toBeEmpty();
-
-    scheduleNameField.fill(scheduleName);
+    await expect(storageLocationField).not.toBeEmpty();
+    const clearLocationButton = page
+      .getByTestId('storage-location-autocomplete')
+      .getByTitle('Clear');
+    await clearLocationButton.click();
+    await expect(
+      page.getByText(
+        'Invalid option. Please make sure you added a storage location and select it from the dropdown'
+      )
+    ).toBeVisible();
+    const openStorageLocationOption = page
+      .getByTestId('storage-location-autocomplete')
+      .getByTitle('Open');
+    await openStorageLocationOption.click();
+    await page.getByRole('option').first().click();
+    await expect(storageLocationField).not.toBeEmpty();
 
     const createScheduleButton = await createDialog
       .getByRole('button')
