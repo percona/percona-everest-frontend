@@ -73,7 +73,7 @@ export const ScheduleForm = ({
             typeof option === 'string' ? option : option.name,
         }}
         isRequired
-        enableFillFirst={mode === 'new'}
+        enableFillFirst={mode === 'new' || mode === 'newDbWizard'}
       />
     </>
   );
