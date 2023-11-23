@@ -34,6 +34,7 @@ const RadioGroup = ({
               value={option.label}
               control={<Radio />}
               label={option.label}
+              disabled={option.disabled}
             />
           ))}
         </MuiRadioGroup>
