@@ -58,7 +58,6 @@ test.describe.serial('DB Cluster Editing Backups Step', () => {
     await page.getByRole('menuitem', { name: 'Edit' }).click();
 
     const nextStep = page.getByTestId('db-wizard-continue-button');
-
     // Go to Resources step
     await nextStep.click();
     // Go to Backups step
@@ -67,14 +66,13 @@ test.describe.serial('DB Cluster Editing Backups Step', () => {
     const enabledBackupsCheckbox = page
       .getByTestId('switch-input-backups-enabled')
       .getByRole('checkbox');
-    await expect(enabledBackupsCheckbox).not.toBeChecked();
 
+    await expect(enabledBackupsCheckbox).not.toBeChecked();
     await enabledBackupsCheckbox.setChecked(true);
 
     const scheduleNameField = page.getByTestId('text-input-schedule-name');
     await expect(scheduleNameField).not.toBeEmpty();
     await scheduleNameField.fill(scheduleName);
-    // TODO check validation of scheduleName (rfc_123)
 
     await expect(
       page.getByTestId('text-input-storage-location')
