@@ -69,6 +69,7 @@ test.describe.serial('Schedules List', () => {
     );
     expect(scheduleNameField).not.toBeEmpty();
     await scheduleNameField.fill(scheduleName);
+
     const storageLocationField = page.getByTestId(
       'text-input-storage-location'
     );
