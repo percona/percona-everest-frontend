@@ -68,11 +68,12 @@ test.describe.serial('Schedules List', () => {
       'text-input-schedule-name'
     );
     expect(scheduleNameField).not.toBeEmpty();
-    scheduleNameField.fill(scheduleName);
+    await scheduleNameField.fill(scheduleName);
     const storageLocationField = page.getByTestId(
       'text-input-storage-location'
     );
     await expect(storageLocationField).not.toBeEmpty();
+    await storageLocationField.click();
     const clearLocationButton = page
       .getByTestId('storage-location-autocomplete')
       .getByTitle('Clear');
@@ -82,10 +83,6 @@ test.describe.serial('Schedules List', () => {
         'Invalid option. Please make sure you added a storage location and select it from the dropdown'
       )
     ).toBeVisible();
-    const openStorageLocationOption = page
-      .getByTestId('storage-location-autocomplete')
-      .getByTitle('Open');
-    await openStorageLocationOption.click();
     await page.getByRole('option').first().click();
     await expect(storageLocationField).not.toBeEmpty();
 
