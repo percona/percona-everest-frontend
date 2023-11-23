@@ -9,6 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Card, EverestMainIcon, TextInput, DialogTitle } from '@percona/ui-lib';
+import { useVersion } from 'hooks/api/version/useVersion';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -17,9 +18,20 @@ const Login = () => {
     defaultValues: { password: '' },
   });
   const [modalOpen, setModalOpen] = useState(false);
+  const [loggingIn, setLoggingIn] = useState(false);
+  const { isError } = useVersion({
+    enabled: loggingIn,
+    onSuccess: () => {
+      console.log('SUCCESS');
+      setLoggingIn(false);
+    },
+  });
 
   const handleClick = () => setModalOpen(true);
   const handleClose = () => setModalOpen(false);
+  const handleLogin = () => {
+    setLoggingIn(true);
+  };
 
   return (
     <Stack flexDirection="row" height="100vh">
@@ -76,7 +88,12 @@ const Login = () => {
                   }}
                   name="password"
                 />
-                <Button variant="contained" fullWidth>
+                <Button
+                  onClick={handleLogin}
+                  disabled={loggingIn}
+                  variant="contained"
+                  fullWidth
+                >
                   Log in
                 </Button>
               </FormProvider>
@@ -92,6 +109,7 @@ const Login = () => {
                 communications in accordance with the Percona Privacy Policy.
               </Typography>
               <Button
+                disabled={loggingIn}
                 onClick={handleClick}
                 variant="text"
                 sx={{ alignSelf: 'flex-start' }}
