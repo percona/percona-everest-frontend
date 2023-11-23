@@ -13,7 +13,9 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 const Login = () => {
-  const methods = useForm();
+  const methods = useForm<{ password: string }>({
+    defaultValues: { password: '' },
+  });
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleClick = () => setModalOpen(true);
