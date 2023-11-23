@@ -29,12 +29,13 @@ const RadioGroup = ({
           name={`radio-group-${name}`}
           {...radioGroupFieldProps}
         >
-          {options.map((option) => (
+          {options.map((option, index) => (
             <FormControlLabel
               value={option.label}
               control={<Radio />}
               label={option.label}
               disabled={option.disabled}
+              checked={index === 0}
             />
           ))}
         </MuiRadioGroup>
