@@ -7,6 +7,8 @@ import {
   Tabs,
   Typography,
 } from '@mui/material';
+import { RestoreDbModal } from 'components/restore-db-modal/RestoreDbModal';
+import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
 import { useEffect, useState } from 'react';
 import {
   Link,
@@ -15,7 +17,6 @@ import {
   useNavigate,
   useParams,
 } from 'react-router-dom';
-import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
 import { NoMatch } from '../404/NoMatch';
 import { DbActionButton } from './db-action-button';
 import { Messages } from './db-cluster-details.messages';
@@ -28,6 +29,12 @@ export const DbClusterDetails = () => {
   const routeMatch = useMatch('/databases/:dbClusterName/:tabs');
   const navigate = useNavigate();
   const currentTab = routeMatch?.params?.tabs;
+
+  const [openRestoreDbModal, setOpenRestoreDbModal] = useState(true);
+
+  const handleCloseRestoreModal = () => {
+    setOpenRestoreDbModal(false);
+  };
 
   useEffect(() => {
     if (!isLoading) {
@@ -113,6 +120,11 @@ export const DbClusterDetails = () => {
         </Tabs>
       </Box>
       <Outlet />
+      <RestoreDbModal
+        isOpen={openRestoreDbModal}
+        closeModal={handleCloseRestoreModal}
+        dbClusterName={dbClusterName!}
+      />
     </Box>
   );
 };
