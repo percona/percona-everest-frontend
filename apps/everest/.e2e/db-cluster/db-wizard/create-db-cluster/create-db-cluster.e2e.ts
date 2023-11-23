@@ -14,8 +14,8 @@
 // limitations under the License.
 
 import { expect, test } from '@playwright/test';
-import { getEnginesVersions } from '../../utils/database-engines';
-import { getClusterDetailedInfo } from '../../utils/storage-class';
+import { getEnginesVersions } from '../../../utils/database-engines';
+import { getClusterDetailedInfo } from '../../../utils/storage-class';
 import { advancedConfigurationStepCheck } from './steps/advanced-configuration-step';
 import { backupsStepCheck } from './steps/backups-step';
 import { basicInformationStepCheck } from './steps/basic-information-step';
