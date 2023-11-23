@@ -36,7 +36,10 @@ export const Backups = () => {
 
   // TODO should be removed after https://jira.percona.com/browse/EVEREST-509 + DEFAULT_VALUES should be changed from false to true for all databases
   useEffect(() => {
-    if (dbType !== DbType.Postresql) {
+    if (
+      dbType !== DbType.Postresql &&
+      (mode === 'new' || mode === 'restoreFromBackup')
+    ) {
       setValue(DbWizardFormFields.backupsEnabled, true);
     }
   }, [dbType]);
