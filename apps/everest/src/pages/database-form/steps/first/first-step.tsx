@@ -125,14 +125,19 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
 
     // We need to check if the previously selected number of nodes exists for the current DB type
     // E.g. 2 nodes is only possible for PG
-    if (nodesTouched) {
-      const numberOfNodes: string = getValues(DbWizardFormFields.numberOfNodes);
-
-      if (!NODES_DB_TYPE_MAP[dbType].find((nodes) => nodes === numberOfNodes)) {
+    if (mode === 'new') {
+      if (nodesTouched) {
+        const numberOfNodes: string = getValues(
+          DbWizardFormFields.numberOfNodes
+        );
+        if (
+          !NODES_DB_TYPE_MAP[dbType].find((nodes) => nodes === numberOfNodes)
+        ) {
+          setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[dbType]);
+        }
+      } else {
         setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[dbType]);
       }
-    } else {
-      setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[dbType]);
     }
 
     const newVersions = dbEngines.find((engine) => engine.type === dbEngine);
