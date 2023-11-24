@@ -1,31 +1,47 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { PaletteMode, createTheme } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeContextProviderProps } from './theme-context-provider.types';
 import { ColorModeContext } from './theme-contexts';
 
+const COLOR_MODE_STORAGE_KEY = 'colorMode';
+
+const getColorModeFromLocalStorage = (): PaletteMode => {
+  const colorMode = localStorage.getItem(COLOR_MODE_STORAGE_KEY);
+
+  if (colorMode && (colorMode === 'light' || colorMode === 'dark')) {
+    return colorMode;
+  }
+
+  return 'light';
+};
+
 const ThemeContextProvider = ({
   children,
   themeOptions,
+  saveColorModeOnLocalStorage,
 }: ThemeContextProviderProps) => {
-  const [mode, setMode] = useState<PaletteMode>('light');
-  const colorMode = useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-      },
-    }),
-    []
+  const [colorMode, setColorMode] = useState<PaletteMode>(
+    saveColorModeOnLocalStorage ? getColorModeFromLocalStorage() : 'light'
   );
+  const toggleColorMode = useCallback(() => {
+    setColorMode((prevMode) => {
+      const newColorMode = prevMode === 'light' ? 'dark' : 'light';
+      if (saveColorModeOnLocalStorage) {
+        localStorage.setItem(COLOR_MODE_STORAGE_KEY, newColorMode);
+      }
+      return newColorMode;
+    });
+  }, [saveColorModeOnLocalStorage]);
 
   const theme = useMemo(
-    () => createTheme(themeOptions(mode)),
-    [mode, themeOptions]
+    () => createTheme(themeOptions(colorMode)),
+    [colorMode, themeOptions]
   );
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
+    <ColorModeContext.Provider value={{ colorMode, toggleColorMode }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {children}
