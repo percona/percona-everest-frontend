@@ -68,12 +68,14 @@ export const createDbClusterFn = async (
           class: customOptions?.storageClass! || storageClassNames,
           size: `${customOptions?.disk || 25}G`,
         },
-        ...(customOptions?.backups && customOptions.backups),
         // TODO return engineParams to tests
         // config: dbPayload.engineParametersEnabled
         //     ? dbPayload.engineParameters
         //     : '',
       },
+      ...(customOptions?.backup && {
+        backup: customOptions?.backup,
+      }),
       // TODO return monitoring to tests
       monitoring: {
         // ...(!!dbPayload.monitoring && {
