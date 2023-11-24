@@ -112,7 +112,10 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
-      <ThemeContextProvider themeOptions={everestThemeOptions}>
+      <ThemeContextProvider
+        themeOptions={everestThemeOptions}
+        saveColorModeOnLocalStorage
+      >
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <SnackbarProvider
             maxSnack={3}

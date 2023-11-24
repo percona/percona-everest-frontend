@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//TODO 485
 import { INVALID_SOURCE_RANGE_ERROR } from '../../consts';
 import { errorMessages } from 'utils/common-validation';
 
@@ -43,9 +42,7 @@ export const Messages = {
     dbName: {
       tooLong: errorMessages.tooLong('database'),
     },
-    storageLocation: {
-      invalid: 'Invalid storage location',
-    },
+
     storageClass: {
       invalid: 'Invalid storage class',
     },

@@ -35,6 +35,7 @@ export const FormDialog = <T extends FieldValues>({
   subHead2,
   size = 'L',
   submitting = false,
+  dataTestId,
 }: FormDialogProps<T>) => {
   const methods = useForm<T>({
     mode: validationMode,
@@ -82,6 +83,7 @@ export const FormDialog = <T extends FieldValues>({
       PaperProps={{ sx: { minWidth: modalWidth } }}
       open={isOpen}
       onClose={handleClose}
+      data-testid={dataTestId ? `${dataTestId}-form-dialog` : 'form-dialog'}
     >
       <DialogTitle onClose={closeModal}>{headerMessage}</DialogTitle>
       <DialogContent>
