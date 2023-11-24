@@ -121,7 +121,7 @@ export const ScheduledBackupModal = () => {
       defaultValues={values}
       {...(mode === 'new' && { subHead2: Messages.createSchedule.subhead })}
       size="XXL"
-      data-testId="scheduled-backup-modal"
+      dataTestId={`${mode}-scheduled-backup`}
     >
       <ScheduledBackupModalForm />
     </FormDialog>

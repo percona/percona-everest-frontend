@@ -1,12 +1,11 @@
 import { z } from 'zod';
 import { ScheduleFormFields } from 'components/schedule-form/schedule-form.types.ts';
 import { rfc_123_schema } from 'utils/common-validation.ts';
-import { Messages as ScheduleFormMessages } from 'components/schedule-form/schedule-form.messages.ts';
 import { MAX_SCHEDULE_NAME_LENGTH } from '../../../../consts.ts';
 import { timeSelectionSchemaObject } from 'components/time-selection/time-selection-schema.ts';
 import { storageLocationScheduleFormSchema } from 'components/schedule-form/schedule-form-schema.ts';
 import { DbWizardFormFields } from '../../database-form.types.ts';
-import { Messages } from '../../database-form.messages.ts';
+import { Messages as ScheduleFormMessages } from 'components/schedule-form/schedule-form.messages.ts';
 
 const backupsValidationObject = {
   backupsEnabled: z.boolean(),
@@ -22,7 +21,7 @@ const backupsWithScheduleValidationObject = {
     .max(MAX_SCHEDULE_NAME_LENGTH, ScheduleFormMessages.scheduleName.tooLong)
     .optional(),
   ...timeSelectionSchemaObject,
-  ...storageLocationScheduleFormSchema,
+  ...storageLocationScheduleFormSchema('dbWizard'),
 };
 
 export const backupsValidationSchema = z
@@ -37,7 +36,7 @@ export const backupsWithScheduleValidationSchema = z
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: [DbWizardFormFields.storageLocation],
-        message: Messages.errors.storageLocation.invalid,
+        message: ScheduleFormMessages.storageLocation.invalidOption,
       });
     }
   });
