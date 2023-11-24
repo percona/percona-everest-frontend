@@ -33,6 +33,11 @@ api.interceptors.response.use(
     ) {
       let message = DEFAULT_ERROR_MESSAGE;
 
+      if (error.response.status === 401) {
+        localStorage.removeItem('pwd');
+        location.replace('/login');
+      }
+
       if (error.response.data && error.response.data.message) {
         if (error.response.data.message.length > MAX_ERROR_MESSAGE_LENGTH) {
           message = `${error.response.data.message
