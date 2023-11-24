@@ -18,9 +18,7 @@ import {
   createDbClusterFn,
   deleteDbClusterFn,
 } from '../../../utils/db-cluster';
-import {
-  findDbAndClickActions,
-} from '../../../utils/db-clusters-list';
+import { findDbAndClickActions } from '../../../utils/db-clusters-list';
 import { DbType } from '@percona/types';
 
 test.describe('DB Cluster Editing Resources Step (Mongo)', () => {
