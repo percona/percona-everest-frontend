@@ -486,6 +486,15 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
         }),
       },
     },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          '&.Mui-disabled': {
+            opacity: 0.5,
+          },
+        },
+      },
+    },
     MuiInputLabel: {
       styleOverrides: {
         root: {
@@ -612,6 +621,15 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
           marginTop: '8px',
           '&.Mui-expanded': {
             marginTop: '8px',
+          },
+        }),
+      },
+    },
+    MuiAccordionSummary: {
+      styleOverrides: {
+        root: () => ({
+          '&.Mui-disabled': {
+            opacity: '0.5 !important',
           },
         }),
       },

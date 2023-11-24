@@ -28,6 +28,10 @@ test.describe.serial('Schedules List', () => {
       dbName: mySQLName,
       dbType: 'mysql',
       numberOfNodes: '1',
+      backup: {
+        enabled: true,
+        schedules: [],
+      },
     });
   });
 
@@ -49,6 +53,7 @@ test.describe.serial('Schedules List', () => {
 
     const scheduledBackupsAccordion = page.getByTestId('scheduled-backups');
     await expect(scheduledBackupsAccordion).not.toBeVisible();
+    await page.pause();
 
     await clickCreateSchedule(page);
 

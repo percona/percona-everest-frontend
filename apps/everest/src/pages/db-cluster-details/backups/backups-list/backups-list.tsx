@@ -220,6 +220,7 @@ export const BackupsList = () => {
                   onClick={() => handleScheduledBackup(handleClose)}
                   key="schedule"
                   data-testid="schedule-menu-item"
+                  disabled={!dbCluster?.spec?.backup?.enabled}
                 >
                   {Messages.schedule}
                 </MenuItem>

@@ -25,3 +25,7 @@ export type ConnectionDetailsOverviewCardProps = {
   username: string;
   password: string;
 } & OverviewCardProps;
+
+export type BackupsDetailsOverviewCardProps = {
+  scheduledBackups?: boolean;
+} & OverviewCardProps;
