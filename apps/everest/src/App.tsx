@@ -18,7 +18,10 @@ const App = () => {
   });
 
   return (
-    <ThemeContextProvider themeOptions={everestThemeOptions}>
+    <ThemeContextProvider
+      themeOptions={everestThemeOptions}
+      saveColorModeOnLocalStorage
+    >
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <SnackbarProvider
           maxSnack={3}
