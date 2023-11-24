@@ -616,6 +616,15 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
         }),
       },
     },
+    MuiAccordionSummary: {
+      styleOverrides: {
+        root: () => ({
+          '&.Mui-disabled': {
+            opacity: '0.5 !important',
+          },
+        }),
+      },
+    },
     MuiDateCalendar: {
       styleOverrides: {
         root: ({ theme }) => ({

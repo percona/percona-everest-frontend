@@ -42,6 +42,7 @@ export const Backups = () => {
     ) {
       setValue(DbWizardFormFields.backupsEnabled, true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dbType]);
 
   // const pitrEnabled: boolean = watch(DbWizardFormFields.pitrEnabled);
@@ -77,6 +78,11 @@ export const Backups = () => {
           )}
           {!scheduleDisabled && <ScheduleBackupSection />}
         </>
+      )}
+      {dbType === DbType.Postresql && (
+        <Alert severity="info">
+          {Messages.schedulesUnavailableForPostgreSQL}
+        </Alert>
       )}
       {/* <Typography variant="h6">{Messages.pitr}</Typography>
           <Typography variant="caption">{Messages.captionPitr}</Typography>
