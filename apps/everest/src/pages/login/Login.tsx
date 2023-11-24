@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Card, EverestMainIcon, TextInput, DialogTitle } from '@percona/ui-lib';
-import { AuthContext } from 'contexts/auth/auth.context';
+import { AuthContext } from 'contexts/auth';
 import { useContext, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';

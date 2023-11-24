@@ -25,7 +25,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { DrawerContextProvider } from 'contexts/drawer/drawer.context';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Main } from 'components/main/Main';
-import { AuthProvider } from 'contexts/auth/auth.context';
+import { AuthProvider } from 'contexts/auth';
 
 const queryClient = new QueryClient({
   defaultOptions: {
