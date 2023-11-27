@@ -18,7 +18,11 @@ import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import { DotsMenuProps } from './dots-menu.types';
 import { useState, MouseEvent } from 'react';
 
-export const DotsMenu = ({ menuProps, options }: DotsMenuProps) => {
+export const DotsMenu = ({
+  menuProps,
+  options,
+  iconButtonProps,
+}: DotsMenuProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -36,6 +40,7 @@ export const DotsMenu = ({ menuProps, options }: DotsMenuProps) => {
         id="more-button"
         onClick={handleClick}
         size="small"
+        {...iconButtonProps}
       >
         <MoreHorizOutlinedIcon />
       </IconButton>
@@ -56,6 +61,7 @@ export const DotsMenu = ({ menuProps, options }: DotsMenuProps) => {
               item?.onClick();
               handleClose();
             }}
+            disabled={!!item?.disabled}
           >
             {item.children}
           </MenuItem>
