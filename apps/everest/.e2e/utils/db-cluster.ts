@@ -56,22 +56,6 @@ export const createDbClusterFn = async (
       name: customOptions?.dbName || 'db-cluster-test-ui',
     },
     spec: {
-      // backup: {
-      //   enabled: dbPayload.backupsEnabled,
-      //   ...(dbPayload.backupsEnabled && {
-      //     schedules: [
-      //       {
-      //         enabled: true,
-      //         name: '',
-      //         backupStorageName:
-      //           typeof dbPayload.storageLocation === 'string'
-      //             ? dbPayload.storageLocation
-      //             : dbPayload.storageLocation!.name,
-      //         schedule: backupSchedule,
-      //       },
-      //     ],
-      //   }),
-      // },
       engine: {
         type: dbEngineType,
         version: customOptions?.dbVersion || lastVersion,
@@ -89,6 +73,9 @@ export const createDbClusterFn = async (
         //     ? dbPayload.engineParameters
         //     : '',
       },
+      ...(customOptions?.backup && {
+        backup: customOptions?.backup,
+      }),
       // TODO return monitoring to tests
       monitoring: {
         // ...(!!dbPayload.monitoring && {

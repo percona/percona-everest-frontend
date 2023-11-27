@@ -10,6 +10,8 @@ export const Messages = {
     username: 'Username',
     password: 'Password',
     host: 'Host',
+    backups: 'Backups',
+    scheduledBackups: 'Scheduled Backups',
   },
   fields: {
     type: (type?: string) => `Type: ${type}`,

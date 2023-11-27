@@ -17,6 +17,9 @@ export const Messages = {
   sectionHeader: (schedulesNumber: number) =>
     `${schedulesNumber} ${schedulesNumber > 1 ? 'schedules' : 'schedule'}`,
   noSchedules: 'No schedules',
+  // TODO Temporary message. Should be deleted after active/inactive status for each schedule
+  backupsDisabled:
+    'Backups are disabled for this database. To manage database schedules, first activate backups in the database configuration.',
   menuItems: {
     edit: 'Edit',
     delete: 'Delete',
