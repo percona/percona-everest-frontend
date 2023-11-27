@@ -9,10 +9,12 @@ import {
 } from '@mui/material';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { ColorModeContext } from '@percona/design';
+import { AuthContext } from 'contexts/auth';
 
 const AppBarUserIcon = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { colorMode, toggleColorMode } = useContext(ColorModeContext);
+  const { logout } = useContext(AuthContext);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -21,6 +23,8 @@ const AppBarUserIcon = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = () => logout();
 
   return (
     <>
@@ -59,7 +63,7 @@ const AppBarUserIcon = () => {
             />
           </FormGroup>
         </MenuItem>
-        <MenuItem>Log out</MenuItem>
+        <MenuItem onClick={handleLogout}>Log out</MenuItem>
       </Menu>
     </>
   );
