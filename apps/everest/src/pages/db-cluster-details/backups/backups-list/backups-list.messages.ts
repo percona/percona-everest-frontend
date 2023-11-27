@@ -16,7 +16,7 @@ export const Messages = {
       'Are you sure you want to replicate the selected database? This will create an exact copy of the current instance.',
     submitButton: 'Create',
   },
-  noData: "You don't have any backups yet. Create one to get started",
+  noData: "You don't have any backups yet. Create one to get started.",
   createBackup: 'Create backup',
   now: 'Now',
   schedule: 'Schedule',
