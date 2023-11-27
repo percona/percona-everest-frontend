@@ -8,15 +8,16 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import { DrawerContext } from 'contexts/drawer/drawer.context';
+import { useKubernetesClusterInfo } from 'hooks/api/kubernetesClusters/useKubernetesClusterInfo';
+import useLocalStorage from 'hooks/utils/useLocalStorage';
+import { ModalsWrapper } from 'modals/ModalsWrapper';
 import { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
-import { DrawerContext } from 'contexts/drawer/drawer.context';
-import useLocalStorage from 'hooks/utils/useLocalStorage';
 import { AppBar } from '../app-bar/AppBar';
 import { Drawer } from '../drawer/Drawer';
 import { WelcomeDialog } from '../welcome-dialog/welcome-dialog';
 import { Messages } from './Main.messages';
-import { useKubernetesClusterInfo } from 'hooks/api/kubernetesClusters/useKubernetesClusterInfo';
 
 export const Main = () => {
   const theme = useTheme();
@@ -87,6 +88,7 @@ export const Main = () => {
             closeDialog={handleCloseWelcomeDialog}
           />
         )}
+        <ModalsWrapper />
       </Box>
     </Box>
   );

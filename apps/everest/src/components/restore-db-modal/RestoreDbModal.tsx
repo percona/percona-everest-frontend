@@ -4,27 +4,21 @@ import { FormDialog } from 'components/form-dialog';
 import { useDbBackups } from 'hooks/api/backups/useBackups';
 import { useDbClusterRestore } from 'hooks/api/restores/useDbClusterRestore';
 import { FieldValues } from 'react-hook-form';
+import { useBackupsStore } from 'stores/useBackupsStore';
 import { Messages } from './restoreDbModal.messages';
 import { RestoreDbFields, schema } from './restoreDbModal.schema';
-type RestoreDbModalProps = {
-  isOpen: boolean;
-  closeModal: () => void;
-  dbClusterName: string;
-};
 
-export const RestoreDbModal = ({
-  isOpen,
-  closeModal,
-  dbClusterName,
-}: RestoreDbModalProps) => {
+export const RestoreDbModal = () => {
+  const { isOpenRestoreDbModal, dbClusterName, closeRestoreDbModal } =
+    useBackupsStore();
   const { data: backups, isLoading } = useDbBackups(dbClusterName);
   const { mutate: restoreBackup, isLoading: restoringBackup } =
     useDbClusterRestore(dbClusterName!);
   return (
     <FormDialog
-      isOpen={isOpen}
+      isOpen={isOpenRestoreDbModal}
       subHead2={Messages.subHead}
-      closeModal={closeModal}
+      closeModal={closeRestoreDbModal}
       headerMessage={Messages.headerMessage}
       schema={schema}
       submitting={restoringBackup}
@@ -34,7 +28,7 @@ export const RestoreDbModal = ({
           { backupName },
           {
             onSuccess() {
-              closeModal();
+              closeRestoreDbModal();
             },
           }
         );

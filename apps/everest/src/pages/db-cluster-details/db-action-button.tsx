@@ -4,6 +4,7 @@ import {
   PauseCircleOutline,
 } from '@mui/icons-material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
@@ -12,6 +13,7 @@ import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
 import { Messages } from 'pages/databases/dbClusterView.messages';
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useBackupsStore } from 'stores/useBackupsStore';
 import { Messages as ClusterDetailsMessages } from './db-cluster-details.messages';
 export const DbActionButton = () => {
   const { dbClusterName } = useParams();
@@ -27,6 +29,9 @@ export const DbActionButton = () => {
     handleCloseDeleteDialog,
     isPaused,
   } = useDbActions();
+  const openRestoreDbModal = useBackupsStore(
+    (state) => state.openRestoreDbModal
+  );
   const { isLoading: deletingCluster } = useDeleteDbCluster();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -91,7 +96,24 @@ export const DbActionButton = () => {
             <RestartAltIcon /> {Messages.menuItems.restart}
           </MenuItem>
           <MenuItem
+            data-testid={`${dbClusterName}-delete`}
             key={3}
+            onClick={() => {
+              openRestoreDbModal(dbClusterName!);
+              closeMenu();
+            }}
+            sx={{
+              display: 'flex',
+              gap: 1,
+              alignItems: 'center',
+              px: 2,
+              py: '10px',
+            }}
+          >
+            <KeyboardReturnIcon /> {Messages.menuItems.restoreFromBackup}
+          </MenuItem>
+          <MenuItem
+            key={4}
             onClick={() => {
               handleDbSuspendOrResumed(dbClusterName!);
               closeMenu();
@@ -111,7 +133,7 @@ export const DbActionButton = () => {
           </MenuItem>
           <MenuItem
             data-testid={`${dbClusterName}-delete`}
-            key={1}
+            key={5}
             onClick={() => {
               handleDeleteDbCluster(dbClusterName!);
               closeMenu();

@@ -31,6 +31,7 @@ const RadioGroup = ({
         >
           {options.map((option, index) => (
             <FormControlLabel
+              key={option.label}
               value={option.label}
               control={<Radio />}
               label={option.label}

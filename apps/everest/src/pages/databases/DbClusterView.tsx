@@ -19,6 +19,7 @@ import {
   PauseCircleOutline,
 } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { Box, Button, MenuItem, Stack } from '@mui/material';
 import { Table } from '@percona/ui-lib';
@@ -33,6 +34,7 @@ import { useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DbClusterStatus } from 'shared-types/dbCluster.types';
 import { DbEngineType } from 'shared-types/dbEngines.types';
+import { useBackupsStore } from 'stores/useBackupsStore';
 import { DB_CLUSTER_STATUS_TO_BASE_STATUS } from './DbClusterView.constants';
 import {
   beautifyDbClusterStatus,
@@ -43,6 +45,9 @@ import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
 
 export const DbClusterView = () => {
+  const openRestoreDbModal = useBackupsStore(
+    (state) => state.openRestoreDbModal
+  );
   const { data: dbClusters = [], isLoading: dbClustersLoading } =
     useDbClusters();
   const tableData = useMemo(
@@ -166,6 +171,22 @@ export const DbClusterView = () => {
             </MenuItem>,
             <MenuItem
               key={3}
+              onClick={() => {
+                openRestoreDbModal(row.original.databaseName);
+                closeMenu();
+              }}
+              sx={{
+                display: 'flex',
+                gap: 1,
+                alignItems: 'center',
+                px: 2,
+                py: '10px',
+              }}
+            >
+              <KeyboardReturnIcon /> {Messages.menuItems.restoreFromBackup}
+            </MenuItem>,
+            <MenuItem
+              key={4}
               disabled={row.original.status === DbClusterStatus.pausing}
               onClick={() => {
                 handleDbSuspendOrResumed(row.original.databaseName);
