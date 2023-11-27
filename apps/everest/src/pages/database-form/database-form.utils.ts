@@ -13,50 +13,56 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { DbCluster, ProxyExposeType } from 'shared-types/dbCluster.types';
 import {
-  DbWizardFormFields,
-  DbWizardMode,
-  DbWizardType,
-} from './database-form.types';
+  Backup,
+  DbCluster,
+  ProxyExposeType,
+} from 'shared-types/dbCluster.types';
+import { DbWizardFormFields, DbWizardMode } from './database-form.types';
 import { dbEngineToDbType } from '@percona/utils';
 import { matchFieldsValueToResourceSize } from './steps/second/second-step.utils';
 import { cpuParser, memoryParser } from 'utils/k8ResourceParser';
 import { generateShortUID } from './steps/first/utils';
 import { MAX_DB_CLUSTER_NAME_LENGTH } from 'consts';
-// import { getFormValuesFromCronExpression } from 'components/time-selection/time-selection.utils';
+import { DbWizardType } from './database-form-schema.ts';
+import { getFormValuesFromCronExpression } from '../../components/time-selection/time-selection.utils.ts';
+import {
+  DB_WIZARD_DEFAULTS,
+  TIME_SELECTION_DEFAULTS,
+} from './database-form.constants.ts';
 
-// EVEREST-334
-// const getBackupInfo = (backup: Backup) => {
-//   if (backup?.enabled) {
-//     const schedules = backup?.schedules;
-//     const firstSchedule = schedules && schedules[0];
-//     if (firstSchedule.schedule) {
-//       return {
-//         ...getFormValuesFromCronExpression(firstSchedule.schedule),
-//         [DbWizardFormFields.storageLocation]:
-//           { name: firstSchedule.backupStorageName } || null,
-//       };
-//     }
-//   }
-//   return {
-//     ...TIME_SELECTION_DEFAULTS,
-//     [DbWizardFormFields.storageLocation]:
-//       DB_WIZARD_DEFAULTS[DbWizardFormFields.storageLocation],
-//   };
-// };
+const getScheduleInfo = (backup?: Backup) => {
+  if (backup?.enabled) {
+    const schedules = backup?.schedules;
+    const firstSchedule = schedules && schedules[0];
+    if (firstSchedule?.schedule && !!schedules && schedules?.length <= 1) {
+      return {
+        ...getFormValuesFromCronExpression(firstSchedule.schedule),
+        [DbWizardFormFields.storageLocation]:
+          { name: firstSchedule.backupStorageName } || null,
+        [DbWizardFormFields.scheduleName]: firstSchedule.name,
+      };
+    }
+  }
+  return {
+    ...TIME_SELECTION_DEFAULTS,
+    [DbWizardFormFields.storageLocation]:
+      DB_WIZARD_DEFAULTS[DbWizardFormFields.storageLocation],
+  };
+};
 
 export const DbClusterPayloadToFormValues = (
   dbCluster: DbCluster,
   mode: DbWizardMode
 ): DbWizardType => {
-  // const backupInfo = getBackupInfo(dbCluster?.spec?.backup); // EVEREST-334
+  const scheduleInfo = getScheduleInfo(dbCluster?.spec?.backup); // EVEREST-334
 
   return {
-    // [DbWizardFormFields.backupsEnabled]: dbCluster?.spec?.backup?.enabled, // EVEREST-334
+    [DbWizardFormFields.backupsEnabled]: !!dbCluster?.spec?.backup?.enabled,
+    [DbWizardFormFields.scheduleName]: `backup-${generateShortUID()}`,
     // [DbWizardFormFields.pitrEnabled]: true,
     // [DbWizardFormFields.pitrTime]: '60',
-    // ...backupInfo, // EVEREST-334
+    ...scheduleInfo,
     [DbWizardFormFields.dbType]: dbEngineToDbType(
       dbCluster?.spec?.engine?.type
     ),

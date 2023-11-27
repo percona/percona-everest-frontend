@@ -25,14 +25,15 @@ import {
   useDbCluster,
 } from 'hooks/api/db-cluster/useDbCluster';
 import { Messages } from './scheduled-backup-modal.messages';
-import {
-  ScheduleFormData,
-  schema,
-} from './scheduled-backup-modal-form/scheduled-backup-modal-form.types';
+
 import { scheduleModalDefaultValues } from './scheduled-backup-modal-utils';
 import { ScheduledBackupModalForm } from './scheduled-backup-modal-form/scheduled-backup-modal-form';
 import { useUpdateSchedules } from 'hooks/api/backups/useScheduledBackups';
-import { ScheduleModalContext } from '../backup.context';
+import { ScheduleModalContext } from '../backups.context.ts';
+import {
+  ScheduleFormData,
+  schema,
+} from 'components/schedule-form/schedule-form-schema.ts';
 
 export const ScheduledBackupModal = () => {
   const queryClient = useQueryClient();
@@ -58,7 +59,7 @@ export const ScheduledBackupModal = () => {
   const schedules = (dbCluster && dbCluster?.spec?.backup?.schedules) || [];
   const schedulesNamesList = schedules.map((item) => item?.name);
 
-  const sheduledBackupSchema = useMemo(
+  const scheduledBackupSchema = useMemo(
     () => schema(schedulesNamesList, mode),
     [schedulesNamesList, mode]
   );
@@ -115,12 +116,12 @@ export const ScheduledBackupModal = () => {
           ? Messages.createSchedule.submitMessage
           : Messages.editSchedule.submitMessage
       }
-      schema={sheduledBackupSchema}
+      schema={scheduledBackupSchema}
       {...(mode === 'edit' && { values })}
       defaultValues={values}
       {...(mode === 'new' && { subHead2: Messages.createSchedule.subhead })}
       size="XXL"
-      data-testId="scheduled-backup-modal"
+      dataTestId={`${mode}-scheduled-backup`}
     >
       <ScheduledBackupModalForm />
     </FormDialog>

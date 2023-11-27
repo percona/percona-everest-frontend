@@ -18,7 +18,7 @@ permissions:
   repository-projects: read
 
 env:
-  NODE_OPTIONS: "—-max_old_space_size=4096"
+  NODE_OPTIONS: '—-max_old_space_size=4096'
 
 jobs:
   cache_pnpm:
@@ -26,22 +26,22 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.ROBOT_TOKEN }}
-    - uses: pnpm/action-setup@v2
-      with:
-        version: 8
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.ROBOT_TOKEN }}
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
 
-    - name: Use Node
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16.x
-        cache: 'pnpm'
-        cache-dependency-path: 'pnpm-lock.yaml'
+      - name: Use Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
-    - name: Install dependencies
-      run: make init
+      - name: Install dependencies
+        run: make init
 
   CI_checks:
     runs-on: ubuntu-latest
@@ -50,49 +50,49 @@ jobs:
       matrix:
         action: ['lint', 'format', 'test', 'build']
     steps:
-    - uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.ROBOT_TOKEN }}
-    - uses: pnpm/action-setup@v2
-      with:
-        version: 8
-    - name: Use Node
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16.x
-        cache: 'pnpm'
-        cache-dependency-path: 'pnpm-lock.yaml'
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.ROBOT_TOKEN }}
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Use Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
-    - run: make init
+      - run: make init
 
-    - name: lint
-      if:  matrix.action == 'lint'
-      run: make lint
+      - name: lint
+        if: matrix.action == 'lint'
+        run: make lint
 
-    - name: format
-      if:  matrix.action == 'format'
-      run: make format
+      - name: format
+        if: matrix.action == 'format'
+        run: make format
 
-    - name: test
-      if:  matrix.action == 'test'
-      run: make test
+      - name: test
+        if: matrix.action == 'test'
+        run: make test
 
-    - name: build
-      if:  matrix.action == 'build'
-      run: make build
+      - name: build
+        if: matrix.action == 'build'
+        run: make build
 
-    - name: Check for changes
-      id: check_changes
-      run: |
-        git config --global user.email "ci-bot@percona.com"
-        git config --global user.name "CI Bot"
-        git diff --exit-code || echo "::set-output name=changes::true"
+      - name: Check for changes
+        id: check_changes
+        run: |
+          git config --global user.email "ci-bot@percona.com"
+          git config --global user.name "CI Bot"
+          git diff --exit-code || echo "::set-output name=changes::true"
 
-    - uses: stefanzweifel/git-auto-commit-action@v5
-      if: steps.check_changes.outputs.changes == 'true' && github.event_name == 'pull_request'
-      with:
-        commit_message: "chore: lint/format"
-        token: ${{ secrets.ROBOT_TOKEN }}
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        if: steps.check_changes.outputs.changes == 'true' && github.event_name == 'pull_request'
+        with:
+          commit_message: 'chore: lint/format'
+          token: ${{ secrets.ROBOT_TOKEN }}
 
   E2E:
     name: E2E Tests
@@ -115,7 +115,6 @@ jobs:
           node-version: 16.x
           cache: 'pnpm'
           cache-dependency-path: FE/pnpm-lock.yaml
-
 
       - name: Checkout CLI repo
         uses: percona-platform/checkout@v3
@@ -165,6 +164,12 @@ jobs:
           pnpm --filter "@percona/everest" dev &
 
       - name: Run integration tests
+        env:
+          EVEREST_LOCATION_BUCKET_NAME: '${{ secrets.EVEREST_LOCATION_BUCKET_NAME }}'
+          EVEREST_LOCATION_ACCESS_KEY: '${{ secrets.EVEREST_LOCATION_ACCESS_KEY }}'
+          EVEREST_LOCATION_SECRET_KEY: '${{ secrets.EVEREST_LOCATION_SECRET_KEY }}'
+          EVEREST_LOCATION_REGION: '${{ secrets.EVEREST_LOCATION_REGION }}'
+          EVEREST_LOCATION_URL: '${{ secrets.EVEREST_LOCATION_URL }}'
         run: |
           cd FE
           pnpm --filter "@percona/everest" e2e

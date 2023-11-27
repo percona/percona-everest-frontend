@@ -16,8 +16,9 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
-import { useActiveBreakpoint } from '../../hooks/utils/useActiveBreakpoint';
+import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
 import { FormDialogProps } from './form-dialog.types';
+import { kebabize } from '@percona/utils';
 
 export const FormDialog = <T extends FieldValues>({
   isOpen,
@@ -34,6 +35,7 @@ export const FormDialog = <T extends FieldValues>({
   subHead2,
   size = 'L',
   submitting = false,
+  dataTestId,
 }: FormDialogProps<T>) => {
   const methods = useForm<T>({
     mode: validationMode,
@@ -81,6 +83,7 @@ export const FormDialog = <T extends FieldValues>({
       PaperProps={{ sx: { minWidth: modalWidth } }}
       open={isOpen}
       onClose={handleClose}
+      data-testid={dataTestId ? `${dataTestId}-form-dialog` : 'form-dialog'}
     >
       <DialogTitle onClose={closeModal}>{headerMessage}</DialogTitle>
       <DialogContent>
@@ -92,13 +95,18 @@ export const FormDialog = <T extends FieldValues>({
         </FormProvider>
       </DialogContent>
       <DialogActions>
-        <Button disabled={submitting} onClick={closeModal}>
+        <Button
+          disabled={submitting}
+          onClick={closeModal}
+          data-testid={`form-dialog-${kebabize(cancelMessage)}`}
+        >
           {cancelMessage}
         </Button>
         <Button
           variant="contained"
           onClick={methods.handleSubmit(handleSubmit)}
           disabled={submitting || !isValid}
+          data-testid={`form-dialog-${kebabize(submitMessage)}`}
         >
           {submitMessage}
         </Button>

@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// import { DbType } from '@percona/types';
 import { test } from '@playwright/test';
 import { createDbClusterFn } from '../utils/db-cluster';
 
@@ -34,18 +33,21 @@ test.describe('DB Cluster List', () => {
       dbType: 'mysql',
       numberOfNodes: '1',
     });
-    // TODO waiting of adding dbCluster function is not necessary but would be good
 
-    const rows = await page.getByRole('row');
-    const mySQLrow = rows.filter({ hasText: mySQLName });
-    const button = mySQLrow.getByTestId('MoreHorizIcon');
+    await page
+      .getByTestId(`${mySQLName}-status`)
+      .filter({ hasText: 'Initializing' });
+
+    const button = await page
+      .getByRole('row')
+      .filter({ hasText: mySQLName })
+      .getByLabel('Row Actions');
     await button.click();
 
     // Delete action
     const deleteButton = page.getByTestId(`${mySQLName}-delete`);
     await deleteButton.click();
     await page.getByTestId(`${mySQLName}-confirm-dialog`).waitFor();
-    await page.pause();
     const deleteConfirmationButton = await page
       .getByRole('button')
       .filter({ hasText: 'Delete' });

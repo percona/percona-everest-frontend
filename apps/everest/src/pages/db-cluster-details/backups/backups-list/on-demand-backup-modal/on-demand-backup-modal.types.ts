@@ -1,5 +1,5 @@
 import z from 'zod';
-import { generateShortUID } from 'pages/database-form/steps/first/utils';
+import { generateShortUID } from '../../../../database-form/steps/first/utils.ts';
 
 export type OnDemandBackupModalProps = {
   open: boolean;

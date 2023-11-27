@@ -24,4 +24,11 @@ export const Messages = {
   captionPitr:
     'Point-in-time recovery provides continuous backups on your database to protect against accidental writes or deletes.',
   pitrCreateHeader: 'Create PITR backup every',
+  youCanAddMoreSchedules:
+    'After creating the database, you can add more schedules from the Backups section in the DB cluster details view.',
+  youHaveMultipleSchedules:
+    'You have multiple backup schedules set for this database. See the list of schedules and update the ones you need straight from the Backups section in the DB cluster details view.',
+  // TODO Temporary message. Should be deleted after https://jira.percona.com/browse/EVEREST-509
+  schedulesUnavailableForPostgreSQL:
+    'Scheduled backups are currently unavailable for PostgreSQL databases. You can still enable on-demand backups from the Backups page in the database cluster view.',
 };

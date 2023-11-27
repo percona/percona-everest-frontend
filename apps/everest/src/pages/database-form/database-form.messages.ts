@@ -14,6 +14,7 @@
 // limitations under the License.
 
 import { INVALID_SOURCE_RANGE_ERROR } from '../../consts';
+import { errorMessages } from 'utils/common-validation';
 
 export const Messages = {
   previous: 'Previous',
@@ -39,11 +40,9 @@ export const Messages = {
       invalid: 'Invalid URL',
     },
     dbName: {
-      tooLong: 'The database name is too long',
+      tooLong: errorMessages.tooLong('database'),
     },
-    storageLocation: {
-      invalid: 'Invalid storage location',
-    },
+
     storageClass: {
       invalid: 'Invalid storage class',
     },

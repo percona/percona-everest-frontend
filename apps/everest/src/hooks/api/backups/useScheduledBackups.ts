@@ -1,16 +1,17 @@
 import { useMutation, UseMutationOptions } from 'react-query';
 import { updateDbClusterFn } from 'api/dbClusterApi';
 import { getCronExpressionFromFormValues } from 'components/time-selection/time-selection.utils';
-import { ScheduleFormData } from 'pages/db-cluster-details/backups/scheduled-backup-modal/scheduled-backup-modal-form/scheduled-backup-modal-form.types';
 import { DbCluster, Schedule } from 'shared-types/dbCluster.types';
 import { useDbCluster } from '../db-cluster/useDbCluster';
+import { ScheduleFormData } from 'components/schedule-form/schedule-form-schema.ts';
 
 const backupScheduleFormValuesToDbClusterPayload = (
   dbPayload: ScheduleFormData,
   dbCluster: DbCluster,
   mode: 'edit' | 'new'
 ): DbCluster => {
-  const { selectedTime, minute, hour, amPm, onDay, weekDay, name } = dbPayload;
+  const { selectedTime, minute, hour, amPm, onDay, weekDay, scheduleName } =
+    dbPayload;
   const backupSchedule = getCronExpressionFromFormValues({
     selectedTime,
     minute,
@@ -25,7 +26,7 @@ const backupScheduleFormValuesToDbClusterPayload = (
       ...(dbCluster.spec.backup?.schedules ?? []),
       {
         enabled: true,
-        name,
+        name: scheduleName,
         backupStorageName:
           typeof dbPayload.storageLocation === 'string'
             ? dbPayload.storageLocation
@@ -40,12 +41,12 @@ const backupScheduleFormValuesToDbClusterPayload = (
       ...(dbCluster?.spec?.backup?.schedules || []),
     ];
     const editedScheduleIndex = newSchedulesArray?.findIndex(
-      (item) => item.name === name
+      (item) => item.name === scheduleName
     );
     if (newSchedulesArray && editedScheduleIndex !== undefined) {
       newSchedulesArray[editedScheduleIndex] = {
         enabled: true,
-        name,
+        name: scheduleName,
         backupStorageName:
           typeof dbPayload.storageLocation === 'string'
             ? dbPayload.storageLocation

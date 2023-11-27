@@ -13,15 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import { useMemo, useState, useContext } from 'react';
 import { Delete } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { MenuItem } from '@mui/material';
 import { MenuButton, Table } from '@percona/ui-lib';
+import { format } from 'date-fns';
+import { MRT_ColumnDef } from 'material-react-table';
+import { useQueryClient } from 'react-query';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
 import { StatusField } from 'components/status-field/status-field';
 import { DATE_FORMAT } from 'consts';
-import { format } from 'date-fns';
 import {
   BACKUPS_QUERY_KEY,
   useDbBackups,
@@ -29,16 +33,12 @@ import {
 } from 'hooks/api/backups/useBackups';
 import { useDbCluster } from 'hooks/api/db-cluster/useDbCluster';
 import { useDbClusterRestore } from 'hooks/api/restores/useDbClusterRestore';
-import { MRT_ColumnDef } from 'material-react-table';
-import { useContext, useMemo, useState } from 'react';
-import { useQueryClient } from 'react-query';
-import { useNavigate, useParams } from 'react-router-dom';
 import { Backup, BackupStatus } from 'shared-types/backups.types';
 import { DbEngineType } from 'shared-types/dbEngines.types';
-import { ScheduleModalContext } from '../backup.context';
-import { OnDemandBackupModal } from '../on-demand-backup-modal/on-demand-backup-modal';
 import { BACKUP_STATUS_TO_BASE_STATUS } from './backups-list.constants';
 import { Messages } from './backups-list.messages';
+import { OnDemandBackupModal } from './on-demand-backup-modal/on-demand-backup-modal';
+import { ScheduleModalContext } from '../backups.context.ts';
 
 export const BackupsList = () => {
   const navigate = useNavigate();
@@ -211,6 +211,7 @@ export const BackupsList = () => {
               <MenuItem
                 key="now"
                 onClick={() => handleManualBackup(handleClose)}
+                data-testid="now-menu-item"
               >
                 {Messages.now}
               </MenuItem>,
@@ -218,6 +219,8 @@ export const BackupsList = () => {
                 <MenuItem
                   onClick={() => handleScheduledBackup(handleClose)}
                   key="schedule"
+                  data-testid="schedule-menu-item"
+                  disabled={!dbCluster?.spec?.backup?.enabled}
                 >
                   {Messages.schedule}
                 </MenuItem>

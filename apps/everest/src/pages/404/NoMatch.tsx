@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 import { NoMatchIcon } from '@percona/ui-lib';
 import { Link } from 'react-router-dom';
-import { useActiveBreakpoint } from '../../hooks/utils/useActiveBreakpoint';
+import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
 import { Messages } from './NoMatch.messages';
 
 export const NoMatch = () => {

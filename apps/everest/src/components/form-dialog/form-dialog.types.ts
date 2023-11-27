@@ -18,4 +18,5 @@ export interface FormDialogProps<T extends FieldValues> {
   size?: 'L' | 'XL' | 'XXL';
   subHead2?: string;
   submitting?: boolean;
+  dataTestId?: string;
 }

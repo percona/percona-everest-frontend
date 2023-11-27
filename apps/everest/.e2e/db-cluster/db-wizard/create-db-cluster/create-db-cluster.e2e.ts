@@ -14,8 +14,8 @@
 // limitations under the License.
 
 import { expect, test } from '@playwright/test';
-import { getEnginesVersions } from '../../utils/database-engines';
-import { getClusterDetailedInfo } from '../../utils/storage-class';
+import { getEnginesVersions } from '../../../utils/database-engines';
+import { getClusterDetailedInfo } from '../../../utils/storage-class';
 import { advancedConfigurationStepCheck } from './steps/advanced-configuration-step';
 import { backupsStepCheck } from './steps/backups-step';
 import { basicInformationStepCheck } from './steps/basic-information-step';
@@ -75,8 +75,8 @@ test.describe('DB Cluster creation', () => {
     await page.getByTestId('db-wizard-continue-button').click();
 
     // TODO uncomment step tests inside function
-    await backupsStepCheck();
-    // await page.getByTestId('db-wizard-continue-button').click();
+    await backupsStepCheck(page);
+    await page.getByTestId('db-wizard-continue-button').click();
 
     await advancedConfigurationStepCheck(page);
     await page.getByTestId('db-wizard-continue-button').click();

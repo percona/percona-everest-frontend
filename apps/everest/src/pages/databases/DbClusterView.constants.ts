@@ -1,5 +1,5 @@
 import { DbClusterStatus } from 'shared-types/dbCluster.types';
-import { BaseStatus } from '../../components/status-field/status-field.types';
+import { BaseStatus } from 'components/status-field/status-field.types';
 
 export const DB_CLUSTER_STATUS_TO_BASE_STATUS: Record<
   DbClusterStatus,

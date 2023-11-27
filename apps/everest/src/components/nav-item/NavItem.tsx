@@ -61,10 +61,7 @@ export const NavItem = ({
           }}
         >
           <Tooltip title={text} placement="right" arrow>
-            <IconButton
-              sx={{ color: 'rgba(0, 0, 0, 0.54)' }}
-              onClick={() => redirect(to)}
-            >
+            <IconButton onClick={() => redirect(to)}>
               {React.createElement(icon)}
             </IconButton>
           </Tooltip>

@@ -13,18 +13,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export const backupsStepCheck = async () => {
-  // TODO return backup step tests
-  // await expect(
-  //   page.getByRole('heading', {
-  //     name: 'Specify how often you want to run backup jobs for your database.',
-  //   })
-  // ).toBeVisible();
-  //
-  // await page.getByTestId('text-input-storage-location').click();
-  //
-  // const storageOptions = page.getByRole('option');
-  //
-  // expect(storageOptions.filter({ hasText: 'ui-dev' })).toBeVisible();
-  // await storageOptions.first().click();
+import z from 'zod';
+import {
+  AmPM,
+  TimeSelectionFields,
+  TimeValue,
+  WeekDays,
+} from './time-selection.types';
+
+export const timeSelectionSchemaObject = {
+  [TimeSelectionFields.selectedTime]: z.nativeEnum(TimeValue),
+  [TimeSelectionFields.minute]: z.number().optional(),
+  [TimeSelectionFields.hour]: z.number().optional(),
+  [TimeSelectionFields.amPm]: z.nativeEnum(AmPM).optional(),
+  [TimeSelectionFields.weekDay]: z.nativeEnum(WeekDays).optional(),
+  [TimeSelectionFields.onDay]: z.number().optional(),
 };
+export const timeSelectionSchema = z.object(timeSelectionSchemaObject);

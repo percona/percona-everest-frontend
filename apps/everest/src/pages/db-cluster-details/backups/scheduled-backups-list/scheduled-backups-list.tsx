@@ -15,6 +15,7 @@
 
 import { useState, useContext } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { BorderColor, DeleteOutline } from '@mui/icons-material';
 import {
   Accordion,
   AccordionDetails,
@@ -37,7 +38,7 @@ import { getTimeSelectionPreviewMessage } from 'pages/database-form/database-pre
 import { Messages } from './scheduled-backups-list.messages';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
 import { useDeleteSchedule } from 'hooks/api/backups/useScheduledBackups';
-import { ScheduleModalContext } from '../backup.context';
+import { ScheduleModalContext } from '../backups.context.ts';
 
 export const ScheduledBackupsList = () => {
   const { dbClusterName } = useParams();
@@ -91,30 +92,34 @@ export const ScheduledBackupsList = () => {
 
   const options: (scheduleName: string) => Option[] = (scheduleName) => [
     {
-      key: 'delete',
-      onClick: handleDelete(scheduleName),
-      children: Messages.menuItems.delete,
-    },
-    {
       key: 'edit',
       onClick: handleEdit(scheduleName),
       children: Messages.menuItems.edit,
+      icon: BorderColor,
+    },
+    {
+      key: 'delete',
+      onClick: handleDelete(scheduleName),
+      children: Messages.menuItems.delete,
+      icon: DeleteOutline,
     },
   ];
 
   return (
     <>
       {schedules && schedules?.length > 0 && (
-        <Accordion sx={{ mt: 1 }}>
+        <Accordion sx={{ mt: 1 }} disabled={!data?.spec?.backup?.enabled}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="scheduled-backups-content"
             data-testid="scheduled-backups"
           >
             <Typography variant="body1">
-              {schedules
-                ? Messages.sectionHeader(schedules?.length)
-                : Messages.noSchedules}
+              {data?.spec?.backup?.enabled
+                ? schedules
+                  ? Messages.sectionHeader(schedules?.length)
+                  : Messages.noSchedules
+                : Messages.backupsDisabled}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -122,8 +127,9 @@ export const ScheduledBackupsList = () => {
               {schedules &&
                 schedules.map((item) => (
                   <Paper
-                    key={`schedule-${item?.schedule}`}
+                    key={`schedule-${item?.name}`}
                     sx={{ py: 1, px: 2, borderRadius: 0 }}
+                    data-testid={`schedule-${item?.schedule}`}
                   >
                     <Box
                       sx={{
@@ -151,6 +157,7 @@ export const ScheduledBackupsList = () => {
                           justifyContent: 'flex-end',
                           display: 'flex',
                         }}
+                        data-testid="schedule-dots-menu"
                       >
                         <DotsMenu options={options(item?.name)} />
                       </Box>
