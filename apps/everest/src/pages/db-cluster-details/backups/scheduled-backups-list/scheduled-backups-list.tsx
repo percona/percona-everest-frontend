@@ -108,18 +108,16 @@ export const ScheduledBackupsList = () => {
   return (
     <>
       {schedules && schedules?.length > 0 && (
-        <Accordion sx={{ mt: 1 }} disabled={!data?.spec?.backup?.enabled}>
+        <Accordion sx={{ mt: 1 }}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="scheduled-backups-content"
             data-testid="scheduled-backups"
           >
             <Typography variant="body1">
-              {data?.spec?.backup?.enabled
-                ? schedules
-                  ? Messages.sectionHeader(schedules?.length)
-                  : Messages.noSchedules
-                : Messages.backupsDisabled}
+              {schedules
+                ? Messages.sectionHeader(schedules?.length)
+                : Messages.noSchedules}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -159,7 +157,12 @@ export const ScheduledBackupsList = () => {
                         }}
                         data-testid="schedule-dots-menu"
                       >
-                        <DotsMenu options={options(item?.name)} />
+                        <DotsMenu
+                          options={options(item?.name)}
+                          iconButtonProps={{
+                            disabled: !data?.spec?.backup?.enabled,
+                          }}
+                        />
                       </Box>
                     </Box>
                   </Paper>

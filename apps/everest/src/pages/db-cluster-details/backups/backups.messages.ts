@@ -14,15 +14,9 @@
 // limitations under the License.
 
 export const Messages = {
-  sectionHeader: (schedulesNumber: number) =>
-    `${schedulesNumber} ${schedulesNumber > 1 ? 'schedules' : 'schedule'}`,
-  noSchedules: 'No schedules',
-  menuItems: {
-    edit: 'Edit',
-    delete: 'Delete',
-  },
-  deleteModal: {
-    header: 'Delete schedule',
-    content: 'Are you sure you want to permanently delete this schedule?',
-  },
+  // TODO Temporary message. Should be deleted after active/inactive status for each schedule
+  backupsDisabled:
+    'Backups are currently disabled for this database. To set up backup schedules, first re-enable backups in the database configuration.',
+  backupsDisabledPG:
+    'Scheduled backups are currently unavailable for PostgreSQL databases. You can still enable on-demand backups from this page.',
 };

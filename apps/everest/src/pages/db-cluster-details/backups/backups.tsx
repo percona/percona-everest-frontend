@@ -22,6 +22,8 @@ import { BackupsList } from './backups-list/backups-list';
 import { ScheduledBackupModal } from './scheduled-backup-modal/scheduled-backup-modal';
 import { ScheduledBackupsList } from './scheduled-backups-list/scheduled-backups-list';
 import { ScheduleModalContext } from './backups.context.ts';
+import { Alert } from '@mui/material';
+import { Messages } from './backups.messages.ts';
 
 export const Backups = () => {
   const { dbClusterName } = useParams();
@@ -55,6 +57,13 @@ export const Backups = () => {
     >
       {dbNameExists && (
         <>
+          {!dbCluster?.spec?.backup?.enabled && (
+            <Alert severity="info">
+              {dbType === DbEngineType.POSTGRESQL
+                ? Messages.backupsDisabledPG
+                : Messages.backupsDisabled}
+            </Alert>
+          )}
           {dbType !== DbEngineType.POSTGRESQL && <ScheduledBackupsList />}
           <BackupsList />
           {openScheduleModal && <ScheduledBackupModal />}
