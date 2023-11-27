@@ -18,10 +18,33 @@ import { enqueueSnackbar } from 'notistack';
 const BASE_URL = '/v1/';
 const DEFAULT_ERROR_MESSAGE = 'Something went wrong';
 const MAX_ERROR_MESSAGE_LENGTH = 120;
+let authInterceptor: number | null = null;
 
 export const api = axios.create({
   baseURL: BASE_URL,
 });
+
+export const addApiAuthInterceptor = () => {
+  if (authInterceptor === null) {
+    authInterceptor = api.interceptors.response.use(
+      (response) => {
+        return response;
+      },
+      (error) => {
+        if (error.response.status === 401) {
+          localStorage.removeItem('pwd');
+          location.replace('/login');
+        }
+      }
+    );
+  }
+};
+
+export const removeApiAuthInterceptor = () => {
+  if (authInterceptor !== null) {
+    api.interceptors.response.eject(authInterceptor);
+  }
+};
 
 api.interceptors.response.use(
   (response) => response,
@@ -33,10 +56,10 @@ api.interceptors.response.use(
     ) {
       let message = DEFAULT_ERROR_MESSAGE;
 
-      if (error.response.status === 401) {
-        localStorage.removeItem('pwd');
-        location.replace('/login');
-      }
+      // if (error.response.status === 401) {
+      //   localStorage.removeItem('pwd');
+      //   location.replace('/login');
+      // }
 
       if (error.response.data && error.response.data.message) {
         if (error.response.data.message.length > MAX_ERROR_MESSAGE_LENGTH) {

@@ -5,6 +5,8 @@ import { Navigate, Outlet } from 'react-router-dom';
 const ProtectedRoute = ({ children }: { children?: ReactNode }) => {
   const { authenticated } = useContext(AuthContext);
 
+  // At this point, we're pretty much checking the auth state.
+  // Later this can be some sort of loading UI
   if (authenticated === null) {
     return <></>;
   }

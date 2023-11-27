@@ -1,4 +1,4 @@
-import { api } from 'api/api';
+import { addApiAuthInterceptor, api, removeApiAuthInterceptor } from 'api/api';
 import { useVersion } from 'hooks/api/version/useVersion';
 import { ReactNode, useEffect, useState } from 'react';
 import AuthContext from './auth.context';
@@ -24,6 +24,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem('pwd', '');
     setApiBearerToken('');
     setAuthenticated(false);
+    removeApiAuthInterceptor();
   };
 
   useEffect(() => {
@@ -40,17 +41,19 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   // At this point, there's not really a login flow, per se
   useVersion({
     enabled: apiCallEnabled,
+    retry: false,
     onSuccess: () => {
       setApiCallEnabled(false);
       setAuthenticated(true);
       setApiBearerToken(password);
       setLoggingIn(false);
       localStorage.setItem('pwd', password);
+      addApiAuthInterceptor();
     },
     onError: () => {
+      setLoggingIn(false);
       setApiCallEnabled(false);
       setAuthenticated(false);
-      setLoggingIn(false);
     },
   });
 
