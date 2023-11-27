@@ -52,9 +52,14 @@ const AppBarUserIcon = () => {
                 />
               }
               label="Dark mode"
+              labelPlacement="start"
+              sx={{
+                ml: 0,
+              }}
             />
           </FormGroup>
         </MenuItem>
+        <MenuItem>Log out</MenuItem>
       </Menu>
     </>
   );
