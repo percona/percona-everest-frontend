@@ -13,6 +13,7 @@ import { AuthContext } from 'contexts/auth';
 import { useContext, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
+import { Messages } from './Login.messages';
 
 const Login = () => {
   const methods = useForm<{ password: string }>({
@@ -69,11 +70,10 @@ const Login = () => {
           content={
             <Stack alignItems="center">
               <Typography variant="h6" mb={3}>
-                Log in
+                {Messages.login}
               </Typography>
               <Typography variant="caption" mb={2}>
-                Insert the password you have received during the installation in
-                your terminal.
+                {Messages.insertPassword}
               </Typography>
               <FormProvider {...methods}>
                 <TextInput
@@ -92,7 +92,7 @@ const Login = () => {
                   variant="contained"
                   fullWidth
                 >
-                  Log in
+                  {Messages.login}
                 </Button>
               </FormProvider>
               <Typography
@@ -101,10 +101,7 @@ const Login = () => {
                 mt={4}
                 mb={1.5}
               >
-                By submitting my personal information, I acknowledge that
-                Percona will communicate with me about its products and
-                services. I understand that I can unsubscribe from these
-                communications in accordance with the Percona Privacy Policy.
+                {Messages.ack}
               </Typography>
               <Button
                 onClick={handleClick}
@@ -112,23 +109,24 @@ const Login = () => {
                 sx={{ alignSelf: 'flex-start' }}
                 disabled={loggingIn}
               >
-                Reset password
+                {Messages.resetPassword}
               </Button>
             </Stack>
           }
         />
       </Box>
       <Dialog open={modalOpen} onClose={handleClose}>
-        <DialogTitle onClose={handleClose}>Reset password</DialogTitle>
+        <DialogTitle onClose={handleClose}>
+          {Messages.resetPassword}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText variant="body1" color="text.primary">
-            Use your terminal to reset your password. Lorem ipsum dolor sit amet
-            adipiscing consecteur.
+            {Messages.useTerminal}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} variant="contained">
-            OK
+            {Messages.ok}
           </Button>
         </DialogActions>
       </Dialog>
