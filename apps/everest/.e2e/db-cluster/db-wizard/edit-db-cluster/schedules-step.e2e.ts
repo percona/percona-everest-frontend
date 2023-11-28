@@ -104,4 +104,58 @@ test.describe.serial('DB Cluster Editing Backups Step', () => {
 
     expect(page.getByText('Every hour at minute 0')).toBeTruthy();
   });
+
+  test('Disabling/Enabling backups for single scheduled db', async ({
+                                                       page,
+  }) => {
+    await page.goto('/databases');
+    const closeIcon = page.getByTestId('close-dialog-icon');
+    if (closeIcon) {
+      await closeIcon.click();
+    }
+
+    await findDbAndClickActions(page, mySQLName);
+
+    await page.getByRole('menuitem', { name: 'Edit' }).click();
+
+    const nextStep = page.getByTestId('db-wizard-continue-button');
+    // Go to Resources step
+    await nextStep.click();
+    // Go to Backups step
+    await nextStep.click();
+
+    // disabling backups
+    const enabledBackupsCheckbox = page
+        .getByTestId('switch-input-backups-enabled')
+        .getByRole('checkbox');
+    await expect(enabledBackupsCheckbox).toBeChecked();
+    await enabledBackupsCheckbox.setChecked(false);
+    await expect(enabledBackupsCheckbox).not.toBeChecked();
+
+    // checking the preview empty value
+    expect(page.getByTestId('section-Backups').getByTestId('empty-backups-preview-content')).toBeTruthy();
+
+    // Go to Advanced Configuration step
+    await nextStep.click();
+    // Go to Monitoring step
+    await nextStep.click();
+
+    await checkDbWizardEditSubmitIsAvailableAndClick(page);
+    await checkSuccessOfUpdateAndGoToDbClustersList(page);
+
+    await findDbAndClickActions(page, mySQLName);
+    await page.getByRole('menuitem', { name: 'Edit' }).click();
+
+    // Go to Resources step
+    await nextStep.click();
+    // Go to Backups step
+    await nextStep.click();
+
+    // check that schedule hasn't been reset
+    await expect(enabledBackupsCheckbox).not.toBeChecked();
+    await enabledBackupsCheckbox.setChecked(true);
+    await expect(page.getByTestId(
+        'text-input-schedule-name'
+    )).toHaveValue(scheduleName);
+  });
 });

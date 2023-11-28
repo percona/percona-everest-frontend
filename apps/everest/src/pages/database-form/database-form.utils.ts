@@ -31,8 +31,8 @@ import {
   TIME_SELECTION_DEFAULTS,
 } from './database-form.constants.ts';
 
-const getScheduleInfo = (backup?: Backup) => {
-  if (backup?.enabled) {
+const getScheduleInfo = (mode: DbWizardMode, backup?: Backup) => {
+  if (backup?.enabled && mode==='new' || mode==='edit') {
     const schedules = backup?.schedules;
     const firstSchedule = schedules && schedules[0];
     if (firstSchedule?.schedule && !!schedules && schedules?.length <= 1) {
@@ -55,7 +55,7 @@ export const DbClusterPayloadToFormValues = (
   dbCluster: DbCluster,
   mode: DbWizardMode
 ): DbWizardType => {
-  const scheduleInfo = getScheduleInfo(dbCluster?.spec?.backup); // EVEREST-334
+  const scheduleInfo = getScheduleInfo(mode, dbCluster?.spec?.backup);
 
   return {
     [DbWizardFormFields.backupsEnabled]: !!dbCluster?.spec?.backup?.enabled,
