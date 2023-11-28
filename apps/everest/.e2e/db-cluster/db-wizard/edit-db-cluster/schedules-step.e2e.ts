@@ -53,9 +53,7 @@ test.describe.serial('DB Cluster Editing Backups Step', () => {
       await closeIcon.click();
     }
 
-    await findDbAndClickActions(page, mySQLName);
-
-    await page.getByRole('menuitem', { name: 'Edit' }).click();
+    await findDbAndClickActions(page, mySQLName, 'Edit');
 
     const nextStep = page.getByTestId('db-wizard-continue-button');
     // Go to Resources step
@@ -114,9 +112,7 @@ test.describe.serial('DB Cluster Editing Backups Step', () => {
       await closeIcon.click();
     }
 
-    await findDbAndClickActions(page, mySQLName);
-
-    await page.getByRole('menuitem', { name: 'Edit' }).click();
+    await findDbAndClickActions(page, mySQLName, 'Edit');
 
     const nextStep = page.getByTestId('db-wizard-continue-button');
     // Go to Resources step
@@ -147,8 +143,7 @@ test.describe.serial('DB Cluster Editing Backups Step', () => {
     await checkDbWizardEditSubmitIsAvailableAndClick(page);
     await checkSuccessOfUpdateAndGoToDbClustersList(page);
 
-    await findDbAndClickActions(page, mySQLName);
-    await page.getByRole('menuitem', { name: 'Edit' }).click();
+    await findDbAndClickActions(page, mySQLName, 'Edit');
 
     // Go to Resources step
     await nextStep.click();
@@ -161,5 +156,10 @@ test.describe.serial('DB Cluster Editing Backups Step', () => {
     await expect(page.getByTestId('text-input-schedule-name')).toHaveValue(
       scheduleName
     );
+
+    // checking the preview actual value
+    await expect(
+      page.getByTestId('section-Backups').getByTestId('preview-content')
+    ).toHaveText('Every hour at minute 0');
   });
 });
