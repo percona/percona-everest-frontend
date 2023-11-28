@@ -106,7 +106,7 @@ test.describe.serial('DB Cluster Editing Backups Step', () => {
   });
 
   test('Disabling/Enabling backups for single scheduled db', async ({
-                                                       page,
+    page,
   }) => {
     await page.goto('/databases');
     const closeIcon = page.getByTestId('close-dialog-icon');
@@ -126,14 +126,18 @@ test.describe.serial('DB Cluster Editing Backups Step', () => {
 
     // disabling backups
     const enabledBackupsCheckbox = page
-        .getByTestId('switch-input-backups-enabled')
-        .getByRole('checkbox');
+      .getByTestId('switch-input-backups-enabled')
+      .getByRole('checkbox');
     await expect(enabledBackupsCheckbox).toBeChecked();
     await enabledBackupsCheckbox.setChecked(false);
     await expect(enabledBackupsCheckbox).not.toBeChecked();
 
     // checking the preview empty value
-    expect(page.getByTestId('section-Backups').getByTestId('empty-backups-preview-content')).toBeTruthy();
+    expect(
+      page
+        .getByTestId('section-Backups')
+        .getByTestId('empty-backups-preview-content')
+    ).toBeTruthy();
 
     // Go to Advanced Configuration step
     await nextStep.click();
@@ -154,8 +158,8 @@ test.describe.serial('DB Cluster Editing Backups Step', () => {
     // check that schedule hasn't been reset
     await expect(enabledBackupsCheckbox).not.toBeChecked();
     await enabledBackupsCheckbox.setChecked(true);
-    await expect(page.getByTestId(
-        'text-input-schedule-name'
-    )).toHaveValue(scheduleName);
+    await expect(page.getByTestId('text-input-schedule-name')).toHaveValue(
+      scheduleName
+    );
   });
 });

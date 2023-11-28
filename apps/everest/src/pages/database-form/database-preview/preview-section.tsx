@@ -80,8 +80,17 @@ export const PreviewSection = ({
   );
 };
 
-export const PreviewContentText = ({ text, dataTestId }: PreviewContentTextProps) => (
-  <Typography variant="caption" color="text.secondary" data-testid={dataTestId? `${dataTestId}-preview-content`: 'preview-content'} >
+export const PreviewContentText = ({
+  text,
+  dataTestId,
+}: PreviewContentTextProps) => (
+  <Typography
+    variant="caption"
+    color="text.secondary"
+    data-testid={
+      dataTestId ? `${dataTestId}-preview-content` : 'preview-content'
+    }
+  >
     {text}
   </Typography>
 );
