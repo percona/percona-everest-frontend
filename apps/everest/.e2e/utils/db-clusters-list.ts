@@ -29,7 +29,11 @@ export const findDbAndClickRow = async (page: Page, dbName: string) => {
   await dbRow.click();
 };
 
-export const findDbAndClickActions = async (page: Page, dbName: string) => {
+export const findDbAndClickActions = async (
+  page: Page,
+  dbName: string,
+  nameOfAction?: string
+) => {
   page.getByTestId(`${dbName}-status`).filter({ hasText: 'Initializing' });
 
   // cluster actions menu click
@@ -38,4 +42,8 @@ export const findDbAndClickActions = async (page: Page, dbName: string) => {
     .filter({ hasText: dbName })
     .getByTestId('MoreHorizIcon')
     .click();
+
+  if (nameOfAction) {
+    await page.getByRole('menuitem', { name: nameOfAction }).click();
+  }
 };
