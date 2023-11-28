@@ -31,4 +31,5 @@ export type PreviewSectionProps = {
 
 export type PreviewContentTextProps = {
   text: string;
+  dataTestId?: string;
 };
