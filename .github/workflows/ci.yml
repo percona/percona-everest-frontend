@@ -190,6 +190,12 @@ jobs:
           cd FE
           cat apps/everest/.e2e/.auth/user.json
 
+      - name: Check file tree
+        if: always()
+        run: |
+          cd FE
+          ls -R .
+
       - name: Archive test results
         if: always()
         uses: actions/upload-artifact@v3
