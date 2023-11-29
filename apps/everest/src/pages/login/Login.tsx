@@ -88,6 +88,7 @@ const Login = () => {
                 />
                 <Button
                   disabled={loggingIn}
+                  data-testid="login-button"
                   onClick={handleLogin}
                   variant="contained"
                   fullWidth

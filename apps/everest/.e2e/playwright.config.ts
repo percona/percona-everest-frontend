@@ -63,9 +63,18 @@ export default defineConfig({
   projects: [
     {
       testDir: '.',
+      name: 'auth',
+      testMatch: /auth.setup\.ts/,
+    },
+    {
+      testDir: '.',
       name: 'setup',
       testMatch: /global.setup\.ts/,
       teardown: 'teardown',
+      use: {
+        storageState: '.auth/user.json',
+      },
+      dependencies: ['auth'],
     },
     {
       testDir: '.',
@@ -77,6 +86,7 @@ export default defineConfig({
       use: {
         browserName: 'chromium',
         channel: 'chrome',
+        storageState: '.auth/user.json',
       },
       dependencies: ['setup'],
     },

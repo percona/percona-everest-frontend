@@ -1,11 +1,17 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, chromium } from '@playwright/test';
 import { createDbClusterFn, deleteDbClusterFn } from '../utils/db-cluster';
+import { getTokenFromLocalStorage } from '../utils/localStorage';
 
 test.describe('DB Cluster Overview', async () => {
   const dbClusterName = 'cluster-overview-test';
 
   test.beforeAll(async ({ request }) => {
-    await createDbClusterFn(request, {
+    const browser = await chromium.launch();
+    const storageStateContext = await browser.newContext({
+      storageState: '.auth/user.json',
+    });
+    const token = await getTokenFromLocalStorage(storageStateContext);
+    await createDbClusterFn(token, request, {
       dbName: dbClusterName,
       dbType: 'mysql',
       numberOfNodes: '1',
@@ -27,7 +33,12 @@ test.describe('DB Cluster Overview', async () => {
   });
 
   test.afterAll(async ({ request }) => {
-    await deleteDbClusterFn(request, dbClusterName);
+    const browser = await chromium.launch();
+    const storageStateContext = await browser.newContext({
+      storageState: '.auth/user.json',
+    });
+    const token = await getTokenFromLocalStorage(storageStateContext);
+    await deleteDbClusterFn(token, request, dbClusterName);
   });
 
   test('Overview information', async ({ page }) => {

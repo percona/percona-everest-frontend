@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { expect, test } from '@playwright/test';
+import { chromium, expect, test } from '@playwright/test';
 import {
   createDbClusterFn,
   deleteDbClusterFn,
@@ -27,13 +27,19 @@ import {
   findDbAndClickRow,
 } from '../../../utils/db-clusters-list';
 import { DBClusterDetailsTabs } from '../../../../src/pages/db-cluster-details/db-cluster-details.types';
+import { getTokenFromLocalStorage } from '../../../utils/localStorage';
 
-test.describe.serial('DB Cluster Editing Backups Step', () => {
+test.describe.serial('DB Cluster Editing Backups Step', async () => {
   let scheduleName = 'db-wizard-schedule';
   const mySQLName = 'db-backup-mysql';
 
   test.beforeAll(async ({ request }) => {
-    await createDbClusterFn(request, {
+    const browser = await chromium.launch();
+    const storageStateContext = await browser.newContext({
+      storageState: '.auth/user.json',
+    });
+    const token = await getTokenFromLocalStorage(storageStateContext);
+    await createDbClusterFn(token, request, {
       dbName: mySQLName,
       dbType: 'mysql',
       numberOfNodes: '1',
@@ -41,7 +47,12 @@ test.describe.serial('DB Cluster Editing Backups Step', () => {
   });
 
   test.afterAll(async ({ request }) => {
-    await deleteDbClusterFn(request, mySQLName);
+    const browser = await chromium.launch();
+    const storageStateContext = await browser.newContext({
+      storageState: '.auth/user.json',
+    });
+    const token = await getTokenFromLocalStorage(storageStateContext);
+    await deleteDbClusterFn(token, request, mySQLName);
   });
 
   test('Add schedule to database with no schedule during editing in dbWizard', async ({

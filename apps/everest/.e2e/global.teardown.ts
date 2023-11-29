@@ -13,11 +13,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { test as setup } from '@playwright/test';
+import { test as setup, expect, chromium } from '@playwright/test';
+import { getTokenFromLocalStorage } from './utils/localStorage';
 
 setup('Delete backup storage', async ({ request }) => {
-  // TODO console.log('DELET BACKUP STORAGE');
-  await request.delete('/v1/backup-storages/ui-dev');
+  const browser = await chromium.launch();
+  const storageStateContext = await browser.newContext({
+    storageState: '.auth/user.json',
+  });
+  const token = await getTokenFromLocalStorage(storageStateContext);
+  const response = await request.delete('/v1/backup-storages/ui-dev', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  expect(response.ok()).toBeTruthy();
 });
 
 // setup('Delete monitoring instances', async ({ request }) => {

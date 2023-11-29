@@ -13,13 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { expect, test } from '@playwright/test';
+import { chromium, expect, test } from '@playwright/test';
 import { getEnginesVersions } from '../../../utils/database-engines';
 import { getClusterDetailedInfo } from '../../../utils/storage-class';
 import { advancedConfigurationStepCheck } from './steps/advanced-configuration-step';
 import { backupsStepCheck } from './steps/backups-step';
 import { basicInformationStepCheck } from './steps/basic-information-step';
 import { resourcesStepCheck } from './steps/resources-step';
+import { getTokenFromLocalStorage } from '../../../utils/localStorage';
 
 test.describe('DB Cluster creation', () => {
   let engineVersions = {
@@ -31,9 +32,17 @@ test.describe('DB Cluster creation', () => {
   // let monitoringInstancesList = [];
 
   test.beforeAll(async ({ request }) => {
-    engineVersions = await getEnginesVersions(request);
+    const browser = await chromium.launch();
+    const context = await browser.newContext({
+      storageState: '.auth/user.json',
+    });
+    const token = await getTokenFromLocalStorage(context);
+    engineVersions = await getEnginesVersions(token, request);
 
-    const { storageClassNames = [] } = await getClusterDetailedInfo(request);
+    const { storageClassNames = [] } = await getClusterDetailedInfo(
+      token,
+      request
+    );
     storageClasses = storageClassNames;
 
     // monitoringInstancesList = await getMonitoringInstanceList(request);
@@ -57,8 +66,9 @@ test.describe('DB Cluster creation', () => {
     // 3) check that the default parameters for MySQL are changed with parameters for the first available dbEngine
   });
 
-  test('Cluster creation', async ({ page, request }) => {
+  test('Cluster creation', async ({ page, request, context }) => {
     const clusterName = 'db-cluster-ui-test';
+    const token = await getTokenFromLocalStorage(context);
 
     expect(storageClasses.length).toBeGreaterThan(0);
 
@@ -105,7 +115,9 @@ test.describe('DB Cluster creation', () => {
       page.getByText('Awesome! Your database is being created!')
     ).toBeVisible();
 
-    const response = await request.get('/v1/database-clusters');
+    const response = await request.get('/v1/database-clusters', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
     expect(response.ok()).toBeTruthy();
     // TODO replace with correct payload typings from GET DB Clusters
@@ -116,7 +128,10 @@ test.describe('DB Cluster creation', () => {
     );
 
     const deleteResponse = await request.delete(
-      `/v1/database-clusters/${addedCluster?.metadata.name}`
+      `/v1/database-clusters/${addedCluster?.metadata.name}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
     );
     expect(deleteResponse.ok()).toBeTruthy();
 

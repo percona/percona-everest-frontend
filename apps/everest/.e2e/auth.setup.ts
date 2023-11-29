@@ -13,17 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { APIRequestContext, expect } from '@playwright/test';
+import { test as setup, expect } from '@playwright/test';
+import 'dotenv/config';
+const { EVEREST_K8_PASSWORD } = process.env;
+const authFile = '.auth/user.json';
 
-export const getClusterDetailedInfo = async (
-  token: string,
-  request: APIRequestContext
-) => {
-  const clusterInfo = await request.get('/v1/cluster-info', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  expect(clusterInfo.ok()).toBeTruthy();
-  return clusterInfo.json();
-};
+setup('Login', async ({ page }) => {
+  page.goto('/login');
+  await page.getByTestId('text-input-password').fill(EVEREST_K8_PASSWORD);
+  await page.getByTestId('login-button').click();
+  await expect(page.getByText('Create Database')).toBeVisible();
+  await page.context().storageState({ path: authFile });
+});
