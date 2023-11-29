@@ -19,6 +19,7 @@ const { EVEREST_K8_PASSWORD } = process.env;
 const authFile = 'user.json';
 
 setup('Login', async ({ page }) => {
+  console.log('PWD: ', EVEREST_K8_PASSWORD);
   page.goto('/login');
   await page.getByTestId('text-input-password').fill(EVEREST_K8_PASSWORD);
   await page.getByTestId('login-button').click();
