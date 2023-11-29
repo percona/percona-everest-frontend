@@ -25,8 +25,8 @@ import { getTokenFromLocalStorage } from '../../../utils/localStorage';
 test.describe('DB Cluster Editing Resources Step (Mongo)', () => {
   const mongoDBName = 'mongo-db';
 
-  test.beforeEach(async ({ context, request }) => {
-    const token = await getTokenFromLocalStorage(context);
+  test.beforeEach(async ({ request }) => {
+    const token = await getTokenFromLocalStorage();
     await createDbClusterFn(token, request, {
       dbName: mongoDBName,
       dbType: DbType.Mongo,
@@ -34,8 +34,8 @@ test.describe('DB Cluster Editing Resources Step (Mongo)', () => {
     });
   });
 
-  test.afterEach(async ({ context, request }) => {
-    const token = await getTokenFromLocalStorage(context);
+  test.afterEach(async ({ request }) => {
+    const token = await getTokenFromLocalStorage();
     await deleteDbClusterFn(token, request, mongoDBName);
   });
 

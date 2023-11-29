@@ -25,13 +25,7 @@ test.describe.serial('Schedules List', async () => {
   const mySQLName = 'schedule-mysql';
 
   test.beforeAll(async ({ request, browser }) => {
-    // const browser = await chromium.launch();
-    const storageStateContext = await browser.newContext({
-      storageState: '.auth/user.json',
-    });
-    const token = await getTokenFromLocalStorage(storageStateContext);
-    storageStateContext.close();
-    console.log('CREATE CLUSTER');
+    const token = await getTokenFromLocalStorage();
     await createDbClusterFn(token, request, {
       dbName: mySQLName,
       dbType: 'mysql',
@@ -43,19 +37,12 @@ test.describe.serial('Schedules List', async () => {
     });
   });
 
-  test.afterAll(async ({ request, browser }) => {
-    // const browser = await chromium.launch();
-    const storageStateContext = await browser.newContext({
-      storageState: '.auth/user.json',
-    });
-    const token = await getTokenFromLocalStorage(storageStateContext);
-    storageStateContext.close();
-    console.log('DELETE CLUSTER');
+  test.afterAll(async ({ request }) => {
+    const token = await getTokenFromLocalStorage();
     await deleteDbClusterFn(token, request, mySQLName);
   });
 
   test('Create schedule', async ({ page }) => {
-    console.log('TESTING CREATE SCHEDULE');
     await page.goto('/databases');
     const closeIcon = page.getByTestId('close-dialog-icon');
     if (closeIcon) {
@@ -113,7 +100,6 @@ test.describe.serial('Schedules List', async () => {
     expect(page.getByText('Every hour at minute 0')).toBeTruthy();
 
     expect(page.getByText('1 schedule')).toBeTruthy();
-    console.log('DONE TESTING CREATE SCHEDULE');
   });
 
   test('Creating schedule with duplicate name shows validation error', async ({
@@ -179,7 +165,6 @@ test.describe.serial('Schedules List', async () => {
   });
 
   test('Edit Schedule', async ({ page }) => {
-    console.log('TESTING EDIT SCHEDULE');
     await page.goto(`/databases/${mySQLName}/backups`);
     const closeIcon = page.getByTestId('close-dialog-icon');
     if (closeIcon) {
@@ -216,6 +201,5 @@ test.describe.serial('Schedules List', async () => {
     await page.getByTestId('form-dialog-save').click();
 
     expect(page.getByText('Weekly on Fridays at 6:08 PM')).toBeTruthy();
-    console.log('DONE TESTING EDIT SCHEDULE');
   });
 });

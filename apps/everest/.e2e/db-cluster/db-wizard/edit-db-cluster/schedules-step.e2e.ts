@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { chromium, expect, test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import {
   createDbClusterFn,
   deleteDbClusterFn,
@@ -34,11 +34,7 @@ test.describe.serial('DB Cluster Editing Backups Step', async () => {
   const mySQLName = 'db-backup-mysql';
 
   test.beforeAll(async ({ request }) => {
-    const browser = await chromium.launch();
-    const storageStateContext = await browser.newContext({
-      storageState: '.auth/user.json',
-    });
-    const token = await getTokenFromLocalStorage(storageStateContext);
+    const token = await getTokenFromLocalStorage();
     await createDbClusterFn(token, request, {
       dbName: mySQLName,
       dbType: 'mysql',
@@ -47,11 +43,7 @@ test.describe.serial('DB Cluster Editing Backups Step', async () => {
   });
 
   test.afterAll(async ({ request }) => {
-    const browser = await chromium.launch();
-    const storageStateContext = await browser.newContext({
-      storageState: '.auth/user.json',
-    });
-    const token = await getTokenFromLocalStorage(storageStateContext);
+    const token = await getTokenFromLocalStorage();
     await deleteDbClusterFn(token, request, mySQLName);
   });
 

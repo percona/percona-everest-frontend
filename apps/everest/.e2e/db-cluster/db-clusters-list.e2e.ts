@@ -28,8 +28,8 @@ test.describe('DB Cluster List', () => {
     }
   });
 
-  test('DB clusters Delete Action', async ({ context, page, request }) => {
-    const token = await getTokenFromLocalStorage(context);
+  test('DB clusters Delete Action', async ({ page, request }) => {
+    const token = await getTokenFromLocalStorage();
     await createDbClusterFn(token, request, {
       dbName: mySQLName,
       dbType: 'mysql',

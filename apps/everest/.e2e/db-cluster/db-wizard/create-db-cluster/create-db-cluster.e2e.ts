@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { chromium, expect, test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { getEnginesVersions } from '../../../utils/database-engines';
 import { getClusterDetailedInfo } from '../../../utils/storage-class';
 import { advancedConfigurationStepCheck } from './steps/advanced-configuration-step';
@@ -32,11 +32,7 @@ test.describe('DB Cluster creation', () => {
   // let monitoringInstancesList = [];
 
   test.beforeAll(async ({ request }) => {
-    const browser = await chromium.launch();
-    const context = await browser.newContext({
-      storageState: '.auth/user.json',
-    });
-    const token = await getTokenFromLocalStorage(context);
+    const token = await getTokenFromLocalStorage();
     engineVersions = await getEnginesVersions(token, request);
 
     const { storageClassNames = [] } = await getClusterDetailedInfo(
@@ -66,9 +62,9 @@ test.describe('DB Cluster creation', () => {
     // 3) check that the default parameters for MySQL are changed with parameters for the first available dbEngine
   });
 
-  test('Cluster creation', async ({ page, request, context }) => {
+  test('Cluster creation', async ({ page, request }) => {
     const clusterName = 'db-cluster-ui-test';
-    const token = await getTokenFromLocalStorage(context);
+    const token = await getTokenFromLocalStorage();
 
     expect(storageClasses.length).toBeGreaterThan(0);
 

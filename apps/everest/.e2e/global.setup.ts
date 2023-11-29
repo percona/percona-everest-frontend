@@ -24,8 +24,8 @@ const {
   EVEREST_LOCATION_URL,
 } = process.env;
 
-setup('Backup storage', async ({ request, context }) => {
-  const token = await getTokenFromLocalStorage(context);
+setup('Backup storage', async ({ request }) => {
+  const token = await getTokenFromLocalStorage();
   const response = await request.post('/v1/backup-storages/', {
     data: {
       name: 'ui-dev',
