@@ -36,18 +36,10 @@ const Login = () => {
       <Stack py={16} px={5} width="35%">
         <EverestMainIcon sx={{ fontSize: '110px', mb: 3 }} />
         <Typography variant="h4" mb={3}>
-          Welcome to Percona Everest, your ultimate destination for database
-          excellence!
+          {Messages.welcome}
         </Typography>
-        <Typography mb={3}>
-          With Percona Everest, you have the power to effortlessly deploy and
-          masterfully manage your databases. Say goodbye to database complexity
-          and hello to streamlined data operations.
-        </Typography>
-        <Typography>
-          Explore the possibilities, and let's conquer the database Everest
-          together!
-        </Typography>
+        <Typography mb={3}>{Messages.intro1}</Typography>
+        <Typography>{Messages.intro2}</Typography>
       </Stack>
       <Box
         width="65%"
