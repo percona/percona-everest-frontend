@@ -46,9 +46,7 @@ test.describe('DB Cluster Editing Resources Step (Mongo)', () => {
       await closeIcon.click();
     }
 
-    await findDbAndClickActions(page, mongoDBName);
-
-    await page.getByRole('menuitem', { name: 'Edit' }).click();
+    await findDbAndClickActions(page, mongoDBName, 'Edit');
 
     const nextStep = page.getByTestId('db-wizard-continue-button');
     // Go to Resources step
