@@ -27,5 +27,6 @@ setup('Login', async ({ page }) => {
   await page.context().storageState({ path: authFile });
 
   console.log('ORIGINs:');
+  console.log((await page.context().storageState()).origins.length);
   console.log((await page.context().storageState()).origins[0].localStorage);
 });
