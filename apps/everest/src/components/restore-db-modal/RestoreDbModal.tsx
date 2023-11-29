@@ -1,4 +1,4 @@
-import { MenuItem } from '@mui/material';
+import { MenuItem, Typography } from '@mui/material';
 import { LoadableChildren, RadioGroup, SelectInput } from '@percona/ui-lib';
 import { FormDialog } from 'components/form-dialog';
 import { useDbBackups } from 'hooks/api/backups/useBackups';
@@ -21,8 +21,8 @@ export const RestoreDbModal = () => {
     useDbClusterRestore(dbClusterName!);
   return (
     <FormDialog
+      size="XXXL"
       isOpen={isOpenRestoreDbModal}
-      subHead2={Messages.subHead}
       closeModal={closeRestoreDbModal}
       headerMessage={Messages.headerMessage}
       schema={schema}
@@ -42,13 +42,22 @@ export const RestoreDbModal = () => {
       submitMessage={Messages.restore}
     >
       <LoadableChildren loading={isLoading}>
+        <Typography variant="body1">{Messages.subHead}</Typography>
         <RadioGroup
           name={RestoreDbFields.backupType}
           radioGroupFieldProps={{
             sx: {
+              ml: '9px',
+              display: 'flex',
+              gap: '24px',
               '& label': {
                 display: 'flex',
+                gap: '10px',
                 alignItems: 'center',
+                padding: '9px',
+                '& span': {
+                  padding: '0px !important',
+                },
               },
             },
           }}
