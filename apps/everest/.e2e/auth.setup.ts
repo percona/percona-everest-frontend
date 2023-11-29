@@ -25,4 +25,7 @@ setup('Login', async ({ page }) => {
   await page.getByTestId('login-button').click();
   await expect(page.getByText('Create Database')).toBeVisible();
   await page.context().storageState({ path: authFile });
+
+  console.log('ORIGINs:');
+  console.log((await page.context().storageState()).origins[0].localStorage);
 });
