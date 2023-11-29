@@ -15,6 +15,7 @@
 import { defineConfig } from '@playwright/test';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { STORAGE_STATE_FILE } from './constants';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -72,7 +73,7 @@ export default defineConfig({
       testMatch: /global.setup\.ts/,
       teardown: 'teardown',
       use: {
-        storageState: '.auth/user.json',
+        storageState: STORAGE_STATE_FILE,
       },
       dependencies: ['auth'],
     },
@@ -86,7 +87,7 @@ export default defineConfig({
       use: {
         browserName: 'chromium',
         channel: 'chrome',
-        storageState: '.auth/user.json',
+        storageState: STORAGE_STATE_FILE,
       },
       dependencies: ['setup'],
     },

@@ -15,18 +15,14 @@
 
 import { test as setup, expect } from '@playwright/test';
 import 'dotenv/config';
+import { STORAGE_STATE_FILE } from './constants';
 const { EVEREST_K8_PASSWORD } = process.env;
-const authFile = '.auth/user.json';
 
 setup('Login', async ({ page }) => {
-  console.log('PWD: ', EVEREST_K8_PASSWORD);
   page.goto('/login');
+  console.log('STORAGE_STATE_FILE', STORAGE_STATE_FILE);
   await page.getByTestId('text-input-password').fill(EVEREST_K8_PASSWORD);
   await page.getByTestId('login-button').click();
   await expect(page.getByText('Create Database')).toBeVisible();
-  await page.context().storageState({ path: authFile });
-
-  console.log('ORIGINs:');
-  console.log((await page.context().storageState()).origins.length);
-  console.log((await page.context().storageState()).origins[0].localStorage);
+  await page.context().storageState({ path: STORAGE_STATE_FILE });
 });
