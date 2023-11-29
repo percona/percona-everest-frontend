@@ -48,6 +48,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       setApiBearerToken(password);
       setLoggingIn(false);
       localStorage.setItem('pwd', password);
+      console.log('PASSWORD SET: ', localStorage.getItem('pwd'));
       addApiAuthInterceptor();
     },
     onError: () => {
