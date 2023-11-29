@@ -156,7 +156,7 @@ jobs:
       - name: Change password
         run: |
           cd CLI
-          echo "EVEREST_K8_PASSWORD=$(go run cmd/everest/main.go password reset -n percona-everest --json | jq .password -r)" >> $GITHUB_ENV
+          echo "EVEREST_K8_PASSWORD=$(go run cmd/everest/main.go password reset --namespace percona-everest --json | jq .password -r)" >> $GITHUB_ENV
 
       - name: Expose Everest backend
         run: |
