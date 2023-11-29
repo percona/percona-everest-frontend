@@ -16,7 +16,7 @@
 import { test as setup, expect } from '@playwright/test';
 import 'dotenv/config';
 const { EVEREST_K8_PASSWORD } = process.env;
-const authFile = 'user.json';
+const authFile = '.auth/user.json';
 
 setup('Login', async ({ page }) => {
   console.log('PWD: ', EVEREST_K8_PASSWORD);
