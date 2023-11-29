@@ -72,7 +72,7 @@ export default defineConfig({
       testMatch: /global.setup\.ts/,
       teardown: 'teardown',
       use: {
-        storageState: '.auth/user.json',
+        storageState: 'user.json',
       },
       dependencies: ['auth'],
     },
@@ -86,7 +86,7 @@ export default defineConfig({
       use: {
         browserName: 'chromium',
         channel: 'chrome',
-        storageState: '.auth/user.json',
+        storageState: 'user.json',
       },
       dependencies: ['setup'],
     },
