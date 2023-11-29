@@ -65,6 +65,9 @@ export default defineConfig({
       testDir: '.',
       name: 'auth',
       testMatch: /auth.setup\.ts/,
+      use: {
+        storageState: '.auth/user.json',
+      },
     },
     {
       testDir: '.',
