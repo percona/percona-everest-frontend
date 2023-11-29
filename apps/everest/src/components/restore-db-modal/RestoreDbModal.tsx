@@ -29,9 +29,9 @@ export const RestoreDbModal = () => {
       submitting={restoringBackup}
       defaultValues={defaultValues}
       onSubmit={(data: FieldValues) => {
-        const backupName = data.backupList;
+        const backupNameStripped = data.backupList.split(' - ')[0];
         restoreBackup(
-          { backupName },
+          { backupName: backupNameStripped },
           {
             onSuccess() {
               closeRestoreDbModal();
@@ -78,11 +78,16 @@ export const RestoreDbModal = () => {
         >
           {backups
             ?.filter((value) => value.completed)
-            .map((value) => (
-              <MenuItem key={value.name} value={value.name}>
-                {`${value.name} - ${value.completed?.toLocaleString('en-US')}`}
-              </MenuItem>
-            ))}
+            .map((value) => {
+              const valueWithTime = `${
+                value.name
+              } - ${value.completed?.toLocaleString('en-US')}`;
+              return (
+                <MenuItem key={value.name} value={valueWithTime}>
+                  {valueWithTime}
+                </MenuItem>
+              );
+            })}
         </SelectInput>
       </LoadableChildren>
     </FormDialog>
