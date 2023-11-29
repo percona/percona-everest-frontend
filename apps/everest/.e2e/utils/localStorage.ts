@@ -6,6 +6,7 @@ export const getTokenFromLocalStorage = async () => {
     storageState: 'user.json',
   });
   const origins = (await storageStateContext.storageState()).origins;
+  console.log(await storageStateContext.storageState());
   storageStateContext.close();
   return origins[0].localStorage.find((item) => item.name === 'pwd').value;
 };
