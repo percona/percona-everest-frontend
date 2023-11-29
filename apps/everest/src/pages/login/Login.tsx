@@ -11,13 +11,17 @@ import {
 import { Card, EverestMainIcon, TextInput, DialogTitle } from '@percona/ui-lib';
 import { AuthContext } from 'contexts/auth';
 import { useContext, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
 import { Messages } from './Login.messages';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { LoginFormType, loginSchema } from './Login.constants';
 
 const Login = () => {
-  const methods = useForm<{ password: string }>({
+  const methods = useForm<LoginFormType>({
+    mode: 'onChange',
     defaultValues: { password: '' },
+    resolver: zodResolver(loginSchema),
   });
   const [modalOpen, setModalOpen] = useState(false);
   const { login, loggingIn, authenticated } = useContext(AuthContext);
@@ -25,7 +29,8 @@ const Login = () => {
   const handleClick = () => setModalOpen(true);
   const handleClose = () => setModalOpen(false);
 
-  const handleLogin = () => login(methods.getValues('password'));
+  const handleLogin: SubmitHandler<LoginFormType> = ({ password }) =>
+    login(password);
 
   if (authenticated) {
     return <Navigate to="/" />;
@@ -68,25 +73,27 @@ const Login = () => {
                 {Messages.insertPassword}
               </Typography>
               <FormProvider {...methods}>
-                <TextInput
-                  textFieldProps={{
-                    type: 'password',
-                    label: 'Password',
-                    fullWidth: true,
-                    sx: { mb: 2 },
-                    disabled: loggingIn,
-                  }}
-                  name="password"
-                />
-                <Button
-                  disabled={loggingIn}
-                  data-testid="login-button"
-                  onClick={handleLogin}
-                  variant="contained"
-                  fullWidth
-                >
-                  {Messages.login}
-                </Button>
+                <form onSubmit={methods.handleSubmit(handleLogin)}>
+                  <TextInput
+                    textFieldProps={{
+                      type: 'password',
+                      label: 'Password',
+                      fullWidth: true,
+                      sx: { mb: 2 },
+                      disabled: loggingIn,
+                    }}
+                    name="password"
+                  />
+                  <Button
+                    onClick={methods.handleSubmit(handleLogin)}
+                    disabled={loggingIn}
+                    data-testid="login-button"
+                    variant="contained"
+                    fullWidth
+                  >
+                    {Messages.login}
+                  </Button>
+                </form>
               </FormProvider>
               <Typography
                 variant="caption"
