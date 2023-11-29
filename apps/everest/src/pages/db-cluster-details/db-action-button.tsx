@@ -47,6 +47,7 @@ export const DbActionButton = () => {
     <Box>
       <Button
         id="actions-button"
+        data-testid="actions-button"
         aria-controls={isOpen ? 'actions-button-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={isOpen ? 'true' : undefined}
@@ -96,7 +97,7 @@ export const DbActionButton = () => {
             <RestartAltIcon /> {Messages.menuItems.restart}
           </MenuItem>
           <MenuItem
-            data-testid={`${dbClusterName}-delete`}
+            data-testid={`${dbClusterName}-restore`}
             key={3}
             onClick={() => {
               openRestoreDbModal(dbClusterName!);

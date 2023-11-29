@@ -171,6 +171,7 @@ export const DbClusterView = () => {
             </MenuItem>,
             <MenuItem
               key={3}
+              data-testid={`${row.original?.databaseName}-restore`}
               onClick={() => {
                 openRestoreDbModal(row.original.databaseName);
                 closeMenu();

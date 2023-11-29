@@ -5,9 +5,19 @@ export enum RestoreDbFields {
   backupList = 'backupList',
 }
 
+export enum BackuptypeValues {
+  fromBackup = 'fromBackup',
+  fromPitr = 'fromPITR',
+}
+
 export const schema = z.object({
-  [RestoreDbFields.backupType]: z.string(),
-  [RestoreDbFields.backupList]: z.string(),
+  [RestoreDbFields.backupType]: z.nativeEnum(BackuptypeValues),
+  [RestoreDbFields.backupList]: z.string().min(1),
 });
+
+export const defaultValues = {
+  [RestoreDbFields.backupType]: BackuptypeValues.fromBackup,
+  [RestoreDbFields.backupList]: '',
+};
 
 export type ScheduleFormData = z.infer<typeof schema>;

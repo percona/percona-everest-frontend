@@ -6,7 +6,12 @@ import { useDbClusterRestore } from 'hooks/api/restores/useDbClusterRestore';
 import { FieldValues } from 'react-hook-form';
 import { useBackupsStore } from 'stores/useBackupsStore';
 import { Messages } from './restoreDbModal.messages';
-import { RestoreDbFields, schema } from './restoreDbModal.schema';
+import {
+  BackuptypeValues,
+  RestoreDbFields,
+  defaultValues,
+  schema,
+} from './restoreDbModal.schema';
 
 export const RestoreDbModal = () => {
   const { isOpenRestoreDbModal, dbClusterName, closeRestoreDbModal } =
@@ -22,6 +27,7 @@ export const RestoreDbModal = () => {
       headerMessage={Messages.headerMessage}
       schema={schema}
       submitting={restoringBackup}
+      defaultValues={defaultValues}
       onSubmit={(data: FieldValues) => {
         const backupName = data.backupList;
         restoreBackup(
@@ -47,10 +53,10 @@ export const RestoreDbModal = () => {
             },
           }}
           options={[
-            { label: Messages.fromBackup, value: 'fromBackup' },
+            { label: Messages.fromBackup, value: BackuptypeValues.fromBackup },
             {
               label: Messages.fromPitr,
-              value: 'pitr',
+              value: BackuptypeValues.fromPitr,
               disabled: true,
             },
           ]}
@@ -59,6 +65,14 @@ export const RestoreDbModal = () => {
           name={RestoreDbFields.backupList}
           label={Messages.selectBackup}
           selectFieldProps={{
+            displayEmpty: true,
+            renderValue(value) {
+              const stringValue = value as string;
+              if (value === '') {
+                return <span>{Messages.emptyValue}</span>;
+              }
+              return <span>{stringValue}</span>;
+            },
             sx: { minWidth: '80px' },
           }}
         >
@@ -66,7 +80,7 @@ export const RestoreDbModal = () => {
             ?.filter((value) => value.completed)
             .map((value) => (
               <MenuItem key={value.name} value={value.name}>
-                {`${value.name} ${value.completed}`}
+                {`${value.name} - ${value.completed?.toLocaleString('en-US')}`}
               </MenuItem>
             ))}
         </SelectInput>
