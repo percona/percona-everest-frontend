@@ -2,11 +2,11 @@ import { PreviewSectionFive } from './section-five';
 import { AdvancedConfigurationsPreviewSection } from './advanced-configurations-section';
 import { PreviewSectionOne } from './section-one';
 import { BackupsPreviewSection } from './backups-section';
-import { PreviewSectionTwo } from './section-two';
+import { ResourcesPreviewSection } from './resources-section.tsx';
 
 export {
   PreviewSectionOne,
-  PreviewSectionTwo,
+  ResourcesPreviewSection,
   BackupsPreviewSection,
   AdvancedConfigurationsPreviewSection,
   PreviewSectionFive,

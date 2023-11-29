@@ -1,7 +1,7 @@
 import { PreviewContentText } from '../preview-section';
 import { SectionProps } from './section.types';
 
-export const PreviewSectionTwo = ({
+export const ResourcesPreviewSection = ({
   numberOfNodes,
   cpu,
   disk,

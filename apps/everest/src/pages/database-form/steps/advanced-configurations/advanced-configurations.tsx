@@ -13,13 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { FormGroup, Typography, Stack } from '@mui/material';
+import { FormGroup, Stack } from '@mui/material';
 import { SwitchInput, TextInput, TextArray } from '@percona/ui-lib';
 import { useFormContext } from 'react-hook-form';
 import { Messages } from './advanced-configurations.messages';
 import { getParamsPlaceholderFromDbType } from './advanced-configurations.utils';
 
 import { DbWizardFormFields } from '../../database-form.types';
+import { StepHeader } from '../step-header/step-header.tsx';
 
 export const AdvancedConfigurations = () => {
   const methods = useFormContext();
@@ -31,7 +32,7 @@ export const AdvancedConfigurations = () => {
 
   return (
     <>
-      <Typography variant="h5">{Messages.advanced}</Typography>
+      <StepHeader pageTitle={Messages.advanced} />
       <FormGroup sx={{ mt: 2 }}>
         <SwitchInput
           label={Messages.enableExternalAccess.title}

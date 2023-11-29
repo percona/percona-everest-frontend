@@ -1,4 +1,4 @@
-import { Box, FormGroup, Typography } from '@mui/material';
+import { Box, FormGroup } from '@mui/material';
 import { ToggleButtonGroupInput, ToggleCard } from '@percona/ui-lib';
 import { DbType } from '@percona/types';
 import { useEffect } from 'react';
@@ -8,13 +8,14 @@ import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
 import { DbWizardFormFields } from '../../database-form.types';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { ResourceInput } from './resource-input/resource-input';
-import { DEFAULT_SIZES } from './second-step.const';
-import { Messages } from './second-step.messages';
-import { ResourceSize } from './second-step.types';
-import { humanizeResourceSizeMap } from './second-step.utils';
+import { DEFAULT_SIZES } from './resources-step.const';
+import { Messages } from './resources-step.messages.ts';
+import { ResourceSize } from './resources-step.types';
+import { humanizeResourceSizeMap } from './resources-step.utils.ts';
 import { NODES_DB_TYPE_MAP } from '../../database-form.constants';
+import { StepHeader } from '../step-header/step-header.tsx';
 
-export const SecondStep = () => {
+export const ResourcesStep = () => {
   const { watch, setValue, setError, clearErrors } = useFormContext();
   const mode = useDatabasePageMode();
   const { data: resourcesInfo, isFetching: resourcesInfoLoading } =
@@ -120,8 +121,10 @@ export const SecondStep = () => {
 
   return (
     <>
-      <Typography variant="h5">{Messages.pageTitle}</Typography>
-      <Typography variant="subtitle2">{Messages.pageDescription}</Typography>
+      <StepHeader
+        pageTitle={Messages.pageTitle}
+        pageDescription={Messages.pageDescription}
+      />
       <FormGroup sx={{ mt: 2 }}>
         <ToggleButtonGroupInput
           name={DbWizardFormFields.numberOfNodes}
