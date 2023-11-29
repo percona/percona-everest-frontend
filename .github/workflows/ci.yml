@@ -163,6 +163,11 @@ jobs:
           make init
           pnpm --filter "@percona/everest" dev &
 
+      - name: Install Chromium for Playwright
+        run: |
+          cd FE/apps/everest
+          npx playwright install chromium
+
       - name: Run integration tests
         env:
           EVEREST_LOCATION_BUCKET_NAME: '${{ secrets.EVEREST_LOCATION_BUCKET_NAME }}'
