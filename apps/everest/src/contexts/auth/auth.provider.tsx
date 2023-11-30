@@ -2,18 +2,19 @@ import { addApiAuthInterceptor, api, removeApiAuthInterceptor } from 'api/api';
 import { useVersion } from 'hooks/api/version/useVersion';
 import { ReactNode, useEffect, useState } from 'react';
 import AuthContext from './auth.context';
+import { UserAuthStatus } from './auth.context.types';
 
 const setApiBearerToken = (password: string) =>
   (api.defaults.headers.common['Authorization'] = `Bearer ${password}`);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [loggingIn, setLoggingIn] = useState(false);
+  const [authStatus, _setAuthStatus] = useState<UserAuthStatus>('unknown');
   const [apiCallEnabled, setApiCallEnabled] = useState(false);
-  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
   const [password, setPassword] = useState('');
+  const [redirect, setRedirect] = useState<string | null>(null);
 
   const login = (password: string) => {
-    setLoggingIn(true);
+    _setAuthStatus('loggingIn');
     setApiBearerToken(password);
     setPassword(password);
     // This will trigger the API call to "/version"
@@ -23,8 +24,16 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     localStorage.setItem('pwd', '');
     setApiBearerToken('');
-    setAuthenticated(false);
+    setRedirect(null);
+    _setAuthStatus('loggedOut');
     removeApiAuthInterceptor();
+  };
+
+  const setAuthStatus = (newStatus: UserAuthStatus) =>
+    _setAuthStatus(newStatus);
+
+  const setRedirectRoute = (route: string) => {
+    setRedirect(route);
   };
 
   useEffect(() => {
@@ -33,7 +42,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (savedPassword) {
       login(savedPassword);
     } else {
-      setAuthenticated(false);
+      _setAuthStatus('loggedOut');
     }
   }, []);
 
@@ -44,21 +53,28 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     retry: false,
     onSuccess: () => {
       setApiCallEnabled(false);
-      setAuthenticated(true);
+      _setAuthStatus('loggedIn');
       setApiBearerToken(password);
-      setLoggingIn(false);
       localStorage.setItem('pwd', password);
       addApiAuthInterceptor();
     },
     onError: () => {
-      setLoggingIn(false);
+      _setAuthStatus('loggedOut');
       setApiCallEnabled(false);
-      setAuthenticated(false);
     },
   });
 
   return (
-    <AuthContext.Provider value={{ login, logout, loggingIn, authenticated }}>
+    <AuthContext.Provider
+      value={{
+        login,
+        logout,
+        authStatus,
+        setAuthStatus,
+        redirectRoute: redirect,
+        setRedirectRoute,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

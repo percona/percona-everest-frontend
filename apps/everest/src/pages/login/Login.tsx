@@ -24,7 +24,7 @@ const Login = () => {
     resolver: zodResolver(loginSchema),
   });
   const [modalOpen, setModalOpen] = useState(false);
-  const { login, loggingIn, authenticated } = useContext(AuthContext);
+  const { login, authStatus, redirectRoute } = useContext(AuthContext);
 
   const handleClick = () => setModalOpen(true);
   const handleClose = () => setModalOpen(false);
@@ -32,8 +32,8 @@ const Login = () => {
   const handleLogin: SubmitHandler<LoginFormType> = ({ password }) =>
     login(password);
 
-  if (authenticated) {
-    return <Navigate to="/" />;
+  if (authStatus === 'loggedIn') {
+    return <Navigate to={redirectRoute ?? '/'} />;
   }
 
   return (
@@ -80,13 +80,13 @@ const Login = () => {
                       label: 'Password',
                       fullWidth: true,
                       sx: { mb: 2 },
-                      disabled: loggingIn,
+                      disabled: authStatus === 'loggingIn',
                     }}
                     name="password"
                   />
                   <Button
                     onClick={methods.handleSubmit(handleLogin)}
-                    disabled={loggingIn}
+                    disabled={authStatus === 'loggingIn'}
                     data-testid="login-button"
                     variant="contained"
                     fullWidth
@@ -107,7 +107,7 @@ const Login = () => {
                 onClick={handleClick}
                 variant="text"
                 sx={{ alignSelf: 'flex-start' }}
-                disabled={loggingIn}
+                disabled={authStatus === 'loggingIn'}
               >
                 {Messages.resetPassword}
               </Button>
