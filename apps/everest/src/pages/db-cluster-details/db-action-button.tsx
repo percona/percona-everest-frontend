@@ -13,7 +13,7 @@ import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
 import { Messages } from 'pages/databases/dbClusterView.messages';
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useBackupsStore } from 'stores/useBackupsStore';
+import { useMainStore } from 'stores/useMainStore';
 import { Messages as ClusterDetailsMessages } from './db-cluster-details.messages';
 export const DbActionButton = () => {
   const { dbClusterName } = useParams();
@@ -29,9 +29,7 @@ export const DbActionButton = () => {
     handleCloseDeleteDialog,
     isPaused,
   } = useDbActions();
-  const openRestoreDbModal = useBackupsStore(
-    (state) => state.openRestoreDbModal
-  );
+  const openRestoreDbModal = useMainStore((state) => state.openRestoreDbModal);
   const { isLoading: deletingCluster } = useDeleteDbCluster();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);

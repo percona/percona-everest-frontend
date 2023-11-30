@@ -4,7 +4,8 @@ import { FormDialog } from 'components/form-dialog';
 import { useDbBackups } from 'hooks/api/backups/useBackups';
 import { useDbClusterRestore } from 'hooks/api/restores/useDbClusterRestore';
 import { FieldValues } from 'react-hook-form';
-import { useBackupsStore } from 'stores/useBackupsStore';
+import { useMainStore } from 'stores/useMainStore';
+import { useShallow } from 'zustand/react/shallow';
 import { Messages } from './restoreDbModal.messages';
 import {
   BackuptypeValues,
@@ -14,8 +15,10 @@ import {
 } from './restoreDbModal.schema';
 
 export const RestoreDbModal = () => {
-  const { isOpenRestoreDbModal, dbClusterName, closeRestoreDbModal } =
-    useBackupsStore();
+  const [isOpenRestoreDbModal, dbClusterName] = useMainStore(
+    useShallow((state) => [state.isOpenRestoreDbModal, state.dbClusterName])
+  );
+  const { closeRestoreDbModal } = useMainStore();
   const { data: backups, isLoading } = useDbBackups(dbClusterName);
   const { mutate: restoreBackup, isLoading: restoringBackup } =
     useDbClusterRestore(dbClusterName!);

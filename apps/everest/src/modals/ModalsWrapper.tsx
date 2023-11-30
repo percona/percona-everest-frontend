@@ -1,8 +1,8 @@
 import { RestoreDbModal } from 'components/restore-db-modal/RestoreDbModal';
-import { useBackupsStore } from 'stores/useBackupsStore';
+import { useMainStore } from 'stores/useMainStore';
 
 export const ModalsWrapper = () => {
-  const isOpenRestoreDbModal = useBackupsStore(
+  const isOpenRestoreDbModal = useMainStore(
     (state) => state.isOpenRestoreDbModal
   );
   return <div>{isOpenRestoreDbModal && <RestoreDbModal />}</div>;

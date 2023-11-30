@@ -34,7 +34,7 @@ import { useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DbClusterStatus } from 'shared-types/dbCluster.types';
 import { DbEngineType } from 'shared-types/dbEngines.types';
-import { useBackupsStore } from 'stores/useBackupsStore';
+import { useMainStore } from 'stores/useMainStore';
 import { DB_CLUSTER_STATUS_TO_BASE_STATUS } from './DbClusterView.constants';
 import {
   beautifyDbClusterStatus,
@@ -45,9 +45,7 @@ import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
 
 export const DbClusterView = () => {
-  const openRestoreDbModal = useBackupsStore(
-    (state) => state.openRestoreDbModal
-  );
+  const openRestoreDbModal = useMainStore((state) => state.openRestoreDbModal);
   const { data: dbClusters = [], isLoading: dbClustersLoading } =
     useDbClusters();
   const tableData = useMemo(
