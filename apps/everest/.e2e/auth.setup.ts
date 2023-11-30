@@ -24,5 +24,16 @@ setup('Login', async ({ page }) => {
   await page.getByTestId('text-input-password').fill(EVEREST_K8_PASSWORD);
   await page.getByTestId('login-button').click();
   await expect(page.getByText('Create Database')).toBeVisible();
+
+  const origins = (await page.context().storageState()).origins;
+  expect(origins.length).toBeGreaterThan(0);
+  expect(
+    origins.find(
+      (origin) =>
+        !!origin.localStorage.find((storage) => storage.name === 'pwd')
+    )
+  ).not.toBeUndefined();
+
+  console.log((await page.context().storageState()).origins);
   await page.context().storageState({ path: STORAGE_STATE_FILE });
 });
