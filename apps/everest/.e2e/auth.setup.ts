@@ -20,7 +20,6 @@ const { EVEREST_K8_PASSWORD } = process.env;
 
 setup('Login', async ({ page }) => {
   page.goto('/login');
-  console.log('STORAGE_STATE_FILE', STORAGE_STATE_FILE);
   await page.getByTestId('text-input-password').fill(EVEREST_K8_PASSWORD);
   await page.getByTestId('login-button').click();
   await expect(page.getByText('Create Database')).toBeVisible();

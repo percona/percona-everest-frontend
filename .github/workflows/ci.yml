@@ -138,13 +138,6 @@ jobs:
           go version
           echo "GO_VERSION=$(go version)" >> $GITHUB_ENV
 
-      - name: Archive backend log
-        if: failure()
-        uses: actions/upload-artifact@v3
-        with:
-          name: everest-backend.log
-          path: BE/everest-backend.log
-
       - name: Create KIND cluster
         uses: helm/kind-action@v1.8.0
 
