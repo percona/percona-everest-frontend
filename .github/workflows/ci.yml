@@ -177,12 +177,6 @@ jobs:
           cd FE
           pnpm --filter "@percona/everest" e2e
 
-      - name: Log user.json
-        if: always()
-        run: |
-          cd FE
-          cat apps/everest/.e2e/.auth/user.json
-
       - name: Archive test results
         if: always()
         uses: actions/upload-artifact@v3
