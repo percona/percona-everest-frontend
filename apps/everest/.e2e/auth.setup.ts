@@ -14,7 +14,6 @@
 // limitations under the License.
 
 import { test as setup, expect } from '@playwright/test';
-import 'dotenv/config';
 import { STORAGE_STATE_FILE } from './constants';
 const { EVEREST_K8_PASSWORD } = process.env;
 
@@ -32,7 +31,5 @@ setup('Login', async ({ page }) => {
         !!origin.localStorage.find((storage) => storage.name === 'pwd')
     )
   ).not.toBeUndefined();
-
-  console.log((await page.context().storageState()).origins);
   await page.context().storageState({ path: STORAGE_STATE_FILE });
 });
