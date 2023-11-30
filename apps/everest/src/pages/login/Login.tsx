@@ -90,19 +90,14 @@ const Login = () => {
                     data-testid="login-button"
                     variant="contained"
                     fullWidth
+                    sx={{
+                      mb: 2,
+                    }}
                   >
                     {Messages.login}
                   </Button>
                 </form>
               </FormProvider>
-              <Typography
-                variant="caption"
-                color="text.secondary"
-                mt={4}
-                mb={1.5}
-              >
-                {Messages.ack}
-              </Typography>
               <Button
                 onClick={handleClick}
                 variant="text"

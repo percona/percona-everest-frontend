@@ -24,8 +24,6 @@ const AppBarUserIcon = () => {
     setAnchorEl(null);
   };
 
-  const handleLogout = () => logout();
-
   return (
     <>
       <IconButton
@@ -63,7 +61,7 @@ const AppBarUserIcon = () => {
             />
           </FormGroup>
         </MenuItem>
-        <MenuItem onClick={handleLogout}>Log out</MenuItem>
+        <MenuItem onClick={logout}>Log out</MenuItem>
       </Menu>
     </>
   );
