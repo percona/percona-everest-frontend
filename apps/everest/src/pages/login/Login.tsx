@@ -33,7 +33,7 @@ const Login = () => {
     login(password);
 
   if (authStatus === 'loggedIn') {
-    return <Navigate to={redirectRoute ?? '/'} />;
+    return <Navigate to={redirectRoute ?? '/'} replace />;
   }
 
   return (
