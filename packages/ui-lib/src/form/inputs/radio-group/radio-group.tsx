@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import LabeledContent from '../../../labeled-content';
-import { RadioGroupProps } from './radio.types';
+import { RadioGroupProps } from './radio-group.types';
 
 const RadioGroup = ({
   name,
@@ -29,14 +29,13 @@ const RadioGroup = ({
           name={`radio-group-${name}`}
           {...radioGroupFieldProps}
         >
-          {options.map((option, index) => (
+          {options.map((option) => (
             <FormControlLabel
               key={option.label}
-              value={option.label}
+              value={option.value}
               control={<Radio />}
               label={option.label}
               disabled={option.disabled}
-              checked={index === 0}
             />
           ))}
         </MuiRadioGroup>

@@ -24,8 +24,8 @@ export { default as AutoCompleteInput } from './form/inputs/auto-complete';
 export * from './form/inputs/select';
 export { default as SelectInput } from './form/inputs/select';
 
-export * from './form/inputs/radio';
-export { default as RadioGroup } from './form/inputs/radio';
+export * from './form/inputs/radio-group';
+export { default as RadioGroup } from './form/inputs/radio-group';
 
 export * from './form/inputs/switch';
 export { default as SwitchInput } from './form/inputs/switch';

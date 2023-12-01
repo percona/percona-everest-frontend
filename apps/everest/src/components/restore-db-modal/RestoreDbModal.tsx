@@ -78,7 +78,7 @@ export const RestoreDbModal = () => {
           label={Messages.selectBackup}
           selectFieldProps={{
             displayEmpty: true,
-            renderValue(value) {
+            renderValue: (value) => {
               const stringValue = value as string;
               if (value === '') {
                 return <span>{Messages.emptyValue}</span>;
