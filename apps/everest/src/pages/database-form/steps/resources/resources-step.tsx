@@ -176,10 +176,13 @@ export const ResourcesStep = () => {
             flexDirection: isMobile ? 'column' : 'row',
             justifyContent: 'center',
             marginTop: 4,
-            gap: isDesktop ? 4 : 2,
-            '& > * > *': {
-              width: '100%',
-            },
+                gap: isDesktop ? 4 : 2,
+                '& > *': {
+                  width: isMobile ? '100%' : '33%',
+                  '&> *': {
+                    width: '100%',
+                  }
+                }
           }}
         >
           <ResourceInput

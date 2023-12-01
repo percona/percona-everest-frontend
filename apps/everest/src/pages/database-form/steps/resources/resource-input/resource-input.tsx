@@ -48,7 +48,8 @@ export const ResourceInput = ({
               variant="body1"
               sx={{ whiteSpace: 'nowrap' }}
               color={theme.palette.text.secondary}
-            >{` = ${value * numberOfNodes} ${endSuffix}`}</Typography>
+              data-testid={`${name}-resource-sum`}
+            >{` = ${Number((value * numberOfNodes).toFixed(2))} ${endSuffix}`}</Typography>
           )}
         </Box>
       )}
