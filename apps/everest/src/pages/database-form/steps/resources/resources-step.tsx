@@ -21,7 +21,7 @@ export const ResourcesStep = () => {
   const { data: resourcesInfo, isFetching: resourcesInfoLoading } =
     useKubernetesClusterResourcesInfo();
 
-  const { isMobile } = useActiveBreakpoint();
+  const { isMobile, isDesktop } = useActiveBreakpoint();
   const checkResourceText = (
     value: string | number | undefined,
     units: string,
@@ -59,6 +59,7 @@ export const ResourcesStep = () => {
   const memory: number = watch(DbWizardFormFields.memory);
   const disk: number = watch(DbWizardFormFields.disk);
   const dbType: DbType = watch(DbWizardFormFields.dbType);
+  const numberOfNodes = watch(DbWizardFormFields.numberOfNodes);
 
   const cpuCapacityExceeded = resourcesInfo
     ? cpu * 1000 > resourcesInfo?.available.cpuMillis
@@ -173,11 +174,11 @@ export const ResourcesStep = () => {
           sx={{
             display: 'flex',
             flexDirection: isMobile ? 'column' : 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'center',
             marginTop: 4,
-            gap: isMobile ? 3 : 2,
-            '& > *': {
-              width: isMobile ? '100%' : '33%',
+            gap: isDesktop ? 4 : 2,
+            '& > * > *': {
+              width: '100%',
             },
           }}
         >
@@ -191,6 +192,7 @@ export const ResourcesStep = () => {
               cpuCapacityExceeded
             )}
             endSuffix="CPU"
+            numberOfNodes={numberOfNodes}
           />
           <ResourceInput
             name={DbWizardFormFields.memory}
@@ -202,6 +204,7 @@ export const ResourcesStep = () => {
               memoryCapacityExceeded
             )}
             endSuffix="GB"
+            numberOfNodes={numberOfNodes}
           />
           <ResourceInput
             name={DbWizardFormFields.disk}
@@ -213,6 +216,7 @@ export const ResourcesStep = () => {
               diskCapacityExceeded
             )}
             endSuffix="GB"
+            numberOfNodes={numberOfNodes}
           />
         </Box>
       </FormGroup>
