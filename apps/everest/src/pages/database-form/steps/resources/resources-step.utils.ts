@@ -17,6 +17,7 @@ import { ResourceSize } from './resources-step.types';
 import { DEFAULT_SIZES } from './resources-step.const';
 import { DbCluster } from 'shared-types/dbCluster.types';
 import { memoryParser } from 'utils/k8ResourceParser';
+import { Messages } from './resources-step.messages.ts';
 
 const humanizedResourceSizeMap: Record<ResourceSize, string> = {
   [ResourceSize.small]: 'Small',
@@ -65,4 +66,34 @@ export const matchFieldsValueToResourceSize = (
   return res !== -1
     ? (Object.keys(DEFAULT_SIZES)[res] as ResourceSize)
     : ResourceSize.custom;
+};
+
+export const checkResourceText = (
+  value: string | number | undefined,
+  units: string,
+  fieldLabel: string,
+  exceedFlag: boolean
+) => {
+  if (value) {
+    const parsedNumber = Number(value);
+
+    if (Number.isNaN(parsedNumber)) {
+      return '';
+    }
+
+    const processedValue =
+      fieldLabel === Messages.labels.cpu
+        ? parsedNumber / 1000
+        : parsedNumber / 10 ** 9;
+
+    if (exceedFlag) {
+      return Messages.alerts.resourcesCapacityExceeding(
+        fieldLabel,
+        processedValue,
+        units
+      );
+    }
+    return Messages.labels.estimated(processedValue, units);
+  }
+  return '';
 };
