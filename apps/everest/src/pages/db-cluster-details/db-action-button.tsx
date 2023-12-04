@@ -30,6 +30,9 @@ export const DbActionButton = () => {
     isPaused,
   } = useDbActions();
   const openRestoreDbModal = useMainStore((state) => state.openRestoreDbModal);
+  const openRestoreDbModalToNewCluster = useMainStore(
+    (state) => state.openRestoreDbModalToNewCluster
+  );
   const { isLoading: deletingCluster } = useDeleteDbCluster();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -110,6 +113,23 @@ export const DbActionButton = () => {
             }}
           >
             <KeyboardReturnIcon /> {Messages.menuItems.restoreFromBackup}
+          </MenuItem>
+          <MenuItem
+            data-testid={`${dbClusterName}-restore`}
+            key={3}
+            onClick={() => {
+              openRestoreDbModalToNewCluster(dbClusterName!);
+              closeMenu();
+            }}
+            sx={{
+              display: 'flex',
+              gap: 1,
+              alignItems: 'center',
+              px: 2,
+              py: '10px',
+            }}
+          >
+            <KeyboardReturnIcon /> New cluster
           </MenuItem>
           <MenuItem
             key={4}
