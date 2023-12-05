@@ -4,27 +4,11 @@ import { ThemeContextProvider, everestThemeOptions } from '@percona/design';
 import { NotistackMuiSnackbar } from '@percona/ui-lib';
 import { SnackbarProvider } from 'notistack';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import {
-  Navigate,
-  RouterProvider,
-  createBrowserRouter,
-} from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { AuthProvider } from 'contexts/auth';
 import { DrawerContextProvider } from 'contexts/drawer/drawer.context';
-import { Login } from 'pages/login';
-import ProtectedRoute from 'components/protected-route/ProtectedRoute';
-import { Main } from 'components/main/Main';
-import { DbClusterView } from 'pages/databases/DbClusterView';
-import { DatabasePage } from 'pages/database-form/database-form';
-import { DbClusterDetails } from 'pages/db-cluster-details/db-cluster-details';
-import { DBClusterDetailsTabs } from 'pages/db-cluster-details/db-cluster-details.types';
-import { ClusterOverview } from 'pages/db-cluster-details/cluster-overview/cluster-overview';
-import { Settings } from 'pages/settings/settings';
-import { SettingsTabs } from 'pages/settings/settings.types';
-import { StorageLocations } from 'pages/settings/storage-locations/storage-locations';
-import { NoMatch } from 'pages/404/NoMatch';
-import { Backups } from 'pages/db-cluster-details/backups/backups';
+import router from 'router';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,80 +17,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-
-const router = createBrowserRouter([
-  {
-    path: 'login',
-    element: <Login />,
-  },
-  {
-    path: '/',
-    element: (
-      <ProtectedRoute>
-        <Main />,
-      </ProtectedRoute>
-    ),
-    children: [
-      {
-        path: 'databases',
-        element: <DbClusterView />,
-      },
-      {
-        path: 'databases/new',
-        element: <DatabasePage />,
-      },
-      {
-        path: 'databases/edit',
-        element: <DatabasePage />,
-      },
-      {
-        path: 'databases/:dbClusterName',
-        element: <DbClusterDetails />,
-        children: [
-          {
-            index: true,
-            path: DBClusterDetailsTabs.backups,
-            element: <Backups />,
-          },
-          {
-            path: DBClusterDetailsTabs.overview,
-            element: <ClusterOverview />,
-          },
-        ],
-      },
-      {
-        index: true,
-        element: <Navigate to="/databases" replace />,
-      },
-      {
-        path: 'settings',
-        element: <Settings />,
-        children: [
-          // {
-          //   path: SettingsTabs.defaultConfigurations,
-          //   element: <DefaultConfigurations />,
-          // },
-          {
-            path: SettingsTabs.storageLocations,
-            element: <StorageLocations />,
-          },
-          // {
-          //   path: SettingsTabs.monitoringEndpoints,
-          //   element: <MonitoringEndpoints />,
-          // },
-          // {
-          //   path: SettingsTabs.k8sClusters,
-          //   element: <K8sClusters />,
-          // },
-        ],
-      },
-      {
-        path: '*',
-        element: <NoMatch />,
-      },
-    ],
-  },
-]);
 
 const App = () => (
   <ThemeContextProvider
