@@ -31,7 +31,7 @@ const ToggleCard = ({ children, sx, ...props }: ToggleCardProps) => {
               mb: 1,
             },
             [theme.breakpoints.up('sm')]: {
-              mr: 1,
+              mr: 0.5,
             },
           },
           '&:not(:first-of-type)': {
