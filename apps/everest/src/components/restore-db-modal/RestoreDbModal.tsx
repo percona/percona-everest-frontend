@@ -50,14 +50,14 @@ export const RestoreDbModal = () => {
           name={RestoreDbFields.backupType}
           radioGroupFieldProps={{
             sx: {
-              ml: '9px',
+              ml: 1,
               display: 'flex',
-              gap: '24px',
+              gap: 3,
               '& label': {
                 display: 'flex',
                 gap: '10px',
                 alignItems: 'center',
-                padding: '9px',
+                padding: 1,
                 '& span': {
                   padding: '0px !important',
                 },

@@ -15,7 +15,10 @@
 
 import { expect, test } from '@playwright/test';
 import { createDbClusterFn, deleteDbClusterFn } from '../utils/db-cluster';
-import { findDbAndClickRow } from '../utils/db-clusters-list';
+import {
+  findDbAndClickActions,
+  findDbAndClickRow,
+} from '../utils/db-clusters-list';
 
 test.describe('DB Cluster Restore', () => {
   const dbClusterName = 'mysql-test-ui-restore';
@@ -42,14 +45,7 @@ test.describe('DB Cluster Restore', () => {
   });
 
   test('DB cluster list restore action', async ({ page }) => {
-    const button = await page
-      .getByRole('row')
-      .filter({ hasText: dbClusterName })
-      .getByLabel('Row Actions');
-    await button.click();
-
-    const restoreButton = page.getByTestId(`${dbClusterName}-restore`);
-    await restoreButton.click();
+    await findDbAndClickActions(page, dbClusterName, 'Restore from a backup');
 
     await expect(page.getByText('Restore database')).toBeVisible();
     await page.getByTestId('close-dialog-icon').click();
@@ -57,7 +53,7 @@ test.describe('DB Cluster Restore', () => {
 
   test('DB cluster detail restore action', async ({ page }) => {
     await findDbAndClickRow(page, dbClusterName);
-    const actionButton = await page.getByTestId('actions-button');
+    const actionButton = page.getByTestId('actions-button');
     await actionButton.click();
 
     const restoreButton = page.getByTestId(`${dbClusterName}-restore`);
