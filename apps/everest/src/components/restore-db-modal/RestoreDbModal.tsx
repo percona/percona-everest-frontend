@@ -17,11 +17,11 @@ import {
 
 export const RestoreDbModal = () => {
   const navigate = useNavigate();
-  const [isOpenRestoreDbModal, dbClusterName, mode] = useMainStore(
+  const [isOpenRestoreDbModal, dbClusterName, isNewClusterMode] = useMainStore(
     useShallow((state) => [
       state.isOpenRestoreDbModal,
       state.dbClusterName,
-      state.mode,
+      state.isNewClusterMode,
     ])
   );
   const { closeRestoreDbModal } = useMainStore();
@@ -35,22 +35,17 @@ export const RestoreDbModal = () => {
         size="XXXL"
         isOpen={isOpenRestoreDbModal}
         closeModal={closeRestoreDbModal}
-        headerMessage={Messages.headerMessage}
+        headerMessage={
+          isNewClusterMode
+            ? Messages.headerMessageCreate
+            : Messages.headerMessage
+        }
         schema={schema}
         submitting={restoringBackup}
         defaultValues={defaultValues}
         onSubmit={(data: FieldValues) => {
           const backupNameStripped = data.backupList.split(' - ')[0];
-          if (mode === 'sameCluster') {
-            restoreBackup(
-              { backupName: backupNameStripped },
-              {
-                onSuccess() {
-                  closeRestoreDbModal();
-                },
-              }
-            );
-          } else {
+          if (isNewClusterMode) {
             closeRestoreDbModal();
             const selectedBackup = backups?.find(
               (backup) => backup.name === backupNameStripped
@@ -62,12 +57,23 @@ export const RestoreDbModal = () => {
                 backupStorageName: selectedBackup,
               },
             });
+          } else {
+            restoreBackup(
+              { backupName: backupNameStripped },
+              {
+                onSuccess() {
+                  closeRestoreDbModal();
+                },
+              }
+            );
           }
         }}
-        submitMessage={mode === 'newCluster' ? 'Create' : Messages.restore}
+        submitMessage={isNewClusterMode ? Messages.create : Messages.restore}
       >
         <LoadableChildren loading={isLoading}>
-          <Typography variant="body1">{Messages.subHead}</Typography>
+          <Typography variant="body1">
+            {isNewClusterMode ? Messages.subHeadCreate : Messages.subHead}
+          </Typography>
           <RadioGroup
             name={RestoreDbFields.backupType}
             radioGroupFieldProps={{

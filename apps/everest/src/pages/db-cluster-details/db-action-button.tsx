@@ -3,6 +3,7 @@ import {
   DeleteOutline,
   PauseCircleOutline,
 } from '@mui/icons-material';
+import AddIcon from '@mui/icons-material/Add';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
@@ -98,6 +99,23 @@ export const DbActionButton = () => {
             <RestartAltIcon /> {Messages.menuItems.restart}
           </MenuItem>
           <MenuItem
+            data-testid={`${dbClusterName}-restore-create`}
+            key={3}
+            onClick={() => {
+              openRestoreDbModalToNewCluster(dbClusterName!);
+              closeMenu();
+            }}
+            sx={{
+              display: 'flex',
+              gap: 1,
+              alignItems: 'center',
+              px: 2,
+              py: '10px',
+            }}
+          >
+            <AddIcon /> {Messages.menuItems.createNewDbFromBackup}
+          </MenuItem>
+          <MenuItem
             data-testid={`${dbClusterName}-restore`}
             key={3}
             onClick={() => {
@@ -113,23 +131,6 @@ export const DbActionButton = () => {
             }}
           >
             <KeyboardReturnIcon /> {Messages.menuItems.restoreFromBackup}
-          </MenuItem>
-          <MenuItem
-            data-testid={`${dbClusterName}-restore`}
-            key={3}
-            onClick={() => {
-              openRestoreDbModalToNewCluster(dbClusterName!);
-              closeMenu();
-            }}
-            sx={{
-              display: 'flex',
-              gap: 1,
-              alignItems: 'center',
-              px: 2,
-              py: '10px',
-            }}
-          >
-            <KeyboardReturnIcon /> New cluster
           </MenuItem>
           <MenuItem
             key={4}

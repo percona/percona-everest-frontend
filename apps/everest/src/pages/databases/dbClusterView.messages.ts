@@ -42,6 +42,7 @@ export const Messages = {
     suspend: 'Suspend',
     resume: 'Resume',
     restoreFromBackup: 'Restore from a backup',
+    createNewDbFromBackup: 'Create DB from a backup',
   },
   dbCluster: {
     noData: "You don't have any databases yet. Create one to get started.",

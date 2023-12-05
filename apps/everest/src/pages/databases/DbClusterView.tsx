@@ -46,6 +46,9 @@ import { ExpandedRow } from './expandedRow/ExpandedRow';
 
 export const DbClusterView = () => {
   const openRestoreDbModal = useMainStore((state) => state.openRestoreDbModal);
+  const openRestoreDbModalToNewCluster = useMainStore(
+    (state) => state.openRestoreDbModalToNewCluster
+  );
   const { data: dbClusters = [], isLoading: dbClustersLoading } =
     useDbClusters();
   const tableData = useMemo(
@@ -166,6 +169,23 @@ export const DbClusterView = () => {
               }}
             >
               <RestartAltIcon /> {Messages.menuItems.restart}
+            </MenuItem>,
+            <MenuItem
+              data-testid={`${row.original?.databaseName}-restore-create`}
+              key={3}
+              onClick={() => {
+                openRestoreDbModalToNewCluster(row.original.databaseName);
+                closeMenu();
+              }}
+              sx={{
+                display: 'flex',
+                gap: 1,
+                alignItems: 'center',
+                px: 2,
+                py: '10px',
+              }}
+            >
+              <AddIcon /> {Messages.menuItems.createNewDbFromBackup}
             </MenuItem>,
             <MenuItem
               key={3}

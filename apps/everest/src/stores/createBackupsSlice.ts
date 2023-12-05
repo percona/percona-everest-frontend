@@ -6,24 +6,24 @@ export interface BackupsSlice {
   openRestoreDbModalToNewCluster: (dbClusterName: string) => void;
   closeRestoreDbModal: () => void;
   dbClusterName: string;
-  mode: 'sameCluster' | 'newCluster';
+  isNewClusterMode: boolean;
 }
 
 export const createBackupsSlice: StateCreator<BackupsSlice> = (set) => ({
   isOpenRestoreDbModal: false,
   dbClusterName: '',
-  mode: 'sameCluster',
+  isNewClusterMode: false,
   openRestoreDbModalToNewCluster: (dbClusterName) =>
     set({
       dbClusterName: dbClusterName,
       isOpenRestoreDbModal: true,
-      mode: 'newCluster',
+      isNewClusterMode: true,
     }),
   openRestoreDbModal: (dbClusterName) =>
     set({
       dbClusterName: dbClusterName,
       isOpenRestoreDbModal: true,
-      mode: 'sameCluster',
+      isNewClusterMode: false,
     }),
   closeRestoreDbModal: () =>
     set({ isOpenRestoreDbModal: false, dbClusterName: '' }),
