@@ -16,17 +16,33 @@
 import { test as setup, expect } from '@playwright/test';
 import { getTokenFromLocalStorage } from './utils/localStorage';
 
-setup('Delete backup storage', async ({ request }) => {
-  const token = await getTokenFromLocalStorage();
-  const response = await request.delete('/v1/backup-storages/ui-dev', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+setup.describe.serial('Teardown', () => {
+  setup('Delete backup storage', async ({ request }) => {
+    const token = await getTokenFromLocalStorage();
+    const response = await request.delete('/v1/backup-storages/ui-dev', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    expect(response.ok()).toBeTruthy();
   });
-  expect(response.ok()).toBeTruthy();
-});
 
-// setup('Delete monitoring instances', async ({ request }) => {
-//   await deleteMonitoringInstance(request, testMonitoringName);
-//   await deleteMonitoringInstance(request, testMonitoringName2);
-// });
+  // setup('Delete monitoring instances', async ({ request }) => {
+  //   await deleteMonitoringInstance(request, testMonitoringName);
+  //   await deleteMonitoringInstance(request, testMonitoringName2);
+  // });
+
+  setup('Logout', async ({ page }) => {
+    await page.goto('/');
+
+    const closeIcon = page.getByTestId('close-dialog-icon');
+    if (closeIcon) {
+      await closeIcon.click();
+    }
+
+    await page.getByTestId('user-appbar-button').click();
+    await page.getByRole('menuitem').filter({ hasText: 'Log out' }).click();
+
+    await expect(page.getByTestId('login-button')).toBeVisible();
+  });
+});

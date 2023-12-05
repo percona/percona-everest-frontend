@@ -81,6 +81,9 @@ export default defineConfig({
     {
       testDir: '.',
       name: 'teardown',
+      use: {
+        storageState: STORAGE_STATE_FILE,
+      },
       testMatch: /global\.teardown\.ts/,
     },
     {
