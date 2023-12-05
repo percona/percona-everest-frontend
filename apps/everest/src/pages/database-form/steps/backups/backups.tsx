@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Alert, Box, Typography } from '@mui/material';
+import { Alert, Box } from '@mui/material';
 import { SwitchInput } from '@percona/ui-lib';
 import { useFormContext } from 'react-hook-form';
 import { DbWizardFormFields } from '../../database-form.types';
@@ -23,6 +23,7 @@ import { useDatabasePageDefaultValues } from '../../useDatabaseFormDefaultValues
 import { useDatabasePageMode } from '../../useDatabasePageMode.ts';
 import { DbType } from '@percona/types';
 import { useEffect } from 'react';
+import { StepHeader } from '../step-header/step-header.tsx';
 
 export const Backups = () => {
   const mode = useDatabasePageMode();
@@ -55,8 +56,10 @@ export const Backups = () => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <Typography variant="h5">{Messages.backups}</Typography>
-      <Typography variant="subtitle2">{Messages.captionBackups}</Typography>
+      <StepHeader
+        pageTitle={Messages.backups}
+        pageDescription={Messages.captionBackups}
+      />
       <SwitchInput
         control={control}
         label={Messages.enableBackups}

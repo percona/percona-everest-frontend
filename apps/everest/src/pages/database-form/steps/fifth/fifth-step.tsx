@@ -1,4 +1,4 @@
-import { Alert, FormGroup, Typography } from '@mui/material';
+import { Alert, FormGroup } from '@mui/material';
 import { SwitchInput, AutoCompleteInput } from '@percona/ui-lib';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -6,6 +6,7 @@ import { DbWizardFormFields } from '../../database-form.types';
 import { Messages } from './fifth-step.messages';
 import { useMonitoringInstancesList } from 'hooks/api/monitoring/useMonitoringInstancesList';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
+import { StepHeader } from '../step-header/step-header.tsx';
 
 export const FifthStep = () => {
   const { watch, getValues } = useFormContext();
@@ -53,8 +54,10 @@ export const FifthStep = () => {
 
   return (
     <>
-      <Typography variant="h5">{Messages.monitoring}</Typography>
-      <Typography variant="subtitle2">{Messages.caption}</Typography>
+      <StepHeader
+        pageTitle={Messages.monitoring}
+        pageDescription={Messages.caption}
+      />
       {!monitoringInstances?.length && (
         <Alert severity="info" sx={{ mt: 1 }} data-testid="monitoring-warning">
           Database monitoring is currently disabled because monitoring endpoints
