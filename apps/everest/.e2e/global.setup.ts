@@ -38,6 +38,12 @@ setup('Backup storage', async ({ request }) => {
   });
 });
 
+setup('Close modal permanently', async ({ page }) => {
+  await page.goto('/');
+  await page.getByTestId('close-dialog-icon').click();
+  await page.context().storageState({ path: 'user.json' });
+});
+
 // setup('Monitoring setup', async ({ request }) => {
 //   await createMonitoringInstance(request, testMonitoringName);
 //   await createMonitoringInstance(request, testMonitoringName2);

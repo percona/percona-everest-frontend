@@ -41,11 +41,6 @@ test.describe.serial('Schedules List', () => {
 
   test('Create schedule', async ({ page }) => {
     await page.goto('/databases');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-
     await findDbAndClickRow(page, mySQLName);
 
     const backupsTab = await page.getByTestId(DBClusterDetailsTabs.backups);
@@ -103,11 +98,6 @@ test.describe.serial('Schedules List', () => {
     page,
   }) => {
     await page.goto(`/databases/${mySQLName}/backups`);
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-
     await clickCreateSchedule(page);
 
     const createDialog = await page.getByRole('dialog');
@@ -143,11 +133,6 @@ test.describe.serial('Schedules List', () => {
 
   test('Delete Schedule', async ({ page }) => {
     await page.goto(`/databases/${mySQLName}/backups`);
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-
     const scheduledBackupsAccordion =
       await page.getByTestId('scheduled-backups');
     await scheduledBackupsAccordion.click();
@@ -163,11 +148,6 @@ test.describe.serial('Schedules List', () => {
 
   test('Edit Schedule', async ({ page }) => {
     await page.goto(`/databases/${mySQLName}/backups`);
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-
     const scheduledBackupsAccordion =
       await page.getByTestId('scheduled-backups');
     await scheduledBackupsAccordion.click();

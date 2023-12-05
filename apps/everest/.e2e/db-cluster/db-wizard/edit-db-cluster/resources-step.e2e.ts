@@ -38,11 +38,6 @@ test.describe('DB Cluster Editing Resources Step (Mongo)', () => {
 
   test('Show the correct number of nodes during editing', async ({ page }) => {
     await page.goto('/databases');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-
     await findDbAndClickActions(page, mongoDBName, 'Edit');
 
     const nextStep = page.getByTestId('db-wizard-continue-button');

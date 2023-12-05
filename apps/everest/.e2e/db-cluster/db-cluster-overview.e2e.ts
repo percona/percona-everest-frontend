@@ -23,7 +23,6 @@ test.describe('DB Cluster Overview', async () => {
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/databases');
-    await page.getByTestId('close-dialog-icon').click();
   });
 
   test.afterAll(async ({ request }) => {

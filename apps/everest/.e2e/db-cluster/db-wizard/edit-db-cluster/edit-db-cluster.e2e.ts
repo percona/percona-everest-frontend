@@ -36,10 +36,6 @@ test.skip('DB Cluster creation', () => {
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/databases');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
   });
 
   test('Editing', async () => {

@@ -21,10 +21,6 @@ test.describe('DB Cluster List', () => {
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/databases');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
   });
 
   test('DB clusters Delete Action', async ({ page, request }) => {

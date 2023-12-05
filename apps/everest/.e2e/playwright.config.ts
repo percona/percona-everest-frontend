@@ -77,6 +77,7 @@ export default defineConfig({
       use: {
         browserName: 'chromium',
         channel: 'chrome',
+        storageState: 'user.json',
       },
       dependencies: ['setup'],
     },
