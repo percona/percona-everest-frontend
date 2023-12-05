@@ -35,6 +35,7 @@ import { useKubernetesClusterInfo } from 'hooks/api/kubernetesClusters/useKubern
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { DEFAULT_NODES } from './first-steps.constants';
 import { NODES_DB_TYPE_MAP } from '../../database-form.constants';
+import { StepHeader } from '../step-header/step-header.tsx';
 
 export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
   const { watch, setValue, getFieldState, getValues } = useFormContext();
@@ -170,8 +171,10 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
 
   return (
     <>
-      <Typography variant="h5">{Messages.pageTitle}</Typography>
-      <Typography variant="subtitle2">{Messages.pageDescription}</Typography>
+      <StepHeader
+        pageTitle={Messages.pageTitle}
+        pageDescription={Messages.pageDescription}
+      />
       <FormGroup sx={{ mt: 2 }}>
         {/* @ts-ignore */}
         <Typography variant="sectionHeading" sx={{ mt: 1, mb: 0.5 }}>
