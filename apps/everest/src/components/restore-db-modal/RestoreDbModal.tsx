@@ -1,15 +1,12 @@
 import { MenuItem, Typography } from '@mui/material';
 import { LoadableChildren, RadioGroup, SelectInput } from '@percona/ui-lib';
-import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
 import { FormDialog } from 'components/form-dialog';
 import { useDbBackups } from 'hooks/api/backups/useBackups';
 import { useDbClusterRestore } from 'hooks/api/restores/useDbClusterRestore';
-import { useState } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useMainStore } from 'stores/useMainStore';
 import { useShallow } from 'zustand/react/shallow';
-import { Messages as BackupListMessages } from '../../pages/db-cluster-details/backups/backups-list/backups-list.messages';
 import { Messages } from './restoreDbModal.messages';
 import {
   BackuptypeValues,
@@ -20,8 +17,6 @@ import {
 
 export const RestoreDbModal = () => {
   const navigate = useNavigate();
-  const [selectedBackup, setSelectedBackup] = useState('');
-  const [selectedBackupStorage, setSelectedBackupStorage] = useState('');
   const [isOpenRestoreDbModal, dbClusterName, mode] = useMainStore(
     useShallow((state) => [
       state.isOpenRestoreDbModal,
@@ -33,33 +28,7 @@ export const RestoreDbModal = () => {
   const { data: backups, isLoading } = useDbBackups(dbClusterName);
   const { mutate: restoreBackup, isLoading: restoringBackup } =
     useDbClusterRestore(dbClusterName!);
-  const [openRestoreToNewDbDialog, setOpenRestoreToNewDbDialog] =
-    useState(false);
 
-  const handleRestoreToNewDbBackup = (backupName: string) => {
-    setSelectedBackup(backupName);
-    const selectedBackup = backups?.find(
-      (backup) => backup.name === backupName
-    );
-    setSelectedBackupStorage(selectedBackup?.backupStorageName!);
-    setOpenRestoreToNewDbDialog(true);
-  };
-
-  const handleCloseRestoreToNewDbDialog = () => {
-    setOpenRestoreToNewDbDialog(false);
-  };
-
-  const handleConfirmRestoreToNewDb = (backupName: string) => {
-    closeRestoreDbModal();
-    handleCloseRestoreToNewDbDialog();
-    navigate('/databases/new', {
-      state: {
-        selectedDbCluster: dbClusterName!,
-        backupName,
-        backupStorageName: selectedBackupStorage,
-      },
-    });
-  };
   return (
     <>
       <FormDialog
@@ -82,10 +51,20 @@ export const RestoreDbModal = () => {
               }
             );
           } else {
-            handleRestoreToNewDbBackup(backupNameStripped);
+            closeRestoreDbModal();
+            const selectedBackup = backups?.find(
+              (backup) => backup.name === backupNameStripped
+            );
+            navigate('/databases/new', {
+              state: {
+                selectedDbCluster: dbClusterName!,
+                backupName: backupNameStripped,
+                backupStorageName: selectedBackup,
+              },
+            });
           }
         }}
-        submitMessage={Messages.restore}
+        submitMessage={mode === 'newCluster' ? 'Create' : Messages.restore}
       >
         <LoadableChildren loading={isLoading}>
           <Typography variant="body1">{Messages.subHead}</Typography>
@@ -149,18 +128,6 @@ export const RestoreDbModal = () => {
           </SelectInput>
         </LoadableChildren>
       </FormDialog>
-      {openRestoreToNewDbDialog && (
-        <ConfirmDialog
-          isOpen={openRestoreToNewDbDialog}
-          selectedId={selectedBackup}
-          closeModal={handleCloseRestoreToNewDbDialog}
-          headerMessage={BackupListMessages.restoreDialogToNewDb.header}
-          handleConfirm={handleConfirmRestoreToNewDb}
-          submitMessage={BackupListMessages.restoreDialogToNewDb.submitButton}
-        >
-          {BackupListMessages.restoreDialogToNewDb.content}
-        </ConfirmDialog>
-      )}
     </>
   );
 };
