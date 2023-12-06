@@ -50,4 +50,11 @@ test.describe('DB Cluster Editing Resources Step (Mongo)', () => {
       .filter({ hasText: '5 nodes' });
     expect(a).toBeTruthy();
   });
+
+  test('Disable disk resize during edition', async ({ page }) => {
+    await page.goto('/databases');
+    await findDbAndClickActions(page, mongoDBName, 'Edit');
+    await page.getByTestId('button-edit-preview-resources').click();
+    await expect(page.getByTestId('text-input-disk')).toBeDisabled();
+  });
 });
