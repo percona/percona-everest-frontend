@@ -88,7 +88,6 @@ export const Main = () => {
             closeDialog={handleCloseWelcomeDialog}
           />
         )}
-        <ModalsWrapper />
       </Box>
     </Box>
   );

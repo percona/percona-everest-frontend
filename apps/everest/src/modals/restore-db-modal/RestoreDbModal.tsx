@@ -13,20 +13,23 @@ import {
   defaultValues,
   schema,
 } from './restoreDbModal.schema';
+import { FormDialogProps } from 'components/form-dialog/form-dialog.types';
 
-export const RestoreDbModal = () => {
-  const [isOpenRestoreDbModal, dbClusterName] = useMainStore(
-    useShallow((state) => [state.isOpenRestoreDbModal, state.dbClusterName])
+const RestoreDbModal = <T extends FieldValues>({
+  closeModal,
+  isOpen,
+}: Pick<FormDialogProps<T>, 'closeModal' | 'isOpen'>) => {
+  const [dbClusterName] = useMainStore(
+    useShallow((state) => [state.dbClusterName])
   );
-  const { closeRestoreDbModal } = useMainStore();
   const { data: backups, isLoading } = useDbBackups(dbClusterName);
   const { mutate: restoreBackup, isLoading: restoringBackup } =
     useDbClusterRestore(dbClusterName!);
   return (
     <FormDialog
       size="XXXL"
-      isOpen={isOpenRestoreDbModal}
-      closeModal={closeRestoreDbModal}
+      isOpen={isOpen}
+      closeModal={closeModal}
       headerMessage={Messages.headerMessage}
       schema={schema}
       submitting={restoringBackup}
@@ -37,7 +40,7 @@ export const RestoreDbModal = () => {
           { backupName: backupNameStripped },
           {
             onSuccess() {
-              closeRestoreDbModal();
+              closeModal();
             },
           }
         );
@@ -105,3 +108,5 @@ export const RestoreDbModal = () => {
     </FormDialog>
   );
 };
+
+export default RestoreDbModal;
