@@ -1,5 +1,5 @@
 import { Box, Tab, Tabs } from '@mui/material';
-import { Link, Outlet, useMatch } from 'react-router-dom';
+import { Link, Navigate, Outlet, useMatch } from 'react-router-dom';
 
 import { Messages } from './settings.messages';
 import { SettingsTabs } from './settings.types';
@@ -7,6 +7,10 @@ import { SettingsTabs } from './settings.types';
 export const Settings = () => {
   const routeMatch = useMatch('/settings/:tabs');
   const currentTab = routeMatch?.params?.tabs;
+
+  if (!currentTab) {
+    return <Navigate to={SettingsTabs.storageLocations} replace />;
+  }
 
   return (
     <Box sx={{ width: '100%' }}>

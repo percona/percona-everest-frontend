@@ -18,13 +18,15 @@ import { createDbClusterFn, deleteDbClusterFn } from '../utils/db-cluster';
 import { DBClusterDetailsTabs } from '../../src/pages/db-cluster-details/db-cluster-details.types';
 import { clickCreateSchedule } from './schedules.utils';
 import { findDbAndClickRow } from '../utils/db-clusters-list';
+import { getTokenFromLocalStorage } from '../utils/localStorage';
 
-test.describe.serial('Schedules List', () => {
+test.describe.serial('Schedules List', async () => {
   let scheduleName = 'test-name';
   const mySQLName = 'schedule-mysql';
 
-  test.beforeAll(async ({ request }) => {
-    await createDbClusterFn(request, {
+  test.beforeAll(async ({ request, browser }) => {
+    const token = await getTokenFromLocalStorage();
+    await createDbClusterFn(token, request, {
       dbName: mySQLName,
       dbType: 'mysql',
       numberOfNodes: '1',
@@ -36,7 +38,8 @@ test.describe.serial('Schedules List', () => {
   });
 
   test.afterAll(async ({ request }) => {
-    await deleteDbClusterFn(request, mySQLName);
+    const token = await getTokenFromLocalStorage();
+    await deleteDbClusterFn(token, request, mySQLName);
   });
 
   test('Create schedule', async ({ page }) => {

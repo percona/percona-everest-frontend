@@ -13,8 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { test as setup } from '@playwright/test';
+import { test as setup, expect } from '@playwright/test';
 import 'dotenv/config';
+import { getTokenFromLocalStorage } from './utils/localStorage';
 const {
   EVEREST_LOCATION_BUCKET_NAME,
   EVEREST_LOCATION_ACCESS_KEY,
@@ -24,7 +25,8 @@ const {
 } = process.env;
 
 setup('Backup storage', async ({ request }) => {
-  await request.post('/v1/backup-storages/', {
+  const token = await getTokenFromLocalStorage();
+  const response = await request.post('/v1/backup-storages/', {
     data: {
       name: 'ui-dev',
       description: 'CI test bucket',
@@ -35,7 +37,11 @@ setup('Backup storage', async ({ request }) => {
       url: EVEREST_LOCATION_URL,
       region: EVEREST_LOCATION_REGION,
     },
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
+  expect(response.ok()).toBeTruthy();
 });
 
 setup('Close modal permanently', async ({ page }) => {

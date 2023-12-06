@@ -15,6 +15,8 @@
 import { defineConfig } from '@playwright/test';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { STORAGE_STATE_FILE } from './constants';
+import 'dotenv/config';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -63,13 +65,25 @@ export default defineConfig({
   projects: [
     {
       testDir: '.',
+      name: 'auth',
+      testMatch: /auth.setup\.ts/,
+    },
+    {
+      testDir: '.',
       name: 'setup',
       testMatch: /global.setup\.ts/,
       teardown: 'teardown',
+      use: {
+        storageState: STORAGE_STATE_FILE,
+      },
+      dependencies: ['auth'],
     },
     {
       testDir: '.',
       name: 'teardown',
+      use: {
+        storageState: STORAGE_STATE_FILE,
+      },
       testMatch: /global\.teardown\.ts/,
     },
     {
@@ -77,7 +91,7 @@ export default defineConfig({
       use: {
         browserName: 'chromium',
         channel: 'chrome',
-        storageState: 'user.json',
+        storageState: STORAGE_STATE_FILE,
       },
       dependencies: ['setup'],
     },

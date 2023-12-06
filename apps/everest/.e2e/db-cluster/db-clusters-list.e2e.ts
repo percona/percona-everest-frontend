@@ -15,6 +15,7 @@
 
 import { test } from '@playwright/test';
 import { createDbClusterFn } from '../utils/db-cluster';
+import { getTokenFromLocalStorage } from '../utils/localStorage';
 
 test.describe('DB Cluster List', () => {
   const mySQLName = 'mysql-test-ui';
@@ -24,7 +25,8 @@ test.describe('DB Cluster List', () => {
   });
 
   test('DB clusters Delete Action', async ({ page, request }) => {
-    await createDbClusterFn(request, {
+    const token = await getTokenFromLocalStorage();
+    await createDbClusterFn(token, request, {
       dbName: mySQLName,
       dbType: 'mysql',
       numberOfNodes: '1',
