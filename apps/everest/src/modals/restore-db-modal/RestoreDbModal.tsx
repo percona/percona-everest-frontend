@@ -1,4 +1,4 @@
-import { MenuItem, Typography } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Typography } from '@mui/material';
 import { LoadableChildren, RadioGroup, SelectInput } from '@percona/ui-lib';
 import { FormDialog } from 'components/form-dialog';
 import { useDbBackups } from 'hooks/api/backups/useBackups';
@@ -76,34 +76,37 @@ const RestoreDbModal = <T extends FieldValues>({
             },
           ]}
         />
-        <SelectInput
-          name={RestoreDbFields.backupList}
-          label={Messages.selectBackup}
-          selectFieldProps={{
-            displayEmpty: true,
-            renderValue: (value) => {
-              const stringValue = value as string;
-              if (value === '') {
-                return <span>{Messages.emptyValue}</span>;
-              }
-              return <span>{stringValue}</span>;
-            },
-            sx: { minWidth: '80px' },
-          }}
-        >
-          {backups
-            ?.filter((value) => value.completed)
-            .map((value) => {
-              const valueWithTime = `${
-                value.name
-              } - ${value.completed?.toLocaleString('en-US')}`;
-              return (
-                <MenuItem key={value.name} value={valueWithTime}>
-                  {valueWithTime}
-                </MenuItem>
-              );
-            })}
-        </SelectInput>
+        <FormControl>
+          <InputLabel id="restore-backup">{Messages.selectBackup}</InputLabel>
+          <SelectInput
+            name={RestoreDbFields.backupList}
+            selectFieldProps={{
+              // displayEmpty: true,
+              // renderValue: (value) => {
+              //   const stringValue = value as string;
+              //   if (value === '') {
+              //     return <span>{Messages.emptyValue}</span>;
+              //   }
+              //   return <span>{stringValue}</span>;
+              // },
+              labelId: 'restore-backup',
+              label: Messages.selectBackup,
+            }}
+          >
+            {backups
+              ?.filter((value) => value.completed)
+              .map((value) => {
+                const valueWithTime = `${
+                  value.name
+                } - ${value.completed?.toLocaleString('en-US')}`;
+                return (
+                  <MenuItem key={value.name} value={value.name}>
+                    {valueWithTime}
+                  </MenuItem>
+                );
+              })}
+          </SelectInput>
+        </FormControl>
       </LoadableChildren>
     </FormDialog>
   );
