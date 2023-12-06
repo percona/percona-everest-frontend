@@ -27,13 +27,15 @@ import {
   findDbAndClickRow,
 } from '../../../utils/db-clusters-list';
 import { DBClusterDetailsTabs } from '../../../../src/pages/db-cluster-details/db-cluster-details.types';
+import { getTokenFromLocalStorage } from '../../../utils/localStorage';
 
-test.describe.serial('DB Cluster Editing Backups Step', () => {
+test.describe.serial('DB Cluster Editing Backups Step', async () => {
   let scheduleName = 'db-wizard-schedule';
   const mySQLName = 'db-backup-mysql';
 
   test.beforeAll(async ({ request }) => {
-    await createDbClusterFn(request, {
+    const token = await getTokenFromLocalStorage();
+    await createDbClusterFn(token, request, {
       dbName: mySQLName,
       dbType: 'mysql',
       numberOfNodes: '1',
@@ -41,7 +43,8 @@ test.describe.serial('DB Cluster Editing Backups Step', () => {
   });
 
   test.afterAll(async ({ request }) => {
-    await deleteDbClusterFn(request, mySQLName);
+    const token = await getTokenFromLocalStorage();
+    await deleteDbClusterFn(token, request, mySQLName);
   });
 
   test('Add schedule to database with no schedule during editing in dbWizard', async ({
