@@ -3,9 +3,9 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { DbType } from '@percona/types';
 import { TestWrapper } from 'utils/test';
-import { SecondStep } from './second-step';
-import { ResourceSize } from './second-step.types';
-import { DEFAULT_SIZES } from './second-step.const';
+import { ResourcesStep } from './resources-step.tsx';
+import { ResourceSize } from './resources-step.types';
+import { DEFAULT_SIZES } from './resources-step.const';
 import { DbWizardFormFields } from '../../database-form.types';
 import { Mock } from 'vitest';
 import { DbWizardType } from '../../database-form-schema.ts';
@@ -43,14 +43,14 @@ const FormProviderWrapper = ({
   );
 };
 
-describe('Second Step', () => {
+describe('Resources Step', () => {
   it('should set default values', async () => {
     const handleSubmitMock = vi.fn();
 
     render(
       <TestWrapper>
         <FormProviderWrapper handleSubmit={handleSubmitMock}>
-          <SecondStep />
+          <ResourcesStep />
           <button data-testid="submitButton" type="submit">
             submit
           </button>
@@ -79,7 +79,7 @@ describe('Second Step', () => {
           handleSubmit={vi.fn()}
           values={{ dbType: DbType.Postresql }}
         >
-          <SecondStep />
+          <ResourcesStep />
         </FormProviderWrapper>
       </TestWrapper>
     );
@@ -102,7 +102,7 @@ describe('Second Step', () => {
           handleSubmit={vi.fn()}
           values={{ dbType: DbType.Mysql }}
         >
-          <SecondStep />
+          <ResourcesStep />
         </FormProviderWrapper>
       </TestWrapper>
     );
@@ -122,7 +122,7 @@ describe('Second Step', () => {
     render(
       <TestWrapper>
         <FormProviderWrapper handleSubmit={vi.fn()}>
-          <SecondStep />
+          <ResourcesStep />
         </FormProviderWrapper>
       </TestWrapper>
     );
@@ -155,7 +155,7 @@ describe('Second Step', () => {
     render(
       <TestWrapper>
         <FormProviderWrapper handleSubmit={vi.fn()}>
-          <SecondStep />
+          <ResourcesStep />
           <button data-testid="submitButton" type="submit">
             submit
           </button>
@@ -181,7 +181,7 @@ describe('Second Step', () => {
     render(
       <TestWrapper>
         <FormProviderWrapper handleSubmit={vi.fn()}>
-          <SecondStep />
+          <ResourcesStep />
           <button data-testid="submitButton" type="submit">
             submit
           </button>

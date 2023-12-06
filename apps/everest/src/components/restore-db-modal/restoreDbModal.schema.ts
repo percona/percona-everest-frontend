@@ -20,4 +20,4 @@ export const defaultValues = {
   [RestoreDbFields.backupList]: '',
 };
 
-export type ScheduleFormData = z.infer<typeof schema>;
+export type RestoreDbFormData = z.infer<typeof schema>;
