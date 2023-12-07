@@ -12,17 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { LabeledContentProps } from '../../../labeled-content';
-import { SelectProps } from '@mui/material';
-import { Control, UseControllerProps } from 'react-hook-form';
 
-export type SelectInputProps = {
-  control?: Control;
-  controllerProps?: UseControllerProps;
-  name: string;
-  label?: string;
-  labelProps?: LabeledContentProps;
-  selectFieldProps?: SelectProps;
-  children?: React.ReactNode[];
-  isRequired?: boolean;
+export const Messages = {
+  noOptions: 'No options',
 };
