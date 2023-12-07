@@ -35,10 +35,9 @@ const RestoreDbModal = <T extends FieldValues>({
       schema={schema}
       submitting={restoringBackup}
       defaultValues={defaultValues}
-      onSubmit={(data: FieldValues) => {
-        const backupNameStripped = data.backupList.split(' - ')[0];
+      onSubmit={({ backupName }) => {
         restoreBackup(
-          { backupName: backupNameStripped },
+          { backupName },
           {
             onSuccess() {
               closeModal();
@@ -80,16 +79,8 @@ const RestoreDbModal = <T extends FieldValues>({
         <FormControl>
           <InputLabel id="restore-backup">{Messages.selectBackup}</InputLabel>
           <SelectInput
-            name={RestoreDbFields.backupList}
+            name={RestoreDbFields.backupName}
             selectFieldProps={{
-              // displayEmpty: true,
-              // renderValue: (value) => {
-              //   const stringValue = value as string;
-              //   if (value === '') {
-              //     return <span>{Messages.emptyValue}</span>;
-              //   }
-              //   return <span>{stringValue}</span>;
-              // },
               labelId: 'restore-backup',
               label: Messages.selectBackup,
             }}
