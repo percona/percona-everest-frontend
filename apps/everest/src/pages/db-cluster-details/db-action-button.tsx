@@ -101,6 +101,7 @@ export const DbActionButton = () => {
             key={3}
             onClick={() => {
               setDbClusterName(dbClusterName!);
+              setOpenRestoreDbModal(true);
               closeMenu();
             }}
             sx={{
