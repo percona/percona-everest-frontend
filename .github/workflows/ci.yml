@@ -138,13 +138,6 @@ jobs:
           go version
           echo "GO_VERSION=$(go version)" >> $GITHUB_ENV
 
-      - name: Archive backend log
-        if: failure()
-        uses: actions/upload-artifact@v3
-        with:
-          name: everest-backend.log
-          path: BE/everest-backend.log
-
       - name: Create KIND cluster
         uses: helm/kind-action@v1.8.0
 
@@ -152,6 +145,11 @@ jobs:
         run: |
           cd CLI
           go run cmd/everest/main.go install --monitoring.enable=false --name=minikube --operator.mongodb=true --operator.postgresql=true --operator.xtradb-cluster=true --skip-wizard --namespace percona-everest
+
+      - name: Change password
+        run: |
+          cd CLI
+          echo "EVEREST_K8_PASSWORD=$(go run cmd/everest/main.go password reset --namespace percona-everest --json | jq .password -r)" >> $GITHUB_ENV
 
       - name: Expose Everest backend
         run: |
@@ -162,6 +160,11 @@ jobs:
           cd FE
           make init
           pnpm --filter "@percona/everest" dev &
+
+      - name: Install Chromium for Playwright
+        run: |
+          cd FE/apps/everest
+          npx playwright install chromium
 
       - name: Run integration tests
         env:

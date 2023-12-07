@@ -15,8 +15,15 @@
 
 import { APIRequestContext, expect, Page } from '@playwright/test';
 
-export const getDBClustersList = async (request: APIRequestContext) => {
-  const response = await request.get('/v1/database-clusters');
+export const getDBClustersList = async (
+  token: string,
+  request: APIRequestContext
+) => {
+  const response = await request.get('/v1/database-clusters', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   expect(response.ok()).toBeTruthy();
   return response.json();

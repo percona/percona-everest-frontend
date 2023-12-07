@@ -21,12 +21,13 @@
   "prettier": "@percona/prettier-config",
   "dependencies": {
     "@fontsource/poppins": "^5.0.8",
+    "@fontsource/roboto": "^5.0.8",
     "@mui/utils": "^5.14.15"
   },
   "devDependencies": {
+    "@percona/eslint-config-react": "workspace:*",
     "@percona/prettier-config": "workspace:*",
     "@percona/tsconfig": "workspace:*",
-    "@percona/eslint-config-react": "workspace:*",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.5",
