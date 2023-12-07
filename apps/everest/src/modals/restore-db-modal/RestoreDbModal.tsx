@@ -14,6 +14,7 @@ import {
   schema,
 } from './restoreDbModal.schema';
 import { FormDialogProps } from 'components/form-dialog/form-dialog.types';
+import { BackupStatus } from 'shared-types/backups.types';
 
 const RestoreDbModal = <T extends FieldValues>({
   closeModal,
@@ -94,11 +95,11 @@ const RestoreDbModal = <T extends FieldValues>({
             }}
           >
             {backups
-              ?.filter((value) => value.completed)
+              ?.filter((value) => value.state === BackupStatus.OK)
               .map((value) => {
                 const valueWithTime = `${
                   value.name
-                } - ${value.completed?.toLocaleString('en-US')}`;
+                } - ${value.created?.toLocaleString('en-US')}`;
                 return (
                   <MenuItem key={value.name} value={value.name}>
                     {valueWithTime}
