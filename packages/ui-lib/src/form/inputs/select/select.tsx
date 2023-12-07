@@ -1,8 +1,9 @@
-import { Select } from '@mui/material';
+import { MenuItem, Select } from '@mui/material';
 import { kebabize } from '@percona/utils';
 import { Controller, useFormContext } from 'react-hook-form';
 import { SelectInputProps } from './select.types';
 import LabeledContent from '../../../labeled-content';
+import { Messages } from './select.messages';
 
 const SelectInput = ({
   name,
@@ -32,6 +33,22 @@ const SelectInput = ({
           {...selectFieldProps}
         >
           {children}
+          {(!children || (Array.isArray(children) && !children.length)) && (
+            <MenuItem
+              disabled
+              key="noOptions"
+              value=""
+              data-testid="no-options-select"
+              sx={{
+                fontWeight: '400',
+                '&.Mui-disabled.Mui-selected': {
+                  backgroundColor: 'transparent',
+                },
+              }}
+            >
+              {Messages.noOptions}
+            </MenuItem>
+          )}
         </Select>
       )}
       {...controllerProps}
