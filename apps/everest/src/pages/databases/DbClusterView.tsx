@@ -19,6 +19,7 @@ import {
   PauseCircleOutline,
 } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { Box, Button, MenuItem, Stack } from '@mui/material';
 import { Table } from '@percona/ui-lib';
@@ -29,10 +30,11 @@ import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
 import { DbClusterTableElement } from 'hooks/api/db-clusters/dbCluster.type';
 import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
 import { type MRT_ColumnDef } from 'material-react-table';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DbClusterStatus } from 'shared-types/dbCluster.types';
 import { DbEngineType } from 'shared-types/dbEngines.types';
+import { useMainStore } from 'stores/useMainStore';
 import { DB_CLUSTER_STATUS_TO_BASE_STATUS } from './DbClusterView.constants';
 import {
   beautifyDbClusterStatus,
@@ -41,8 +43,11 @@ import {
 import { Messages } from './dbClusterView.messages';
 import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
+import { RestoreDbModal } from 'modals';
 
 export const DbClusterView = () => {
+  const [openRestoreDbModal, setOpenRestoreDbModal] = useState(false);
+  const setDbClusterName = useMainStore((state) => state.setDbClusterName);
   const { data: dbClusters = [], isLoading: dbClustersLoading } =
     useDbClusters();
   const tableData = useMemo(
@@ -166,6 +171,24 @@ export const DbClusterView = () => {
             </MenuItem>,
             <MenuItem
               key={3}
+              data-testid={`${row.original?.databaseName}-restore`}
+              onClick={() => {
+                setDbClusterName(row.original.databaseName);
+                setOpenRestoreDbModal(true);
+                closeMenu();
+              }}
+              sx={{
+                display: 'flex',
+                gap: 1,
+                alignItems: 'center',
+                px: 2,
+                py: '10px',
+              }}
+            >
+              <KeyboardReturnIcon /> {Messages.menuItems.restoreFromBackup}
+            </MenuItem>,
+            <MenuItem
+              key={4}
               disabled={row.original.status === DbClusterStatus.pausing}
               onClick={() => {
                 handleDbSuspendOrResumed(row.original.databaseName);
@@ -232,6 +255,12 @@ export const DbClusterView = () => {
           hideExpandAllIcon
         />
       </Box>
+      {openRestoreDbModal && (
+        <RestoreDbModal
+          isOpen={openRestoreDbModal}
+          closeModal={() => setOpenRestoreDbModal(false)}
+        />
+      )}
       {openDeleteDialog && (
         <ConfirmDialog
           isOpen={openDeleteDialog}

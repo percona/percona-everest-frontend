@@ -40,7 +40,8 @@
     "react-hook-form": "^7.47.0",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.17.0",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.4.6"
   },
   "devDependencies": {
     "@percona/eslint-config-react": "workspace:*",
