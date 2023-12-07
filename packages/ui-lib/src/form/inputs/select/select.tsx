@@ -16,7 +16,6 @@ const SelectInput = ({
   isRequired = false,
 }: SelectInputProps) => {
   const { control: contextControl } = useFormContext();
-  console.log(children);
   const content = (
     <Controller
       name={name}
