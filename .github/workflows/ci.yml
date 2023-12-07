@@ -144,7 +144,13 @@ jobs:
       - name: Run Provisioning
         run: |
           cd CLI
-          go run cmd/everest/main.go install --monitoring.enable=false --operator.mongodb=true --operator.postgresql=true --operator.xtradb-cluster=true --skip-wizard --namespace percona-everest
+          go run cmd/everest/main.go install \
+          --monitoring.enable=false \
+          --operator.mongodb=true \
+          --operator.postgresql=true \
+          --operator.xtradb-cluster=true \
+          --skip-wizard \
+          --namespace percona-everest
 
       - name: Change password
         run: |
