@@ -33,12 +33,12 @@ const SelectInput = ({
           {...selectFieldProps}
         >
           {children}
-          {(!children || children?.length === 0) && (
+          {(!children || (Array.isArray(children) && !children.length)) && (
             <MenuItem
               disabled
               key="noOptions"
               value=""
-              data-testId="no-options-select"
+              data-testid="no-options-select"
               sx={{
                 fontWeight: '400',
                 '&.Mui-disabled.Mui-selected': {
