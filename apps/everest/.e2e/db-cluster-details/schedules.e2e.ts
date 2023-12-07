@@ -94,7 +94,7 @@ test.describe.serial('Schedules List', async () => {
       .filter({ hasText: 'create' });
     await createScheduleButton.click();
 
-    expect(page.getByTestId('scheduled-backups')).toBeVisible();
+    await expect(page.getByTestId('scheduled-backups')).toBeVisible();
     await scheduledBackupsAccordion.click();
 
     expect(page.getByText('Every hour at minute 0')).toBeTruthy();

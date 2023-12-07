@@ -7,6 +7,7 @@ import {
   Tabs,
   Typography,
 } from '@mui/material';
+import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
 import { useEffect, useState } from 'react';
 import {
   Link,
@@ -15,7 +16,6 @@ import {
   useNavigate,
   useParams,
 } from 'react-router-dom';
-import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
 import { NoMatch } from '../404/NoMatch';
 import { DbActionButton } from './db-action-button';
 import { Messages } from './db-cluster-details.messages';

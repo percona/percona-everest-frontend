@@ -4,6 +4,7 @@ import {
   PauseCircleOutline,
 } from '@mui/icons-material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
@@ -13,9 +14,13 @@ import { Messages } from 'pages/databases/dbClusterView.messages';
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Messages as ClusterDetailsMessages } from './db-cluster-details.messages';
+import { RestoreDbModal } from 'modals';
+import { useMainStore } from 'stores/useMainStore';
 export const DbActionButton = () => {
   const { dbClusterName } = useParams();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [openRestoreDbModal, setOpenRestoreDbModal] = useState(false);
+  const setDbClusterName = useMainStore((state) => state.setDbClusterName);
   const isOpen = !!anchorEl;
   const {
     selectedDbCluster,
@@ -42,6 +47,7 @@ export const DbActionButton = () => {
     <Box>
       <Button
         id="actions-button"
+        data-testid="actions-button"
         aria-controls={isOpen ? 'actions-button-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={isOpen ? 'true' : undefined}
@@ -91,7 +97,25 @@ export const DbActionButton = () => {
             <RestartAltIcon /> {Messages.menuItems.restart}
           </MenuItem>
           <MenuItem
+            data-testid={`${dbClusterName}-restore`}
             key={3}
+            onClick={() => {
+              setDbClusterName(dbClusterName!);
+              setOpenRestoreDbModal(true);
+              closeMenu();
+            }}
+            sx={{
+              display: 'flex',
+              gap: 1,
+              alignItems: 'center',
+              px: 2,
+              py: '10px',
+            }}
+          >
+            <KeyboardReturnIcon /> {Messages.menuItems.restoreFromBackup}
+          </MenuItem>
+          <MenuItem
+            key={4}
             onClick={() => {
               handleDbSuspendOrResumed(dbClusterName!);
               closeMenu();
@@ -111,7 +135,7 @@ export const DbActionButton = () => {
           </MenuItem>
           <MenuItem
             data-testid={`${dbClusterName}-delete`}
-            key={1}
+            key={5}
             onClick={() => {
               handleDeleteDbCluster(dbClusterName!);
               closeMenu();
@@ -128,6 +152,12 @@ export const DbActionButton = () => {
           </MenuItem>
         </Menu>
       </Box>
+      {openRestoreDbModal && (
+        <RestoreDbModal
+          isOpen={openRestoreDbModal}
+          closeModal={() => setOpenRestoreDbModal(false)}
+        />
+      )}
       {openDeleteDialog && (
         <ConfirmDialog
           isOpen={openDeleteDialog}

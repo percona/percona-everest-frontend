@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Button,
@@ -10,15 +9,16 @@ import {
   Typography,
 } from '@mui/material';
 import { DialogTitle } from '@percona/ui-lib';
+import { kebabize } from '@percona/utils';
+import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
+import { useMemo } from 'react';
 import {
   FieldValues,
   FormProvider,
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
-import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
 import { FormDialogProps } from './form-dialog.types';
-import { kebabize } from '@percona/utils';
 
 export const FormDialog = <T extends FieldValues>({
   isOpen,
@@ -59,6 +59,8 @@ export const FormDialog = <T extends FieldValues>({
         return '640px';
       case 'XXL':
         return '700px';
+      case 'XXXL':
+        return '800px';
       default:
         return '640px';
     }

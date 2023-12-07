@@ -472,10 +472,9 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
     },
     MuiInputLabel: {
       styleOverrides: {
-        root: {
-          fontSize: '12px',
-          fontWeight: 400,
-        },
+        root: ({ theme }) => ({
+          ...theme.typography.inputText,
+        }),
       },
     },
     MuiFormHelperText: {
