@@ -68,7 +68,7 @@ export const CreateEditModalStorage = ({
         selectFieldProps={{ disabled: isEditMode }}
         isRequired
       >
-        <MenuItem value={StorageType.S3}>{Messages.s3}</MenuItem>
+        [<MenuItem value={StorageType.S3}>{Messages.s3}</MenuItem>]
         {/* <MenuItem value={StorageType.GCS}>{Messages.gcs}</MenuItem> */}
         {/* <MenuItem value={StorageType.AZURE}>{Messages.azure}</MenuItem> */}
       </SelectInput>
