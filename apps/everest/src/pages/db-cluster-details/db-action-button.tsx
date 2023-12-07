@@ -14,11 +14,14 @@ import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
 import { Messages } from 'pages/databases/dbClusterView.messages';
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useMainStore } from 'stores/useMainStore';
 import { Messages as ClusterDetailsMessages } from './db-cluster-details.messages';
+import { RestoreDbModal } from 'modals';
+import { useMainStore } from 'stores/useMainStore';
 export const DbActionButton = () => {
   const { dbClusterName } = useParams();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [openRestoreDbModal, setOpenRestoreDbModal] = useState(false);
+  const setDbClusterName = useMainStore((state) => state.setDbClusterName);
   const isOpen = !!anchorEl;
   const {
     selectedDbCluster,
@@ -30,10 +33,6 @@ export const DbActionButton = () => {
     handleCloseDeleteDialog,
     isPaused,
   } = useDbActions();
-  const openRestoreDbModal = useMainStore((state) => state.openRestoreDbModal);
-  const openRestoreDbModalToNewCluster = useMainStore(
-    (state) => state.openRestoreDbModalToNewCluster
-  );
   const { isLoading: deletingCluster } = useDeleteDbCluster();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -99,10 +98,11 @@ export const DbActionButton = () => {
             <RestartAltIcon /> {Messages.menuItems.restart}
           </MenuItem>
           <MenuItem
-            data-testid={`${dbClusterName}-restore-create`}
+            data-testid={`${dbClusterName}-restore`}
             key={3}
             onClick={() => {
-              openRestoreDbModalToNewCluster(dbClusterName!);
+                // TODO
+              // openRestoreDbModalToNewCluster(dbClusterName!);
               closeMenu();
             }}
             sx={{
@@ -119,8 +119,9 @@ export const DbActionButton = () => {
             data-testid={`${dbClusterName}-restore`}
             key={3}
             onClick={() => {
-              openRestoreDbModal(dbClusterName!);
-              closeMenu();
+                setDbClusterName(dbClusterName!);
+                setOpenRestoreDbModal(true);
+                closeMenu();
             }}
             sx={{
               display: 'flex',
@@ -170,6 +171,12 @@ export const DbActionButton = () => {
           </MenuItem>
         </Menu>
       </Box>
+      {openRestoreDbModal && (
+        <RestoreDbModal
+          isOpen={openRestoreDbModal}
+          closeModal={() => setOpenRestoreDbModal(false)}
+        />
+      )}
       {openDeleteDialog && (
         <ConfirmDialog
           isOpen={openDeleteDialog}

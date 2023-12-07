@@ -11,7 +11,6 @@ import {
 import { DrawerContext } from 'contexts/drawer/drawer.context';
 import { useKubernetesClusterInfo } from 'hooks/api/kubernetesClusters/useKubernetesClusterInfo';
 import useLocalStorage from 'hooks/utils/useLocalStorage';
-import { ModalsWrapper } from 'modals/ModalsWrapper';
 import { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
 import { AppBar } from '../app-bar/AppBar';
@@ -88,7 +87,6 @@ export const Main = () => {
             closeDialog={handleCloseWelcomeDialog}
           />
         )}
-        <ModalsWrapper />
       </Box>
     </Box>
   );

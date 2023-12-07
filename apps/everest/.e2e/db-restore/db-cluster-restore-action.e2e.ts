@@ -19,17 +19,19 @@ import {
   findDbAndClickActions,
   findDbAndClickRow,
 } from '../utils/db-clusters-list';
+import { getTokenFromLocalStorage } from '../utils/localStorage';
 
 test.describe('DB Cluster Restore', () => {
   const dbClusterName = 'mysql-test-ui-restore';
 
   test.beforeEach(async ({ request, page }) => {
     await page.goto('/databases');
+    const token = await getTokenFromLocalStorage();
     const closeIcon = page.getByTestId('close-dialog-icon');
     if (closeIcon) {
       await closeIcon.click();
     }
-    await createDbClusterFn(request, {
+    await createDbClusterFn(token, request, {
       dbName: dbClusterName,
       dbType: 'mysql',
       numberOfNodes: '1',
@@ -41,13 +43,14 @@ test.describe('DB Cluster Restore', () => {
   });
 
   test.afterEach(async ({ request }) => {
-    await deleteDbClusterFn(request, dbClusterName);
+    const token = await getTokenFromLocalStorage();
+    await deleteDbClusterFn(token, request, dbClusterName);
   });
 
   test('DB cluster list restore action', async ({ page }) => {
     await findDbAndClickActions(page, dbClusterName, 'Restore from a backup');
 
-    await expect(page.getByText('Restore database')).toBeVisible();
+    await expect(page.getByTestId('form-dialog-restore')).toBeVisible();
     await page.getByTestId('close-dialog-icon').click();
   });
 
@@ -59,7 +62,7 @@ test.describe('DB Cluster Restore', () => {
     const restoreButton = page.getByTestId(`${dbClusterName}-restore`);
     await restoreButton.click();
 
-    await expect(page.getByText('Restore database')).toBeVisible();
+    await expect(page.getByTestId('form-dialog-restore')).toBeVisible();
     await page.getByTestId('close-dialog-icon').click();
   });
 });
