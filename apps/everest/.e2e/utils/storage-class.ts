@@ -15,8 +15,15 @@
 
 import { APIRequestContext, expect } from '@playwright/test';
 
-export const getClusterDetailedInfo = async (request: APIRequestContext) => {
-  const clusterInfo = await request.get('/v1/cluster-info');
+export const getClusterDetailedInfo = async (
+  token: string,
+  request: APIRequestContext
+) => {
+  const clusterInfo = await request.get('/v1/cluster-info', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   expect(clusterInfo.ok()).toBeTruthy();
   return clusterInfo.json();
 };

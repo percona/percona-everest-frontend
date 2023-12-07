@@ -13,12 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { expect } from '@playwright/test';
+import { APIRequestContext, expect } from '@playwright/test';
 
 export const testMonitoringName = 'ui-test-monitoring';
 export const testMonitoringName2 = 'ui-test-monitoring-1';
 
-export const createMonitoringInstance = async (request, name) => {
+export const createMonitoringInstance = async (
+  request: APIRequestContext,
+  name: string,
+  token: string
+) => {
   const data = {
     type: 'pmm',
     name,
@@ -28,7 +32,12 @@ export const createMonitoringInstance = async (request, name) => {
     },
   };
 
-  const response = await request.post('/v1/monitoring-instances', { data });
+  const response = await request.post('/v1/monitoring-instances', {
+    data,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   expect(response.ok()).toBeTruthy();
   const created = await response.json();
@@ -38,8 +47,16 @@ export const createMonitoringInstance = async (request, name) => {
   expect(created.type).toBe(data.type);
 };
 
-export const deleteMonitoringInstance = async (request, name) => {
-  const response = await request.delete(`/v1/monitoring-instances/${name}`);
+export const deleteMonitoringInstance = async (
+  request: APIRequestContext,
+  name,
+  token: string
+) => {
+  const response = await request.delete(`/v1/monitoring-instances/${name}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   expect(response.ok()).toBeTruthy();
 };
 

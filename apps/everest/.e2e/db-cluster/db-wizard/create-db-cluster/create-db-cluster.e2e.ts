@@ -20,6 +20,7 @@ import { advancedConfigurationStepCheck } from './steps/advanced-configuration-s
 import { backupsStepCheck } from './steps/backups-step';
 import { basicInformationStepCheck } from './steps/basic-information-step';
 import { resourcesStepCheck } from './steps/resources-step';
+import { getTokenFromLocalStorage } from '../../../utils/localStorage';
 
 test.describe('DB Cluster creation', () => {
   let engineVersions = {
@@ -31,9 +32,13 @@ test.describe('DB Cluster creation', () => {
   // let monitoringInstancesList = [];
 
   test.beforeAll(async ({ request }) => {
-    engineVersions = await getEnginesVersions(request);
+    const token = await getTokenFromLocalStorage();
+    engineVersions = await getEnginesVersions(token, request);
 
-    const { storageClassNames = [] } = await getClusterDetailedInfo(request);
+    const { storageClassNames = [] } = await getClusterDetailedInfo(
+      token,
+      request
+    );
     storageClasses = storageClassNames;
 
     // monitoringInstancesList = await getMonitoringInstanceList(request);
@@ -59,6 +64,7 @@ test.describe('DB Cluster creation', () => {
 
   test('Cluster creation', async ({ page, request }) => {
     const clusterName = 'db-cluster-ui-test';
+    const token = await getTokenFromLocalStorage();
 
     expect(storageClasses.length).toBeGreaterThan(0);
 
@@ -105,7 +111,9 @@ test.describe('DB Cluster creation', () => {
       page.getByText('Awesome! Your database is being created!')
     ).toBeVisible();
 
-    const response = await request.get('/v1/database-clusters');
+    const response = await request.get('/v1/database-clusters', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
     expect(response.ok()).toBeTruthy();
     // TODO replace with correct payload typings from GET DB Clusters
@@ -116,7 +124,10 @@ test.describe('DB Cluster creation', () => {
     );
 
     const deleteResponse = await request.delete(
-      `/v1/database-clusters/${addedCluster?.metadata.name}`
+      `/v1/database-clusters/${addedCluster?.metadata.name}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
     );
     expect(deleteResponse.ok()).toBeTruthy();
 

@@ -15,19 +15,29 @@
 
 import { APIRequestContext, expect } from '@playwright/test';
 
-export const getEnginesList = async (request: APIRequestContext) => {
-  const enginesList = await request.get('/v1/database-engines');
+export const getEnginesList = async (
+  token: string,
+  request: APIRequestContext
+) => {
+  const enginesList = await request.get('/v1/database-engines', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   expect(enginesList.ok()).toBeTruthy();
   return (await enginesList.json()).items;
 };
-export const getEnginesVersions = async (request: APIRequestContext) => {
+export const getEnginesVersions = async (
+  token: string,
+  request: APIRequestContext
+) => {
   const engineVersions = {
     pxc: [],
     psmdb: [],
     postgresql: [],
   };
 
-  const engines = await getEnginesList(request);
+  const engines = await getEnginesList(token, request);
   engines.forEach((engine) => {
     const { type } = engine.spec;
 

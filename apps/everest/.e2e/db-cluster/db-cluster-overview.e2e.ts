@@ -1,11 +1,13 @@
 import { test, expect } from '@playwright/test';
 import { createDbClusterFn, deleteDbClusterFn } from '../utils/db-cluster';
+import { getTokenFromLocalStorage } from '../utils/localStorage';
 
 test.describe('DB Cluster Overview', async () => {
   const dbClusterName = 'cluster-overview-test';
 
   test.beforeAll(async ({ request }) => {
-    await createDbClusterFn(request, {
+    const token = await getTokenFromLocalStorage();
+    await createDbClusterFn(token, request, {
       dbName: dbClusterName,
       dbType: 'mysql',
       numberOfNodes: '1',
@@ -27,7 +29,8 @@ test.describe('DB Cluster Overview', async () => {
   });
 
   test.afterAll(async ({ request }) => {
-    await deleteDbClusterFn(request, dbClusterName);
+    const token = await getTokenFromLocalStorage();
+    await deleteDbClusterFn(token, request, dbClusterName);
   });
 
   test('Overview information', async ({ page }) => {
