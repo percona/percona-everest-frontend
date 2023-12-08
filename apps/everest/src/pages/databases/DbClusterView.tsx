@@ -154,7 +154,7 @@ export const DbClusterView = () => {
               <BorderColor fontSize="small" /> {Messages.menuItems.edit}
             </MenuItem>,
             <MenuItem
-              key={1}
+              key={2}
               onClick={() => {
                 handleDbRestart(row.original.databaseName);
                 closeMenu();
@@ -171,7 +171,7 @@ export const DbClusterView = () => {
               <RestartAltIcon /> {Messages.menuItems.restart}
             </MenuItem>,
             <MenuItem
-              key={2}
+              key={5}
               onClick={() => {
                 setDbClusterName(row.original.databaseName);
                 setIsNewClusterMode(true);
@@ -230,7 +230,7 @@ export const DbClusterView = () => {
             </MenuItem>,
             <MenuItem
               data-testid={`${row.original?.databaseName}-delete`}
-              key={5}
+              key={1}
               onClick={() => {
                 handleDeleteDbCluster(row.original.databaseName!);
                 closeMenu();

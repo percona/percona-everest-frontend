@@ -83,7 +83,7 @@ export const DbActionButton = () => {
             <BorderColor fontSize="small" /> {Messages.menuItems.edit}
           </MenuItem>
           <MenuItem
-            key={1}
+            key={2}
             onClick={() => {
               handleDbRestart(dbClusterName!);
               closeMenu();
@@ -100,7 +100,7 @@ export const DbActionButton = () => {
           </MenuItem>
           <MenuItem
             data-testid={`${dbClusterName}-restore`}
-            key={2}
+            key={1}
             onClick={() => {
               setDbClusterName(dbClusterName!);
               setIsNewClusterMode(true);
