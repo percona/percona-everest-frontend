@@ -21,6 +21,7 @@ export const DbActionButton = () => {
   const { dbClusterName } = useParams();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openRestoreDbModal, setOpenRestoreDbModal] = useState(false);
+  const [isNewClusterMode, setIsNewClusterMode] = useState(false);
   const setDbClusterName = useMainStore((state) => state.setDbClusterName);
   const isOpen = !!anchorEl;
   const {
@@ -82,7 +83,7 @@ export const DbActionButton = () => {
             <BorderColor fontSize="small" /> {Messages.menuItems.edit}
           </MenuItem>
           <MenuItem
-            key={2}
+            key={1}
             onClick={() => {
               handleDbRestart(dbClusterName!);
               closeMenu();
@@ -99,10 +100,11 @@ export const DbActionButton = () => {
           </MenuItem>
           <MenuItem
             data-testid={`${dbClusterName}-restore`}
-            key={3}
+            key={2}
             onClick={() => {
-                // TODO
-              // openRestoreDbModalToNewCluster(dbClusterName!);
+              setDbClusterName(dbClusterName!);
+              setIsNewClusterMode(true);
+              setOpenRestoreDbModal(true);
               closeMenu();
             }}
             sx={{
@@ -119,9 +121,10 @@ export const DbActionButton = () => {
             data-testid={`${dbClusterName}-restore`}
             key={3}
             onClick={() => {
-                setDbClusterName(dbClusterName!);
-                setOpenRestoreDbModal(true);
-                closeMenu();
+              setDbClusterName(dbClusterName!);
+              setIsNewClusterMode(false);
+              setOpenRestoreDbModal(true);
+              closeMenu();
             }}
             sx={{
               display: 'flex',
@@ -173,6 +176,7 @@ export const DbActionButton = () => {
       </Box>
       {openRestoreDbModal && (
         <RestoreDbModal
+          isNewClusterMode={isNewClusterMode}
           isOpen={openRestoreDbModal}
           closeModal={() => setOpenRestoreDbModal(false)}
         />

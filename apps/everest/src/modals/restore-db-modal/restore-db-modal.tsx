@@ -1,30 +1,33 @@
-import { MenuItem, Typography } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Typography } from '@mui/material';
 import { LoadableChildren, RadioGroup, SelectInput } from '@percona/ui-lib';
 import { FormDialog } from 'components/form-dialog';
 import { useDbBackups } from 'hooks/api/backups/useBackups';
 import { useDbClusterRestore } from 'hooks/api/restores/useDbClusterRestore';
 import { FieldValues } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { useMainStore } from 'stores/useMainStore';
 import { useShallow } from 'zustand/react/shallow';
-import { Messages } from './restoreDbModal.messages';
+import { Messages } from './restore-db-modal.messages';
 import {
   BackuptypeValues,
   RestoreDbFields,
   defaultValues,
   schema,
-} from './restoreDbModal.schema';
+} from './restore-db-modal-schema';
+import { FormDialogProps } from 'components/form-dialog/form-dialog.types';
+import { BackupStatus } from 'shared-types/backups.types';
+import { useNavigate } from 'react-router-dom';
 
-export const RestoreDbModal = () => {
+const RestoreDbModal = <T extends FieldValues>({
+  closeModal,
+  isOpen,
+  isNewClusterMode,
+}: Pick<FormDialogProps<T>, 'closeModal' | 'isOpen'> & {
+  isNewClusterMode: boolean;
+}) => {
   const navigate = useNavigate();
-  const [isOpenRestoreDbModal, dbClusterName, isNewClusterMode] = useMainStore(
-    useShallow((state) => [
-      state.isOpenRestoreDbModal,
-      state.dbClusterName,
-      state.isNewClusterMode,
-    ])
+  const [dbClusterName] = useMainStore(
+    useShallow((state) => [state.dbClusterName])
   );
-  const { closeRestoreDbModal } = useMainStore();
   const { data: backups, isLoading } = useDbBackups(dbClusterName);
   const { mutate: restoreBackup, isLoading: restoringBackup } =
     useDbClusterRestore(dbClusterName!);
@@ -32,34 +35,35 @@ export const RestoreDbModal = () => {
   return (
     <FormDialog
       size="XXXL"
-      isOpen={isOpenRestoreDbModal}
-      closeModal={closeRestoreDbModal}
+      isOpen={isOpen}
+      closeModal={closeModal}
       headerMessage={
         isNewClusterMode ? Messages.headerMessageCreate : Messages.headerMessage
       }
       schema={schema}
       submitting={restoringBackup}
       defaultValues={defaultValues}
-      onSubmit={(data: FieldValues) => {
-        const backupNameStripped = data.backupList.split(' - ')[0];
+      onSubmit={({ backupName }) => {
+        const backupNameWithoutTime = backupName.split(' - ')[0];
+
         if (isNewClusterMode) {
-          closeRestoreDbModal();
+          closeModal();
           const selectedBackup = backups?.find(
-            (backup) => backup.name === backupNameStripped
+            (backup) => backup.name === backupNameWithoutTime
           );
           navigate('/databases/new', {
             state: {
               selectedDbCluster: dbClusterName!,
-              backupName: backupNameStripped,
+              backupName: backupNameWithoutTime,
               backupStorageName: selectedBackup,
             },
           });
         } else {
           restoreBackup(
-            { backupName: backupNameStripped },
+            { backupName: backupNameWithoutTime },
             {
               onSuccess() {
-                closeRestoreDbModal();
+                closeModal();
               },
             }
           );
@@ -90,10 +94,7 @@ export const RestoreDbModal = () => {
             },
           }}
           options={[
-            {
-              label: Messages.fromBackup,
-              value: BackuptypeValues.fromBackup,
-            },
+            { label: Messages.fromBackup, value: BackuptypeValues.fromBackup },
             {
               label: Messages.fromPitr,
               value: BackuptypeValues.fromPitr,
@@ -101,35 +102,43 @@ export const RestoreDbModal = () => {
             },
           ]}
         />
-        <SelectInput
-          name={RestoreDbFields.backupList}
-          label={Messages.selectBackup}
-          selectFieldProps={{
-            displayEmpty: true,
-            renderValue: (value) => {
-              const stringValue = value as string;
-              if (value === '') {
-                return <span>{Messages.emptyValue}</span>;
-              }
-              return <span>{stringValue}</span>;
-            },
-            sx: { minWidth: '80px' },
-          }}
-        >
-          {backups
-            ?.filter((value) => value.completed)
-            .map((value) => {
-              const valueWithTime = `${
-                value.name
-              } - ${value.completed?.toLocaleString('en-US')}`;
-              return (
-                <MenuItem key={value.name} value={valueWithTime}>
-                  {valueWithTime}
-                </MenuItem>
-              );
-            })}
-        </SelectInput>
+        <FormControl sx={{ mt: 3 }}>
+          <InputLabel shrink id="restore-backup">
+            {Messages.selectBackup}
+          </InputLabel>
+          <SelectInput
+            name={RestoreDbFields.backupName}
+            selectFieldProps={{
+              labelId: 'restore-backup',
+              notched: true,
+              label: Messages.selectBackup,
+              displayEmpty: true,
+              renderValue: (value) => {
+                const stringValue = value as string;
+                if (value === '') {
+                  return <span>{Messages.emptyValue}</span>;
+                }
+                return <span>{stringValue}</span>;
+              },
+            }}
+          >
+            {backups
+              ?.filter((value) => value.state === BackupStatus.OK)
+              .map((value) => {
+                const valueWithTime = `${
+                  value.name
+                } - ${value.created?.toLocaleString('en-US')}`;
+                return (
+                  <MenuItem key={value.name} value={valueWithTime}>
+                    {valueWithTime}
+                  </MenuItem>
+                );
+              })}
+          </SelectInput>
+        </FormControl>
       </LoadableChildren>
     </FormDialog>
   );
 };
+
+export default RestoreDbModal;
