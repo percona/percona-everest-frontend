@@ -99,7 +99,7 @@ export const DbActionButton = () => {
             <RestartAltIcon /> {Messages.menuItems.restart}
           </MenuItem>
           <MenuItem
-            data-testid={`${dbClusterName}-restore`}
+            data-testid={`${dbClusterName}-create-new-db-from-backup`}
             key={1}
             onClick={() => {
               setDbClusterName(dbClusterName!);
