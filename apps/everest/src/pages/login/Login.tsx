@@ -33,6 +33,10 @@ const Login = () => {
   const handleLogin: SubmitHandler<LoginFormType> = ({ password }) =>
     login(password);
 
+  if (authStatus === 'unknown') {
+    return <></>;
+  }
+
   if (authStatus === 'loggedIn') {
     return <Navigate to={redirectRoute ?? '/'} replace />;
   }

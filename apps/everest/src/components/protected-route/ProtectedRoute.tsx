@@ -16,7 +16,7 @@ const ProtectedRoute = ({ children }: { children?: ReactNode }) => {
 
   // At this point, we're pretty much checking the auth state.
   // Later this can be some sort of loading UI
-  if (authStatus === 'unknown') {
+  if (authStatus === 'unknown' || authStatus === 'loggingIn') {
     return <></>;
   }
 
