@@ -16,5 +16,4 @@
 export type CodeCopyBlockProps = {
   message: string;
   showCopyButtonText?: boolean;
-  snackbarSuccessMessage?: string;
 };

@@ -4,4 +4,5 @@ export type ResourceInputProps = {
   helperText: string;
   endSuffix: string;
   numberOfNodes: number;
+  disabled?: boolean;
 };

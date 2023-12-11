@@ -1,4 +1,4 @@
-import { addApiAuthInterceptor, api, removeApiAuthInterceptor } from 'api/api';
+import { addApiInterceptors, api, removeApiInterceptors } from 'api/api';
 import { useVersion } from 'hooks/api/version/useVersion';
 import { ReactNode, useEffect, useState } from 'react';
 import AuthContext from './auth.context';
@@ -26,7 +26,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     setApiBearerToken('');
     setRedirect(null);
     _setAuthStatus('loggedOut');
-    removeApiAuthInterceptor();
+    removeApiInterceptors();
   };
 
   const setAuthStatus = (newStatus: UserAuthStatus) =>
@@ -56,7 +56,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       _setAuthStatus('loggedIn');
       setApiBearerToken(password);
       localStorage.setItem('pwd', password);
-      addApiAuthInterceptor();
+      addApiInterceptors();
     },
     onError: () => {
       _setAuthStatus('loggedOut');
