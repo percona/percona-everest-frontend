@@ -9,6 +9,6 @@ export const Messages = {
   fromBackup: 'From a backup',
   fromPitr: 'From a Point-in-time (PITR)',
   selectBackup: 'Select backup',
-  emptyValue: 'Backup name - date and time finished',
+  emptyValue: 'Backup name - date and time started',
   create: 'Create',
 };
