@@ -62,7 +62,10 @@ export const HiddenPasswordToggle = ({
         {show ? <VisibilityOutlinedIcon /> : <VisibilityOffOutlinedIcon />}
       </IconButton>
       {showCopy && (
-        <CopyToClipboardButton buttonSx={{ mt: -1 }} textToCopy={value} />
+        <CopyToClipboardButton
+          buttonProps={{ sx: { mt: -1 } }}
+          textToCopy={value}
+        />
       )}
     </Box>
   );
