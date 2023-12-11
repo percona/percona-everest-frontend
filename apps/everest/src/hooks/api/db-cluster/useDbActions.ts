@@ -13,7 +13,6 @@ import { useNavigate } from 'react-router-dom';
 import { DbCluster, GetDbClusterPayload } from 'shared-types/dbCluster.types';
 
 export const useDbActions = () => {
-  const [selectedDbCluster, setSelectedDbCluster] = useState<string>('');
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const { data: dbClusters = [] } = useDbClusters();
   const { mutate: deleteDbCluster } = useDeleteDbCluster();
@@ -104,8 +103,7 @@ export const useDbActions = () => {
     }
   };
 
-  const handleDeleteDbCluster = (dbClusterName: string) => {
-    setSelectedDbCluster(dbClusterName);
+  const handleDeleteDbCluster = () => {
     setOpenDeleteDialog(true);
   };
 
@@ -144,7 +142,6 @@ export const useDbActions = () => {
   };
 
   return {
-    selectedDbCluster,
     openDeleteDialog,
     handleDbSuspendOrResumed,
     handleDbRestart,

@@ -4,8 +4,6 @@ import { FormDialog } from 'components/form-dialog';
 import { useDbBackups } from 'hooks/api/backups/useBackups';
 import { useDbClusterRestore } from 'hooks/api/restores/useDbClusterRestore';
 import { FieldValues } from 'react-hook-form';
-import { useMainStore } from 'stores/useMainStore';
-import { useShallow } from 'zustand/react/shallow';
 import { Messages } from './restoreDbModal.messages';
 import {
   BackuptypeValues,
@@ -15,17 +13,18 @@ import {
 } from './restoreDbModal.schema';
 import { FormDialogProps } from 'components/form-dialog/form-dialog.types';
 import { BackupStatus } from 'shared-types/backups.types';
+import { DbCluster } from 'shared-types/dbCluster.types';
 
 const RestoreDbModal = <T extends FieldValues>({
   closeModal,
   isOpen,
-}: Pick<FormDialogProps<T>, 'closeModal' | 'isOpen'>) => {
-  const [dbClusterName] = useMainStore(
-    useShallow((state) => [state.dbClusterName])
-  );
-  const { data: backups, isLoading } = useDbBackups(dbClusterName);
+  dbCluster,
+}: Pick<FormDialogProps<T>, 'closeModal' | 'isOpen'> & {
+  dbCluster: DbCluster;
+}) => {
+  const { data: backups, isLoading } = useDbBackups(dbCluster.metadata.name);
   const { mutate: restoreBackup, isLoading: restoringBackup } =
-    useDbClusterRestore(dbClusterName!);
+    useDbClusterRestore(dbCluster.metadata.name);
   return (
     <FormDialog
       size="XXXL"

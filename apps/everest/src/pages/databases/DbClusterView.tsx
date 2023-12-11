@@ -27,14 +27,13 @@ import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
 import { StatusField } from 'components/status-field/status-field';
 import { useDbActions } from 'hooks/api/db-cluster/useDbActions';
 import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
-import { DbClusterTableElement } from 'hooks/api/db-clusters/dbCluster.type';
+import { DbClusterTableElement } from './dbClusterView.types';
 import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
 import { type MRT_ColumnDef } from 'material-react-table';
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { DbClusterStatus } from 'shared-types/dbCluster.types';
+import { DbCluster, DbClusterStatus } from 'shared-types/dbCluster.types';
 import { DbEngineType } from 'shared-types/dbEngines.types';
-import { useMainStore } from 'stores/useMainStore';
 import { DB_CLUSTER_STATUS_TO_BASE_STATUS } from './DbClusterView.constants';
 import {
   beautifyDbClusterStatus,
@@ -47,9 +46,9 @@ import { RestoreDbModal } from 'modals';
 
 export const DbClusterView = () => {
   const [openRestoreDbModal, setOpenRestoreDbModal] = useState(false);
-  const setDbClusterName = useMainStore((state) => state.setDbClusterName);
   const { data: dbClusters = [], isLoading: dbClustersLoading } =
     useDbClusters();
+  const [dbCluster, setDbCluster] = useState<DbCluster | null>(null);
   const tableData = useMemo(
     () => convertDbClusterPayloadToTableFormat(dbClusters),
     [dbClusters]
@@ -57,7 +56,6 @@ export const DbClusterView = () => {
 
   const { isLoading: deletingCluster } = useDeleteDbCluster();
   const {
-    selectedDbCluster,
     openDeleteDialog,
     handleConfirmDelete,
     handleDbRestart,
@@ -173,7 +171,7 @@ export const DbClusterView = () => {
               key={3}
               data-testid={`${row.original?.databaseName}-restore`}
               onClick={() => {
-                setDbClusterName(row.original.databaseName);
+                setDbCluster(row.original.raw);
                 setOpenRestoreDbModal(true);
                 closeMenu();
               }}
@@ -212,7 +210,7 @@ export const DbClusterView = () => {
               data-testid={`${row.original?.databaseName}-delete`}
               key={1}
               onClick={() => {
-                handleDeleteDbCluster(row.original.databaseName!);
+                handleDeleteDbCluster();
                 closeMenu();
               }}
               sx={{
@@ -257,6 +255,7 @@ export const DbClusterView = () => {
       </Box>
       {openRestoreDbModal && (
         <RestoreDbModal
+          dbCluster={dbCluster!}
           isOpen={openRestoreDbModal}
           closeModal={() => setOpenRestoreDbModal(false)}
         />
@@ -264,7 +263,7 @@ export const DbClusterView = () => {
       {openDeleteDialog && (
         <ConfirmDialog
           isOpen={openDeleteDialog}
-          selectedId={selectedDbCluster}
+          selectedId={dbCluster?.metadata.name || ''}
           closeModal={handleCloseDeleteDialog}
           headerMessage={Messages.deleteModal.header}
           handleConfirm={handleConfirmDelete}

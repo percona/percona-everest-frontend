@@ -15,15 +15,14 @@ import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Messages as ClusterDetailsMessages } from './db-cluster-details.messages';
 import { RestoreDbModal } from 'modals';
-import { useMainStore } from 'stores/useMainStore';
-export const DbActionButton = () => {
+import { DbCluster } from 'shared-types/dbCluster.types';
+
+export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
   const { dbClusterName } = useParams();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openRestoreDbModal, setOpenRestoreDbModal] = useState(false);
-  const setDbClusterName = useMainStore((state) => state.setDbClusterName);
   const isOpen = !!anchorEl;
   const {
-    selectedDbCluster,
     openDeleteDialog,
     handleConfirmDelete,
     handleDbRestart,
@@ -43,6 +42,7 @@ export const DbActionButton = () => {
   const handleDelete = (dbName: string) => {
     handleConfirmDelete(dbName, '/databases');
   };
+
   return (
     <Box>
       <Button
@@ -100,7 +100,6 @@ export const DbActionButton = () => {
             data-testid={`${dbClusterName}-restore`}
             key={3}
             onClick={() => {
-              setDbClusterName(dbClusterName!);
               setOpenRestoreDbModal(true);
               closeMenu();
             }}
@@ -137,7 +136,7 @@ export const DbActionButton = () => {
             data-testid={`${dbClusterName}-delete`}
             key={5}
             onClick={() => {
-              handleDeleteDbCluster(dbClusterName!);
+              handleDeleteDbCluster();
               closeMenu();
             }}
             sx={{
@@ -154,6 +153,7 @@ export const DbActionButton = () => {
       </Box>
       {openRestoreDbModal && (
         <RestoreDbModal
+          dbCluster={dbCluster}
           isOpen={openRestoreDbModal}
           closeModal={() => setOpenRestoreDbModal(false)}
         />
@@ -161,7 +161,7 @@ export const DbActionButton = () => {
       {openDeleteDialog && (
         <ConfirmDialog
           isOpen={openDeleteDialog}
-          selectedId={selectedDbCluster}
+          selectedId={dbCluster.metadata.name}
           closeModal={handleCloseDeleteDialog}
           headerMessage={Messages.deleteModal.header}
           handleConfirm={handleDelete}

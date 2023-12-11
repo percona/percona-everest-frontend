@@ -1,11 +1,12 @@
+import { DbCluster } from 'shared-types/dbCluster.types';
 import { StateCreator } from 'zustand';
 
 export interface BackupsSlice {
-  setDbClusterName: (dbClusterName: string) => void;
-  dbClusterName: string;
+  setDbCluster: (dbCluster: DbCluster) => void;
+  dbCluster: DbCluster | null;
 }
 
 export const createBackupsSlice: StateCreator<BackupsSlice> = (set) => ({
-  dbClusterName: '',
-  setDbClusterName: (dbClusterName: string) => set({ dbClusterName }),
+  dbCluster: null,
+  setDbCluster: (dbCluster: DbCluster) => set({ dbCluster }),
 });
