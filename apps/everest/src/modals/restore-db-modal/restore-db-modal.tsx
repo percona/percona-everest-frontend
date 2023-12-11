@@ -1,33 +1,30 @@
 import { FormControl, InputLabel, MenuItem, Typography } from '@mui/material';
 import { LoadableChildren, RadioGroup, SelectInput } from '@percona/ui-lib';
 import { FormDialog } from 'components/form-dialog';
+import { FormDialogProps } from 'components/form-dialog/form-dialog.types';
 import { useDbBackups } from 'hooks/api/backups/useBackups';
 import { useDbClusterRestore } from 'hooks/api/restores/useDbClusterRestore';
 import { FieldValues } from 'react-hook-form';
-import { useMainStore } from 'stores/useMainStore';
-import { useShallow } from 'zustand/react/shallow';
-import { Messages } from './restore-db-modal.messages';
+import { useNavigate } from 'react-router-dom';
+import { BackupStatus } from 'shared-types/backups.types';
 import {
   BackuptypeValues,
   RestoreDbFields,
   defaultValues,
   schema,
 } from './restore-db-modal-schema';
-import { FormDialogProps } from 'components/form-dialog/form-dialog.types';
-import { BackupStatus } from 'shared-types/backups.types';
-import { useNavigate } from 'react-router-dom';
+import { Messages } from './restore-db-modal.messages';
 
 const RestoreDbModal = <T extends FieldValues>({
   closeModal,
   isOpen,
   isNewClusterMode,
+  dbClusterName,
 }: Pick<FormDialogProps<T>, 'closeModal' | 'isOpen'> & {
   isNewClusterMode: boolean;
+  dbClusterName: string;
 }) => {
   const navigate = useNavigate();
-  const [dbClusterName] = useMainStore(
-    useShallow((state) => [state.dbClusterName])
-  );
   const { data: backups, isLoading } = useDbBackups(dbClusterName);
   const { mutate: restoreBackup, isLoading: restoringBackup } =
     useDbClusterRestore(dbClusterName!);
