@@ -16,6 +16,7 @@ import { Navigate } from 'react-router-dom';
 import { Messages } from './Login.messages';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginFormType, loginSchema } from './Login.constants';
+import { CodeCopyBlock } from 'components/code-copy-block/code-copy-block';
 
 const Login = () => {
   const methods = useForm<LoginFormType>({
@@ -118,6 +119,7 @@ const Login = () => {
           <DialogContentText variant="body1" color="text.primary">
             {Messages.useTerminal}
           </DialogContentText>
+          <CodeCopyBlock message="everestctl password reset" />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} variant="contained">
