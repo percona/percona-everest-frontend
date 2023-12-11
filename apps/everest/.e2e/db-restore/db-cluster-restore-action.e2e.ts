@@ -28,10 +28,6 @@ test.describe('DB Cluster Restore', () => {
   test.beforeEach(async ({ request, page }) => {
     await page.goto('/databases');
     const token = await getTokenFromLocalStorage();
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
     await createDbClusterFn(token, request, {
       dbName: dbClusterName,
       dbType: 'mysql',
