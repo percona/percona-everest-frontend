@@ -13,26 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { Alert, Button, IconButton } from '@mui/material';
-import { enqueueSnackbar } from 'notistack';
-import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
-import { Messages } from './code-copy-block.messages';
+import { Alert } from '@mui/material';
 import { CodeCopyBlockProps } from './code-copy-block.types';
+import { CopyToClipboardButton } from '@percona/ui-lib';
 
 export const CodeCopyBlock = ({
   message,
   showCopyButtonText,
-  snackbarSuccessMessage,
 }: CodeCopyBlockProps) => {
-  const copyToClipboard = async () => {
-    await navigator.clipboard.writeText(message);
-    enqueueSnackbar(snackbarSuccessMessage || Messages.copyToClipboardTooltip, {
-      variant: 'success',
-    });
-  };
-  const { isMobile } = useActiveBreakpoint();
-
   return (
     <Alert
       severity="info"
@@ -46,40 +34,11 @@ export const CodeCopyBlock = ({
         },
       }}
       action={
-        navigator.clipboard &&
-        window.isSecureContext &&
-        (showCopyButtonText ? (
-          <Button
-            size="small"
-            color="primary"
-            onClick={copyToClipboard}
-            sx={{
-              whiteSpace: 'nowrap',
-              display: 'flex',
-              gap: 1,
-              fontWeight: 600,
-            }}
-          >
-            <ContentCopyIcon />{' '}
-            {!isMobile && showCopyButtonText && Messages.copyCommand}
-          </Button>
-        ) : (
-          <IconButton
-            aria-label="copy to clipboard"
-            color="primary"
-            size="small"
-            sx={{
-              whiteSpace: 'nowrap',
-              display: 'flex',
-              gap: 1,
-              fontWeight: 600,
-            }}
-            data-testid="close-dialog-icon"
-            onClick={copyToClipboard}
-          >
-            <ContentCopyIcon />
-          </IconButton>
-        ))
+        <CopyToClipboardButton
+          showCopyButtonText={showCopyButtonText}
+          buttonProps={{ size: 'small', color: 'primary' }}
+          textToCopy={message}
+        />
       }
     >
       {message}
