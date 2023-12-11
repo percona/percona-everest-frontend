@@ -49,7 +49,9 @@ test.describe('DB Cluster Restore', () => {
 
   test('DB cluster list restore action', async ({ page }) => {
     await findDbAndClickActions(page, dbClusterName, 'Restore from a backup');
-    await expect(page.getByText('Backup name - date and time finished')).toBeVisible();
+    await expect(
+      page.getByText('Backup name - date and time finished')
+    ).toBeVisible();
     await expect(page.getByTestId('form-dialog-restore')).toBeVisible();
     await page.getByTestId('close-dialog-icon').click();
   });
@@ -61,7 +63,9 @@ test.describe('DB Cluster Restore', () => {
 
     const restoreButton = page.getByTestId(`${dbClusterName}-restore`);
     await restoreButton.click();
-    await expect(page.getByText('Backup name - date and time finished')).toBeVisible();
+    await expect(
+      page.getByText('Backup name - date and time finished')
+    ).toBeVisible();
     await expect(page.getByTestId('form-dialog-restore')).toBeVisible();
     await page.getByTestId('close-dialog-icon').click();
   });

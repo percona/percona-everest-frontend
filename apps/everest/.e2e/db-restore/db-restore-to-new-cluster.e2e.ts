@@ -16,55 +16,61 @@
 import { expect, test } from '@playwright/test';
 import { createDbClusterFn, deleteDbClusterFn } from '../utils/db-cluster';
 import {
-    findDbAndClickActions,
-    findDbAndClickRow,
+  findDbAndClickActions,
+  findDbAndClickRow,
 } from '../utils/db-clusters-list';
 import { getTokenFromLocalStorage } from '../utils/localStorage';
 
 test.describe('DB Cluster Restore to the new cluster', () => {
-    const dbClusterName = 'mysql-restore-to-new';
+  const dbClusterName = 'mysql-restore-to-new';
 
-    test.beforeEach(async ({ request, page }) => {
-        await page.goto('/databases');
-        const token = await getTokenFromLocalStorage();
-        const closeIcon = page.getByTestId('close-dialog-icon');
-        if (closeIcon) {
-            await closeIcon.click();
-        }
-        await createDbClusterFn(token, request, {
-            dbName: dbClusterName,
-            dbType: 'mysql',
-            numberOfNodes: '1',
-            backup: {
-                enabled: true,
-                schedules: [],
-            },
-        });
+  test.beforeEach(async ({ request, page }) => {
+    await page.goto('/databases');
+    const token = await getTokenFromLocalStorage();
+    const closeIcon = page.getByTestId('close-dialog-icon');
+    if (closeIcon) {
+      await closeIcon.click();
+    }
+    await createDbClusterFn(token, request, {
+      dbName: dbClusterName,
+      dbType: 'mysql',
+      numberOfNodes: '1',
+      backup: {
+        enabled: true,
+        schedules: [],
+      },
     });
+  });
 
-    test.afterEach(async ({ request }) => {
-        const token = await getTokenFromLocalStorage();
-        await deleteDbClusterFn(token, request, dbClusterName);
-    });
+  test.afterEach(async ({ request }) => {
+    const token = await getTokenFromLocalStorage();
+    await deleteDbClusterFn(token, request, dbClusterName);
+  });
 
-    test('DB cluster list restore action', async ({ page }) => {
-        await findDbAndClickActions(page, dbClusterName, 'Create DB from a backup');
+  test('DB cluster list restore action', async ({ page }) => {
+    await findDbAndClickActions(page, dbClusterName, 'Create DB from a backup');
 
-        await expect(page.getByTestId('restore-form-dialog')).toBeVisible();
-        await expect(page.getByText('Backup name - date and time finished')).toBeVisible();
-        await page.getByTestId('close-dialog-icon').click();
-    });
+    await expect(page.getByTestId('restore-form-dialog')).toBeVisible();
+    await expect(
+      page.getByText('Backup name - date and time finished')
+    ).toBeVisible();
+    await page.getByTestId('close-dialog-icon').click();
+  });
 
-    test('DB cluster detail restore action', async ({ page }) => {
-        await findDbAndClickRow(page, dbClusterName);
-        const actionButton = page.getByTestId('actions-button');
-        await actionButton.click();
+  test('DB cluster detail restore action', async ({ page }) => {
+    await findDbAndClickRow(page, dbClusterName);
+    const actionButton = page.getByTestId('actions-button');
+    await actionButton.click();
 
-        const restoreButton = page.getByTestId(`${dbClusterName}-create-new-db-from-backup`);
-        await restoreButton.click();
+    const restoreButton = page.getByTestId(
+      `${dbClusterName}-create-new-db-from-backup`
+    );
+    await restoreButton.click();
 
-        await expect(page.getByTestId('restore-form-dialog')).toBeVisible();
-        await expect(page.getByText('Backup name - date and time finished')).toBeVisible();
-        await page.getByTestId('close-dialog-icon').click();
-    });
+    await expect(page.getByTestId('restore-form-dialog')).toBeVisible();
+    await expect(
+      page.getByText('Backup name - date and time finished')
+    ).toBeVisible();
+    await page.getByTestId('close-dialog-icon').click();
+  });
 });
