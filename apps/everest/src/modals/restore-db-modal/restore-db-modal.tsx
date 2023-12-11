@@ -42,23 +42,21 @@ const RestoreDbModal = <T extends FieldValues>({
       submitting={restoringBackup}
       defaultValues={defaultValues}
       onSubmit={({ backupName }) => {
-        const backupNameWithoutTime = backupName.split(' - ')[0];
-
         if (isNewClusterMode) {
           closeModal();
           const selectedBackup = backups?.find(
-            (backup) => backup.name === backupNameWithoutTime
+            (backup) => backup.name === backupName
           );
           navigate('/databases/new', {
             state: {
               selectedDbCluster: dbClusterName!,
-              backupName: backupNameWithoutTime,
+              backupName: backupName,
               backupStorageName: selectedBackup,
             },
           });
         } else {
           restoreBackup(
-            { backupName: backupNameWithoutTime },
+            { backupName: backupName },
             {
               onSuccess() {
                 closeModal();
@@ -101,23 +99,12 @@ const RestoreDbModal = <T extends FieldValues>({
           ]}
         />
         <FormControl sx={{ mt: 3 }}>
-          <InputLabel shrink id="restore-backup">
-            {Messages.selectBackup}
-          </InputLabel>
+          <InputLabel id="restore-backup">{Messages.selectBackup}</InputLabel>
           <SelectInput
             name={RestoreDbFields.backupName}
             selectFieldProps={{
               labelId: 'restore-backup',
-              notched: true,
               label: Messages.selectBackup,
-              displayEmpty: true,
-              renderValue: (value) => {
-                const stringValue = value as string;
-                if (value === '') {
-                  return <span>{Messages.emptyValue}</span>;
-                }
-                return <span>{stringValue}</span>;
-              },
             }}
           >
             {backups
@@ -128,7 +115,7 @@ const RestoreDbModal = <T extends FieldValues>({
                 } - ${value.created?.toLocaleString('en-US')}`;
                 return (
                   <MenuItem key={value.name} value={valueWithTime}>
-                    {valueWithTime}
+                    {value.name}
                   </MenuItem>
                 );
               })}

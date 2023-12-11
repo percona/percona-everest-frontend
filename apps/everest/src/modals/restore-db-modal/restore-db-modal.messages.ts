@@ -8,7 +8,6 @@ export const Messages = {
   restore: 'Restore',
   fromBackup: 'From a backup',
   fromPitr: 'From a Point-in-time (PITR)',
-  selectBackup: 'Select backup',
-  emptyValue: 'Select backup (Backup name - Started time)',
+  selectBackup: 'Select backup (Backup name - Started time)',
   create: 'Create',
 };
