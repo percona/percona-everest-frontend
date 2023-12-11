@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import { IconButton } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import { CopyToClipboardButtonProps } from './CopyToClipboardButton.types';
 
 const CopyToClipboardButton = ({
   textToCopy,
-  buttonSx,
+  buttonProps,
   iconSx,
+  showCopyButtonText,
+  copyCommand = 'Copy command',
 }: CopyToClipboardButtonProps) => {
   const [open, setOpen] = useState(false);
   const clipboardAvailable = !!navigator.clipboard;
@@ -40,19 +42,32 @@ const CopyToClipboardButton = ({
           : 'Clipboard access is restricted in unsecured contexts. Switch to HTTPS or localhost, or copy the content manually.'
       }
     >
-      <IconButton
-        component="div"
-        sx={{
-          ...buttonSx,
-          '&.Mui-disabled': {
-            pointerEvents: 'auto',
-          },
-        }}
-        onClick={handleClick}
-        disabled={!clipboardAvailable}
-      >
-        <ContentCopyOutlinedIcon sx={iconSx} />
-      </IconButton>
+      {showCopyButtonText ? (
+        <Button
+          sx={{ ...buttonProps?.sx, display: 'flex', gap: 1 }}
+          onClick={handleClick}
+          disabled={!clipboardAvailable}
+          {...buttonProps}
+        >
+          <ContentCopyOutlinedIcon sx={iconSx} />
+          {copyCommand}
+        </Button>
+      ) : (
+        <IconButton
+          component="div"
+          sx={{
+            ...buttonProps?.sx,
+            '&.Mui-disabled': {
+              pointerEvents: 'auto',
+            },
+          }}
+          onClick={handleClick}
+          disabled={!clipboardAvailable}
+          {...buttonProps}
+        >
+          <ContentCopyOutlinedIcon sx={iconSx} />
+        </IconButton>
+      )}
     </Tooltip>
   );
 };
