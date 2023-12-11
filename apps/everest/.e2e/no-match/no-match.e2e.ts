@@ -19,10 +19,6 @@ import { checkNoMatchPage } from '../utils/no-match';
 test.describe('No match (404) page', () => {
   test('databases page successfully loaded', async ({ page }) => {
     await page.goto('/databases');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
     const button = page.getByTestId('add-db-cluster-button');
 
     await expect(button).toBeVisible();

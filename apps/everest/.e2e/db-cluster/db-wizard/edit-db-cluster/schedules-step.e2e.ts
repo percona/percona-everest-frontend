@@ -51,11 +51,6 @@ test.describe.serial('DB Cluster Editing Backups Step', async () => {
     page,
   }) => {
     await page.goto('/databases');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-
     await findDbAndClickActions(page, mySQLName, 'Edit');
 
     const nextStep = page.getByTestId('db-wizard-continue-button');
@@ -110,11 +105,6 @@ test.describe.serial('DB Cluster Editing Backups Step', async () => {
     page,
   }) => {
     await page.goto('/databases');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-
     await findDbAndClickActions(page, mySQLName, 'Edit');
 
     const nextStep = page.getByTestId('db-wizard-continue-button');
