@@ -47,7 +47,6 @@ test.describe('DB Cluster Restore to the new cluster', () => {
     await findDbAndClickActions(page, dbClusterName, 'Create DB from a backup');
 
     await expect(page.getByTestId('restore-modal')).toBeVisible();
-    await page.getByTestId('close-dialog-icon').click();
   });
 
   test('DB cluster detail restore action', async ({ page }) => {
@@ -61,6 +60,5 @@ test.describe('DB Cluster Restore to the new cluster', () => {
     await restoreButton.click();
 
     await expect(page.getByTestId('restore-modal')).toBeVisible();
-    await page.getByTestId('close-dialog-icon').click();
   });
 });
