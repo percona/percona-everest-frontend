@@ -1,6 +1,6 @@
 import {
   BackupPayload,
-  DatabaseClusterPitr,
+  DatabaseClusterPitrPayload,
   GetBackupsPayload,
   SingleBackupPayload,
 } from 'shared-types/backups.types';
@@ -28,10 +28,19 @@ export const deleteBackupFn = async (backupName: string) => {
   return response.data;
 };
 
-export const getPitrFn = async (dbClusterName: string) => {
-  const response = await api.get<DatabaseClusterPitr>(
-    `/database-clusters/${dbClusterName}/pitr`
-  );
+export const getPitrFn = async (/*dbClusterName: string*/) => {
+  // TODO uncomment after API is ready
+  // const response = await api.get<DatabaseClusterPitr>(
+  //   `/database-clusters/${dbClusterName}/pitr`
+  // );
 
-  return response.data;
+  // return response.data;
+
+  const payload: DatabaseClusterPitrPayload = {
+    earliestDate: '2023-12-01 23:59:59',
+    latestDate: '2023-12-05 23:59:59',
+    latestBackupName: 'my-backup',
+  };
+
+  return payload;
 };

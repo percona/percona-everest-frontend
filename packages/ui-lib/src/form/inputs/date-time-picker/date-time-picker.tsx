@@ -18,6 +18,7 @@ const DateTimePickerInput = <T extends object>({
       render={({ field }) => (
         <DateTimePicker
           {...field}
+          inputRef={field.ref}
           data-testid={`date-time-picker-${kebabize(name)}`}
           {...dateTimePickerProps}
         />

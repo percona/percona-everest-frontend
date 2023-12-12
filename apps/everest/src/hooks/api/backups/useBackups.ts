@@ -13,6 +13,8 @@ import {
 import {
   Backup,
   BackupStatus,
+  DatabaseClusterPitr,
+  DatabaseClusterPitrPayload,
   GetBackupsPayload,
 } from 'shared-types/backups.types';
 import { mapBackupState } from 'utils/backups';
@@ -78,6 +80,24 @@ export const useDeleteBackup = (
   });
 };
 
-export const useDbClusterPitr = (dbClusterName: string) => {
-  return useQuery(`${dbClusterName}-pitr`, () => getPitrFn(dbClusterName));
+export const useDbClusterPitr = (
+  dbClusterName: string,
+  options?: UseQueryOptions<
+    DatabaseClusterPitrPayload,
+    unknown,
+    DatabaseClusterPitr
+  >
+) => {
+  return useQuery<DatabaseClusterPitrPayload, unknown, DatabaseClusterPitr>(
+    `${dbClusterName}-pitr`,
+    () => getPitrFn(/*dbClusterName*/),
+    {
+      select: ({ earliestDate, latestDate, latestBackupName }) => ({
+        earliestDate: new Date(earliestDate),
+        latestDate: new Date(latestDate),
+        latestBackupName,
+      }),
+      ...options,
+    }
+  );
 };
