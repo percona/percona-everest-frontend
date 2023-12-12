@@ -23,7 +23,7 @@
     "@hookform/resolvers": "^3.3.2",
     "@mui/icons-material": "^5.14.15",
     "@mui/material": "^5.14.14",
-    "@mui/x-date-pickers": "^6.18.1",
+    "@mui/x-date-pickers": "^6.18.4",
     "@percona/design": "workspace:^",
     "@percona/types": "workspace:^",
     "@percona/ui-lib": "workspace:^",

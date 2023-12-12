@@ -8,6 +8,7 @@ import {
   createBackupOnDemand,
   deleteBackupFn,
   getBackupsFn,
+  getPitrFn,
 } from 'api/backups';
 import {
   Backup,
@@ -75,4 +76,8 @@ export const useDeleteBackup = (
   return useMutation((backupName: string) => deleteBackupFn(backupName), {
     ...options,
   });
+};
+
+export const useDbClusterPitr = (dbClusterName: string) => {
+  return useQuery(`${dbClusterName}-pitr`, () => getPitrFn(dbClusterName));
 };

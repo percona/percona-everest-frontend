@@ -3,6 +3,7 @@ import { z } from 'zod';
 export enum RestoreDbFields {
   backupType = 'backupType',
   backupName = 'backupName',
+  pitrBackup = 'pitrBackup',
 }
 
 export enum BackuptypeValues {
@@ -18,6 +19,7 @@ export const schema = z.object({
 export const defaultValues = {
   [RestoreDbFields.backupType]: BackuptypeValues.fromBackup,
   [RestoreDbFields.backupName]: '',
+  [RestoreDbFields.pitrBackup]: '',
 };
 
 export type RestoreDbFormData = z.infer<typeof schema>;

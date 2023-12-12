@@ -44,3 +44,9 @@ export type BackupPayload = {
     backupStorageName: string;
   };
 };
+
+export type DatabaseClusterPitr = {
+  earliestDate: string;
+  latestDate: string;
+  latestBackupName: string;
+};
