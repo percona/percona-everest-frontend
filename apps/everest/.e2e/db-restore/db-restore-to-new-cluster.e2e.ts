@@ -14,7 +14,6 @@
 // limitations under the License.
 
 import { expect, test } from '@playwright/test';
-import { Messages } from '../../src/modals/restore-db-modal/restore-db-modal.messages';
 import { createDbClusterFn, deleteDbClusterFn } from '../utils/db-cluster';
 import {
   findDbAndClickActions,
@@ -47,7 +46,7 @@ test.describe('DB Cluster Restore to the new cluster', () => {
   test('DB cluster list restore action', async ({ page }) => {
     await findDbAndClickActions(page, dbClusterName, 'Create DB from a backup');
 
-    await expect(page.getByText(Messages.headerMessageCreate)).toBeVisible();
+    await expect(page.getByTestId('restore-modal')).toBeVisible();
     await page.getByTestId('close-dialog-icon').click();
   });
 
@@ -61,7 +60,7 @@ test.describe('DB Cluster Restore to the new cluster', () => {
     );
     await restoreButton.click();
 
-    await expect(page.getByText(Messages.headerMessageCreate)).toBeVisible();
+    await expect(page.getByTestId('restore-modal')).toBeVisible();
     await page.getByTestId('close-dialog-icon').click();
   });
 });

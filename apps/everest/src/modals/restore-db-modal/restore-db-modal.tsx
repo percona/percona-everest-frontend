@@ -33,7 +33,7 @@ const RestoreDbModal = <T extends FieldValues>({
     <FormDialog
       size="XXXL"
       isOpen={isOpen}
-      dataTestId="restore"
+      dataTestId="restore-modal"
       closeModal={closeModal}
       headerMessage={
         isNewClusterMode ? Messages.headerMessageCreate : Messages.headerMessage
