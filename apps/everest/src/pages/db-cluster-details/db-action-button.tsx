@@ -39,8 +39,8 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
     setAnchorEl(null);
   };
 
-  const handleDelete = (dbName: string) => {
-    handleConfirmDelete(dbName, '/databases');
+  const handleDelete = () => {
+    handleConfirmDelete('/databases');
   };
 
   return (
@@ -83,7 +83,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
           <MenuItem
             key={2}
             onClick={() => {
-              handleDbRestart(dbClusterName!);
+              handleDbRestart(dbCluster);
               closeMenu();
             }}
             sx={{
@@ -116,7 +116,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
           <MenuItem
             key={4}
             onClick={() => {
-              handleDbSuspendOrResumed(dbClusterName!);
+              handleDbSuspendOrResumed(dbCluster);
               closeMenu();
             }}
             sx={{
@@ -128,7 +128,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
             }}
           >
             <PauseCircleOutline />{' '}
-            {isPaused(dbClusterName!)
+            {isPaused(dbCluster)
               ? Messages.menuItems.resume
               : Messages.menuItems.suspend}
           </MenuItem>
@@ -136,7 +136,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
             data-testid={`${dbClusterName}-delete`}
             key={5}
             onClick={() => {
-              handleDeleteDbCluster();
+              handleDeleteDbCluster(dbCluster);
               closeMenu();
             }}
             sx={{

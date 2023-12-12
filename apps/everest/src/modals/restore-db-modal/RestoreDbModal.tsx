@@ -14,6 +14,7 @@ import {
 import { FormDialogProps } from 'components/form-dialog/form-dialog.types';
 import { BackupStatus } from 'shared-types/backups.types';
 import { DbCluster } from 'shared-types/dbCluster.types';
+import { DbEngineType } from '@percona/types';
 
 const RestoreDbModal = <T extends FieldValues>({
   closeModal,
@@ -71,7 +72,7 @@ const RestoreDbModal = <T extends FieldValues>({
             {
               label: Messages.fromPitr,
               value: BackuptypeValues.fromPitr,
-              disabled: true,
+              disabled: dbCluster.spec.engine.type !== DbEngineType.PXC,
             },
           ]}
         />
