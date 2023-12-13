@@ -75,9 +75,9 @@ const formValuesToPayloadOverrides = (
             ...dbCluster?.spec?.backup?.pitr,
             enabled: dbPayload.pitrEnabled,
             backupStorageName:
-                typeof dbPayload.pitrStorageLocation === 'string'
-                    ? dbPayload.pitrStorageLocation
-                    : dbPayload.pitrStorageLocation!.name,
+              typeof dbPayload.pitrStorageLocation === 'string'
+                ? dbPayload.pitrStorageLocation
+                : dbPayload.pitrStorageLocation!.name,
           },
         }),
         ...(dbPayload.backupsEnabled && {
