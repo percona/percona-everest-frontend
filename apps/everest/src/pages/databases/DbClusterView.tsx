@@ -30,7 +30,8 @@ import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
 import { DbClusterTableElement } from './dbClusterView.types';
 import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
 import { type MRT_ColumnDef } from 'material-react-table';
-import { useMemo } from 'react';
+import { RestoreDbModal } from 'modals';
+import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DbClusterStatus } from 'shared-types/dbCluster.types';
 import { DbEngineType } from 'shared-types/dbEngines.types';
@@ -42,9 +43,9 @@ import {
 import { Messages } from './dbClusterView.messages';
 import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
-import { RestoreDbModal } from 'modals';
 
 export const DbClusterView = () => {
+  const [isNewClusterMode, setIsNewClusterMode] = useState(false);
   const { data: dbClusters = [], isLoading: dbClustersLoading } =
     useDbClusters();
   const tableData = useMemo(
@@ -170,10 +171,28 @@ export const DbClusterView = () => {
               <RestartAltIcon /> {Messages.menuItems.restart}
             </MenuItem>,
             <MenuItem
+              key={5}
+              onClick={() => {
+                handleRestoreDbCluster(row.original.raw);
+                setIsNewClusterMode(true);
+                closeMenu();
+              }}
+              sx={{
+                display: 'flex',
+                gap: 1,
+                alignItems: 'center',
+                px: 2,
+                py: '10px',
+              }}
+            >
+              <AddIcon /> {Messages.menuItems.createNewDbFromBackup}
+            </MenuItem>,
+            <MenuItem
               key={3}
               data-testid={`${row.original?.databaseName}-restore`}
               onClick={() => {
                 handleRestoreDbCluster(row.original.raw);
+                setIsNewClusterMode(false);
                 closeMenu();
               }}
               sx={{
@@ -259,6 +278,7 @@ export const DbClusterView = () => {
           dbCluster={selectedDbCluster!}
           isOpen
           closeModal={handleCloseRestoreDialog}
+          isNewClusterMode={isNewClusterMode}
         />
       )}
       {openDeleteDialog && (

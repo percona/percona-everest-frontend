@@ -3,6 +3,7 @@ import {
   DeleteOutline,
   PauseCircleOutline,
 } from '@mui/icons-material';
+import AddIcon from '@mui/icons-material/Add';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
@@ -10,17 +11,18 @@ import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
 import { useDbActions } from 'hooks/api/db-cluster/useDbActions';
 import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
+import { RestoreDbModal } from 'modals';
 import { Messages } from 'pages/databases/dbClusterView.messages';
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Messages as ClusterDetailsMessages } from './db-cluster-details.messages';
-import { RestoreDbModal } from 'modals';
 import { DbCluster } from 'shared-types/dbCluster.types';
 
 export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
   const { dbClusterName } = useParams();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openRestoreDbModal, setOpenRestoreDbModal] = useState(false);
+  const [isNewClusterMode, setIsNewClusterMode] = useState(false);
   const isOpen = !!anchorEl;
   const {
     openDeleteDialog,
@@ -97,9 +99,28 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
             <RestartAltIcon /> {Messages.menuItems.restart}
           </MenuItem>
           <MenuItem
+            data-testid={`${dbClusterName}-create-new-db-from-backup`}
+            key={1}
+            onClick={() => {
+              setIsNewClusterMode(true);
+              setOpenRestoreDbModal(true);
+              closeMenu();
+            }}
+            sx={{
+              display: 'flex',
+              gap: 1,
+              alignItems: 'center',
+              px: 2,
+              py: '10px',
+            }}
+          >
+            <AddIcon /> {Messages.menuItems.createNewDbFromBackup}
+          </MenuItem>
+          <MenuItem
             data-testid={`${dbClusterName}-restore`}
             key={3}
             onClick={() => {
+              setIsNewClusterMode(false);
               setOpenRestoreDbModal(true);
               closeMenu();
             }}
@@ -154,6 +175,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
       {openRestoreDbModal && (
         <RestoreDbModal
           dbCluster={dbCluster}
+          isNewClusterMode={isNewClusterMode}
           isOpen={openRestoreDbModal}
           closeModal={() => setOpenRestoreDbModal(false)}
         />

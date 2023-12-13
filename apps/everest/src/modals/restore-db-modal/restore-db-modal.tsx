@@ -9,26 +9,30 @@ import { FormDialog } from 'components/form-dialog';
 import { useDbBackups, useDbClusterPitr } from 'hooks/api/backups/useBackups';
 import { useDbClusterRestore } from 'hooks/api/restores/useDbClusterRestore';
 import { FieldValues } from 'react-hook-form';
-import { Messages } from './restoreDbModal.messages';
+import { FormDialogProps } from 'components/form-dialog/form-dialog.types';
+import { useNavigate } from 'react-router-dom';
+import { BackupStatus } from 'shared-types/backups.types';
 import {
   BackuptypeValues,
   RestoreDbFields,
   defaultValues,
   schema,
-} from './restoreDbModal.schema';
-import { FormDialogProps } from 'components/form-dialog/form-dialog.types';
-import { BackupStatus } from 'shared-types/backups.types';
+} from './restore-db-modal-schema';
 import { DbCluster } from 'shared-types/dbCluster.types';
 import { DbEngineType } from '@percona/types';
 import { DATE_FORMAT } from 'consts';
+import { Messages } from './restore-db-modal.messages';
 
 const RestoreDbModal = <T extends FieldValues>({
   closeModal,
   isOpen,
   dbCluster,
+  isNewClusterMode,
 }: Pick<FormDialogProps<T>, 'closeModal' | 'isOpen'> & {
   dbCluster: DbCluster;
+  isNewClusterMode: boolean;
 }) => {
+  const navigate = useNavigate();
   const { data: backups = [], isLoading } = useDbBackups(
     dbCluster.metadata.name
   );
@@ -47,28 +51,47 @@ const RestoreDbModal = <T extends FieldValues>({
     <FormDialog
       size="XXXL"
       isOpen={isOpen}
+      dataTestId="restore-modal"
       closeModal={closeModal}
-      headerMessage={Messages.headerMessage}
+      headerMessage={
+        isNewClusterMode ? Messages.headerMessageCreate : Messages.headerMessage
+      }
       schema={schema(pitrData!.earliestDate, pitrData!.latestDate)}
       submitting={restoringBackup}
       defaultValues={defaultValues}
       values={{ ...defaultValues, pitrBackup: pitrData!.latestDate }}
       onSubmit={({ backupName, backupType, pitrBackup }) => {
         console.log(backupType, backupName, pitrBackup);
-        // restoreBackup(
-        //   { backupName },
-        //   {
-        //     onSuccess() {
-        //       closeModal();
+        // if (isNewClusterMode) {
+        //   closeModal();
+        //   const selectedBackup = backups?.find(
+        //     (backup) => backup.name === backupName
+        //   );
+        //   navigate('/databases/new', {
+        //     state: {
+        //       selectedDbCluster: dbClusterName!,
+        //       backupName: backupName,
+        //       backupStorageName: selectedBackup,
         //     },
-        //   }
-        // );
+        //   });
+        // } else {
+        //   restoreBackup(
+        //     { backupName },
+        //     {
+        //       onSuccess() {
+        //         closeModal();
+        //       },
+        //     }
+        //   );
+        // }
       }}
-      submitMessage={Messages.restore}
+      submitMessage={isNewClusterMode ? Messages.create : Messages.restore}
     >
       {({ watch }) => (
         <LoadableChildren loading={isLoading}>
-          <Typography variant="body1">{Messages.subHead}</Typography>
+          <Typography variant="body1">
+            {isNewClusterMode ? Messages.subHeadCreate : Messages.subHead}
+          </Typography>
           <RadioGroup
             name={RestoreDbFields.backupType}
             radioGroupFieldProps={{
