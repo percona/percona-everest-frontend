@@ -14,13 +14,13 @@
 // limitations under the License.
 
 import { expect, test } from '@playwright/test';
+import { Messages } from '../../src/modals/restore-db-modal/restore-db-modal.messages';
 import { createDbClusterFn, deleteDbClusterFn } from '../utils/db-cluster';
 import {
   findDbAndClickActions,
   findDbAndClickRow,
 } from '../utils/db-clusters-list';
 import { getTokenFromLocalStorage } from '../utils/localStorage';
-
 test.describe('DB Cluster Restore', () => {
   const dbClusterName = 'mysql-test-ui-restore';
 
@@ -46,9 +46,10 @@ test.describe('DB Cluster Restore', () => {
   test('DB cluster list restore action', async ({ page }) => {
     await findDbAndClickActions(page, dbClusterName, 'Restore from a backup');
     await expect(
-      page.getByText('Backup name - date and time finished')
+      page
+        .getByTestId('select-backup-name-button')
+        .getByText(Messages.selectBackup)
     ).toBeVisible();
-    await expect(page.getByTestId('form-dialog-restore')).toBeVisible();
   });
 
   test('DB cluster detail restore action', async ({ page }) => {
@@ -59,8 +60,9 @@ test.describe('DB Cluster Restore', () => {
     const restoreButton = page.getByTestId(`${dbClusterName}-restore`);
     await restoreButton.click();
     await expect(
-      page.getByText('Backup name - date and time finished')
+      page
+        .getByTestId('select-backup-name-button')
+        .getByText(Messages.selectBackup)
     ).toBeVisible();
-    await expect(page.getByTestId('form-dialog-restore')).toBeVisible();
   });
 });

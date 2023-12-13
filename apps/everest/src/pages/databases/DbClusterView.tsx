@@ -30,11 +30,11 @@ import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
 import { DbClusterTableElement } from 'hooks/api/db-clusters/dbCluster.type';
 import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
 import { type MRT_ColumnDef } from 'material-react-table';
+import { RestoreDbModal } from 'modals';
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DbClusterStatus } from 'shared-types/dbCluster.types';
 import { DbEngineType } from 'shared-types/dbEngines.types';
-import { useMainStore } from 'stores/useMainStore';
 import { DB_CLUSTER_STATUS_TO_BASE_STATUS } from './DbClusterView.constants';
 import {
   beautifyDbClusterStatus,
@@ -43,12 +43,11 @@ import {
 import { Messages } from './dbClusterView.messages';
 import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
-import { RestoreDbModal } from 'modals';
 
 export const DbClusterView = () => {
   const [openRestoreDbModal, setOpenRestoreDbModal] = useState(false);
   const [isNewClusterMode, setIsNewClusterMode] = useState(false);
-  const setDbClusterName = useMainStore((state) => state.setDbClusterName);
+  const [dbClusterName, setDbClusterName] = useState('');
   const { data: dbClusters = [], isLoading: dbClustersLoading } =
     useDbClusters();
   const tableData = useMemo(
@@ -280,6 +279,7 @@ export const DbClusterView = () => {
           isNewClusterMode={isNewClusterMode}
           isOpen={openRestoreDbModal}
           closeModal={() => setOpenRestoreDbModal(false)}
+          dbClusterName={dbClusterName}
         />
       )}
       {openDeleteDialog && (

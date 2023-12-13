@@ -1,33 +1,30 @@
 import { FormControl, InputLabel, MenuItem, Typography } from '@mui/material';
 import { LoadableChildren, RadioGroup, SelectInput } from '@percona/ui-lib';
 import { FormDialog } from 'components/form-dialog';
+import { FormDialogProps } from 'components/form-dialog/form-dialog.types';
 import { useDbBackups } from 'hooks/api/backups/useBackups';
 import { useDbClusterRestore } from 'hooks/api/restores/useDbClusterRestore';
 import { FieldValues } from 'react-hook-form';
-import { useMainStore } from 'stores/useMainStore';
-import { useShallow } from 'zustand/react/shallow';
-import { Messages } from './restore-db-modal.messages';
+import { useNavigate } from 'react-router-dom';
+import { BackupStatus } from 'shared-types/backups.types';
 import {
   BackuptypeValues,
   RestoreDbFields,
   defaultValues,
   schema,
 } from './restore-db-modal-schema';
-import { FormDialogProps } from 'components/form-dialog/form-dialog.types';
-import { BackupStatus } from 'shared-types/backups.types';
-import { useNavigate } from 'react-router-dom';
+import { Messages } from './restore-db-modal.messages';
 
 const RestoreDbModal = <T extends FieldValues>({
   closeModal,
   isOpen,
   isNewClusterMode,
+  dbClusterName,
 }: Pick<FormDialogProps<T>, 'closeModal' | 'isOpen'> & {
   isNewClusterMode: boolean;
+  dbClusterName: string;
 }) => {
   const navigate = useNavigate();
-  const [dbClusterName] = useMainStore(
-    useShallow((state) => [state.dbClusterName])
-  );
   const { data: backups, isLoading } = useDbBackups(dbClusterName);
   const { mutate: restoreBackup, isLoading: restoringBackup } =
     useDbClusterRestore(dbClusterName!);
@@ -36,7 +33,7 @@ const RestoreDbModal = <T extends FieldValues>({
     <FormDialog
       size="XXXL"
       isOpen={isOpen}
-      dataTestId="restore"
+      dataTestId="restore-modal"
       closeModal={closeModal}
       headerMessage={
         isNewClusterMode ? Messages.headerMessageCreate : Messages.headerMessage
@@ -45,23 +42,21 @@ const RestoreDbModal = <T extends FieldValues>({
       submitting={restoringBackup}
       defaultValues={defaultValues}
       onSubmit={({ backupName }) => {
-        const backupNameWithoutTime = backupName.split(' - ')[0];
-
         if (isNewClusterMode) {
           closeModal();
           const selectedBackup = backups?.find(
-            (backup) => backup.name === backupNameWithoutTime
+            (backup) => backup.name === backupName
           );
           navigate('/databases/new', {
             state: {
               selectedDbCluster: dbClusterName!,
-              backupName: backupNameWithoutTime,
+              backupName: backupName,
               backupStorageName: selectedBackup,
             },
           });
         } else {
           restoreBackup(
-            { backupName: backupNameWithoutTime },
+            { backupName: backupName },
             {
               onSuccess() {
                 closeModal();
@@ -104,23 +99,12 @@ const RestoreDbModal = <T extends FieldValues>({
           ]}
         />
         <FormControl sx={{ mt: 3 }}>
-          <InputLabel shrink id="restore-backup">
-            {Messages.selectBackup}
-          </InputLabel>
+          <InputLabel id="restore-backup">{Messages.selectBackup}</InputLabel>
           <SelectInput
             name={RestoreDbFields.backupName}
             selectFieldProps={{
               labelId: 'restore-backup',
-              notched: true,
               label: Messages.selectBackup,
-              displayEmpty: true,
-              renderValue: (value) => {
-                const stringValue = value as string;
-                if (value === '') {
-                  return <span>{Messages.emptyValue}</span>;
-                }
-                return <span>{stringValue}</span>;
-              },
             }}
           >
             {backups
@@ -130,7 +114,7 @@ const RestoreDbModal = <T extends FieldValues>({
                   value.name
                 } - ${value.created?.toLocaleString('en-US')}`;
                 return (
-                  <MenuItem key={value.name} value={valueWithTime}>
+                  <MenuItem key={value.name} value={value.name}>
                     {valueWithTime}
                   </MenuItem>
                 );

@@ -14,6 +14,7 @@
 // limitations under the License.
 
 import { expect, test } from '@playwright/test';
+import { Messages } from '../../src/modals/restore-db-modal/restore-db-modal.messages';
 import { createDbClusterFn, deleteDbClusterFn } from '../utils/db-cluster';
 import {
   findDbAndClickActions,
@@ -27,10 +28,6 @@ test.describe('DB Cluster Restore to the new cluster', () => {
   test.beforeEach(async ({ request, page }) => {
     await page.goto('/databases');
     const token = await getTokenFromLocalStorage();
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
     await createDbClusterFn(token, request, {
       dbName: dbClusterName,
       dbType: 'mysql',
@@ -50,11 +47,11 @@ test.describe('DB Cluster Restore to the new cluster', () => {
   test('DB cluster list restore action', async ({ page }) => {
     await findDbAndClickActions(page, dbClusterName, 'Create DB from a backup');
 
-    await expect(page.getByTestId('restore-form-dialog')).toBeVisible();
     await expect(
-      page.getByText('Backup name - date and time finished')
+      page
+        .getByTestId('select-backup-name-button')
+        .getByText(Messages.selectBackup)
     ).toBeVisible();
-    await page.getByTestId('close-dialog-icon').click();
   });
 
   test('DB cluster detail restore action', async ({ page }) => {
@@ -67,10 +64,10 @@ test.describe('DB Cluster Restore to the new cluster', () => {
     );
     await restoreButton.click();
 
-    await expect(page.getByTestId('restore-form-dialog')).toBeVisible();
     await expect(
-      page.getByText('Backup name - date and time finished')
+      page
+        .getByTestId('select-backup-name-button')
+        .getByText(Messages.selectBackup)
     ).toBeVisible();
-    await page.getByTestId('close-dialog-icon').click();
   });
 });
