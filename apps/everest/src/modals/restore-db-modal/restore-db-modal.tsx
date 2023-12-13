@@ -10,7 +10,7 @@ import { useDbBackups, useDbClusterPitr } from 'hooks/api/backups/useBackups';
 import { useDbClusterRestore } from 'hooks/api/restores/useDbClusterRestore';
 import { FieldValues } from 'react-hook-form';
 import { FormDialogProps } from 'components/form-dialog/form-dialog.types';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { BackupStatus } from 'shared-types/backups.types';
 import {
   BackuptypeValues,
@@ -32,7 +32,7 @@ const RestoreDbModal = <T extends FieldValues>({
   dbCluster: DbCluster;
   isNewClusterMode: boolean;
 }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { data: backups = [], isLoading } = useDbBackups(
     dbCluster.metadata.name
   );
@@ -44,7 +44,7 @@ const RestoreDbModal = <T extends FieldValues>({
       latestBackupName: '',
     },
   });
-  const { mutate: restoreBackup, isLoading: restoringBackup } =
+  const { /*mutate: restoreBackup,*/ isLoading: restoringBackup } =
     useDbClusterRestore(dbCluster.metadata.name);
 
   return (
