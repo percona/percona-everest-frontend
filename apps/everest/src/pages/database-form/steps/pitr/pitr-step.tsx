@@ -35,11 +35,10 @@ const PITRStep = () => {
     DbWizardFormFields.pitrEnabled,
     DbWizardFormFields.backupsEnabled,
     DbWizardFormFields.pitrStorageLocation,
-    DbWizardFormFields.dbType
+    DbWizardFormFields.dbType,
   ]);
 
   useEffect(() => {
-
     if (mode === 'new' && backupStorages?.length > 0) {
       setValue(DbWizardFormFields.pitrStorageLocation, {
         name: backupStorages[0].name,
@@ -56,7 +55,6 @@ const PITRStep = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [backupStorages, mode, pitrEnabled]);
-
 
   useEffect(() => {
     if (dbType !== DbType.Mysql) {
