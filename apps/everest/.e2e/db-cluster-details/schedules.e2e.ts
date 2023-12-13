@@ -24,7 +24,7 @@ test.describe.serial('Schedules List', async () => {
   let scheduleName = 'test-name';
   const mySQLName = 'schedule-mysql';
 
-  test.beforeAll(async ({ request, browser }) => {
+  test.beforeAll(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
     await createDbClusterFn(token, request, {
       dbName: mySQLName,
@@ -51,7 +51,6 @@ test.describe.serial('Schedules List', async () => {
 
     const scheduledBackupsAccordion = page.getByTestId('scheduled-backups');
     await expect(scheduledBackupsAccordion).not.toBeVisible();
-    await page.pause();
 
     await clickCreateSchedule(page);
 

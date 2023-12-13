@@ -95,7 +95,11 @@ export const Backups = () => {
         </Alert>
       )}
       {!backupsEnabled && (
-        <Alert sx={{ mt: 1 }} severity="info">
+        <Alert
+          data-testid="pitr-no-backup-alert"
+          sx={{ mt: 1 }}
+          severity="info"
+        >
           {Messages.pitrAlert}
         </Alert>
       )}
