@@ -34,12 +34,6 @@ setup.describe.serial('Teardown', () => {
 
   setup('Logout', async ({ page }) => {
     await page.goto('/');
-
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-
     await page.getByTestId('user-appbar-button').click();
     await page.getByRole('menuitem').filter({ hasText: 'Log out' }).click();
 

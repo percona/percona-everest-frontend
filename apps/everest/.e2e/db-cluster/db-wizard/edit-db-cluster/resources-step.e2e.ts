@@ -41,11 +41,6 @@ test.describe('DB Cluster Editing Resources Step (Mongo)', () => {
 
   test('Show the correct number of nodes during editing', async ({ page }) => {
     await page.goto('/databases');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-
     await findDbAndClickActions(page, mongoDBName, 'Edit');
 
     const nextStep = page.getByTestId('db-wizard-continue-button');
@@ -57,5 +52,12 @@ test.describe('DB Cluster Editing Resources Step (Mongo)', () => {
       .getByRole('button', { pressed: true })
       .filter({ hasText: '5 nodes' });
     expect(a).toBeTruthy();
+  });
+
+  test('Disable disk resize during edition', async ({ page }) => {
+    await page.goto('/databases');
+    await findDbAndClickActions(page, mongoDBName, 'Edit');
+    await page.getByTestId('button-edit-preview-resources').click();
+    await expect(page.getByTestId('text-input-disk')).toBeDisabled();
   });
 });

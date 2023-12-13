@@ -6,6 +6,7 @@ import { previewSections } from './sections/constants';
 import { Messages } from './database.preview.messages';
 import { PreviewSection } from './preview-section';
 import { DbWizardType } from '../database-form-schema.ts';
+import { useDatabasePageMode } from '../useDatabasePageMode.ts';
 
 export const DatabasePreview = ({
   activeStep,
@@ -15,6 +16,7 @@ export const DatabasePreview = ({
 }: DatabasePreviewProps) => {
   const { getValues } = useFormContext<DbWizardType>();
   const [longestAchievedStep, setLongestAchievedStep] = useState(activeStep);
+  const mode = useDatabasePageMode();
 
   useEffect(() => {
     if (activeStep > longestAchievedStep) {
@@ -38,7 +40,7 @@ export const DatabasePreview = ({
             <PreviewSection
               order={idx + 1}
               title={Messages.preview[idx]}
-              hasBeenReached={longestAchievedStep >= idx}
+              hasBeenReached={longestAchievedStep >= idx || mode === 'edit'}
               active={activeStep === idx}
               onEditClick={() => onSectionEdit(idx + 1)}
               sx={{
