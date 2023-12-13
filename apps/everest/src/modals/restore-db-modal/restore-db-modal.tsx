@@ -1,4 +1,10 @@
-import { FormControl, InputLabel, MenuItem, Typography } from '@mui/material';
+import {
+  Alert,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Typography,
+} from '@mui/material';
 import {
   DateTimePickerInput,
   LoadableChildren,
@@ -22,6 +28,7 @@ import { DbCluster } from 'shared-types/dbCluster.types';
 import { DbEngineType } from '@percona/types';
 import { DATE_FORMAT } from 'consts';
 import { Messages } from './restore-db-modal.messages';
+import { format } from 'date-fns';
 
 const RestoreDbModal = <T extends FieldValues>({
   closeModal,
@@ -149,13 +156,21 @@ const RestoreDbModal = <T extends FieldValues>({
               </SelectInput>
             </FormControl>
           ) : (
-            <DateTimePickerInput
-              disableFuture
-              minDate={new Date(pitrData!.earliestDate)}
-              maxDate={new Date(pitrData!.latestDate)}
-              format={DATE_FORMAT}
-              name={RestoreDbFields.pitrBackup}
-            />
+            <>
+              <Alert sx={{ mb: 3, mt: 1.5 }} severity="info">
+                {Messages.pitrDisclaimer(
+                  format(pitrData!.earliestDate, DATE_FORMAT),
+                  format(pitrData!.latestDate, DATE_FORMAT)
+                )}
+              </Alert>
+              <DateTimePickerInput
+                disableFuture
+                minDate={new Date(pitrData!.earliestDate)}
+                maxDate={new Date(pitrData!.latestDate)}
+                format={DATE_FORMAT}
+                name={RestoreDbFields.pitrBackup}
+              />
+            </>
           )}
         </LoadableChildren>
       )}

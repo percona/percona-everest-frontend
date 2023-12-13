@@ -10,4 +10,7 @@ export const Messages = {
   fromPitr: 'From a Point-in-time (PITR)',
   selectBackup: 'Select backup (Backup name - Started time)',
   create: 'Create',
+  pitrDisclaimer: (earliestDate: string, latestDate: string) =>
+    `Restore your database by rolling it back to any date and time between the latest full backup (${earliestDate})
+     and the most recent upload of transaction logs (${latestDate})`,
 };
