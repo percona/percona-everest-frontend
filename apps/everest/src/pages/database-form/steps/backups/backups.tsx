@@ -43,6 +43,9 @@ export const Backups = () => {
     ) {
       setValue(DbWizardFormFields.backupsEnabled, true);
     }
+    if (dbType === DbType.Postresql) {
+      setValue(DbWizardFormFields.backupsEnabled, false);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dbType]);
 
@@ -68,32 +71,34 @@ export const Backups = () => {
           disabled: dbType === DbType.Postresql,
         }}
         formControlLabelProps={{
-          sx: { my: 1 },
+          sx: { mt: 1 },
         }}
       />
       {backupsEnabled && (
         <>
           {(mode === 'new' || mode === 'restoreFromBackup') && (
-            <Alert severity="info">{Messages.youCanAddMoreSchedules}</Alert>
+            <Alert sx={{ mt: 1 }} severity="info">
+              {Messages.youCanAddMoreSchedules}
+            </Alert>
           )}
           {multiSchedules && (
-            <Alert severity="info">{Messages.youHaveMultipleSchedules}</Alert>
+            <Alert sx={{ mt: 1 }} severity="info">
+              {Messages.youHaveMultipleSchedules}
+            </Alert>
           )}
           {!scheduleDisabled && <ScheduleBackupSection />}
         </>
       )}
       {dbType === DbType.Postresql && (
-        <Alert severity="info">
+        <Alert sx={{ mt: 1 }} severity="info">
           {Messages.schedulesUnavailableForPostgreSQL}
         </Alert>
       )}
-      {/* <Typography variant="h6">{Messages.pitr}</Typography>
-          <Typography variant="caption">{Messages.captionPitr}</Typography>
-          <SwitchInput
-            label={Messages.enablePitr}
-            name={DbWizardFormFields.pitrEnabled}
-          /> */}
-      {/* {pitrEnabled && <PitrEnabledSection />} */}
+      {!backupsEnabled && (
+        <Alert sx={{ mt: 1 }} severity="info">
+          {Messages.pitrAlert}
+        </Alert>
+      )}
     </Box>
   );
 };

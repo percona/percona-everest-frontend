@@ -12,19 +12,15 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { FirstStep } from './first/first-step';
-import { ResourcesStep } from './resources/resources-step.tsx';
-import { Backups } from './backups/backups';
-import { AdvancedConfigurations } from './advanced-configurations/advanced-configurations';
-import { FifthStep } from './fifth/fifth-step';
-import PITRStep from './pitr';
+export const Messages = {
+  header: 'Point-in-time Recovery (PITR)',
+  description:
+    'PitrStep provides continuous backups of your database, enabling you to restore it to a specific point in time in case of accidental writes or deletes.',
+  enablePitr: 'Enable PITR',
+  toEnablePitr:
+    'To enable PitrStep, first set up a backup schedule for this database.',
 
-// TODO re-add steps after API is ready
-export const steps = [
-  FirstStep,
-  ResourcesStep,
-  Backups,
-  PITRStep,
-  AdvancedConfigurations,
-  FifthStep,
-];
+  captionPitr:
+    'Point-in-time recovery provides continuous backups on your database to protect against accidental writes or deletes.',
+  pitrCreateHeader: 'Create PitrStep backup every',
+};
