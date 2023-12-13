@@ -10,6 +10,7 @@ export const ResourceInput = ({
   helperText,
   endSuffix,
   numberOfNodes,
+  disabled,
 }: ResourceInputProps) => {
   const { isDesktop } = useActiveBreakpoint();
   const theme = useTheme();
@@ -24,6 +25,7 @@ export const ResourceInput = ({
           variant: 'outlined',
           label,
           helperText,
+          disabled,
           InputProps: {
             endAdornment: (
               <InputAdornment position="end">{endSuffix}</InputAdornment>

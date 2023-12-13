@@ -185,6 +185,7 @@ export const ResourcesStep = () => {
           />
           <ResourceInput
             name={DbWizardFormFields.disk}
+            disabled={mode === 'edit'}
             label={Messages.labels.disk.toUpperCase()}
             helperText={checkResourceText(
               resourcesInfo?.available?.diskSize,

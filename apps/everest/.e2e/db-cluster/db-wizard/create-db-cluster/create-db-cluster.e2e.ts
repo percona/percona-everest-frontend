@@ -46,11 +46,6 @@ test.describe('DB Cluster creation', () => {
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/databases/new');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-
     await page.getByTestId('toggle-button-group-input-db-type').waitFor();
     await page.getByTestId('select-input-db-version').waitFor();
   });

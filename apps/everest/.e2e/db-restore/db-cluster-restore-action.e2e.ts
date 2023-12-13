@@ -27,10 +27,6 @@ test.describe('DB Cluster Restore', () => {
   test.beforeEach(async ({ request, page }) => {
     await page.goto('/databases');
     const token = await getTokenFromLocalStorage();
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
     await createDbClusterFn(token, request, {
       dbName: dbClusterName,
       dbType: 'mysql',
@@ -53,7 +49,6 @@ test.describe('DB Cluster Restore', () => {
       page.getByText('Backup name - date and time finished')
     ).toBeVisible();
     await expect(page.getByTestId('form-dialog-restore')).toBeVisible();
-    await page.getByTestId('close-dialog-icon').click();
   });
 
   test('DB cluster detail restore action', async ({ page }) => {
@@ -67,6 +62,5 @@ test.describe('DB Cluster Restore', () => {
       page.getByText('Backup name - date and time finished')
     ).toBeVisible();
     await expect(page.getByTestId('form-dialog-restore')).toBeVisible();
-    await page.getByTestId('close-dialog-icon').click();
   });
 });
