@@ -21,8 +21,9 @@ import {
   findDbAndClickRow,
 } from '../utils/db-clusters-list';
 import { getTokenFromLocalStorage } from '../utils/localStorage';
-test.describe('DB Cluster Restore', () => {
-  const dbClusterName = 'mysql-test-ui-restore';
+
+test.describe('DB Cluster Restore to the new cluster', () => {
+  const dbClusterName = 'mysql-restore-to-new';
 
   test.beforeEach(async ({ request, page }) => {
     await page.goto('/databases');
@@ -44,7 +45,8 @@ test.describe('DB Cluster Restore', () => {
   });
 
   test('DB cluster list restore action', async ({ page }) => {
-    await findDbAndClickActions(page, dbClusterName, 'Restore from a backup');
+    await findDbAndClickActions(page, dbClusterName, 'Create DB from a backup');
+
     await expect(
       page
         .getByTestId('select-backup-name-button')
@@ -57,8 +59,11 @@ test.describe('DB Cluster Restore', () => {
     const actionButton = page.getByTestId('actions-button');
     await actionButton.click();
 
-    const restoreButton = page.getByTestId(`${dbClusterName}-restore`);
+    const restoreButton = page.getByTestId(
+      `${dbClusterName}-create-new-db-from-backup`
+    );
     await restoreButton.click();
+
     await expect(
       page
         .getByTestId('select-backup-name-button')
