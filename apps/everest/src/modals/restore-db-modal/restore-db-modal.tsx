@@ -1,54 +1,76 @@
 import { FormControl, InputLabel, MenuItem, Typography } from '@mui/material';
 import { LoadableChildren, RadioGroup, SelectInput } from '@percona/ui-lib';
 import { FormDialog } from 'components/form-dialog';
+import { FormDialogProps } from 'components/form-dialog/form-dialog.types';
 import { useDbBackups } from 'hooks/api/backups/useBackups';
 import { useDbClusterRestore } from 'hooks/api/restores/useDbClusterRestore';
 import { FieldValues } from 'react-hook-form';
-import { useMainStore } from 'stores/useMainStore';
-import { useShallow } from 'zustand/react/shallow';
-import { Messages } from './restoreDbModal.messages';
+import { useNavigate } from 'react-router-dom';
+import { BackupStatus } from 'shared-types/backups.types';
 import {
   BackuptypeValues,
   RestoreDbFields,
   defaultValues,
   schema,
-} from './restoreDbModal.schema';
-import { FormDialogProps } from 'components/form-dialog/form-dialog.types';
-import { BackupStatus } from 'shared-types/backups.types';
+} from './restore-db-modal-schema';
+import { Messages } from './restore-db-modal.messages';
 
 const RestoreDbModal = <T extends FieldValues>({
   closeModal,
   isOpen,
-}: Pick<FormDialogProps<T>, 'closeModal' | 'isOpen'>) => {
-  const [dbClusterName] = useMainStore(
-    useShallow((state) => [state.dbClusterName])
-  );
+  isNewClusterMode,
+  dbClusterName,
+}: Pick<FormDialogProps<T>, 'closeModal' | 'isOpen'> & {
+  isNewClusterMode: boolean;
+  dbClusterName: string;
+}) => {
+  const navigate = useNavigate();
   const { data: backups, isLoading } = useDbBackups(dbClusterName);
   const { mutate: restoreBackup, isLoading: restoringBackup } =
     useDbClusterRestore(dbClusterName!);
+
   return (
     <FormDialog
       size="XXXL"
       isOpen={isOpen}
+      dataTestId="restore-modal"
       closeModal={closeModal}
-      headerMessage={Messages.headerMessage}
+      headerMessage={
+        isNewClusterMode ? Messages.headerMessageCreate : Messages.headerMessage
+      }
       schema={schema}
       submitting={restoringBackup}
       defaultValues={defaultValues}
       onSubmit={({ backupName }) => {
-        restoreBackup(
-          { backupName },
-          {
-            onSuccess() {
-              closeModal();
+        if (isNewClusterMode) {
+          closeModal();
+          const selectedBackup = backups?.find(
+            (backup) => backup.name === backupName
+          );
+          navigate('/databases/new', {
+            state: {
+              selectedDbCluster: dbClusterName!,
+              backupName: backupName,
+              backupStorageName: selectedBackup,
             },
-          }
-        );
+          });
+        } else {
+          restoreBackup(
+            { backupName: backupName },
+            {
+              onSuccess() {
+                closeModal();
+              },
+            }
+          );
+        }
       }}
-      submitMessage={Messages.restore}
+      submitMessage={isNewClusterMode ? Messages.create : Messages.restore}
     >
       <LoadableChildren loading={isLoading}>
-        <Typography variant="body1">{Messages.subHead}</Typography>
+        <Typography variant="body1">
+          {isNewClusterMode ? Messages.subHeadCreate : Messages.subHead}
+        </Typography>
         <RadioGroup
           name={RestoreDbFields.backupType}
           radioGroupFieldProps={{
@@ -76,7 +98,7 @@ const RestoreDbModal = <T extends FieldValues>({
             },
           ]}
         />
-        <FormControl>
+        <FormControl sx={{ mt: 3 }}>
           <InputLabel id="restore-backup">{Messages.selectBackup}</InputLabel>
           <SelectInput
             name={RestoreDbFields.backupName}

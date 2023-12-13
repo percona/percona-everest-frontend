@@ -1,1 +1,1 @@
-export { default } from './RestoreDbModal';
+export { default } from './restore-db-modal';
