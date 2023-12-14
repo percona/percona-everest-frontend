@@ -7,11 +7,10 @@ export const ResourcesPreviewSection = ({
   disk,
   memory,
 }: SectionProps) => {
-
-    const numberOfNodes = Number(numberOfNodesFieldValue);
-  const parsedCPU = Number(cpu)*numberOfNodes;
-  const parsedDisk = Number(disk)*numberOfNodes;
-  const parsedMemory = Number(memory)*numberOfNodes;
+  const numberOfNodes = Number(numberOfNodesFieldValue);
+  const parsedCPU = Number(cpu) * numberOfNodes;
+  const parsedDisk = Number(disk) * numberOfNodes;
+  const parsedMemory = Number(memory) * numberOfNodes;
 
   return (
     <>
