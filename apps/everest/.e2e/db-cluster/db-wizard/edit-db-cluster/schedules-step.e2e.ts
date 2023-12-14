@@ -79,7 +79,7 @@ test.describe.serial('DB Cluster Editing Backups Step', async () => {
       )
     ).toBeVisible();
 
-    //  Go to Point-in-time Recovery (PITR)
+    // Go to Point-in-time Recovery (PITR)
     await nextStep.click();
     // Go to Advanced Configuration step
     await nextStep.click();
@@ -130,7 +130,7 @@ test.describe.serial('DB Cluster Editing Backups Step', async () => {
         .getByTestId('empty-backups-preview-content')
     ).toBeTruthy();
 
-    //  Go to Point-in-time Recovery (PITR)
+    // Go to Point-in-time Recovery (PITR)
     await nextStep.click();
     // Go to Advanced Configuration step
     await nextStep.click();

@@ -37,7 +37,6 @@ export const TIME_SELECTION_DEFAULTS = {
 export const DB_WIZARD_DEFAULTS: DbWizardType = {
   // TODO should be changed to true after  https://jira.percona.com/browse/EVEREST-509
   [DbWizardFormFields.backupsEnabled]: false,
-  // TODO should be true after MONGODb and PG will be ready
   [DbWizardFormFields.pitrEnabled]: false,
   [DbWizardFormFields.pitrStorageLocation]: null,
   // @ts-ignore

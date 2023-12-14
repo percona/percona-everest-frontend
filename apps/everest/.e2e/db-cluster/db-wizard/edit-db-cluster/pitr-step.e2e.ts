@@ -58,7 +58,7 @@ test.describe.serial('DB Cluster Editing PITR Step', async () => {
     // Go to Backups step
     await nextStep.click();
 
-    // check and fill in backups step
+    // Check and fill in backups step
     expect(page.getByTestId('pitr-no-backup-alert'));
 
     const backupsCheckbox = page
@@ -90,7 +90,7 @@ test.describe.serial('DB Cluster Editing PITR Step', async () => {
     await expect(storageOptions.filter({ hasText: 'ui-dev' })).toBeVisible();
     await storageOptions.first().click();
 
-    // checking the preview actual value
+    // Check the preview actual value
     await expect(
       page
         .getByTestId('section-Point-in-time Recovery')
@@ -148,7 +148,7 @@ test.describe.serial('DB Cluster Editing PITR Step', async () => {
 
     // Disable PITR
     await pitrCheckbox.setChecked(false);
-    // Checking the preview actual value
+    // Check the preview actual value
     await expect(
       page
         .getByTestId('section-Point-in-time Recovery')
@@ -163,7 +163,7 @@ test.describe.serial('DB Cluster Editing PITR Step', async () => {
     await checkDbWizardEditSubmitIsAvailableAndClick(page);
     await checkSuccessOfUpdateAndGoToDbClustersList(page);
 
-    // GO to DB details and check pitr
+    // Go to DB details and check pitr
     await findDbAndClickRow(page, mySQLName);
     await page.pause();
     await expect(page.getByText('PITR enabled')).toBeVisible();
