@@ -10,7 +10,7 @@ export const Messages = {
   insertToken:
     'Insert the authorization token you have received during the installation in your terminal.',
   resetToken: 'Reset token',
-  useTerminal: 'Use your terminal to reset your token.',
+  useTerminal: 'Use your terminal to reset your authorization token.',
   ok: 'OK',
   token: 'Token',
 };
