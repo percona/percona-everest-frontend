@@ -8,7 +8,7 @@ export const Messages = {
     "Explore the possibilities, and let's conquer the database Everest together!",
   login: 'Log in',
   insertToken:
-    'Insert the token you have received during the installation in your terminal.',
+    'Insert the authorization token you have received during the installation in your terminal.',
   resetToken: 'Reset token',
   useTerminal: 'Use your terminal to reset your token.',
   ok: 'OK',
