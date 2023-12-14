@@ -27,14 +27,11 @@ export const basicInformationStepCheck = async (
   const nrButtons = await dbEnginesButtons.count();
 
   expect(nrButtons).toBe(3);
+  expect(dbEnginesButtons.first().textContent).toBe('MySQL');
+  expect(dbEnginesButtons.nth(1)).toBe('MongoDB');
+  expect(dbEnginesButtons.nth(2)).toBe('PostgreSQL');
 
-  const mySqlButton = dbEnginesButtons.filter({ hasText: 'MySQL' });
-  const mongoButton = dbEnginesButtons.filter({ hasText: 'MongoDB' });
-
-  await expect(mySqlButton).toBeVisible();
-  await expect(mongoButton).toBeVisible();
-
-  await mongoButton.click();
+  await dbEnginesButtons.nth(1).click();
   await page.getByTestId('select-db-version-button').click();
 
   const dbVersionOptions = page.getByRole('option');
