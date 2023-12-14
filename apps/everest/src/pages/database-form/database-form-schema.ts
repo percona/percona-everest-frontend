@@ -69,8 +69,7 @@ const backupsStepSchema = (hideScheduleValidation: boolean) => {
 const pitrStepSchema = z
   .object({
     [DbWizardFormFields.pitrEnabled]: z.boolean(),
-    [DbWizardFormFields.pitrStorageLocation]:
-      storageLocationZodObject('dbWizard'),
+    [DbWizardFormFields.pitrStorageLocation]: storageLocationZodObject,
   })
   .passthrough()
   .superRefine(

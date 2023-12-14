@@ -20,37 +20,35 @@ import { ScheduleFormFields } from './schedule-form.types.ts';
 import { rfc_123_schema } from 'utils/common-validation';
 import { timeSelectionSchemaObject } from '../time-selection/time-selection-schema.ts';
 
-export const storageLocationZodObject = (
-  mode: 'dbWizard' | 'scheduledBackups'
-) =>
-  z
-    .string()
-    .or(
-      z.object({
-        name: z.string(),
-      })
-    )
-    .nullable()
-    .superRefine((input, ctx) => {
-      // TODO revert next line check after https://jira.percona.com/browse/EVEREST-509
-      //  this is a temporary measure, as soon as PostgresSQL is implemented, the StorageLocation check
-      //  will become mandatory everywhere and it will be possible to remove the null check at all,
-      const checkNullStorage = mode !== 'dbWizard';
-      if (
-        (!input || typeof input === 'string' || !input.name) &&
-        (checkNullStorage ? true : input !== null)
-      ) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: Messages.storageLocation.invalidOption,
-        });
-      }
-    });
+export const storageLocationZodObject = z
+  .string()
+  .or(
+    z.object({
+      name: z.string(),
+    })
+  )
+  .nullable();
 export const storageLocationScheduleFormSchema = (
   mode: 'dbWizard' | 'scheduledBackups'
 ) => {
   return {
-    [ScheduleFormFields.storageLocation]: storageLocationZodObject(mode),
+    [ScheduleFormFields.storageLocation]: storageLocationZodObject.superRefine(
+      (input, ctx) => {
+        // TODO revert next line check after https://jira.percona.com/browse/EVEREST-509
+        //  this is a temporary measure, as soon as PostgresSQL is implemented, the StorageLocation check
+        //  will become mandatory everywhere and it will be possible to remove the null check at all,
+        const checkNullStorage = mode !== 'dbWizard';
+        if (
+          (!input || typeof input === 'string' || !input.name) &&
+          (checkNullStorage ? true : input !== null)
+        ) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: Messages.storageLocation.invalidOption,
+          });
+        }
+      }
+    ),
   };
 };
 

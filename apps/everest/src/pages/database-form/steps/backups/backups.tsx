@@ -94,7 +94,7 @@ export const Backups = () => {
           {Messages.schedulesUnavailableForPostgreSQL}
         </Alert>
       )}
-      {!backupsEnabled && (
+      {!backupsEnabled && dbType !== DbType.Mongo && (
         <Alert
           data-testid="pitr-no-backup-alert"
           sx={{ mt: 1 }}

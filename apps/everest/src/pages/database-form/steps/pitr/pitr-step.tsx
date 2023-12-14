@@ -60,6 +60,7 @@ const PITRStep = () => {
     if (dbType !== DbType.Mysql) {
       setValue(DbWizardFormFields.pitrEnabled, false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dbType]);
 
   const pitrDisabled =
@@ -69,6 +70,7 @@ const PITRStep = () => {
     if (!backupsEnabled) {
       setValue(DbWizardFormFields.pitrEnabled, false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [backupsEnabled]);
 
   return (
@@ -77,7 +79,7 @@ const PITRStep = () => {
         pageTitle={Messages.header}
         pageDescription={Messages.description}
       />
-      {!backupsEnabled && (
+      {!backupsEnabled && dbType !== DbType.Mongo && (
         <Alert severity="info" sx={{ mt: 1 }}>
           {Messages.toEnablePitr}
         </Alert>
