@@ -49,10 +49,12 @@ export type DatabaseClusterPitrPayload = {
   earliestDate: string;
   latestDate: string;
   latestBackupName: string;
+  gaps: boolean;
 };
 
 export type DatabaseClusterPitr = {
   earliestDate: Date;
   latestDate: Date;
   latestBackupName: string;
+  gaps: boolean;
 };
