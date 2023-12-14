@@ -1,12 +1,13 @@
-import { Alert, FormGroup } from '@mui/material';
-import { SwitchInput, AutoCompleteInput } from '@percona/ui-lib';
+import { Alert, Box, FormGroup } from '@mui/material';
+import { AutoCompleteInput, SwitchInput } from '@percona/ui-lib';
+import { CodeCopyBlock } from 'components/code-copy-block/code-copy-block.tsx';
+import { useMonitoringInstancesList } from 'hooks/api/monitoring/useMonitoringInstancesList';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { DbWizardFormFields } from '../../database-form.types';
-import { Messages } from './fifth-step.messages';
-import { useMonitoringInstancesList } from 'hooks/api/monitoring/useMonitoringInstancesList';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { StepHeader } from '../step-header/step-header.tsx';
+import { Messages } from './fifth-step.messages';
 
 export const FifthStep = () => {
   const { watch, getValues } = useFormContext();
@@ -62,7 +63,11 @@ export const FifthStep = () => {
         <Alert severity="info" sx={{ mt: 1 }} data-testid="monitoring-warning">
           Database monitoring is currently disabled because monitoring endpoints
           were not configured during installation. To enable database
-          monitoring, run the `everestctl install` command to reinstall Everest.
+          monitoring, run the
+          <Box sx={{ display: 'inline-block', width: '200px', mx: '10px' }}>
+            <CodeCopyBlock message={'everestctl install'} />
+          </Box>
+          command to reinstall Everest.
         </Alert>
       )}
       <FormGroup sx={{ mt: 2 }}>
