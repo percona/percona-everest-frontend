@@ -27,9 +27,9 @@ export const basicInformationStepCheck = async (
   const nrButtons = await dbEnginesButtons.count();
 
   expect(nrButtons).toBe(3);
-  expect(dbEnginesButtons.first().textContent).toBe('MySQL');
-  expect(dbEnginesButtons.nth(1)).toBe('MongoDB');
-  expect(dbEnginesButtons.nth(2)).toBe('PostgreSQL');
+  expect(dbEnginesButtons.first().textContent()).toBe('MySQL');
+  expect(dbEnginesButtons.nth(1).textContent()).toBe('MongoDB');
+  expect(dbEnginesButtons.nth(2).textContent()).toBe('PostgreSQL');
 
   await dbEnginesButtons.nth(1).click();
   await page.getByTestId('select-db-version-button').click();
