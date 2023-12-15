@@ -145,7 +145,6 @@ jobs:
         run: |
           cd CLI
           go run cmd/everest/main.go install \
-          --monitoring.enable=false \
           --operator.mongodb=true \
           --operator.postgresql=true \
           --operator.xtradb-cluster=true \
