@@ -47,7 +47,7 @@ const Login = () => {
         <Typography variant="h4" mb={3}>
           {Messages.welcome}
         </Typography>
-        <Typography mb={3}>{Messages.intro1}</Typography>
+        <Typography>{Messages.intro1}</Typography>
         <Typography>{Messages.intro2}</Typography>
       </Stack>
       <Box
@@ -95,7 +95,9 @@ const Login = () => {
                     variant="contained"
                     fullWidth
                     sx={{
-                      mb: 2,
+                      mb: 1,
+                      mt: 4,
+                      fontSize: '13px',
                     }}
                   >
                     {Messages.login}
@@ -105,7 +107,7 @@ const Login = () => {
               <Button
                 onClick={handleClick}
                 variant="text"
-                sx={{ alignSelf: 'flex-start' }}
+                sx={{ alignSelf: 'center', fontSize: '13px', mb: 3 }}
                 disabled={authStatus === 'loggingIn'}
               >
                 {Messages.resetToken}
