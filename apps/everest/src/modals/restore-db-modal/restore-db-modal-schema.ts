@@ -11,7 +11,7 @@ export enum BackuptypeValues {
   fromPitr = 'fromPITR',
 }
 
-export const schema = (minDate: Date, maxDate: Date) =>
+export const schema = (minDate: Date, maxDate: Date, gaps: boolean) =>
   z
     .object({
       [RestoreDbFields.backupType]: z.nativeEnum(BackuptypeValues),
@@ -28,10 +28,17 @@ export const schema = (minDate: Date, maxDate: Date) =>
             minimum: 1,
           });
         }
-      } else if (!pitrBackup) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.invalid_date,
-        });
+      } else {
+        if (gaps) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+          });
+        }
+        if (!pitrBackup) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.invalid_date,
+          });
+        }
       }
     });
 

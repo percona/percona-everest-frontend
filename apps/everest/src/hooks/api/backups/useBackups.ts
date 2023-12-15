@@ -92,10 +92,11 @@ export const useDbClusterPitr = (
     `${dbClusterName}-pitr`,
     () => getPitrFn(/*dbClusterName*/),
     {
-      select: ({ earliestDate, latestDate, latestBackupName }) => ({
+      select: ({ earliestDate, latestDate, latestBackupName, gaps }) => ({
         earliestDate: new Date(earliestDate),
         latestDate: new Date(latestDate),
         latestBackupName,
+        gaps,
       }),
       ...options,
     }

@@ -40,6 +40,7 @@ export const getPitrFn = async (/*dbClusterName: string*/) => {
     earliestDate: '2023-12-01 23:59:59',
     latestDate: '2023-12-05 23:59:59',
     latestBackupName: 'my-backup',
+    gaps: true,
   };
 
   return payload;

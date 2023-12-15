@@ -49,8 +49,10 @@ const RestoreDbModal = <T extends FieldValues>({
       earliestDate: new Date().toISOString(),
       latestDate: new Date().toISOString(),
       latestBackupName: '',
+      gaps: false,
     },
   });
+
   const { /*mutate: restoreBackup,*/ isLoading: restoringBackup } =
     useDbClusterRestore(dbCluster.metadata.name);
 
@@ -63,7 +65,11 @@ const RestoreDbModal = <T extends FieldValues>({
       headerMessage={
         isNewClusterMode ? Messages.headerMessageCreate : Messages.headerMessage
       }
-      schema={schema(pitrData!.earliestDate, pitrData!.latestDate)}
+      schema={schema(
+        pitrData!.earliestDate,
+        pitrData!.latestDate,
+        !!pitrData?.gaps
+      )}
       submitting={restoringBackup}
       defaultValues={defaultValues}
       values={{ ...defaultValues, pitrBackup: pitrData!.latestDate }}
@@ -130,7 +136,7 @@ const RestoreDbModal = <T extends FieldValues>({
             ]}
           />
           {watch(RestoreDbFields.backupType) === BackuptypeValues.fromBackup ? (
-            <FormControl>
+            <FormControl sx={{ mt: 1.5 }}>
               <InputLabel id="restore-backup">
                 {Messages.selectBackup}
               </InputLabel>
@@ -157,19 +163,27 @@ const RestoreDbModal = <T extends FieldValues>({
             </FormControl>
           ) : (
             <>
-              <Alert sx={{ mb: 3, mt: 1.5 }} severity="info">
-                {Messages.pitrDisclaimer(
-                  format(pitrData!.earliestDate, DATE_FORMAT),
-                  format(pitrData!.latestDate, DATE_FORMAT)
-                )}
+              <Alert
+                sx={{ mt: 1.5 }}
+                severity={pitrData?.gaps ? 'error' : 'info'}
+              >
+                {pitrData?.gaps
+                  ? Messages.gapDisclaimer
+                  : Messages.pitrDisclaimer(
+                      format(pitrData!.earliestDate, DATE_FORMAT),
+                      format(pitrData!.latestDate, DATE_FORMAT)
+                    )}
               </Alert>
-              <DateTimePickerInput
-                disableFuture
-                minDate={new Date(pitrData!.earliestDate)}
-                maxDate={new Date(pitrData!.latestDate)}
-                format={DATE_FORMAT}
-                name={RestoreDbFields.pitrBackup}
-              />
+              {!pitrData?.gaps && (
+                <DateTimePickerInput
+                  disableFuture
+                  minDate={new Date(pitrData!.earliestDate)}
+                  maxDate={new Date(pitrData!.latestDate)}
+                  format={DATE_FORMAT}
+                  name={RestoreDbFields.pitrBackup}
+                  sx={{ mt: 3 }}
+                />
+              )}
             </>
           )}
         </LoadableChildren>
