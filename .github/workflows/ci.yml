@@ -151,10 +151,10 @@ jobs:
           --skip-wizard \
           --namespace percona-everest
 
-      - name: Change password
+      - name: Change token
         run: |
           cd CLI
-          echo "EVEREST_K8_PASSWORD=$(go run cmd/everest/main.go password reset --namespace percona-everest --json | jq .password -r)" >> $GITHUB_ENV
+          echo "EVEREST_K8_TOKEN=$(go run cmd/everest/main.go token reset --namespace percona-everest --json | jq .token -r)" >> $GITHUB_ENV
 
       - name: Expose Everest backend
         run: |
