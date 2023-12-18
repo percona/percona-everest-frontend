@@ -12,19 +12,19 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { FirstStep } from './first/first-step';
-import { ResourcesStep } from './resources/resources-step.tsx';
-import { Backups } from './backups/backups';
-import { AdvancedConfigurations } from './advanced-configurations/advanced-configurations';
-import { FifthStep } from './fifth/fifth-step';
-import PITRStep from './pitr';
+import { expect, Page } from '@playwright/test';
 
-// TODO re-add steps after API is ready
-export const steps = [
-  FirstStep,
-  ResourcesStep,
-  Backups,
-  PITRStep,
-  AdvancedConfigurations,
-  FifthStep,
-];
+export const pitrStepCheck = async (page: Page) => {
+  await expect(page.getByTestId('step-header')).toHaveText(
+    'Point-in-time Recovery (PITR)'
+  );
+
+  const enabledPitrCheckbox = page
+    .getByTestId('switch-input-pitr-enabled-label')
+    .getByRole('checkbox');
+
+  await expect(enabledPitrCheckbox).not.toBeChecked();
+  await expect(enabledPitrCheckbox).toBeDisabled();
+
+  // TODO when mongo pitr will be available => add the check of pitrStorageLocation in this test
+};

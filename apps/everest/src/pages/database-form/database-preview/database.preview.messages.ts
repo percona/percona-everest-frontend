@@ -27,6 +27,7 @@ export const Messages = {
     'Basic Information',
     'Resources',
     'Backups',
+    'Point-in-time Recovery',
     'Advanced Configurations',
     'Monitoring',
   ],

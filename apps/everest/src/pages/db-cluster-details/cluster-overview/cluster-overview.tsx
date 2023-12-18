@@ -5,7 +5,7 @@ import { useDbCluster } from 'hooks/api/db-cluster/useDbCluster';
 import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
 import { ProxyExposeType } from 'shared-types/dbCluster.types';
 import { dbEngineToDbType } from '@percona/utils';
-import { ConnectionDetails, DatabaseDetails, BackupsDetails } from './cards';
+import { ConnectionDetails, DatabaseDetails } from './cards';
 
 export const ClusterOverview = () => {
   const { dbClusterName } = useParams();
@@ -47,6 +47,7 @@ export const ClusterOverview = () => {
         cpu={dbCluster?.spec.engine.resources?.cpu!}
         memory={dbCluster?.spec.engine.resources?.memory!}
         disk={dbCluster?.spec.engine.storage.size!}
+        backup={dbCluster?.spec?.backup}
         externalAccess={
           dbCluster?.spec.proxy.expose.type === ProxyExposeType.external
         }
@@ -59,10 +60,6 @@ export const ClusterOverview = () => {
         port={dbCluster?.status?.port!}
         username={dbClusterDetails?.username!}
         password={dbClusterDetails?.password!}
-      />
-      <BackupsDetails
-        loading={fetchingCluster}
-        scheduledBackups={dbCluster?.spec?.backup?.enabled}
       />
     </Stack>
   );
