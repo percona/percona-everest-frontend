@@ -87,13 +87,6 @@ export const DatabaseDetails = ({
                 )}
               </OverviewSectionText>
             )}
-            <OverviewSectionText>
-              {Messages.fields.pitr(
-                backup?.enabled
-                  ? Messages.fields.enabled
-                  : Messages.fields.disabled
-              )}
-            </OverviewSectionText>
           </OverviewSection>
           <OverviewSection
             title={Messages.titles.externalAccess}
@@ -101,6 +94,13 @@ export const DatabaseDetails = ({
           >
             <OverviewSectionText>
               {externalAccess
+                ? Messages.fields.enabled
+                : Messages.fields.disabled}
+            </OverviewSectionText>
+          </OverviewSection>
+          <OverviewSection dataTestId="pitr" title={Messages.titles.pitr}>
+            <OverviewSectionText dataTestId="pitr">
+              {backup?.enabled
                 ? Messages.fields.enabled
                 : Messages.fields.disabled}
             </OverviewSectionText>
