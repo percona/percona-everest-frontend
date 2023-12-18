@@ -93,6 +93,7 @@ const RestoreDbModal = <T extends FieldValues>({
         //     {
         //       onSuccess() {
         //         closeModal();
+        // navigate('/');
         //       },
         //     }
         //   );

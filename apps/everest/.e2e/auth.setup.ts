@@ -13,13 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { test as setup, expect } from '@playwright/test';
+import { expect, test as setup } from '@playwright/test';
 import { STORAGE_STATE_FILE } from './constants';
-const { EVEREST_K8_PASSWORD } = process.env;
+const { EVEREST_K8_TOKEN } = process.env;
 
 setup('Login', async ({ page }) => {
   page.goto('/login');
-  await page.getByTestId('text-input-password').fill(EVEREST_K8_PASSWORD);
+  await page.getByTestId('text-input-token').fill(EVEREST_K8_TOKEN);
   await page.getByTestId('login-button').click();
   await expect(page.getByText('Create Database')).toBeVisible();
 
