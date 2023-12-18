@@ -27,5 +27,5 @@ export const Messages = {
   schedulesUnavailableForPostgreSQL:
     'Scheduled backups are currently unavailable for PostgreSQL databases. You can still enable on-demand backups from the Backups page in the database cluster view.',
   pitrAlert:
-    'Point-in-time-recovery (PitrStep) relies on an active backup schedule. If you do not configure a backup schedule, PitrStep will be disabled for this database.',
+    'Point-in-time-recovery (PITR) relies on an active backup schedule. If you don’t configure a backup schedule now, PITR will be disabled in the next step of the wizard.',
 };

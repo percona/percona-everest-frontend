@@ -39,19 +39,20 @@ const PITRStep = () => {
   ]);
 
   useEffect(() => {
-    if (mode === 'new' && backupStorages?.length > 0) {
-      setValue(DbWizardFormFields.pitrStorageLocation, {
-        name: backupStorages[0].name,
-      });
-    }
-    if (
-      (mode === 'edit' || mode === 'restoreFromBackup') &&
-      backupStorages?.length > 0 &&
-      !pitrStorageLocation
-    ) {
-      setValue(DbWizardFormFields.pitrStorageLocation, {
-        name: backupStorages[0].name,
-      });
+    if (backupStorages?.length > 0) {
+      if (mode === 'new') {
+        setValue(DbWizardFormFields.pitrStorageLocation, {
+          name: backupStorages[0].name,
+        });
+      }
+      if (
+        (mode === 'edit' || mode === 'restoreFromBackup') &&
+        !pitrStorageLocation
+      ) {
+        setValue(DbWizardFormFields.pitrStorageLocation, {
+          name: backupStorages[0].name,
+        });
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [backupStorages, mode, pitrEnabled]);
@@ -79,9 +80,14 @@ const PITRStep = () => {
         pageTitle={Messages.header}
         pageDescription={Messages.description}
       />
-      {!backupsEnabled && dbType !== DbType.Mongo && (
+      {(dbType === DbType.Postresql || dbType === DbType.Mongo) && (
         <Alert severity="info" sx={{ mt: 1 }}>
-          {Messages.toEnablePitr}
+          {Messages.unavailableForDb(dbType)}
+        </Alert>
+      )}
+      {!backupsEnabled && (
+        <Alert severity="info" sx={{ mt: 1 }}>
+          {dbType === DbType.Mysql && Messages.toEnablePitr}
         </Alert>
       )}
       <SwitchInput
