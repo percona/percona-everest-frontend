@@ -1,3 +1,4 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Box,
   Button,
@@ -8,20 +9,19 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { Card, EverestMainIcon, TextInput, DialogTitle } from '@percona/ui-lib';
+import { Card, DialogTitle, EverestMainIcon, TextInput } from '@percona/ui-lib';
+import { CodeCopyBlock } from 'components/code-copy-block/code-copy-block';
 import { AuthContext } from 'contexts/auth';
 import { useContext, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
+import { LoginFields, LoginFormType, loginSchema } from './Login.constants';
 import { Messages } from './Login.messages';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { LoginFormType, loginSchema } from './Login.constants';
-import { CodeCopyBlock } from 'components/code-copy-block/code-copy-block';
 
 const Login = () => {
   const methods = useForm<LoginFormType>({
     mode: 'onChange',
-    defaultValues: { password: '' },
+    defaultValues: { token: '' },
     resolver: zodResolver(loginSchema),
   });
   const [modalOpen, setModalOpen] = useState(false);
@@ -30,8 +30,7 @@ const Login = () => {
   const handleClick = () => setModalOpen(true);
   const handleClose = () => setModalOpen(false);
 
-  const handleLogin: SubmitHandler<LoginFormType> = ({ password }) =>
-    login(password);
+  const handleLogin: SubmitHandler<LoginFormType> = ({ token }) => login(token);
 
   if (authStatus === 'unknown') {
     return <></>;
@@ -75,19 +74,19 @@ const Login = () => {
                 {Messages.login}
               </Typography>
               <Typography variant="caption" mb={2}>
-                {Messages.insertPassword}
+                {Messages.insertToken}
               </Typography>
               <FormProvider {...methods}>
                 <form onSubmit={methods.handleSubmit(handleLogin)}>
                   <TextInput
                     textFieldProps={{
                       type: 'password',
-                      label: 'Password',
+                      label: Messages.token,
                       fullWidth: true,
                       sx: { mb: 2 },
                       disabled: authStatus === 'loggingIn',
                     }}
-                    name="password"
+                    name={LoginFields.token}
                   />
                   <Button
                     onClick={methods.handleSubmit(handleLogin)}
@@ -109,21 +108,19 @@ const Login = () => {
                 sx={{ alignSelf: 'flex-start' }}
                 disabled={authStatus === 'loggingIn'}
               >
-                {Messages.resetPassword}
+                {Messages.resetToken}
               </Button>
             </Stack>
           }
         />
       </Box>
       <Dialog open={modalOpen} onClose={handleClose}>
-        <DialogTitle onClose={handleClose}>
-          {Messages.resetPassword}
-        </DialogTitle>
+        <DialogTitle onClose={handleClose}>{Messages.resetToken}</DialogTitle>
         <DialogContent>
           <DialogContentText variant="body1" color="text.primary">
             {Messages.useTerminal}
           </DialogContentText>
-          <CodeCopyBlock message="everestctl password reset" />
+          <CodeCopyBlock message="everestctl token reset" />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} variant="contained">

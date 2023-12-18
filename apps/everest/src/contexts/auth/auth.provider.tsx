@@ -4,19 +4,19 @@ import { ReactNode, useEffect, useState } from 'react';
 import AuthContext from './auth.context';
 import { UserAuthStatus } from './auth.context.types';
 
-const setApiBearerToken = (password: string) =>
-  (api.defaults.headers.common['Authorization'] = `Bearer ${password}`);
+const setApiBearerToken = (token: string) =>
+  (api.defaults.headers.common['Authorization'] = `Bearer ${token}`);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [authStatus, _setAuthStatus] = useState<UserAuthStatus>('unknown');
   const [apiCallEnabled, setApiCallEnabled] = useState(false);
-  const [password, setPassword] = useState('');
+  const [token, setToken] = useState('');
   const [redirect, setRedirect] = useState<string | null>(null);
 
-  const login = (password: string) => {
+  const login = (token: string) => {
     _setAuthStatus('loggingIn');
-    setApiBearerToken(password);
-    setPassword(password);
+    setApiBearerToken(token);
+    setToken(token);
     // This will trigger the API call to "/version"
     setApiCallEnabled(true);
   };
@@ -37,16 +37,16 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    const savedPassword = localStorage.getItem('pwd');
+    const savedToken = localStorage.getItem('pwd');
 
-    if (savedPassword) {
-      login(savedPassword);
+    if (savedToken) {
+      login(savedToken);
     } else {
       _setAuthStatus('loggedOut');
     }
   }, []);
 
-  // We use the "/version" API call just to make sure the password works
+  // We use the "/version" API call just to make sure the token works
   // At this point, there's not really a login flow, per se
   useVersion({
     enabled: apiCallEnabled,
@@ -54,8 +54,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     onSuccess: () => {
       setApiCallEnabled(false);
       _setAuthStatus('loggedIn');
-      setApiBearerToken(password);
-      localStorage.setItem('pwd', password);
+      setApiBearerToken(token);
+      localStorage.setItem('pwd', token);
       addApiInterceptors();
     },
     onError: () => {
