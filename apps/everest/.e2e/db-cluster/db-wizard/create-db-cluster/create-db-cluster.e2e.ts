@@ -21,6 +21,7 @@ import { backupsStepCheck } from './steps/backups-step';
 import { basicInformationStepCheck } from './steps/basic-information-step';
 import { resourcesStepCheck } from './steps/resources-step';
 import { getTokenFromLocalStorage } from '../../../utils/localStorage';
+import { pitrStepCheck } from './steps/pitr-step';
 
 test.describe('DB Cluster creation', () => {
   let engineVersions = {
@@ -75,8 +76,10 @@ test.describe('DB Cluster creation', () => {
     await resourcesStepCheck(page);
     await page.getByTestId('db-wizard-continue-button').click();
 
-    // TODO uncomment step tests inside function
     await backupsStepCheck(page);
+    await page.getByTestId('db-wizard-continue-button').click();
+
+    await pitrStepCheck(page);
     await page.getByTestId('db-wizard-continue-button').click();
 
     await advancedConfigurationStepCheck(page);
@@ -141,6 +144,45 @@ test.describe('DB Cluster creation', () => {
     //   '192.168.1.0',
     // ]);
     expect(addedCluster?.spec.engine.storage.class).toBe(storageClasses[0]);
+  });
+
+  test('PITR should be disabled when backups toggle was not checked', async ({
+    page,
+  }) => {
+    expect(storageClasses.length).toBeGreaterThan(0);
+
+    const mySQLButton = page.getByTestId('mysql-toggle-button');
+    await mySQLButton.click();
+
+    await page.getByTestId('db-wizard-continue-button').click();
+    await page.getByTestId('db-wizard-continue-button').click();
+    const enabledBackupsCheckbox = page
+      .getByTestId('switch-input-backups-enabled')
+      .getByRole('checkbox');
+
+    await expect(enabledBackupsCheckbox).toBeChecked();
+    await page.getByTestId('db-wizard-continue-button').click();
+
+    const enabledPitrCheckbox = page
+      .getByTestId('switch-input-pitr-enabled-label')
+      .getByRole('checkbox');
+
+    await expect(enabledPitrCheckbox).not.toBeChecked();
+    await expect(enabledPitrCheckbox).not.toBeDisabled();
+    await enabledPitrCheckbox.setChecked(true);
+    await expect(enabledPitrCheckbox).toBeChecked();
+    await expect(
+      page.getByTestId('text-input-pitr-storage-location')
+    ).toBeVisible();
+
+    await page.getByTestId('db-wizard-previous-button').click();
+
+    await enabledBackupsCheckbox.setChecked(false);
+    await expect(page.getByTestId('pitr-no-backup-alert')).toBeVisible();
+    await page.getByTestId('db-wizard-continue-button').click();
+
+    await expect(enabledPitrCheckbox).not.toBeChecked();
+    await expect(enabledPitrCheckbox).toBeDisabled();
   });
 
   test.skip('Cancel wizard', async ({ page }) => {

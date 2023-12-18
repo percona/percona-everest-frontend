@@ -553,7 +553,7 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
         root: {
           alignItems: 'flex-start',
           '.MuiFormControlLabel-label': {
-            paddingTop: '6px',
+            paddingTop: '7px',
           },
         },
       },
