@@ -116,7 +116,7 @@ const RestoreDbModal = <T extends FieldValues>({
                 }
                 return -1;
               })
-              ?.map((value) => {
+              .map((value) => {
                 const valueWithTime = `${
                   value.name
                 } - ${value.created?.toLocaleString('en-US')}`;
