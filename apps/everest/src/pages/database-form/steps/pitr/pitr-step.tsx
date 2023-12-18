@@ -107,11 +107,6 @@ const PITRStep = () => {
           label={StorageLocationMessages.storageLocation.label}
           loading={isFetching}
           options={backupStorages}
-          autoCompleteProps={{
-            isOptionEqualToValue: (option, value) => option.name === value.name,
-            getOptionLabel: (option) =>
-              typeof option === 'string' ? option : option.name,
-          }}
           isRequired
           enableFillFirst={mode === 'new'}
         />
