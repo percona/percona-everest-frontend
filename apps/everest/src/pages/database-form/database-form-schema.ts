@@ -12,7 +12,7 @@ import {
   BackupsWithScheduleValidationSchemaType,
 } from './steps/backups/backups-schema.ts';
 import { Messages as ScheduleFormMessages } from 'components/schedule-form/schedule-form.messages.ts';
-import { storageLocationZodObject } from '../../components/schedule-form/schedule-form-schema';
+import { storageLocationZodObject } from 'components/schedule-form/schedule-form-schema';
 
 const resourceToNumber = (minimum = 0) =>
   z.union([z.string().nonempty(), z.number()]).pipe(
