@@ -22,6 +22,8 @@ import {
 } from '../overview-section/overview-section';
 import { DatabaseDetailsOverviewCardProps } from './card.types';
 import { beautifyDbTypeName } from '@percona/utils';
+import { getTimeSelectionPreviewMessage } from '../../../database-form/database-preview/database.preview.messages';
+import { getFormValuesFromCronExpression } from '../../../../components/time-selection/time-selection.utils';
 
 export const DatabaseDetails = ({
   loading,
@@ -33,59 +35,83 @@ export const DatabaseDetails = ({
   cpu,
   memory,
   disk,
+  backup,
   externalAccess,
   monitoring,
-}: DatabaseDetailsOverviewCardProps) => (
-  <Card
-    title={Messages.titles.dbDetails}
-    dataTestId="database-details"
-    content={
-      <Grid container spacing={2}>
-        <OverviewSection
-          title={Messages.titles.basicInformation}
-          loading={loading}
-        >
-          <OverviewSectionText>
-            {Messages.fields.type(beautifyDbTypeName(type))}
-          </OverviewSectionText>
-          <OverviewSectionText>
-            {Messages.fields.name(name)}
-          </OverviewSectionText>
-          <OverviewSectionText>
-            {Messages.fields.namespace(namespace)}
-          </OverviewSectionText>
-          <OverviewSectionText>
-            {Messages.fields.version(version)}
-          </OverviewSectionText>
-        </OverviewSection>
-        <OverviewSection title={Messages.titles.resources} loading={loading}>
-          <OverviewSectionText>
-            {Messages.fields.numberOfNodes(numberOfNodes)}
-          </OverviewSectionText>
-          <OverviewSectionText>{Messages.fields.cpu(cpu)}</OverviewSectionText>
-          <OverviewSectionText>
-            {Messages.fields.memory(memory)}
-          </OverviewSectionText>
-          <OverviewSectionText>
-            {Messages.fields.disk(disk)}
-          </OverviewSectionText>
-        </OverviewSection>
-        <OverviewSection
-          title={Messages.titles.externalAccess}
-          loading={loading}
-        >
-          <OverviewSectionText>
-            {externalAccess
-              ? Messages.fields.enabled
-              : Messages.fields.disabled}
-          </OverviewSectionText>
-        </OverviewSection>
-        <OverviewSection title={Messages.titles.monitoring} loading={loading}>
-          <OverviewSectionText>
-            {monitoring ? Messages.fields.enabled : Messages.fields.disabled}
-          </OverviewSectionText>
-        </OverviewSection>
-      </Grid>
-    }
-  />
-);
+}: DatabaseDetailsOverviewCardProps) => {
+  const schedules = backup?.schedules;
+  return (
+    <Card
+      title={Messages.titles.dbDetails}
+      dataTestId="database-details"
+      content={
+        <Grid container spacing={2}>
+          <OverviewSection
+            title={Messages.titles.basicInformation}
+            loading={loading}
+          >
+            <OverviewSectionText>
+              {Messages.fields.type(beautifyDbTypeName(type))}
+            </OverviewSectionText>
+            <OverviewSectionText>
+              {Messages.fields.name(name)}
+            </OverviewSectionText>
+            <OverviewSectionText>
+              {Messages.fields.namespace(namespace)}
+            </OverviewSectionText>
+            <OverviewSectionText>
+              {Messages.fields.version(version)}
+            </OverviewSectionText>
+          </OverviewSection>
+          <OverviewSection title={Messages.titles.resources} loading={loading}>
+            <OverviewSectionText>
+              {Messages.fields.numberOfNodes(numberOfNodes)}
+            </OverviewSectionText>
+            <OverviewSectionText>
+              {Messages.fields.cpu(cpu)}
+            </OverviewSectionText>
+            <OverviewSectionText>
+              {Messages.fields.memory(memory)}
+            </OverviewSectionText>
+            <OverviewSectionText>
+              {Messages.fields.disk(disk)}
+            </OverviewSectionText>
+          </OverviewSection>
+          <OverviewSection title={Messages.titles.backups} loading={loading}>
+            {Array.isArray(schedules) && schedules?.length > 0 && (
+              <OverviewSectionText>
+                {schedules?.map((item) =>
+                  getTimeSelectionPreviewMessage(
+                    getFormValuesFromCronExpression(item.schedule)
+                  )
+                )}
+              </OverviewSectionText>
+            )}
+          </OverviewSection>
+          <OverviewSection
+            title={Messages.titles.externalAccess}
+            loading={loading}
+          >
+            <OverviewSectionText>
+              {externalAccess
+                ? Messages.fields.enabled
+                : Messages.fields.disabled}
+            </OverviewSectionText>
+          </OverviewSection>
+          <OverviewSection dataTestId="pitr" title={Messages.titles.pitr}>
+            <OverviewSectionText dataTestId="pitr">
+              {backup?.enabled
+                ? Messages.fields.enabled
+                : Messages.fields.disabled}
+            </OverviewSectionText>
+          </OverviewSection>
+          <OverviewSection title={Messages.titles.monitoring} loading={loading}>
+            <OverviewSectionText>
+              {monitoring ? Messages.fields.enabled : Messages.fields.disabled}
+            </OverviewSectionText>
+          </OverviewSection>
+        </Grid>
+      }
+    />
+  );
+};

@@ -37,8 +37,8 @@ export const TIME_SELECTION_DEFAULTS = {
 export const DB_WIZARD_DEFAULTS: DbWizardType = {
   // TODO should be changed to true after  https://jira.percona.com/browse/EVEREST-509
   [DbWizardFormFields.backupsEnabled]: false,
-  // [DbWizardFormFields.pitrEnabled]: true,
-  // [DbWizardFormFields.pitrTime]: '60',
+  [DbWizardFormFields.pitrEnabled]: false,
+  [DbWizardFormFields.pitrStorageLocation]: null,
   // @ts-ignore
   [DbWizardFormFields.storageLocation]: null,
   ...TIME_SELECTION_DEFAULTS,
