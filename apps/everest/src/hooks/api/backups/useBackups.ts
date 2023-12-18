@@ -85,20 +85,27 @@ export const useDbClusterPitr = (
   options?: UseQueryOptions<
     DatabaseClusterPitrPayload,
     unknown,
-    DatabaseClusterPitr
+    DatabaseClusterPitr | undefined
   >
 ) => {
-  return useQuery<DatabaseClusterPitrPayload, unknown, DatabaseClusterPitr>(
-    `${dbClusterName}-pitr`,
-    () => getPitrFn(/*dbClusterName*/),
-    {
-      select: ({ earliestDate, latestDate, latestBackupName, gaps }) => ({
+  return useQuery<
+    DatabaseClusterPitrPayload,
+    unknown,
+    DatabaseClusterPitr | undefined
+  >(`${dbClusterName}-pitr`, () => getPitrFn(dbClusterName), {
+    select: (pitrData) => {
+      const { earliestDate, latestDate, latestBackupName, gaps } = pitrData;
+      if (!Object.keys(pitrData).length || !earliestDate || !latestDate) {
+        return undefined;
+      }
+
+      return {
         earliestDate: new Date(earliestDate),
         latestDate: new Date(latestDate),
         latestBackupName,
         gaps,
-      }),
-      ...options,
-    }
-  );
+      };
+    },
+    ...options,
+  });
 };

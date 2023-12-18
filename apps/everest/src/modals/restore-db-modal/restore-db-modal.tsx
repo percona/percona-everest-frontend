@@ -13,10 +13,13 @@ import {
 } from '@percona/ui-lib';
 import { FormDialog } from 'components/form-dialog';
 import { useDbBackups, useDbClusterPitr } from 'hooks/api/backups/useBackups';
-import { useDbClusterRestore } from 'hooks/api/restores/useDbClusterRestore';
+import {
+  useDbClusterRestoreFromBackup,
+  useDbClusterRestoreFromPointInTime,
+} from 'hooks/api/restores/useDbClusterRestore';
 import { FieldValues } from 'react-hook-form';
 import { FormDialogProps } from 'components/form-dialog/form-dialog.types';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { BackupStatus } from 'shared-types/backups.types';
 import {
   BackuptypeValues,
@@ -39,22 +42,19 @@ const RestoreDbModal = <T extends FieldValues>({
   dbCluster: DbCluster;
   isNewClusterMode: boolean;
 }) => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { data: backups = [], isLoading } = useDbBackups(
     dbCluster.metadata.name
   );
   // Setting placeholderData allows us to avoid undefined checks along the code
-  const { data: pitrData } = useDbClusterPitr(dbCluster.metadata.name, {
-    placeholderData: {
-      earliestDate: new Date().toISOString(),
-      latestDate: new Date().toISOString(),
-      latestBackupName: '',
-      gaps: false,
-    },
-  });
+  const { data: pitrData } = useDbClusterPitr(dbCluster.metadata.name);
 
-  const { /*mutate: restoreBackup,*/ isLoading: restoringBackup } =
-    useDbClusterRestore(dbCluster.metadata.name);
+  const { mutate: restoreBackupFromBackup, isLoading: restoringFromBackup } =
+    useDbClusterRestoreFromBackup(dbCluster.metadata.name);
+  const {
+    mutate: restoreBackupFromPointInTime,
+    isLoading: restoringFromPointInTime,
+  } = useDbClusterRestoreFromPointInTime(dbCluster.metadata.name);
 
   return (
     <FormDialog
@@ -66,38 +66,53 @@ const RestoreDbModal = <T extends FieldValues>({
         isNewClusterMode ? Messages.headerMessageCreate : Messages.headerMessage
       }
       schema={schema(
-        pitrData!.earliestDate,
-        pitrData!.latestDate,
+        pitrData?.earliestDate || new Date(),
+        pitrData?.latestDate || new Date(),
         !!pitrData?.gaps
       )}
-      submitting={restoringBackup}
+      submitting={restoringFromBackup || restoringFromPointInTime}
       defaultValues={defaultValues}
-      values={{ ...defaultValues, pitrBackup: pitrData!.latestDate }}
+      values={{ ...defaultValues, pitrBackup: pitrData?.latestDate }}
       onSubmit={({ backupName, backupType, pitrBackup }) => {
         console.log(backupType, backupName, pitrBackup);
-        // if (isNewClusterMode) {
-        //   closeModal();
-        //   const selectedBackup = backups?.find(
-        //     (backup) => backup.name === backupName
-        //   );
-        //   navigate('/databases/new', {
-        //     state: {
-        //       selectedDbCluster: dbClusterName!,
-        //       backupName: backupName,
-        //       backupStorageName: selectedBackup,
-        //     },
-        //   });
-        // } else {
-        //   restoreBackup(
-        //     { backupName },
-        //     {
-        //       onSuccess() {
-        //         closeModal();
-        // navigate('/');
-        //       },
-        //     }
-        //   );
-        // }
+        if (isNewClusterMode) {
+          closeModal();
+          const selectedBackup = backups?.find(
+            (backup) => backup.name === backupName
+          );
+          navigate('/databases/new', {
+            state: {
+              selectedDbCluster: dbCluster.metadata.name,
+              backupName,
+              backupStorageName: selectedBackup,
+            },
+          });
+        } else {
+          if (backupType === BackuptypeValues.fromBackup) {
+            restoreBackupFromBackup(
+              { backupName },
+              {
+                onSuccess() {
+                  closeModal();
+                  navigate('/');
+                },
+              }
+            );
+          } else {
+            restoreBackupFromPointInTime(
+              {
+                backupName: pitrData!.latestBackupName,
+                pointInTimeDate: pitrBackup!.toISOString(),
+              },
+              {
+                onSuccess() {
+                  closeModal();
+                  navigate('/');
+                },
+              }
+            );
+          }
+        }
       }}
       submitMessage={isNewClusterMode ? Messages.create : Messages.restore}
     >
@@ -164,24 +179,31 @@ const RestoreDbModal = <T extends FieldValues>({
             </FormControl>
           ) : (
             <>
-              <Alert
-                sx={{ mt: 1.5 }}
-                severity={pitrData?.gaps ? 'error' : 'info'}
-              >
-                {pitrData?.gaps
-                  ? Messages.gapDisclaimer
-                  : Messages.pitrDisclaimer(
-                      format(pitrData!.earliestDate, DATE_FORMAT),
-                      format(pitrData!.latestDate, DATE_FORMAT)
-                    )}
-              </Alert>
+              {pitrData && (
+                <Alert
+                  sx={{ mt: 1.5 }}
+                  severity={pitrData?.gaps ? 'error' : 'info'}
+                >
+                  {pitrData?.gaps
+                    ? Messages.gapDisclaimer
+                    : Messages.pitrDisclaimer(
+                        format(
+                          pitrData?.earliestDate || new Date(),
+                          DATE_FORMAT
+                        ),
+                        format(pitrData?.latestDate || new Date(), DATE_FORMAT)
+                      )}
+                </Alert>
+              )}
               {!pitrData?.gaps && (
                 <DateTimePickerInput
                   disableFuture
-                  minDate={new Date(pitrData!.earliestDate)}
-                  maxDate={new Date(pitrData!.latestDate)}
+                  disabled={!pitrData}
+                  minDate={new Date(pitrData?.earliestDate || new Date())}
+                  maxDate={new Date(pitrData?.latestDate || new Date())}
                   format={DATE_FORMAT}
                   name={RestoreDbFields.pitrBackup}
+                  label={pitrData ? 'Select point in time' : 'No options'}
                   sx={{ mt: 3 }}
                 />
               )}
