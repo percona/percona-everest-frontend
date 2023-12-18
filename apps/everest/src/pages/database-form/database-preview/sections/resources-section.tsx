@@ -2,15 +2,14 @@ import { PreviewContentText } from '../preview-section';
 import { SectionProps } from './section.types';
 
 export const ResourcesPreviewSection = ({
-  numberOfNodes: numberOfNodesFieldValue,
+  numberOfNodes,
   cpu,
   disk,
   memory,
 }: SectionProps) => {
-  const numberOfNodes = Number(numberOfNodesFieldValue);
-  const parsedCPU = Number(cpu) * numberOfNodes;
-  const parsedDisk = Number(disk) * numberOfNodes;
-  const parsedMemory = Number(memory) * numberOfNodes;
+  const parsedCPU = Number(cpu) * Number(numberOfNodes);
+  const parsedDisk = Number(disk) * Number(numberOfNodes);
+  const parsedMemory = Number(memory) * Number(numberOfNodes);
 
   return (
     <>
