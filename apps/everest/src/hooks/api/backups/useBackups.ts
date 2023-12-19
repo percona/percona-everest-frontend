@@ -95,7 +95,12 @@ export const useDbClusterPitr = (
   >(`${dbClusterName}-pitr`, () => getPitrFn(dbClusterName), {
     select: (pitrData) => {
       const { earliestDate, latestDate, latestBackupName, gaps } = pitrData;
-      if (!Object.keys(pitrData).length || !earliestDate || !latestDate) {
+      if (
+        !Object.keys(pitrData).length ||
+        !earliestDate ||
+        !latestDate ||
+        !latestBackupName
+      ) {
         return undefined;
       }
 
