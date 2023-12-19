@@ -180,7 +180,7 @@ const RestoreDbModal = <T extends FieldValues>({
             <>
               {pitrData && (
                 <Alert
-                  sx={{ mt: 1.5 }}
+                  sx={{ mt: 1.5, mb: 1.5 }}
                   severity={pitrData?.gaps ? 'error' : 'info'}
                 >
                   {pitrData?.gaps
