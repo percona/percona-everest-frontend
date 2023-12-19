@@ -17,12 +17,14 @@ import { ResourcesStep } from './resources/resources-step.tsx';
 import { Backups } from './backups/backups';
 import { AdvancedConfigurations } from './advanced-configurations/advanced-configurations';
 import { FifthStep } from './fifth/fifth-step';
+import PITRStep from './pitr';
 
 // TODO re-add steps after API is ready
 export const steps = [
   FirstStep,
   ResourcesStep,
   Backups,
+  PITRStep,
   AdvancedConfigurations,
   FifthStep,
 ];

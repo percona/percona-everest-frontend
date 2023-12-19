@@ -44,3 +44,19 @@ export type BackupPayload = {
     backupStorageName: string;
   };
 };
+
+export type DatabaseClusterPitrPayload =
+  | {
+      earliestDate: string;
+      latestDate: string;
+      latestBackupName: string;
+      gaps: boolean;
+    }
+  | Record<string, never>;
+
+export type DatabaseClusterPitr = {
+  earliestDate: Date;
+  latestDate: Date;
+  latestBackupName: string;
+  gaps: boolean;
+};

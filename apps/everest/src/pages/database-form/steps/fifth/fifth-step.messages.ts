@@ -18,4 +18,7 @@ export const Messages = {
     'Monitor the health of your database to detect issues quickly and improve its performance.',
   monitoringEnabled: 'Enable monitoring',
   monitoringInstanceLabel: 'Monitoring endpoint URL',
+  alertText:
+    'Database monitoring is currently disabled because monitoring endpoints were not configured during installation. To enable database monitoring, run the following command:',
+  command: 'everestctl monitoring enable',
 };

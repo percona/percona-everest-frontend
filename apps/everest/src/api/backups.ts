@@ -1,5 +1,6 @@
 import {
   BackupPayload,
+  DatabaseClusterPitrPayload,
   GetBackupsPayload,
   SingleBackupPayload,
 } from 'shared-types/backups.types';
@@ -23,6 +24,14 @@ export const createBackupOnDemand = async (payload: BackupPayload) => {
 
 export const deleteBackupFn = async (backupName: string) => {
   const response = await api.delete(`/database-cluster-backups/${backupName}`);
+
+  return response.data;
+};
+
+export const getPitrFn = async (dbClusterName: string) => {
+  const response = await api.get<DatabaseClusterPitrPayload>(
+    `/database-clusters/${dbClusterName}/pitr`
+  );
 
   return response.data;
 };

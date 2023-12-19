@@ -12,19 +12,19 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { DbClusterStatus, ProxyExposeType } from 'shared-types/dbCluster.types';
-import { DbEngineType } from 'shared-types/dbEngines.types';
+import { expect, Page } from '@playwright/test';
 
-export interface DbClusterTableElement {
-  status: DbClusterStatus;
-  dbType: DbEngineType;
-  dbVersion: string;
-  backupsEnabled: boolean;
-  databaseName: string;
-  cpu: string | number;
-  memory: string | number;
-  storage: string | number;
-  hostName: string;
-  port?: number;
-  exposetype: ProxyExposeType;
-}
+export const pitrStepCheck = async (page: Page) => {
+  await expect(page.getByTestId('step-header')).toHaveText(
+    'Point-in-time Recovery (PITR)'
+  );
+
+  const enabledPitrCheckbox = page
+    .getByTestId('switch-input-pitr-enabled-label')
+    .getByRole('checkbox');
+
+  await expect(enabledPitrCheckbox).not.toBeChecked();
+  await expect(enabledPitrCheckbox).toBeDisabled();
+
+  // TODO when mongo pitr will be available => add the check of pitrStorageLocation in this test
+};
