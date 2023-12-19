@@ -8,10 +8,13 @@ import {
   createBackupOnDemand,
   deleteBackupFn,
   getBackupsFn,
+  getPitrFn,
 } from 'api/backups';
 import {
   Backup,
   BackupStatus,
+  DatabaseClusterPitr,
+  DatabaseClusterPitrPayload,
   GetBackupsPayload,
 } from 'shared-types/backups.types';
 import { mapBackupState } from 'utils/backups';
@@ -73,6 +76,41 @@ export const useDeleteBackup = (
   options?: UseMutationOptions<unknown, unknown, string, unknown>
 ) => {
   return useMutation((backupName: string) => deleteBackupFn(backupName), {
+    ...options,
+  });
+};
+
+export const useDbClusterPitr = (
+  dbClusterName: string,
+  options?: UseQueryOptions<
+    DatabaseClusterPitrPayload,
+    unknown,
+    DatabaseClusterPitr | undefined
+  >
+) => {
+  return useQuery<
+    DatabaseClusterPitrPayload,
+    unknown,
+    DatabaseClusterPitr | undefined
+  >(`${dbClusterName}-pitr`, () => getPitrFn(dbClusterName), {
+    select: (pitrData) => {
+      const { earliestDate, latestDate, latestBackupName, gaps } = pitrData;
+      if (
+        !Object.keys(pitrData).length ||
+        !earliestDate ||
+        !latestDate ||
+        !latestBackupName
+      ) {
+        return undefined;
+      }
+
+      return {
+        earliestDate: new Date(earliestDate),
+        latestDate: new Date(latestDate),
+        latestBackupName,
+        gaps,
+      };
+    },
     ...options,
   });
 };

@@ -45,4 +45,5 @@ export const convertDbClusterPayloadToTableFormat = (
     hostName: cluster.status ? cluster.status.hostname : '',
     exposetype: cluster.spec.proxy.expose.type,
     port: cluster.status?.port,
+    raw: cluster,
   }));

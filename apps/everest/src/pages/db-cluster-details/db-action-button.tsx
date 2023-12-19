@@ -16,15 +16,15 @@ import { Messages } from 'pages/databases/dbClusterView.messages';
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Messages as ClusterDetailsMessages } from './db-cluster-details.messages';
+import { DbCluster } from 'shared-types/dbCluster.types';
 
-export const DbActionButton = () => {
+export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
   const { dbClusterName } = useParams();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openRestoreDbModal, setOpenRestoreDbModal] = useState(false);
   const [isNewClusterMode, setIsNewClusterMode] = useState(false);
   const isOpen = !!anchorEl;
   const {
-    selectedDbCluster,
     openDeleteDialog,
     handleConfirmDelete,
     handleDbRestart,
@@ -41,9 +41,10 @@ export const DbActionButton = () => {
     setAnchorEl(null);
   };
 
-  const handleDelete = (dbName: string) => {
-    handleConfirmDelete(dbName, '/databases');
+  const handleDelete = () => {
+    handleConfirmDelete('/databases');
   };
+
   return (
     <Box>
       <Button
@@ -84,7 +85,7 @@ export const DbActionButton = () => {
           <MenuItem
             key={2}
             onClick={() => {
-              handleDbRestart(dbClusterName!);
+              handleDbRestart(dbCluster);
               closeMenu();
             }}
             sx={{
@@ -136,7 +137,7 @@ export const DbActionButton = () => {
           <MenuItem
             key={4}
             onClick={() => {
-              handleDbSuspendOrResumed(dbClusterName!);
+              handleDbSuspendOrResumed(dbCluster);
               closeMenu();
             }}
             sx={{
@@ -148,7 +149,7 @@ export const DbActionButton = () => {
             }}
           >
             <PauseCircleOutline />{' '}
-            {isPaused(dbClusterName!)
+            {isPaused(dbCluster)
               ? Messages.menuItems.resume
               : Messages.menuItems.suspend}
           </MenuItem>
@@ -156,7 +157,7 @@ export const DbActionButton = () => {
             data-testid={`${dbClusterName}-delete`}
             key={5}
             onClick={() => {
-              handleDeleteDbCluster(dbClusterName!);
+              handleDeleteDbCluster(dbCluster);
               closeMenu();
             }}
             sx={{
@@ -173,16 +174,16 @@ export const DbActionButton = () => {
       </Box>
       {openRestoreDbModal && (
         <RestoreDbModal
+          dbCluster={dbCluster}
           isNewClusterMode={isNewClusterMode}
           isOpen={openRestoreDbModal}
           closeModal={() => setOpenRestoreDbModal(false)}
-          dbClusterName={dbClusterName!}
         />
       )}
       {openDeleteDialog && (
         <ConfirmDialog
           isOpen={openDeleteDialog}
-          selectedId={selectedDbCluster}
+          selectedId={dbCluster.metadata.name}
           closeModal={handleCloseDeleteDialog}
           headerMessage={Messages.deleteModal.header}
           handleConfirm={handleDelete}
