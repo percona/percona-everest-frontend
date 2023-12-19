@@ -46,7 +46,6 @@ const RestoreDbModal = <T extends FieldValues>({
   const { data: backups = [], isLoading } = useDbBackups(
     dbCluster.metadata.name
   );
-  // Setting placeholderData allows us to avoid undefined checks along the code
   const { data: pitrData } = useDbClusterPitr(dbCluster.metadata.name);
 
   const { mutate: restoreBackupFromBackup, isLoading: restoringFromBackup } =
