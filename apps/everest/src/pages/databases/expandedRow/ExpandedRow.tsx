@@ -15,7 +15,7 @@
 
 import { Box, Skeleton, Typography } from '@mui/material';
 import { MRT_Row } from 'material-react-table';
-import { DbClusterTableElement } from 'hooks/api/db-clusters/dbCluster.type';
+import { DbClusterTableElement } from '../dbClusterView.types';
 import { ProxyExposeType } from 'shared-types/dbCluster.types';
 import { Messages } from '../dbClusterView.messages';
 import { LabelValue } from './LabelValue';

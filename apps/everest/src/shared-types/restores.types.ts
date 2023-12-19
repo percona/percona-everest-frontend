@@ -22,7 +22,10 @@ export type RestorePayload = {
   spec: {
     dbClusterName: string;
     dataSource: {
-      dbClusterBackupName: string;
+      dbClusterBackupName?: string;
+      pitr?: {
+        date: string;
+      };
     };
   };
 };

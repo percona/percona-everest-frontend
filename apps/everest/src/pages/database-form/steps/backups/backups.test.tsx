@@ -12,8 +12,6 @@ const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
   const methods = useForm({
     defaultValues: {
       backupsEnabled: true,
-      // pitrEnabled: true,
-      // pitrTime: '60',
       storageLocation: 'S3',
       selectedTime: TimeValue.hours,
       minute: 0,
@@ -47,10 +45,6 @@ describe('BackupsStep', () => {
     expect(
       screen.queryByTestId('text-input-storage-location')
     ).not.toBeInTheDocument();
-    // expect(
-    //   screen.queryByTestId('switch-input-pitr-enabled')
-    // ).not.toBeInTheDocument();
-    // expect(screen.queryByTestId('pitr-time-minutes')).not.toBeInTheDocument();
     expect(
       screen.queryByTestId('select-input-selected-time')
     ).not.toBeInTheDocument();
@@ -76,30 +70,12 @@ describe('BackupsStep', () => {
   //   expect(screen.getByTestId('select-input-selected-time')).toBeInTheDocument();
   // });
 
-  // // it('should render pitr related fields when pitr is enabled', () => {
-  // //   render(
-  // //     <TestWrapper>
-  // //       <FormProviderWrapper>
-  // //         <ThirdStep />
-  // //       </FormProviderWrapper>
-  // //     </TestWrapper>
-  // //   );
-
   // //   expect(
   // //     screen.getByTestId('switch-input-backups-enabled')
   // //   ).toBeInTheDocument();
   // //   expect(screen.getByTestId('switch-input-pitr-enabled')).toBeInTheDocument();
   // //   expect(screen.getByTestId('pitr-time-minutes')).toBeInTheDocument();
   // // });
-
-  // // it('should render not pitr related fields when pitr is disabled', () => {
-  // //   render(
-  // //     <TestWrapper>
-  // //       <FormProviderWrapper>
-  // //         <ThirdStep />
-  // //       </FormProviderWrapper>
-  // //     </TestWrapper>
-  // //   );
 
   // //   expect(
   // //     screen.getByTestId('switch-input-backups-enabled')

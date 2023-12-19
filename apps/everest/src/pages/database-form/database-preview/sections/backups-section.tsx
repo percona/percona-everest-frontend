@@ -42,7 +42,7 @@ export const BackupsPreviewSection = (backupsSection: BackupStepType) => {
         schedules?.length > 1 &&
         schedulesPreviewList.map((item) => <PreviewContentText text={item} />)}
       {!backupsEnabled && (
-        <PreviewContentText text="-" dataTestId="empty-backups" />
+        <PreviewContentText text="Disabled" dataTestId="empty-backups" />
       )}
     </>
   );

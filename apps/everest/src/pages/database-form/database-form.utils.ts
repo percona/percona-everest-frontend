@@ -55,14 +55,17 @@ export const DbClusterPayloadToFormValues = (
   dbCluster: DbCluster,
   mode: DbWizardMode
 ): DbWizardType => {
-  const scheduleInfo = getScheduleInfo(mode, dbCluster?.spec?.backup);
+  const backup = dbCluster?.spec?.backup;
 
   return {
-    [DbWizardFormFields.backupsEnabled]: !!dbCluster?.spec?.backup?.enabled,
+    [DbWizardFormFields.backupsEnabled]: !!backup?.enabled,
     [DbWizardFormFields.scheduleName]: `backup-${generateShortUID()}`,
-    // [DbWizardFormFields.pitrEnabled]: true,
-    // [DbWizardFormFields.pitrTime]: '60',
-    ...scheduleInfo,
+    [DbWizardFormFields.pitrEnabled]: backup?.pitr?.enabled || false,
+    [DbWizardFormFields.pitrStorageLocation]:
+      (backup?.pitr?.enabled && mode === 'new') || mode === 'edit'
+        ? backup?.pitr?.backupStorageName || null
+        : DB_WIZARD_DEFAULTS[DbWizardFormFields.pitrStorageLocation],
+    ...getScheduleInfo(mode, backup),
     [DbWizardFormFields.dbType]: dbEngineToDbType(
       dbCluster?.spec?.engine?.type
     ),

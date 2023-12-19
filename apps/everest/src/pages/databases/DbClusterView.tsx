@@ -27,7 +27,7 @@ import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
 import { StatusField } from 'components/status-field/status-field';
 import { useDbActions } from 'hooks/api/db-cluster/useDbActions';
 import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
-import { DbClusterTableElement } from 'hooks/api/db-clusters/dbCluster.type';
+import { DbClusterTableElement } from './dbClusterView.types';
 import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
 import { type MRT_ColumnDef } from 'material-react-table';
 import { RestoreDbModal } from 'modals';
@@ -45,9 +45,7 @@ import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
 
 export const DbClusterView = () => {
-  const [openRestoreDbModal, setOpenRestoreDbModal] = useState(false);
   const [isNewClusterMode, setIsNewClusterMode] = useState(false);
-  const [dbClusterName, setDbClusterName] = useState('');
   const { data: dbClusters = [], isLoading: dbClustersLoading } =
     useDbClusters();
   const tableData = useMemo(
@@ -57,14 +55,17 @@ export const DbClusterView = () => {
 
   const { isLoading: deletingCluster } = useDeleteDbCluster();
   const {
-    selectedDbCluster,
     openDeleteDialog,
+    openRestoreDialog,
     handleConfirmDelete,
     handleDbRestart,
     handleDbSuspendOrResumed,
     handleDeleteDbCluster,
     handleCloseDeleteDialog,
     isPaused,
+    handleRestoreDbCluster,
+    handleCloseRestoreDialog,
+    selectedDbCluster,
   } = useDbActions();
   const navigate = useNavigate();
 
@@ -155,7 +156,7 @@ export const DbClusterView = () => {
             <MenuItem
               key={2}
               onClick={() => {
-                handleDbRestart(row.original.databaseName);
+                handleDbRestart(row.original.raw);
                 closeMenu();
               }}
               sx={{
@@ -172,9 +173,8 @@ export const DbClusterView = () => {
             <MenuItem
               key={5}
               onClick={() => {
-                setDbClusterName(row.original.databaseName);
+                handleRestoreDbCluster(row.original.raw);
                 setIsNewClusterMode(true);
-                setOpenRestoreDbModal(true);
                 closeMenu();
               }}
               sx={{
@@ -191,9 +191,8 @@ export const DbClusterView = () => {
               key={3}
               data-testid={`${row.original?.databaseName}-restore`}
               onClick={() => {
-                setDbClusterName(row.original.databaseName);
+                handleRestoreDbCluster(row.original.raw);
                 setIsNewClusterMode(false);
-                setOpenRestoreDbModal(true);
                 closeMenu();
               }}
               sx={{
@@ -210,7 +209,7 @@ export const DbClusterView = () => {
               key={4}
               disabled={row.original.status === DbClusterStatus.pausing}
               onClick={() => {
-                handleDbSuspendOrResumed(row.original.databaseName);
+                handleDbSuspendOrResumed(row.original.raw);
                 closeMenu();
               }}
               sx={{
@@ -223,7 +222,7 @@ export const DbClusterView = () => {
               }}
             >
               <PauseCircleOutline />{' '}
-              {isPaused(row.original.databaseName)
+              {isPaused(row.original.raw)
                 ? Messages.menuItems.resume
                 : Messages.menuItems.suspend}
             </MenuItem>,
@@ -231,7 +230,7 @@ export const DbClusterView = () => {
               data-testid={`${row.original?.databaseName}-delete`}
               key={1}
               onClick={() => {
-                handleDeleteDbCluster(row.original.databaseName!);
+                handleDeleteDbCluster(row.original.raw);
                 closeMenu();
               }}
               sx={{
@@ -274,21 +273,21 @@ export const DbClusterView = () => {
           hideExpandAllIcon
         />
       </Box>
-      {openRestoreDbModal && (
+      {openRestoreDialog && (
         <RestoreDbModal
+          dbCluster={selectedDbCluster!}
+          isOpen
+          closeModal={handleCloseRestoreDialog}
           isNewClusterMode={isNewClusterMode}
-          isOpen={openRestoreDbModal}
-          closeModal={() => setOpenRestoreDbModal(false)}
-          dbClusterName={dbClusterName}
         />
       )}
       {openDeleteDialog && (
         <ConfirmDialog
           isOpen={openDeleteDialog}
-          selectedId={selectedDbCluster}
+          selectedId={selectedDbCluster?.metadata.name || ''}
           closeModal={handleCloseDeleteDialog}
           headerMessage={Messages.deleteModal.header}
-          handleConfirm={handleConfirmDelete}
+          handleConfirm={() => handleConfirmDelete()}
           disabledButtons={deletingCluster}
         >
           {Messages.deleteModal.content}

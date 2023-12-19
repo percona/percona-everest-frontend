@@ -32,7 +32,7 @@ import {
   useDeleteBackup,
 } from 'hooks/api/backups/useBackups';
 import { useDbCluster } from 'hooks/api/db-cluster/useDbCluster';
-import { useDbClusterRestore } from 'hooks/api/restores/useDbClusterRestore';
+import { useDbClusterRestoreFromBackup } from 'hooks/api/restores/useDbClusterRestore';
 import { Backup, BackupStatus } from 'shared-types/backups.types';
 import { DbEngineType } from 'shared-types/dbEngines.types';
 import { BACKUP_STATUS_TO_BASE_STATUS } from './backups-list.constants';
@@ -59,7 +59,7 @@ export const BackupsList = () => {
   });
   const { mutate: deleteBackup, isLoading: deletingBackup } = useDeleteBackup();
   const { mutate: restoreBackup, isLoading: restoringBackup } =
-    useDbClusterRestore(dbClusterName!);
+    useDbClusterRestoreFromBackup(dbClusterName!);
   const { data: dbCluster } = useDbCluster(dbClusterName || '', {
     enabled: !!dbClusterName,
   });

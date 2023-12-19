@@ -19,12 +19,13 @@ import { DBClusterDetailsTabs } from '../../src/pages/db-cluster-details/db-clus
 import { clickCreateSchedule } from './schedules.utils';
 import { findDbAndClickRow } from '../utils/db-clusters-list';
 import { getTokenFromLocalStorage } from '../utils/localStorage';
+import { storageLocationAutocompleteEmptyValidationCheck } from '../utils/db-wizard';
 
 test.describe.serial('Schedules List', async () => {
   let scheduleName = 'test-name';
   const mySQLName = 'schedule-mysql';
 
-  test.beforeAll(async ({ request, browser }) => {
+  test.beforeAll(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
     await createDbClusterFn(token, request, {
       dbName: mySQLName,
@@ -51,7 +52,6 @@ test.describe.serial('Schedules List', async () => {
 
     const scheduledBackupsAccordion = page.getByTestId('scheduled-backups');
     await expect(scheduledBackupsAccordion).not.toBeVisible();
-    await page.pause();
 
     await clickCreateSchedule(page);
 
@@ -72,15 +72,7 @@ test.describe.serial('Schedules List', async () => {
     );
     await expect(storageLocationField).not.toBeEmpty();
     await storageLocationField.click();
-    const clearLocationButton = page
-      .getByTestId('storage-location-autocomplete')
-      .getByTitle('Clear');
-    await clearLocationButton.click();
-    await expect(
-      page.getByText(
-        'Invalid option. Please make sure you added a storage location and select it from the dropdown'
-      )
-    ).toBeVisible();
+    await storageLocationAutocompleteEmptyValidationCheck(page);
     await page.getByRole('option').first().click();
     await expect(storageLocationField).not.toBeEmpty();
 
