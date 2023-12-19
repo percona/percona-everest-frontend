@@ -203,7 +203,7 @@ const RestoreDbModal = <T extends FieldValues>({
                   format={DATE_FORMAT}
                   name={RestoreDbFields.pitrBackup}
                   label={pitrData ? 'Select point in time' : 'No options'}
-                  sx={{ mt: 3 }}
+                  sx={{ mt: 1.5 }}
                 />
               )}
             </>
