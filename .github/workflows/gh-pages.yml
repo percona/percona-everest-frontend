@@ -28,5 +28,5 @@ jobs:
         with:
           install_command: pnpm install
           build_command: pnpm build-storybook
-          path: packages/ui-lib/torybook-static
+          path: packages/ui-lib/storybook-static
           checkout: false
