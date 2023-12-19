@@ -1,17 +1,22 @@
 import { ReactNode } from 'react';
 
-import { DefaultValues, FieldValues, ValidationMode } from 'react-hook-form';
-import { ZodObject, ZodRawShape } from 'zod';
+import {
+  DefaultValues,
+  FieldValues,
+  UseFormReturn,
+  ValidationMode,
+} from 'react-hook-form';
+import { ZodEffects, ZodObject, ZodRawShape } from 'zod';
 
 export interface FormDialogProps<T extends FieldValues> {
   isOpen: boolean;
   closeModal: () => void;
   headerMessage: string;
-  schema: ZodObject<ZodRawShape>;
+  schema: ZodEffects<ZodObject<ZodRawShape>> | ZodObject<ZodRawShape>;
   defaultValues?: DefaultValues<T>;
   values?: T;
   onSubmit: (data: T) => void;
-  children: ReactNode;
+  children: ((formMethods: UseFormReturn<T>) => ReactNode) | ReactNode;
   cancelMessage?: string;
   submitMessage: string;
   validationMode?: keyof ValidationMode;

@@ -39,6 +39,9 @@ export { default as TextArray } from './form/inputs/text-array';
 export * from './form/inputs/toggle-button-group';
 export { default as ToggleButtonGroupInput } from './form/inputs/toggle-button-group';
 
+export * from './form/inputs/date-time-picker';
+export { default as DateTimePickerInput } from './form/inputs/date-time-picker';
+
 export * from './loadable-children';
 export { default as LoadableChildren } from './loadable-children';
 

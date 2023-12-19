@@ -20,10 +20,11 @@ import { NoMatch } from '../404/NoMatch';
 import { DbActionButton } from './db-action-button';
 import { Messages } from './db-cluster-details.messages';
 import { DBClusterDetailsTabs } from './db-cluster-details.types';
+import { DbCluster } from 'shared-types/dbCluster.types';
 
 export const DbClusterDetails = () => {
   const { dbClusterName } = useParams();
-  const [routeFound, setRouteFound] = useState(true);
+  const [dbCluster, setDbCluster] = useState<DbCluster | null>();
   const { data = [], isLoading } = useDbClusters();
   const routeMatch = useMatch('/databases/:dbClusterName/:tabs');
   const navigate = useNavigate();
@@ -31,17 +32,16 @@ export const DbClusterDetails = () => {
 
   useEffect(() => {
     if (!isLoading) {
-      const dbNameExists = data.find(
+      const cluster = data.find(
         (cluster) => cluster.metadata.name === dbClusterName
       );
 
-      if (!dbNameExists) {
-        setRouteFound(false);
-      }
+      setDbCluster(cluster ? cluster : null);
     }
   }, [isLoading, data, dbClusterName]);
 
-  if (isLoading) {
+  // Either loading or we're still searching through the array
+  if (isLoading || dbCluster === undefined) {
     return (
       <>
         <Skeleton variant="rectangular" />
@@ -54,10 +54,12 @@ export const DbClusterDetails = () => {
     );
   }
 
-  if (!routeFound) {
+  // We went through the array and know the cluster is not there. Safe to show 404
+  if (dbCluster === null) {
     return <NoMatch />;
   }
 
+  // All clear, show the cluster data
   return (
     <Box sx={{ width: '100%' }}>
       <Box
@@ -81,7 +83,8 @@ export const DbClusterDetails = () => {
           </IconButton>
           <Typography variant="h4">{dbClusterName}</Typography>
         </Box>
-        <DbActionButton />
+        {/* At this point, loading is done and we either have the cluster or not */}
+        <DbActionButton dbCluster={dbCluster!} />
       </Box>
       <Box
         sx={{
