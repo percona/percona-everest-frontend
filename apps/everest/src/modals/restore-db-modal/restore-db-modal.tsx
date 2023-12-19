@@ -145,7 +145,9 @@ const RestoreDbModal = <T extends FieldValues>({
               {
                 label: Messages.fromPitr,
                 value: BackuptypeValues.fromPitr,
-                disabled: dbCluster.spec.engine.type !== DbEngineType.PXC,
+                disabled:
+                  dbCluster.spec.engine.type !== DbEngineType.PXC ||
+                  isNewClusterMode,
               },
             ]}
           />
