@@ -14,7 +14,11 @@
 // limitations under the License.
 
 import { DbType } from '@percona/types';
-import { DbClusterStatus, ProxyExposeType } from 'shared-types/dbCluster.types';
+import {
+  DbCluster,
+  DbClusterStatus,
+  ProxyExposeType,
+} from 'shared-types/dbCluster.types';
 import { DbEngineType } from 'shared-types/dbEngines.types';
 
 export interface DbTypeIconProviderProps {
@@ -33,4 +37,5 @@ export interface DbClusterTableElement {
   hostName: string;
   port?: number;
   exposetype: ProxyExposeType;
+  raw: DbCluster;
 }

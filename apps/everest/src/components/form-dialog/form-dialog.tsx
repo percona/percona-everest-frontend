@@ -92,7 +92,9 @@ export const FormDialog = <T extends FieldValues>({
         {subHead2 && <Typography variant="subHead2">{subHead2}</Typography>}
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(handleSubmit)}>
-            <FormGroup>{children}</FormGroup>
+            <FormGroup>
+              {typeof children === 'function' ? children(methods) : children}
+            </FormGroup>
           </form>
         </FormProvider>
       </DialogContent>

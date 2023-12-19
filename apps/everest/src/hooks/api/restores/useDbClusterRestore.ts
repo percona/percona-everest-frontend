@@ -17,16 +17,12 @@ import { useMutation, UseMutationOptions } from 'react-query';
 import { createDbClusterRestore } from 'api/restores';
 import { generateShortUID } from 'pages/database-form/steps/first/utils';
 
-export type RestoreFormData = {
-  backupName: string;
-};
-
-export const useDbClusterRestore = (
+export const useDbClusterRestoreFromBackup = (
   dbClusterName: string,
-  options?: UseMutationOptions<unknown, unknown, RestoreFormData, unknown>
+  options?: UseMutationOptions<unknown, unknown, unknown, unknown>
 ) => {
   return useMutation(
-    (formData: RestoreFormData) =>
+    ({ backupName }: { backupName: string }) =>
       createDbClusterRestore({
         apiVersion: 'everest.percona.com/v1alpha1',
         kind: 'DatabaseClusterRestore',
@@ -36,7 +32,39 @@ export const useDbClusterRestore = (
         spec: {
           dbClusterName,
           dataSource: {
-            dbClusterBackupName: formData.backupName,
+            dbClusterBackupName: backupName,
+          },
+        },
+      }),
+    { ...options }
+  );
+};
+
+export const useDbClusterRestoreFromPointInTime = (
+  dbClusterName: string,
+  options?: UseMutationOptions<unknown, unknown, unknown, unknown>
+) => {
+  return useMutation(
+    ({
+      pointInTimeDate,
+      backupName,
+    }: {
+      pointInTimeDate: string;
+      backupName: string;
+    }) =>
+      createDbClusterRestore({
+        apiVersion: 'everest.percona.com/v1alpha1',
+        kind: 'DatabaseClusterRestore',
+        metadata: {
+          name: `restore-${generateShortUID()}`,
+        },
+        spec: {
+          dbClusterName,
+          dataSource: {
+            dbClusterBackupName: backupName,
+            pitr: {
+              date: pointInTimeDate,
+            },
           },
         },
       }),
