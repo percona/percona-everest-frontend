@@ -74,7 +74,6 @@ const RestoreDbModal = <T extends FieldValues>({
       defaultValues={defaultValues}
       values={{ ...defaultValues, pitrBackup: pitrData?.latestDate }}
       onSubmit={({ backupName, backupType, pitrBackup }) => {
-        console.log(backupType, backupName, pitrBackup);
         if (isNewClusterMode) {
           closeModal();
           const selectedBackup = backups?.find(
