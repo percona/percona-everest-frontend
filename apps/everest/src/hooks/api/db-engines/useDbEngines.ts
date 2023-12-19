@@ -16,10 +16,18 @@ import { useQuery } from 'react-query';
 import {
   DbEngine,
   DbEngineStatus,
+  DbEngineType,
   EngineToolPayload,
   GetDbEnginesPayload,
 } from 'shared-types/dbEngines.types';
 import { getDbEnginesFn } from 'api/dbEngineApi';
+
+const DB_TYPE_ORDER_MAP: Record<DbEngineType, number> = {
+  // Lower is more important
+  [DbEngineType.PXC]: 1,
+  [DbEngineType.PSMDB]: 2,
+  [DbEngineType.POSTGRESQL]: 3,
+};
 
 export const useDbEngines = () => {
   return useQuery<GetDbEnginesPayload, unknown, DbEngine[]>(
@@ -71,6 +79,10 @@ export const useDbEngines = () => {
 
               return result;
             }
+          )
+          .sort(
+            ({ type: dbTypeA }, { type: dbTypeB }) =>
+              DB_TYPE_ORDER_MAP[dbTypeA] - DB_TYPE_ORDER_MAP[dbTypeB]
           ),
     }
   );

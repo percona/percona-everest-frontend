@@ -12,6 +12,7 @@ export const Messages = {
     host: 'Host',
     backups: 'Backups',
     scheduledBackups: 'Scheduled Backups',
+    pitr: 'Point-in-time Recovery (PITR)',
   },
   fields: {
     type: (type?: string) => `Type: ${type}`,
@@ -25,5 +26,7 @@ export const Messages = {
     disk: (disk: string | number) => `Disk: ${disk}`,
     enabled: `Enabled`,
     disabled: `Disabled`,
+    pitr: (isEnabled: string) =>
+      `${Messages.titles.pitr} ${isEnabled.toLocaleLowerCase()}`,
   },
 };
