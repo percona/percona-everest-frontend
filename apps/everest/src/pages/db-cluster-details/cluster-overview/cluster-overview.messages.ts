@@ -12,7 +12,7 @@ export const Messages = {
     host: 'Host',
     backups: 'Backups',
     scheduledBackups: 'Scheduled Backups',
-    pitr: 'PITR',
+    pitr: 'Point-in-time Recovery (PITR)',
   },
   fields: {
     type: (type?: string) => `Type: ${type}`,

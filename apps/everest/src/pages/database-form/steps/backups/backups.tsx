@@ -89,18 +89,15 @@ export const Backups = () => {
           {!scheduleDisabled && <ScheduleBackupSection />}
         </>
       )}
-      {dbType === DbType.Postresql && (
-        <Alert sx={{ mt: 1 }} severity="info">
-          {Messages.schedulesUnavailableForPostgreSQL}
-        </Alert>
-      )}
       {!backupsEnabled && dbType !== DbType.Mongo && (
         <Alert
-          data-testid="pitr-no-backup-alert"
           sx={{ mt: 1 }}
           severity="info"
+          data-testid="pitr-no-backup-alert"
         >
-          {Messages.pitrAlert}
+          {dbType === DbType.Postresql &&
+            Messages.schedulesUnavailableForPostgreSQL}
+          {dbType === DbType.Mysql && Messages.pitrAlert}
         </Alert>
       )}
     </Box>
