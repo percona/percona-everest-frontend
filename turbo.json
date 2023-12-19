@@ -7,9 +7,7 @@
     },
     "rm-build-dir": {
       "cache": false,
-      "dependsOn": [
-        "^rm-build-dir"
-      ]
+      "dependsOn": ["^rm-build-dir"]
     },
     "test": {
       "cache": false
@@ -21,18 +19,16 @@
       "cache": false
     },
     "build": {
-      "dependsOn": [
-        "rm-build-dir",
-        "^build"
-      ],
-      "outputs": [
-        "dist/**"
-      ]
+      "dependsOn": ["rm-build-dir", "^build"],
+      "outputs": ["dist/**"]
     },
     "move-build": {
       "dependsOn": ["^move-build"],
       "persistent": true,
       "cache": false
+    },
+    "build-storybook": {
+      "dependsOn": ["build"]
     }
   }
 }
