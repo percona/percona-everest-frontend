@@ -39,6 +39,7 @@ import { BACKUP_STATUS_TO_BASE_STATUS } from './backups-list.constants';
 import { Messages } from './backups-list.messages';
 import { OnDemandBackupModal } from './on-demand-backup-modal/on-demand-backup-modal';
 import { ScheduleModalContext } from '../backups.context.ts';
+import { DbClusterStatus } from 'shared-types/dbCluster.types.ts';
 
 export const BackupsList = () => {
   const navigate = useNavigate();
@@ -68,6 +69,7 @@ export const BackupsList = () => {
     useContext(ScheduleModalContext);
 
   const dbType = dbCluster?.spec?.engine?.type;
+  const restoring = dbCluster?.status?.status === DbClusterStatus.restoring;
 
   const columns = useMemo<MRT_ColumnDef<Backup>[]>(
     () => [
@@ -205,7 +207,10 @@ export const BackupsList = () => {
           ],
         }}
         renderTopToolbarCustomActions={() => (
-          <MenuButton buttonText={Messages.createBackup}>
+          <MenuButton
+            buttonText={Messages.createBackup}
+            buttonProps={{ disabled: restoring }}
+          >
             {/* MUI Menu does not like fragments and asks for arrays instead */}
             {(handleClose) => [
               <MenuItem
