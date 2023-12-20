@@ -118,12 +118,12 @@ export const DbClusterDetails = () => {
             />
           ))}
         </Tabs>
-        {dbCluster.status?.status === DbClusterStatus.restoring && (
-          <Alert severity="warning" sx={{ my: 1 }}>
-            {Messages.restoringDb}
-          </Alert>
-        )}
       </Box>
+      {dbCluster.status?.status === DbClusterStatus.restoring && (
+        <Alert severity="warning" sx={{ my: 1 }}>
+          {Messages.restoringDb}
+        </Alert>
+      )}
       <Outlet />
     </Box>
   );
