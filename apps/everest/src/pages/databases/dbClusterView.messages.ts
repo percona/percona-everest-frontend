@@ -32,6 +32,7 @@ export const Messages = {
     cpu: 'CPU',
     memory: 'Memory',
     disk: 'Disk',
+    nodes: 'Number of nodes',
     externalAccess: 'External Access',
     enabled: 'Enabled',
     disabled: 'Disabled',

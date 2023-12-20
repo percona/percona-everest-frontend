@@ -27,8 +27,16 @@ export const ExpandedRow = ({
 }: {
   row: MRT_Row<DbClusterTableElement>;
 }) => {
-  const { cpu, memory, storage, exposetype, databaseName, hostName, port } =
-    row.original;
+  const {
+    cpu,
+    memory,
+    storage,
+    nodes,
+    exposetype,
+    databaseName,
+    hostName,
+    port,
+  } = row.original;
   const isExpanded = row.getIsExpanded();
   const { isLoading, isFetching, data } = useDbClusterCredentials(
     databaseName,
@@ -86,6 +94,7 @@ export const ExpandedRow = ({
           {Messages.expandedRow.dbClusterParams}
         </Typography>
         <LabelValue label={Messages.expandedRow.cpu} value={cpu} />
+        <LabelValue label={Messages.expandedRow.nodes} value={nodes} />
         <LabelValue label={Messages.expandedRow.memory} value={memory} />
         <LabelValue label={Messages.expandedRow.disk} value={storage} />
         <LabelValue

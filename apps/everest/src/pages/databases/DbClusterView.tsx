@@ -111,6 +111,11 @@ export const DbClusterView = () => {
           </Stack>
         ),
       },
+      {
+        accessorKey: 'nodes',
+        id: 'nodes',
+        header: 'Number of nodes',
+      },
       // {
       //   accessorKey: 'backupsEnabled',
       //   header: 'Backups',

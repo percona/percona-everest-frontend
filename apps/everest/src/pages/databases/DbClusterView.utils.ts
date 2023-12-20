@@ -42,6 +42,7 @@ export const convertDbClusterPayloadToTableFormat = (
     cpu: cluster.spec.engine.resources?.cpu || '',
     memory: cluster.spec.engine.resources?.memory || '',
     storage: cluster.spec.engine.storage.size,
+    nodes: cluster.spec.engine.replicas,
     hostName: cluster.status ? cluster.status.hostname : '',
     exposetype: cluster.spec.proxy.expose.type,
     port: cluster.status?.port,
