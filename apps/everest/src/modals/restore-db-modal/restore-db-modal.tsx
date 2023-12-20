@@ -100,7 +100,7 @@ const RestoreDbModal = <T extends FieldValues>({
             restoreBackupFromPointInTime(
               {
                 backupName: pitrData!.latestBackupName,
-                pointInTimeDate: pitrBackup!.toISOString(),
+                pointInTimeDate: pitrBackup!.toISOString().split('.')[0] + 'Z',
               },
               {
                 onSuccess() {
@@ -203,6 +203,7 @@ const RestoreDbModal = <T extends FieldValues>({
               )}
               {!pitrData?.gaps && (
                 <DateTimePickerInput
+                  timeSteps={{ hours: 1, minutes: 1 }}
                   disableFuture
                   disabled={!pitrData}
                   minDate={new Date(pitrData?.earliestDate || new Date())}
