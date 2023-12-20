@@ -12,6 +12,7 @@
     "test": "turbo run test",
     "lint": "turbo run lint",
     "format": "turbo run format",
-    "build": "turbo run build && turbo run move-build"
+    "build": "turbo run build && turbo run move-build",
+    "build-storybook": "turbo run build-storybook"
   }
 }

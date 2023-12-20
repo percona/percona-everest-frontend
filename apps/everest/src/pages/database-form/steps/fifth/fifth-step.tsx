@@ -1,12 +1,16 @@
-import { Alert, FormGroup } from '@mui/material';
-import { SwitchInput, AutoCompleteInput } from '@percona/ui-lib';
+import { Alert, FormGroup, Typography } from '@mui/material';
+import {
+  AutoCompleteInput,
+  CopyToClipboardButton,
+  SwitchInput,
+} from '@percona/ui-lib';
+import { useMonitoringInstancesList } from 'hooks/api/monitoring/useMonitoringInstancesList';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { DbWizardFormFields } from '../../database-form.types';
-import { Messages } from './fifth-step.messages';
-import { useMonitoringInstancesList } from 'hooks/api/monitoring/useMonitoringInstancesList';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { StepHeader } from '../step-header/step-header.tsx';
+import { Messages } from './fifth-step.messages';
 
 export const FifthStep = () => {
   const { watch, getValues } = useFormContext();
@@ -60,9 +64,36 @@ export const FifthStep = () => {
       />
       {!monitoringInstances?.length && (
         <Alert severity="info" sx={{ mt: 1 }} data-testid="monitoring-warning">
-          Database monitoring is currently disabled because monitoring endpoints
-          were not configured during installation. To enable database
-          monitoring, run the `everestctl install` command to reinstall Everest.
+          {Messages.alertText}
+          <Alert
+            severity="info"
+            icon={false}
+            sx={{
+              mt: 0.5,
+              mb: 0.5,
+              px: 0,
+              maxWidth: '260px',
+              border: 'none',
+              '& .MuiAlert-action': {
+                alignItems: 'center',
+                pt: 0,
+                px: 0,
+              },
+            }}
+            action={
+              <CopyToClipboardButton
+                buttonProps={{ size: 'small', color: 'primary' }}
+                textToCopy={Messages.command}
+              />
+            }
+          >
+            <Typography
+              variant="button"
+              sx={{ fontSize: '15px', fontWeight: 600 }}
+            >
+              {Messages.command}
+            </Typography>
+          </Alert>
         </Alert>
       )}
       <FormGroup sx={{ mt: 2 }}>
