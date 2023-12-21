@@ -85,9 +85,9 @@ const PITRStep = () => {
           {Messages.unavailableForDb(dbType)}
         </Alert>
       )}
-      {!backupsEnabled && (
+      {!backupsEnabled && dbType === DbType.Mysql && (
         <Alert severity="info" sx={{ mt: 1 }}>
-          {dbType === DbType.Mysql && Messages.toEnablePitr}
+          {Messages.toEnablePitr}
         </Alert>
       )}
       <SwitchInput

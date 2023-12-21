@@ -16,7 +16,7 @@ import { Messages } from 'pages/databases/dbClusterView.messages';
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Messages as ClusterDetailsMessages } from './db-cluster-details.messages';
-import { DbCluster } from 'shared-types/dbCluster.types';
+import { DbCluster, DbClusterStatus } from 'shared-types/dbCluster.types';
 
 export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
   const { dbClusterName } = useParams();
@@ -24,6 +24,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
   const [openRestoreDbModal, setOpenRestoreDbModal] = useState(false);
   const [isNewClusterMode, setIsNewClusterMode] = useState(false);
   const isOpen = !!anchorEl;
+  const restoring = dbCluster.status?.status === DbClusterStatus.restoring;
   const {
     openDeleteDialog,
     handleConfirmDelete,
@@ -68,6 +69,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
           onClose={closeMenu}
         >
           <MenuItem
+            disabled={restoring}
             key={0}
             component={Link}
             to="/databases/edit"
@@ -83,6 +85,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
             <BorderColor fontSize="small" /> {Messages.menuItems.edit}
           </MenuItem>
           <MenuItem
+            disabled={restoring}
             key={2}
             onClick={() => {
               handleDbRestart(dbCluster);
@@ -100,6 +103,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
           </MenuItem>
           <MenuItem
             data-testid={`${dbClusterName}-create-new-db-from-backup`}
+            disabled={restoring}
             key={1}
             onClick={() => {
               setIsNewClusterMode(true);
@@ -118,6 +122,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
           </MenuItem>
           <MenuItem
             data-testid={`${dbClusterName}-restore`}
+            disabled={restoring}
             key={3}
             onClick={() => {
               setIsNewClusterMode(false);
@@ -135,6 +140,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
             <KeyboardReturnIcon /> {Messages.menuItems.restoreFromBackup}
           </MenuItem>
           <MenuItem
+            disabled={restoring}
             key={4}
             onClick={() => {
               handleDbSuspendOrResumed(dbCluster);
