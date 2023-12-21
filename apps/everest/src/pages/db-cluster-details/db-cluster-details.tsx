@@ -1,5 +1,6 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import {
+  Alert,
   Box,
   IconButton,
   Skeleton,
@@ -20,7 +21,7 @@ import { NoMatch } from '../404/NoMatch';
 import { DbActionButton } from './db-action-button';
 import { Messages } from './db-cluster-details.messages';
 import { DBClusterDetailsTabs } from './db-cluster-details.types';
-import { DbCluster } from 'shared-types/dbCluster.types';
+import { DbCluster, DbClusterStatus } from 'shared-types/dbCluster.types';
 
 export const DbClusterDetails = () => {
   const { dbClusterName } = useParams();
@@ -118,6 +119,11 @@ export const DbClusterDetails = () => {
           ))}
         </Tabs>
       </Box>
+      {dbCluster.status?.status === DbClusterStatus.restoring && (
+        <Alert severity="warning" sx={{ my: 1 }}>
+          {Messages.restoringDb}
+        </Alert>
+      )}
       <Outlet />
     </Box>
   );

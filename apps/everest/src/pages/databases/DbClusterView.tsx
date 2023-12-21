@@ -143,6 +143,7 @@ export const DbClusterView = () => {
           renderRowActionMenuItems={({ row, closeMenu }) => [
             // TODO: finish when design is ready
             <MenuItem
+              disabled={row.original.status === DbClusterStatus.restoring}
               key={0}
               component={Link}
               to="/databases/edit"
@@ -159,6 +160,7 @@ export const DbClusterView = () => {
               <BorderColor fontSize="small" /> {Messages.menuItems.edit}
             </MenuItem>,
             <MenuItem
+              disabled={row.original.status === DbClusterStatus.restoring}
               key={2}
               onClick={() => {
                 handleDbRestart(row.original.raw);
@@ -176,6 +178,7 @@ export const DbClusterView = () => {
               <RestartAltIcon /> {Messages.menuItems.restart}
             </MenuItem>,
             <MenuItem
+              disabled={row.original.status === DbClusterStatus.restoring}
               key={5}
               onClick={() => {
                 handleRestoreDbCluster(row.original.raw);
@@ -193,6 +196,7 @@ export const DbClusterView = () => {
               <AddIcon /> {Messages.menuItems.createNewDbFromBackup}
             </MenuItem>,
             <MenuItem
+              disabled={row.original.status === DbClusterStatus.restoring}
               key={3}
               data-testid={`${row.original?.databaseName}-restore`}
               onClick={() => {
@@ -212,7 +216,10 @@ export const DbClusterView = () => {
             </MenuItem>,
             <MenuItem
               key={4}
-              disabled={row.original.status === DbClusterStatus.pausing}
+              disabled={
+                row.original.status === DbClusterStatus.pausing ||
+                row.original.status === DbClusterStatus.restoring
+              }
               onClick={() => {
                 handleDbSuspendOrResumed(row.original.raw);
                 closeMenu();
