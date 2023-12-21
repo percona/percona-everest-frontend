@@ -41,12 +41,11 @@ import { steps } from './steps';
 import { useCreateDbCluster } from 'hooks/api/db-cluster/useCreateDbCluster';
 import { useUpdateDbCluster } from 'hooks/api/db-cluster/useUpdateDbCluster';
 import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
+import { DbWizardType } from './database-form-schema.ts';
 import { DatabasePreview } from './database-preview/database-preview';
-import { RestoreDialog } from './restore-dialog/restore-dialog';
 import { SixthStep } from './steps/sixth/sixth-step';
 import { useDatabasePageDefaultValues } from './useDatabaseFormDefaultValues';
 import { useDatabasePageMode } from './useDatabasePageMode';
-import { DbWizardType } from './database-form-schema.ts';
 import { useDbValidationSchema } from './useDbValidationSchema.ts';
 
 export const DatabasePage = () => {
@@ -54,7 +53,6 @@ export const DatabasePage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [closeModalIsOpen, setModalIsOpen] = useState(false);
-  const [restoreFromBackupModal, setRestoreFromBackupModal] = useState(false);
 
   const { mutate: addDbCluster, isLoading: isCreating } = useCreateDbCluster();
   const { mutate: editDbCluster, isLoading: isUpdating } = useUpdateDbCluster();
@@ -119,7 +117,6 @@ export const DatabasePage = () => {
         },
         {
           onSuccess: () => {
-            setRestoreFromBackupModal(false);
             setFormSubmitted(true);
           },
         }
@@ -211,14 +208,6 @@ export const DatabasePage = () => {
         ))}
       </Stepper>
       <FormProvider {...methods}>
-        {mode === 'restoreFromBackup' && (
-          <RestoreDialog
-            open={restoreFromBackupModal}
-            setOpen={setRestoreFromBackupModal}
-            onSubmit={onSubmit}
-            submitting={isCreating}
-          />
-        )}
         <Stack direction={isDesktop ? 'row' : 'column'}>
           <form style={{ flexGrow: 1 }} onSubmit={handleSubmit(onSubmit)}>
             <Box>
@@ -252,28 +241,16 @@ export const DatabasePage = () => {
                 {Messages.cancel}
               </Button>
               {activeStep === steps.length - 1 ? (
-                mode !== 'restoreFromBackup' ? (
-                  <Button
-                    onClick={handleSubmit(onSubmit)}
-                    variant="contained"
-                    disabled={isCreating || isUpdating}
-                    data-testid="db-wizard-submit-button"
-                  >
-                    {mode === 'edit' && Messages.editDatabase}
-                    {mode === 'new' && Messages.createDatabase}
-                  </Button>
-                ) : (
-                  <Button
-                    onClick={() => {
-                      setRestoreFromBackupModal(true);
-                    }}
-                    disabled={isCreating}
-                    variant="contained"
-                    data-testid="db-wizard-submit-button"
-                  >
-                    {Messages.createDatabase}
-                  </Button>
-                )
+                <Button
+                  onClick={handleSubmit(onSubmit)}
+                  variant="contained"
+                  disabled={isCreating || isUpdating}
+                  data-testid="db-wizard-submit-button"
+                >
+                  {mode === 'edit'
+                    ? Messages.editDatabase
+                    : Messages.createDatabase}
+                </Button>
               ) : (
                 <Button
                   onClick={handleNext}
