@@ -1,6 +1,7 @@
 import { addApiInterceptors, api, removeApiInterceptors } from 'api/api';
 import { useVersion } from 'hooks/api/version/useVersion';
 import { ReactNode, useEffect, useState } from 'react';
+import { enqueueSnackbar } from 'notistack';
 import AuthContext from './auth.context';
 import { UserAuthStatus } from './auth.context.types';
 
@@ -61,6 +62,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     onError: () => {
       _setAuthStatus('loggedOut');
       setApiCallEnabled(false);
+      enqueueSnackbar('Invalid authorization token', {
+        variant: 'error',
+      });
     },
   });
 
