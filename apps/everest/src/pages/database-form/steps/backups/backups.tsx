@@ -27,7 +27,7 @@ import { StepHeader } from '../step-header/step-header.tsx';
 
 export const Backups = () => {
   const mode = useDatabasePageMode();
-  const { control, watch, setValue } = useFormContext();
+  const { control, watch, setValue, getFieldState } = useFormContext();
   const { dbClusterData } = useDatabasePageDefaultValues(mode);
 
   const [backupsEnabled, dbType] = watch([
@@ -37,6 +37,12 @@ export const Backups = () => {
 
   // TODO should be removed after https://jira.percona.com/browse/EVEREST-509 + DEFAULT_VALUES should be changed from false to true for all databases
   useEffect(() => {
+    const { isTouched } = getFieldState(DbWizardFormFields.backupsEnabled);
+
+    if (isTouched) {
+      return;
+    }
+
     if (
       dbType !== DbType.Postresql &&
       (mode === 'new' || mode === 'restoreFromBackup')
