@@ -29,7 +29,7 @@ import {
 } from './restore-db-modal-schema';
 import { DbCluster } from 'shared-types/dbCluster.types';
 import { DbEngineType } from '@percona/types';
-import { DATE_FORMAT } from 'consts';
+import { PITR_DATE_FORMAT } from 'consts';
 import { Messages } from './restore-db-modal.messages';
 import { format } from 'date-fns';
 
@@ -195,20 +195,31 @@ const RestoreDbModal = <T extends FieldValues>({
                     : Messages.pitrDisclaimer(
                         format(
                           pitrData?.earliestDate || new Date(),
-                          DATE_FORMAT
+                          PITR_DATE_FORMAT
                         ),
-                        format(pitrData?.latestDate || new Date(), DATE_FORMAT)
+                        format(
+                          pitrData?.latestDate || new Date(),
+                          PITR_DATE_FORMAT
+                        )
                       )}
                 </Alert>
               )}
               {!pitrData?.gaps && (
                 <DateTimePickerInput
-                  timeSteps={{ hours: 1, minutes: 1 }}
+                  views={[
+                    'year',
+                    'month',
+                    'day',
+                    'hours',
+                    'minutes',
+                    'seconds',
+                  ]}
+                  timeSteps={{ hours: 1, minutes: 1, seconds: 1 }}
                   disableFuture
                   disabled={!pitrData}
                   minDate={new Date(pitrData?.earliestDate || new Date())}
                   maxDate={new Date(pitrData?.latestDate || new Date())}
-                  format={DATE_FORMAT}
+                  format={PITR_DATE_FORMAT}
                   name={RestoreDbFields.pitrBackup}
                   label={pitrData ? 'Select point in time' : 'No options'}
                   sx={{ mt: 1.5 }}
