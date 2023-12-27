@@ -15,8 +15,12 @@ export const schema = (minDate: Date, maxDate: Date, gaps: boolean) =>
   z
     .object({
       [RestoreDbFields.backupType]: z.nativeEnum(BackuptypeValues),
-      [RestoreDbFields.backupName]: z.string(),
-      [RestoreDbFields.pitrBackup]: z.date().min(minDate).max(maxDate),
+      [RestoreDbFields.backupName]: z.string().optional(),
+      [RestoreDbFields.pitrBackup]: z
+        .date()
+        .min(minDate)
+        .max(maxDate)
+        .optional(),
     })
     .superRefine(({ backupType, backupName, pitrBackup }, ctx) => {
       if (backupType === BackuptypeValues.fromBackup) {
