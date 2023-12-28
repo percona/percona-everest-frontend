@@ -78,15 +78,21 @@ export const DatabaseDetails = ({
             </OverviewSectionText>
           </OverviewSection>
           <OverviewSection title={Messages.titles.backups} loading={loading}>
-            {Array.isArray(schedules) && schedules?.length > 0 && (
-              <OverviewSectionText>
-                {schedules?.map((item) =>
-                  getTimeSelectionPreviewMessage(
-                    getFormValuesFromCronExpression(item.schedule)
-                  )
-                )}
-              </OverviewSectionText>
-            )}
+            <OverviewSectionText>
+              {Array.isArray(schedules) &&
+              schedules?.length > 0 &&
+              backup?.enabled ? (
+                <OverviewSectionText>
+                  {schedules?.map((item) =>
+                    getTimeSelectionPreviewMessage(
+                      getFormValuesFromCronExpression(item.schedule)
+                    )
+                  )}
+                </OverviewSectionText>
+              ) : (
+                Messages.fields.disabled
+              )}
+            </OverviewSectionText>
           </OverviewSection>
           <OverviewSection
             title={Messages.titles.externalAccess}
