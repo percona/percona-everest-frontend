@@ -100,7 +100,7 @@ export const DatabaseDetails = ({
           </OverviewSection>
           <OverviewSection dataTestId="pitr" title={Messages.titles.pitr}>
             <OverviewSectionText dataTestId="pitr">
-              {backup?.enabled
+              {backup?.pitr?.enabled
                 ? Messages.fields.enabled
                 : Messages.fields.disabled}
             </OverviewSectionText>
