@@ -12,15 +12,38 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { useQuery } from 'react-query';
-import { getMonitoringInstancesFn } from 'api/monitoring';
-import { MonitoringInstanceList } from 'shared-types/monitoring.types';
+import { UseMutationOptions, useMutation, useQuery } from 'react-query';
+import {
+  getMonitoringInstancesFn,
+  createMonitoringInstanceFn,
+} from 'api/monitoring';
+import {
+  CreateMonitoringInstancePayload,
+  MonitoringInstance,
+  MonitoringInstanceList,
+} from 'shared-types/monitoring.types';
+
+export const MONITORING_INSTANCES_QUERY_KEY = 'monitoringInstances';
 
 export const useMonitoringInstancesList = (enabled?: boolean) =>
   useQuery<MonitoringInstanceList>(
-    'monitoring-instances',
+    MONITORING_INSTANCES_QUERY_KEY,
     () => getMonitoringInstancesFn(),
     {
       enabled,
     }
+  );
+
+export const useCreateMonitoringInstance = (
+  options?: UseMutationOptions<
+    MonitoringInstance,
+    unknown,
+    CreateMonitoringInstancePayload,
+    unknown
+  >
+) =>
+  useMutation(
+    (payload: CreateMonitoringInstancePayload) =>
+      createMonitoringInstanceFn(payload),
+    options
   );

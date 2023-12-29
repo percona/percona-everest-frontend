@@ -1,16 +1,25 @@
 import { useMemo, useState } from 'react';
 import { Button } from '@mui/material';
 import { Add } from '@mui/icons-material';
+import { useQueryClient } from 'react-query';
 import { Table } from '@percona/ui-lib';
-import { useMonitoringInstancesList } from 'hooks/api/monitoring/useMonitoringInstancesList';
+import {
+  useMonitoringInstancesList,
+  useCreateMonitoringInstance,
+  MONITORING_INSTANCES_QUERY_KEY,
+} from 'hooks/api/monitoring/useMonitoringInstancesList';
 import { MRT_ColumnDef } from 'material-react-table';
 import { MonitoringInstance } from 'shared-types/monitoring.types';
 import { CreateEditEndpointModal } from './createEditModal/create-edit-modal';
 import { EndpointFormType } from './createEditModal/create-edit-modal.types';
+import { updateDataAfterCreate } from 'utils/generalOptimisticDataUpdate';
 
 export const MonitoringEndpoints = () => {
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
   const { data: monitoringInstances = [] } = useMonitoringInstancesList();
+  const { mutate: createMonitoringInstance, isLoading: creatingInstance } =
+    useCreateMonitoringInstance();
+  const queryClient = useQueryClient();
   const columns = useMemo<MRT_ColumnDef<MonitoringInstance>[]>(
     () => [
       {
@@ -26,13 +35,23 @@ export const MonitoringEndpoints = () => {
   );
 
   const handleOpenCreateModal = () => {
-    // setSelectedStorageLocation(undefined);
     setOpenCreateEditModal(true);
   };
 
   const handleCloseModal = () => setOpenCreateEditModal(false);
-  const handleSubmitModal = (data: EndpointFormType) => {
-    console.log(data);
+  const handleSubmitModal = ({ name, url, ...pmmData }: EndpointFormType) => {
+    createMonitoringInstance(
+      { name, url, type: 'pmm', pmm: { ...pmmData } },
+      {
+        onSuccess: (newInstance) => {
+          updateDataAfterCreate(
+            queryClient,
+            MONITORING_INSTANCES_QUERY_KEY
+          )(newInstance);
+          setOpenCreateEditModal(false);
+        },
+      }
+    );
   };
 
   return (
@@ -58,6 +77,7 @@ export const MonitoringEndpoints = () => {
           open={openCreateEditModal}
           handleClose={handleCloseModal}
           handleSubmit={handleSubmitModal}
+          isLoading={creatingInstance}
         />
       )}
     </>
