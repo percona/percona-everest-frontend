@@ -18,3 +18,9 @@ export const createMonitoringInstanceFn = async (
 
   return response.data;
 };
+
+export const deleteMonitoringInstanceFn = async (instanceName: string) => {
+  const response = await api.delete(`monitoring-instances/${instanceName}`);
+
+  return response.data;
+};

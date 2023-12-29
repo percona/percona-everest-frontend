@@ -16,6 +16,7 @@ import { UseMutationOptions, useMutation, useQuery } from 'react-query';
 import {
   getMonitoringInstancesFn,
   createMonitoringInstanceFn,
+  deleteMonitoringInstanceFn,
 } from 'api/monitoring';
 import {
   CreateMonitoringInstancePayload,
@@ -46,4 +47,9 @@ export const useCreateMonitoringInstance = (
     (payload: CreateMonitoringInstancePayload) =>
       createMonitoringInstanceFn(payload),
     options
+  );
+
+export const useDeleteMonitoringInstance = () =>
+  useMutation((instanceName: string) =>
+    deleteMonitoringInstanceFn(instanceName)
   );
