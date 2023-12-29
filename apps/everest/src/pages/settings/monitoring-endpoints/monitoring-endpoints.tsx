@@ -131,7 +131,7 @@ export const MonitoringEndpoints = () => {
           isOpen={openDeleteDialog}
           selectedId={selectedInstance?.name || ''}
           closeModal={handleCloseDeleteDialog}
-          headerMessage={'Messages.deleteDialog.header'}
+          headerMessage={'Delete monitoring endpoint'}
           handleConfirm={handleConfirmDelete}
           disabledButtons={removingInstance}
         >
