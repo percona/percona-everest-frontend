@@ -13,7 +13,7 @@ export enum EndpointFormFields {
 export interface CreateEditEndpointModalProps {
   open: boolean;
   handleClose: () => void;
-  handleSubmit: (data: EndpointFormType) => void;
+  handleSubmit: (isEditMode: boolean, data: EndpointFormType) => void;
   selectedEndpoint?: MonitoringInstance;
   isLoading?: boolean;
 }
@@ -21,8 +21,8 @@ export interface CreateEditEndpointModalProps {
 export const endpointSchema = z.object({
   [EndpointFormFields.name]: rfc_123_schema('endpoint name'),
   [EndpointFormFields.url]: z.string().min(1).url(),
-  [EndpointFormFields.user]: z.string().min(1),
-  [EndpointFormFields.password]: z.string().min(1),
+  [EndpointFormFields.user]: z.string(),
+  [EndpointFormFields.password]: z.string(),
   [EndpointFormFields.apiKey]: z.string().min(1),
 });
 

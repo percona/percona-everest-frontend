@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Button, MenuItem } from '@mui/material';
-import { Add, Delete } from '@mui/icons-material';
+import { Add, Delete, Edit } from '@mui/icons-material';
 import { useQueryClient } from 'react-query';
 import { Table } from '@percona/ui-lib';
 import {
@@ -8,6 +8,7 @@ import {
   useCreateMonitoringInstance,
   MONITORING_INSTANCES_QUERY_KEY,
   useDeleteMonitoringInstance,
+  useUpdateMonitoringInstance,
 } from 'hooks/api/monitoring/useMonitoringInstancesList';
 import { MRT_ColumnDef } from 'material-react-table';
 import { MonitoringInstance } from 'shared-types/monitoring.types';
@@ -16,6 +17,7 @@ import { EndpointFormType } from './createEditModal/create-edit-modal.types';
 import {
   updateDataAfterCreate,
   updateDataAfterDelete,
+  updateDataAfterEdit,
 } from 'utils/generalOptimisticDataUpdate';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
 
@@ -29,6 +31,8 @@ export const MonitoringEndpoints = () => {
     useCreateMonitoringInstance();
   const { mutate: deleteMonitoringInstance, isLoading: removingInstance } =
     useDeleteMonitoringInstance();
+  const { mutate: updateMonitoringInstance, isLoading: updatingInstance } =
+    useUpdateMonitoringInstance();
   const queryClient = useQueryClient();
   const columns = useMemo<MRT_ColumnDef<MonitoringInstance>[]>(
     () => [
@@ -48,7 +52,15 @@ export const MonitoringEndpoints = () => {
     setOpenCreateEditModal(true);
   };
 
-  const handleCloseModal = () => setOpenCreateEditModal(false);
+  const handleOpenEditModal = (instance: MonitoringInstance) => {
+    setSelectedInstance(instance);
+    setOpenCreateEditModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedInstance(undefined);
+    setOpenCreateEditModal(false);
+  };
 
   const handleCloseDeleteDialog = () => {
     setSelectedInstance(undefined);
@@ -60,19 +72,41 @@ export const MonitoringEndpoints = () => {
     setOpenDeleteDialog(true);
   };
 
-  const handleSubmitModal = ({ name, url, ...pmmData }: EndpointFormType) => {
-    createMonitoringInstance(
-      { name, url, type: 'pmm', pmm: { ...pmmData } },
-      {
-        onSuccess: (newInstance) => {
-          updateDataAfterCreate(
-            queryClient,
-            MONITORING_INSTANCES_QUERY_KEY
-          )(newInstance);
-          setOpenCreateEditModal(false);
+  const handleSubmitModal = (
+    isEditMode: boolean,
+    { name, url, ...pmmData }: EndpointFormType
+  ) => {
+    if (isEditMode) {
+      updateMonitoringInstance(
+        {
+          instanceName: name,
+          payload: { url, type: 'pmm', pmm: { ...pmmData } },
         },
-      }
-    );
+        {
+          onSuccess: (updatedInstance) => {
+            updateDataAfterEdit(
+              queryClient,
+              MONITORING_INSTANCES_QUERY_KEY,
+              'name'
+            )(updatedInstance);
+            handleCloseModal();
+          },
+        }
+      );
+    } else {
+      createMonitoringInstance(
+        { name, url, type: 'pmm', pmm: { ...pmmData } },
+        {
+          onSuccess: (newInstance) => {
+            updateDataAfterCreate(
+              queryClient,
+              MONITORING_INSTANCES_QUERY_KEY
+            )(newInstance);
+            handleCloseModal();
+          },
+        }
+      );
+    }
   };
 
   const handleConfirmDelete = (instanceName: string) => {
@@ -110,6 +144,16 @@ export const MonitoringEndpoints = () => {
           <MenuItem
             key={0}
             onClick={() => {
+              handleOpenEditModal(row.original);
+              closeMenu();
+            }}
+            sx={{ m: 0, display: 'flex', gap: 1, px: 2, py: '10px' }}
+          >
+            <Edit /> Edit
+          </MenuItem>,
+          <MenuItem
+            key={1}
+            onClick={() => {
               handleDeleteInstance(row.original);
               closeMenu();
             }}
@@ -123,7 +167,8 @@ export const MonitoringEndpoints = () => {
           open={openCreateEditModal}
           handleClose={handleCloseModal}
           handleSubmit={handleSubmitModal}
-          isLoading={creatingInstance}
+          isLoading={creatingInstance || updatingInstance}
+          selectedEndpoint={selectedInstance}
         />
       )}
       {openDeleteDialog && (

@@ -17,12 +17,19 @@ import {
   getMonitoringInstancesFn,
   createMonitoringInstanceFn,
   deleteMonitoringInstanceFn,
+  updateMonitoringInstanceFn,
 } from 'api/monitoring';
 import {
   CreateMonitoringInstancePayload,
   MonitoringInstance,
   MonitoringInstanceList,
+  UpdateMonitoringInstancePayload,
 } from 'shared-types/monitoring.types';
+
+type HookUpdateParam = {
+  instanceName: string;
+  payload: UpdateMonitoringInstancePayload;
+};
 
 export const MONITORING_INSTANCES_QUERY_KEY = 'monitoringInstances';
 
@@ -52,4 +59,18 @@ export const useCreateMonitoringInstance = (
 export const useDeleteMonitoringInstance = () =>
   useMutation((instanceName: string) =>
     deleteMonitoringInstanceFn(instanceName)
+  );
+
+export const useUpdateMonitoringInstance = (
+  options?: UseMutationOptions<
+    MonitoringInstance,
+    unknown,
+    HookUpdateParam,
+    unknown
+  >
+) =>
+  useMutation(
+    ({ instanceName, payload }: HookUpdateParam) =>
+      updateMonitoringInstanceFn(instanceName, payload),
+    options
   );

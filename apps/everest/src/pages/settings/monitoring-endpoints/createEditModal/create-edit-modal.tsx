@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+import { TextInput } from '@percona/ui-lib';
 import { FormDialog } from 'components/form-dialog';
 import {
   CreateEditEndpointModalProps,
@@ -6,16 +8,26 @@ import {
   endpointDefaultValues,
   endpointSchema,
 } from './create-edit-modal.types';
-import { TextInput } from '@percona/ui-lib';
 
 export const CreateEditEndpointModal = ({
   open,
   handleClose,
   isLoading = false,
   handleSubmit,
+  selectedEndpoint,
 }: CreateEditEndpointModalProps) => {
+  const isEditMode = !!selectedEndpoint;
+
+  const defaultValues = useMemo(
+    () =>
+      selectedEndpoint
+        ? { ...endpointDefaultValues, ...selectedEndpoint }
+        : endpointDefaultValues,
+    [selectedEndpoint]
+  );
+
   const onSubmit = (data: EndpointFormType) => {
-    handleSubmit(data);
+    handleSubmit(isEditMode, data);
   };
 
   return (
@@ -24,19 +36,20 @@ export const CreateEditEndpointModal = ({
       closeModal={handleClose}
       submitting={isLoading}
       onSubmit={onSubmit}
-      defaultValues={endpointDefaultValues}
+      defaultValues={defaultValues}
       headerMessage="Add monitoring endpoint"
       schema={endpointSchema}
       submitMessage="Add"
     >
-      <TextInput name={EndpointFormFields.name} label="Name" isRequired />
-      <TextInput name={EndpointFormFields.url} label="Endpoint" isRequired />
-      <TextInput name={EndpointFormFields.user} label="User" isRequired />
       <TextInput
-        name={EndpointFormFields.password}
-        label="Password"
+        name={EndpointFormFields.name}
+        label="Name"
         isRequired
+        textFieldProps={{ disabled: isEditMode }}
       />
+      <TextInput name={EndpointFormFields.url} label="Endpoint" isRequired />
+      <TextInput name={EndpointFormFields.user} label="User" />
+      <TextInput name={EndpointFormFields.password} label="Password" />
       <TextInput name={EndpointFormFields.apiKey} label="API Key" isRequired />
     </FormDialog>
   );
