@@ -8,6 +8,7 @@ import {
   endpointDefaultValues,
   endpointSchema,
 } from './create-edit-modal.types';
+import { Messages } from '../monitoring-endpoints.messages';
 
 export const CreateEditEndpointModal = ({
   open,
@@ -38,20 +39,34 @@ export const CreateEditEndpointModal = ({
       submitting={isLoading}
       onSubmit={onSubmit}
       defaultValues={defaultValues}
-      headerMessage="Add monitoring endpoint"
+      headerMessage={Messages.addDialogHeader}
       schema={endpointSchema}
       submitMessage="Add"
     >
       <TextInput
         name={EndpointFormFields.name}
-        label="Name"
+        label={Messages.fieldLabels.name}
         isRequired
         textFieldProps={{ disabled: isEditMode }}
       />
-      <TextInput name={EndpointFormFields.url} label="Endpoint" isRequired />
-      <TextInput name={EndpointFormFields.user} label="User" />
-      <TextInput name={EndpointFormFields.password} label="Password" />
-      <TextInput name={EndpointFormFields.apiKey} label="API Key" isRequired />
+      <TextInput
+        name={EndpointFormFields.url}
+        label={Messages.fieldLabels.endpoint}
+        isRequired
+      />
+      <TextInput
+        name={EndpointFormFields.user}
+        label={Messages.fieldLabels.user}
+      />
+      <TextInput
+        name={EndpointFormFields.password}
+        label={Messages.fieldLabels.password}
+      />
+      <TextInput
+        name={EndpointFormFields.apiKey}
+        label={Messages.fieldLabels.apiKey}
+        isRequired
+      />
     </FormDialog>
   );
 };

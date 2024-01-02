@@ -20,6 +20,7 @@ import {
   updateDataAfterEdit,
 } from 'utils/generalOptimisticDataUpdate';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
+import { Messages } from './monitoring-endpoints.messages';
 
 export const MonitoringEndpoints = () => {
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
@@ -137,7 +138,7 @@ export const MonitoringEndpoints = () => {
             variant="outlined"
             onClick={handleOpenCreateModal}
           >
-            Add Endpoint
+            {Messages.add}
           </Button>
         )}
         renderRowActionMenuItems={({ row, closeMenu }) => [
@@ -149,7 +150,7 @@ export const MonitoringEndpoints = () => {
             }}
             sx={{ m: 0, display: 'flex', gap: 1, px: 2, py: '10px' }}
           >
-            <Edit /> Edit
+            <Edit /> {Messages.edit}
           </MenuItem>,
           <MenuItem
             key={1}
@@ -158,7 +159,7 @@ export const MonitoringEndpoints = () => {
               closeMenu();
             }}
           >
-            <Delete /> Delete
+            <Delete /> {Messages.delete}
           </MenuItem>,
         ]}
       />
@@ -176,11 +177,11 @@ export const MonitoringEndpoints = () => {
           isOpen={openDeleteDialog}
           selectedId={selectedInstance?.name || ''}
           closeModal={handleCloseDeleteDialog}
-          headerMessage={'Delete monitoring endpoint'}
+          headerMessage={Messages.deleteDialogHeader}
           handleConfirm={handleConfirmDelete}
           disabledButtons={removingInstance}
         >
-          Delete?
+          {Messages.deleteConfirmation}
         </ConfirmDialog>
       )}
     </>
