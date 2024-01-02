@@ -61,6 +61,7 @@ export const CreateEditEndpointModal = ({
       <TextInput
         name={EndpointFormFields.password}
         label={Messages.fieldLabels.password}
+        textFieldProps={{ type: 'password' }}
       />
       <TextInput
         name={EndpointFormFields.apiKey}
