@@ -32,6 +32,7 @@ export const CreateEditEndpointModal = ({
 
   return (
     <FormDialog
+      size="XL"
       isOpen={open}
       closeModal={handleClose}
       submitting={isLoading}
