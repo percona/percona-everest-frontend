@@ -54,12 +54,10 @@ export const ScheduleBackupSection = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const scheduleFormMode =
-    schedules?.length === 1 ? 'editDbWizard' : 'newDbWizard';
-
   return (
     <ScheduleForm
-      mode={scheduleFormMode}
+      disableNameInput={mode === 'edit' && schedules.length === 1}
+      autoFillLocation={mode === 'new'}
       schedules={schedules}
       storageLocationFetching={isFetching}
       storageLocationOptions={backupStorages}
