@@ -15,15 +15,15 @@
 
 import { Grid } from '@mui/material';
 import { Card } from '@percona/ui-lib';
+import { beautifyDbTypeName } from '@percona/utils';
+import { getFormValuesFromCronExpression } from '../../../../components/time-selection/time-selection.utils';
+import { getTimeSelectionPreviewMessage } from '../../../database-form/database-preview/database.preview.messages';
 import { Messages } from '../cluster-overview.messages';
 import {
   OverviewSection,
   OverviewSectionText,
 } from '../overview-section/overview-section';
 import { DatabaseDetailsOverviewCardProps } from './card.types';
-import { beautifyDbTypeName } from '@percona/utils';
-import { getTimeSelectionPreviewMessage } from '../../../database-form/database-preview/database.preview.messages';
-import { getFormValuesFromCronExpression } from '../../../../components/time-selection/time-selection.utils';
 
 export const DatabaseDetails = ({
   loading,
@@ -78,21 +78,21 @@ export const DatabaseDetails = ({
             </OverviewSectionText>
           </OverviewSection>
           <OverviewSection title={Messages.titles.backups} loading={loading}>
-            <OverviewSectionText>
-              {Array.isArray(schedules) &&
-              schedules?.length > 0 &&
-              backup?.enabled ? (
+            {Array.isArray(schedules) &&
+            schedules?.length > 0 &&
+            backup?.enabled ? (
+              schedules?.map((item) => (
                 <OverviewSectionText>
-                  {schedules?.map((item) =>
-                    getTimeSelectionPreviewMessage(
-                      getFormValuesFromCronExpression(item.schedule)
-                    )
+                  {getTimeSelectionPreviewMessage(
+                    getFormValuesFromCronExpression(item.schedule)
                   )}
                 </OverviewSectionText>
-              ) : (
-                Messages.fields.disabled
-              )}
-            </OverviewSectionText>
+              ))
+            ) : (
+              <OverviewSectionText>
+                {Messages.fields.disabled}
+              </OverviewSectionText>
+            )}
           </OverviewSection>
           <OverviewSection
             title={Messages.titles.externalAccess}
