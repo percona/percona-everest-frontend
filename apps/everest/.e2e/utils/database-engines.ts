@@ -41,7 +41,7 @@ export const getEnginesVersions = async (
   engines.forEach((engine) => {
     const { type } = engine.spec;
 
-    if (engine?.status?.status === 'installed') {
+    if (engine.status?.status === 'installed') {
       engineVersions[type].push(
         ...Object.keys(engine.status.availableVersions.engine)
       );

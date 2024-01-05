@@ -5,3 +5,16 @@ export interface MonitoringInstance {
 }
 
 export type MonitoringInstanceList = MonitoringInstance[];
+
+export type CreateMonitoringInstancePayload = MonitoringInstance & {
+  pmm: {
+    user?: string;
+    password?: string;
+    apiKey: string;
+  };
+};
+
+export type UpdateMonitoringInstancePayload = Omit<
+  CreateMonitoringInstancePayload,
+  'name'
+>;

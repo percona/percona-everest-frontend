@@ -20,6 +20,7 @@ export const rfc_123_schema = (fieldName: string) =>
   z
     .string()
     .min(1)
+    .max(63)
     .regex(
       doesNotContainerAnythingButAlphanumericAndDash,
       `The ${fieldName} should only contain lowercase letters, numbers and hyphens.`
