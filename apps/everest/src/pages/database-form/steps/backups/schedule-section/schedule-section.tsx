@@ -57,7 +57,7 @@ export const ScheduleBackupSection = () => {
   return (
     <ScheduleForm
       disableNameInput={mode === 'edit' && schedules.length === 1}
-      autoFillLocation={mode === 'new'}
+      autoFillLocation
       schedules={schedules}
       storageLocationFetching={isFetching}
       storageLocationOptions={backupStorages}
