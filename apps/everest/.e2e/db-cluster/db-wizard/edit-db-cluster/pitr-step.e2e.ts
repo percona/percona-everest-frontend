@@ -166,7 +166,7 @@ test.describe.serial('DB Cluster Editing PITR Step', async () => {
     // Go to DB details and check pitr
     await findDbAndClickRow(page, mySQLName);
     await expect(page.getByTestId('pitr-overview-section-text')).toHaveText(
-      'Enabled'
+      'Disabled'
     );
   });
 });

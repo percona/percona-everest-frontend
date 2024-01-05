@@ -10,6 +10,7 @@ import { ClusterOverview } from 'pages/db-cluster-details/cluster-overview/clust
 import { Settings } from 'pages/settings/settings';
 import { SettingsTabs } from 'pages/settings/settings.types';
 import { StorageLocations } from 'pages/settings/storage-locations/storage-locations';
+import { MonitoringEndpoints } from 'pages/settings/monitoring-endpoints/monitoring-endpoints';
 import { NoMatch } from 'pages/404/NoMatch';
 import { Backups } from 'pages/db-cluster-details/backups/backups';
 
@@ -69,10 +70,10 @@ const router = createBrowserRouter([
             path: SettingsTabs.storageLocations,
             element: <StorageLocations />,
           },
-          // {
-          //   path: SettingsTabs.monitoringEndpoints,
-          //   element: <MonitoringEndpoints />,
-          // },
+          {
+            path: SettingsTabs.monitoringEndpoints,
+            element: <MonitoringEndpoints />,
+          },
           // {
           //   path: SettingsTabs.k8sClusters,
           //   element: <K8sClusters />,

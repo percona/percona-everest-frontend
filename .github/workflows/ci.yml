@@ -145,9 +145,9 @@ jobs:
         run: |
           cd CLI
           go run cmd/everest/main.go install \
-          --operator.mongodb=true \
-          --operator.postgresql=true \
-          --operator.xtradb-cluster=true \
+          --operator.mongodb \
+          --operator.postgresql \
+          --operator.xtradb-cluster \
           --skip-wizard \
           --namespace percona-everest
 
