@@ -44,7 +44,8 @@ export const ScheduledBackupModalForm = () => {
 
   return (
     <ScheduleForm
-      mode={mode}
+      allowScheduleSelection={mode === 'edit'}
+      autoFillLocation={mode === 'new'}
       schedules={schedules}
       storageLocationFetching={isFetching}
       storageLocationOptions={backupStorages}

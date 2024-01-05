@@ -32,9 +32,14 @@ import {
 } from './database-form.constants.ts';
 
 const getScheduleInfo = (mode: DbWizardMode, backup?: Backup) => {
-  if ((backup?.enabled && mode === 'new') || mode === 'edit') {
+  if (
+    (backup?.enabled && mode === 'new') ||
+    mode === 'edit' ||
+    mode === 'restoreFromBackup'
+  ) {
     const schedules = backup?.schedules;
     const firstSchedule = schedules && schedules[0];
+
     if (firstSchedule?.schedule && !!schedules && schedules?.length <= 1) {
       return {
         ...getFormValuesFromCronExpression(firstSchedule.schedule),
