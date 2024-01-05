@@ -40,7 +40,7 @@ export type GetDbEnginesPayload = {
     spec: {
       type: DbEngineType;
     };
-    status: {
+    status?: {
       status: DbEngineStatus;
       availableVersions: {
         backup: Record<string, EngineToolPayload>;
