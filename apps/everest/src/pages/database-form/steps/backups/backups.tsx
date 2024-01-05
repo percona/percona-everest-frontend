@@ -13,23 +13,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Alert, Box } from '@mui/material';
+import { Alert, Box, Button } from '@mui/material';
+import { DbType } from '@percona/types';
 import { SwitchInput } from '@percona/ui-lib';
+import {
+  BACKUP_STORAGES_QUERY_KEY,
+  useBackupStorages,
+  useCreateBackupStorage,
+} from 'hooks/api/backup-storages/useBackupStorages.ts';
+import { CreateEditModalStorage } from 'pages/settings/storage-locations/createEditModal/create-edit-modal.tsx';
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useQueryClient } from 'react-query';
+import { BackupStorage } from 'shared-types/backupStorages.types.ts';
+import { updateDataAfterCreate } from 'utils/generalOptimisticDataUpdate.ts';
 import { DbWizardFormFields } from '../../database-form.types';
-import { Messages } from './backups.messages.ts';
-import { ScheduleBackupSection } from './schedule-section/schedule-section.tsx';
 import { useDatabasePageDefaultValues } from '../../useDatabaseFormDefaultValues.ts';
 import { useDatabasePageMode } from '../../useDatabasePageMode.ts';
-import { DbType } from '@percona/types';
-import { useEffect } from 'react';
 import { StepHeader } from '../step-header/step-header.tsx';
+import { Messages } from './backups.messages.ts';
+import { ScheduleBackupSection } from './schedule-section/schedule-section.tsx';
 
 export const Backups = () => {
+  const queryClient = useQueryClient();
+  const { mutate: createBackupStorage, isLoading: creatingBackupStorage } =
+    useCreateBackupStorage();
+  const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
   const mode = useDatabasePageMode();
   const { control, watch, setValue, getFieldState } = useFormContext();
   const { dbClusterData } = useDatabasePageDefaultValues(mode);
-
+  const { data: backupStorages = [] } = useBackupStorages();
   const [backupsEnabled, dbType] = watch([
     DbWizardFormFields.backupsEnabled,
     DbWizardFormFields.dbType,
@@ -63,6 +76,26 @@ export const Backups = () => {
     mode === 'edit' && !!schedules && schedules?.length > 1;
   const scheduleDisabled = multiSchedules || dbType === DbType.Postresql;
 
+  const handleSubmit = (isEdit: boolean, data: BackupStorage) => {
+    handleCreateBackup(data);
+  };
+
+  const handleCreateBackup = (data: BackupStorage) => {
+    createBackupStorage(data, {
+      onSuccess: (newLocation) => {
+        updateDataAfterCreate(
+          queryClient,
+          BACKUP_STORAGES_QUERY_KEY
+        )(newLocation);
+        handleCloseModal();
+      },
+    });
+  };
+
+  const handleCloseModal = () => {
+    setOpenCreateEditModal(false);
+  };
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <StepHeader
@@ -80,7 +113,23 @@ export const Backups = () => {
           sx: { mt: 1 },
         }}
       />
-      {backupsEnabled && (
+      {backupStorages.length === 0 && (
+        <Alert
+          severity="warning"
+          action={
+            <Button
+              color="inherit"
+              size="small"
+              onClick={() => setOpenCreateEditModal(true)}
+            >
+              {Messages.addStorage}
+            </Button>
+          }
+        >
+          {Messages.noStoragesMessage}
+        </Alert>
+      )}
+      {backupsEnabled && backupStorages.length > 0 && (
         <>
           {(mode === 'new' || mode === 'restoreFromBackup') && (
             <Alert sx={{ mt: 1 }} severity="info">
@@ -95,16 +144,26 @@ export const Backups = () => {
           {!scheduleDisabled && <ScheduleBackupSection />}
         </>
       )}
-      {!backupsEnabled && dbType !== DbType.Mongo && (
-        <Alert
-          sx={{ mt: 1 }}
-          severity="info"
-          data-testid="pitr-no-backup-alert"
-        >
-          {dbType === DbType.Postresql &&
-            Messages.schedulesUnavailableForPostgreSQL}
-          {dbType === DbType.Mysql && Messages.pitrAlert}
-        </Alert>
+      {!backupsEnabled &&
+        dbType !== DbType.Mongo &&
+        backupStorages.length > 0 && (
+          <Alert
+            sx={{ mt: 1 }}
+            severity="info"
+            data-testid="pitr-no-backup-alert"
+          >
+            {dbType === DbType.Postresql &&
+              Messages.schedulesUnavailableForPostgreSQL}
+            {dbType === DbType.Mysql && Messages.pitrAlert}
+          </Alert>
+        )}
+      {openCreateEditModal && (
+        <CreateEditModalStorage
+          open={openCreateEditModal}
+          handleCloseModal={handleCloseModal}
+          handleSubmitModal={handleSubmit}
+          isLoading={creatingBackupStorage}
+        />
       )}
     </Box>
   );

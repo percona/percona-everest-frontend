@@ -256,6 +256,7 @@ export const DatabasePage = () => {
                   onClick={handleNext}
                   variant="contained"
                   data-testid="db-wizard-continue-button"
+                  disabled={Object.values(errors).length > 0}
                 >
                   {Messages.continue}
                 </Button>
