@@ -1,12 +1,21 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import { TimeValue } from 'components/time-selection/time-selection.types';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { TestWrapper } from 'utils/test';
 import { Backups } from './backups.tsx';
-import { TimeValue } from 'components/time-selection/time-selection.types';
 
 vi.mock('hooks/api/backup-storages/useBackupStorages');
 vi.mock('hooks/api/db-cluster/useDbCluster');
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
   const methods = useForm({
@@ -28,11 +37,13 @@ const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
 describe('BackupsStep', () => {
   it('should render nothing when backups are disabled', () => {
     render(
-      <TestWrapper>
-        <FormProviderWrapper>
-          <Backups />
-        </FormProviderWrapper>
-      </TestWrapper>
+      <QueryClientProvider client={queryClient}>
+        <TestWrapper>
+          <FormProviderWrapper>
+            <Backups />
+          </FormProviderWrapper>
+        </TestWrapper>
+      </QueryClientProvider>
     );
     expect(
       screen.getByTestId('text-input-storage-location')
