@@ -86,6 +86,7 @@ export const DatabasePage = () => {
     trigger,
     handleSubmit,
     formState: { errors, isDirty },
+    clearErrors,
   } = methods;
 
   useEffect(() => {
@@ -149,12 +150,16 @@ export const DatabasePage = () => {
   };
 
   const handleBack = () => {
+    clearErrors();
     if (activeStep > 0) {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);
     }
   };
 
-  const handleSectionEdit = (order: number) => setActiveStep(order - 1);
+  const handleSectionEdit = (order: number) => {
+    clearErrors();
+    setActiveStep(order - 1);
+  };
 
   const handleCancel = () => {
     navigate('/databases');

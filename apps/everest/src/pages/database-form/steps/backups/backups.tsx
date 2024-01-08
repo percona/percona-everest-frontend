@@ -40,7 +40,7 @@ export const Backups = () => {
     useCreateBackupStorage();
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
   const mode = useDatabasePageMode();
-  const { control, watch, setValue, getFieldState } = useFormContext();
+  const { control, watch, setValue, getFieldState, trigger } = useFormContext();
   const { dbClusterData } = useDatabasePageDefaultValues(mode);
   const { data: backupStorages = [] } = useBackupStorages();
   const [backupsEnabled, dbType] = watch([
@@ -96,6 +96,10 @@ export const Backups = () => {
     setOpenCreateEditModal(false);
   };
 
+  useEffect(() => {
+    trigger();
+  }, [backupsEnabled]);
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <StepHeader
@@ -113,7 +117,7 @@ export const Backups = () => {
           sx: { mt: 1 },
         }}
       />
-      {backupStorages.length === 0 && (
+      {backupsEnabled && backupStorages.length === 0 && (
         <Alert
           severity="warning"
           action={
@@ -144,19 +148,17 @@ export const Backups = () => {
           {!scheduleDisabled && <ScheduleBackupSection />}
         </>
       )}
-      {!backupsEnabled &&
-        dbType !== DbType.Mongo &&
-        backupStorages.length > 0 && (
-          <Alert
-            sx={{ mt: 1 }}
-            severity="info"
-            data-testid="pitr-no-backup-alert"
-          >
-            {dbType === DbType.Postresql &&
-              Messages.schedulesUnavailableForPostgreSQL}
-            {dbType === DbType.Mysql && Messages.pitrAlert}
-          </Alert>
-        )}
+      {!backupsEnabled && dbType !== DbType.Mongo && (
+        <Alert
+          sx={{ mt: 1 }}
+          severity="info"
+          data-testid="pitr-no-backup-alert"
+        >
+          {dbType === DbType.Postresql &&
+            Messages.schedulesUnavailableForPostgreSQL}
+          {dbType === DbType.Mysql && Messages.pitrAlert}
+        </Alert>
+      )}
       {openCreateEditModal && (
         <CreateEditModalStorage
           open={openCreateEditModal}
