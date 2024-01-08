@@ -36,7 +36,8 @@ import { ScheduleBackupSection } from './schedule-section/schedule-section.tsx';
 
 export const Backups = () => {
   const queryClient = useQueryClient();
-  const { mutate: createBackupStorage, isLoading: creatingBackupStorage } = useCreateBackupStorage();
+  const { mutate: createBackupStorage, isLoading: creatingBackupStorage } =
+    useCreateBackupStorage();
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
   const mode = useDatabasePageMode();
   const { control, watch, setValue, getFieldState, trigger } = useFormContext();
