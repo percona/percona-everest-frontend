@@ -20,7 +20,7 @@ import {
   BACKUP_STORAGES_QUERY_KEY,
   useBackupStorages,
   useCreateBackupStorage,
-} from 'hooks/api/backup-storages/useBackupStorages.ts';
+} from 'hooks/api/backup-storages/useBackupStorages';
 import { CreateEditModalStorage } from 'pages/settings/storage-locations/createEditModal/create-edit-modal.tsx';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
