@@ -15,17 +15,19 @@
 
 import { StorageType } from 'shared-types/backupStorages.types';
 
+const storageDataObject = {
+  id: 'backup-storage-1',
+  name: 'Backup Storage One',
+  type: StorageType.S3,
+  bucketName: 'bucket-001',
+  region: 'Us',
+};
+
 // was moved as separate object to avoid recreation since the original use of useQuery caches the data
 const backupStorageMockData = {
-  data: [
-    {
-      id: 'backup-storage-1',
-      name: 'Backup Storage One',
-      type: StorageType.S3,
-      bucketName: 'bucket-001',
-      region: 'Us',
-    },
-  ],
+  data: [storageDataObject],
 };
 
 export const useBackupStorages = () => backupStorageMockData;
+
+export const useCreateBackupStorage = () => storageDataObject;
