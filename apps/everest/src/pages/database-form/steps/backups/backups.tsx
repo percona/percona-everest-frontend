@@ -36,8 +36,7 @@ import { ScheduleBackupSection } from './schedule-section/schedule-section.tsx';
 
 export const Backups = () => {
   const queryClient = useQueryClient();
-  const { mutate: createBackupStorage, isLoading: creatingBackupStorage } =
-    useCreateBackupStorage();
+  const { mutate: createBackupStorage, isLoading: creatingBackupStorage } = useCreateBackupStorage();
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
   const mode = useDatabasePageMode();
   const { control, watch, setValue, getFieldState, trigger } = useFormContext();
@@ -76,7 +75,7 @@ export const Backups = () => {
     mode === 'edit' && !!schedules && schedules?.length > 1;
   const scheduleDisabled = multiSchedules || dbType === DbType.Postresql;
 
-  const handleSubmit = (isEdit: boolean, data: BackupStorage) => {
+  const handleSubmit = (_: boolean, data: BackupStorage) => {
     handleCreateBackup(data);
   };
 
