@@ -19,4 +19,7 @@ export const Messages = {
     'Backups are currently disabled for this database. To set up backup schedules, first re-enable backups in the database configuration.',
   backupsDisabledPG:
     'Scheduled backups are currently unavailable for PostgreSQL databases. You can still enable on-demand backups from this page.',
+  noStoragesMessage:
+    'To start using Backups, you need to add a backups storage first.',
+  addStorage: 'Add Storage',
 };
