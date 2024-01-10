@@ -23,7 +23,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    localStorage.setItem('pwd', '');
+    localStorage.removeItem('pwd');
     setApiBearerToken('');
     setRedirect(null);
     _setAuthStatus('loggedOut');
@@ -62,9 +62,14 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     onError: () => {
       _setAuthStatus('loggedOut');
       setApiCallEnabled(false);
-      enqueueSnackbar('Invalid authorization token', {
-        variant: 'error',
-      });
+
+      // This means the request was triggered by clicking the button, not an auto login
+      if (!localStorage.getItem('pwd')) {
+        enqueueSnackbar('Invalid authorization token', {
+          variant: 'error',
+        });
+      }
+      localStorage.removeItem('pwd');
     },
   });
 
