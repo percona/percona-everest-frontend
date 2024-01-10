@@ -36,7 +36,7 @@ import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { DEFAULT_NODES } from './first-steps.constants';
 import { NODES_DB_TYPE_MAP } from '../../database-form.constants';
 import { StepHeader } from '../step-header/step-header.tsx';
-import { AutoCompleteAutoFill } from "../../../../components/auto-complete-auto-fill/auto-complete-auto-fill";
+import { AutoCompleteAutoFill } from '../../../../components/auto-complete-auto-fill/auto-complete-auto-fill';
 
 // TODO 676 change to api request's result
 const k8sNamespacesMockOptions = [
@@ -51,7 +51,8 @@ const k8sNamespacesMockOptions = [
 ];
 
 export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
-  const { watch, setValue, getFieldState, getValues, trigger } = useFormContext();
+  const { watch, setValue, getFieldState, getValues, trigger } =
+    useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
   const { data: clusterInfo, isFetching: clusterInfoFetching } =
@@ -211,12 +212,12 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
           }}
         />
         <AutoCompleteAutoFill
-            name={DbWizardFormFields.k8sNamespace}
-            label={Messages.labels.k8sNamespace}
-            loading={clusterInfoFetching} //TODO 676 add loading of k8sNamespace
-            options={k8sNamespacesMockOptions || []}
-            isRequired
-            enableFillFirst={mode === 'new'}
+          name={DbWizardFormFields.k8sNamespace}
+          label={Messages.labels.k8sNamespace}
+          loading={clusterInfoFetching} //TODO 676 add loading of k8sNamespace
+          options={k8sNamespacesMockOptions || []}
+          isRequired
+          enableFillFirst={mode === 'new'}
         />
 
         {/*<Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>*/}
