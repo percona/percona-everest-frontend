@@ -36,9 +36,22 @@ import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { DEFAULT_NODES } from './first-steps.constants';
 import { NODES_DB_TYPE_MAP } from '../../database-form.constants';
 import { StepHeader } from '../step-header/step-header.tsx';
+import { AutoCompleteAutoFill } from "../../../../components/auto-complete-auto-fill/auto-complete-auto-fill";
+
+// TODO 676 change to api request's result
+const k8sNamespacesMockOptions = [
+  {
+    name: 'namespaceOne',
+    label: 'namespaceOneLabel',
+  },
+  {
+    name: 'namespaceTwo',
+    label: 'namespaceTwoLabel',
+  },
+];
 
 export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
-  const { watch, setValue, getFieldState, getValues } = useFormContext();
+  const { watch, setValue, getFieldState, getValues, trigger } = useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
   const { data: clusterInfo, isFetching: clusterInfoFetching } =
@@ -46,17 +59,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
 
   const mode = useDatabasePageMode();
 
-  // TODO change to api request's result
-  // const k8sNamespacesOptions = [
-  //   {
-  //     value: 'namespaceOne',
-  //     label: 'namespaceOneLabel',
-  //   },
-  //   {
-  //     value: 'namespaceTwo',
-  //     label: 'namespaceTwoLabel',
-  //   },
-  // ];
+  //TODO change to api request's result
   // const dbEnvironmentOptions = [
   //   {
   //     value: 'dbEnvironmentOne',
@@ -103,6 +106,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
         DbWizardFormFields.storageClass,
         clusterInfo?.storageClassNames[0]
       );
+      trigger();
     }
   }, [clusterInfo, mode, setValue]);
 
@@ -165,6 +169,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
           ? recommendedVersion.version
           : newVersions.availableVersions.engine[0].version
       );
+      trigger();
     }
     setDbVersions(newVersions);
   }, [dbType, dbEngines, mode, setValue, getFieldState, dbEngine, dbVersion]);
@@ -205,52 +210,38 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
             disabled: mode === 'edit' || loadingDefaultsForEdition,
           }}
         />
-        {/* <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
-          {Messages.labels.k8sNamespace}
-        </Typography>
-        <Controller
-          control={control}
-          name={DbWizardFormFields.k8sNamespace}
-          render={({ field, fieldState: { error } }) => (
-            <Select
-              {...field}
-              variant="outlined"
-              error={error !== undefined}
-              inputProps={{
-                'data-testid': 'text-k8sNamespace',
-              }}
-            >
-              {k8sNamespacesOptions.map((item) => (
-                <MenuItem value={item.value} key={item.value}>
-                  {item.label}
-                </MenuItem>
-              ))}
-            </Select>
-          )}
+        <AutoCompleteAutoFill
+            name={DbWizardFormFields.k8sNamespace}
+            label={Messages.labels.k8sNamespace}
+            loading={clusterInfoFetching} //TODO 676 add loading of k8sNamespace
+            options={k8sNamespacesMockOptions || []}
+            isRequired
+            enableFillFirst={mode === 'new'}
         />
-        <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
-          {Messages.labels.dbEnvironment}
-        </Typography>
-        <Controller
-          control={control}
-          name={DbWizardFormFields.dbEnvironment}
-          render={({ field, fieldState: { error } }) => (
-            <Select
-              {...field}
-              variant="outlined"
-              error={error !== undefined}
-              inputProps={{
-                'data-testid': 'text-dbEnvironment',
-              }}
-            >
-              {dbEnvironmentOptions.map((item) => (
-                <MenuItem value={item.value} key={item.value}>
-                  {item.label}
-                </MenuItem>
-              ))}
-            </Select>
-          )}
-        /> */}
+
+        {/*<Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>*/}
+        {/*  {Messages.labels.dbEnvironment}*/}
+        {/*</Typography>*/}
+        {/*<Controller*/}
+        {/*  control={control}*/}
+        {/*  name={DbWizardFormFields.dbEnvironment}*/}
+        {/*  render={({ field, fieldState: { error } }) => (*/}
+        {/*    <Select*/}
+        {/*      {...field}*/}
+        {/*      variant="outlined"*/}
+        {/*      error={error !== undefined}*/}
+        {/*      inputProps={{*/}
+        {/*        'data-testid': 'text-dbEnvironment',*/}
+        {/*      }}*/}
+        {/*    >*/}
+        {/*      {dbEnvironmentOptions.map((item) => (*/}
+        {/*        <MenuItem value={item.value} key={item.value}>*/}
+        {/*          {item.label}*/}
+        {/*        </MenuItem>*/}
+        {/*      ))}*/}
+        {/*    </Select>*/}
+        {/*  )}*/}
+        {/*/>*/}
         <SelectInput
           name={DbWizardFormFields.dbVersion}
           label={Messages.labels.dbVersion}

@@ -23,13 +23,19 @@ const resourceToNumber = (minimum = 0) =>
       .min(minimum)
   );
 
-const stepOneSchema = z
+const basicInformationSchema = z
   .object({
     [DbWizardFormFields.dbType]: z.nativeEnum(DbType),
     [DbWizardFormFields.dbName]: rfc_123_schema('database name')
       .max(MAX_DB_CLUSTER_NAME_LENGTH, Messages.errors.dbName.tooLong)
       .nonempty(),
-    // [DbWizardFormFields.k8sNamespace]: z.string().nonempty(),
+      // TODO 676 check validation
+      [DbWizardFormFields.k8sNamespace]: z.string()
+          .or(
+              z.object({
+                  name: z.string(),
+              })
+          ).nullable(),
     // [DbWizardFormFields.dbEnvironment]: z.string().nonempty(),
     [DbWizardFormFields.dbVersion]: z.string().nonempty(),
     [DbWizardFormFields.storageClass]: z
@@ -127,7 +133,7 @@ export const getDBWizardSchema = (
   hideBackupValidation: boolean
 ) => {
   const schema = [
-    stepOneSchema,
+    basicInformationSchema,
     stepTwoSchema,
     backupsStepSchema(hideBackupValidation),
     pitrStepSchema,
@@ -137,7 +143,7 @@ export const getDBWizardSchema = (
   return schema[activeStep];
 };
 
-export type StepOneType = z.infer<typeof stepOneSchema>;
+export type BasicInformationType = z.infer<typeof basicInformationSchema>;
 export type StepTwoType = z.infer<typeof stepTwoSchema>;
 export type AdvancedConfigurationType = z.infer<
   typeof advancedConfigurationsSchema
@@ -147,7 +153,7 @@ export type BackupStepType = BackupsValidationSchemaType &
 export type PITRStepType = z.infer<typeof pitrStepSchema>;
 export type StepFiveType = z.infer<typeof stepFiveSchema>;
 
-export type DbWizardType = StepOneType &
+export type DbWizardType = BasicInformationType &
   StepTwoType &
   StepFiveType &
   AdvancedConfigurationType &
