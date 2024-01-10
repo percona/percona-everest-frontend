@@ -36,7 +36,7 @@ import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { DEFAULT_NODES } from './first-steps.constants';
 import { NODES_DB_TYPE_MAP } from '../../database-form.constants';
 import { StepHeader } from '../step-header/step-header.tsx';
-import { AutoCompleteAutoFill } from "../../../../components/auto-complete-auto-fill/auto-complete-auto-fill";
+import { AutoCompleteAutoFill } from '../../../../components/auto-complete-auto-fill/auto-complete-auto-fill';
 
 // TODO 676 change to api request's result
 const k8sNamespacesMockOptions = [
@@ -50,26 +50,27 @@ const k8sNamespacesMockOptions = [
   },
 ];
 
+// TODO change to api request's result
+// const dbEnvironmentOptions = [
+//   {
+//     value: 'dbEnvironmentOne',
+//     label: 'dbEnvironmentOneLabel',
+//   },
+//   {
+//     value: 'dbEnvironmentTwo',
+//     label: 'dbEnvironmentTwoLabel',
+//   },
+// ];
+
 export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
-  const { watch, setValue, getFieldState, getValues, trigger } = useFormContext();
+  const { watch, setValue, getFieldState, getValues, trigger } =
+    useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
   const { data: clusterInfo, isFetching: clusterInfoFetching } =
     useKubernetesClusterInfo('wizard-k8-info');
 
   const mode = useDatabasePageMode();
-
-  //TODO change to api request's result
-  // const dbEnvironmentOptions = [
-  //   {
-  //     value: 'dbEnvironmentOne',
-  //     label: 'dbEnvironmentOneLabel',
-  //   },
-  //   {
-  //     value: 'dbEnvironmentTwo',
-  //     label: 'dbEnvironmentTwoLabel',
-  //   },
-  // ];
 
   const dbType: DbType = watch(DbWizardFormFields.dbType);
   const dbVersion: DbType = watch(DbWizardFormFields.dbVersion);
@@ -108,6 +109,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
       );
       trigger();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clusterInfo, mode, setValue]);
 
   useEffect(() => {
@@ -172,6 +174,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
       trigger();
     }
     setDbVersions(newVersions);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dbType, dbEngines, mode, setValue, getFieldState, dbEngine, dbVersion]);
 
   return (
@@ -211,12 +214,12 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
           }}
         />
         <AutoCompleteAutoFill
-            name={DbWizardFormFields.k8sNamespace}
-            label={Messages.labels.k8sNamespace}
-            loading={clusterInfoFetching} //TODO 676 add loading of k8sNamespace
-            options={k8sNamespacesMockOptions || []}
-            isRequired
-            enableFillFirst={mode === 'new'}
+          name={DbWizardFormFields.k8sNamespace}
+          label={Messages.labels.k8sNamespace}
+          loading={clusterInfoFetching} //TODO 676 add loading of k8sNamespace
+          options={k8sNamespacesMockOptions || []}
+          isRequired
+          enableFillFirst={mode === 'new'}
         />
 
         {/*<Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>*/}
@@ -242,6 +245,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
         {/*    </Select>*/}
         {/*  )}*/}
         {/*/>*/}
+
         <SelectInput
           name={DbWizardFormFields.dbVersion}
           label={Messages.labels.dbVersion}

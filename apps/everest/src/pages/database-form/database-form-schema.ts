@@ -29,13 +29,15 @@ const basicInformationSchema = z
     [DbWizardFormFields.dbName]: rfc_123_schema('database name')
       .max(MAX_DB_CLUSTER_NAME_LENGTH, Messages.errors.dbName.tooLong)
       .nonempty(),
-      // TODO 676 check validation
-      [DbWizardFormFields.k8sNamespace]: z.string()
-          .or(
-              z.object({
-                  name: z.string(),
-              })
-          ).nullable(),
+    // TODO 676 check validation
+    [DbWizardFormFields.k8sNamespace]: z
+      .string()
+      .or(
+        z.object({
+          name: z.string(),
+        })
+      )
+      .nullable(),
     // [DbWizardFormFields.dbEnvironment]: z.string().nonempty(),
     [DbWizardFormFields.dbVersion]: z.string().nonempty(),
     [DbWizardFormFields.storageClass]: z
