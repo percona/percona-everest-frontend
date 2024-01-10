@@ -14,20 +14,20 @@
 // limitations under the License.
 
 import { expect, test } from '@playwright/test';
+import { DBClusterDetailsTabs } from '../../../../src/pages/db-cluster-details/db-cluster-details.types';
 import {
   createDbClusterFn,
   deleteDbClusterFn,
 } from '../../../utils/db-cluster';
 import {
-  checkDbWizardEditSubmitIsAvailableAndClick,
-  checkSuccessOfUpdateAndGoToDbClustersList,
-} from './edit-db-cluster.utils';
-import {
   findDbAndClickActions,
   findDbAndClickRow,
 } from '../../../utils/db-clusters-list';
-import { DBClusterDetailsTabs } from '../../../../src/pages/db-cluster-details/db-cluster-details.types';
 import { getTokenFromLocalStorage } from '../../../utils/localStorage';
+import {
+  checkDbWizardEditSubmitIsAvailableAndClick,
+  checkSuccessOfUpdateAndGoToDbClustersList,
+} from './edit-db-cluster.utils';
 
 test.describe.serial('DB Cluster Editing Backups Step', async () => {
   let scheduleName = 'db-wizard-schedule';
@@ -75,7 +75,7 @@ test.describe.serial('DB Cluster Editing Backups Step', async () => {
     ).not.toBeEmpty();
     await expect(
       page.getByText(
-        'Everest will create a backup of your database every hours, starting at minute 0.'
+        'Everest will create a backup of your database every hour, starting at minute 0.'
       )
     ).toBeVisible();
 
