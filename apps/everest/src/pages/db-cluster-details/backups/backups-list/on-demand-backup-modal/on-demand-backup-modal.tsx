@@ -1,27 +1,26 @@
 import { TextInput } from '@percona/ui-lib';
-import { useMemo } from 'react';
-import { useQueryClient } from 'react-query';
-import { useParams } from 'react-router-dom';
-import { FormDialog } from 'components/form-dialog';
 import { AutoCompleteAutoFill } from 'components/auto-complete-auto-fill/auto-complete-auto-fill';
+import { FormDialog } from 'components/form-dialog';
 import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages';
 import {
   BACKUPS_QUERY_KEY,
   useCreateBackupOnDemand,
 } from 'hooks/api/backups/useBackups';
-import {
-  BackupFields,
-  BackupFormData,
-  defaultValuesFc,
-  OnDemandBackupModalProps,
-  schema,
-} from './on-demand-backup-modal.types';
+import { useMemo } from 'react';
+import { useQueryClient } from 'react-query';
+import { useParams } from 'react-router-dom';
 import {
   GetBackupsPayload,
   SingleBackupPayload,
 } from 'shared-types/backups.types';
 import { Messages } from '../../../db-cluster-details.messages.ts';
-import { NoStoragesModal } from '../../no-storages-modal/no-storages-modal.tsx';
+import {
+  BackupFields,
+  BackupFormData,
+  OnDemandBackupModalProps,
+  defaultValuesFc,
+  schema,
+} from './on-demand-backup-modal.types';
 
 export const OnDemandBackupModal = ({
   open,
@@ -53,16 +52,6 @@ export const OnDemandBackupModal = ({
   };
 
   const values = useMemo(() => defaultValuesFc(), []);
-
-  if (!backupStorages.length) {
-    return (
-      <NoStoragesModal
-        isOpen={open}
-        subHead={Messages.onDemandBackupModal.subHead}
-        closeModal={handleClose}
-      />
-    );
-  }
 
   return (
     <FormDialog
