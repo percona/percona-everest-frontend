@@ -61,6 +61,8 @@ const formValuesToPayloadOverrides = (
     weekDay,
   });
 
+  // TODO 676 add k8sNamespace to payload
+
   return {
     apiVersion: 'everest.percona.com/v1alpha1',
     kind: 'DatabaseCluster',

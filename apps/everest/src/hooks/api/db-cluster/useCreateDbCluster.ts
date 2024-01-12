@@ -51,7 +51,7 @@ const formValuesToPayloadMapping = (
     weekDay,
   });
 
-  // TODO re-add payload after API is ready
+  // TODO 676 add k8sNamespace to payload
   const dbClusterPayload: DbCluster = {
     apiVersion: 'everest.percona.com/v1alpha1',
     kind: 'DatabaseCluster',

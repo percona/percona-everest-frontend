@@ -63,7 +63,7 @@ const k8sNamespacesMockOptions = [
 // ];
 
 export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
-  const { watch, setValue, getFieldState, getValues, trigger } =
+  const { watch, setValue, getFieldState, getValues, } =
     useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
@@ -107,7 +107,6 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
         DbWizardFormFields.storageClass,
         clusterInfo?.storageClassNames[0]
       );
-      trigger();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clusterInfo, mode, setValue]);
@@ -171,7 +170,6 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
           ? recommendedVersion.version
           : newVersions.availableVersions.engine[0].version
       );
-      trigger();
     }
     setDbVersions(newVersions);
     // eslint-disable-next-line react-hooks/exhaustive-deps
