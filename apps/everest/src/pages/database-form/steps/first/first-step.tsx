@@ -63,8 +63,7 @@ const k8sNamespacesMockOptions = [
 // ];
 
 export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
-  const { watch, setValue, getFieldState, getValues, } =
-    useFormContext();
+  const { watch, setValue, getFieldState, getValues } = useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
   const { data: clusterInfo, isFetching: clusterInfoFetching } =
