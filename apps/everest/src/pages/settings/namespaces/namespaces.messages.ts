@@ -1,3 +1,3 @@
 export const Messages = {
-    noDataMessage: 'No namespaces added',
+  noDataMessage: 'No namespaces added',
 };
