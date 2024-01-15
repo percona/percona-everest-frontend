@@ -42,7 +42,7 @@ export const Namespaces = () => {
         // }}
         columns={columns}
         data={namespacesData}
-        enableRowActions
+        // enableRowActions
         // renderRowActionMenuItems={({ row, closeMenu }) => [
         //     <MenuItem
         //         key={1} //TODO EVEREST-677 actions will be in later iterations (now we haven't mockups)
