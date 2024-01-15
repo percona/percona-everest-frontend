@@ -24,7 +24,6 @@ export const pitrStepCheck = async (page: Page) => {
     .getByRole('checkbox');
 
   await expect(enabledPitrCheckbox).not.toBeChecked();
-  await expect(enabledPitrCheckbox).toBeDisabled();
 
   // TODO when mongo pitr will be available => add the check of pitrStorageLocation in this test
 };

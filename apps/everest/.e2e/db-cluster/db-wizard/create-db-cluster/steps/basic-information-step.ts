@@ -31,7 +31,7 @@ export const basicInformationStepCheck = async (
   expect(await dbEnginesButtons.nth(1).textContent()).toBe('MongoDB');
   expect(await dbEnginesButtons.nth(2).textContent()).toBe('PostgreSQL');
 
-  await dbEnginesButtons.nth(0).click();
+  await dbEnginesButtons.nth(1).click(); //MongoDB
   await page.getByTestId('select-db-version-button').click();
 
   const dbVersionOptions = page.getByRole('option');
