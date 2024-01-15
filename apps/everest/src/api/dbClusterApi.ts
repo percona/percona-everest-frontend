@@ -20,7 +20,6 @@ import {
 import { api } from './api';
 
 export const createDbClusterFn = async (data: DbCluster) => {
-  console.log(data);
   const response = await api.post(`database-clusters`, data);
 
   return response.data;

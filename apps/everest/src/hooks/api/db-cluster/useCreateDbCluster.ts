@@ -19,10 +19,10 @@ import { getCronExpressionFromFormValues } from 'components/time-selection/time-
 import { DbWizardType } from 'pages/database-form/database-form-schema.ts';
 import { generateShortUID } from 'pages/database-form/steps/first/utils.ts';
 import {
-  useMutation,
   UseMutationOptions,
-  useQuery,
   UseQueryOptions,
+  useMutation,
+  useQuery,
 } from 'react-query';
 import {
   ClusterCredentials,
@@ -41,7 +41,6 @@ const formValuesToPayloadMapping = (
   dbPayload: DbWizardType,
   backupDataSource?: DataSource
 ): DbCluster => {
-  console.log('db payload', dbPayload);
   const { selectedTime, minute, hour, amPm, onDay, weekDay } = dbPayload;
   const backupSchedule = getCronExpressionFromFormValues({
     selectedTime,
