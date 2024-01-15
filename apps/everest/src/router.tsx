@@ -13,6 +13,7 @@ import { StorageLocations } from 'pages/settings/storage-locations/storage-locat
 import { MonitoringEndpoints } from 'pages/settings/monitoring-endpoints/monitoring-endpoints';
 import { NoMatch } from 'pages/404/NoMatch';
 import { Backups } from 'pages/db-cluster-details/backups/backups';
+import { Namespaces } from "./pages/settings/namespaces/namespaces";
 
 const router = createBrowserRouter([
   {
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
           {
             path: SettingsTabs.monitoringEndpoints,
             element: <MonitoringEndpoints />,
+          },
+          {
+            path: SettingsTabs.namespaces,
+            element: <Namespaces/>
           },
           // {
           //   path: SettingsTabs.k8sClusters,
