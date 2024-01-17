@@ -195,7 +195,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
           handleConfirm={handleDelete}
           disabledButtons={deletingCluster}
         >
-          {Messages.deleteModal.content}
+          {Messages.deleteModal.content(dbCluster.metadata.name)}
         </ConfirmDialog>
       )}
     </Box>
