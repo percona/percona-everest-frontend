@@ -36,6 +36,7 @@ export const ExpandedRow = ({
     databaseName,
     hostName,
     port,
+    raw,
   } = row.original;
   const isExpanded = row.getIsExpanded();
   const { isLoading, isFetching, data } = useDbClusterCredentials(
@@ -101,6 +102,14 @@ export const ExpandedRow = ({
           label={Messages.expandedRow.externalAccess}
           value={
             exposetype === ProxyExposeType.external
+              ? Messages.expandedRow.enabled
+              : Messages.expandedRow.disabled
+          }
+        />
+        <LabelValue
+          label={Messages.expandedRow.monitoring}
+          value={
+            raw.spec.monitoring.monitoringConfigName
               ? Messages.expandedRow.enabled
               : Messages.expandedRow.disabled
           }

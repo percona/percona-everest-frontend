@@ -34,6 +34,7 @@ export const Messages = {
     disk: 'Disk',
     nodes: 'Number of nodes',
     externalAccess: 'External Access',
+    monitoring: 'Monitoring',
     enabled: 'Enabled',
     disabled: 'Disabled',
   },
