@@ -23,6 +23,7 @@ export const Messages = {
   },
   deleteModal: {
     header: 'Delete schedule',
-    content: 'Are you sure you want to permanently delete this schedule?',
+    content: (scheduleName: string) =>
+      `Are you sure you want to permanently delete schedule "${scheduleName}"?`,
   },
 };
