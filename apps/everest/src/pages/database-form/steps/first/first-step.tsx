@@ -16,29 +16,30 @@
 import { FormGroup, MenuItem, Skeleton, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
+import { DbType } from '@percona/types';
 import {
+  AutoCompleteInput,
   DbToggleCard,
   SelectInput,
   TextInput,
   ToggleButtonGroupInput,
-  AutoCompleteInput,
 } from '@percona/ui-lib';
-import { DbType } from '@percona/types';
-import { useFormContext } from 'react-hook-form';
-import { useDbEngines } from 'hooks/api/db-engines/useDbEngines';
-import { DbEngineToolStatus } from 'shared-types/dbEngines.types';
 import { dbEngineToDbType, dbTypeToDbEngine } from '@percona/utils';
-import { DbWizardFormFields, StepProps } from '../../database-form.types';
-import { Messages } from './first-step.messages';
-import { generateShortUID } from './utils';
+import { useDbEngines } from 'hooks/api/db-engines/useDbEngines';
 import { useKubernetesClusterInfo } from 'hooks/api/kubernetesClusters/useKubernetesClusterInfo';
-import { useDatabasePageMode } from '../../useDatabasePageMode';
-import { DEFAULT_NODES } from './first-steps.constants';
+import { useFormContext } from 'react-hook-form';
+import { DbEngineToolStatus } from 'shared-types/dbEngines.types';
 import { NODES_DB_TYPE_MAP } from '../../database-form.constants';
+import { DbWizardFormFields, StepProps } from '../../database-form.types';
+import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { StepHeader } from '../step-header/step-header.tsx';
+import { Messages } from './first-step.messages';
+import { DEFAULT_NODES } from './first-steps.constants';
+import { generateShortUID } from './utils';
 
 export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
-  const { watch, setValue, getFieldState, getValues } = useFormContext();
+  const { watch, setValue, getFieldState, getValues, resetField } =
+    useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
     useDbEngines();
   const { data: clusterInfo, isFetching: clusterInfoFetching } =
@@ -193,6 +194,11 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
                   (mode === 'edit' || mode === 'restoreFromBackup') &&
                   dbType !== dbEngineToDbType(type)
                 }
+                onClick={() => {
+                  if (dbEngineToDbType(type) !== dbType) {
+                    resetField(DbWizardFormFields.dbVersion);
+                  }
+                }}
               />
             ))}
           </ToggleButtonGroupInput>
