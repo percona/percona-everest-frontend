@@ -288,7 +288,7 @@ export const BackupsList = () => {
           handleConfirm={handleConfirmDelete}
           disabledButtons={deletingBackup}
         >
-          {Messages.deleteDialog.content}
+          {Messages.deleteDialog.content(selectedBackup)}
         </ConfirmDialog>
       )}
       {openRestoreDialog && (

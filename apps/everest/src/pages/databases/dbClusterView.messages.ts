@@ -34,6 +34,7 @@ export const Messages = {
     disk: 'Disk',
     nodes: 'Number of nodes',
     externalAccess: 'External Access',
+    monitoring: 'Monitoring',
     enabled: 'Enabled',
     disabled: 'Disabled',
   },
@@ -51,8 +52,8 @@ export const Messages = {
   },
   deleteModal: {
     header: 'Delete database',
-    content:
-      'Are you sure you want to permanently delete this database and any datasets it contains?',
+    content: (dbName: string) =>
+      `Are you sure you want to permanently delete "${dbName}" and any datasets it contains?`,
   },
   responseMessages: {
     restart: 'The database is being restarted',

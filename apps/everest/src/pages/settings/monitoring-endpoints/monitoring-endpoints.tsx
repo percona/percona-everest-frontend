@@ -181,7 +181,7 @@ export const MonitoringEndpoints = () => {
           handleConfirm={handleConfirmDelete}
           disabledButtons={removingInstance}
         >
-          {Messages.deleteConfirmation}
+          {Messages.deleteConfirmation(selectedInstance!.name)}
         </ConfirmDialog>
       )}
     </>

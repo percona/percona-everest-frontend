@@ -7,7 +7,6 @@ export enum EndpointFormFields {
   url = 'url',
   user = 'user',
   password = 'password',
-  apiKey = 'apiKey',
 }
 
 export interface CreateEditEndpointModalProps {
@@ -23,7 +22,6 @@ export const endpointSchema = z.object({
   [EndpointFormFields.url]: z.string().min(1).url(),
   [EndpointFormFields.user]: z.string(),
   [EndpointFormFields.password]: z.string(),
-  [EndpointFormFields.apiKey]: z.string().min(1),
 });
 
 export const endpointDefaultValues = {
@@ -31,7 +29,6 @@ export const endpointDefaultValues = {
   [EndpointFormFields.url]: '',
   [EndpointFormFields.user]: '',
   [EndpointFormFields.password]: '',
-  [EndpointFormFields.apiKey]: '',
 };
 
 export type EndpointFormType = z.infer<typeof endpointSchema>;
