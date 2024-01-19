@@ -36,6 +36,7 @@ export const FormDialog = <T extends FieldValues>({
   size = 'L',
   submitting = false,
   dataTestId,
+  scroll = 'body',
 }: FormDialogProps<T>) => {
   const methods = useForm<T>({
     mode: validationMode,
@@ -49,7 +50,7 @@ export const FormDialog = <T extends FieldValues>({
   const { isMobile } = useActiveBreakpoint();
   const modalWidth = useMemo(() => {
     if (isMobile) {
-      return '90%';
+      return '80%';
     }
 
     switch (size) {
@@ -86,6 +87,7 @@ export const FormDialog = <T extends FieldValues>({
       open={isOpen}
       onClose={handleClose}
       data-testid={dataTestId ? `${dataTestId}-form-dialog` : 'form-dialog'}
+      scroll={scroll}
     >
       <DialogTitle onClose={closeModal}>{headerMessage}</DialogTitle>
       <DialogContent>

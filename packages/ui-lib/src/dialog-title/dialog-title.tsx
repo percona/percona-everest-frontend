@@ -3,8 +3,8 @@ import { DialogTitle as MuiDialogTitle, IconButton } from '@mui/material';
 import { DialogTitleProps } from './dialog-title.types';
 
 const DialogTitle = ({ onClose, children, ...props }: DialogTitleProps) => (
-  <MuiDialogTitle {...props}>
-    {children}
+  <>
+    <MuiDialogTitle {...props}>{children}</MuiDialogTitle>
     {onClose ? (
       <IconButton
         aria-label="close"
@@ -20,7 +20,7 @@ const DialogTitle = ({ onClose, children, ...props }: DialogTitleProps) => (
         <CloseIcon />
       </IconButton>
     ) : null}
-  </MuiDialogTitle>
+  </>
 );
 
 export default DialogTitle;
