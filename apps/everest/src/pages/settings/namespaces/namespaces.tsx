@@ -3,20 +3,28 @@ import { Table } from '@percona/ui-lib';
 import { MRT_ColumnDef } from 'material-react-table';
 import { Messages } from './namespaces.messages';
 import { NamespaceInstance } from '../../../shared-types/namespaces.types';
+import { useDBEnginesForNamespaces } from '../../../hooks/api/namespaces/useNamespaces';
 
 export const Namespaces = () => {
-  const namespacesData = [
-    {
-      name: 'default',
-      operator: 'PSMDB (v8.2); PXC (v17.3)',
-      name1: 'default',
-    },
-    {
-      name: 'name1',
-      operator: 'PG (v8.2); PXC (v17.3)',
-      name1: 'default',
-    },
-  ];
+  const dbEngines = useDBEnginesForNamespaces();
+  const namespacesData = dbEngines.map((item) => ({
+    name: item.namespace,
+    operator: item.isSuccess
+      ? item.data?.reduce((prevVal, currVal, idx) => {
+          if (idx === 0 || prevVal === '') {
+            if (currVal?.type && currVal?.operatorVersion) {
+              return `${currVal.type} (${currVal.operatorVersion})`;
+            } else return '';
+          } else {
+            return (
+              prevVal + '; ' + `${currVal.type} (${currVal.operatorVersion})`
+            );
+          }
+        }, '')
+      : '-',
+  }));
+
+  const isFetching = dbEngines.some((result) => result.isLoading);
 
   const columns = useMemo<MRT_ColumnDef<NamespaceInstance>[]>(
     () => [
@@ -37,9 +45,9 @@ export const Namespaces = () => {
       <Table
         noDataMessage={Messages.noDataMessage}
         hideExpandAllIcon
-        // state={{
-        //     isLoading: isFetching,
-        // }}
+        state={{
+          isLoading: isFetching,
+        }}
         columns={columns}
         data={namespacesData}
         // enableRowActions
