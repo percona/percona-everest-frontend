@@ -13,16 +13,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { TimeSelection } from '../time-selection/time-selection';
-import { ScheduleFormFields } from './schedule-form.types.ts';
-import { Messages } from './schedule-form.messages.ts';
-import { Schedule } from 'shared-types/dbCluster.types.ts';
-import { BackupStorage } from 'shared-types/backupStorages.types.ts';
 import { AutoCompleteInput, LabeledContent, TextInput } from '@percona/ui-lib';
+import { BackupStorage } from 'shared-types/backupStorages.types.ts';
+import { Schedule } from 'shared-types/dbCluster.types.ts';
 import { AutoCompleteAutoFill } from '../auto-complete-auto-fill/auto-complete-auto-fill.tsx';
+import { TimeSelection } from '../time-selection/time-selection';
+import { Messages } from './schedule-form.messages.ts';
+import { ScheduleFormFields } from './schedule-form.types.ts';
 
 type ScheduleFormProps = {
   allowScheduleSelection?: boolean;
+  allowStorageSelection?: boolean;
   disableNameInput?: boolean;
   autoFillLocation?: boolean;
   schedules: Schedule[];
@@ -31,6 +32,7 @@ type ScheduleFormProps = {
 };
 export const ScheduleForm = ({
   allowScheduleSelection,
+  allowStorageSelection = true,
   disableNameInput,
   autoFillLocation,
   schedules,
@@ -62,19 +64,21 @@ export const ScheduleForm = ({
         <TimeSelection showInfoAlert />
       </LabeledContent>
 
-      <AutoCompleteAutoFill
-        name={ScheduleFormFields.storageLocation}
-        label={Messages.storageLocation.label}
-        loading={storageLocationFetching}
-        options={storageLocationOptions}
-        autoCompleteProps={{
-          isOptionEqualToValue: (option, value) => option.name === value.name,
-          getOptionLabel: (option) =>
-            typeof option === 'string' ? option : option.name,
-        }}
-        isRequired
-        enableFillFirst={autoFillLocation}
-      />
+      {allowStorageSelection && (
+        <AutoCompleteAutoFill
+          name={ScheduleFormFields.storageLocation}
+          label={Messages.storageLocation.label}
+          loading={storageLocationFetching}
+          options={storageLocationOptions}
+          autoCompleteProps={{
+            isOptionEqualToValue: (option, value) => option.name === value.name,
+            getOptionLabel: (option) =>
+              typeof option === 'string' ? option : option.name,
+          }}
+          isRequired
+          enableFillFirst={autoFillLocation}
+        />
+      )}
     </>
   );
 };

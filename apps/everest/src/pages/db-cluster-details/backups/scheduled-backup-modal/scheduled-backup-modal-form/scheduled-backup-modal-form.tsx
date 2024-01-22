@@ -13,17 +13,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { useParams } from 'react-router-dom';
-import { useFormContext } from 'react-hook-form';
-import { useContext, useEffect } from 'react';
+import { ScheduleForm } from 'components/schedule-form/schedule-form.tsx';
+import { ScheduleFormFields } from 'components/schedule-form/schedule-form.types.ts';
 import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages.ts';
 import { useDbCluster } from 'hooks/api/db-cluster/useDbCluster.ts';
-import { ScheduleFormFields } from 'components/schedule-form/schedule-form.types.ts';
-import { ScheduleForm } from 'components/schedule-form/schedule-form.tsx';
+import { useContext, useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 import { ScheduleModalContext } from '../../backups.context.ts';
 
 export const ScheduledBackupModalForm = () => {
-  const { watch } = useFormContext();
+  const { watch, setValue } = useFormContext();
   const { dbClusterName } = useParams();
   const { mode = 'new', setSelectedScheduleName } =
     useContext(ScheduleModalContext);
@@ -32,7 +32,7 @@ export const ScheduledBackupModalForm = () => {
   const { data: dbCluster } = useDbCluster(dbClusterName!, {
     enabled: !!dbClusterName && mode === 'edit',
   });
-
+  const dbClusterActiveStorage = dbCluster?.status?.activeStorage;
   const schedules = (dbCluster && dbCluster?.spec?.backup?.schedules) || [];
   const scheduleName = watch(ScheduleFormFields.scheduleName);
 
@@ -42,9 +42,16 @@ export const ScheduledBackupModalForm = () => {
     }
   }, [scheduleName, mode, setSelectedScheduleName]);
 
+  useEffect(() => {
+    if (dbClusterActiveStorage) {
+      setValue(ScheduleFormFields.storageLocation, dbClusterActiveStorage);
+    }
+  }, [dbClusterActiveStorage]);
+
   return (
     <ScheduleForm
       allowScheduleSelection={mode === 'edit'}
+      allowStorageSelection={!dbClusterActiveStorage}
       autoFillLocation={mode === 'new'}
       schedules={schedules}
       storageLocationFetching={isFetching}
