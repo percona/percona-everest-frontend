@@ -13,29 +13,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { useDatabasePageMode } from '../../useDatabasePageMode';
+import { Alert, Box, Typography } from '@mui/material';
+import { DbType } from '@percona/types';
+import { SwitchInput } from '@percona/ui-lib';
+import { AutoCompleteAutoFill } from 'components/auto-complete-auto-fill/auto-complete-auto-fill';
+import { Messages as StorageLocationMessages } from 'components/schedule-form/schedule-form.messages';
+import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages';
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { Alert, Box } from '@mui/material';
+import { DbWizardFormFields } from '../../database-form.types';
+import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { StepHeader } from '../step-header/step-header';
 import { Messages } from './pitr.messages';
-import { DbWizardFormFields } from '../../database-form.types';
-import { SwitchInput } from '@percona/ui-lib';
-import { useEffect } from 'react';
-import { Messages as StorageLocationMessages } from 'components/schedule-form/schedule-form.messages';
-import { AutoCompleteAutoFill } from 'components/auto-complete-auto-fill/auto-complete-auto-fill';
-import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages';
-import { DbType } from '@percona/types';
 
 const PITRStep = () => {
   const mode = useDatabasePageMode();
   const { control, watch, setValue } = useFormContext();
   const { data: backupStorages = [], isFetching } = useBackupStorages();
   // const { dbClusterData } = useDatabasePageDefaultValues(mode);
-  const [pitrEnabled, backupsEnabled, pitrStorageLocation, dbType] = watch([
+  const [
+    pitrEnabled,
+    backupsEnabled,
+    pitrStorageLocation,
+    dbType,
+    storageLocation,
+  ] = watch([
     DbWizardFormFields.pitrEnabled,
     DbWizardFormFields.backupsEnabled,
     DbWizardFormFields.pitrStorageLocation,
     DbWizardFormFields.dbType,
+    DbWizardFormFields.storageLocation,
   ]);
 
   useEffect(() => {
@@ -58,18 +65,21 @@ const PITRStep = () => {
   }, [backupStorages, mode, pitrEnabled]);
 
   useEffect(() => {
-    if (dbType !== DbType.Mysql) {
+    if (dbType === DbType.Postresql) {
       setValue(DbWizardFormFields.pitrEnabled, false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dbType]);
 
-  const pitrDisabled =
-    !backupsEnabled || dbType === DbType.Mongo || dbType === DbType.Postresql;
+  const pitrDisabled = !backupsEnabled || dbType === DbType.Postresql;
 
   useEffect(() => {
     if (!backupsEnabled) {
       setValue(DbWizardFormFields.pitrEnabled, false);
+    }
+
+    if (pitrEnabled && dbType === DbType.Mongo && storageLocation) {
+      setValue(DbWizardFormFields.pitrStorageLocation, storageLocation);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [backupsEnabled]);
@@ -80,16 +90,17 @@ const PITRStep = () => {
         pageTitle={Messages.header}
         pageDescription={Messages.description}
       />
-      {(dbType === DbType.Postresql || dbType === DbType.Mongo) && (
+      {dbType === DbType.Postresql && (
         <Alert severity="info" sx={{ mt: 1 }}>
           {Messages.unavailableForDb(dbType)}
         </Alert>
       )}
-      {!backupsEnabled && dbType === DbType.Mysql && (
-        <Alert severity="info" sx={{ mt: 1 }}>
-          {Messages.toEnablePitr}
-        </Alert>
-      )}
+      {!backupsEnabled &&
+        (dbType === DbType.Mysql || dbType === DbType.Mongo) && (
+          <Alert severity="info" sx={{ mt: 1 }}>
+            {Messages.toEnablePitr}
+          </Alert>
+        )}
       <SwitchInput
         control={control}
         label={Messages.enablePitr}
@@ -101,7 +112,7 @@ const PITRStep = () => {
           sx: { my: 1 },
         }}
       />
-      {pitrEnabled && (
+      {pitrEnabled && dbType === DbType.Mysql && (
         <AutoCompleteAutoFill
           name={DbWizardFormFields.pitrStorageLocation}
           label={StorageLocationMessages.storageLocation.label}
@@ -110,6 +121,12 @@ const PITRStep = () => {
           isRequired
           enableFillFirst={mode === 'new'}
         />
+      )}
+      {pitrEnabled && dbType === DbType.Mongo && (
+        <Typography variant="body1">
+          Backups storage: S3 (storage type is automatically matched to your
+          selection on the Backups page)
+        </Typography>
       )}
     </Box>
   );
