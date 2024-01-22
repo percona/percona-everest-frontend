@@ -35,7 +35,6 @@ export const ScheduledBackupModalForm = () => {
   const dbClusterActiveStorage = dbCluster?.status?.activeStorage;
   const schedules = (dbCluster && dbCluster?.spec?.backup?.schedules) || [];
   const scheduleName = watch(ScheduleFormFields.scheduleName);
-
   useEffect(() => {
     if (mode === 'edit' && setSelectedScheduleName) {
       setSelectedScheduleName(scheduleName);
@@ -44,14 +43,16 @@ export const ScheduledBackupModalForm = () => {
 
   useEffect(() => {
     if (dbClusterActiveStorage) {
-      setValue(ScheduleFormFields.storageLocation, dbClusterActiveStorage);
+      setValue(ScheduleFormFields.storageLocation, {
+        name: dbClusterActiveStorage,
+      });
     }
   }, [dbClusterActiveStorage]);
 
   return (
     <ScheduleForm
       allowScheduleSelection={mode === 'edit'}
-      allowStorageSelection={!dbClusterActiveStorage}
+      disableStorageSelection={!!dbClusterActiveStorage}
       autoFillLocation={mode === 'new'}
       schedules={schedules}
       storageLocationFetching={isFetching}

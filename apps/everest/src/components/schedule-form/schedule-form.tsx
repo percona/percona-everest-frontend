@@ -23,7 +23,7 @@ import { ScheduleFormFields } from './schedule-form.types.ts';
 
 type ScheduleFormProps = {
   allowScheduleSelection?: boolean;
-  allowStorageSelection?: boolean;
+  disableStorageSelection?: boolean;
   disableNameInput?: boolean;
   autoFillLocation?: boolean;
   schedules: Schedule[];
@@ -32,7 +32,7 @@ type ScheduleFormProps = {
 };
 export const ScheduleForm = ({
   allowScheduleSelection,
-  allowStorageSelection = true,
+  disableStorageSelection = false,
   disableNameInput,
   autoFillLocation,
   schedules,
@@ -64,21 +64,20 @@ export const ScheduleForm = ({
         <TimeSelection showInfoAlert />
       </LabeledContent>
 
-      {allowStorageSelection && (
-        <AutoCompleteAutoFill
-          name={ScheduleFormFields.storageLocation}
-          label={Messages.storageLocation.label}
-          loading={storageLocationFetching}
-          options={storageLocationOptions}
-          autoCompleteProps={{
-            isOptionEqualToValue: (option, value) => option.name === value.name,
-            getOptionLabel: (option) =>
-              typeof option === 'string' ? option : option.name,
-          }}
-          isRequired
-          enableFillFirst={autoFillLocation}
-        />
-      )}
+      <AutoCompleteAutoFill
+        name={ScheduleFormFields.storageLocation}
+        label={Messages.storageLocation.label}
+        loading={storageLocationFetching}
+        options={storageLocationOptions}
+        autoCompleteProps={{
+          isOptionEqualToValue: (option, value) => option.name === value.name,
+          getOptionLabel: (option) =>
+            typeof option === 'string' ? option : option.name,
+        }}
+        isRequired
+        enableFillFirst={autoFillLocation}
+        disabled={disableStorageSelection}
+      />
     </>
   );
 };

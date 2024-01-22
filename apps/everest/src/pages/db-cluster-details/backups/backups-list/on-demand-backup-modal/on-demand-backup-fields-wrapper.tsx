@@ -20,7 +20,9 @@ export const OnDemandBackupFieldsWrapper = () => {
 
   useEffect(() => {
     if (dbClusterActiveStorage) {
-      setValue(ScheduleFormFields.storageLocation, dbClusterActiveStorage);
+      setValue(ScheduleFormFields.storageLocation, {
+        name: dbClusterActiveStorage,
+      });
     }
   }, [dbClusterActiveStorage]);
 
@@ -31,16 +33,15 @@ export const OnDemandBackupFieldsWrapper = () => {
         label={Messages.onDemandBackupModal.backupName}
         isRequired
       />
-      {!dbClusterActiveStorage && (
-        <AutoCompleteAutoFill
-          name={BackupFields.storageLocation}
-          label={Messages.onDemandBackupModal.backupStorage}
-          loading={isFetching}
-          options={backupStorages}
-          enableFillFirst
-          isRequired
-        />
-      )}
+      <AutoCompleteAutoFill
+        name={BackupFields.storageLocation}
+        label={Messages.onDemandBackupModal.backupStorage}
+        loading={isFetching}
+        options={backupStorages}
+        enableFillFirst
+        isRequired
+        disabled={!!dbClusterActiveStorage}
+      />
     </>
   );
 };
