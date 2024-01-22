@@ -5,6 +5,7 @@ import {
   MenuItem,
   Typography,
 } from '@mui/material';
+import { DbEngineType } from '@percona/types';
 import {
   DateTimePickerInput,
   LoadableChildren,
@@ -12,26 +13,25 @@ import {
   SelectInput,
 } from '@percona/ui-lib';
 import { FormDialog } from 'components/form-dialog';
+import { FormDialogProps } from 'components/form-dialog/form-dialog.types';
+import { PITR_DATE_FORMAT } from 'consts';
+import { format } from 'date-fns';
 import { useDbBackups, useDbClusterPitr } from 'hooks/api/backups/useBackups';
 import {
   useDbClusterRestoreFromBackup,
   useDbClusterRestoreFromPointInTime,
 } from 'hooks/api/restores/useDbClusterRestore';
 import { FieldValues } from 'react-hook-form';
-import { FormDialogProps } from 'components/form-dialog/form-dialog.types';
 import { useNavigate } from 'react-router-dom';
 import { BackupStatus } from 'shared-types/backups.types';
+import { DbCluster } from 'shared-types/dbCluster.types';
 import {
   BackuptypeValues,
   RestoreDbFields,
   defaultValues,
   schema,
 } from './restore-db-modal-schema';
-import { DbCluster } from 'shared-types/dbCluster.types';
-import { DbEngineType } from '@percona/types';
-import { PITR_DATE_FORMAT } from 'consts';
 import { Messages } from './restore-db-modal.messages';
-import { format } from 'date-fns';
 
 const RestoreDbModal = <T extends FieldValues>({
   closeModal,
@@ -146,7 +146,7 @@ const RestoreDbModal = <T extends FieldValues>({
                 label: Messages.fromPitr,
                 value: BackuptypeValues.fromPitr,
                 disabled:
-                  dbCluster.spec.engine.type !== DbEngineType.PXC ||
+                  dbCluster.spec.engine.type === DbEngineType.POSTGRESQL ||
                   isNewClusterMode,
               },
             ]}
