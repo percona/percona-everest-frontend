@@ -241,9 +241,9 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
             isOptionEqualToValue: (option, value) => option === value,
           }}
         />
-        <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
-          {Messages.labels.dbEnvironment}
-        </Typography>
+        {/*<Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>*/}
+        {/*  {Messages.labels.dbEnvironment}*/}
+        {/*</Typography>*/}
         {/*<Controller
           control={control}
           name={DbWizardFormFields.dbEnvironment}
