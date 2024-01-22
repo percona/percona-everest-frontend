@@ -15,13 +15,13 @@
 
 import { expect, test } from '@playwright/test';
 import { getEnginesVersions } from '../../../utils/database-engines';
+import { getTokenFromLocalStorage } from '../../../utils/localStorage';
 import { getClusterDetailedInfo } from '../../../utils/storage-class';
 import { advancedConfigurationStepCheck } from './steps/advanced-configuration-step';
 import { backupsStepCheck } from './steps/backups-step';
 import { basicInformationStepCheck } from './steps/basic-information-step';
-import { resourcesStepCheck } from './steps/resources-step';
-import { getTokenFromLocalStorage } from '../../../utils/localStorage';
 import { pitrStepCheck } from './steps/pitr-step';
+import { resourcesStepCheck } from './steps/resources-step';
 
 test.describe('DB Cluster creation', () => {
   let engineVersions = {
@@ -128,6 +128,8 @@ test.describe('DB Cluster creation', () => {
       }
     );
     expect(deleteResponse.ok()).toBeTruthy();
+
+    //TODO: Add check for PITR ones backend is ready
 
     expect(addedCluster).not.toBeUndefined();
     expect(addedCluster?.spec.engine.type).toBe('psmdb');
