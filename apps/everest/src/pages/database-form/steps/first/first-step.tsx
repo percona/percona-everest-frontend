@@ -111,7 +111,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     if (!dbType) {
       return;
     }
-    const { isTouched: nameTouched } = getFieldState(DbWizardFormFields.dbName);
+    const { isDirty: nameDirty } = getFieldState(DbWizardFormFields.dbName);
     const { isDirty: dbVersionDirty } = getFieldState(
       DbWizardFormFields.dbVersion
     );
@@ -119,7 +119,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
       DbWizardFormFields.numberOfNodes
     );
 
-    if (!nameTouched && mode === 'new') {
+    if (!nameDirty && mode === 'new') {
       setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`, {
         shouldValidate: true,
       });

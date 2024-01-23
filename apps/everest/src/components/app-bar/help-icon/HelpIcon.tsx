@@ -48,19 +48,39 @@ const AppBarHelpIcon = () => {
           </Typography>
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>
-          <Typography variant="menuText">
-            <Link
-              underline="none"
-              color="inherit"
-              target="_blank"
-              rel="noopener"
-              href="https://docs.percona.com/everest/"
-            >
-              Documentation
-            </Link>
-          </Typography>
-        </MenuItem>
+        <Link
+          underline="none"
+          color="inherit"
+          target="_blank"
+          rel="noopener"
+          href="https://docs.percona.com/everest/"
+        >
+          <MenuItem onClick={handleClose}>
+            <Typography variant="menuText">Documentation</Typography>
+          </MenuItem>
+        </Link>
+        <Link
+          underline="none"
+          color="inherit"
+          target="_blank"
+          rel="noopener"
+          href="https://github.com/percona/percona-everest-backend/issues"
+        >
+          <MenuItem onClick={handleClose}>
+            <Typography variant="menuText">Report issue</Typography>
+          </MenuItem>
+        </Link>
+        <Link
+          underline="none"
+          color="inherit"
+          target="_blank"
+          rel="noopener"
+          href="https://forums.percona.com/c/percona-everest"
+        >
+          <MenuItem onClick={handleClose}>
+            <Typography variant="menuText">Forum</Typography>
+          </MenuItem>
+        </Link>
       </Menu>
     </>
   );

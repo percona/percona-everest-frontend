@@ -238,7 +238,7 @@ export const StorageLocations = () => {
           handleConfirm={handleConfirmDelete}
           disabledButtons={deletingBackupStorage}
         >
-          {Messages.deleteDialog.content}
+          {Messages.deleteDialog.content(selectedStorageName)}
         </ConfirmDialog>
       )}
     </>
