@@ -15,6 +15,7 @@ export function AutoCompleteAutoFill<T>({
   isRequired,
   enableFillFirst = false,
   fillFirstField = 'name',
+  disabled,
 }: AutoCompleteAutoFillProps<T>) {
   const { setValue, trigger } = useFormContext();
 
@@ -47,6 +48,7 @@ export function AutoCompleteAutoFill<T>({
         ...autoCompleteProps,
       }}
       isRequired={isRequired}
+      disabled={disabled}
     />
   );
 }

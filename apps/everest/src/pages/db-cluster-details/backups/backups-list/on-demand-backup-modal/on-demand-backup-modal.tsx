@@ -1,7 +1,4 @@
-import { TextInput } from '@percona/ui-lib';
-import { AutoCompleteAutoFill } from 'components/auto-complete-auto-fill/auto-complete-auto-fill';
 import { FormDialog } from 'components/form-dialog';
-import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages';
 import {
   BACKUPS_QUERY_KEY,
   useCreateBackupOnDemand,
@@ -14,8 +11,8 @@ import {
   SingleBackupPayload,
 } from 'shared-types/backups.types';
 import { Messages } from '../../../db-cluster-details.messages.ts';
+import { OnDemandBackupFieldsWrapper } from './on-demand-backup-fields-wrapper.tsx';
 import {
-  BackupFields,
   BackupFormData,
   OnDemandBackupModalProps,
   defaultValuesFc,
@@ -30,7 +27,7 @@ export const OnDemandBackupModal = ({
   const { dbClusterName } = useParams();
   const { mutate: createBackupOnDemand, isLoading: creatingBackup } =
     useCreateBackupOnDemand(dbClusterName!);
-  const { data: backupStorages = [], isFetching } = useBackupStorages();
+
   const handleSubmit = (data: BackupFormData) => {
     createBackupOnDemand(data, {
       onSuccess(newBackup: SingleBackupPayload) {
@@ -66,19 +63,7 @@ export const OnDemandBackupModal = ({
       size="XL"
       subHead2={Messages.onDemandBackupModal.subHead}
     >
-      <TextInput
-        name={BackupFields.name}
-        label={Messages.onDemandBackupModal.backupName}
-        isRequired
-      />
-      <AutoCompleteAutoFill
-        name={BackupFields.storageLocation}
-        label={Messages.onDemandBackupModal.backupStorage}
-        loading={isFetching}
-        options={backupStorages}
-        enableFillFirst
-        isRequired
-      />
+      <OnDemandBackupFieldsWrapper />
     </FormDialog>
   );
 };
