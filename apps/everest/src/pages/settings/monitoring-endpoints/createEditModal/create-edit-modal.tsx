@@ -39,7 +39,7 @@ export const CreateEditEndpointModal = ({
       submitting={isLoading}
       onSubmit={onSubmit}
       defaultValues={defaultValues}
-      headerMessage={Messages.addDialogHeader}
+      headerMessage={Messages.addEditDialogHeader(isEditMode)}
       schema={endpointSchema}
       submitMessage="Add"
     >
