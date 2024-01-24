@@ -2,8 +2,9 @@ import { updateDbClusterFn } from 'api/dbClusterApi';
 import { ScheduleFormData } from 'components/schedule-form/schedule-form-schema.ts';
 import { getCronExpressionFromFormValues } from 'components/time-selection/time-selection.utils';
 import { useMutation, UseMutationOptions } from 'react-query';
-import { DbCluster, Schedule } from 'shared-types/dbCluster.types';
+import { Schedule } from 'shared-types/dbCluster.types';
 import { useDbCluster } from '../db-cluster/useDbCluster';
+import { DbCluster } from './../../../shared-types/dbCluster.types';
 
 const backupScheduleFormValuesToDbClusterPayload = (
   dbPayload: ScheduleFormData,
@@ -64,9 +65,9 @@ const backupScheduleFormValuesToDbClusterPayload = (
     spec: {
       ...dbCluster?.spec,
       backup: {
+        ...dbCluster.spec.backup,
         enabled: true,
         schedules: schedulesPayload,
-        pitr: dbCluster.spec.backup?.pitr,
       },
     },
   };
@@ -88,9 +89,9 @@ const deletedScheduleToDbClusterPayload = (
     spec: {
       ...dbCluster?.spec,
       backup: {
+        ...dbCluster.spec.backup,
         enabled: true,
         schedules: filteredSchedules,
-        pitr: dbCluster.spec.backup?.pitr,
       },
     },
   };
