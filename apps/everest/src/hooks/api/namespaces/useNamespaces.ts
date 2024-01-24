@@ -18,10 +18,7 @@ import { GetNamespacesPayload } from 'shared-types/namespaces.types';
 import { getNamespacesFn } from 'api/namespaces';
 import { dbEnginesQuerySelect } from '../db-engines/useDbEngines';
 import { getDbEnginesFn } from 'api/dbEngineApi';
-import {
-  DbEngine,
-  GetDbEnginesPayload,
-} from 'shared-types/dbEngines.types';
+import { DbEngine, GetDbEnginesPayload } from 'shared-types/dbEngines.types';
 
 export const NAMESPACES_QUERY_KEY = 'namespace';
 
