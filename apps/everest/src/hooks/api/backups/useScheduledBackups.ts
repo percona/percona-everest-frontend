@@ -4,7 +4,7 @@ import { getCronExpressionFromFormValues } from 'components/time-selection/time-
 import { useMutation, UseMutationOptions } from 'react-query';
 import { Schedule } from 'shared-types/dbCluster.types';
 import { useDbCluster } from '../db-cluster/useDbCluster';
-import { DbCluster } from './../../../shared-types/dbCluster.types';
+import { DbCluster } from 'shared-types/dbCluster.types';
 
 const backupScheduleFormValuesToDbClusterPayload = (
   dbPayload: ScheduleFormData,
