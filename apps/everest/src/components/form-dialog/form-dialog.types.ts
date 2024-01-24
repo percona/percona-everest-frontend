@@ -1,3 +1,4 @@
+import { DialogProps } from '@mui/material';
 import { ReactNode } from 'react';
 
 import {
@@ -24,4 +25,5 @@ export interface FormDialogProps<T extends FieldValues> {
   subHead2?: string;
   submitting?: boolean;
   dataTestId?: string;
+  scroll?: DialogProps['scroll'];
 }

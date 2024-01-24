@@ -302,7 +302,7 @@ export const DbClusterView = () => {
           handleConfirm={() => handleConfirmDelete()}
           disabledButtons={deletingCluster}
         >
-          {Messages.deleteModal.content}
+          {Messages.deleteModal.content(selectedDbCluster!.metadata.name)}
         </ConfirmDialog>
       )}
     </Stack>

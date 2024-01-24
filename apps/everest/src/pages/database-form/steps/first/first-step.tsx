@@ -129,9 +129,9 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     if (!dbType) {
       return;
     }
-    const { isTouched: nameTouched } = getFieldState(DbWizardFormFields.dbName);
+      const { isDirty: nameDirty } = getFieldState(DbWizardFormFields.dbName);
 
-    if (!nameTouched && mode === 'new') {
+      if (!nameDirty && mode === 'new') {
       if (!dbVersions) {
         setValue(DbWizardFormFields.dbName, ``);
       } else {
