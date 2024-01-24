@@ -14,14 +14,14 @@
 // limitations under the License.
 
 import { useQueries, useQuery, UseQueryOptions } from 'react-query';
-import { GetNamespacesPayload } from '../../../shared-types/namespaces.types';
-import { getNamespacesFn } from '../../../api/namespaces';
+import { GetNamespacesPayload } from 'shared-types/namespaces.types';
+import { getNamespacesFn } from 'api/namespaces';
 import { dbEnginesQuerySelect } from '../db-engines/useDbEngines';
-import { getDbEnginesFn } from '../../../api/dbEngineApi';
+import { getDbEnginesFn } from 'api/dbEngineApi';
 import {
   DbEngine,
   GetDbEnginesPayload,
-} from '../../../shared-types/dbEngines.types';
+} from 'shared-types/dbEngines.types';
 
 export const NAMESPACES_QUERY_KEY = 'namespace';
 

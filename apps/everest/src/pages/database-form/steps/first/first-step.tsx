@@ -36,7 +36,7 @@ import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { DEFAULT_NODES } from './first-step.constants';
 import { NODES_DB_TYPE_MAP } from '../../database-form.constants';
 import { StepHeader } from '../step-header/step-header.tsx';
-import { useNamespaces } from '../../../../hooks/api/namespaces/useNamespaces';
+import { useNamespaces } from 'hooks/api/namespaces/useNamespaces';
 
 // TODO change to api request's result
 // const dbEnvironmentOptions = [
