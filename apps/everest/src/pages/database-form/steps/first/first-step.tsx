@@ -33,48 +33,66 @@ import { Messages } from './first-step.messages';
 import { generateShortUID } from './utils';
 import { useKubernetesClusterInfo } from 'hooks/api/kubernetesClusters/useKubernetesClusterInfo';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
-import { DEFAULT_NODES } from './first-steps.constants';
+import { DEFAULT_NODES } from './first-step.constants';
 import { NODES_DB_TYPE_MAP } from '../../database-form.constants';
 import { StepHeader } from '../step-header/step-header.tsx';
+import { useNamespaces } from 'hooks/api/namespaces/useNamespaces';
+
+// TODO change to api request's result
+// const dbEnvironmentOptions = [
+//   {
+//     value: 'dbEnvironmentOne',
+//     label: 'dbEnvironmentOneLabel',
+//   },
+//   {
+//     value: 'dbEnvironmentTwo',
+//     label: 'dbEnvironmentTwoLabel',
+//   },
+// ];
 
 export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
-  const { watch, setValue, getFieldState, getValues } = useFormContext();
-  const { data: dbEngines = [], isFetching: dbEnginesFetching } =
-    useDbEngines();
-  const { data: clusterInfo, isFetching: clusterInfoFetching } =
-    useKubernetesClusterInfo('wizard-k8-info');
+  // namespaces field should be added in EVEREST-676, for EVEREST-677 changes for the first page are just a hotfix:
+  // TODO for EVEREST-676 :
+  //  - check new/edit/restore modes field values
+  //  - check returning to first page from other pages
+  //  - add tests
 
   const mode = useDatabasePageMode();
 
-  // TODO change to api request's result
-  // const k8sNamespacesOptions = [
-  //   {
-  //     value: 'namespaceOne',
-  //     label: 'namespaceOneLabel',
-  //   },
-  //   {
-  //     value: 'namespaceTwo',
-  //     label: 'namespaceTwoLabel',
-  //   },
-  // ];
-  // const dbEnvironmentOptions = [
-  //   {
-  //     value: 'dbEnvironmentOne',
-  //     label: 'dbEnvironmentOneLabel',
-  //   },
-  //   {
-  //     value: 'dbEnvironmentTwo',
-  //     label: 'dbEnvironmentTwoLabel',
-  //   },
-  // ];
+  const { watch, setValue, getFieldState, getValues, trigger } =
+    useFormContext();
 
+  const { data: clusterInfo, isFetching: clusterInfoFetching } =
+    useKubernetesClusterInfo('wizard-k8-info');
+  const { data: namespaces = [], isFetching: namespacesFetching } =
+    useNamespaces();
   const dbType: DbType = watch(DbWizardFormFields.dbType);
   const dbVersion: DbType = watch(DbWizardFormFields.dbVersion);
+  const dbNamespace = watch(DbWizardFormFields.k8sNamespace);
+
+  const { data: dbEngines = [], isFetching: dbEnginesFetching } =
+    useDbEngines(dbNamespace);
   const dbEngine = dbTypeToDbEngine(dbType);
 
   const [dbVersions, setDbVersions] = useState(
     dbEngines.find((engine) => engine.type === dbEngine)
   );
+
+  useEffect(() => {
+    const { isTouched: k8sNamespaceTouched } = getFieldState(
+      DbWizardFormFields.k8sNamespace
+    );
+    if (!k8sNamespaceTouched && mode === 'new' && namespaces?.length > 0) {
+      setValue(DbWizardFormFields.k8sNamespace, namespaces[0]);
+      trigger(DbWizardFormFields.k8sNamespace);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [namespaces, mode]);
+
+  useEffect(() => {
+    const newDbVersions = dbEngines.find((engine) => engine.type === dbEngine);
+    setDbVersions(newDbVersions);
+  }, [dbEngines, dbType, dbEngine]);
 
   useEffect(() => {
     if (!dbType && mode === 'new' && dbEngines.length > 0) {
@@ -104,6 +122,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
         clusterInfo?.storageClassNames[0]
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clusterInfo, mode, setValue]);
 
   useEffect(() => {
@@ -111,18 +130,26 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
       return;
     }
     const { isDirty: nameDirty } = getFieldState(DbWizardFormFields.dbName);
+
+    if (!nameDirty && mode === 'new') {
+      if (!dbVersions) {
+        setValue(DbWizardFormFields.dbName, ``);
+      } else {
+        setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`, {
+          shouldValidate: true,
+        });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dbType, dbVersions, mode]);
+
+  useEffect(() => {
     const { isDirty: dbVersionDirty } = getFieldState(
       DbWizardFormFields.dbVersion
     );
     const { isTouched: nodesTouched } = getFieldState(
       DbWizardFormFields.numberOfNodes
     );
-
-    if (!nameDirty && mode === 'new') {
-      setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`, {
-        shouldValidate: true,
-      });
-    }
 
     // We need to check if the previously selected number of nodes exists for the current DB type
     // E.g. 2 nodes is only possible for PG
@@ -141,13 +168,11 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
       }
     }
 
-    const newVersions = dbEngines.find((engine) => engine.type === dbEngine);
-
     // Safety check
     if (
       dbVersionDirty ||
-      !newVersions ||
-      !newVersions.availableVersions.engine.length
+      !dbVersions ||
+      !dbVersions.availableVersions.engine.length
     ) {
       return;
     }
@@ -156,18 +181,18 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
       ((mode === 'edit' || mode === 'restoreFromBackup') && !dbVersion) ||
       mode === 'new'
     ) {
-      const recommendedVersion = newVersions.availableVersions.engine.find(
+      const recommendedVersion = dbVersions.availableVersions.engine.find(
         (version) => version.status === DbEngineToolStatus.RECOMMENDED
       );
       setValue(
         DbWizardFormFields.dbVersion,
         recommendedVersion
           ? recommendedVersion.version
-          : newVersions.availableVersions.engine[0].version
+          : dbVersions.availableVersions.engine[0].version
       );
     }
-    setDbVersions(newVersions);
-  }, [dbType, dbEngines, mode, setValue, getFieldState, dbEngine, dbVersion]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dbType, dbVersions, mode, dbEngine, dbVersion]);
 
   return (
     <>
@@ -205,33 +230,21 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
             disabled: mode === 'edit' || loadingDefaultsForEdition,
           }}
         />
-        {/* <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
-          {Messages.labels.k8sNamespace}
-        </Typography>
-        <Controller
-          control={control}
+        <AutoCompleteInput
           name={DbWizardFormFields.k8sNamespace}
-          render={({ field, fieldState: { error } }) => (
-            <Select
-              {...field}
-              variant="outlined"
-              error={error !== undefined}
-              inputProps={{
-                'data-testid': 'text-k8sNamespace',
-              }}
-            >
-              {k8sNamespacesOptions.map((item) => (
-                <MenuItem value={item.value} key={item.value}>
-                  {item.label}
-                </MenuItem>
-              ))}
-            </Select>
-          )}
+          label={Messages.labels.k8sNamespace}
+          loading={namespacesFetching}
+          options={namespaces || []}
+          autoCompleteProps={{
+            disableClearable: true,
+            disabled: mode === 'edit' || loadingDefaultsForEdition,
+            isOptionEqualToValue: (option, value) => option === value,
+          }}
         />
-        <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
-          {Messages.labels.dbEnvironment}
-        </Typography>
-        <Controller
+        {/*<Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>*/}
+        {/*  {Messages.labels.dbEnvironment}*/}
+        {/*</Typography>*/}
+        {/*<Controller
           control={control}
           name={DbWizardFormFields.dbEnvironment}
           render={({ field, fieldState: { error } }) => (

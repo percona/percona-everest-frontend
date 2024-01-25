@@ -12,18 +12,11 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-export const Messages = {
-  pageTitle: 'Basic information',
-  pageDescription: 'Provide the basic information for your new database.',
-  labels: {
-    dbType: 'Database type',
-    dbName: 'Display name',
-    k8sNamespace: 'Namespace',
-    dbEnvironment: 'Database environment',
-    dbVersion: 'Database version',
-    storageClass: 'Storage class',
-  },
-  placeholders: {
-    dbName: 'E.g. postgresql-123',
-  },
-};
+
+// TODO EVEREST-677
+export interface NamespaceInstance {
+  name: string;
+  operator: string;
+}
+
+export type GetNamespacesPayload = string[];

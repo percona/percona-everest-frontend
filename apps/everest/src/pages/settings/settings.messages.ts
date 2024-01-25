@@ -16,5 +16,6 @@ export const Messages = {
   defaultConfigurations: 'Default configurations',
   storageLocations: 'Backups storages',
   monitoringEndpoints: 'Monitoring endpoints',
+  namespaces: 'Namespaces',
   k8sClusters: 'Kubernetes clusters',
 };

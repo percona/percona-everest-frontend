@@ -71,6 +71,8 @@ export const DbClusterPayloadToFormValues = (
         ? backup?.pitr?.backupStorageName || null
         : DB_WIZARD_DEFAULTS[DbWizardFormFields.pitrStorageLocation],
     ...getScheduleInfo(mode, backup),
+    [DbWizardFormFields.k8sNamespace]:
+      DB_WIZARD_DEFAULTS[DbWizardFormFields.k8sNamespace], // TODO 676 change when API will be ready for Edit
     [DbWizardFormFields.dbType]: dbEngineToDbType(
       dbCluster?.spec?.engine?.type
     ),
