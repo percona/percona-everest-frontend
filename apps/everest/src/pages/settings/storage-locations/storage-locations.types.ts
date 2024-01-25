@@ -10,6 +10,7 @@ export enum StorageLocationsFields {
   url = 'url',
   accessKey = 'accessKey',
   secretKey = 'secretKey',
+  namespaces = 'targetNamespaces',
 }
 
 export const storageLocationDefaultValues = {
@@ -21,6 +22,7 @@ export const storageLocationDefaultValues = {
   [StorageLocationsFields.accessKey]: '',
   [StorageLocationsFields.secretKey]: '',
   [StorageLocationsFields.bucketName]: '',
+  [StorageLocationsFields.namespaces]: [],
 };
 
 export const storageLocationEditValues = (
@@ -36,6 +38,8 @@ export const storageLocationEditValues = (
   [StorageLocationsFields.secretKey]: selectedStorageLocationForEdit.secretKey,
   [StorageLocationsFields.bucketName]:
     selectedStorageLocationForEdit.bucketName,
+  [StorageLocationsFields.namespaces]:
+    selectedStorageLocationForEdit.targetNamespaces || [],
 });
 
 export const storageLocationsSchema = z.object({
@@ -47,6 +51,7 @@ export const storageLocationsSchema = z.object({
   [StorageLocationsFields.region]: z.string().nonempty(),
   [StorageLocationsFields.accessKey]: z.string().nonempty(),
   [StorageLocationsFields.secretKey]: z.string().nonempty(),
+  [StorageLocationsFields.namespaces]: z.array(z.string()),
 });
 
 export type BackupStorageType = z.infer<typeof storageLocationsSchema>;

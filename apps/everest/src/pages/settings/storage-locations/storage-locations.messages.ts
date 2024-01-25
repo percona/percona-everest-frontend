@@ -4,6 +4,15 @@ export const Messages = {
       `${isEditMode ? 'Edit' : 'Add'} Backup storage`,
     addEditButton: (isEditMode: boolean) => (isEditMode ? 'Edit' : 'Add'),
     cancel: 'Cancel',
+    placeholders: {
+      name: 'Insert storage display name',
+      descriptions: 'Insert an optional description',
+      namespaces: 'Select namespaces',
+    },
+    helperText: {
+      namespaces:
+        'Select in which namespaces this storage should be available.',
+    },
   },
   deleteDialog: {
     header: 'Delete storage',
@@ -15,6 +24,7 @@ their scheduled backup jobs.`,
   gcs: 'Google Cloud Storage',
   azure: 'Azure Cloud Storage',
   name: 'Name',
+  namespaces: 'Namespaces',
   type: 'Type',
   bucketName: 'Bucket Name',
   description: 'Description',

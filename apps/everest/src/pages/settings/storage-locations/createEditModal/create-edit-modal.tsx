@@ -1,5 +1,5 @@
-import { MenuItem } from '@mui/material';
-import { TextInput, SelectInput } from '@percona/ui-lib';
+import { Checkbox, MenuItem } from '@mui/material';
+import { TextInput, SelectInput, AutoCompleteInput } from '@percona/ui-lib';
 import { useMemo } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { FormDialog } from 'components/form-dialog/form-dialog';
@@ -12,6 +12,7 @@ import {
   storageLocationsSchema,
 } from '../storage-locations.types';
 import { CreateEditModalStorageProps } from './create-edit-modal.types';
+import { useNamespaces } from '../../../../hooks/api/namespaces/useNamespaces';
 
 export const CreateEditModalStorage = ({
   open,
@@ -31,6 +32,8 @@ export const CreateEditModalStorage = ({
         : storageLocationsSchema,
     [isEditMode]
   );
+  const { data: namespaces = [], isFetching: isNamespacesFetching } =
+    useNamespaces();
 
   const defaultValues = useMemo(
     () =>
@@ -58,9 +61,33 @@ export const CreateEditModalStorage = ({
       <TextInput
         name={StorageLocationsFields.name}
         label={Messages.name}
-        textFieldProps={{ disabled: isEditMode }}
         isRequired
         labelProps={{ sx: { mt: 0 } }}
+      />
+      <TextInput
+        name={StorageLocationsFields.description}
+        label={Messages.description}
+      />
+      <AutoCompleteInput
+        name={StorageLocationsFields.namespaces}
+        label={Messages.namespaces}
+        loading={isNamespacesFetching}
+        textFieldProps={{helperText: Messages.createEditModal.helperText.namespaces}}
+        autoCompleteProps={{
+          multiple: true,
+          disableCloseOnSelect: true,
+          placeholder: isEditMode ? '************' : Messages.createEditModal.placeholders.namespaces,
+          renderOption: (props, option, { selected }) => (
+            <li {...props}>
+              <Checkbox
+                style={{ marginRight: 8 }}
+                checked={selected}
+              />
+              {option}
+            </li>
+          ),
+        }}
+        options={namespaces}
       />
       <SelectInput
         name={StorageLocationsFields.type}
@@ -81,10 +108,6 @@ export const CreateEditModalStorage = ({
         name={StorageLocationsFields.region}
         label={Messages.region}
         isRequired
-      />
-      <TextInput
-        name={StorageLocationsFields.description}
-        label={Messages.description}
       />
       <TextInput
         name={StorageLocationsFields.url}
