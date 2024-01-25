@@ -72,17 +72,18 @@ export const CreateEditModalStorage = ({
         name={StorageLocationsFields.namespaces}
         label={Messages.namespaces}
         loading={isNamespacesFetching}
-        textFieldProps={{helperText: Messages.createEditModal.helperText.namespaces}}
+        textFieldProps={{
+          helperText: Messages.createEditModal.helperText.namespaces,
+        }}
         autoCompleteProps={{
           multiple: true,
           disableCloseOnSelect: true,
-          placeholder: isEditMode ? '************' : Messages.createEditModal.placeholders.namespaces,
+          placeholder: isEditMode
+            ? '************'
+            : Messages.createEditModal.placeholders.namespaces,
           renderOption: (props, option, { selected }) => (
             <li {...props}>
-              <Checkbox
-                style={{ marginRight: 8 }}
-                checked={selected}
-              />
+              <Checkbox style={{ marginRight: 8 }} checked={selected} />
               {option}
             </li>
           ),
