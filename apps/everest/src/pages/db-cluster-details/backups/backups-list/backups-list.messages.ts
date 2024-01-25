@@ -1,8 +1,8 @@
 export const Messages = {
   deleteDialog: {
     header: 'Delete backup',
-    content:
-      'Are you sure you want to permanently delete this backup and any datasets it contains?',
+    content: (backupName: string) =>
+      `Are you sure you want to permanently delete "${backupName}" and any datasets it contains?`,
   },
   restoreDialog: {
     header: 'Restore to this database',

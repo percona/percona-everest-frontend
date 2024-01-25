@@ -180,7 +180,7 @@ export const ScheduledBackupsList = () => {
           handleConfirm={handleConfirmDelete}
           disabledButtons={deletingSchedule}
         >
-          {Messages.deleteModal.content}
+          {Messages.deleteModal.content(selectedSchedule)}
         </ConfirmDialog>
       )}
     </>

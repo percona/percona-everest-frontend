@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Table } from '@percona/ui-lib';
 import { MRT_ColumnDef } from 'material-react-table';
 import { Messages } from './namespaces.messages';
-import { NamespaceInstance } from '../../../shared-types/namespaces.types';
+import { NamespaceInstance } from 'shared-types/namespaces.types';
 import { useDBEnginesForNamespaces } from '../../../hooks/api/namespaces/useNamespaces';
 
 export const Namespaces = () => {

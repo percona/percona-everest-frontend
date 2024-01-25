@@ -16,7 +16,9 @@ export const Messages = {
   },
   deleteDialog: {
     header: 'Delete storage',
-    content: `Are you sure you want to permanently delete this storage location? Any
+    content: (
+      storageName: string
+    ) => `Are you sure you want to permanently delete this storage location "${storageName}"? Any
 database clusters using this storage will no longer be able to execute
 their scheduled backup jobs.`,
   },

@@ -39,7 +39,7 @@ export const CreateEditEndpointModal = ({
       submitting={isLoading}
       onSubmit={onSubmit}
       defaultValues={defaultValues}
-      headerMessage={Messages.addDialogHeader}
+      headerMessage={Messages.addEditDialogHeader(isEditMode)}
       schema={endpointSchema}
       submitMessage="Add"
     >
@@ -57,16 +57,13 @@ export const CreateEditEndpointModal = ({
       <TextInput
         name={EndpointFormFields.user}
         label={Messages.fieldLabels.user}
+        isRequired
       />
       <TextInput
         name={EndpointFormFields.password}
         label={Messages.fieldLabels.password}
-        textFieldProps={{ type: 'password' }}
-      />
-      <TextInput
-        name={EndpointFormFields.apiKey}
-        label={Messages.fieldLabels.apiKey}
         isRequired
+        textFieldProps={{ type: 'password' }}
       />
     </FormDialog>
   );

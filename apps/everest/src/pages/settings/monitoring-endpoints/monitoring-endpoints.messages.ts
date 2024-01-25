@@ -3,9 +3,10 @@ export const Messages = {
   edit: 'Edit',
   delete: 'Delete',
   deleteDialogHeader: 'Delete monitoring endpoint',
-  addDialogHeader: 'Add monitoring endpoint',
-  deleteConfirmation:
-    'Are you sure you want to permanently delete this endpoint?',
+  addEditDialogHeader: (editMode: boolean) =>
+    `${editMode ? 'Edit' : 'Add'} monitoring endpoint`,
+  deleteConfirmation: (endpoint: string) =>
+    `Are you sure you want to permanently delete endpoint "${endpoint}"?`,
   fieldLabels: {
     name: 'Name',
     endpoint: 'Endpoint',

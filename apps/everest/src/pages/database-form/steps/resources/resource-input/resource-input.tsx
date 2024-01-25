@@ -1,7 +1,7 @@
 import { TextInput } from '@percona/ui-lib';
 import { Box, InputAdornment, Typography, useTheme } from '@mui/material';
 import { ResourceInputProps } from './resource-input.types';
-import { useActiveBreakpoint } from '../../../../../hooks/utils/useActiveBreakpoint.ts';
+import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint.ts';
 import { useFormContext } from 'react-hook-form';
 
 export const ResourceInput = ({
