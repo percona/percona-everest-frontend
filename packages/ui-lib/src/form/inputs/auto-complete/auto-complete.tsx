@@ -1,8 +1,8 @@
 import { Autocomplete, CircularProgress, TextField } from '@mui/material';
 import { kebabize } from '@percona/utils';
 import { Controller, useFormContext } from 'react-hook-form';
-import { AutoCompleteInputProps } from './auto-complete.types';
 import LabeledContent from '../../../labeled-content';
+import { AutoCompleteInputProps } from './auto-complete.types';
 
 function AutoCompleteInput<T>({
   name,
@@ -15,6 +15,7 @@ function AutoCompleteInput<T>({
   options,
   loading = false,
   isRequired = false,
+  disabled = false,
 }: AutoCompleteInputProps<T>) {
   const { control: contextControl } = useFormContext();
   const content = (
@@ -26,6 +27,7 @@ function AutoCompleteInput<T>({
           {...field}
           options={options}
           forcePopupIcon
+          disabled={disabled}
           onChange={(_, newValue) => {
             field.onChange(newValue);
           }}

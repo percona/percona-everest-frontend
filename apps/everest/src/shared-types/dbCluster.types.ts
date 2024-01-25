@@ -98,6 +98,7 @@ export interface StatusSpec {
   status: DbClusterStatus;
   hostname: string;
   port: number;
+  activeStorage?: string;
 }
 
 export interface DbClusterMetadata {
