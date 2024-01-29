@@ -3,9 +3,7 @@ import { TextInput, SelectInput, AutoCompleteInput } from '@percona/ui-lib';
 import { useFormContext } from 'react-hook-form';
 import { StorageType } from 'shared-types/backupStorages.types';
 import { Messages } from '../storage-locations.messages';
-import {
-  StorageLocationsFields,
-} from '../storage-locations.types';
+import { StorageLocationsFields } from '../storage-locations.types';
 import { useNamespaces } from '../../../../hooks/api/namespaces/useNamespaces';
 
 interface CreateEditFormWrapperProps {
@@ -14,10 +12,10 @@ interface CreateEditFormWrapperProps {
 export const CreateEditStorageFormWrpapper = ({
   isEditMode,
 }: CreateEditFormWrapperProps) => {
-    const title = "Select All";
+  const title = 'Select All';
   const { data: namespaces = [], isFetching: isNamespacesFetching } =
     useNamespaces();
-  const {setValue, watch} = useFormContext();
+  const { setValue, watch } = useFormContext();
   const namespacesFieldValue = watch(StorageLocationsFields.namespaces);
 
   return (
@@ -51,18 +49,33 @@ export const CreateEditStorageFormWrpapper = ({
             return [title, ...filtered];
           },
           onChange: (_event, newValue) => {
-            if (Array.isArray(newValue) && newValue.find((option) => option===title)) {
-                return setValue(StorageLocationsFields.namespaces, namespacesFieldValue.length === namespaces.length ? [] : namespaces);
+            if (
+              Array.isArray(newValue) &&
+              newValue.find((option) => option === title)
+            ) {
+              return setValue(
+                StorageLocationsFields.namespaces,
+                namespacesFieldValue.length === namespaces.length
+                  ? []
+                  : namespaces
+              );
             }
             setValue(StorageLocationsFields.namespaces, newValue);
           },
           renderOption: (props, option, { selected }) => {
-              return (
-                  <li {...props}>
-                      <Checkbox style={{ marginRight: 8 }}   checked={option===title? namespaces.length === namespacesFieldValue.length: selected} />
-                      {option}
-                  </li>
-              )
+            return (
+              <li {...props}>
+                <Checkbox
+                  style={{ marginRight: 8 }}
+                  checked={
+                    option === title
+                      ? namespaces.length === namespacesFieldValue.length
+                      : selected
+                  }
+                />
+                {option}
+              </li>
+            );
           },
         }}
         options={namespaces}
