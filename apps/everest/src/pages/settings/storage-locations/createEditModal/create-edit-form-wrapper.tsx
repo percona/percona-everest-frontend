@@ -1,4 +1,4 @@
-import { Checkbox, createFilterOptions, MenuItem } from '@mui/material';
+import {Checkbox, createFilterOptions, Divider, MenuItem} from '@mui/material';
 import { TextInput, SelectInput, AutoCompleteInput } from '@percona/ui-lib';
 import { useFormContext } from 'react-hook-form';
 import { StorageType } from 'shared-types/backupStorages.types';
@@ -81,6 +81,7 @@ export const CreateEditStorageFormWrpapper = ({
         }}
         options={namespaces}
       />
+        <Divider sx={{mt: 4}}/>
       <SelectInput
         name={StorageLocationsFields.type}
         label={Messages.type}
