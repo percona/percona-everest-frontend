@@ -21,13 +21,12 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import { Box, Button, MenuItem, Stack } from '@mui/material';
+import { Box, Button, Chip, MenuItem, Stack } from '@mui/material';
 import { Table } from '@percona/ui-lib';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
 import { StatusField } from 'components/status-field/status-field';
 import { useDbActions } from 'hooks/api/db-cluster/useDbActions';
 import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
-import { DbClusterTableElement } from './dbClusterView.types';
 import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
 import { type MRT_ColumnDef } from 'material-react-table';
 import { RestoreDbModal } from 'modals';
@@ -41,6 +40,7 @@ import {
   convertDbClusterPayloadToTableFormat,
 } from './DbClusterView.utils';
 import { Messages } from './dbClusterView.messages';
+import { DbClusterTableElement } from './dbClusterView.types';
 import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
 
@@ -134,6 +134,16 @@ export const DbClusterView = () => {
   return (
     <Stack direction="column" alignItems="center">
       <Box sx={{ width: '100%' }}>
+        <Chip label={'chip'} />
+        <Chip label={'chip'} color="info" />
+        <Chip label={'chip'} color="error" />
+        <Chip label={'chip'} color="warning" />
+        <Chip label={'chip'} color="success" />
+        <Chip label={'chip'} variant="outlined" />
+        <Chip label={'chip'} variant="outlined" color="info" />
+        <Chip label={'chip'} variant="outlined" color="error" />
+        <Chip label={'chip'} variant="outlined" color="warning" />
+        <Chip label={'chip'} variant="outlined" color="success" />
         <Table
           noDataMessage={Messages.dbCluster.noData}
           state={{ isLoading: dbClustersLoading }}
