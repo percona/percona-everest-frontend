@@ -9,7 +9,7 @@ import {
   storageLocationsSchema,
 } from '../storage-locations.types';
 import { CreateEditModalStorageProps } from './create-edit-modal.types';
-import { CreateEditStorageFormWrpapper } from './create-edit-form-wrapper';
+import { CreateEditStorageFormWrpapper } from './create-edit-form';
 
 export const CreateEditModalStorage = ({
   open,
