@@ -50,7 +50,9 @@ export const CreateEditStorageFormWrpapper = ({
           onChange: (_event, newValue) => {
             if (
               Array.isArray(newValue) &&
-              newValue.find((option) => option === Messages.createEditModal.selectAll)
+              newValue.find(
+                (option) => option === Messages.createEditModal.selectAll
+              )
             ) {
               return setValue(
                 StorageLocationsFields.namespaces,
