@@ -34,6 +34,7 @@ setup('Backup storage', async ({ request }) => {
       bucketName: EVEREST_LOCATION_BUCKET_NAME,
       secretKey: EVEREST_LOCATION_SECRET_KEY,
       accessKey: EVEREST_LOCATION_ACCESS_KEY,
+      targetNamespaces: [],
       url: EVEREST_LOCATION_URL,
       region: EVEREST_LOCATION_REGION,
     },

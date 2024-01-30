@@ -12,7 +12,6 @@ interface CreateEditFormWrapperProps {
 export const CreateEditStorageFormWrpapper = ({
   isEditMode,
 }: CreateEditFormWrapperProps) => {
-  const title = 'Select All';
   const { data: namespaces = [], isFetching: isNamespacesFetching } =
     useNamespaces();
   const { setValue, watch } = useFormContext();
@@ -46,12 +45,12 @@ export const CreateEditStorageFormWrpapper = ({
           filterOptions: (options, params) => {
             const filter = createFilterOptions<string>();
             const filtered = filter(options, params);
-            return [title, ...filtered];
+            return [Messages.createEditModal.selectAll, ...filtered];
           },
           onChange: (_event, newValue) => {
             if (
               Array.isArray(newValue) &&
-              newValue.find((option) => option === title)
+              newValue.find((option) => option === Messages.createEditModal.selectAll)
             ) {
               return setValue(
                 StorageLocationsFields.namespaces,
@@ -68,7 +67,7 @@ export const CreateEditStorageFormWrpapper = ({
                 <Checkbox
                   style={{ marginRight: 8 }}
                   checked={
-                    option === title
+                    option === Messages.createEditModal.selectAll
                       ? namespaces.length === namespacesFieldValue.length
                       : selected
                   }

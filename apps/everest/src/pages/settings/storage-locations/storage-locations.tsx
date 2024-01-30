@@ -61,7 +61,7 @@ export const StorageLocations = () => {
         Cell: ({ cell }) => {
           const val = cell.getValue<string[]>();
           if (val) {
-            return val.join(' ,');
+            return val.join(', ');
           } else return '-';
         },
       },
@@ -167,6 +167,7 @@ export const StorageLocations = () => {
           <Button
             size="small"
             startIcon={<Add />}
+            data-testid="add-backup-storage"
             variant="outlined"
             onClick={handleOpenCreateModal}
           >
