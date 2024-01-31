@@ -37,7 +37,10 @@ import { Messages } from './first-step.messages';
 import { DEFAULT_NODES } from './first-steps.constants';
 import { generateShortUID } from './utils';
 
-export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
+export const FirstStep = ({
+  loadingDefaultsForEdition,
+  alreadyVisited,
+}: StepProps) => {
   const { watch, setValue, getFieldState, getValues, resetField } =
     useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
@@ -108,9 +111,10 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
   }, [clusterInfo, mode, setValue]);
 
   useEffect(() => {
-    if (!dbType) {
+    if (!dbType || alreadyVisited) {
       return;
     }
+
     const { isDirty: nameDirty } = getFieldState(DbWizardFormFields.dbName);
     const { isDirty: dbVersionDirty } = getFieldState(
       DbWizardFormFields.dbVersion

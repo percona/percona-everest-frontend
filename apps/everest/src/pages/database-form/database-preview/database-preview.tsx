@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Stack, Typography } from '@mui/material';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { DatabasePreviewProps } from './database-preview.types';
@@ -10,19 +10,20 @@ import { useDatabasePageMode } from '../useDatabasePageMode.ts';
 
 export const DatabasePreview = ({
   activeStep,
+  longestAchievedStep,
   onSectionEdit = () => {},
   sx,
   ...stackProps
 }: DatabasePreviewProps) => {
   const { getValues } = useFormContext<DbWizardType>();
-  const [longestAchievedStep, setLongestAchievedStep] = useState(activeStep);
+  // const [longestAchievedStep, setLongestAchievedStep] = useState(activeStep);
   const mode = useDatabasePageMode();
 
-  useEffect(() => {
-    if (activeStep > longestAchievedStep) {
-      setLongestAchievedStep(activeStep);
-    }
-  }, [activeStep, longestAchievedStep]);
+  // useEffect(() => {
+  //   if (activeStep > longestAchievedStep) {
+  //     setLongestAchievedStep(activeStep);
+  //   }
+  // }, [activeStep, longestAchievedStep]);
 
   // Under normal circumstances, useWatch should return the right values
   // But the initial setValue are not taking effect

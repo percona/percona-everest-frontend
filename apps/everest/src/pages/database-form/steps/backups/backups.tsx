@@ -27,14 +27,14 @@ import { useFormContext } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import { BackupStorage } from 'shared-types/backupStorages.types.ts';
 import { updateDataAfterCreate } from 'utils/generalOptimisticDataUpdate.ts';
-import { DbWizardFormFields } from '../../database-form.types';
+import { DbWizardFormFields, StepProps } from '../../database-form.types';
 import { useDatabasePageDefaultValues } from '../../useDatabaseFormDefaultValues.ts';
 import { useDatabasePageMode } from '../../useDatabasePageMode.ts';
 import { StepHeader } from '../step-header/step-header.tsx';
 import { Messages } from './backups.messages.ts';
 import { ScheduleBackupSection } from './schedule-section/schedule-section.tsx';
 
-export const Backups = () => {
+export const Backups = ({ alreadyVisited }: StepProps) => {
   const queryClient = useQueryClient();
   const { mutate: createBackupStorage, isLoading: creatingBackupStorage } =
     useCreateBackupStorage();
@@ -145,7 +145,9 @@ export const Backups = () => {
               {Messages.youHaveMultipleSchedules}
             </Alert>
           )}
-          {!scheduleDisabled && <ScheduleBackupSection />}
+          {!scheduleDisabled && (
+            <ScheduleBackupSection enableNameGeneration={!alreadyVisited} />
+          )}
         </>
       )}
       {!backupsEnabled && dbType !== DbType.Mongo && (

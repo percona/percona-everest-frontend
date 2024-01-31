@@ -51,6 +51,7 @@ import { useDbValidationSchema } from './useDbValidationSchema.ts';
 export const DatabasePage = () => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
+  const [longestAchievedStep, setLongestAchievedStep] = useState(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [closeModalIsOpen, setModalIsOpen] = useState(false);
 
@@ -138,13 +139,16 @@ export const DatabasePage = () => {
   const handleNext: React.MouseEventHandler<HTMLButtonElement> = async () => {
     if (activeStep < steps.length - 1) {
       let isStepValid;
+
       if (errors[DbWizardFormFields.disk] && activeStep === 1) {
         isStepValid = false;
       } else {
         isStepValid = await trigger();
       }
+
       if (isStepValid) {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        setLongestAchievedStep((prevActiveStep) => prevActiveStep + 1);
       }
     }
   };
@@ -169,6 +173,7 @@ export const DatabasePage = () => {
     () => (
       <DatabasePreview
         activeStep={activeStep}
+        longestAchievedStep={longestAchievedStep}
         onSectionEdit={handleSectionEdit}
         sx={{
           mt: 2,
@@ -178,7 +183,7 @@ export const DatabasePage = () => {
         }}
       />
     ),
-    [activeStep, isDesktop]
+    [activeStep, longestAchievedStep, isDesktop]
   );
 
   return formSubmitted ? (
@@ -221,6 +226,9 @@ export const DatabasePage = () => {
                   dbClusterRequestStatus === 'success')) &&
                 React.createElement(steps[activeStep], {
                   loadingDefaultsForEdition,
+                  alreadyVisited:
+                    longestAchievedStep > activeStep ||
+                    activeStep === steps.length - 1,
                 })}
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>

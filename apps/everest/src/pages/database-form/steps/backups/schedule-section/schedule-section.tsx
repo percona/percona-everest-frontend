@@ -6,8 +6,11 @@ import { DbWizardFormFields } from '../../../database-form.types.ts';
 import { useDatabasePageMode } from '../../../useDatabasePageMode.ts';
 import { generateShortUID } from '../../first/utils.ts';
 import { useDatabasePageDefaultValues } from '../../../useDatabaseFormDefaultValues.ts';
+import { ScheduleBackupSectionProps } from './schedule-section.types.ts';
 
-export const ScheduleBackupSection = () => {
+export const ScheduleBackupSection = ({
+  enableNameGeneration,
+}: ScheduleBackupSectionProps) => {
   const mode = useDatabasePageMode();
   const { setValue, getFieldState, watch } = useFormContext();
   const { data: backupStorages = [], isFetching } = useBackupStorages();
@@ -36,11 +39,16 @@ export const ScheduleBackupSection = () => {
     mode === 'new' ? [] : dbClusterData?.spec?.backup?.schedules || [];
 
   useEffect(() => {
-    const { isTouched: nameTouched } = getFieldState(
+    const { isDirty: nameDirty } = getFieldState(
       DbWizardFormFields.scheduleName
     );
+
+    if (!enableNameGeneration) {
+      return;
+    }
+
     if (
-      (!nameTouched && mode === 'new') ||
+      (!nameDirty && mode === 'new') ||
       (mode === 'edit' && schedules?.length === 0)
     ) {
       setValue(
