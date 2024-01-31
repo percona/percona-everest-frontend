@@ -4,6 +4,7 @@ import { rfc_123_schema } from 'utils/common-validation';
 
 export enum EndpointFormFields {
   name = 'name',
+  namespaces = 'targetNamespaces',
   url = 'url',
   user = 'user',
   password = 'password',
@@ -19,6 +20,7 @@ export interface CreateEditEndpointModalProps {
 
 export const endpointSchema = z.object({
   [EndpointFormFields.name]: rfc_123_schema('endpoint name'),
+  [EndpointFormFields.namespaces]: z.array(z.string()),
   [EndpointFormFields.url]: z.string().min(1).url(),
   [EndpointFormFields.user]: z.string(),
   [EndpointFormFields.password]: z.string(),
@@ -26,6 +28,7 @@ export const endpointSchema = z.object({
 
 export const endpointDefaultValues = {
   [EndpointFormFields.name]: '',
+  [EndpointFormFields.namespaces]: [],
   [EndpointFormFields.url]: '',
   [EndpointFormFields.user]: '',
   [EndpointFormFields.password]: '',

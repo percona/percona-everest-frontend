@@ -21,6 +21,7 @@ import {
 } from 'utils/generalOptimisticDataUpdate';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
 import { Messages } from './monitoring-endpoints.messages';
+import { StorageLocationsFields } from '../storage-locations/storage-locations.types';
 
 export const MonitoringEndpoints = () => {
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
@@ -44,6 +45,16 @@ export const MonitoringEndpoints = () => {
       {
         accessorKey: 'url',
         header: 'Endpoint',
+      },
+      {
+        accessorKey: StorageLocationsFields.namespaces,
+        header: Messages.namespaces,
+        Cell: ({ cell }) => {
+          const val = cell.getValue<string[]>();
+          if (val) {
+            return val.join(', ');
+          } else return '-';
+        },
       },
     ],
     []

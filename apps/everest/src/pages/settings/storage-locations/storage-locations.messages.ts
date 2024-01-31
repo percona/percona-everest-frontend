@@ -4,7 +4,6 @@ export const Messages = {
       `${isEditMode ? 'Edit' : 'Add'} Backup storage`,
     addEditButton: (isEditMode: boolean) => (isEditMode ? 'Edit' : 'Add'),
     cancel: 'Cancel',
-    selectAll: 'Select All',
     placeholders: {
       name: 'Insert storage display name',
       descriptions: 'Insert an optional description',

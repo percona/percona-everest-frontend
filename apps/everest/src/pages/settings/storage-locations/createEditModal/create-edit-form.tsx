@@ -1,15 +1,10 @@
-import {
-  Checkbox,
-  createFilterOptions,
-  Divider,
-  MenuItem,
-} from '@mui/material';
-import { TextInput, SelectInput, AutoCompleteInput } from '@percona/ui-lib';
-import { useFormContext } from 'react-hook-form';
+import { Divider, MenuItem } from '@mui/material';
+import { TextInput, SelectInput } from '@percona/ui-lib';
 import { StorageType } from 'shared-types/backupStorages.types';
 import { Messages } from '../storage-locations.messages';
 import { StorageLocationsFields } from '../storage-locations.types';
 import { useNamespaces } from '../../../../hooks/api/namespaces/useNamespaces';
+import { AutoCompleteSelectAll } from '../../../../components/auto-complete-select-all/auto-complete-select-all';
 
 interface CreateEditFormWrapperProps {
   isEditMode: boolean;
@@ -19,8 +14,6 @@ export const CreateEditStorageFormWrpapper = ({
 }: CreateEditFormWrapperProps) => {
   const { data: namespaces = [], isFetching: isNamespacesFetching } =
     useNamespaces();
-  const { setValue, watch } = useFormContext();
-  const namespacesFieldValue = watch(StorageLocationsFields.namespaces);
 
   return (
     <>
@@ -34,57 +27,14 @@ export const CreateEditStorageFormWrpapper = ({
         name={StorageLocationsFields.description}
         label={Messages.description}
       />
-      <AutoCompleteInput
+      <AutoCompleteSelectAll
         name={StorageLocationsFields.namespaces}
         label={Messages.namespaces}
         loading={isNamespacesFetching}
+        options={namespaces}
         textFieldProps={{
           helperText: Messages.createEditModal.helperText.namespaces,
         }}
-        autoCompleteProps={{
-          multiple: true,
-          disableCloseOnSelect: true,
-          placeholder: isEditMode
-            ? '************'
-            : Messages.createEditModal.placeholders.namespaces,
-          filterOptions: (options, params) => {
-            const filter = createFilterOptions<string>();
-            const filtered = filter(options, params);
-            return [Messages.createEditModal.selectAll, ...filtered];
-          },
-          onChange: (_event, newValue) => {
-            if (
-              Array.isArray(newValue) &&
-              newValue.find(
-                (option) => option === Messages.createEditModal.selectAll
-              )
-            ) {
-              return setValue(
-                StorageLocationsFields.namespaces,
-                namespacesFieldValue.length === namespaces.length
-                  ? []
-                  : namespaces
-              );
-            }
-            setValue(StorageLocationsFields.namespaces, newValue);
-          },
-          renderOption: (props, option, { selected }) => {
-            return (
-              <li {...props}>
-                <Checkbox
-                  style={{ marginRight: 8 }}
-                  checked={
-                    option === Messages.createEditModal.selectAll
-                      ? namespaces.length === namespacesFieldValue.length
-                      : selected
-                  }
-                />
-                {option}
-              </li>
-            );
-          },
-        }}
-        options={namespaces}
       />
       <Divider sx={{ mt: 4 }} />
       <SelectInput
