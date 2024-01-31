@@ -17,6 +17,6 @@ export const Messages = {
   },
   namespaces: 'Namespaces',
   helperText: {
-    namespaces: 'Select in which namespaces this storage should be available.',
+    namespaces: 'Select in which namespaces this endpoint should be available.',
   },
 };
