@@ -26,11 +26,11 @@ declare module '@mui/material/styles' {
 
   interface Palette extends PaletteOptions {}
   interface SimplePaletteColorOptions {
-    surface: string;
+    surface?: string;
   }
 
   interface PaletteColor {
-    surface: string;
+    surface?: string;
   }
   interface TypeAction {
     focusVisible: string;
