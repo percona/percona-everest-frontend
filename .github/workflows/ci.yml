@@ -154,7 +154,8 @@ jobs:
         env:
           PMM_PASSWORD: '${{ secrets.PMM_PASSWORD }}'
         run: |
-          helm install pmm --set secret.pmm_password=${PMM_PASSWORD},service.type=ClusterIP percona/pmm
+          echo $PMM_PASSWORD
+          helm install pmm --set secret.pmm_password='${PMM_PASSWORD}',service.type=ClusterIP percona/pmm
 
       - name: Echo PMM credentials
         run: |
