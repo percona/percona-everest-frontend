@@ -154,12 +154,11 @@ jobs:
         env:
           PMM_PASSWORD: '${{ secrets.PMM_PASSWORD }}'
         run: |
-          echo $PMM_PASSWORD
           helm install pmm --set secret.pmm_password='${PMM_PASSWORD}',service.type=ClusterIP percona/pmm
 
       - name: Echo PMM credentials
         run: |
-          export ADMIN_PASS=$(kubectl get secret pmm-secret --namespace default -o jsonpath='{.data.PMM_ADMIN_PASSWORD}' | base64 --decode)
+          export ADMIN_PASS=$(kubectl get secret pmm-secret --namespace default -o jsonpath='{.data.PMM_ADMIN_PASSWORD}' | base64 --decode) >> $GITHUB_ENV
           echo $ADMIN_PASS
           echo -n "http://" && kubectl get svc/monitoring-service -o json | jq -r '.spec.clusterIP'
 
