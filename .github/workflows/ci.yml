@@ -146,6 +146,18 @@ jobs:
       - name: Create KIND cluster
         uses: helm/kind-action@v1.8.0
 
+      - name: Add Helm Percona repository
+        run: |
+          helm repo add percona https://percona.github.io/percona-helm-charts/
+
+      - name: Install Helm PMM chart
+        run: |
+          helm install pmm --set secret.pmm_password='admin',service.type=ClusterIP percona/pmm
+
+      - name: Echo PMM credentials
+        run: |
+          echo -n "http://" && kubectl get svc/monitoring-service -o json | jq -r '.spec.clusterIP'
+
       - name: Run Provisioning
         run: |
           cd CLI
@@ -155,23 +167,6 @@ jobs:
           --operator.xtradb-cluster \
           --skip-wizard \
           --namespace percona-everest
-
-      - name: Add Helm Percona repository
-        run: |
-          helm repo add percona https://percona.github.io/percona-helm-charts/
-          helm repo update
-
-      - name: Install Helm PMM chart
-        run: |
-          helm install pmm percona/pmm
-
-      - name: Echo PMM credentials
-        run: |
-          export NODE_IP=$(kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")
-          export NODE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[1].nodePort}" services monitoring-service)
-          echo http://$NODE_IP:$NODE_PORT
-          export ADMIN_PASS=$(kubectl get secret pmm-secret --namespace default -o jsonpath='{.data.PMM_ADMIN_PASSWORD}' | base64 --decode)
-          echo $ADMIN_PASS
 
       - name: Change token
         run: |
