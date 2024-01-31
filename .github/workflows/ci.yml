@@ -156,7 +156,7 @@ jobs:
 
       - name: Echo PMM credentials
         run: |
-          echo -n "http://" && kubectl get svc/monitoring-service -o json | jq -r '.spec.clusterIP'
+          echo -n MONITORING_URL=$("http://" && kubectl get svc/monitoring-service -o json | jq -r '.spec.clusterIP') >> $GITHUB_ENV
 
       - name: Run Provisioning
         run: |
