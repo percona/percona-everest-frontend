@@ -195,6 +195,8 @@ jobs:
           EVEREST_LOCATION_SECRET_KEY: '${{ secrets.EVEREST_LOCATION_SECRET_KEY }}'
           EVEREST_LOCATION_REGION: '${{ secrets.EVEREST_LOCATION_REGION }}'
           EVEREST_LOCATION_URL: '${{ secrets.EVEREST_LOCATION_URL }}'
+          MONITORING_USER: 'admin'
+          MONITORING_PASSWORD: 'admin'
         run: |
           cd FE
           pnpm --filter "@percona/everest" e2e
