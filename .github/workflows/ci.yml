@@ -159,6 +159,8 @@ jobs:
 
       - name: Echo PMM credentials
         run: |
+          export ADMIN_PASS=$(kubectl get secret pmm-secret --namespace default -o jsonpath='{.data.PMM_ADMIN_PASSWORD}' | base64 --decode)
+          echo $ADMIN_PASS
           echo -n "http://" && kubectl get svc/monitoring-service -o json | jq -r '.spec.clusterIP'
 
       - name: Run Provisioning
