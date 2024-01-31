@@ -151,8 +151,10 @@ jobs:
           helm repo add percona https://percona.github.io/percona-helm-charts/
 
       - name: Install Helm PMM chart
+        env:
+          PMM_PASSWORD: '${{ secrets.PMM_PASSWORD }}'
         run: |
-          helm install pmm --set secret.pmm_password='admin',service.type=ClusterIP percona/pmm
+          helm install pmm --set secret.pmm_password=${PMM_PASSWORD},service.type=ClusterIP percona/pmm
 
       - name: Echo PMM credentials
         run: |
