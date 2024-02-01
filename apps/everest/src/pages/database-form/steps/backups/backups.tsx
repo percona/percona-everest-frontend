@@ -56,14 +56,8 @@ export const Backups = ({ alreadyVisited }: StepProps) => {
       return;
     }
 
-    if (
-      dbType !== DbType.Postresql &&
-      (mode === 'new' || mode === 'restoreFromBackup')
-    ) {
+    if (mode === 'new' || mode === 'restoreFromBackup') {
       setValue(DbWizardFormFields.backupsEnabled, true);
-    }
-    if (dbType === DbType.Postresql) {
-      setValue(DbWizardFormFields.backupsEnabled, false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dbType]);
@@ -74,7 +68,7 @@ export const Backups = ({ alreadyVisited }: StepProps) => {
     mode === 'new' ? [] : dbClusterData?.spec?.backup?.schedules || [];
   const multiSchedules =
     mode === 'edit' && !!schedules && schedules?.length > 1;
-  const scheduleDisabled = multiSchedules || dbType === DbType.Postresql;
+  const scheduleDisabled = multiSchedules;
 
   const handleSubmit = (_: boolean, data: BackupStorage) => {
     handleCreateBackup(data);
@@ -110,9 +104,6 @@ export const Backups = ({ alreadyVisited }: StepProps) => {
         control={control}
         label={Messages.enableBackups}
         name={DbWizardFormFields.backupsEnabled}
-        switchFieldProps={{
-          disabled: dbType === DbType.Postresql,
-        }}
         formControlLabelProps={{
           sx: { mt: 1 },
         }}
@@ -150,14 +141,12 @@ export const Backups = ({ alreadyVisited }: StepProps) => {
           )}
         </>
       )}
-      {!backupsEnabled && dbType !== DbType.Mongo && (
+      {!backupsEnabled && dbType === DbType.Mysql && (
         <Alert
           sx={{ mt: 1 }}
           severity="info"
           data-testid="pitr-no-backup-alert"
         >
-          {dbType === DbType.Postresql &&
-            Messages.schedulesUnavailableForPostgreSQL}
           {dbType === DbType.Mysql && Messages.pitrAlert}
         </Alert>
       )}
