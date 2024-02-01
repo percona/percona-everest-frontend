@@ -45,7 +45,7 @@ describe('First Step', () => {
     render(
       <TestWrapper>
         <FormProviderWrapper handleSubmit={handleSubmitMock}>
-          <FirstStep loadingDefaultsForEdition={false} />
+          <FirstStep loadingDefaultsForEdition={false} alreadyVisited={false} />
           <button data-testid="submitButton" type="submit">
             submit
           </button>
