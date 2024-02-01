@@ -1,18 +1,22 @@
-import { useFormContext } from 'react-hook-form';
+import { DbType } from '@percona/types';
 import { ScheduleForm } from 'components/schedule-form/schedule-form.tsx';
 import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages.ts';
 import { useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { DbWizardFormFields } from '../../../database-form.types.ts';
+import { useDatabasePageDefaultValues } from '../../../useDatabaseFormDefaultValues.ts';
 import { useDatabasePageMode } from '../../../useDatabasePageMode.ts';
 import { generateShortUID } from '../../first/utils.ts';
-import { useDatabasePageDefaultValues } from '../../../useDatabaseFormDefaultValues.ts';
 
 export const ScheduleBackupSection = () => {
   const mode = useDatabasePageMode();
   const { setValue, getFieldState, watch } = useFormContext();
   const { data: backupStorages = [], isFetching } = useBackupStorages();
   const { dbClusterData } = useDatabasePageDefaultValues(mode);
-  const storageLocationField = watch(DbWizardFormFields.storageLocation);
+  const [storageLocationField, dbType] = watch([
+    DbWizardFormFields.storageLocation,
+    DbWizardFormFields.dbType,
+  ]);
 
   useEffect(() => {
     if (mode === 'new' && backupStorages?.length > 0) {
@@ -61,6 +65,7 @@ export const ScheduleBackupSection = () => {
       schedules={schedules}
       storageLocationFetching={isFetching}
       storageLocationOptions={backupStorages}
+      disableStorageSelection={mode === 'edit' && dbType === DbType.Mongo}
     />
   );
 };
