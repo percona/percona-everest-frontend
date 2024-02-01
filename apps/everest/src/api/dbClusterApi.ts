@@ -34,8 +34,10 @@ export const updateDbClusterFn = async (
   return response.data;
 };
 
-export const getDbClustersFn = async () => {
-  const response = await api.get<GetDbClusterPayload>(`database-clusters`);
+export const getDbClustersFn = async (namespace: string) => {
+  const response = await api.get<GetDbClusterPayload>(
+    `/namespaces/${namespace}/database-clusters`
+  );
   return response.data;
 };
 

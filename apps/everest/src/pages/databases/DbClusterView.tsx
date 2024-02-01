@@ -28,7 +28,6 @@ import { StatusField } from 'components/status-field/status-field';
 import { useDbActions } from 'hooks/api/db-cluster/useDbActions';
 import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
 import { DbClusterTableElement } from './dbClusterView.types';
-import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
 import { type MRT_ColumnDef } from 'material-react-table';
 import { RestoreDbModal } from 'modals';
 import { useMemo, useState } from 'react';
@@ -43,14 +42,18 @@ import {
 import { Messages } from './dbClusterView.messages';
 import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
+import { useDBClustersForNamespaces } from '../../hooks/api/db-clusters/useDbClusters';
 
 export const DbClusterView = () => {
   const [isNewClusterMode, setIsNewClusterMode] = useState(false);
-  const { data: dbClusters = [], isLoading: dbClustersLoading } =
-    useDbClusters();
+  const dbClustersResults = useDBClustersForNamespaces();
+  const dbClustersLoading = dbClustersResults.some(
+    (result) => result.queryResult.isLoading
+  );
+
   const tableData = useMemo(
-    () => convertDbClusterPayloadToTableFormat(dbClusters),
-    [dbClusters]
+    () => convertDbClusterPayloadToTableFormat(dbClustersResults),
+    [dbClustersResults]
   );
 
   const { isLoading: deletingCluster } = useDeleteDbCluster();
