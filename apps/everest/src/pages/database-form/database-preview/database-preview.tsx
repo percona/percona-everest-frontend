@@ -16,14 +16,7 @@ export const DatabasePreview = ({
   ...stackProps
 }: DatabasePreviewProps) => {
   const { getValues } = useFormContext<DbWizardType>();
-  // const [longestAchievedStep, setLongestAchievedStep] = useState(activeStep);
   const mode = useDatabasePageMode();
-
-  // useEffect(() => {
-  //   if (activeStep > longestAchievedStep) {
-  //     setLongestAchievedStep(activeStep);
-  //   }
-  // }, [activeStep, longestAchievedStep]);
 
   // Under normal circumstances, useWatch should return the right values
   // But the initial setValue are not taking effect
