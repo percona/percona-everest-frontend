@@ -30,4 +30,6 @@ export const Messages = {
   captionPitr:
     'Point-in-time recovery provides continuous backups on your database to protect against accidental writes or deletes.',
   pitrCreateHeader: 'Create PitrStep backup every',
+  matchedStorageType: (storagetype: string) =>
+    `Backups storage: ${storagetype} (storage type is automatically matched to your selection on the Backups page)`,
 };
