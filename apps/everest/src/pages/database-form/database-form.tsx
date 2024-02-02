@@ -147,8 +147,14 @@ export const DatabasePage = () => {
       }
 
       if (isStepValid) {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setLongestAchievedStep((prevActiveStep) => prevActiveStep + 1);
+        setActiveStep((prevActiveStep) => {
+          const newStep = prevActiveStep + 1;
+
+          if (newStep > longestAchievedStep) {
+            setLongestAchievedStep(newStep);
+          }
+          return newStep;
+        });
       }
     }
   };

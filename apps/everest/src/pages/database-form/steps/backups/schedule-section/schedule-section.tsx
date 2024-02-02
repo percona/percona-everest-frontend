@@ -59,8 +59,7 @@ export const ScheduleBackupSection = ({
         }
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [enableNameGeneration, schedules?.length]);
 
   return (
     <ScheduleForm

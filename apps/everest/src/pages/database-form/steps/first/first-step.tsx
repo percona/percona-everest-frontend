@@ -14,7 +14,7 @@
 // limitations under the License.
 
 import { FormGroup, MenuItem, Skeleton, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { DbType } from '@percona/types';
 import {
@@ -37,10 +37,7 @@ import { Messages } from './first-step.messages';
 import { DEFAULT_NODES } from './first-steps.constants';
 import { generateShortUID } from './utils';
 
-export const FirstStep = ({
-  loadingDefaultsForEdition,
-  alreadyVisited,
-}: StepProps) => {
+export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
   const { watch, setValue, getFieldState, getValues, resetField } =
     useFormContext();
   const { data: dbEngines = [], isFetching: dbEnginesFetching } =
@@ -80,72 +77,16 @@ export const FirstStep = ({
     dbEngines.find((engine) => engine.type === dbEngine)
   );
 
-  useEffect(() => {
-    if (!dbType && mode === 'new' && dbEngines.length > 0) {
-      const defaultDbType = dbEngineToDbType(dbEngines[0].type);
-      if (defaultDbType) {
-        setValue(
-          DbWizardFormFields.dbType,
-          dbEngineToDbType(dbEngines[0].type)
-        );
-      }
-    }
-  }, [dbEngines, mode, setValue, dbType]);
+  const setRandomDbName = useCallback((type: DbType) => {
+    setValue(DbWizardFormFields.dbName, `${type}-${generateShortUID()}`, {
+      shouldValidate: true,
+    });
+  }, []);
 
-  useEffect(() => {
-    const { isTouched: storageClassTouched } = getFieldState(
-      DbWizardFormFields.storageClass
-    );
-
-    if (
-      !storageClassTouched &&
-      mode === 'new' &&
-      clusterInfo?.storageClassNames &&
-      clusterInfo.storageClassNames.length > 0
-    ) {
-      setValue(
-        DbWizardFormFields.storageClass,
-        clusterInfo?.storageClassNames[0]
-      );
-    }
-  }, [clusterInfo, mode, setValue]);
-
-  useEffect(() => {
-    if (!dbType || alreadyVisited) {
-      return;
-    }
-
-    const { isDirty: nameDirty } = getFieldState(DbWizardFormFields.dbName);
+  const updateDbVersions = useCallback(() => {
     const { isDirty: dbVersionDirty } = getFieldState(
       DbWizardFormFields.dbVersion
     );
-    const { isTouched: nodesTouched } = getFieldState(
-      DbWizardFormFields.numberOfNodes
-    );
-
-    if (!nameDirty && mode === 'new') {
-      setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`, {
-        shouldValidate: true,
-      });
-    }
-
-    // We need to check if the previously selected number of nodes exists for the current DB type
-    // E.g. 2 nodes is only possible for PG
-    if (mode === 'new') {
-      if (nodesTouched) {
-        const numberOfNodes: string = getValues(
-          DbWizardFormFields.numberOfNodes
-        );
-        if (
-          !NODES_DB_TYPE_MAP[dbType].find((nodes) => nodes === numberOfNodes)
-        ) {
-          setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[dbType]);
-        }
-      } else {
-        setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[dbType]);
-      }
-    }
-
     const newVersions = dbEngines.find((engine) => engine.type === dbEngine);
 
     // Safety check
@@ -172,7 +113,89 @@ export const FirstStep = ({
       );
     }
     setDbVersions(newVersions);
-  }, [dbType, dbEngines, mode, setValue, getFieldState, dbEngine, dbVersion]);
+  }, [dbEngine, dbEngines, dbVersion, getFieldState, mode, setValue]);
+
+  const onDbTypeChange = useCallback(
+    (newDbType: DbType) => {
+      const { isDirty: isNameDirty } = getFieldState(DbWizardFormFields.dbName);
+      const { isTouched: nodesTouched } = getFieldState(
+        DbWizardFormFields.numberOfNodes
+      );
+
+      resetField(DbWizardFormFields.dbVersion);
+
+      if (!isNameDirty) {
+        setRandomDbName(newDbType);
+      }
+
+      if (mode === 'new') {
+        if (nodesTouched) {
+          const numberOfNodes: string = getValues(
+            DbWizardFormFields.numberOfNodes
+          );
+          if (
+            !NODES_DB_TYPE_MAP[newDbType].find(
+              (nodes) => nodes === numberOfNodes
+            )
+          ) {
+            setValue(
+              DbWizardFormFields.numberOfNodes,
+              DEFAULT_NODES[newDbType]
+            );
+          }
+        } else {
+          setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[newDbType]);
+        }
+      }
+
+      updateDbVersions();
+    },
+    [
+      getFieldState,
+      resetField,
+      setRandomDbName,
+      mode,
+      updateDbVersions,
+      getValues,
+      setValue,
+    ]
+  );
+
+  useEffect(() => {
+    if (mode !== 'new' || dbEngines.length <= 0) {
+      return;
+    }
+
+    if (!dbType) {
+      const defaultDbType = dbEngineToDbType(dbEngines[0].type);
+      if (defaultDbType) {
+        setValue(
+          DbWizardFormFields.dbType,
+          dbEngineToDbType(dbEngines[0].type)
+        );
+        setRandomDbName(defaultDbType);
+      }
+    }
+    updateDbVersions();
+  }, [dbEngines, dbType, setRandomDbName, updateDbVersions]);
+
+  useEffect(() => {
+    const { isTouched: storageClassTouched } = getFieldState(
+      DbWizardFormFields.storageClass
+    );
+
+    if (
+      !storageClassTouched &&
+      mode === 'new' &&
+      clusterInfo?.storageClassNames &&
+      clusterInfo.storageClassNames.length > 0
+    ) {
+      setValue(
+        DbWizardFormFields.storageClass,
+        clusterInfo?.storageClassNames[0]
+      );
+    }
+  }, [clusterInfo]);
 
   return (
     <>
@@ -200,7 +223,7 @@ export const FirstStep = ({
                 }
                 onClick={() => {
                   if (dbEngineToDbType(type) !== dbType) {
-                    resetField(DbWizardFormFields.dbVersion);
+                    onDbTypeChange(dbEngineToDbType(type));
                   }
                 }}
               />
