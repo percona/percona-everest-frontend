@@ -22,8 +22,8 @@ export const endpointSchema = z.object({
   [EndpointFormFields.name]: rfc_123_schema('endpoint name'),
   [EndpointFormFields.namespaces]: z.array(z.string()),
   [EndpointFormFields.url]: z.string().min(1).url(),
-  [EndpointFormFields.user]: z.string(),
-  [EndpointFormFields.password]: z.string(),
+  [EndpointFormFields.user]: z.string().min(1),
+  [EndpointFormFields.password]: z.string().min(1),
 });
 
 export const endpointDefaultValues = {
