@@ -16,7 +16,7 @@ export function AutoCompleteSelectAll<T>({
   isRequired,
   disabled,
   optionLabelName,
-}: AutoCompleteSelectAllTypes<string|T>) {
+}: AutoCompleteSelectAllTypes<string | T>) {
   const { setValue, watch } = useFormContext();
   const fieldValue = watch(name);
 
@@ -33,7 +33,7 @@ export function AutoCompleteSelectAll<T>({
         multiple: true,
         disableCloseOnSelect: true,
         filterOptions: (options, params): (string | T)[] => {
-          const filter = createFilterOptions<T|string>();
+          const filter = createFilterOptions<T | string>();
           const filtered = filter(options, params);
           return [Messages.selectAll, ...filtered];
         },
