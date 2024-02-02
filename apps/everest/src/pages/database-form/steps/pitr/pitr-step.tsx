@@ -124,8 +124,7 @@ const PITRStep = () => {
       )}
       {pitrEnabled && dbType === DbType.Mongo && (
         <Typography variant="body1">
-          Backups storage: S3 (storage type is automatically matched to your
-          selection on the Backups page)
+          {Messages.matchedStorageType(storageLocation.name)}
         </Typography>
       )}
     </Box>
