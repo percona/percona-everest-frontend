@@ -62,7 +62,9 @@ export const StorageLocations = () => {
           const val = cell.getValue<string[]>();
           if (val) {
             return val.join(', ');
-          } else return '-';
+          } else {
+            return '-';
+          }
         },
       },
       {
