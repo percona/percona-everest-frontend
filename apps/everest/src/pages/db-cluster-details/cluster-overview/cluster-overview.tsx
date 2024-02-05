@@ -8,19 +8,20 @@ import { dbEngineToDbType } from '@percona/utils';
 import { ConnectionDetails, DatabaseDetails } from './cards';
 
 export const ClusterOverview = () => {
-  const { dbClusterName } = useParams();
-  const { data = [], isLoading } = useDbClusters();
+  const { dbClusterName, namespace = '' } = useParams();
+  const { data = [], isLoading } = useDbClusters(namespace);
   const dbNameExists = data.find(
     (cluster) => cluster.metadata.name === dbClusterName
   );
   const { data: dbCluster, isFetching: fetchingCluster } = useDbCluster(
     dbClusterName || '',
+    namespace,
     {
       enabled: !!dbClusterName && !!dbNameExists,
     }
   );
   const { data: dbClusterDetails, isFetching: fetchingClusterDetails } =
-    useDbClusterCredentials(dbClusterName || '', {
+    useDbClusterCredentials(dbClusterName || '', namespace, {
       enabled: !!dbClusterName && !!dbNameExists,
     });
 

@@ -19,7 +19,7 @@ import { Messages as ClusterDetailsMessages } from './db-cluster-details.message
 import { DbCluster, DbClusterStatus } from 'shared-types/dbCluster.types';
 
 export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
-  const { dbClusterName } = useParams();
+  const { dbClusterName, namespace = '' } = useParams();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openRestoreDbModal, setOpenRestoreDbModal] = useState(false);
   const [isNewClusterMode, setIsNewClusterMode] = useState(false);
@@ -73,7 +73,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
             key={0}
             component={Link}
             to="/databases/edit"
-            state={{ selectedDbCluster: dbClusterName }}
+            state={{ selectedDbCluster: dbClusterName, namespace }}
             sx={{
               display: 'flex',
               gap: 1,
@@ -88,7 +88,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
             disabled={restoring}
             key={2}
             onClick={() => {
-              handleDbRestart(dbCluster);
+              handleDbRestart(dbCluster, namespace);
               closeMenu();
             }}
             sx={{
@@ -143,7 +143,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
             disabled={restoring}
             key={4}
             onClick={() => {
-              handleDbSuspendOrResumed(dbCluster);
+              handleDbSuspendOrResumed(dbCluster, namespace);
               closeMenu();
             }}
             sx={{
@@ -163,7 +163,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
             data-testid={`${dbClusterName}-delete`}
             key={5}
             onClick={() => {
-              handleDeleteDbCluster(dbCluster);
+              handleDeleteDbCluster(dbCluster, namespace);
               closeMenu();
             }}
             sx={{
@@ -181,6 +181,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
       {openRestoreDbModal && (
         <RestoreDbModal
           dbCluster={dbCluster}
+          namespace={namespace}
           isNewClusterMode={isNewClusterMode}
           isOpen={openRestoreDbModal}
           closeModal={() => setOpenRestoreDbModal(false)}

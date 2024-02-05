@@ -43,7 +43,7 @@ import { OnDemandBackupModal } from './on-demand-backup-modal/on-demand-backup-m
 export const BackupsList = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { dbClusterName } = useParams();
+  const { dbClusterName, namespace = '' } = useParams();
 
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openRestoreDialog, setOpenRestoreDialog] = useState(false);
@@ -53,14 +53,15 @@ export const BackupsList = () => {
   const [selectedBackupStorage, setSelectedBackupStorage] = useState('');
   const [openCreateBackupModal, setOpenCreateBackupModal] = useState(false);
 
-  const { data: backups = [] } = useDbBackups(dbClusterName!, {
+  const { data: backups = [] } = useDbBackups(dbClusterName!, namespace, {
     enabled: !!dbClusterName,
     refetchInterval: 10 * 1000,
   });
-  const { mutate: deleteBackup, isLoading: deletingBackup } = useDeleteBackup();
+  const { mutate: deleteBackup, isLoading: deletingBackup } =
+    useDeleteBackup(namespace);
   const { mutate: restoreBackup, isLoading: restoringBackup } =
     useDbClusterRestoreFromBackup(dbClusterName!);
-  const { data: dbCluster } = useDbCluster(dbClusterName || '', {
+  const { data: dbCluster } = useDbCluster(dbClusterName || '', namespace, {
     enabled: !!dbClusterName,
   });
 
@@ -156,7 +157,7 @@ export const BackupsList = () => {
 
   const handleConfirmRestore = (backupName: string) => {
     restoreBackup(
-      { backupName },
+      { backupName, namespace },
       {
         onSuccess() {
           // In principle, not needed
@@ -185,6 +186,7 @@ export const BackupsList = () => {
       state: {
         selectedDbCluster: dbClusterName!,
         backupName,
+        namespace,
         backupStorageName: selectedBackupStorage,
       },
     });

@@ -41,7 +41,7 @@ const router = createBrowserRouter([
         element: <DatabasePage />,
       },
       {
-        path: 'databases/:dbClusterName',
+        path: 'databases/:namespace/:dbClusterName',
         element: <DbClusterDetails />,
         children: [
           {
