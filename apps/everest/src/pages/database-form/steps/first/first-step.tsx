@@ -46,7 +46,6 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     useKubernetesClusterInfo('wizard-k8-info');
 
   const mode = useDatabasePageMode();
-
   // TODO change to api request's result
   // const k8sNamespacesOptions = [
   //   {
@@ -157,9 +156,10 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
       ((mode === 'edit' || mode === 'restoreFromBackup') && !dbVersion) ||
       mode === 'new'
     ) {
-      const recommendedVersion = newVersions.availableVersions.engine.find(
-        (version) => version.status === DbEngineToolStatus.RECOMMENDED
-      );
+      const recommendedVersion = newVersions.availableVersions.engine
+        .slice()
+        .reverse()
+        .find((version) => version.status === DbEngineToolStatus.RECOMMENDED);
       setValue(
         DbWizardFormFields.dbVersion,
         recommendedVersion
