@@ -235,7 +235,10 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
           loading={namespacesFetching}
           options={namespaces || []}
           textFieldProps={{
-            disabled: mode === 'edit' || mode === 'restoreFromBackup' || loadingDefaultsForEdition,
+            disabled:
+              mode === 'edit' ||
+              mode === 'restoreFromBackup' ||
+              loadingDefaultsForEdition,
           }}
           autoCompleteProps={{
             disableClearable: true,

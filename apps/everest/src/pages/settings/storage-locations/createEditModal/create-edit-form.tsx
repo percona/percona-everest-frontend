@@ -9,9 +9,7 @@ import { AutoCompleteSelectAll } from '../../../../components/auto-complete-sele
 interface CreateEditFormProps {
   isEditMode: boolean;
 }
-export const CreateEditStorageForm = ({
-  isEditMode,
-}: CreateEditFormProps) => {
+export const CreateEditStorageForm = ({ isEditMode }: CreateEditFormProps) => {
   const { data: namespaces = [], isFetching: isNamespacesFetching } =
     useNamespaces();
 
