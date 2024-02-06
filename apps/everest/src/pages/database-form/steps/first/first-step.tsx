@@ -51,12 +51,6 @@ import { useNamespaces } from 'hooks/api/namespaces/useNamespaces';
 // ];
 
 export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
-  // namespaces field should be added in EVEREST-676, for EVEREST-677 changes for the first page are just a hotfix:
-  // TODO for EVEREST-676 :
-  //  - check new/edit/restore modes field values
-  //  - check returning to first page from other pages
-  //  - add tests
-
   const mode = useDatabasePageMode();
 
   const { watch, setValue, getFieldState, resetField, getValues, trigger } =
@@ -240,9 +234,11 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
           label={Messages.labels.k8sNamespace}
           loading={namespacesFetching}
           options={namespaces || []}
+          textFieldProps={{
+            disabled: mode === 'edit' || mode === 'restoreFromBackup' || loadingDefaultsForEdition,
+          }}
           autoCompleteProps={{
             disableClearable: true,
-            disabled: mode === 'edit' || loadingDefaultsForEdition,
             isOptionEqualToValue: (option, value) => option === value,
           }}
         />

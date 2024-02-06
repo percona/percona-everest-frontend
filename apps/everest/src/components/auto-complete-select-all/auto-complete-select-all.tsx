@@ -17,7 +17,7 @@ export function AutoCompleteSelectAll<T>({
   disabled,
   optionLabelName,
 }: AutoCompleteSelectAllTypes<string | T>) {
-  const { setValue, watch } = useFormContext();
+  const { setValue, watch, trigger } = useFormContext();
   const fieldValue = watch(name);
 
   return (
@@ -48,6 +48,7 @@ export function AutoCompleteSelectAll<T>({
             );
           }
           setValue(name, newValue);
+          trigger(name);
         },
         renderOption: (props, option, { selected }) => {
           return (
