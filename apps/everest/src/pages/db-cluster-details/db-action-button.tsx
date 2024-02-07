@@ -88,7 +88,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
             disabled={restoring}
             key={2}
             onClick={() => {
-              handleDbRestart(dbCluster, namespace);
+              handleDbRestart(dbCluster);
               closeMenu();
             }}
             sx={{
@@ -143,7 +143,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
             disabled={restoring}
             key={4}
             onClick={() => {
-              handleDbSuspendOrResumed(dbCluster, namespace);
+              handleDbSuspendOrResumed(dbCluster);
               closeMenu();
             }}
             sx={{
@@ -163,7 +163,7 @@ export const DbActionButton = ({ dbCluster }: { dbCluster: DbCluster }) => {
             data-testid={`${dbClusterName}-delete`}
             key={5}
             onClick={() => {
-              handleDeleteDbCluster(dbCluster, namespace);
+              handleDeleteDbCluster(dbCluster);
               closeMenu();
             }}
             sx={{

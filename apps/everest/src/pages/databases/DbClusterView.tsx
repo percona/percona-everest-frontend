@@ -69,7 +69,6 @@ export const DbClusterView = () => {
     handleRestoreDbCluster,
     handleCloseRestoreDialog,
     selectedDbCluster,
-    selectedDbClusterNamespace,
   } = useDbActions();
   const navigate = useNavigate();
 
@@ -175,7 +174,7 @@ export const DbClusterView = () => {
               disabled={row.original.status === DbClusterStatus.restoring}
               key={2}
               onClick={() => {
-                handleDbRestart(row.original.raw, row.original.namespace);
+                handleDbRestart(row.original.raw);
                 closeMenu();
               }}
               sx={{
@@ -193,10 +192,7 @@ export const DbClusterView = () => {
               disabled={row.original.status === DbClusterStatus.restoring}
               key={5}
               onClick={() => {
-                handleRestoreDbCluster(
-                  row.original.raw,
-                  row.original.namespace
-                );
+                handleRestoreDbCluster(row.original.raw);
                 setIsNewClusterMode(true);
                 closeMenu();
               }}
@@ -215,10 +211,7 @@ export const DbClusterView = () => {
               key={3}
               data-testid={`${row.original?.databaseName}-restore`}
               onClick={() => {
-                handleRestoreDbCluster(
-                  row.original.raw,
-                  row.original.namespace
-                );
+                handleRestoreDbCluster(row.original.raw);
                 setIsNewClusterMode(false);
                 closeMenu();
               }}
@@ -239,10 +232,7 @@ export const DbClusterView = () => {
                 row.original.status === DbClusterStatus.restoring
               }
               onClick={() => {
-                handleDbSuspendOrResumed(
-                  row.original.raw,
-                  row.original.namespace
-                );
+                handleDbSuspendOrResumed(row.original.raw);
                 closeMenu();
               }}
               sx={{
@@ -263,7 +253,7 @@ export const DbClusterView = () => {
               data-testid={`${row.original?.databaseName}-delete`}
               key={1}
               onClick={() => {
-                handleDeleteDbCluster(row.original.raw, row.original.namespace);
+                handleDeleteDbCluster(row.original.raw);
                 closeMenu();
               }}
               sx={{
@@ -311,7 +301,7 @@ export const DbClusterView = () => {
       {openRestoreDialog && (
         <RestoreDbModal
           dbCluster={selectedDbCluster!}
-          namespace={selectedDbClusterNamespace}
+          namespace={selectedDbCluster?.metadata.namespace || ''}
           isOpen
           closeModal={handleCloseRestoreDialog}
           isNewClusterMode={isNewClusterMode}

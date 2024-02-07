@@ -13,8 +13,6 @@ export const useDbActions = () => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openRestoreDialog, setOpenRestoreDialog] = useState(false);
   const [selectedDbCluster, setSelectedDbCluster] = useState<DbCluster>();
-  const [selectedDbClusterNamespace, setSelectedDbClusterNamespace] =
-    useState('');
   const { mutate: deleteDbCluster } = useDeleteDbCluster();
   const { mutate: suspendDbCluster } = usePausedDbCluster();
   const { mutate: restartDbCluster } = useRestartDbCluster();
@@ -23,16 +21,12 @@ export const useDbActions = () => {
 
   const isPaused = (dbCluster: DbCluster) => dbCluster.spec.paused;
 
-  const handleDbSuspendOrResumed = (
-    dbCluster: DbCluster,
-    namespace: string
-  ) => {
+  const handleDbSuspendOrResumed = (dbCluster: DbCluster) => {
     setSelectedDbCluster(dbCluster);
-    setSelectedDbClusterNamespace(namespace);
     const shouldBePaused = !isPaused(dbCluster);
 
     suspendDbCluster(
-      { shouldBePaused, dbCluster, namespace },
+      { shouldBePaused, dbCluster },
       {
         onSuccess: (updatedObject: DbCluster) => {
           queryClient.setQueryData<GetDbClusterPayload | undefined>(
@@ -65,11 +59,10 @@ export const useDbActions = () => {
     );
   };
 
-  const handleDbRestart = (dbCluster: DbCluster, namespace: string) => {
+  const handleDbRestart = (dbCluster: DbCluster) => {
     setSelectedDbCluster(dbCluster);
-    setSelectedDbClusterNamespace(namespace);
     restartDbCluster(
-      { dbCluster, namespace },
+      { dbCluster },
       {
         onSuccess: (updatedObject: DbCluster) => {
           queryClient.setQueryData<GetDbClusterPayload | undefined>(
@@ -97,9 +90,8 @@ export const useDbActions = () => {
     );
   };
 
-  const handleDeleteDbCluster = (dbCluster: DbCluster, namespace: string) => {
+  const handleDeleteDbCluster = (dbCluster: DbCluster) => {
     setSelectedDbCluster(dbCluster);
-    setSelectedDbClusterNamespace(namespace);
     setOpenDeleteDialog(true);
   };
 
@@ -115,7 +107,7 @@ export const useDbActions = () => {
     deleteDbCluster(
       {
         dbClusterName: selectedDbCluster!.metadata.name,
-        namespace: selectedDbClusterNamespace,
+        namespace: selectedDbCluster!.metadata.namespace,
       },
       {
         onSuccess: (_, variables) => {
@@ -140,9 +132,8 @@ export const useDbActions = () => {
     );
   };
 
-  const handleRestoreDbCluster = (dbCluster: DbCluster, namespace: string) => {
+  const handleRestoreDbCluster = (dbCluster: DbCluster) => {
     setSelectedDbCluster(dbCluster);
-    setSelectedDbClusterNamespace(namespace);
     setOpenRestoreDialog(true);
   };
 
@@ -162,6 +153,5 @@ export const useDbActions = () => {
     handleRestoreDbCluster,
     handleCloseRestoreDialog,
     selectedDbCluster,
-    selectedDbClusterNamespace,
   };
 };
