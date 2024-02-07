@@ -33,6 +33,7 @@ export const ExpandedRow = ({
     storage,
     nodes,
     exposetype,
+    namespace,
     databaseName,
     hostName,
     port,
@@ -41,6 +42,7 @@ export const ExpandedRow = ({
   const isExpanded = row.getIsExpanded();
   const { isLoading, isFetching, data } = useDbClusterCredentials(
     databaseName,
+    namespace,
     {
       enabled: !!isExpanded,
       staleTime: 10 * (60 * 1000),

@@ -40,7 +40,11 @@ export const useRestartDbCluster = (
           },
         },
       };
-      return updateDbClusterFn(dbCluster?.metadata?.name, payload);
+      return updateDbClusterFn(
+        dbCluster?.metadata?.name,
+        dbCluster?.metadata?.namespace,
+        payload
+      );
     },
     { ...options }
   );
