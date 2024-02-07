@@ -27,7 +27,6 @@ import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
 import { StatusField } from 'components/status-field/status-field';
 import { useDbActions } from 'hooks/api/db-cluster/useDbActions';
 import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
-import { DbClusterTableElement } from './dbClusterView.types';
 import { type MRT_ColumnDef } from 'material-react-table';
 import { RestoreDbModal } from 'modals';
 import { useMemo, useState } from 'react';
@@ -40,6 +39,7 @@ import {
   convertDbClusterPayloadToTableFormat,
 } from './DbClusterView.utils';
 import { Messages } from './dbClusterView.messages';
+import { DbClusterTableElement } from './dbClusterView.types';
 import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
 import { useDBClustersForNamespaces } from '../../hooks/api/db-clusters/useDbClusters';
