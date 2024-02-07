@@ -14,6 +14,5 @@
 // limitations under the License.
 
 export const useNamespaces = () => {
-  console.log('useNameSpace api');
   return ['my-special-place', 'the-dark-side', 'percona-everest'];
 };
