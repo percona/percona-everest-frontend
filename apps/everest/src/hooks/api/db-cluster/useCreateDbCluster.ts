@@ -57,7 +57,7 @@ const formValuesToPayloadMapping = (
     kind: 'DatabaseCluster',
     metadata: {
       name: dbPayload.dbName,
-      namespace: dbPayload.k8sNamespace || ''
+      namespace: dbPayload.k8sNamespace || '',
     },
     spec: {
       backup: {
