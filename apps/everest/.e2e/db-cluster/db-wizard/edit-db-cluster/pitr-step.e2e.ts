@@ -34,7 +34,7 @@ test.describe.serial('DB Cluster Editing PITR Step', async () => {
 
   test.beforeAll(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
-    await createDbClusterFn(token, request, 'TODO',{
+    await createDbClusterFn(token, request, 'TODO', {
       dbName: mySQLName,
       dbType: 'mysql',
       numberOfNodes: '1',

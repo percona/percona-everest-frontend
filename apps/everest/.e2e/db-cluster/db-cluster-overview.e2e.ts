@@ -5,12 +5,11 @@ import { getTokenFromLocalStorage } from '../utils/localStorage';
 test.describe('DB Cluster Overview', async () => {
   const dbClusterName = 'cluster-overview-test';
   //TODO 676 getListOfNamespace, get the first one
-  const namespace = "percona-everest"
+  const namespace = 'percona-everest';
 
   test.beforeAll(async ({ request }) => {
-
     const token = await getTokenFromLocalStorage();
-    await createDbClusterFn(token, request, namespace,{
+    await createDbClusterFn(token, request, namespace, {
       dbName: dbClusterName,
       dbType: 'mysql',
       numberOfNodes: '1',

@@ -27,7 +27,7 @@ test.describe('DB Cluster Editing Resources Step (Mongo)', () => {
 
   test.beforeEach(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
-    await createDbClusterFn(token, request, 'TODO',{
+    await createDbClusterFn(token, request, 'TODO', {
       dbName: mongoDBName,
       dbType: DbType.Mongo,
       numberOfNodes: '5',

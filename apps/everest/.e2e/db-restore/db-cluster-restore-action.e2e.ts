@@ -27,7 +27,7 @@ test.describe('DB Cluster Restore', () => {
   test.beforeEach(async ({ request, page }) => {
     await page.goto('/databases');
     const token = await getTokenFromLocalStorage();
-    await createDbClusterFn(token, request, 'TODO',{
+    await createDbClusterFn(token, request, 'TODO', {
       dbName: dbClusterName,
       dbType: 'mysql',
       numberOfNodes: '1',

@@ -22,7 +22,7 @@ export const createDbClusterFn = async (
   token: string,
   request: APIRequestContext,
   namespace: string,
-  customOptions?,
+  customOptions?
 ) => {
   const dbEngines = await getEnginesVersions(token, namespace, request);
   const dbType = customOptions?.dbType || 'mysql';
@@ -108,12 +108,15 @@ export const createDbClusterFn = async (
     },
   };
 
-  const response = await request.post(`/v1/namespaces/${namespace}/database-clusters`, {
-    data: payload,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await request.post(
+    `/v1/namespaces/${namespace}/database-clusters`,
+    {
+      data: payload,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   expect(response.ok()).toBeTruthy();
 };
@@ -122,7 +125,7 @@ export const deleteDbClusterFn = async (
   token: string,
   request: APIRequestContext,
   clusterName: string,
-  namespace: string,
+  namespace: string
 ) => {
   const deleteResponse = await request.delete(
     `/v1/namespaces/${namespace}/database-clusters/${clusterName}`,

@@ -18,13 +18,16 @@ import { APIRequestContext, expect } from '@playwright/test';
 export const getEnginesList = async (
   token: string,
   namespace: string,
-  request: APIRequestContext,
+  request: APIRequestContext
 ) => {
-  const enginesList = await request.get(`/v1/namespaces/${namespace}/database-engines`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const enginesList = await request.get(
+    `/v1/namespaces/${namespace}/database-engines`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
   expect(enginesList.ok()).toBeTruthy();
   return (await enginesList.json()).items;
 };
