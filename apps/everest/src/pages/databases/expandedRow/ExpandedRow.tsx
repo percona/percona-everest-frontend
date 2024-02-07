@@ -71,15 +71,17 @@ export const ExpandedRow = ({
         </Typography>
         <LabelValue
           label="Host"
-          value={
+          value={hostName.split(',').map((host) => (
             <Box sx={{ display: 'flex', gap: 1 }}>
-              <Box sx={{ whiteSpace: 'nowrap' }}>{hostName}</Box>
+              <Box sx={{ whiteSpace: 'nowrap' }} key={host}>
+                {host}
+              </Box>
               <CopyToClipboardButton
                 buttonProps={{ sx: { mt: -1, mb: -1.5 } }}
-                textToCopy={hostName}
+                textToCopy={host}
               />
             </Box>
-          }
+          ))}
         />
         <LabelValue label="Port" value={port} />
         {isLoading || isFetching ? (
