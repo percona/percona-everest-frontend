@@ -195,8 +195,27 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
         pageDescription={Messages.pageDescription}
       />
       <FormGroup sx={{ mt: 2 }}>
+        <AutoCompleteInput
+            labelProps={{
+              sx: {mt:1}
+            }}
+            name={DbWizardFormFields.k8sNamespace}
+            label={Messages.labels.k8sNamespace}
+            loading={namespacesFetching}
+            options={namespaces || []}
+            textFieldProps={{
+              disabled:
+                  mode === 'edit' ||
+                  mode === 'restoreFromBackup' ||
+                  loadingDefaultsForEdition,
+            }}
+            autoCompleteProps={{
+              disableClearable: true,
+              isOptionEqualToValue: (option, value) => option === value,
+            }}
+        />
         {/* @ts-ignore */}
-        <Typography variant="sectionHeading" sx={{ mt: 1, mb: 0.5 }}>
+        <Typography variant="sectionHeading" sx={{ mt:4, mb: 0.5 }}>
           {Messages.labels.dbType}
         </Typography>
         {dbEnginesFetching || !dbEngines.length ? (
@@ -227,22 +246,6 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
           textFieldProps={{
             placeholder: Messages.placeholders.dbName,
             disabled: mode === 'edit' || loadingDefaultsForEdition,
-          }}
-        />
-        <AutoCompleteInput
-          name={DbWizardFormFields.k8sNamespace}
-          label={Messages.labels.k8sNamespace}
-          loading={namespacesFetching}
-          options={namespaces || []}
-          textFieldProps={{
-            disabled:
-              mode === 'edit' ||
-              mode === 'restoreFromBackup' ||
-              loadingDefaultsForEdition,
-          }}
-          autoCompleteProps={{
-            disableClearable: true,
-            isOptionEqualToValue: (option, value) => option === value,
           }}
         />
         {/*<Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>*/}
