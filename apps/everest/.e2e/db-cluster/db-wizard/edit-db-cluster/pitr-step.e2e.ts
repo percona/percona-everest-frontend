@@ -28,13 +28,18 @@ import {
   checkDbWizardEditSubmitIsAvailableAndClick,
   checkSuccessOfUpdateAndGoToDbClustersList,
 } from './edit-db-cluster.utils';
+import { getNamespacesFn } from '../../../utils/namespaces';
 
 test.describe.serial('DB Cluster Editing PITR Step', async () => {
   const mySQLName = 'db-pitr-mysql';
+  let namespace = '';
 
   test.beforeAll(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
-    await createDbClusterFn(token, request, 'TODO', {
+    const namespaces = await getNamespacesFn(token, request);
+    namespace = namespaces[0];
+
+    await createDbClusterFn(token, request, namespaces[0], {
       dbName: mySQLName,
       dbType: 'mysql',
       numberOfNodes: '1',
@@ -43,7 +48,7 @@ test.describe.serial('DB Cluster Editing PITR Step', async () => {
 
   test.afterAll(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
-    await deleteDbClusterFn(token, request, mySQLName, 'TODO');
+    await deleteDbClusterFn(token, request, mySQLName, namespace);
   });
 
   test('Enable PITR to database during editing in dbWizard', async ({
