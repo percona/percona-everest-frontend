@@ -203,12 +203,10 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
           label={Messages.labels.k8sNamespace}
           loading={namespacesFetching}
           options={namespaces || []}
-          textFieldProps={{
-            disabled:
-              mode === 'edit' ||
-              mode === 'restoreFromBackup' ||
-              loadingDefaultsForEdition,
-          }}
+          disabled={
+            mode === 'edit' ||
+            mode === 'restoreFromBackup' ||
+            loadingDefaultsForEdition}
           autoCompleteProps={{
             disableClearable: true,
             isOptionEqualToValue: (option, value) => option === value,
