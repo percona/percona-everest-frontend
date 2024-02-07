@@ -50,3 +50,30 @@ export const getEnginesVersions = async (
 
   return engineVersions;
 };
+
+export const getEnginesLatestRecommendedVersions = async (
+  token: string,
+  request: APIRequestContext
+) => {
+  let latestRecommendedVersions = {
+    pxc: '',
+    psmdb: '',
+    postgresql: '',
+  };
+
+  const engines = await getEnginesList(token, request);
+  engines.forEach((engine) => {
+    const { type } = engine.spec;
+
+    if (engine.status?.status === 'installed') {
+      Object.entries(engine.status.availableVersions.engine).forEach(
+        ([key, value]: any) => {
+          if (value.status === 'recommended') {
+            latestRecommendedVersions[type] = key;
+          }
+        }
+      );
+    }
+  });
+  return latestRecommendedVersions;
+};

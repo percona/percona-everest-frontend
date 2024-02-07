@@ -14,7 +14,10 @@
 // limitations under the License.
 
 import { expect, test } from '@playwright/test';
-import { getEnginesVersions } from '../../../utils/database-engines';
+import {
+  getEnginesLatestRecommendedVersions,
+  getEnginesVersions,
+} from '../../../utils/database-engines';
 import { getTokenFromLocalStorage } from '../../../utils/localStorage';
 import { getClusterDetailedInfo } from '../../../utils/storage-class';
 import { advancedConfigurationStepCheck } from './steps/advanced-configuration-step';
@@ -61,12 +64,17 @@ test.describe('DB Cluster creation', () => {
   test('Cluster creation', async ({ page, request }) => {
     const clusterName = 'db-cluster-ui-test';
     const token = await getTokenFromLocalStorage();
+    const recommendedEngineVersions = await getEnginesLatestRecommendedVersions(
+      token,
+      request
+    );
 
     expect(storageClasses.length).toBeGreaterThan(0);
 
     await basicInformationStepCheck(
       page,
       engineVersions,
+      recommendedEngineVersions,
       storageClasses,
       clusterName
     );
