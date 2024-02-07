@@ -206,7 +206,8 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
           disabled={
             mode === 'edit' ||
             mode === 'restoreFromBackup' ||
-            loadingDefaultsForEdition}
+            loadingDefaultsForEdition
+          }
           autoCompleteProps={{
             disableClearable: true,
             isOptionEqualToValue: (option, value) => option === value,
