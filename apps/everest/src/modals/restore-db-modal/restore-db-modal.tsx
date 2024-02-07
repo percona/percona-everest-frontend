@@ -37,16 +37,22 @@ const RestoreDbModal = <T extends FieldValues>({
   closeModal,
   isOpen,
   dbCluster,
+  namespace,
   isNewClusterMode,
 }: Pick<FormDialogProps<T>, 'closeModal' | 'isOpen'> & {
   dbCluster: DbCluster;
+  namespace: string;
   isNewClusterMode: boolean;
 }) => {
   const navigate = useNavigate();
   const { data: backups = [], isLoading } = useDbBackups(
-    dbCluster.metadata.name
+    dbCluster.metadata.name,
+    namespace
   );
-  const { data: pitrData } = useDbClusterPitr(dbCluster.metadata.name);
+  const { data: pitrData } = useDbClusterPitr(
+    dbCluster.metadata.name,
+    namespace
+  );
 
   const { mutate: restoreBackupFromBackup, isLoading: restoringFromBackup } =
     useDbClusterRestoreFromBackup(dbCluster.metadata.name);
@@ -82,13 +88,14 @@ const RestoreDbModal = <T extends FieldValues>({
             state: {
               selectedDbCluster: dbCluster.metadata.name,
               backupName,
+              namespace,
               backupStorageName: selectedBackup,
             },
           });
         } else {
           if (backupType === BackuptypeValues.fromBackup) {
             restoreBackupFromBackup(
-              { backupName },
+              { backupName, namespace },
               {
                 onSuccess() {
                   closeModal();
@@ -100,6 +107,7 @@ const RestoreDbModal = <T extends FieldValues>({
             restoreBackupFromPointInTime(
               {
                 backupName: pitrData!.latestBackupName,
+                namespace,
                 pointInTimeDate: pitrBackup!.toISOString().split('.')[0] + 'Z',
               },
               {

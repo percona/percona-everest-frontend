@@ -9,7 +9,7 @@ import {
   storageLocationsSchema,
 } from '../storage-locations.types';
 import { CreateEditModalStorageProps } from './create-edit-modal.types';
-import { CreateEditStorageFormWrpapper } from './create-edit-form';
+import { CreateEditStorageForm } from './create-edit-form';
 
 export const CreateEditModalStorage = ({
   open,
@@ -53,7 +53,7 @@ export const CreateEditModalStorage = ({
       schema={schema}
       defaultValues={defaultValues}
     >
-      <CreateEditStorageFormWrpapper isEditMode={isEditMode} />
+      <CreateEditStorageForm isEditMode={isEditMode} />
     </FormDialog>
   );
 };

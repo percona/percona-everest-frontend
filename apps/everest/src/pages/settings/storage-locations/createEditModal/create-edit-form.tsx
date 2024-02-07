@@ -6,12 +6,10 @@ import { StorageLocationsFields } from '../storage-locations.types';
 import { useNamespaces } from '../../../../hooks/api/namespaces/useNamespaces';
 import { AutoCompleteSelectAll } from '../../../../components/auto-complete-select-all/auto-complete-select-all';
 
-interface CreateEditFormWrapperProps {
+interface CreateEditFormProps {
   isEditMode: boolean;
 }
-export const CreateEditStorageFormWrpapper = ({
-  isEditMode,
-}: CreateEditFormWrapperProps) => {
+export const CreateEditStorageForm = ({ isEditMode }: CreateEditFormProps) => {
   const { data: namespaces = [], isFetching: isNamespacesFetching } =
     useNamespaces();
 

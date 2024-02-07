@@ -13,26 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { useMutation, UseMutationOptions } from 'react-query';
-import { deleteDbClusterFn } from 'api/dbClusterApi';
-
-type DeleteDbClusterArgType = {
-  dbClusterName: string;
-  namespace: string;
-};
-export const useDeleteDbCluster = (
-  options?: UseMutationOptions<
-    unknown,
-    unknown,
-    DeleteDbClusterArgType,
-    unknown
-  >
-) => {
-  return useMutation(
-    ({ dbClusterName, namespace }: DeleteDbClusterArgType) =>
-      deleteDbClusterFn(dbClusterName, namespace),
-    {
-      ...options,
-    }
-  );
+export const useNamespaces = () => {
+  return ['my-special-place', 'the-dark-side', 'percona-everest'];
 };

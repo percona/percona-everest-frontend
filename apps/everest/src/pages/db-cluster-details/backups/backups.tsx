@@ -27,13 +27,13 @@ import { ScheduledBackupModal } from './scheduled-backup-modal/scheduled-backup-
 import { ScheduledBackupsList } from './scheduled-backups-list/scheduled-backups-list';
 
 export const Backups = () => {
-  const { dbClusterName } = useParams();
-  const { data = [] } = useDbClusters();
+  const { dbClusterName, namespace = '' } = useParams();
+  const { data = [] } = useDbClusters(namespace);
   const { data: backupStorages = [] } = useBackupStorages();
   const dbNameExists = data.find(
     (cluster) => cluster.metadata.name === dbClusterName
   );
-  const { data: dbCluster } = useDbCluster(dbClusterName || '', {
+  const { data: dbCluster } = useDbCluster(dbClusterName || '', namespace, {
     enabled: !!dbClusterName && !!dbNameExists,
   });
 

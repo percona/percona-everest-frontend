@@ -7,8 +7,10 @@ export const PreviewSectionOne = ({
   dbVersion,
   dbType,
   storageClass,
+  k8sNamespace,
 }: SectionProps) => (
   <>
+    <PreviewContentText text={`Namespace: ${k8sNamespace}`} />
     <PreviewContentText text={`Type: ${beautifyDbTypeName(dbType)}`} />
     <PreviewContentText text={`Name: ${dbName}`} />
     <PreviewContentText text={`Version: ${dbVersion}`} />

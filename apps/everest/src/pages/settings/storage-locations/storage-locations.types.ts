@@ -51,7 +51,7 @@ export const storageLocationsSchema = z.object({
   [StorageLocationsFields.region]: z.string().nonempty(),
   [StorageLocationsFields.accessKey]: z.string().nonempty(),
   [StorageLocationsFields.secretKey]: z.string().nonempty(),
-  [StorageLocationsFields.namespaces]: z.array(z.string()),
+  [StorageLocationsFields.namespaces]: z.array(z.string()).nonempty(),
 });
 
 export type BackupStorageType = z.infer<typeof storageLocationsSchema>;
