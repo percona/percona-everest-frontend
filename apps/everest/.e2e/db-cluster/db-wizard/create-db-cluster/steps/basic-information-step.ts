@@ -35,12 +35,16 @@ export const basicInformationStepCheck = async (
   await page.getByTestId('select-db-version-button').click();
 
   const dbVersionOptions = page.getByRole('option');
+  console.log('engineVersions.psmdb', engineVersions.psmdb);
 
   engineVersions.psmdb.forEach((version) =>
     expect(
       dbVersionOptions.filter({ hasText: new RegExp(`^${version}$`) })
     ).toBeVisible()
   );
+  // const latestRecommended =   engineVersions.psmdb.
+  const defaultOption = await page.getByRole('option', { selected: true });
+  expect(await defaultOption.textContent()).toBe('6.0.0.2');
 
   await page.getByRole('option').filter({ hasText: '5.0.7-6' }).click();
   await page.getByTestId('text-input-db-name').fill(clusterName);
