@@ -26,7 +26,7 @@ test.describe('DB Cluster List', () => {
 
   test('DB clusters Delete Action', async ({ page, request }) => {
     const token = await getTokenFromLocalStorage();
-    await createDbClusterFn(token, request, {
+    await createDbClusterFn(token, request, 'TODO',{
       dbName: mySQLName,
       dbType: 'mysql',
       numberOfNodes: '1',

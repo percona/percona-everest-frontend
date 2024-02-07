@@ -27,7 +27,7 @@ test.describe.serial('Schedules List', async () => {
 
   test.beforeAll(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
-    await createDbClusterFn(token, request, {
+    await createDbClusterFn(token, request, 'TODO', {
       dbName: mySQLName,
       dbType: 'mysql',
       numberOfNodes: '1',
@@ -40,7 +40,7 @@ test.describe.serial('Schedules List', async () => {
 
   test.afterAll(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
-    await deleteDbClusterFn(token, request, mySQLName);
+    await deleteDbClusterFn(token, request, mySQLName, 'TODO');
   });
 
   test('Create schedule', async ({ page }) => {

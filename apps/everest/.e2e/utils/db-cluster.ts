@@ -21,9 +21,10 @@ import { getClusterDetailedInfo } from './storage-class';
 export const createDbClusterFn = async (
   token: string,
   request: APIRequestContext,
-  customOptions?
+  namespace: string,
+  customOptions?,
 ) => {
-  const dbEngines = await getEnginesVersions(token, request);
+  const dbEngines = await getEnginesVersions(token, namespace, request);
   const dbType = customOptions?.dbType || 'mysql';
   const dbEngineType = dbTypeToDbEngine(dbType);
   const dbTypeVersions = dbEngines[dbEngineType];
@@ -107,7 +108,7 @@ export const createDbClusterFn = async (
     },
   };
 
-  const response = await request.post('/v1/database-clusters', {
+  const response = await request.post(`/v1/namespaces/${namespace}/database-clusters`, {
     data: payload,
     headers: {
       Authorization: `Bearer ${token}`,
@@ -120,10 +121,11 @@ export const createDbClusterFn = async (
 export const deleteDbClusterFn = async (
   token: string,
   request: APIRequestContext,
-  clusterName: string
+  clusterName: string,
+  namespace: string,
 ) => {
   const deleteResponse = await request.delete(
-    `/v1/database-clusters/${clusterName}`,
+    `/v1/namespaces/${namespace}/database-clusters/${clusterName}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

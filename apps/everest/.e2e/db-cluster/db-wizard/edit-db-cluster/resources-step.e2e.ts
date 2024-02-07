@@ -27,7 +27,7 @@ test.describe('DB Cluster Editing Resources Step (Mongo)', () => {
 
   test.beforeEach(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
-    await createDbClusterFn(token, request, {
+    await createDbClusterFn(token, request, 'TODO',{
       dbName: mongoDBName,
       dbType: DbType.Mongo,
       numberOfNodes: '5',
@@ -36,7 +36,7 @@ test.describe('DB Cluster Editing Resources Step (Mongo)', () => {
 
   test.afterEach(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
-    await deleteDbClusterFn(token, request, mongoDBName);
+    await deleteDbClusterFn(token, request, mongoDBName, 'TODO');
   });
 
   test('Show the correct number of nodes during editing', async ({ page }) => {

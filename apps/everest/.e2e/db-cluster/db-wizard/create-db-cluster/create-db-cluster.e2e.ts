@@ -34,7 +34,7 @@ test.describe('DB Cluster creation', () => {
 
   test.beforeAll(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
-    engineVersions = await getEnginesVersions(token, request);
+    engineVersions = await getEnginesVersions(token, '', request);
 
     const { storageClassNames = [] } = await getClusterDetailedInfo(
       token,

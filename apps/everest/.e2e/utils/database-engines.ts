@@ -17,9 +17,10 @@ import { APIRequestContext, expect } from '@playwright/test';
 
 export const getEnginesList = async (
   token: string,
-  request: APIRequestContext
+  namespace: string,
+  request: APIRequestContext,
 ) => {
-  const enginesList = await request.get('/v1/database-engines', {
+  const enginesList = await request.get(`/v1/namespaces/${namespace}/database-engines`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -29,6 +30,7 @@ export const getEnginesList = async (
 };
 export const getEnginesVersions = async (
   token: string,
+  namespace: string,
   request: APIRequestContext
 ) => {
   const engineVersions = {
@@ -37,7 +39,7 @@ export const getEnginesVersions = async (
     postgresql: [],
   };
 
-  const engines = await getEnginesList(token, request);
+  const engines = await getEnginesList(token, namespace, request);
   engines.forEach((engine) => {
     const { type } = engine.spec;
 

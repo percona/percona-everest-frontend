@@ -28,7 +28,7 @@ test.describe('DB Cluster Restore to the new cluster', () => {
   test.beforeEach(async ({ request, page }) => {
     await page.goto('/databases');
     const token = await getTokenFromLocalStorage();
-    await createDbClusterFn(token, request, {
+    await createDbClusterFn(token, request, 'TODO',{
       dbName: dbClusterName,
       dbType: 'mysql',
       numberOfNodes: '1',
@@ -41,7 +41,7 @@ test.describe('DB Cluster Restore to the new cluster', () => {
 
   test.afterEach(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
-    await deleteDbClusterFn(token, request, dbClusterName);
+    await deleteDbClusterFn(token, request, dbClusterName, 'TODO');
   });
 
   test('DB cluster list restore action', async ({ page }) => {
