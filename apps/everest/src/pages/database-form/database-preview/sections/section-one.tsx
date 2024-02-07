@@ -10,9 +10,9 @@ export const PreviewSectionOne = ({
   k8sNamespace,
 }: SectionProps) => (
   <>
+    <PreviewContentText text={`Namespace: ${k8sNamespace}`} />
     <PreviewContentText text={`Type: ${beautifyDbTypeName(dbType)}`} />
     <PreviewContentText text={`Name: ${dbName}`} />
-    <PreviewContentText text={`Namespace: ${k8sNamespace}`} />
     <PreviewContentText text={`Version: ${dbVersion}`} />
     <PreviewContentText text={`Storage class: ${storageClass ?? ''}`} />
   </>
