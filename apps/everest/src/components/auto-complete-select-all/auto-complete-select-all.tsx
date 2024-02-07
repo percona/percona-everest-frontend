@@ -42,13 +42,12 @@ export function AutoCompleteSelectAll<T>({
             Array.isArray(newValue) &&
             newValue.find((option) => option === Messages.selectAll)
           ) {
-            return setValue(
-              name,
-              fieldValue.length === options.length ? [] : options
-            );
+            setValue(name, fieldValue.length === options.length ? [] : options);
+            trigger(name);
+          } else {
+            setValue(name, newValue);
+            trigger(name);
           }
-          setValue(name, newValue);
-          trigger(name);
         },
         renderOption: (props, option, { selected }) => {
           return (
