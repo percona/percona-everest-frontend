@@ -166,16 +166,16 @@ jobs:
           --operator.postgresql \
           --operator.xtradb-cluster \
           --skip-wizard \
-          --namespace percona-everest
+          --namespace everest-ui-ci
 
       - name: Change token
         run: |
           cd CLI
-          echo "EVEREST_K8_TOKEN=$(go run cmd/everest/main.go token reset --namespace percona-everest --json | jq .token -r)" >> $GITHUB_ENV
+          echo "EVEREST_K8_TOKEN=$(go run cmd/everest/main.go token reset --namespace everest-ui-ci --json | jq .token -r)" >> $GITHUB_ENV
 
       - name: Expose Everest backend
         run: |
-          kubectl port-forward -n percona-everest deployment/percona-everest 8080:8080 &
+          kubectl port-forward -n everest-ui-ci deployment/percona-everest 8080:8080 &
 
       - name: Run Everest
         run: |
