@@ -214,3 +214,8 @@ jobs:
         with:
           name: playwright-report
           path: FE/apps/everest/.e2e/playwright-report/
+
+      - name: Run debug commands on failure
+        if: ${{ failure() }}
+        run: |
+          kubectl -n everest-ui-ci logs deploy/percona-everest
