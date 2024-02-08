@@ -66,6 +66,8 @@ test.describe('DB Cluster creation', () => {
   test('Cluster creation', async ({ page, request }) => {
     const clusterName = 'db-cluster-ui-test';
     const token = await getTokenFromLocalStorage();
+    let dbName = '';
+    let scheduleName = '';
 
     expect(storageClasses.length).toBeGreaterThan(0);
 
@@ -75,6 +77,9 @@ test.describe('DB Cluster creation', () => {
       storageClasses,
       clusterName
     );
+
+    dbName = await page.getByTestId('text-input-db-name').inputValue();
+
     await page.getByTestId('db-wizard-continue-button').click();
     await expect(page.getByText('Number of nodes: 3')).toBeVisible();
 
@@ -82,6 +87,9 @@ test.describe('DB Cluster creation', () => {
     await page.getByTestId('db-wizard-continue-button').click();
 
     await backupsStepCheck(page);
+    scheduleName = await page
+      .getByTestId('text-input-schedule-name')
+      .inputValue();
     await page.getByTestId('db-wizard-continue-button').click();
 
     await pitrStepCheck(page);
@@ -94,6 +102,11 @@ test.describe('DB Cluster creation', () => {
     await page.getByTestId('button-edit-preview-basic-information').click();
     // Here we test that version wasn't reset to default
     await expect(page.getByText('Version: 5.0.7-6')).toBeVisible();
+
+    // Make sure name doesn't change when we go back to first step
+    expect(await page.getByTestId('text-input-db-name').inputValue()).toBe(
+      dbName
+    );
     await page.getByTestId('postgresql-toggle-button').click();
     await expect(page.getByText('Number of nodes: 2')).toBeVisible();
     // Now we change the number of nodes
@@ -104,6 +117,13 @@ test.describe('DB Cluster creation', () => {
     // Because 2 nodes is not valid for MongoDB, the default will be picked
     await page.getByTestId('mongodb-toggle-button').click();
     await expect(page.getByText('Number of nodes: 3')).toBeVisible();
+    await page.getByTestId('button-edit-preview-backups').click();
+
+    // Now we make sure schedule name hasn't changed
+    expect(
+      await page.getByTestId('text-input-schedule-name').inputValue()
+    ).toBe(scheduleName);
+
     await page.getByTestId('button-edit-preview-monitoring').click();
 
     // await monitoringStepCheck(page, monitoringInstancesList);
