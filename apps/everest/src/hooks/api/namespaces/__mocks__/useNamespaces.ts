@@ -14,5 +14,5 @@
 // limitations under the License.
 
 export const useNamespaces = () => {
-  return ['my-special-place', 'the-dark-side', 'percona-everest'];
+  return ['my-special-place', 'the-dark-side'];
 };
