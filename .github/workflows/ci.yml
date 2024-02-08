@@ -175,7 +175,7 @@ jobs:
 
       - name: Expose Everest backend
         run: |
-          kubectl port-forward deployment/percona-everest 8080:8080 &
+          kubectl port-forward -n percona-everest deployment/percona-everest 8080:8080 &
 
       - name: Run Everest
         run: |
