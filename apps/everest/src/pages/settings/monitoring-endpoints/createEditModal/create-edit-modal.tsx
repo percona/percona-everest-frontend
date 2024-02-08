@@ -9,6 +9,8 @@ import {
   endpointSchema,
 } from './create-edit-modal.types';
 import { Messages } from '../monitoring-endpoints.messages';
+import { AutoCompleteSelectAll } from '../../../../components/auto-complete-select-all/auto-complete-select-all';
+import { useNamespaces } from '../../../../hooks/api/namespaces/useNamespaces';
 
 export const CreateEditEndpointModal = ({
   open,
@@ -18,6 +20,8 @@ export const CreateEditEndpointModal = ({
   selectedEndpoint,
 }: CreateEditEndpointModalProps) => {
   const isEditMode = !!selectedEndpoint;
+  const { data: namespaces = [], isFetching: isNamespacesFetching } =
+    useNamespaces();
 
   const defaultValues = useMemo(
     () =>
@@ -48,6 +52,16 @@ export const CreateEditEndpointModal = ({
         label={Messages.fieldLabels.name}
         isRequired
         textFieldProps={{ disabled: isEditMode }}
+      />
+      <AutoCompleteSelectAll
+        name={EndpointFormFields.namespaces}
+        label={Messages.fieldLabels.namespaces}
+        loading={isNamespacesFetching}
+        options={namespaces}
+        isRequired
+        textFieldProps={{
+          helperText: Messages.helperText.namespaces,
+        }}
       />
       <TextInput
         name={EndpointFormFields.url}

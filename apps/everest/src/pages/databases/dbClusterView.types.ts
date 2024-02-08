@@ -26,6 +26,7 @@ export interface DbTypeIconProviderProps {
 }
 
 export interface DbClusterTableElement {
+  namespace: string;
   status: DbClusterStatus;
   dbType: DbEngineType;
   dbVersion: string;

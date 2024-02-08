@@ -24,9 +24,9 @@ import { DBClusterDetailsTabs } from './db-cluster-details.types';
 import { DbCluster, DbClusterStatus } from 'shared-types/dbCluster.types';
 
 export const DbClusterDetails = () => {
-  const { dbClusterName } = useParams();
+  const { dbClusterName, namespace = '' } = useParams();
   const [dbCluster, setDbCluster] = useState<DbCluster | null>();
-  const { data = [], isLoading } = useDbClusters();
+  const { data = [], isLoading } = useDbClusters(namespace);
   const routeMatch = useMatch('/databases/:dbClusterName/:tabs');
   const navigate = useNavigate();
   const currentTab = routeMatch?.params?.tabs;

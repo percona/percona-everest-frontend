@@ -57,6 +57,7 @@ const formValuesToPayloadMapping = (
     kind: 'DatabaseCluster',
     metadata: {
       name: dbPayload.dbName,
+      namespace: dbPayload.k8sNamespace || '',
     },
     spec: {
       backup: {
@@ -141,7 +142,8 @@ export const useCreateDbCluster = (
   return useMutation(
     ({ dbPayload, backupDataSource }: CreateDbClusterArgType) =>
       createDbClusterFn(
-        formValuesToPayloadMapping(dbPayload, backupDataSource)
+        formValuesToPayloadMapping(dbPayload, backupDataSource),
+        dbPayload.k8sNamespace || ''
       ),
     { ...options }
   );
@@ -149,11 +151,12 @@ export const useCreateDbCluster = (
 
 export const useDbClusterCredentials = (
   dbClusterName: string,
+  namespace: string,
   options?: UseQueryOptions<ClusterCredentials>
 ) => {
   return useQuery<GetDbClusterCredentialsPayload, unknown, ClusterCredentials>(
     `cluster-credentials-${dbClusterName}`,
-    () => getDbClusterCredentialsFn(dbClusterName),
+    () => getDbClusterCredentialsFn(dbClusterName, namespace),
     { ...options }
   );
 };

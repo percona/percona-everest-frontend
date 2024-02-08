@@ -25,8 +25,9 @@ export function AutoCompleteAutoFill<T>({
         // @ts-ignore
         [fillFirstField]: options[0][fillFirstField],
       });
-      trigger();
+      trigger(name);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options]);
 
   return (

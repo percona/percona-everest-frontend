@@ -21,6 +21,7 @@ import {
 } from 'utils/generalOptimisticDataUpdate';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
 import { Messages } from './monitoring-endpoints.messages';
+import { StorageLocationsFields } from '../storage-locations/storage-locations.types';
 
 export const MonitoringEndpoints = () => {
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
@@ -44,6 +45,18 @@ export const MonitoringEndpoints = () => {
       {
         accessorKey: 'url',
         header: 'Endpoint',
+      },
+      {
+        accessorKey: StorageLocationsFields.namespaces,
+        header: Messages.namespaces,
+        Cell: ({ cell }) => {
+          const val = cell.getValue<string[]>();
+          if (val) {
+            return val.join(', ');
+          } else {
+            return '-';
+          }
+        },
       },
     ],
     []
@@ -75,13 +88,13 @@ export const MonitoringEndpoints = () => {
 
   const handleSubmitModal = (
     isEditMode: boolean,
-    { name, url, ...pmmData }: EndpointFormType
+    { name, url, targetNamespaces, ...pmmData }: EndpointFormType
   ) => {
     if (isEditMode) {
       updateMonitoringInstance(
         {
           instanceName: name,
-          payload: { url, type: 'pmm', pmm: { ...pmmData } },
+          payload: { url, type: 'pmm', targetNamespaces, pmm: { ...pmmData } },
         },
         {
           onSuccess: (updatedInstance) => {
@@ -96,7 +109,7 @@ export const MonitoringEndpoints = () => {
       );
     } else {
       createMonitoringInstance(
-        { name, url, type: 'pmm', pmm: { ...pmmData } },
+        { name, url, type: 'pmm', targetNamespaces, pmm: { ...pmmData } },
         {
           onSuccess: (newInstance) => {
             updateDataAfterCreate(

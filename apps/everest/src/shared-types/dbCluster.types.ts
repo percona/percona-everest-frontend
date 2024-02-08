@@ -103,7 +103,7 @@ export interface StatusSpec {
 
 export interface DbClusterMetadata {
   name: string;
-  namespace?: string;
+  namespace: string;
   annotations?: {
     'everest.percona.com/restart'?: string;
   };
