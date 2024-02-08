@@ -166,12 +166,12 @@ jobs:
           --operator.postgresql \
           --operator.xtradb-cluster \
           --skip-wizard \
-          --namespace percona-everest
+          --namespace test
 
       - name: Change token
         run: |
           cd CLI
-          echo "EVEREST_K8_TOKEN=$(go run cmd/everest/main.go token reset --namespace percona-everest --json | jq .token -r)" >> $GITHUB_ENV
+          echo "EVEREST_K8_TOKEN=$(go run cmd/everest/main.go token reset --namespace test --json | jq .token -r)" >> $GITHUB_ENV
 
       - name: Expose Everest backend
         run: |
