@@ -14,7 +14,7 @@
 // limitations under the License.
 
 import { FormGroup, MenuItem, Skeleton, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { DbType } from '@percona/types';
 import {
@@ -72,33 +72,107 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     dbEngines.find((engine) => engine.type === dbEngine)
   );
 
-  useEffect(() => {
-    const { isTouched: k8sNamespaceTouched } = getFieldState(
-      DbWizardFormFields.k8sNamespace
+  const setRandomDbName = useCallback((type: DbType) => {
+    setValue(DbWizardFormFields.dbName, `${type}-${generateShortUID()}`, {
+      shouldValidate: true,
+    });
+  }, []);
+
+  const updateDbVersions = useCallback(() => {
+    const { isDirty: dbVersionDirty } = getFieldState(
+      DbWizardFormFields.dbVersion
     );
-    if (!k8sNamespaceTouched && mode === 'new' && namespaces?.length > 0) {
-      setValue(DbWizardFormFields.k8sNamespace, namespaces[0]);
-      trigger(DbWizardFormFields.k8sNamespace);
+    const newVersions = dbEngines.find((engine) => engine.type === dbEngine);
+
+    // Safety check
+    if (
+      dbVersionDirty ||
+      !newVersions ||
+      !newVersions.availableVersions.engine.length
+    ) {
+      return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [namespaces, mode]);
+
+    if (
+      ((mode === 'edit' || mode === 'restoreFromBackup') && !dbVersion) ||
+      mode === 'new'
+    ) {
+      const recommendedVersion = newVersions.availableVersions.engine.find(
+        (version) => version.status === DbEngineToolStatus.RECOMMENDED
+      );
+      setValue(
+        DbWizardFormFields.dbVersion,
+        recommendedVersion
+          ? recommendedVersion.version
+          : newVersions.availableVersions.engine[0].version
+      );
+    }
+    setDbVersions(newVersions);
+  }, [dbEngine, dbEngines, dbVersion, getFieldState, mode, setValue]);
+
+  const onDbTypeChange = useCallback(
+    (newDbType: DbType) => {
+      const { isDirty: isNameDirty } = getFieldState(DbWizardFormFields.dbName);
+      const { isTouched: nodesTouched } = getFieldState(
+        DbWizardFormFields.numberOfNodes
+      );
+
+      resetField(DbWizardFormFields.dbVersion);
+
+      if (!isNameDirty) {
+        setRandomDbName(newDbType);
+      }
+
+      if (mode === 'new') {
+        if (nodesTouched) {
+          const numberOfNodes: string = getValues(
+            DbWizardFormFields.numberOfNodes
+          );
+          if (
+            !NODES_DB_TYPE_MAP[newDbType].find(
+              (nodes) => nodes === numberOfNodes
+            )
+          ) {
+            setValue(
+              DbWizardFormFields.numberOfNodes,
+              DEFAULT_NODES[newDbType]
+            );
+          }
+        } else {
+          setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[newDbType]);
+        }
+      }
+
+      updateDbVersions();
+    },
+    [
+      getFieldState,
+      resetField,
+      setRandomDbName,
+      mode,
+      updateDbVersions,
+      getValues,
+      setValue,
+    ]
+  );
 
   useEffect(() => {
-    const newDbVersions = dbEngines.find((engine) => engine.type === dbEngine);
-    setDbVersions(newDbVersions);
-  }, [dbEngines, dbType, dbEngine]);
+    if (mode !== 'new' || dbEngines.length <= 0) {
+      return;
+    }
 
-  useEffect(() => {
-    if (!dbType && mode === 'new' && dbEngines.length > 0) {
+    if (!dbType) {
       const defaultDbType = dbEngineToDbType(dbEngines[0].type);
       if (defaultDbType) {
         setValue(
           DbWizardFormFields.dbType,
           dbEngineToDbType(dbEngines[0].type)
         );
+        setRandomDbName(defaultDbType);
       }
     }
-  }, [dbEngines, mode, setValue, dbType]);
+    updateDbVersions();
+  }, [dbEngines, dbType, setRandomDbName, updateDbVersions]);
 
   useEffect(() => {
     const { isTouched: storageClassTouched } = getFieldState(
@@ -116,77 +190,18 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
         clusterInfo?.storageClassNames[0]
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clusterInfo, mode, setValue]);
+  }, [clusterInfo]);
 
   useEffect(() => {
-    if (!dbType) {
-      return;
-    }
-    const { isDirty: nameDirty } = getFieldState(DbWizardFormFields.dbName);
-
-    if (!nameDirty && mode === 'new') {
-      if (!dbVersions) {
-        setValue(DbWizardFormFields.dbName, ``);
-      } else {
-        setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`, {
-          shouldValidate: true,
-        });
-      }
+    const { isTouched: k8sNamespaceTouched } = getFieldState(
+      DbWizardFormFields.k8sNamespace
+    );
+    if (!k8sNamespaceTouched && mode === 'new' && namespaces?.length > 0) {
+      setValue(DbWizardFormFields.k8sNamespace, namespaces[0]);
+      trigger(DbWizardFormFields.k8sNamespace);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dbType, dbVersions, mode]);
-
-  useEffect(() => {
-    const { isDirty: dbVersionDirty } = getFieldState(
-      DbWizardFormFields.dbVersion
-    );
-    const { isTouched: nodesTouched } = getFieldState(
-      DbWizardFormFields.numberOfNodes
-    );
-
-    // We need to check if the previously selected number of nodes exists for the current DB type
-    // E.g. 2 nodes is only possible for PG
-    if (mode === 'new') {
-      if (nodesTouched) {
-        const numberOfNodes: string = getValues(
-          DbWizardFormFields.numberOfNodes
-        );
-        if (
-          !NODES_DB_TYPE_MAP[dbType].find((nodes) => nodes === numberOfNodes)
-        ) {
-          setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[dbType]);
-        }
-      } else {
-        setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[dbType]);
-      }
-    }
-
-    // Safety check
-    if (
-      dbVersionDirty ||
-      !dbVersions ||
-      !dbVersions.availableVersions.engine.length
-    ) {
-      return;
-    }
-
-    if (
-      ((mode === 'edit' || mode === 'restoreFromBackup') && !dbVersion) ||
-      mode === 'new'
-    ) {
-      const recommendedVersion = dbVersions.availableVersions.engine.find(
-        (version) => version.status === DbEngineToolStatus.RECOMMENDED
-      );
-      setValue(
-        DbWizardFormFields.dbVersion,
-        recommendedVersion
-          ? recommendedVersion.version
-          : dbVersions.availableVersions.engine[0].version
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dbType, dbVersions, mode, dbEngine, dbVersion]);
+  }, [namespaces, mode]);
 
   return (
     <>
@@ -232,7 +247,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
                 }
                 onClick={() => {
                   if (dbEngineToDbType(type) !== dbType) {
-                    resetField(DbWizardFormFields.dbVersion);
+                    onDbTypeChange(dbEngineToDbType(type));
                   }
                 }}
               />

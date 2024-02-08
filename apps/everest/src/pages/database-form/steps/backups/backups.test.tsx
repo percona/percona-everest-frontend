@@ -40,7 +40,7 @@ describe('BackupsStep', () => {
       <QueryClientProvider client={queryClient}>
         <TestWrapper>
           <FormProviderWrapper>
-            <Backups />
+            <Backups alreadyVisited={false} loadingDefaultsForEdition={false} />
           </FormProviderWrapper>
         </TestWrapper>
       </QueryClientProvider>
