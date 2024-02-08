@@ -19,44 +19,62 @@ import {
 } from 'shared-types/dbCluster.types';
 import { api } from './api';
 
-export const createDbClusterFn = async (data: DbCluster) => {
-  const response = await api.post(`database-clusters`, data);
+export const createDbClusterFn = async (data: DbCluster, namespace: string) => {
+  const response = await api.post(
+    `namespaces/${namespace}/database-clusters`,
+    data
+  );
 
   return response.data;
 };
 
 export const updateDbClusterFn = async (
   dbClusterName: string,
+  namespace: string,
   data: DbCluster
 ) => {
-  const response = await api.put(`database-clusters/${dbClusterName}`, data);
+  const response = await api.put(
+    `namespaces/${namespace}/database-clusters/${dbClusterName}`,
+    data
+  );
 
   return response.data;
 };
 
-export const getDbClustersFn = async () => {
-  const response = await api.get<GetDbClusterPayload>(`database-clusters`);
+export const getDbClustersFn = async (namespace: string) => {
+  const response = await api.get<GetDbClusterPayload>(
+    `namespaces/${namespace}/database-clusters`
+  );
   return response.data;
 };
 
-export const getDbClusterCredentialsFn = async (dbClusterName: string) => {
+export const getDbClusterCredentialsFn = async (
+  dbClusterName: string,
+  namespace: string
+) => {
   const response = await api.get<GetDbClusterCredentialsPayload>(
-    `database-clusters/${dbClusterName}/credentials`
+    `namespaces/${namespace}/database-clusters/${dbClusterName}/credentials`
   );
 
   return response.data;
 };
 
-export const getDbClusterFn = async (dbClusterName: string) => {
+export const getDbClusterFn = async (
+  dbClusterName: string,
+  namespace: string
+) => {
   const response = await api.get<DbCluster>(
-    `database-clusters/${dbClusterName}`
+    `namespaces/${namespace}/database-clusters/${dbClusterName}`
   );
   return response.data;
 };
 
-export const deleteDbClusterFn = async (dbClusterName: string) => {
+export const deleteDbClusterFn = async (
+  dbClusterName: string,
+  namespace: string
+) => {
   const response = await api.delete<DbCluster>(
-    `database-clusters/${dbClusterName}`
+    `namespaces/${namespace}/database-clusters/${dbClusterName}`
   );
   return response.data;
 };

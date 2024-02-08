@@ -99,10 +99,11 @@ const deletedScheduleToDbClusterPayload = (
 
 export const useUpdateSchedules = (
   dbClusterName: string,
+  namespace: string,
   mode: 'new' | 'edit',
   options?: UseMutationOptions<unknown, unknown, ScheduleFormData, unknown>
 ) => {
-  const { data: dbCluster } = useDbCluster(dbClusterName);
+  const { data: dbCluster } = useDbCluster(dbClusterName, namespace);
 
   return useMutation(
     (dbPayload: ScheduleFormData) => {
@@ -111,7 +112,7 @@ export const useUpdateSchedules = (
         dbCluster!,
         mode
       );
-      return updateDbClusterFn(dbClusterName, payload);
+      return updateDbClusterFn(dbClusterName, namespace, payload);
     },
     { ...options }
   );
@@ -119,9 +120,10 @@ export const useUpdateSchedules = (
 
 export const useDeleteSchedule = (
   dbClusterName: string,
+  namespace: string,
   options?: UseMutationOptions<unknown, unknown, string, unknown>
 ) => {
-  const { data: dbCluster } = useDbCluster(dbClusterName);
+  const { data: dbCluster } = useDbCluster(dbClusterName, namespace);
 
   return useMutation(
     (scheduleName) => {
@@ -129,7 +131,7 @@ export const useDeleteSchedule = (
         scheduleName,
         dbCluster!
       );
-      return updateDbClusterFn(dbClusterName, payload);
+      return updateDbClusterFn(dbClusterName, namespace, payload);
     },
     { ...options }
   );

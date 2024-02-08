@@ -22,6 +22,8 @@ import { backupsStepCheck } from './steps/backups-step';
 import { basicInformationStepCheck } from './steps/basic-information-step';
 import { pitrStepCheck } from './steps/pitr-step';
 import { resourcesStepCheck } from './steps/resources-step';
+import { getNamespacesFn } from '../../../utils/namespaces';
+import { deleteDbClusterFn } from '../../../utils/db-cluster';
 
 test.describe('DB Cluster creation', () => {
   let engineVersions = {
@@ -31,10 +33,13 @@ test.describe('DB Cluster creation', () => {
   };
   let storageClasses = [];
   // let monitoringInstancesList = [];
+  let namespace = '';
 
   test.beforeAll(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
-    engineVersions = await getEnginesVersions(token, request);
+    const namespaces = await getNamespacesFn(token, request);
+    namespace = namespaces[0];
+    engineVersions = await getEnginesVersions(token, namespaces[0], request);
 
     const { storageClassNames = [] } = await getClusterDetailedInfo(
       token,
@@ -129,9 +134,12 @@ test.describe('DB Cluster creation', () => {
       page.getByText('Awesome! Your database is being created!')
     ).toBeVisible();
 
-    const response = await request.get('/v1/database-clusters', {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await request.get(
+      `/v1/namespaces/${namespace}/database-clusters`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
 
     expect(response.ok()).toBeTruthy();
     // TODO replace with correct payload typings from GET DB Clusters
@@ -141,14 +149,12 @@ test.describe('DB Cluster creation', () => {
       (cluster) => cluster.metadata.name === clusterName
     );
 
-    const deleteResponse = await request.delete(
-      `/v1/database-clusters/${addedCluster?.metadata.name}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
+    await deleteDbClusterFn(
+      token,
+      request,
+      addedCluster?.metadata.name,
+      namespace
     );
-    expect(deleteResponse.ok()).toBeTruthy();
-
     //TODO: Add check for PITR ones backend is ready
 
     expect(addedCluster).not.toBeUndefined();

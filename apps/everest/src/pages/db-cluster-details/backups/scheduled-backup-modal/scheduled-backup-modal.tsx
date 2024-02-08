@@ -34,7 +34,7 @@ import { scheduleModalDefaultValues } from './scheduled-backup-modal-utils';
 
 export const ScheduledBackupModal = () => {
   const queryClient = useQueryClient();
-  const { dbClusterName } = useParams();
+  const { dbClusterName, namespace = '' } = useParams();
   const {
     mode = 'new',
     selectedScheduleName,
@@ -42,12 +42,13 @@ export const ScheduledBackupModal = () => {
     setOpenScheduleModal,
   } = useContext(ScheduleModalContext);
 
-  const { data: dbCluster } = useDbCluster(dbClusterName!, {
+  const { data: dbCluster } = useDbCluster(dbClusterName!, namespace, {
     enabled: !!dbClusterName && mode === 'edit',
   });
 
   const { mutate: updateScheduledBackup, isLoading } = useUpdateSchedules(
     dbClusterName!,
+    namespace,
     mode
   );
 

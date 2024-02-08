@@ -22,20 +22,23 @@ export const useDbClusterRestoreFromBackup = (
   options?: UseMutationOptions<unknown, unknown, unknown, unknown>
 ) => {
   return useMutation(
-    ({ backupName }: { backupName: string }) =>
-      createDbClusterRestore({
-        apiVersion: 'everest.percona.com/v1alpha1',
-        kind: 'DatabaseClusterRestore',
-        metadata: {
-          name: `restore-${generateShortUID()}`,
-        },
-        spec: {
-          dbClusterName,
-          dataSource: {
-            dbClusterBackupName: backupName,
+    ({ backupName, namespace }: { backupName: string; namespace: string }) =>
+      createDbClusterRestore(
+        {
+          apiVersion: 'everest.percona.com/v1alpha1',
+          kind: 'DatabaseClusterRestore',
+          metadata: {
+            name: `restore-${generateShortUID()}`,
+          },
+          spec: {
+            dbClusterName,
+            dataSource: {
+              dbClusterBackupName: backupName,
+            },
           },
         },
-      }),
+        namespace
+      ),
     { ...options }
   );
 };
@@ -48,26 +51,31 @@ export const useDbClusterRestoreFromPointInTime = (
     ({
       pointInTimeDate,
       backupName,
+      namespace,
     }: {
       pointInTimeDate: string;
       backupName: string;
+      namespace: string;
     }) =>
-      createDbClusterRestore({
-        apiVersion: 'everest.percona.com/v1alpha1',
-        kind: 'DatabaseClusterRestore',
-        metadata: {
-          name: `restore-${generateShortUID()}`,
-        },
-        spec: {
-          dbClusterName,
-          dataSource: {
-            dbClusterBackupName: backupName,
-            pitr: {
-              date: pointInTimeDate,
+      createDbClusterRestore(
+        {
+          apiVersion: 'everest.percona.com/v1alpha1',
+          kind: 'DatabaseClusterRestore',
+          metadata: {
+            name: `restore-${generateShortUID()}`,
+          },
+          spec: {
+            dbClusterName,
+            dataSource: {
+              dbClusterBackupName: backupName,
+              pitr: {
+                date: pointInTimeDate,
+              },
             },
           },
         },
-      }),
+        namespace
+      ),
     { ...options }
   );
 };
