@@ -218,4 +218,4 @@ jobs:
       - name: Run debug commands on failure
         if: ${{ failure() }}
         run: |
-          kubectl -n percona-everest logs deploy/percona-everest
+          kubectl -n percona-everest logs deployment/percona-everest
