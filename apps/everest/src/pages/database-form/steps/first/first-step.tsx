@@ -87,8 +87,8 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     // Safety check
     if (
       dbVersionDirty ||
-      !dbVersions ||
-      !dbVersions.availableVersions.engine.length
+      !newVersions ||
+      !newVersions.availableVersions.engine.length
     ) {
       return;
     }
@@ -97,26 +97,18 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
       ((mode === 'edit' || mode === 'restoreFromBackup') && !dbVersion) ||
       mode === 'new'
     ) {
-      const recommendedVersion = dbVersions.availableVersions.engine.find(
+      const recommendedVersion = newVersions.availableVersions.engine.find(
         (version) => version.status === DbEngineToolStatus.RECOMMENDED
       );
       setValue(
         DbWizardFormFields.dbVersion,
         recommendedVersion
           ? recommendedVersion.version
-          : dbVersions.availableVersions.engine[0].version
+          : newVersions.availableVersions.engine[0].version
       );
     }
     setDbVersions(newVersions);
-  }, [
-    dbEngine,
-    dbEngines,
-    dbVersion,
-    dbVersions,
-    getFieldState,
-    mode,
-    setValue,
-  ]);
+  }, [dbEngine, dbEngines, dbVersion, getFieldState, mode, setValue]);
 
   const onDbTypeChange = useCallback(
     (newDbType: DbType) => {
