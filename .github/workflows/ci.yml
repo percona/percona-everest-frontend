@@ -175,7 +175,7 @@ jobs:
 
       - name: Expose Everest backend
         run: |
-          kubectl port-forward -n everest-ui-ci deployment/percona-everest 8080:8080 &
+          kubectl port-forward -n percona-everest deployment/percona-everest 8080:8080 &
 
       - name: Run Everest
         run: |
@@ -218,4 +218,4 @@ jobs:
       - name: Run debug commands on failure
         if: ${{ failure() }}
         run: |
-          kubectl -n everest-ui-ci logs deploy/percona-everest
+          kubectl -n percona-everest logs deploy/percona-everest
