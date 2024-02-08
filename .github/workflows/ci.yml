@@ -171,11 +171,11 @@ jobs:
       - name: Change token
         run: |
           cd CLI
-          echo "EVEREST_K8_TOKEN=$(go run cmd/everest/main.go token reset --json | jq .token -r)" >> $GITHUB_ENV
+          echo "EVEREST_K8_TOKEN=$(go run cmd/everest/main.go reset --json | jq .token -r)" >> $GITHUB_ENV
 
       - name: Expose Everest backend
         run: |
-          kubectl port-forward -n everest-ui deployment/percona-everest 8080:8080 &
+          kubectl port-forward deployment/percona-everest 8080:8080 &
 
       - name: Run Everest
         run: |
