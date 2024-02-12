@@ -188,9 +188,9 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
         const defaultDbType = dbEngineToDbType(dbEngines[0].type);
         if (defaultDbType) {
           setValue(
-              DbWizardFormFields.dbType,
-              dbEngineToDbType(dbEngines[0].type)
-          )
+            DbWizardFormFields.dbType,
+            dbEngineToDbType(dbEngines[0].type)
+          );
           if (!isNameDirty) {
             setRandomDbName(defaultDbType);
           }
