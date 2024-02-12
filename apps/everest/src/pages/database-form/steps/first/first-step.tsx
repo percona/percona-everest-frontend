@@ -172,6 +172,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     if (mode !== 'new' || dbEngines.length <= 0) {
       return;
     }
+    const { isDirty: isNameDirty } = getFieldState(DbWizardFormFields.dbName);
 
     if (!dbType) {
       const defaultDbType = dbEngineToDbType(dbEngines[0].type);
@@ -181,6 +182,19 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
           dbEngineToDbType(dbEngines[0].type)
         );
         setRandomDbName(defaultDbType);
+      }
+    } else {
+      if (!dbEngines.find((engine) => engine.type === dbEngine)) {
+        const defaultDbType = dbEngineToDbType(dbEngines[0].type);
+        if (defaultDbType) {
+          setValue(
+              DbWizardFormFields.dbType,
+              dbEngineToDbType(dbEngines[0].type)
+          )
+          if (!isNameDirty) {
+            setRandomDbName(defaultDbType);
+          }
+        }
       }
     }
     updateDbVersions();
