@@ -27,7 +27,7 @@ export const DbClusterDetails = () => {
   const { dbClusterName, namespace = '' } = useParams();
   const [dbCluster, setDbCluster] = useState<DbCluster | null>();
   const { data = [], isLoading } = useDbClusters(namespace);
-  const routeMatch = useMatch('/databases/:dbClusterName/:tabs');
+  const routeMatch = useMatch('/databases/:namespace/:dbClusterName/:tabs');
   const navigate = useNavigate();
   const currentTab = routeMatch?.params?.tabs;
 
