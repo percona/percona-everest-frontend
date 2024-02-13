@@ -143,7 +143,11 @@ export const useUpdateDbCluster = (
     ({ dbPayload, dbCluster }: UpdateDbClusterArgType) => {
       const dbClusterName = dbCluster?.metadata?.name;
       const payload = formValuesToPayloadOverrides(dbPayload, dbCluster);
-      return updateDbClusterFn(dbClusterName, payload);
+      return updateDbClusterFn(
+        dbClusterName,
+        dbPayload.k8sNamespace || '',
+        payload
+      );
     },
     { ...options }
   );

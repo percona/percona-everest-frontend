@@ -18,7 +18,7 @@ export const Messages = {
   labels: {
     dbType: 'Database type',
     dbName: 'Display name',
-    k8sNamespace: 'Kubernetes namespace',
+    k8sNamespace: 'Namespace',
     dbEnvironment: 'Database environment',
     dbVersion: 'Database version',
     storageClass: 'Storage class',

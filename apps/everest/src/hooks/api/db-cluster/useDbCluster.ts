@@ -22,11 +22,12 @@ export const DB_CLUSTER_QUERY = 'dbCluster';
 
 export const useDbCluster = (
   dbClusterName: string,
+  namespace: string,
   options?: UseQueryOptions<DbCluster>
 ) => {
   return useQuery<DbCluster, unknown, DbCluster>(
     [DB_CLUSTER_QUERY, dbClusterName],
-    () => getDbClusterFn(dbClusterName),
+    () => getDbClusterFn(dbClusterName, namespace),
     {
       ...options,
     }

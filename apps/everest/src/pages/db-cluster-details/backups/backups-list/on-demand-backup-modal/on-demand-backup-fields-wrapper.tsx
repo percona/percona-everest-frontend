@@ -10,9 +10,9 @@ import { Messages } from '../../../db-cluster-details.messages.ts';
 import { BackupFields } from './on-demand-backup-modal.types.ts';
 
 export const OnDemandBackupFieldsWrapper = () => {
-  const { dbClusterName } = useParams();
+  const { dbClusterName, namespace = '' } = useParams();
   const { setValue } = useFormContext();
-  const { data: dbCluster } = useDbCluster(dbClusterName!, {
+  const { data: dbCluster } = useDbCluster(dbClusterName!, namespace, {
     enabled: !!dbClusterName,
   });
   const { data: backupStorages = [], isFetching } = useBackupStorages();

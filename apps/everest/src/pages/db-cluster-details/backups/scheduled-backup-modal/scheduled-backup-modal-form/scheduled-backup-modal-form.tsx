@@ -24,12 +24,12 @@ import { ScheduleModalContext } from '../../backups.context.ts';
 
 export const ScheduledBackupModalForm = () => {
   const { watch, setValue } = useFormContext();
-  const { dbClusterName } = useParams();
+  const { dbClusterName, namespace = '' } = useParams();
   const { mode = 'new', setSelectedScheduleName } =
     useContext(ScheduleModalContext);
 
   const { data: backupStorages = [], isFetching } = useBackupStorages();
-  const { data: dbCluster } = useDbCluster(dbClusterName!, {
+  const { data: dbCluster } = useDbCluster(dbClusterName!, namespace, {
     enabled: !!dbClusterName && mode === 'edit',
   });
   const dbClusterActiveStorage = dbCluster?.status?.activeStorage;

@@ -23,7 +23,6 @@ import { CreateEditModalStorage } from './createEditModal/create-edit-modal';
 import { Messages } from './storage-locations.messages';
 import { StorageLocationsFields } from './storage-locations.types';
 import { convertStoragesType } from './storage-locations.utils';
-
 export const StorageLocations = () => {
   const queryClient = useQueryClient();
 
@@ -55,6 +54,18 @@ export const StorageLocations = () => {
       {
         accessorKey: StorageLocationsFields.bucketName,
         header: Messages.bucketName,
+      },
+      {
+        accessorKey: StorageLocationsFields.namespaces,
+        header: Messages.namespaces,
+        Cell: ({ cell }) => {
+          const val = cell.getValue<string[]>();
+          if (val) {
+            return val.join(', ');
+          } else {
+            return '-';
+          }
+        },
       },
       {
         accessorKey: StorageLocationsFields.description,
@@ -158,6 +169,7 @@ export const StorageLocations = () => {
           <Button
             size="small"
             startIcon={<Add />}
+            data-testid="add-backup-storage"
             variant="outlined"
             onClick={handleOpenCreateModal}
           >
