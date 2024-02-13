@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { TestWrapper } from 'utils/test';
-import { FifthStep } from './fifth-step';
+import { Monitoring } from './monitoring';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -39,7 +39,7 @@ describe('AdvancedConfigurations', () => {
     render(
       <TestWrapper>
         <FormProviderWrapper>
-          <FifthStep />
+          <Monitoring />
         </FormProviderWrapper>
       </TestWrapper>
     );
@@ -58,7 +58,7 @@ describe('AdvancedConfigurations', () => {
     render(
       <TestWrapper>
         <FormProviderWrapper>
-          <FifthStep />
+          <Monitoring />
         </FormProviderWrapper>
       </TestWrapper>
     );
@@ -78,7 +78,7 @@ describe('AdvancedConfigurations', () => {
     render(
       <TestWrapper>
         <FormProviderWrapper>
-          <FifthStep />
+          <Monitoring />
         </FormProviderWrapper>
       </TestWrapper>
     );
