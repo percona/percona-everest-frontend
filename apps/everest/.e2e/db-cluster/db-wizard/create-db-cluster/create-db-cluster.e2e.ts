@@ -42,7 +42,7 @@ test.describe('DB Cluster creation', () => {
     const token = await getTokenFromLocalStorage();
     const namespaces = await getNamespacesFn(token, request);
     namespace = namespaces[0];
-    engineVersions = await getEnginesVersions(token, namespaces[0], request);
+    engineVersions = await getEnginesVersions(token, namespace, request);
 
     const { storageClassNames = [] } = await getClusterDetailedInfo(
       token,
@@ -71,6 +71,7 @@ test.describe('DB Cluster creation', () => {
     const token = await getTokenFromLocalStorage();
     const recommendedEngineVersions = await getEnginesLatestRecommendedVersions(
       token,
+      namespace,
       request
     );
     let dbName = '';

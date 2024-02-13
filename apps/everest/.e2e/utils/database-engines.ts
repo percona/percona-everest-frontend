@@ -58,6 +58,7 @@ export const getEnginesVersions = async (
 
 export const getEnginesLatestRecommendedVersions = async (
   token: string,
+  namespace: string,
   request: APIRequestContext
 ) => {
   let latestRecommendedVersions = {
@@ -66,7 +67,7 @@ export const getEnginesLatestRecommendedVersions = async (
     postgresql: '',
   };
 
-  const engines = await getEnginesList(token, request);
+  const engines = await getEnginesList(token, namespace, request);
   engines.forEach((engine) => {
     const { type } = engine.spec;
 
