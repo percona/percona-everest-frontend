@@ -19,7 +19,7 @@ export const Messages = {
   monitoringEnabled: 'Enable monitoring',
   monitoringInstanceLabel: 'Monitoring endpoint URL',
   alertText:
-    'Database monitoring is currently disabled because no monitoring endpoints have been configured. In order to enable database monitoring you need to add a monitoring endpoint first.',
+    'Database monitoring is currently disabled because no monitoring endpoints have been configured. To enable database monitoring, you should first add a monitoring endpoint.',
   command: 'everestctl monitoring enable',
   addMonitoringEndpoint: 'Add monitoring endpoint',
 };
