@@ -166,7 +166,7 @@ jobs:
           --operator.postgresql \
           --operator.xtradb-cluster \
           --skip-wizard \
-          --namespace everest-ui
+          --namespaces everest-ui
 
       - name: Change token
         run: |
