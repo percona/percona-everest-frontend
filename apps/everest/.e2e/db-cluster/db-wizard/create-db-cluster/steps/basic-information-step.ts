@@ -21,6 +21,8 @@ export const basicInformationStepCheck = async (
   storageClasses,
   clusterName
 ) => {
+  expect(page.getByTestId('text-input-k8s-namespace')).not.toBeEmpty();
+
   const dbEnginesButtons = page
     .getByTestId('toggle-button-group-input-db-type')
     .getByRole('button');

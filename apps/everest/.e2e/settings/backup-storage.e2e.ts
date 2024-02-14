@@ -14,6 +14,7 @@
 // limitations under the License.
 
 import { test, expect } from '@playwright/test';
+import { findRowAndClickActions } from '../utils/table';
 const {
   EVEREST_LOCATION_BUCKET_NAME,
   EVEREST_LOCATION_ACCESS_KEY,
@@ -52,15 +53,7 @@ test.describe('Backup storage', () => {
 
     await page.pause();
 
-    await page
-      .locator('.MuiTableRow-root')
-      .filter({ hasText: 'test-storage-name' })
-      .getByTestId('MoreHorizIcon')
-      .click();
-
-    await page.getByRole('menuitem', { name: 'Delete' }).click();
+    findRowAndClickActions(page, 'test-storage-name', 'Delete');
     await page.getByTestId('confirm-dialog-delete').click();
-
-    await page.pause();
   });
 });
