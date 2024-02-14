@@ -189,6 +189,10 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     if (!dbType) {
       if (defaultDbType) {
         setValue(DbWizardFormFields.dbType, defaultDbType);
+        setValue(
+          DbWizardFormFields.numberOfNodes,
+          DEFAULT_NODES[defaultDbType]
+        );
         setRandomDbName(defaultDbType);
       }
     } else {
