@@ -1,19 +1,14 @@
 import {
-  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  Divider,
   Link,
   Typography,
 } from '@mui/material';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { DialogTitle } from '@percona/ui-lib';
 import { useNavigate } from 'react-router-dom';
 import { Messages } from './welcome-dialog.messages';
-import { CardLink } from './card/CardLink';
 
 export const WelcomeDialog = ({
   open,
