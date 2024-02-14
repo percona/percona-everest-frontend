@@ -183,15 +183,22 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     if (mode !== 'new' || dbEngines.length <= 0) {
       return;
     }
+    const { isDirty: isNameDirty } = getFieldState(DbWizardFormFields.dbName);
+    const defaultDbType = dbEngineToDbType(dbEngines[0].type);
 
     if (!dbType) {
-      const defaultDbType = dbEngineToDbType(dbEngines[0].type);
       if (defaultDbType) {
-        setValue(
-          DbWizardFormFields.dbType,
-          dbEngineToDbType(dbEngines[0].type)
-        );
+        setValue(DbWizardFormFields.dbType, defaultDbType);
         setRandomDbName(defaultDbType);
+      }
+    } else {
+      if (!dbEngines.find((engine) => engine.type === dbEngine)) {
+        if (defaultDbType) {
+          setValue(DbWizardFormFields.dbType, defaultDbType);
+          if (!isNameDirty) {
+            setRandomDbName(defaultDbType);
+          }
+        }
       }
     }
     updateDbVersions();
