@@ -32,7 +32,7 @@ function AutoCompleteInput<T>({
           onChange={(_, newValue) => {
             field.onChange(newValue);
             if (onChange) {
-                onChange();
+              onChange();
             }
           }}
           data-testid={`${kebabize(name)}-autocomplete`}
