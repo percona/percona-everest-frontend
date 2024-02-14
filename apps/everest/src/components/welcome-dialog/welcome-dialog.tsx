@@ -1,14 +1,19 @@
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
+  Divider,
   Link,
   Typography,
 } from '@mui/material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { DialogTitle } from '@percona/ui-lib';
 import { useNavigate } from 'react-router-dom';
 import { Messages } from './welcome-dialog.messages';
+import { CardLink } from './card/CardLink';
 
 export const WelcomeDialog = ({
   open,
@@ -30,9 +35,7 @@ export const WelcomeDialog = ({
       open={open}
       onClose={closeDialog}
     >
-      <DialogTitle onClose={closeDialog}>
-        <Typography variant="h5">{Messages.header}</Typography>
-      </DialogTitle>
+      <DialogTitle onClose={closeDialog}>{Messages.header}</DialogTitle>
       <DialogContent sx={{ display: 'flex', flexFlow: 'column' }}>
         <Typography variant="body1" sx={{ marginBottom: 2 }}>
           {Messages.subHead}
@@ -54,9 +57,8 @@ export const WelcomeDialog = ({
             px: '44px',
           }}
         >
-
           <CardLink
-            Icon={AddCircleOutlineOutlinedIcon}
+            Icon={AddCircleOutlineIcon}
             action={Messages.card1.header}
             description={Messages.card1.description}
             link="/databases/new"
