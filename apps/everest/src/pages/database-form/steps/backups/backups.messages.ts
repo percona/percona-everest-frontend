@@ -29,6 +29,6 @@ export const Messages = {
   pitrAlert:
     'Point-in-time-recovery (PITR) relies on an active backup schedule. If you don’t configure a backup schedule now, PITR will be disabled in the next step of the wizard.',
   addStorage: 'Add storage',
-  noStoragesMessage:
-    'To continue with enabled backups, you need to add a backup storage first. Disable backups to proceed without them.',
+  noStoragesMessage: (namespace: string) =>
+    `To enable backups for the ${namespace} namespace, first add a storage location within the same namespace. If you want to proceed without the backups, disable them.`,
 };

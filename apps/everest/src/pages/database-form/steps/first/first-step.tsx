@@ -30,7 +30,10 @@ import { useKubernetesClusterInfo } from 'hooks/api/kubernetesClusters/useKubern
 import { useFormContext } from 'react-hook-form';
 import { DbEngineToolStatus } from 'shared-types/dbEngines.types';
 import { DbWizardFormFields, StepProps } from '../../database-form.types';
-import { NODES_DB_TYPE_MAP } from '../../database-form.constants';
+import {
+  DB_WIZARD_DEFAULTS,
+  NODES_DB_TYPE_MAP,
+} from '../../database-form.constants';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { StepHeader } from '../step-header/step-header.tsx';
 import { Messages } from './first-step.messages';
@@ -121,6 +124,14 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     setDbVersionsForEngine,
     setValue,
   ]);
+
+  const onDbNamespaceChange = () => {
+    setValue(
+      DbWizardFormFields.monitoringInstance,
+      DB_WIZARD_DEFAULTS.monitoringInstance
+    );
+    setValue(DbWizardFormFields.monitoring, DB_WIZARD_DEFAULTS.monitoring);
+  };
 
   const onDbTypeChange = useCallback(
     (newDbType: DbType) => {
@@ -239,6 +250,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
             mode === 'restoreFromBackup' ||
             loadingDefaultsForEdition
           }
+          onChange={onDbNamespaceChange}
           autoCompleteProps={{
             disableClearable: true,
             isOptionEqualToValue: (option, value) => option === value,
