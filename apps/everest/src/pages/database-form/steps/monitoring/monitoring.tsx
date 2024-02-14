@@ -1,19 +1,13 @@
 import { Alert, Button, FormGroup } from '@mui/material';
 import { AutoCompleteInput, SwitchInput } from '@percona/ui-lib';
+import { useEffect, useState, useMemo } from 'react';
 import {
-  AutoCompleteInput,
-  CopyToClipboardButton,
-  SwitchInput,
-} from '@percona/ui-lib';
-import { useMonitoringInstancesList } from 'hooks/api/monitoring/useMonitoringInstancesList';
-import { useEffect, useMemo } from 'react';
   MONITORING_INSTANCES_QUERY_KEY,
   useCreateMonitoringInstance,
   useMonitoringInstancesList,
 } from 'hooks/api/monitoring/useMonitoringInstancesList';
 import { CreateEditEndpointModal } from 'pages/settings/monitoring-endpoints/createEditModal/create-edit-modal.tsx';
 import { EndpointFormType } from 'pages/settings/monitoring-endpoints/createEditModal/create-edit-modal.types.ts';
-import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import { updateDataAfterCreate } from 'utils/generalOptimisticDataUpdate.ts';
@@ -49,7 +43,7 @@ export const Monitoring = () => {
     (item) => item.name
   );
   const getInstanceOptionLabel = (instanceName: string) => {
-    const instance = monitoringInstances?.find(
+    const instance = availableMonitoringInstances?.find(
       (inst) => inst.name === instanceName
     );
 
@@ -61,6 +55,7 @@ export const Monitoring = () => {
   };
 
   const handleSubmitModal = (
+    // @ts-ignore
     _,
     { name, url, targetNamespaces, ...pmmData }: EndpointFormType
   ) => {
@@ -107,7 +102,7 @@ export const Monitoring = () => {
         pageTitle={Messages.monitoring}
         pageDescription={Messages.caption}
       />
-      {!monitoringInstances?.length && (
+      {!availableMonitoringInstances?.length && (
         <Alert
           severity="info"
           sx={{ mt: 1 }}
@@ -122,7 +117,7 @@ export const Monitoring = () => {
             </Button>
           }
         >
-          {Messages.alertText}
+          {Messages.alertText(selectedNamespace)}
         </Alert>
       )}
       <FormGroup sx={{ mt: 2 }}>
@@ -130,10 +125,10 @@ export const Monitoring = () => {
           label={Messages.monitoringEnabled}
           name={DbWizardFormFields.monitoring}
           switchFieldProps={{
-            disabled: !monitoringInstances?.length,
+            disabled: !availableMonitoringInstances?.length,
           }}
         />
-        {monitoring && monitoringInstances?.length && (
+        {monitoring && availableMonitoringInstances?.length && (
           <AutoCompleteInput
             name={DbWizardFormFields.monitoringInstance}
             label={Messages.monitoringInstanceLabel}
