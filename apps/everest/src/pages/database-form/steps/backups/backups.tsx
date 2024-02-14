@@ -121,6 +121,7 @@ export const Backups = ({ alreadyVisited }: StepProps) => {
       {backupsEnabled && availableBackupStorages.length === 0 && (
         <Alert
           severity="warning"
+          data-testid="no-storage-message"
           action={
             <Button
               color="inherit"

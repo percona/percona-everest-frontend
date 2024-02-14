@@ -12,6 +12,7 @@ const mocks = vi.hoisted(() => {
           type: 'type1',
           url: '127.0.0.1',
           name: 'PMM-local',
+          targetNamespaces: ['the-dark-side'],
         },
       ],
     }),
