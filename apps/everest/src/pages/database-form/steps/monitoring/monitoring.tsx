@@ -19,8 +19,8 @@ import { Messages } from './monitoring.messages';
 export const Monitoring = () => {
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
   const queryClient = useQueryClient();
-  const { watch, getValues } = useFormContext();
-  const monitoring = watch(DbWizardFormFields.monitoring);
+  const { watch, getValues, trigger } = useFormContext();
+  const monitoring: boolean = watch(DbWizardFormFields.monitoring);
   const selectedNamespace = watch(DbWizardFormFields.k8sNamespace);
 
   const mode = useDatabasePageMode();
@@ -84,6 +84,7 @@ export const Monitoring = () => {
         );
       }
     }
+
     if (
       (mode === 'edit' || mode === 'restoreFromBackup') &&
       availableMonitoringInstances?.length &&
@@ -94,7 +95,9 @@ export const Monitoring = () => {
         availableMonitoringInstances[0].name
       );
     }
-  }, [monitoring]);
+
+    trigger();
+  }, [monitoring, availableMonitoringInstances]);
 
   return (
     <>
@@ -124,11 +127,11 @@ export const Monitoring = () => {
         <SwitchInput
           label={Messages.monitoringEnabled}
           name={DbWizardFormFields.monitoring}
-          switchFieldProps={{
-            disabled: !availableMonitoringInstances?.length,
-          }}
+          // switchFieldProps={{
+          //   disabled: !availableMonitoringInstances?.length,
+          // }}
         />
-        {monitoring && availableMonitoringInstances?.length && (
+        {monitoring && !!availableMonitoringInstances?.length && (
           <AutoCompleteInput
             name={DbWizardFormFields.monitoringInstance}
             label={Messages.monitoringInstanceLabel}

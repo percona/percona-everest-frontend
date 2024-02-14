@@ -90,6 +90,8 @@ export const DatabasePage = () => {
     clearErrors,
   } = methods;
 
+  const formHasErrors = Object.values(errors).length > 0;
+
   useEffect(() => {
     // We disable the inputs on first step to make sure user doesn't change anything before all data is loaded
     // When users change the inputs, it means all data was loaded and we should't change the defaults anymore at this point
@@ -263,7 +265,7 @@ export const DatabasePage = () => {
                 <Button
                   onClick={handleSubmit(onSubmit)}
                   variant="contained"
-                  disabled={isCreating || isUpdating}
+                  disabled={formHasErrors || isCreating || isUpdating}
                   data-testid="db-wizard-submit-button"
                 >
                   {mode === 'edit'
@@ -275,7 +277,7 @@ export const DatabasePage = () => {
                   onClick={handleNext}
                   variant="contained"
                   data-testid="db-wizard-continue-button"
-                  disabled={Object.values(errors).length > 0}
+                  disabled={formHasErrors}
                 >
                   {Messages.continue}
                 </Button>
