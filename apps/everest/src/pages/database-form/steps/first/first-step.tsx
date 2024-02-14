@@ -130,10 +130,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
       DbWizardFormFields.monitoringInstance,
       DB_WIZARD_DEFAULTS.monitoringInstance
     );
-    setValue(
-        DbWizardFormFields.monitoring,
-        DB_WIZARD_DEFAULTS.monitoring,
-    );
+    setValue(DbWizardFormFields.monitoring, DB_WIZARD_DEFAULTS.monitoring);
   };
 
   const onDbTypeChange = useCallback(

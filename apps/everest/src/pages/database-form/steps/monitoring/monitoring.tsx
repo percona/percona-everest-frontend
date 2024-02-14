@@ -5,7 +5,7 @@ import {
   SwitchInput,
 } from '@percona/ui-lib';
 import { useMonitoringInstancesList } from 'hooks/api/monitoring/useMonitoringInstancesList';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { DbWizardFormFields } from '../../database-form.types';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
@@ -23,11 +23,17 @@ export const Monitoring = () => {
   const { data: monitoringInstances, isFetching: monitoringInstancesLoading } =
     useMonitoringInstancesList();
 
-  const monitoringInstancesForSelectedNamespace = (
-    monitoringInstances || []
-  ).filter((item) => item.targetNamespaces.includes(selectedNamespace));
-  const monitoringInstancesOptions =
-    monitoringInstancesForSelectedNamespace.map((item) => item.name);
+  const availableMonitoringInstances = useMemo(
+    () =>
+      (monitoringInstances || []).filter((item) =>
+        item.targetNamespaces.includes(selectedNamespace)
+      ),
+    [monitoringInstances, selectedNamespace]
+  );
+
+  const monitoringInstancesOptions = availableMonitoringInstances.map(
+    (item) => item.name
+  );
   const getInstanceOptionLabel = (instanceName: string) => {
     const instance = monitoringInstances?.find(
       (inst) => inst.name === instanceName
@@ -40,21 +46,21 @@ export const Monitoring = () => {
     const selectedInstance = getValues(DbWizardFormFields.monitoringInstance);
 
     if (mode === 'new') {
-      if (monitoring && monitoringInstancesForSelectedNamespace?.length) {
+      if (monitoring && availableMonitoringInstances?.length) {
         setValue(
           DbWizardFormFields.monitoringInstance,
-          monitoringInstancesForSelectedNamespace[0].name
+          availableMonitoringInstances[0].name
         );
       }
     }
     if (
       (mode === 'edit' || mode === 'restoreFromBackup') &&
-      monitoringInstancesForSelectedNamespace?.length &&
+      availableMonitoringInstances?.length &&
       !selectedInstance
     ) {
       setValue(
         DbWizardFormFields.monitoringInstance,
-        monitoringInstancesForSelectedNamespace[0].name
+        availableMonitoringInstances[0].name
       );
     }
   }, [monitoring]);

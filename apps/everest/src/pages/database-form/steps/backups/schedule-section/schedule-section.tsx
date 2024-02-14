@@ -1,7 +1,7 @@
 import { DbType } from '@percona/types';
 import { ScheduleForm } from 'components/schedule-form/schedule-form.tsx';
 import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages.ts';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { DbWizardFormFields } from '../../../database-form.types.ts';
 import { useDatabasePageDefaultValues } from '../../../useDatabaseFormDefaultValues.ts';
@@ -16,28 +16,37 @@ export const ScheduleBackupSection = ({
   const { setValue, getFieldState, watch } = useFormContext();
   const { data: backupStorages = [], isFetching } = useBackupStorages();
   const { dbClusterData } = useDatabasePageDefaultValues(mode);
-  const [storageLocationField, dbType] = watch([
+  const [storageLocationField, dbType, selectedNamespace] = watch([
     DbWizardFormFields.storageLocation,
     DbWizardFormFields.dbType,
+    DbWizardFormFields.k8sNamespace,
   ]);
 
+  const availableBackupStorages = useMemo(
+    () =>
+      backupStorages.filter((item) =>
+        item.targetNamespaces.includes(selectedNamespace)
+      ),
+    [selectedNamespace, backupStorages]
+  );
+
   useEffect(() => {
-    if (mode === 'new' && backupStorages?.length > 0) {
+    if (mode === 'new' && availableBackupStorages?.length > 0) {
       setValue(DbWizardFormFields.storageLocation, {
-        name: backupStorages[0].name,
+        name: availableBackupStorages[0].name,
       });
     }
     if (
       (mode === 'edit' || mode === 'restoreFromBackup') &&
-      backupStorages?.length > 0 &&
+      availableBackupStorages?.length > 0 &&
       !!storageLocationField
     ) {
       setValue(DbWizardFormFields.storageLocation, {
-        name: backupStorages[0].name,
+        name: availableBackupStorages[0].name,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [backupStorages, mode]);
+  }, [availableBackupStorages, mode]);
 
   const schedules =
     mode === 'new' ? [] : dbClusterData?.spec?.backup?.schedules || [];
@@ -71,7 +80,7 @@ export const ScheduleBackupSection = ({
       autoFillLocation
       schedules={schedules}
       storageLocationFetching={isFetching}
-      storageLocationOptions={backupStorages}
+      storageLocationOptions={availableBackupStorages}
       disableStorageSelection={mode === 'edit' && dbType === DbType.Mongo}
     />
   );
