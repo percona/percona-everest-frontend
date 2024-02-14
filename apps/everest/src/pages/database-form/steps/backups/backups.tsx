@@ -22,7 +22,7 @@ import {
   useCreateBackupStorage,
 } from 'hooks/api/backup-storages/useBackupStorages';
 import { CreateEditModalStorage } from 'pages/settings/storage-locations/createEditModal/create-edit-modal.tsx';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import { BackupStorage } from 'shared-types/backupStorages.types.ts';
@@ -43,10 +43,20 @@ export const Backups = ({ alreadyVisited }: StepProps) => {
   const { control, watch, setValue, getFieldState, trigger } = useFormContext();
   const { dbClusterData } = useDatabasePageDefaultValues(mode);
   const { data: backupStorages = [] } = useBackupStorages();
-  const [backupsEnabled, dbType] = watch([
+
+  const [backupsEnabled, dbType, selectedNamespace] = watch([
     DbWizardFormFields.backupsEnabled,
     DbWizardFormFields.dbType,
+    DbWizardFormFields.k8sNamespace,
   ]);
+
+  const availableBackupStorages = useMemo(
+    () =>
+      backupStorages.filter((item) =>
+        item.targetNamespaces.includes(selectedNamespace)
+      ),
+    [selectedNamespace, backupStorages]
+  );
 
   // TODO should be removed after https://jira.percona.com/browse/EVEREST-509 + DEFAULT_VALUES should be changed from false to true for all databases
   useEffect(() => {
@@ -108,9 +118,10 @@ export const Backups = ({ alreadyVisited }: StepProps) => {
           sx: { mt: 1 },
         }}
       />
-      {backupsEnabled && backupStorages.length === 0 && (
+      {backupsEnabled && availableBackupStorages.length === 0 && (
         <Alert
           severity="warning"
+          data-testid="no-storage-message"
           action={
             <Button
               color="inherit"
@@ -121,10 +132,10 @@ export const Backups = ({ alreadyVisited }: StepProps) => {
             </Button>
           }
         >
-          {Messages.noStoragesMessage}
+          {Messages.noStoragesMessage(selectedNamespace)}
         </Alert>
       )}
-      {backupsEnabled && backupStorages.length > 0 && (
+      {backupsEnabled && availableBackupStorages.length > 0 && (
         <>
           {(mode === 'new' || mode === 'restoreFromBackup') && (
             <Alert sx={{ mt: 1 }} severity="info">
