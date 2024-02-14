@@ -30,7 +30,10 @@ import { useKubernetesClusterInfo } from 'hooks/api/kubernetesClusters/useKubern
 import { useFormContext } from 'react-hook-form';
 import { DbEngineToolStatus } from 'shared-types/dbEngines.types';
 import { DbWizardFormFields, StepProps } from '../../database-form.types';
-import { NODES_DB_TYPE_MAP } from '../../database-form.constants';
+import {
+  DB_WIZARD_DEFAULTS,
+  NODES_DB_TYPE_MAP,
+} from '../../database-form.constants';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { StepHeader } from '../step-header/step-header.tsx';
 import { Messages } from './first-step.messages';
@@ -78,17 +81,23 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     });
   }, []);
 
+  const setDbVersionsForEngine = useCallback(() => {
+    const newVersions = dbEngines.find((engine) => engine.type === dbEngine);
+
+    setDbVersions(newVersions);
+  }, [dbEngine, dbEngines]);
+
   const updateDbVersions = useCallback(() => {
     const { isDirty: dbVersionDirty } = getFieldState(
       DbWizardFormFields.dbVersion
     );
-    const newVersions = dbEngines.find((engine) => engine.type === dbEngine);
+    setDbVersionsForEngine();
 
     // Safety check
     if (
       dbVersionDirty ||
-      !newVersions ||
-      !newVersions.availableVersions.engine.length
+      !dbVersions ||
+      !dbVersions.availableVersions.engine.length
     ) {
       return;
     }
@@ -97,18 +106,32 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
       ((mode === 'edit' || mode === 'restoreFromBackup') && !dbVersion) ||
       mode === 'new'
     ) {
-      const recommendedVersion = newVersions.availableVersions.engine.find(
+      const recommendedVersion = dbVersions.availableVersions.engine.find(
         (version) => version.status === DbEngineToolStatus.RECOMMENDED
       );
       setValue(
         DbWizardFormFields.dbVersion,
         recommendedVersion
           ? recommendedVersion.version
-          : newVersions.availableVersions.engine[0].version
+          : dbVersions.availableVersions.engine[0].version
       );
     }
-    setDbVersions(newVersions);
-  }, [dbEngine, dbEngines, dbVersion, getFieldState, mode, setValue]);
+  }, [
+    dbVersion,
+    dbVersions,
+    getFieldState,
+    mode,
+    setDbVersionsForEngine,
+    setValue,
+  ]);
+
+  const onDbNamespaceChange = () => {
+    setValue(
+      DbWizardFormFields.monitoringInstance,
+      DB_WIZARD_DEFAULTS.monitoringInstance
+    );
+    setValue(DbWizardFormFields.monitoring, DB_WIZARD_DEFAULTS.monitoring);
+  };
 
   const onDbTypeChange = useCallback(
     (newDbType: DbType) => {
@@ -160,15 +183,22 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     if (mode !== 'new' || dbEngines.length <= 0) {
       return;
     }
+    const { isDirty: isNameDirty } = getFieldState(DbWizardFormFields.dbName);
+    const defaultDbType = dbEngineToDbType(dbEngines[0].type);
 
     if (!dbType) {
-      const defaultDbType = dbEngineToDbType(dbEngines[0].type);
       if (defaultDbType) {
-        setValue(
-          DbWizardFormFields.dbType,
-          dbEngineToDbType(dbEngines[0].type)
-        );
+        setValue(DbWizardFormFields.dbType, defaultDbType);
         setRandomDbName(defaultDbType);
+      }
+    } else {
+      if (!dbEngines.find((engine) => engine.type === dbEngine)) {
+        if (defaultDbType) {
+          setValue(DbWizardFormFields.dbType, defaultDbType);
+          if (!isNameDirty) {
+            setRandomDbName(defaultDbType);
+          }
+        }
       }
     }
     updateDbVersions();
@@ -191,6 +221,10 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
       );
     }
   }, [clusterInfo]);
+
+  useEffect(() => {
+    setDbVersionsForEngine();
+  }, [setDbVersionsForEngine]);
 
   useEffect(() => {
     const { isTouched: k8sNamespaceTouched } = getFieldState(
@@ -223,6 +257,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
             mode === 'restoreFromBackup' ||
             loadingDefaultsForEdition
           }
+          onChange={onDbNamespaceChange}
           autoCompleteProps={{
             disableClearable: true,
             isOptionEqualToValue: (option, value) => option === value,

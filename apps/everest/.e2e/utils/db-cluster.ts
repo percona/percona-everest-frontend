@@ -56,6 +56,7 @@ export const createDbClusterFn = async (
     kind: 'DatabaseCluster',
     metadata: {
       name: customOptions?.dbName || 'db-cluster-test-ui',
+      namespace,
     },
     spec: {
       engine: {
