@@ -104,7 +104,7 @@ export const Monitoring = () => {
       />
       {!availableMonitoringInstances?.length && (
         <Alert
-          severity="info"
+          severity="warning"
           sx={{ mt: 1 }}
           data-testid="monitoring-warning"
           action={
