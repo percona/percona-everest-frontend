@@ -1,23 +1,31 @@
-import { Alert, FormGroup, Typography } from '@mui/material';
+import { Alert, Button, FormGroup } from '@mui/material';
+import { AutoCompleteInput, SwitchInput } from '@percona/ui-lib';
+import { useEffect, useState, useMemo } from 'react';
 import {
-  AutoCompleteInput,
-  CopyToClipboardButton,
-  SwitchInput,
-} from '@percona/ui-lib';
-import { useMonitoringInstancesList } from 'hooks/api/monitoring/useMonitoringInstancesList';
-import { useEffect, useMemo } from 'react';
+  MONITORING_INSTANCES_QUERY_KEY,
+  useCreateMonitoringInstance,
+  useMonitoringInstancesList,
+} from 'hooks/api/monitoring/useMonitoringInstancesList';
+import { CreateEditEndpointModal } from 'pages/settings/monitoring-endpoints/createEditModal/create-edit-modal.tsx';
+import { EndpointFormType } from 'pages/settings/monitoring-endpoints/createEditModal/create-edit-modal.types.ts';
 import { useFormContext } from 'react-hook-form';
+import { useQueryClient } from 'react-query';
+import { updateDataAfterCreate } from 'utils/generalOptimisticDataUpdate.ts';
 import { DbWizardFormFields } from '../../database-form.types';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { StepHeader } from '../step-header/step-header.tsx';
 import { Messages } from './monitoring.messages';
 
 export const Monitoring = () => {
+  const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
+  const queryClient = useQueryClient();
   const { watch, getValues } = useFormContext();
   const monitoring = watch(DbWizardFormFields.monitoring);
   const selectedNamespace = watch(DbWizardFormFields.k8sNamespace);
 
   const mode = useDatabasePageMode();
+  const { mutate: createMonitoringInstance, isLoading: creatingInstance } =
+    useCreateMonitoringInstance();
   const { setValue } = useFormContext();
 
   const { data: monitoringInstances, isFetching: monitoringInstancesLoading } =
@@ -35,11 +43,34 @@ export const Monitoring = () => {
     (item) => item.name
   );
   const getInstanceOptionLabel = (instanceName: string) => {
-    const instance = monitoringInstances?.find(
+    const instance = availableMonitoringInstances?.find(
       (inst) => inst.name === instanceName
     );
 
     return instance ? `${instance.name} (${instance.url})` : '';
+  };
+
+  const handleCloseModal = () => {
+    setOpenCreateEditModal(false);
+  };
+
+  const handleSubmitModal = (
+    // @ts-ignore
+    _,
+    { name, url, targetNamespaces, ...pmmData }: EndpointFormType
+  ) => {
+    createMonitoringInstance(
+      { name, url, type: 'pmm', targetNamespaces, pmm: { ...pmmData } },
+      {
+        onSuccess: (newInstance) => {
+          updateDataAfterCreate(
+            queryClient,
+            MONITORING_INSTANCES_QUERY_KEY
+          )(newInstance);
+          handleCloseModal();
+        },
+      }
+    );
   };
 
   useEffect(() => {
@@ -71,38 +102,22 @@ export const Monitoring = () => {
         pageTitle={Messages.monitoring}
         pageDescription={Messages.caption}
       />
-      {!monitoringInstances?.length && (
-        <Alert severity="info" sx={{ mt: 1 }} data-testid="monitoring-warning">
-          {Messages.alertText}
-          <Alert
-            severity="info"
-            icon={false}
-            sx={{
-              mt: 0.5,
-              mb: 0.5,
-              px: 0,
-              maxWidth: '260px',
-              border: 'none',
-              '& .MuiAlert-action': {
-                alignItems: 'center',
-                pt: 0,
-                px: 0,
-              },
-            }}
-            action={
-              <CopyToClipboardButton
-                buttonProps={{ size: 'small', color: 'primary' }}
-                textToCopy={Messages.command}
-              />
-            }
-          >
-            <Typography
-              variant="button"
-              sx={{ fontSize: '15px', fontWeight: 600 }}
+      {!availableMonitoringInstances?.length && (
+        <Alert
+          severity="info"
+          sx={{ mt: 1 }}
+          data-testid="monitoring-warning"
+          action={
+            <Button
+              color="inherit"
+              size="small"
+              onClick={() => setOpenCreateEditModal(true)}
             >
-              {Messages.command}
-            </Typography>
-          </Alert>
+              {Messages.addMonitoringEndpoint}
+            </Button>
+          }
+        >
+          {Messages.alertText(selectedNamespace)}
         </Alert>
       )}
       <FormGroup sx={{ mt: 2 }}>
@@ -110,10 +125,10 @@ export const Monitoring = () => {
           label={Messages.monitoringEnabled}
           name={DbWizardFormFields.monitoring}
           switchFieldProps={{
-            disabled: !monitoringInstances?.length,
+            disabled: !availableMonitoringInstances?.length,
           }}
         />
-        {monitoring && monitoringInstances?.length && (
+        {monitoring && availableMonitoringInstances?.length && (
           <AutoCompleteInput
             name={DbWizardFormFields.monitoringInstance}
             label={Messages.monitoringInstanceLabel}
@@ -125,6 +140,14 @@ export const Monitoring = () => {
                 <li {...props}>{getInstanceOptionLabel(option)}</li>
               ),
             }}
+          />
+        )}
+        {openCreateEditModal && (
+          <CreateEditEndpointModal
+            open={openCreateEditModal}
+            handleClose={handleCloseModal}
+            handleSubmit={handleSubmitModal}
+            isLoading={creatingInstance}
           />
         )}
       </FormGroup>
