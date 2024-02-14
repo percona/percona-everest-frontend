@@ -5,26 +5,35 @@ import {
   SwitchInput,
 } from '@percona/ui-lib';
 import { useMonitoringInstancesList } from 'hooks/api/monitoring/useMonitoringInstancesList';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { DbWizardFormFields } from '../../database-form.types';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { StepHeader } from '../step-header/step-header.tsx';
-import { Messages } from './fifth-step.messages';
+import { Messages } from './monitoring.messages';
 
-export const FifthStep = () => {
+export const Monitoring = () => {
   const { watch, getValues } = useFormContext();
   const monitoring = watch(DbWizardFormFields.monitoring);
+  const selectedNamespace = watch(DbWizardFormFields.k8sNamespace);
+
   const mode = useDatabasePageMode();
   const { setValue } = useFormContext();
 
   const { data: monitoringInstances, isFetching: monitoringInstancesLoading } =
     useMonitoringInstancesList();
 
-  const monitoringInstancesOptions = (monitoringInstances || []).map(
-    (instance) => instance.name
+  const availableMonitoringInstances = useMemo(
+    () =>
+      (monitoringInstances || []).filter((item) =>
+        item.targetNamespaces.includes(selectedNamespace)
+      ),
+    [monitoringInstances, selectedNamespace]
   );
 
+  const monitoringInstancesOptions = availableMonitoringInstances.map(
+    (item) => item.name
+  );
   const getInstanceOptionLabel = (instanceName: string) => {
     const instance = monitoringInstances?.find(
       (inst) => inst.name === instanceName
@@ -37,21 +46,21 @@ export const FifthStep = () => {
     const selectedInstance = getValues(DbWizardFormFields.monitoringInstance);
 
     if (mode === 'new') {
-      if (monitoring && monitoringInstances?.length) {
+      if (monitoring && availableMonitoringInstances?.length) {
         setValue(
           DbWizardFormFields.monitoringInstance,
-          monitoringInstances[0].name
+          availableMonitoringInstances[0].name
         );
       }
     }
     if (
       (mode === 'edit' || mode === 'restoreFromBackup') &&
-      monitoringInstances?.length &&
+      availableMonitoringInstances?.length &&
       !selectedInstance
     ) {
       setValue(
         DbWizardFormFields.monitoringInstance,
-        monitoringInstances[0].name
+        availableMonitoringInstances[0].name
       );
     }
   }, [monitoring]);
