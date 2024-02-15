@@ -27,19 +27,19 @@ import {
 import { dbEngineToDbType, dbTypeToDbEngine } from '@percona/utils';
 import { useDbEngines } from 'hooks/api/db-engines/useDbEngines';
 import { useKubernetesClusterInfo } from 'hooks/api/kubernetesClusters/useKubernetesClusterInfo';
+import { useNamespaces } from 'hooks/api/namespaces/useNamespaces';
 import { useFormContext } from 'react-hook-form';
 import { DbEngineToolStatus } from 'shared-types/dbEngines.types';
-import { DbWizardFormFields, StepProps } from '../../database-form.types';
 import {
   DB_WIZARD_DEFAULTS,
   NODES_DB_TYPE_MAP,
 } from '../../database-form.constants';
+import { DbWizardFormFields, StepProps } from '../../database-form.types';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { StepHeader } from '../step-header/step-header.tsx';
-import { Messages } from './first-step.messages';
 import { DEFAULT_NODES } from './first-step.constants';
+import { Messages } from './first-step.messages';
 import { generateShortUID } from './utils';
-import { useNamespaces } from 'hooks/api/namespaces/useNamespaces';
 
 // TODO change to api request's result
 // const dbEnvironmentOptions = [
@@ -106,9 +106,11 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
       ((mode === 'edit' || mode === 'restoreFromBackup') && !dbVersion) ||
       mode === 'new'
     ) {
-      const recommendedVersion = dbVersions.availableVersions.engine.find(
-        (version) => version.status === DbEngineToolStatus.RECOMMENDED
-      );
+      const recommendedVersion = dbVersions.availableVersions.engine
+        .slice()
+        .reverse()
+        .find((version) => version.status === DbEngineToolStatus.RECOMMENDED);
+
       setValue(
         DbWizardFormFields.dbVersion,
         recommendedVersion
