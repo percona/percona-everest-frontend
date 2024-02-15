@@ -75,7 +75,7 @@ const PITRStep = () => {
   }, [availableBackupStorages, mode, pitrEnabled]);
 
   useEffect(() => {
-    if (dbType === DbType.Postresql || backupsEnabled) {
+    if (dbType === DbType.Postresql && backupsEnabled) {
       setValue(DbWizardFormFields.pitrEnabled, true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
