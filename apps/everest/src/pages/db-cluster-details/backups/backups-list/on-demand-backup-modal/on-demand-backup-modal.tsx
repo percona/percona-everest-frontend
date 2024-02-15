@@ -24,9 +24,9 @@ export const OnDemandBackupModal = ({
   handleClose,
 }: OnDemandBackupModalProps) => {
   const queryClient = useQueryClient();
-  const { dbClusterName } = useParams();
+  const { dbClusterName, namespace = '' } = useParams();
   const { mutate: createBackupOnDemand, isLoading: creatingBackup } =
-    useCreateBackupOnDemand(dbClusterName!);
+    useCreateBackupOnDemand(dbClusterName!, namespace);
 
   const handleSubmit = (data: BackupFormData) => {
     createBackupOnDemand(data, {

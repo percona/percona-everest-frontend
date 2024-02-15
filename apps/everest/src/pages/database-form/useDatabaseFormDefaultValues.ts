@@ -36,11 +36,12 @@ export const useDatabasePageDefaultValues = (
   const shouldRetrieveDbClusterData =
     (mode === 'edit' || mode === 'restoreFromBackup') &&
     !!state?.selectedDbCluster;
+  const namespace = shouldRetrieveDbClusterData ? state?.namespace : null;
   const {
     data: dbCluster,
     status: dbClusterRequestStatus,
     isFetching,
-  } = useDbCluster(state?.selectedDbCluster, {
+  } = useDbCluster(state?.selectedDbCluster, namespace, {
     enabled: shouldRetrieveDbClusterData,
   });
 
@@ -49,7 +50,7 @@ export const useDatabasePageDefaultValues = (
     mode === 'new'
       ? DB_WIZARD_DEFAULTS
       : dbClusterRequestStatus === 'success'
-      ? DbClusterPayloadToFormValues(dbCluster, mode)
+      ? DbClusterPayloadToFormValues(dbCluster, mode, namespace)
       : { ...DB_WIZARD_DEFAULTS, [DbWizardFormFields.dbVersion]: '' }
   );
 
@@ -57,8 +58,10 @@ export const useDatabasePageDefaultValues = (
     // dbClusterRequestStatus === 'success' when the request is enabled, which only happens if shouldRetrieveDbClusterData === true
     // hence, no need to re-check mode and so on here
     if (dbClusterRequestStatus === 'success' && dbCluster)
-      setDefaultValues(DbClusterPayloadToFormValues(dbCluster, mode));
-  }, [dbCluster, dbClusterRequestStatus, mode]);
+      setDefaultValues(
+        DbClusterPayloadToFormValues(dbCluster, mode, namespace)
+      );
+  }, [dbCluster, dbClusterRequestStatus, mode, namespace]);
 
   return {
     defaultValues,

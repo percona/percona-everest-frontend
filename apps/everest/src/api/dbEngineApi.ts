@@ -15,8 +15,10 @@
 import { GetDbEnginesPayload } from 'shared-types/dbEngines.types';
 import { api } from './api';
 
-export const getDbEnginesFn = async () => {
-  const response = await api.get<GetDbEnginesPayload>(`/database-engines`);
+export const getDbEnginesFn = async (namespace: string) => {
+  const response = await api.get<GetDbEnginesPayload>(
+    `/namespaces/${namespace}/database-engines`
+  );
 
   return response.data;
 };

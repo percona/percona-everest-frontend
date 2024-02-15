@@ -27,8 +27,6 @@ import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
 import { StatusField } from 'components/status-field/status-field';
 import { useDbActions } from 'hooks/api/db-cluster/useDbActions';
 import { useDeleteDbCluster } from 'hooks/api/db-cluster/useDeleteDbCluster';
-import { DbClusterTableElement } from './dbClusterView.types';
-import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
 import { type MRT_ColumnDef } from 'material-react-table';
 import { RestoreDbModal } from 'modals';
 import { useMemo, useState } from 'react';
@@ -41,16 +39,21 @@ import {
   convertDbClusterPayloadToTableFormat,
 } from './DbClusterView.utils';
 import { Messages } from './dbClusterView.messages';
+import { DbClusterTableElement } from './dbClusterView.types';
 import { DbTypeIconProvider } from './dbTypeIconProvider/DbTypeIconProvider';
 import { ExpandedRow } from './expandedRow/ExpandedRow';
+import { useDBClustersForNamespaces } from '../../hooks/api/db-clusters/useDbClusters';
 
 export const DbClusterView = () => {
   const [isNewClusterMode, setIsNewClusterMode] = useState(false);
-  const { data: dbClusters = [], isLoading: dbClustersLoading } =
-    useDbClusters();
+  const dbClustersResults = useDBClustersForNamespaces();
+  const dbClustersLoading = dbClustersResults.some(
+    (result) => result.queryResult.isLoading
+  );
+
   const tableData = useMemo(
-    () => convertDbClusterPayloadToTableFormat(dbClusters),
-    [dbClusters]
+    () => convertDbClusterPayloadToTableFormat(dbClustersResults),
+    [dbClustersResults]
   );
 
   const { isLoading: deletingCluster } = useDeleteDbCluster();
@@ -116,6 +119,11 @@ export const DbClusterView = () => {
         id: 'nodes',
         header: 'Number of nodes',
       },
+      {
+        accessorKey: 'namespace',
+        id: 'namespace',
+        header: 'Namespaces',
+      },
       // {
       //   accessorKey: 'backupsEnabled',
       //   header: 'Backups',
@@ -147,7 +155,10 @@ export const DbClusterView = () => {
               key={0}
               component={Link}
               to="/databases/edit"
-              state={{ selectedDbCluster: row.original.databaseName! }}
+              state={{
+                selectedDbCluster: row.original.databaseName!,
+                namespace: row.original.namespace,
+              }}
               sx={{
                 m: 0,
                 display: 'flex',
@@ -261,7 +272,9 @@ export const DbClusterView = () => {
           muiTableBodyRowProps={({ row, isDetailPanel }) => ({
             onClick: () => {
               if (!isDetailPanel) {
-                navigate(`/databases/${row.original.databaseName}/overview`);
+                navigate(
+                  `/databases/${row.original.namespace}/${row.original.databaseName}/overview`
+                );
               }
             },
             sx: {
@@ -288,6 +301,7 @@ export const DbClusterView = () => {
       {openRestoreDialog && (
         <RestoreDbModal
           dbCluster={selectedDbCluster!}
+          namespace={selectedDbCluster?.metadata.namespace || ''}
           isOpen
           closeModal={handleCloseRestoreDialog}
           isNewClusterMode={isNewClusterMode}

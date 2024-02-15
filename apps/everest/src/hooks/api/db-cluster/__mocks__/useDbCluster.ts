@@ -23,7 +23,7 @@ export const useDbCluster = () => ({
       kind: 'DatabaseCluster',
       metadata: {
         name: 'mysql-mkg',
-        namespace: 'percona-everest',
+        namespace: 'the-dark-side',
       },
       spec: {
         allowUnsafeConfiguration: true,

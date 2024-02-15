@@ -21,19 +21,19 @@ import {
   useCreateBackupStorage,
 } from 'hooks/api/backup-storages/useBackupStorages';
 import { CreateEditModalStorage } from 'pages/settings/storage-locations/createEditModal/create-edit-modal.tsx';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import { BackupStorage } from 'shared-types/backupStorages.types.ts';
 import { updateDataAfterCreate } from 'utils/generalOptimisticDataUpdate.ts';
-import { DbWizardFormFields } from '../../database-form.types';
+import { DbWizardFormFields, StepProps } from '../../database-form.types';
 import { useDatabasePageDefaultValues } from '../../useDatabaseFormDefaultValues.ts';
 import { useDatabasePageMode } from '../../useDatabasePageMode.ts';
 import { StepHeader } from '../step-header/step-header.tsx';
 import { Messages } from './backups.messages.ts';
 import { ScheduleBackupSection } from './schedule-section/schedule-section.tsx';
 
-export const Backups = () => {
+export const Backups = ({ alreadyVisited }: StepProps) => {
   const queryClient = useQueryClient();
   const { mutate: createBackupStorage, isLoading: creatingBackupStorage } =
     useCreateBackupStorage();
@@ -42,10 +42,20 @@ export const Backups = () => {
   const { control, watch, setValue, getFieldState, trigger } = useFormContext();
   const { dbClusterData } = useDatabasePageDefaultValues(mode);
   const { data: backupStorages = [] } = useBackupStorages();
-  const [backupsEnabled, dbType] = watch([
+
+  const [backupsEnabled, dbType, selectedNamespace] = watch([
     DbWizardFormFields.backupsEnabled,
     DbWizardFormFields.dbType,
+    DbWizardFormFields.k8sNamespace,
   ]);
+
+  const availableBackupStorages = useMemo(
+    () =>
+      backupStorages.filter((item) =>
+        item.targetNamespaces.includes(selectedNamespace)
+      ),
+    [selectedNamespace, backupStorages]
+  );
 
   // TODO should be removed after https://jira.percona.com/browse/EVEREST-509 + DEFAULT_VALUES should be changed from false to true for all databases
   useEffect(() => {
@@ -107,9 +117,10 @@ export const Backups = () => {
           sx: { mt: 1 },
         }}
       />
-      {backupsEnabled && backupStorages.length === 0 && (
+      {backupsEnabled && availableBackupStorages.length === 0 && (
         <Alert
           severity="warning"
+          data-testid="no-storage-message"
           action={
             <Button
               color="inherit"
@@ -120,10 +131,10 @@ export const Backups = () => {
             </Button>
           }
         >
-          {Messages.noStoragesMessage}
+          {Messages.noStoragesMessage(selectedNamespace)}
         </Alert>
       )}
-      {backupsEnabled && backupStorages.length > 0 && (
+      {backupsEnabled && availableBackupStorages.length > 0 && (
         <>
           {(mode === 'new' || mode === 'restoreFromBackup') && (
             <Alert sx={{ mt: 1 }} severity="info">
@@ -135,7 +146,9 @@ export const Backups = () => {
               {Messages.youHaveMultipleSchedules}
             </Alert>
           )}
-          {!scheduleDisabled && <ScheduleBackupSection />}
+          {!scheduleDisabled && (
+            <ScheduleBackupSection enableNameGeneration={!alreadyVisited} />
+          )}
         </>
       )}
       {!backupsEnabled && (

@@ -19,7 +19,7 @@ import { SwitchInput } from '@percona/ui-lib';
 import { AutoCompleteAutoFill } from 'components/auto-complete-auto-fill/auto-complete-auto-fill';
 import { Messages as StorageLocationMessages } from 'components/schedule-form/schedule-form.messages';
 import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { DbWizardFormFields } from '../../database-form.types';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
@@ -30,26 +30,36 @@ const PITRStep = () => {
   const mode = useDatabasePageMode();
   const { control, watch, setValue } = useFormContext();
   const { data: backupStorages = [], isFetching } = useBackupStorages();
-  // const { dbClusterData } = useDatabasePageDefaultValues(mode);
+
   const [
     pitrEnabled,
     backupsEnabled,
     pitrStorageLocation,
     dbType,
     storageLocation,
+    selectedNamespace,
   ] = watch([
     DbWizardFormFields.pitrEnabled,
     DbWizardFormFields.backupsEnabled,
     DbWizardFormFields.pitrStorageLocation,
     DbWizardFormFields.dbType,
     DbWizardFormFields.storageLocation,
+    DbWizardFormFields.k8sNamespace,
   ]);
 
+  const availableBackupStorages = useMemo(
+    () =>
+      backupStorages.filter((item) =>
+        item.targetNamespaces.includes(selectedNamespace)
+      ),
+    [selectedNamespace, backupStorages]
+  );
+
   useEffect(() => {
-    if (backupStorages?.length > 0) {
+    if (availableBackupStorages?.length > 0) {
       if (mode === 'new') {
         setValue(DbWizardFormFields.pitrStorageLocation, {
-          name: backupStorages[0].name,
+          name: availableBackupStorages[0].name,
         });
       }
       if (
@@ -57,12 +67,12 @@ const PITRStep = () => {
         !pitrStorageLocation
       ) {
         setValue(DbWizardFormFields.pitrStorageLocation, {
-          name: backupStorages[0].name,
+          name: availableBackupStorages[0].name,
         });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [backupStorages, mode, pitrEnabled]);
+  }, [availableBackupStorages, mode, pitrEnabled]);
 
   useEffect(() => {
     if (dbType === DbType.Postresql || backupsEnabled) {
@@ -113,7 +123,7 @@ const PITRStep = () => {
           name={DbWizardFormFields.pitrStorageLocation}
           label={StorageLocationMessages.storageLocation.label}
           loading={isFetching}
-          options={backupStorages}
+          options={availableBackupStorages}
           isRequired
           enableFillFirst={mode === 'new'}
         />

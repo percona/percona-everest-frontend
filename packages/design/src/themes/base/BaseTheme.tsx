@@ -13,11 +13,6 @@ import {
   ThemeOptions,
 } from '@mui/material';
 import { DatePickerToolbarClassKey } from '@mui/x-date-pickers/DatePicker';
-import {
-  getBackgroundColorForAlertSeverity,
-  getBorderColorForAlertSeverity,
-  getFontColorForAlertSeverity,
-} from './BaseTheme.utils';
 
 declare module '@mui/material/styles' {
   interface PaletteOptions {
@@ -31,11 +26,11 @@ declare module '@mui/material/styles' {
 
   interface Palette extends PaletteOptions {}
   interface SimplePaletteColorOptions {
-    soft?: string;
+    surface?: string;
   }
 
   interface PaletteColor {
-    soft?: string;
+    surface?: string;
   }
   interface TypeAction {
     focusVisible: string;
@@ -93,28 +88,40 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
     mode,
     ...(mode === 'light'
       ? {
+          default: {
+            light: '#4B5468',
+            main: '#3A4151',
+            dark: '#2C323E',
+            contrastText: '#3A4151',
+            surface: 'rgba(44, 50, 62, 0.122)',
+          },
           error: {
             light: '#CC352E',
             main: '#B10810',
             dark: '#920000',
-            contrastText: '#ffffff',
-            soft: '#FFECE9',
+            contrastText: '#920000',
+            surface: '#FFECE9',
           },
           warning: {
-            main: '#FFF2B2',
-            contrastText: '#856E00',
+            light: '#AA7F26',
+            main: '#9C7407',
+            dark: '#654B17',
+            contrastText: '#654B17',
+            surface: '#FFF5C2',
           },
           info: {
             light: '#127AE8',
-            main: '#E7F3FF',
+            main: '#0E5FB5',
             dark: '#0B4A8C',
-            contrastText: '#0056CB',
+            contrastText: '#0B4A8C',
+            surface: '#E8F3FF',
           },
           success: {
-            light: '#127AE8',
-            main: '#E7F6F1',
-            dark: '#0B4A8C',
-            contrastText: '#00745B',
+            light: '#008C71',
+            main: '#00745B',
+            dark: '#005C45',
+            contrastText: '#005C45',
+            surface: '#E7F6F1',
           },
           text: {
             primary: '#303642',
@@ -140,29 +147,40 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
           },
         }
       : {
+          default: {
+            light: '#FFFFFF',
+            main: '#F0F1F4',
+            dark: '#D1D5DE',
+            contrastText: '#F0F1F4',
+            surface: 'rgba(240, 241, 244, 0.149)',
+          },
           error: {
-            light: '#E2584D',
-            main: '#CC352E',
-            dark: '#B10810',
+            light: '#FEA195',
+            main: '#F37C6F',
+            dark: '#E2584D',
             contrastText: '#FFFFFF',
+            surface: '#E2584D',
           },
           warning: {
-            light: '#FAE7C1',
-            main: '#F5CC00',
-            dark: '#E1B252',
-            contrastText: '#665500',
+            light: '#FFF5C2',
+            main: '#FFEE99',
+            dark: '#FFE770',
+            contrastText: '#654B17',
+            surface: '#FFE770',
           },
           info: {
-            light: '#B6D9FF',
-            main: '#0070E5',
-            dark: '#62AEFF',
+            light: '#439EFF',
+            main: '#1486FF',
+            dark: '#127AE8',
             contrastText: '#FFFFFF',
+            surface: '#127AE8',
           },
           success: {
-            light: '#A0EADC',
-            main: '#00745B',
-            dark: '#2CBEA2',
+            light: '#51BAA2',
+            main: '#00A489',
+            dark: '#008C71',
             contrastText: '#FFFFFF',
+            surface: '#008C71',
           },
           text: {
             primary: '#FFFFFF',
@@ -623,14 +641,25 @@ const baseThemeOptions = (mode: PaletteMode): ThemeOptions => ({
           borderRadius: '4px',
           borderWidth: '1px',
           borderStyle: 'solid',
-          borderColor: getBorderColorForAlertSeverity(severity, theme),
-          backgroundColor: getBackgroundColorForAlertSeverity(severity, theme),
+          borderColor:
+            theme.palette.mode === 'light'
+              ? 'rgba(0, 0, 0, 0.059)'
+              : 'transparent',
+          backgroundColor: theme.palette[severity!].surface,
         }),
         icon: ({ theme, ownerState: { severity } }) => ({
-          color: `${getFontColorForAlertSeverity(severity, theme)} !important`,
+          color: `${theme.palette[severity!].contrastText} !important`,
         }),
         message: ({ theme, ownerState: { severity } }) => ({
-          color: getFontColorForAlertSeverity(severity, theme),
+          color: theme.palette[severity!].contrastText,
+        }),
+      },
+    },
+    MuiChip: {
+      styleOverrides: {
+        filled: ({ theme, ownerState: { color } }) => ({
+          // @ts-ignore
+          backgroundColor: theme.palette[color]?.surface,
         }),
       },
     },

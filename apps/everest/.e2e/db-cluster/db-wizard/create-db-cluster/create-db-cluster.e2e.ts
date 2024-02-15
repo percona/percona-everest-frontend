@@ -22,6 +22,8 @@ import { backupsStepCheck } from './steps/backups-step';
 import { basicInformationStepCheck } from './steps/basic-information-step';
 import { pitrStepCheck } from './steps/pitr-step';
 import { resourcesStepCheck } from './steps/resources-step';
+import { getNamespacesFn } from '../../../utils/namespaces';
+import { deleteDbClusterFn } from '../../../utils/db-cluster';
 
 test.describe('DB Cluster creation', () => {
   let engineVersions = {
@@ -31,10 +33,13 @@ test.describe('DB Cluster creation', () => {
   };
   let storageClasses = [];
   // let monitoringInstancesList = [];
+  let namespace = '';
 
   test.beforeAll(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
-    engineVersions = await getEnginesVersions(token, request);
+    const namespaces = await getNamespacesFn(token, request);
+    namespace = namespaces[0];
+    engineVersions = await getEnginesVersions(token, namespaces[0], request);
 
     const { storageClassNames = [] } = await getClusterDetailedInfo(
       token,
@@ -61,6 +66,8 @@ test.describe('DB Cluster creation', () => {
   test('Cluster creation', async ({ page, request }) => {
     const clusterName = 'db-cluster-ui-test';
     const token = await getTokenFromLocalStorage();
+    let dbName = '';
+    let scheduleName = '';
 
     expect(storageClasses.length).toBeGreaterThan(0);
 
@@ -70,6 +77,9 @@ test.describe('DB Cluster creation', () => {
       storageClasses,
       clusterName
     );
+
+    dbName = await page.getByTestId('text-input-db-name').inputValue();
+
     await page.getByTestId('db-wizard-continue-button').click();
     await expect(page.getByText('Number of nodes: 3')).toBeVisible();
 
@@ -77,6 +87,9 @@ test.describe('DB Cluster creation', () => {
     await page.getByTestId('db-wizard-continue-button').click();
 
     await backupsStepCheck(page);
+    scheduleName = await page
+      .getByTestId('text-input-schedule-name')
+      .inputValue();
     await page.getByTestId('db-wizard-continue-button').click();
 
     await pitrStepCheck(page);
@@ -89,6 +102,11 @@ test.describe('DB Cluster creation', () => {
     await page.getByTestId('button-edit-preview-basic-information').click();
     // Here we test that version wasn't reset to default
     await expect(page.getByText('Version: 5.0.7-6')).toBeVisible();
+
+    // Make sure name doesn't change when we go back to first step
+    expect(await page.getByTestId('text-input-db-name').inputValue()).toBe(
+      dbName
+    );
     await page.getByTestId('postgresql-toggle-button').click();
     await expect(page.getByText('Number of nodes: 2')).toBeVisible();
     // Now we change the number of nodes
@@ -99,6 +117,13 @@ test.describe('DB Cluster creation', () => {
     // Because 2 nodes is not valid for MongoDB, the default will be picked
     await page.getByTestId('mongodb-toggle-button').click();
     await expect(page.getByText('Number of nodes: 3')).toBeVisible();
+    await page.getByTestId('button-edit-preview-backups').click();
+
+    // Now we make sure schedule name hasn't changed
+    expect(
+      await page.getByTestId('text-input-schedule-name').inputValue()
+    ).toBe(scheduleName);
+
     await page.getByTestId('button-edit-preview-monitoring').click();
 
     // await monitoringStepCheck(page, monitoringInstancesList);
@@ -109,9 +134,12 @@ test.describe('DB Cluster creation', () => {
       page.getByText('Awesome! Your database is being created!')
     ).toBeVisible();
 
-    const response = await request.get('/v1/database-clusters', {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await request.get(
+      `/v1/namespaces/${namespace}/database-clusters`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
 
     expect(response.ok()).toBeTruthy();
     // TODO replace with correct payload typings from GET DB Clusters
@@ -121,14 +149,12 @@ test.describe('DB Cluster creation', () => {
       (cluster) => cluster.metadata.name === clusterName
     );
 
-    const deleteResponse = await request.delete(
-      `/v1/database-clusters/${addedCluster?.metadata.name}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
+    await deleteDbClusterFn(
+      token,
+      request,
+      addedCluster?.metadata.name,
+      namespace
     );
-    expect(deleteResponse.ok()).toBeTruthy();
-
     //TODO: Add check for PITR ones backend is ready
 
     expect(addedCluster).not.toBeUndefined();

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { TimeValue } from 'components/time-selection/time-selection.types';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -35,24 +35,21 @@ const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
 };
 
 describe('BackupsStep', () => {
-  it('should render nothing when backups are disabled', () => {
+  it('should render nothing when backups are disabled by non-existent storage location', () => {
     render(
       <QueryClientProvider client={queryClient}>
         <TestWrapper>
           <FormProviderWrapper>
-            <Backups />
+            <Backups alreadyVisited={false} loadingDefaultsForEdition={false} />
           </FormProviderWrapper>
         </TestWrapper>
       </QueryClientProvider>
     );
-    expect(
-      screen.getByTestId('text-input-storage-location')
-    ).toBeInTheDocument();
-    expect(
-      screen.getByTestId('switch-input-backups-enabled')
-    ).toBeInTheDocument();
 
-    fireEvent.click(screen.getByTestId('switch-input-backups-enabled'));
+    expect(
+      screen.getByTestId('switch-input-backups-enabled').querySelector('input')
+    ).toBeChecked();
+    expect(screen.getByTestId('no-storage-message')).toBeInTheDocument();
     expect(
       screen.queryByTestId('text-input-storage-location')
     ).not.toBeInTheDocument();

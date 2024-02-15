@@ -58,7 +58,8 @@ const getScheduleInfo = (mode: DbWizardMode, backup?: Backup) => {
 
 export const DbClusterPayloadToFormValues = (
   dbCluster: DbCluster,
-  mode: DbWizardMode
+  mode: DbWizardMode,
+  namespace: string
 ): DbWizardType => {
   const backup = dbCluster?.spec?.backup;
 
@@ -71,6 +72,8 @@ export const DbClusterPayloadToFormValues = (
         ? backup?.pitr?.backupStorageName || null
         : DB_WIZARD_DEFAULTS[DbWizardFormFields.pitrStorageLocation],
     ...getScheduleInfo(mode, backup),
+    [DbWizardFormFields.k8sNamespace]:
+      namespace || DB_WIZARD_DEFAULTS[DbWizardFormFields.k8sNamespace],
     [DbWizardFormFields.dbType]: dbEngineToDbType(
       dbCluster?.spec?.engine?.type
     ),

@@ -105,7 +105,10 @@ export const useDbActions = () => {
 
   const handleConfirmDelete = (redirect?: string) => {
     deleteDbCluster(
-      { dbClusterName: selectedDbCluster!.metadata.name },
+      {
+        dbClusterName: selectedDbCluster!.metadata.name,
+        namespace: selectedDbCluster!.metadata.namespace,
+      },
       {
         onSuccess: (_, variables) => {
           queryClient.setQueryData<GetDbClusterPayload | undefined>(

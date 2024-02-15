@@ -49,4 +49,5 @@ export type DbWizardMode = 'edit' | 'new' | 'restoreFromBackup';
 
 export type StepProps = {
   loadingDefaultsForEdition: boolean;
+  alreadyVisited: boolean;
 };

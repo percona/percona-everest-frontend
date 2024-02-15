@@ -14,13 +14,14 @@
 // limitations under the License.
 
 import { Box, Skeleton, Typography } from '@mui/material';
+import { CopyToClipboardButton } from '@percona/ui-lib';
+import { HiddenPasswordToggle } from 'components/hidden-row';
+import { useDbClusterCredentials } from 'hooks/api/db-cluster/useCreateDbCluster';
 import { MRT_Row } from 'material-react-table';
-import { DbClusterTableElement } from '../dbClusterView.types';
 import { ProxyExposeType } from 'shared-types/dbCluster.types';
 import { Messages } from '../dbClusterView.messages';
+import { DbClusterTableElement } from '../dbClusterView.types';
 import { LabelValue } from './LabelValue';
-import { useDbClusterCredentials } from 'hooks/api/db-cluster/useCreateDbCluster';
-import { HiddenPasswordToggle } from 'components/hidden-row';
 
 export const ExpandedRow = ({
   row,
@@ -33,6 +34,7 @@ export const ExpandedRow = ({
     storage,
     nodes,
     exposetype,
+    namespace,
     databaseName,
     hostName,
     port,
@@ -41,6 +43,7 @@ export const ExpandedRow = ({
   const isExpanded = row.getIsExpanded();
   const { isLoading, isFetching, data } = useDbClusterCredentials(
     databaseName,
+    namespace,
     {
       enabled: !!isExpanded,
       staleTime: 10 * (60 * 1000),
@@ -68,7 +71,20 @@ export const ExpandedRow = ({
         >
           {Messages.expandedRow.connection}
         </Typography>
-        <LabelValue label="Host" value={hostName} />
+        <LabelValue
+          label="Host"
+          value={hostName.split(',').map((host) => (
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <Box sx={{ whiteSpace: 'nowrap' }} key={host}>
+                {host}
+              </Box>
+              <CopyToClipboardButton
+                buttonProps={{ sx: { mt: -1, mb: -1.5 } }}
+                textToCopy={host}
+              />
+            </Box>
+          ))}
+        />
         <LabelValue label="Port" value={port} />
         {isLoading || isFetching ? (
           <>

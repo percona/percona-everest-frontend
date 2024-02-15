@@ -27,7 +27,6 @@ export const backupsStepCheck = async (page) => {
   );
 
   expect(scheduleNameField).not.toBeEmpty();
-  await scheduleNameField.fill('db-wizard-backup-test');
 
   expect(storageLocationField).not.toBeEmpty();
   await storageLocationField.click();
