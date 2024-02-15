@@ -30,7 +30,10 @@ import { useKubernetesClusterInfo } from 'hooks/api/kubernetesClusters/useKubern
 import { useNamespaces } from 'hooks/api/namespaces/useNamespaces';
 import { useFormContext } from 'react-hook-form';
 import { DbEngineToolStatus } from 'shared-types/dbEngines.types';
-import { NODES_DB_TYPE_MAP } from '../../database-form.constants';
+import {
+  DB_WIZARD_DEFAULTS,
+  NODES_DB_TYPE_MAP,
+} from '../../database-form.constants';
 import { DbWizardFormFields, StepProps } from '../../database-form.types';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { StepHeader } from '../step-header/step-header.tsx';
@@ -124,6 +127,14 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     setValue,
   ]);
 
+  const onDbNamespaceChange = () => {
+    setValue(
+      DbWizardFormFields.monitoringInstance,
+      DB_WIZARD_DEFAULTS.monitoringInstance
+    );
+    setValue(DbWizardFormFields.monitoring, DB_WIZARD_DEFAULTS.monitoring);
+  };
+
   const onDbTypeChange = useCallback(
     (newDbType: DbType) => {
       const { isDirty: isNameDirty } = getFieldState(DbWizardFormFields.dbName);
@@ -174,15 +185,22 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     if (mode !== 'new' || dbEngines.length <= 0) {
       return;
     }
+    const { isDirty: isNameDirty } = getFieldState(DbWizardFormFields.dbName);
+    const defaultDbType = dbEngineToDbType(dbEngines[0].type);
 
     if (!dbType) {
-      const defaultDbType = dbEngineToDbType(dbEngines[0].type);
       if (defaultDbType) {
-        setValue(
-          DbWizardFormFields.dbType,
-          dbEngineToDbType(dbEngines[0].type)
-        );
+        setValue(DbWizardFormFields.dbType, defaultDbType);
         setRandomDbName(defaultDbType);
+      }
+    } else {
+      if (!dbEngines.find((engine) => engine.type === dbEngine)) {
+        if (defaultDbType) {
+          setValue(DbWizardFormFields.dbType, defaultDbType);
+          if (!isNameDirty) {
+            setRandomDbName(defaultDbType);
+          }
+        }
       }
     }
     updateDbVersions();
@@ -241,6 +259,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
             mode === 'restoreFromBackup' ||
             loadingDefaultsForEdition
           }
+          onChange={onDbNamespaceChange}
           autoCompleteProps={{
             disableClearable: true,
             isOptionEqualToValue: (option, value) => option === value,
