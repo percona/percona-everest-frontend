@@ -14,16 +14,19 @@
 // limitations under the License.
 
 import { expect, test } from '@playwright/test';
-import { getEnginesVersions } from '../../../utils/database-engines';
+import {
+  getEnginesLatestRecommendedVersions,
+  getEnginesVersions,
+} from '../../../utils/database-engines';
+import { deleteDbClusterFn } from '../../../utils/db-cluster';
 import { getTokenFromLocalStorage } from '../../../utils/localStorage';
+import { getNamespacesFn } from '../../../utils/namespaces';
 import { getClusterDetailedInfo } from '../../../utils/storage-class';
 import { advancedConfigurationStepCheck } from './steps/advanced-configuration-step';
 import { backupsStepCheck } from './steps/backups-step';
 import { basicInformationStepCheck } from './steps/basic-information-step';
 import { pitrStepCheck } from './steps/pitr-step';
 import { resourcesStepCheck } from './steps/resources-step';
-import { getNamespacesFn } from '../../../utils/namespaces';
-import { deleteDbClusterFn } from '../../../utils/db-cluster';
 
 test.describe('DB Cluster creation', () => {
   let engineVersions = {
@@ -39,7 +42,7 @@ test.describe('DB Cluster creation', () => {
     const token = await getTokenFromLocalStorage();
     const namespaces = await getNamespacesFn(token, request);
     namespace = namespaces[0];
-    engineVersions = await getEnginesVersions(token, namespaces[0], request);
+    engineVersions = await getEnginesVersions(token, namespace, request);
 
     const { storageClassNames = [] } = await getClusterDetailedInfo(
       token,
@@ -66,6 +69,11 @@ test.describe('DB Cluster creation', () => {
   test('Cluster creation', async ({ page, request }) => {
     const clusterName = 'db-cluster-ui-test';
     const token = await getTokenFromLocalStorage();
+    const recommendedEngineVersions = await getEnginesLatestRecommendedVersions(
+      token,
+      namespace,
+      request
+    );
     let dbName = '';
     let scheduleName = '';
 
@@ -74,6 +82,7 @@ test.describe('DB Cluster creation', () => {
     await basicInformationStepCheck(
       page,
       engineVersions,
+      recommendedEngineVersions,
       storageClasses,
       clusterName
     );
