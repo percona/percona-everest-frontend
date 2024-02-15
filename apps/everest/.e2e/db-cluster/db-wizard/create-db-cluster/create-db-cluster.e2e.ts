@@ -92,6 +92,9 @@ test.describe('DB Cluster creation', () => {
         await page.getByTestId(`toggle-button-nodes-${expectedNodesOrder[i]}`)
       ).toHaveAttribute('aria-pressed', 'true');
 
+      // We click on the first button to make sure it always goes back to defaults afterwards
+      await page.getByTestId('toggle-button-nodes-1').click();
+
       await moveBack(page);
     }
   });
