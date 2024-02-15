@@ -143,9 +143,6 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
   const onDbTypeChange = useCallback(
     (newDbType: DbType) => {
       const { isDirty: isNameDirty } = getFieldState(DbWizardFormFields.dbName);
-      const { isTouched: nodesTouched } = getFieldState(
-        DbWizardFormFields.numberOfNodes
-      );
 
       resetField(DbWizardFormFields.dbVersion);
 
@@ -153,26 +150,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
         setRandomDbName(newDbType);
       }
 
-      if (mode === 'new') {
-        if (nodesTouched) {
-          const numberOfNodes: string = getValues(
-            DbWizardFormFields.numberOfNodes
-          );
-          if (
-            !NODES_DB_TYPE_MAP[newDbType].find(
-              (nodes) => nodes === numberOfNodes
-            )
-          ) {
-            setValue(
-              DbWizardFormFields.numberOfNodes,
-              DEFAULT_NODES[newDbType]
-            );
-          }
-        } else {
-          setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[newDbType]);
-        }
-      }
-
+      setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[newDbType]);
       updateDbVersions();
     },
     [
