@@ -55,6 +55,8 @@ const PITRStep = () => {
     [selectedNamespace, backupStorages]
   );
 
+  const pitrDisabled = !backupsEnabled || dbType === DbType.Postresql;
+
   useEffect(() => {
     if (availableBackupStorages?.length > 0) {
       if (mode === 'new') {
@@ -112,7 +114,7 @@ const PITRStep = () => {
         label={Messages.enablePitr}
         name={DbWizardFormFields.pitrEnabled}
         switchFieldProps={{
-          disabled: dbType === DbType.Postresql,
+          disabled: pitrDisabled,
         }}
         formControlLabelProps={{
           sx: { my: 1 },
