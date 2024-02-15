@@ -27,6 +27,7 @@ import { backupsStepCheck } from './steps/backups-step';
 import { basicInformationStepCheck } from './steps/basic-information-step';
 import { pitrStepCheck } from './steps/pitr-step';
 import { resourcesStepCheck } from './steps/resources-step';
+import { moveBack, moveForward } from '../../../utils/db-wizard';
 
 test.describe('DB Cluster creation', () => {
   let engineVersions = {
@@ -64,6 +65,38 @@ test.describe('DB Cluster creation', () => {
     // 1) rewrite the starting pipeline of launching everest to launch everest without clusters
     // 2) add 2 clusters using new methods from EVEREST-203
     // 3) check that the default parameters for MySQL are changed with parameters for the first available dbEngine
+  });
+
+  test('Cluster defaults', async ({ page }) => {
+    const expectedNodesOrder = [3, 3, 2];
+    const dbEnginesButtons = page
+      .getByTestId('toggle-button-group-input-db-type')
+      .getByRole('button');
+
+    expect(await dbEnginesButtons.count()).toBe(3);
+    // MySQL is our default DB type
+    expect(await page.getByTestId('mysql-toggle-button')).toHaveAttribute(
+      'aria-pressed',
+      'true'
+    );
+
+    for (let i = 0; i < 3; i++) {
+      await dbEnginesButtons.nth(i).click();
+      expect(
+        await page.getByTestId('select-input-db-version').inputValue()
+      ).toBeDefined();
+
+      await moveForward(page);
+
+      expect(
+        await page.getByTestId(`toggle-button-nodes-${expectedNodesOrder[i]}`)
+      ).toHaveAttribute('aria-pressed', 'true');
+
+      // We click on the first button to make sure it always goes back to defaults afterwards
+      await page.getByTestId('toggle-button-nodes-1').click();
+
+      await moveBack(page);
+    }
   });
 
   test('Cluster creation', async ({ page, request }) => {

@@ -55,6 +55,8 @@ const PITRStep = () => {
     [selectedNamespace, backupStorages]
   );
 
+  const pitrDisabled = !backupsEnabled || dbType === DbType.Postresql;
+
   useEffect(() => {
     if (availableBackupStorages?.length > 0) {
       if (mode === 'new') {
@@ -75,20 +77,22 @@ const PITRStep = () => {
   }, [availableBackupStorages, mode, pitrEnabled]);
 
   useEffect(() => {
-    if (dbType === DbType.Postresql) {
-      setValue(DbWizardFormFields.pitrEnabled, false);
+    if (dbType === DbType.Postresql && backupsEnabled) {
+      setValue(DbWizardFormFields.pitrEnabled, true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dbType]);
-
-  const pitrDisabled = !backupsEnabled || dbType === DbType.Postresql;
 
   useEffect(() => {
     if (!backupsEnabled) {
       setValue(DbWizardFormFields.pitrEnabled, false);
     }
 
-    if (pitrEnabled && dbType === DbType.Mongo && storageLocation) {
+    if (
+      pitrEnabled &&
+      (dbType === DbType.Mongo || dbType === DbType.Postresql) &&
+      storageLocation
+    ) {
       setValue(DbWizardFormFields.pitrStorageLocation, storageLocation);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -100,17 +104,11 @@ const PITRStep = () => {
         pageTitle={Messages.header}
         pageDescription={Messages.description}
       />
-      {dbType === DbType.Postresql && (
+      {!backupsEnabled && (
         <Alert severity="info" sx={{ mt: 1 }}>
-          {Messages.unavailableForDb(dbType)}
+          {Messages.toEnablePitr}
         </Alert>
       )}
-      {!backupsEnabled &&
-        (dbType === DbType.Mysql || dbType === DbType.Mongo) && (
-          <Alert severity="info" sx={{ mt: 1 }}>
-            {Messages.toEnablePitr}
-          </Alert>
-        )}
       <SwitchInput
         control={control}
         label={Messages.enablePitr}
@@ -132,11 +130,12 @@ const PITRStep = () => {
           enableFillFirst={mode === 'new'}
         />
       )}
-      {pitrEnabled && dbType === DbType.Mongo && (
-        <Typography variant="body1">
-          {Messages.matchedStorageType(storageLocation.name)}
-        </Typography>
-      )}
+      {pitrEnabled &&
+        (dbType === DbType.Mongo || dbType === DbType.Postresql) && (
+          <Typography variant="body1">
+            {Messages.matchedStorageType(storageLocation.name)}
+          </Typography>
+        )}
     </Box>
   );
 };
