@@ -133,6 +133,11 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     setValue(DbWizardFormFields.monitoring, DB_WIZARD_DEFAULTS.monitoring);
   };
 
+  const setDefaultsForDbType = useCallback((dbType: DbType) => {
+    setValue(DbWizardFormFields.dbType, dbType);
+    setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[dbType]);
+  }, []);
+
   const onDbTypeChange = useCallback(
     (newDbType: DbType) => {
       const { isDirty: isNameDirty } = getFieldState(DbWizardFormFields.dbName);
@@ -186,27 +191,25 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     const { isDirty: isNameDirty } = getFieldState(DbWizardFormFields.dbName);
     const defaultDbType = dbEngineToDbType(dbEngines[0].type);
 
-    if (!dbType) {
-      if (defaultDbType) {
-        setValue(DbWizardFormFields.dbType, defaultDbType);
-        setValue(
-          DbWizardFormFields.numberOfNodes,
-          DEFAULT_NODES[defaultDbType]
-        );
+    if (defaultDbType) {
+      if (!dbType) {
+        setDefaultsForDbType(defaultDbType);
         setRandomDbName(defaultDbType);
-      }
-    } else {
-      if (!dbEngines.find((engine) => engine.type === dbEngine)) {
-        if (defaultDbType) {
-          setValue(DbWizardFormFields.dbType, defaultDbType);
-          if (!isNameDirty) {
-            setRandomDbName(defaultDbType);
-          }
+      } else if (!dbEngines.find((engine) => engine.type === dbEngine)) {
+        setDefaultsForDbType(defaultDbType);
+        if (!isNameDirty) {
+          setRandomDbName(defaultDbType);
         }
       }
     }
     updateDbVersions();
-  }, [dbEngines, dbType, setRandomDbName, updateDbVersions]);
+  }, [
+    dbEngines,
+    dbType,
+    setRandomDbName,
+    updateDbVersions,
+    setDefaultsForDbType,
+  ]);
 
   useEffect(() => {
     const { isTouched: storageClassTouched } = getFieldState(
