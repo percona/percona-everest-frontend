@@ -30,10 +30,7 @@ import { useKubernetesClusterInfo } from 'hooks/api/kubernetesClusters/useKubern
 import { useNamespaces } from 'hooks/api/namespaces/useNamespaces';
 import { useFormContext } from 'react-hook-form';
 import { DbEngineToolStatus } from 'shared-types/dbEngines.types';
-import {
-  DB_WIZARD_DEFAULTS,
-  NODES_DB_TYPE_MAP,
-} from '../../database-form.constants';
+import { DB_WIZARD_DEFAULTS } from '../../database-form.constants';
 import { DbWizardFormFields, StepProps } from '../../database-form.types';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { StepHeader } from '../step-header/step-header.tsx';
