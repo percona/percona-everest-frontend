@@ -14,7 +14,6 @@
 // limitations under the License.
 
 import { Alert, Box, Button } from '@mui/material';
-import { DbType } from '@percona/types';
 import { SwitchInput } from '@percona/ui-lib';
 import {
   BACKUP_STORAGES_QUERY_KEY,
@@ -152,13 +151,13 @@ export const Backups = ({ alreadyVisited }: StepProps) => {
           )}
         </>
       )}
-      {!backupsEnabled && dbType === DbType.Mysql && (
+      {!backupsEnabled && (
         <Alert
           sx={{ mt: 1 }}
           severity="info"
           data-testid="pitr-no-backup-alert"
         >
-          {dbType === DbType.Mysql && Messages.pitrAlert}
+          {Messages.pitrAlert}
         </Alert>
       )}
       {openCreateEditModal && (
