@@ -30,10 +30,7 @@ import { useKubernetesClusterInfo } from 'hooks/api/kubernetesClusters/useKubern
 import { useNamespaces } from 'hooks/api/namespaces/useNamespaces';
 import { useFormContext } from 'react-hook-form';
 import { DbEngineToolStatus } from 'shared-types/dbEngines.types';
-import {
-  DB_WIZARD_DEFAULTS,
-  NODES_DB_TYPE_MAP,
-} from '../../database-form.constants';
+import { DB_WIZARD_DEFAULTS } from '../../database-form.constants';
 import { DbWizardFormFields, StepProps } from '../../database-form.types';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { StepHeader } from '../step-header/step-header.tsx';
@@ -135,12 +132,14 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     setValue(DbWizardFormFields.monitoring, DB_WIZARD_DEFAULTS.monitoring);
   };
 
+  const setDefaultsForDbType = useCallback((dbType: DbType) => {
+    setValue(DbWizardFormFields.dbType, dbType);
+    setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[dbType]);
+  }, []);
+
   const onDbTypeChange = useCallback(
     (newDbType: DbType) => {
       const { isDirty: isNameDirty } = getFieldState(DbWizardFormFields.dbName);
-      const { isTouched: nodesTouched } = getFieldState(
-        DbWizardFormFields.numberOfNodes
-      );
 
       resetField(DbWizardFormFields.dbVersion);
 
@@ -148,26 +147,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
         setRandomDbName(newDbType);
       }
 
-      if (mode === 'new') {
-        if (nodesTouched) {
-          const numberOfNodes: string = getValues(
-            DbWizardFormFields.numberOfNodes
-          );
-          if (
-            !NODES_DB_TYPE_MAP[newDbType].find(
-              (nodes) => nodes === numberOfNodes
-            )
-          ) {
-            setValue(
-              DbWizardFormFields.numberOfNodes,
-              DEFAULT_NODES[newDbType]
-            );
-          }
-        } else {
-          setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[newDbType]);
-        }
-      }
-
+      setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[newDbType]);
       updateDbVersions();
     },
     [
@@ -188,23 +168,25 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     const { isDirty: isNameDirty } = getFieldState(DbWizardFormFields.dbName);
     const defaultDbType = dbEngineToDbType(dbEngines[0].type);
 
-    if (!dbType) {
-      if (defaultDbType) {
-        setValue(DbWizardFormFields.dbType, defaultDbType);
+    if (defaultDbType) {
+      if (!dbType) {
+        setDefaultsForDbType(defaultDbType);
         setRandomDbName(defaultDbType);
-      }
-    } else {
-      if (!dbEngines.find((engine) => engine.type === dbEngine)) {
-        if (defaultDbType) {
-          setValue(DbWizardFormFields.dbType, defaultDbType);
-          if (!isNameDirty) {
-            setRandomDbName(defaultDbType);
-          }
+      } else if (!dbEngines.find((engine) => engine.type === dbEngine)) {
+        setDefaultsForDbType(defaultDbType);
+        if (!isNameDirty) {
+          setRandomDbName(defaultDbType);
         }
       }
     }
     updateDbVersions();
-  }, [dbEngines, dbType, setRandomDbName, updateDbVersions]);
+  }, [
+    dbEngines,
+    dbType,
+    setRandomDbName,
+    updateDbVersions,
+    setDefaultsForDbType,
+  ]);
 
   useEffect(() => {
     const { isTouched: storageClassTouched } = getFieldState(
