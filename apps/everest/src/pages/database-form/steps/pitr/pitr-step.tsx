@@ -133,7 +133,7 @@ const PITRStep = () => {
       {pitrEnabled &&
         (dbType === DbType.Mongo || dbType === DbType.Postresql) && (
           <Typography variant="body1">
-            {Messages.matchedStorageType(storageLocation.name)}
+            {Messages.matchedStorageType(storageLocation?.name)}
           </Typography>
         )}
     </Box>

@@ -123,6 +123,10 @@ const formValuesToPayloadMapping = (
       ...(backupDataSource?.dbClusterBackupName && {
         dataSource: {
           dbClusterBackupName: backupDataSource.dbClusterBackupName,
+          pitr: backupDataSource.pitr && {
+            date: backupDataSource.pitr.date,
+            type: 'date',
+          },
         },
       }),
     },

@@ -52,7 +52,9 @@ const RestoreDbModal = <T extends FieldValues>({
     dbCluster.metadata.name,
     namespace
   );
-
+  console.log(pitrData?.latestBackupName);
+  console.log(dbCluster.metadata.name);
+  console.log(backups);
   const { mutate: restoreBackupFromBackup, isLoading: restoringFromBackup } =
     useDbClusterRestoreFromBackup(dbCluster.metadata.name);
   const {
@@ -83,14 +85,26 @@ const RestoreDbModal = <T extends FieldValues>({
           const selectedBackup = backups?.find(
             (backup) => backup.name === backupName
           );
-          navigate('/databases/new', {
-            state: {
-              selectedDbCluster: dbCluster.metadata.name,
-              backupName,
-              namespace,
-              backupStorageName: selectedBackup,
-            },
-          });
+          if (backupType === BackuptypeValues.fromBackup) {
+            navigate('/databases/new', {
+              state: {
+                selectedDbCluster: dbCluster.metadata.name,
+                backupName,
+                namespace,
+                backupStorageName: selectedBackup,
+              },
+            });
+          } else {
+            navigate('/databases/new', {
+              state: {
+                selectedDbCluster: dbCluster.metadata.name,
+                backupName: pitrData!.latestBackupName,
+                namespace,
+                backupStorageName: selectedBackup,
+                pointInTimeDate: pitrBackup!.toISOString().split('.')[0] + 'Z',
+              },
+            });
+          }
         } else {
           if (backupType === BackuptypeValues.fromBackup) {
             restoreBackupFromBackup(
@@ -152,7 +166,6 @@ const RestoreDbModal = <T extends FieldValues>({
               {
                 label: Messages.fromPitr,
                 value: BackuptypeValues.fromPitr,
-                disabled: isNewClusterMode,
               },
             ]}
           />
