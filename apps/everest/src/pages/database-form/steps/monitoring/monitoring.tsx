@@ -107,7 +107,7 @@ export const Monitoring = () => {
         <ActionableAlert
           message={Messages.alertText(selectedNamespace)}
           buttonMessage={Messages.addMonitoringEndpoint}
-          data-testid="no-storage-message"
+          data-testid="monitoring-warning"
           onClick={() => setOpenCreateEditModal(true)}
         />
       )}
