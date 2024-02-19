@@ -16,8 +16,7 @@ export const ScheduleBackupSection = ({
   const { setValue, getFieldState, watch } = useFormContext();
   const { data: backupStorages = [], isFetching } = useBackupStorages();
   const { dbClusterData } = useDatabasePageDefaultValues(mode);
-  const [storageLocationField, dbType, selectedNamespace] = watch([
-    DbWizardFormFields.storageLocation,
+  const [dbType, selectedNamespace] = watch([
     DbWizardFormFields.dbType,
     DbWizardFormFields.k8sNamespace,
   ]);
@@ -31,21 +30,19 @@ export const ScheduleBackupSection = ({
   );
 
   useEffect(() => {
+    const { isDirty: isStorageLocationDirty } = getFieldState(
+      DbWizardFormFields.storageLocation
+    );
+
+    if (isStorageLocationDirty) {
+      return;
+    }
+
     if (mode === 'new' && availableBackupStorages?.length > 0) {
       setValue(DbWizardFormFields.storageLocation, {
         name: availableBackupStorages[0].name,
       });
     }
-    if (
-      (mode === 'edit' || mode === 'restoreFromBackup') &&
-      availableBackupStorages?.length > 0 &&
-      !!storageLocationField
-    ) {
-      setValue(DbWizardFormFields.storageLocation, {
-        name: availableBackupStorages[0].name,
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [availableBackupStorages, mode]);
 
   const schedules =
@@ -78,6 +75,10 @@ export const ScheduleBackupSection = ({
     <ScheduleForm
       disableNameInput={mode === 'edit' && schedules.length === 1}
       autoFillLocation
+      // autoFillLocation={
+      //   mode === 'new' &&
+      //   !getFieldState(DbWizardFormFields.storageLocation).isDirty
+      // }
       schedules={schedules}
       storageLocationFetching={isFetching}
       storageLocationOptions={availableBackupStorages}
