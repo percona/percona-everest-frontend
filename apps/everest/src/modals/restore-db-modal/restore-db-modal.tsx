@@ -52,9 +52,7 @@ const RestoreDbModal = <T extends FieldValues>({
     dbCluster.metadata.name,
     namespace
   );
-  console.log(pitrData?.latestBackupName);
-  console.log(dbCluster.metadata.name);
-  console.log(backups);
+
   const { mutate: restoreBackupFromBackup, isLoading: restoringFromBackup } =
     useDbClusterRestoreFromBackup(dbCluster.metadata.name);
   const {
