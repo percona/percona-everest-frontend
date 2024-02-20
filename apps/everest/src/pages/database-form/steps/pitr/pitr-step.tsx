@@ -50,7 +50,7 @@ const PITRStep = () => {
   const availableBackupStorages = useMemo(
     () =>
       backupStorages.filter((item) =>
-        item.targetNamespaces.includes(selectedNamespace)
+        item.allowedNamespaces.includes(selectedNamespace)
       ),
     [selectedNamespace, backupStorages]
   );
