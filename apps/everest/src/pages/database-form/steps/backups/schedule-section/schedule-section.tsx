@@ -52,10 +52,6 @@ export const ScheduleBackupSection = ({
     <ScheduleForm
       disableNameInput={mode === 'edit' && schedules.length === 1}
       autoFillLocation
-      // autoFillLocation={
-      //   mode === 'new' &&
-      //   !getFieldState(DbWizardFormFields.storageLocation).isDirty
-      // }
       schedules={schedules}
       storageLocationFetching={isFetching}
       storageLocationOptions={backupStorages}
