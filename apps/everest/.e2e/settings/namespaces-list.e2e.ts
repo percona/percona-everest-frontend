@@ -28,4 +28,9 @@ test.describe('Namespaces List', () => {
     await page.goto('/settings/namespaces');
     expect(page.getByText(namespaces[0])).toBeTruthy();
   });
+
+  test('More then one namespaces', async ({ page }) => {
+    expect(namespaces.length).toBe(2);
+    console.log(namespaces.length);
+  });
 });
