@@ -18,6 +18,7 @@ import { Page, expect } from '@playwright/test';
 export const basicInformationStepCheck = async (
   page: Page,
   engineVersions,
+  recommendedEngineVersions,
   storageClasses,
   clusterName
 ) => {
@@ -42,6 +43,11 @@ export const basicInformationStepCheck = async (
     expect(
       dbVersionOptions.filter({ hasText: new RegExp(`^${version}$`) })
     ).toBeVisible()
+  );
+
+  const defaultOption = await page.getByRole('option', { selected: true });
+  expect(await defaultOption.textContent()).toBe(
+    recommendedEngineVersions.psmdb
   );
 
   await page.getByRole('option').filter({ hasText: '5.0.7-6' }).click();

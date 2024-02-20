@@ -5,7 +5,6 @@ import {
   MenuItem,
   Typography,
 } from '@mui/material';
-import { DbEngineType } from '@percona/types';
 import {
   DateTimePickerInput,
   LoadableChildren,
@@ -153,9 +152,7 @@ const RestoreDbModal = <T extends FieldValues>({
               {
                 label: Messages.fromPitr,
                 value: BackuptypeValues.fromPitr,
-                disabled:
-                  dbCluster.spec.engine.type === DbEngineType.POSTGRESQL ||
-                  isNewClusterMode,
+                disabled: isNewClusterMode,
               },
             ]}
           />
