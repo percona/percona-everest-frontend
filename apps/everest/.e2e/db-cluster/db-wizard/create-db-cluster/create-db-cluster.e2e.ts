@@ -109,6 +109,7 @@ test.describe('DB Cluster creation', () => {
     );
     let dbName = '';
     let scheduleName = '';
+    let storageName = '';
 
     expect(storageClasses.length).toBeGreaterThan(0);
 
@@ -131,6 +132,9 @@ test.describe('DB Cluster creation', () => {
     await backupsStepCheck(page);
     scheduleName = await page
       .getByTestId('text-input-schedule-name')
+      .inputValue();
+    storageName = await page
+      .getByTestId('text-input-storage-location')
       .inputValue();
     await page.getByTestId('db-wizard-continue-button').click();
 
@@ -161,10 +165,13 @@ test.describe('DB Cluster creation', () => {
     await expect(page.getByText('Number of nodes: 3')).toBeVisible();
     await page.getByTestId('button-edit-preview-backups').click();
 
-    // Now we make sure schedule name hasn't changed
+    // Now we make sure schedule name and location haven't changed
     expect(
       await page.getByTestId('text-input-schedule-name').inputValue()
     ).toBe(scheduleName);
+    expect(
+      await page.getByTestId('text-input-storage-location').inputValue()
+    ).toBe(storageName);
 
     await page.getByTestId('button-edit-preview-monitoring').click();
 
