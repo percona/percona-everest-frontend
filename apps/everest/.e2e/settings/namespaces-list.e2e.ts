@@ -31,8 +31,7 @@ test.describe('Namespaces List', () => {
 
   test('Provisioning is working right', async ({ page }) => {
     await page.goto('/settings/namespaces');
-    const rows = page
-        .locator('.MuiTableRow-root');
+    const rows = page.locator('.MuiTableRow-root');
     await expect(rows.first()).toBeVisible();
     expect(await rows.count()).toBe(5);
   });
