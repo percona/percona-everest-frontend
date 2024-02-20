@@ -167,12 +167,10 @@ jobs:
           --operator.xtradb-cluster \
           --skip-wizard \
           --namespaces everest-ui
-          
-          go run cmd/everest/main.go install \
-          --operator.xtradb-cluster \
-          --skip-wizard \
-          --namespaces everest-pxc
-          
+
+      - name: Adding extra namespaces
+        run: |
+          cd CLI
           go run cmd/everest/main.go install \
           --operator.mongodb \
           --skip-wizard \
