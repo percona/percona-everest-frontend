@@ -28,6 +28,7 @@ import { basicInformationStepCheck } from './steps/basic-information-step';
 import { pitrStepCheck } from './steps/pitr-step';
 import { resourcesStepCheck } from './steps/resources-step';
 import { moveBack, moveForward } from '../../../utils/db-wizard';
+import { findDbAndClickActions } from '../../../utils/db-clusters-list';
 
 test.describe('DB Cluster creation', () => {
   let engineVersions = {
@@ -304,5 +305,65 @@ test.describe('DB Cluster creation', () => {
     await page.getByText('Yes, cancel').click();
 
     await expect(page).toHaveURL('/databases');
+  });
+
+  test('Multiple Mongo schedules', async ({ page, request }) => {
+    const clusterName = 'multi-schedule-test';
+    const token = await getTokenFromLocalStorage();
+    const namespaces = await getNamespacesFn(token, request);
+    const recommendedEngineVersions = await getEnginesLatestRecommendedVersions(
+      token,
+      namespaces[0],
+      request
+    );
+    let storageName = '';
+
+    await basicInformationStepCheck(
+      page,
+      engineVersions,
+      recommendedEngineVersions,
+      storageClasses,
+      clusterName
+    );
+    await moveForward(page);
+    await resourcesStepCheck(page);
+    await moveForward(page);
+    await backupsStepCheck(page);
+
+    storageName = await page
+      .getByTestId('text-input-storage-location')
+      .inputValue();
+
+    await moveForward(page);
+    await pitrStepCheck(page);
+    await page
+      .getByTestId('switch-input-pitr-enabled-label')
+      .getByRole('checkbox')
+      .check();
+    await moveForward(page);
+    await advancedConfigurationStepCheck(page);
+    await moveForward(page);
+    await page.getByTestId('db-wizard-submit-button').click();
+    await expect(page.getByTestId('db-wizard-goto-db-clusters')).toBeVisible();
+
+    await page.goto(`/databases/${namespaces[0]}/${clusterName}/backups`);
+    await page.getByTestId('menu-button').click();
+    await page.getByTestId('schedule-menu-item').click();
+    await page.getByTestId('form-dialog-create').click();
+    await expect(page.getByText('2 schedules')).toBeVisible();
+
+    await page.goto('/databases');
+    await findDbAndClickActions(page, clusterName, 'Edit');
+
+    const pitrEditIcon = page.getByTestId(
+      'button-edit-preview-point-in-time-recovery'
+    );
+    expect(pitrEditIcon).toBeVisible();
+
+    await pitrEditIcon.click();
+
+    await expect(
+      page.getByText(`Backups storage: ${storageName}`)
+    ).toBeVisible();
   });
 });
