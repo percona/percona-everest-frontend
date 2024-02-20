@@ -1,7 +1,7 @@
 import { DbType } from '@percona/types';
 import { ScheduleForm } from 'components/schedule-form/schedule-form.tsx';
 import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages.ts';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { DbWizardFormFields } from '../../../database-form.types.ts';
 import { useDatabasePageDefaultValues } from '../../../useDatabaseFormDefaultValues.ts';
@@ -14,36 +14,13 @@ export const ScheduleBackupSection = ({
 }: ScheduleBackupSectionProps) => {
   const mode = useDatabasePageMode();
   const { setValue, getFieldState, watch } = useFormContext();
-  const { data: backupStorages = [], isFetching } = useBackupStorages();
   const { dbClusterData } = useDatabasePageDefaultValues(mode);
   const [dbType, selectedNamespace] = watch([
     DbWizardFormFields.dbType,
     DbWizardFormFields.k8sNamespace,
   ]);
-
-  const availableBackupStorages = useMemo(
-    () =>
-      backupStorages.filter((item) =>
-        item.targetNamespaces.includes(selectedNamespace)
-      ),
-    [selectedNamespace, backupStorages]
-  );
-
-  useEffect(() => {
-    const { isDirty: isStorageLocationDirty } = getFieldState(
-      DbWizardFormFields.storageLocation
-    );
-
-    if (isStorageLocationDirty) {
-      return;
-    }
-
-    if (mode === 'new' && availableBackupStorages?.length > 0) {
-      setValue(DbWizardFormFields.storageLocation, {
-        name: availableBackupStorages[0].name,
-      });
-    }
-  }, [availableBackupStorages, mode]);
+  const { data: backupStorages = [], isFetching } =
+    useBackupStorages(selectedNamespace);
 
   const schedules =
     mode === 'new' ? [] : dbClusterData?.spec?.backup?.schedules || [];
@@ -81,7 +58,7 @@ export const ScheduleBackupSection = ({
       // }
       schedules={schedules}
       storageLocationFetching={isFetching}
-      storageLocationOptions={availableBackupStorages}
+      storageLocationOptions={backupStorages}
       disableStorageSelection={mode === 'edit' && dbType === DbType.Mongo}
     />
   );

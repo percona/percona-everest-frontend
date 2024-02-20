@@ -27,10 +27,16 @@ import {
 
 export const BACKUP_STORAGES_QUERY_KEY = 'backupStorages';
 
-export const useBackupStorages = () => {
+export const useBackupStorages = (namespace: string = '') => {
   return useQuery<GetBackupStoragesPayload, unknown, BackupStorage[]>(
     BACKUP_STORAGES_QUERY_KEY,
-    () => getBackupStoragesFn()
+    () => getBackupStoragesFn(),
+    {
+      ...(namespace && {
+        select: (data) =>
+          data.filter((item) => item.targetNamespaces.includes(namespace)),
+      }),
+    }
   );
 };
 

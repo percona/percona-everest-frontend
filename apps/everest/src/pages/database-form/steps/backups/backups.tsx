@@ -16,7 +16,7 @@
 import { Alert, Box } from '@mui/material';
 import { SwitchInput } from '@percona/ui-lib';
 import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { DbWizardFormFields, StepProps } from '../../database-form.types';
 import BackupsActionableAlert from 'components/actionable-alert/backups-actionable-alert';
@@ -30,21 +30,13 @@ export const Backups = ({ alreadyVisited }: StepProps) => {
   const mode = useDatabasePageMode();
   const { control, watch, setValue, getFieldState, trigger } = useFormContext();
   const { dbClusterData } = useDatabasePageDefaultValues(mode);
-  const { data: backupStorages = [] } = useBackupStorages();
 
   const [backupsEnabled, dbType, selectedNamespace] = watch([
     DbWizardFormFields.backupsEnabled,
     DbWizardFormFields.dbType,
     DbWizardFormFields.k8sNamespace,
   ]);
-
-  const availableBackupStorages = useMemo(
-    () =>
-      backupStorages.filter((item) =>
-        item.targetNamespaces.includes(selectedNamespace)
-      ),
-    [selectedNamespace, backupStorages]
-  );
+  const { data: backupStorages = [] } = useBackupStorages(selectedNamespace);
 
   // TODO should be removed after https://jira.percona.com/browse/EVEREST-509 + DEFAULT_VALUES should be changed from false to true for all databases
   useEffect(() => {
@@ -86,10 +78,10 @@ export const Backups = ({ alreadyVisited }: StepProps) => {
           sx: { mt: 1 },
         }}
       />
-      {backupsEnabled && availableBackupStorages.length === 0 && (
+      {backupsEnabled && backupStorages.length === 0 && (
         <BackupsActionableAlert namespace={selectedNamespace} />
       )}
-      {backupsEnabled && availableBackupStorages.length > 0 && (
+      {backupsEnabled && backupStorages.length > 0 && (
         <>
           {(mode === 'new' || mode === 'restoreFromBackup') && (
             <Alert sx={{ mt: 1 }} severity="info">
