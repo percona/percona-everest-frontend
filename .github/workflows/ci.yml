@@ -168,13 +168,30 @@ jobs:
           --skip-wizard \
           --namespaces everest-ui
 
-      - name: Adding extra namespaces
+      - name: Adding psmdb namespace
         run: |
           cd CLI
           go run cmd/everest/main.go install \
           --operator.mongodb \
           --skip-wizard \
           --namespaces everest-psmdb
+
+      - name: Adding pxc namespace
+        run: |
+          cd CLI
+          go run cmd/everest/main.go install \
+          --operator.xtradb-cluster \
+          --skip-wizard \
+          --namespaces everest-pxc
+
+      - name: Adding pg namespace
+        run: |
+          cd CLI
+          go run cmd/everest/main.go install \
+          --operator.postgresql \
+          --skip-wizard \
+          --namespaces everest-pg
+
 
       - name: Change token
         run: |

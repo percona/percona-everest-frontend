@@ -29,8 +29,11 @@ test.describe('Namespaces List', () => {
     expect(page.getByText(namespaces[0])).toBeTruthy();
   });
 
-  test('More then one namespaces', async ({ page }) => {
-    expect(namespaces.length).toBe(2);
-    console.log(namespaces.length);
+  test('Provisioning is working right', async ({ page }) => {
+    await page.goto('/settings/namespaces');
+    await page.pause();
+    const rowsCount = await page
+        .locator('.MuiTableRow-root').count();
+    expect(rowsCount-1).toBe(4);
   });
 });
