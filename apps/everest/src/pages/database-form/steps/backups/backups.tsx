@@ -52,7 +52,7 @@ export const Backups = ({ alreadyVisited }: StepProps) => {
   const availableBackupStorages = useMemo(
     () =>
       backupStorages.filter((item) =>
-        item.targetNamespaces.includes(selectedNamespace)
+        item.allowedNamespaces.includes(selectedNamespace)
       ),
     [selectedNamespace, backupStorages]
   );

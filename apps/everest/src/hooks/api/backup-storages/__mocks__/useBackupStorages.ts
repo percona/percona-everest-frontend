@@ -21,7 +21,7 @@ const storageDataObject = {
   type: StorageType.S3,
   bucketName: 'bucket-001',
   region: 'Us',
-  targetNamespaces: ['the-dark-side'],
+  allowedNamespaces: ['the-dark-side'],
 };
 
 // was moved as separate object to avoid recreation since the original use of useQuery caches the data
