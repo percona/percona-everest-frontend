@@ -14,26 +14,32 @@
 // limitations under the License.
 
 import { expect, test } from '@playwright/test';
+import { DBClusterDetailsTabs } from '../../../../src/pages/db-cluster-details/db-cluster-details.types';
 import {
   createDbClusterFn,
   deleteDbClusterFn,
 } from '../../../utils/db-cluster';
 import {
-  checkDbWizardEditSubmitIsAvailableAndClick,
-  checkSuccessOfUpdateAndGoToDbClustersList,
-} from './edit-db-cluster.utils';
-import {
   findDbAndClickActions,
   findDbAndClickRow,
 } from '../../../utils/db-clusters-list';
-import { DBClusterDetailsTabs } from '../../../../src/pages/db-cluster-details/db-cluster-details.types';
+import { getTokenFromLocalStorage } from '../../../utils/localStorage';
+import {
+  checkDbWizardEditSubmitIsAvailableAndClick,
+  checkSuccessOfUpdateAndGoToDbClustersList,
+} from './edit-db-cluster.utils';
+import { getNamespacesFn } from '../../../utils/namespaces';
 
-test.describe.serial('DB Cluster Editing Backups Step', () => {
+test.describe.serial('DB Cluster Editing Backups Step', async () => {
   let scheduleName = 'db-wizard-schedule';
   const mySQLName = 'db-backup-mysql';
+  let namespace = '';
 
   test.beforeAll(async ({ request }) => {
-    await createDbClusterFn(request, {
+    const token = await getTokenFromLocalStorage();
+    const namespaces = await getNamespacesFn(token, request);
+    namespace = namespaces[0];
+    await createDbClusterFn(token, request, namespaces[0], {
       dbName: mySQLName,
       dbType: 'mysql',
       numberOfNodes: '1',
@@ -41,18 +47,14 @@ test.describe.serial('DB Cluster Editing Backups Step', () => {
   });
 
   test.afterAll(async ({ request }) => {
-    await deleteDbClusterFn(request, mySQLName);
+    const token = await getTokenFromLocalStorage();
+    await deleteDbClusterFn(token, request, mySQLName, namespace);
   });
 
   test('Add schedule to database with no schedule during editing in dbWizard', async ({
     page,
   }) => {
     await page.goto('/databases');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-
     await findDbAndClickActions(page, mySQLName, 'Edit');
 
     const nextStep = page.getByTestId('db-wizard-continue-button');
@@ -77,10 +79,12 @@ test.describe.serial('DB Cluster Editing Backups Step', () => {
     ).not.toBeEmpty();
     await expect(
       page.getByText(
-        'Everest will create a backup of your database every hours, starting at minute 0.'
+        'Everest will create a backup of your database every hour, starting at minute 0.'
       )
     ).toBeVisible();
 
+    // Go to Point-in-time Recovery (PITR)
+    await nextStep.click();
     // Go to Advanced Configuration step
     await nextStep.click();
     // Go to Monitoring step
@@ -107,11 +111,6 @@ test.describe.serial('DB Cluster Editing Backups Step', () => {
     page,
   }) => {
     await page.goto('/databases');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-
     await findDbAndClickActions(page, mySQLName, 'Edit');
 
     const nextStep = page.getByTestId('db-wizard-continue-button');
@@ -135,6 +134,8 @@ test.describe.serial('DB Cluster Editing Backups Step', () => {
         .getByTestId('empty-backups-preview-content')
     ).toBeTruthy();
 
+    // Go to Point-in-time Recovery (PITR)
+    await nextStep.click();
     // Go to Advanced Configuration step
     await nextStep.click();
     // Go to Monitoring step

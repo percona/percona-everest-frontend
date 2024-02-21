@@ -14,10 +14,12 @@ export const Messages = {
   noStorages: {
     alert:
       'You don’t have any storage location set yet. Please set one before you proceed.',
-    submitButton: 'Go go settings',
+    submitButton: 'Go to settings',
     cancel: 'Cancel',
   },
   backups: 'Backups',
   overview: 'Overview',
   dbActions: 'Actions',
+  restoringDb:
+    'We are recovering your database. Do not perform any actions on the database until recovery is complete.',
 };

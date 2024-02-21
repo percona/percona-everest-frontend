@@ -15,6 +15,7 @@ export function AutoCompleteAutoFill<T>({
   isRequired,
   enableFillFirst = false,
   fillFirstField = 'name',
+  disabled,
 }: AutoCompleteAutoFillProps<T>) {
   const { setValue, trigger } = useFormContext();
 
@@ -24,8 +25,9 @@ export function AutoCompleteAutoFill<T>({
         // @ts-ignore
         [fillFirstField]: options[0][fillFirstField],
       });
-      trigger();
+      trigger(name);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options]);
 
   return (
@@ -47,6 +49,7 @@ export function AutoCompleteAutoFill<T>({
         ...autoCompleteProps,
       }}
       isRequired={isRequired}
+      disabled={disabled}
     />
   );
 }

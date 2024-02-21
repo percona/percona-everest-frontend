@@ -13,37 +13,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { useMemo, useState, useContext } from 'react';
 import { Delete } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { MenuItem } from '@mui/material';
 import { MenuButton, Table } from '@percona/ui-lib';
-import { format } from 'date-fns';
-import { MRT_ColumnDef } from 'material-react-table';
-import { useQueryClient } from 'react-query';
-import { useNavigate, useParams } from 'react-router-dom';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
 import { StatusField } from 'components/status-field/status-field';
 import { DATE_FORMAT } from 'consts';
+import { format } from 'date-fns';
 import {
   BACKUPS_QUERY_KEY,
   useDbBackups,
   useDeleteBackup,
 } from 'hooks/api/backups/useBackups';
 import { useDbCluster } from 'hooks/api/db-cluster/useDbCluster';
-import { useDbClusterRestore } from 'hooks/api/restores/useDbClusterRestore';
+import { useDbClusterRestoreFromBackup } from 'hooks/api/restores/useDbClusterRestore';
+import { MRT_ColumnDef } from 'material-react-table';
+import { useContext, useMemo, useState } from 'react';
+import { useQueryClient } from 'react-query';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Backup, BackupStatus } from 'shared-types/backups.types';
-import { DbEngineType } from 'shared-types/dbEngines.types';
+import { DbClusterStatus } from 'shared-types/dbCluster.types.ts';
+import { ScheduleModalContext } from '../backups.context.ts';
 import { BACKUP_STATUS_TO_BASE_STATUS } from './backups-list.constants';
 import { Messages } from './backups-list.messages';
 import { OnDemandBackupModal } from './on-demand-backup-modal/on-demand-backup-modal';
-import { ScheduleModalContext } from '../backups.context.ts';
 
 export const BackupsList = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { dbClusterName } = useParams();
+  const { dbClusterName, namespace = '' } = useParams();
 
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openRestoreDialog, setOpenRestoreDialog] = useState(false);
@@ -53,21 +53,22 @@ export const BackupsList = () => {
   const [selectedBackupStorage, setSelectedBackupStorage] = useState('');
   const [openCreateBackupModal, setOpenCreateBackupModal] = useState(false);
 
-  const { data: backups = [] } = useDbBackups(dbClusterName!, {
+  const { data: backups = [] } = useDbBackups(dbClusterName!, namespace, {
     enabled: !!dbClusterName,
     refetchInterval: 10 * 1000,
   });
-  const { mutate: deleteBackup, isLoading: deletingBackup } = useDeleteBackup();
+  const { mutate: deleteBackup, isLoading: deletingBackup } =
+    useDeleteBackup(namespace);
   const { mutate: restoreBackup, isLoading: restoringBackup } =
-    useDbClusterRestore(dbClusterName!);
-  const { data: dbCluster } = useDbCluster(dbClusterName || '', {
+    useDbClusterRestoreFromBackup(dbClusterName!);
+  const { data: dbCluster } = useDbCluster(dbClusterName || '', namespace, {
     enabled: !!dbClusterName,
   });
 
   const { setMode: setScheduleModalMode, setOpenScheduleModal } =
     useContext(ScheduleModalContext);
 
-  const dbType = dbCluster?.spec?.engine?.type;
+  const restoring = dbCluster?.status?.status === DbClusterStatus.restoring;
 
   const columns = useMemo<MRT_ColumnDef<Backup>[]>(
     () => [
@@ -156,7 +157,7 @@ export const BackupsList = () => {
 
   const handleConfirmRestore = (backupName: string) => {
     restoreBackup(
-      { backupName },
+      { backupName, namespace },
       {
         onSuccess() {
           // In principle, not needed
@@ -185,6 +186,7 @@ export const BackupsList = () => {
       state: {
         selectedDbCluster: dbClusterName!,
         backupName,
+        namespace,
         backupStorageName: selectedBackupStorage,
       },
     });
@@ -205,7 +207,10 @@ export const BackupsList = () => {
           ],
         }}
         renderTopToolbarCustomActions={() => (
-          <MenuButton buttonText={Messages.createBackup}>
+          <MenuButton
+            buttonText={Messages.createBackup}
+            buttonProps={{ disabled: restoring }}
+          >
             {/* MUI Menu does not like fragments and asks for arrays instead */}
             {(handleClose) => [
               <MenuItem
@@ -215,16 +220,14 @@ export const BackupsList = () => {
               >
                 {Messages.now}
               </MenuItem>,
-              dbType !== DbEngineType.POSTGRESQL && (
-                <MenuItem
-                  onClick={() => handleScheduledBackup(handleClose)}
-                  key="schedule"
-                  data-testid="schedule-menu-item"
-                  disabled={!dbCluster?.spec?.backup?.enabled}
-                >
-                  {Messages.schedule}
-                </MenuItem>
-              ),
+              <MenuItem
+                onClick={() => handleScheduledBackup(handleClose)}
+                key="schedule"
+                data-testid="schedule-menu-item"
+                disabled={!dbCluster?.spec?.backup?.enabled}
+              >
+                {Messages.schedule}
+              </MenuItem>,
             ]}
           </MenuButton>
         )}
@@ -283,7 +286,7 @@ export const BackupsList = () => {
           handleConfirm={handleConfirmDelete}
           disabledButtons={deletingBackup}
         >
-          {Messages.deleteDialog.content}
+          {Messages.deleteDialog.content(selectedBackup)}
         </ConfirmDialog>
       )}
       {openRestoreDialog && (

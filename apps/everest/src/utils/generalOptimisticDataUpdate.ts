@@ -1,19 +1,15 @@
 import { QueryClient } from 'react-query';
 
-interface DataObject {
-  id?: string;
-  [key: string]: string | undefined;
-}
-
 export const updateDataAfterEdit =
   (
     queryClient: QueryClient,
     queryKey: string,
     identifier: string | undefined = 'id'
   ) =>
-  <T extends DataObject>(updatedObject: T) => {
+  <T extends object>(updatedObject: T) => {
     queryClient.setQueryData([queryKey], (oldData?: T[]) => {
       return (oldData || []).map((value) =>
+        // @ts-ignore
         value[identifier] === updatedObject[identifier] ? updatedObject : value
       );
     });
@@ -21,7 +17,7 @@ export const updateDataAfterEdit =
 
 export const updateDataAfterCreate =
   (queryClient: QueryClient, queryKey: string) =>
-  <T extends DataObject>(createdObject: T) => {
+  <T extends object>(createdObject: T) => {
     queryClient.setQueryData([queryKey], (oldData?: T[]) => {
       return [createdObject, ...(oldData || [])];
     });
@@ -33,8 +29,9 @@ export const updateDataAfterDelete =
     queryKey: string,
     identifier: string | undefined = 'id'
   ) =>
-  <T extends DataObject>(_: T, objectId: string) => {
+  <T extends object>(_: T, objectId: string) => {
     queryClient.setQueryData([queryKey], (oldData?: T[]) => {
+      // @ts-ignore
       return (oldData || []).filter((value) => value[identifier] !== objectId);
     });
   };

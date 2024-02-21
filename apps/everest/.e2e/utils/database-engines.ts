@@ -15,23 +15,38 @@
 
 import { APIRequestContext, expect } from '@playwright/test';
 
-export const getEnginesList = async (request: APIRequestContext) => {
-  const enginesList = await request.get('/v1/database-engines');
+export const getEnginesList = async (
+  token: string,
+  namespace: string,
+  request: APIRequestContext
+) => {
+  const enginesList = await request.get(
+    `/v1/namespaces/${namespace}/database-engines`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
   expect(enginesList.ok()).toBeTruthy();
   return (await enginesList.json()).items;
 };
-export const getEnginesVersions = async (request: APIRequestContext) => {
+export const getEnginesVersions = async (
+  token: string,
+  namespace: string,
+  request: APIRequestContext
+) => {
   const engineVersions = {
     pxc: [],
     psmdb: [],
     postgresql: [],
   };
 
-  const engines = await getEnginesList(request);
+  const engines = await getEnginesList(token, namespace, request);
   engines.forEach((engine) => {
     const { type } = engine.spec;
 
-    if (engine.status.status === 'installed') {
+    if (engine.status?.status === 'installed') {
       engineVersions[type].push(
         ...Object.keys(engine.status.availableVersions.engine)
       );
@@ -39,4 +54,32 @@ export const getEnginesVersions = async (request: APIRequestContext) => {
   });
 
   return engineVersions;
+};
+
+export const getEnginesLatestRecommendedVersions = async (
+  token: string,
+  namespace: string,
+  request: APIRequestContext
+) => {
+  let latestRecommendedVersions = {
+    pxc: '',
+    psmdb: '',
+    postgresql: '',
+  };
+
+  const engines = await getEnginesList(token, namespace, request);
+  engines.forEach((engine) => {
+    const { type } = engine.spec;
+
+    if (engine.status?.status === 'installed') {
+      Object.entries(engine.status.availableVersions.engine).forEach(
+        ([key, value]: any) => {
+          if (value.status === 'recommended') {
+            latestRecommendedVersions[type] = key;
+          }
+        }
+      );
+    }
+  });
+  return latestRecommendedVersions;
 };

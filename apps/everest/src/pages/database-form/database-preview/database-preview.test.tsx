@@ -31,13 +31,13 @@ describe('DatabasePreview', () => {
     render(
       <FormProviderWrapper>
         <TestWrapper>
-          <DatabasePreview activeStep={0} />
+          <DatabasePreview activeStep={0} longestAchievedStep={0} />
         </TestWrapper>
       </FormProviderWrapper>
     );
 
     expect(screen.getAllByTestId(/^section-*/, { exact: false })).toHaveLength(
-      5
+      6
     );
   });
 
@@ -51,7 +51,7 @@ describe('DatabasePreview', () => {
         }}
       >
         <TestWrapper>
-          <DatabasePreview activeStep={0} />
+          <DatabasePreview activeStep={0} longestAchievedStep={0} />
         </TestWrapper>
       </FormProviderWrapper>
     );
@@ -74,7 +74,7 @@ describe('DatabasePreview', () => {
         }}
       >
         <TestWrapper>
-          <DatabasePreview activeStep={1} />
+          <DatabasePreview activeStep={1} longestAchievedStep={1} />
         </TestWrapper>
       </FormProviderWrapper>
     );
@@ -113,7 +113,7 @@ describe('DatabasePreview', () => {
       >
         <TestWrapper>
           <FormConsumer />
-          <DatabasePreview activeStep={1} />
+          <DatabasePreview activeStep={1} longestAchievedStep={1} />
         </TestWrapper>
       </FormProviderWrapper>
     );

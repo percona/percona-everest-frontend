@@ -20,8 +20,8 @@ import {
   WeekDays,
 } from 'components/time-selection/time-selection.types';
 import { DbWizardFormFields } from './database-form.types';
-import { DEFAULT_SIZES } from './steps/second/second-step.const';
-import { ResourceSize } from './steps/second/second-step.types';
+import { DEFAULT_SIZES } from './steps/resources/resources-step.const';
+import { ResourceSize } from './steps/resources/resources-step.types';
 import { DbWizardType } from './database-form-schema.ts';
 
 // TODO re-add steps after API is ready
@@ -37,8 +37,8 @@ export const TIME_SELECTION_DEFAULTS = {
 export const DB_WIZARD_DEFAULTS: DbWizardType = {
   // TODO should be changed to true after  https://jira.percona.com/browse/EVEREST-509
   [DbWizardFormFields.backupsEnabled]: false,
-  // [DbWizardFormFields.pitrEnabled]: true,
-  // [DbWizardFormFields.pitrTime]: '60',
+  [DbWizardFormFields.pitrEnabled]: false,
+  [DbWizardFormFields.pitrStorageLocation]: null,
   // @ts-ignore
   [DbWizardFormFields.storageLocation]: null,
   ...TIME_SELECTION_DEFAULTS,
@@ -46,6 +46,7 @@ export const DB_WIZARD_DEFAULTS: DbWizardType = {
   [DbWizardFormFields.dbName]: '',
   [DbWizardFormFields.dbVersion]: '',
   [DbWizardFormFields.storageClass]: '',
+  [DbWizardFormFields.k8sNamespace]: null,
   [DbWizardFormFields.externalAccess]: false,
   // [DbWizardFormFields.internetFacing]: true,
   [DbWizardFormFields.sourceRanges]: [{ sourceRange: '' }],

@@ -17,29 +17,65 @@ import { useMutation, UseMutationOptions } from 'react-query';
 import { createDbClusterRestore } from 'api/restores';
 import { generateShortUID } from 'pages/database-form/steps/first/utils';
 
-export type RestoreFormData = {
-  backupName: string;
-};
-
-export const useDbClusterRestore = (
+export const useDbClusterRestoreFromBackup = (
   dbClusterName: string,
-  options?: UseMutationOptions<unknown, unknown, RestoreFormData, unknown>
+  options?: UseMutationOptions<unknown, unknown, unknown, unknown>
 ) => {
   return useMutation(
-    (formData: RestoreFormData) =>
-      createDbClusterRestore({
-        apiVersion: 'everest.percona.com/v1alpha1',
-        kind: 'DatabaseClusterRestore',
-        metadata: {
-          name: `restore-${generateShortUID()}`,
-        },
-        spec: {
-          dbClusterName,
-          dataSource: {
-            dbClusterBackupName: formData.backupName,
+    ({ backupName, namespace }: { backupName: string; namespace: string }) =>
+      createDbClusterRestore(
+        {
+          apiVersion: 'everest.percona.com/v1alpha1',
+          kind: 'DatabaseClusterRestore',
+          metadata: {
+            name: `restore-${generateShortUID()}`,
+          },
+          spec: {
+            dbClusterName,
+            dataSource: {
+              dbClusterBackupName: backupName,
+            },
           },
         },
-      }),
+        namespace
+      ),
+    { ...options }
+  );
+};
+
+export const useDbClusterRestoreFromPointInTime = (
+  dbClusterName: string,
+  options?: UseMutationOptions<unknown, unknown, unknown, unknown>
+) => {
+  return useMutation(
+    ({
+      pointInTimeDate,
+      backupName,
+      namespace,
+    }: {
+      pointInTimeDate: string;
+      backupName: string;
+      namespace: string;
+    }) =>
+      createDbClusterRestore(
+        {
+          apiVersion: 'everest.percona.com/v1alpha1',
+          kind: 'DatabaseClusterRestore',
+          metadata: {
+            name: `restore-${generateShortUID()}`,
+          },
+          spec: {
+            dbClusterName,
+            dataSource: {
+              dbClusterBackupName: backupName,
+              pitr: {
+                date: pointInTimeDate,
+              },
+            },
+          },
+        },
+        namespace
+      ),
     { ...options }
   );
 };

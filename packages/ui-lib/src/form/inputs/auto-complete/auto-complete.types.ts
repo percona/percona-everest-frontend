@@ -12,9 +12,9 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { LabeledContentProps } from '../../../labeled-content';
 import { AutocompleteProps, TextFieldProps } from '@mui/material';
 import { Control, UseControllerProps } from 'react-hook-form';
+import { LabeledContentProps } from '../../../labeled-content';
 
 export type AutoCompleteInputProps<T> = {
   name: string;
@@ -35,4 +35,6 @@ export type AutoCompleteInputProps<T> = {
   textFieldProps?: TextFieldProps;
   loading?: boolean;
   isRequired?: boolean;
+  disabled?: boolean;
+  onChange?: () => void;
 };

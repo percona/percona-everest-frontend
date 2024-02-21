@@ -9,10 +9,12 @@ import {
 } from '@mui/material';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { ColorModeContext } from '@percona/design';
+import { AuthContext } from 'contexts/auth';
 
 const AppBarUserIcon = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { colorMode, toggleColorMode } = useContext(ColorModeContext);
+  const { logout } = useContext(AuthContext);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -52,9 +54,14 @@ const AppBarUserIcon = () => {
                 />
               }
               label="Dark mode"
+              labelPlacement="start"
+              sx={{
+                ml: 0,
+              }}
             />
           </FormGroup>
         </MenuItem>
+        <MenuItem onClick={logout}>Log out</MenuItem>
       </Menu>
     </>
   );

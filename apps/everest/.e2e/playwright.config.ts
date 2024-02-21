@@ -15,6 +15,8 @@
 import { defineConfig } from '@playwright/test';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { STORAGE_STATE_FILE } from './constants';
+import 'dotenv/config';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -39,7 +41,7 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 1,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : 2,
+  workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['github'],
@@ -49,7 +51,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'http://127.0.0.1:3000',
+    baseURL: 'http://localhost:3000',
     extraHTTPHeaders: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
@@ -63,13 +65,25 @@ export default defineConfig({
   projects: [
     {
       testDir: '.',
+      name: 'auth',
+      testMatch: /auth.setup\.ts/,
+    },
+    {
+      testDir: '.',
       name: 'setup',
       testMatch: /global.setup\.ts/,
       teardown: 'teardown',
+      use: {
+        storageState: STORAGE_STATE_FILE,
+      },
+      dependencies: ['auth'],
     },
     {
       testDir: '.',
       name: 'teardown',
+      use: {
+        storageState: STORAGE_STATE_FILE,
+      },
       testMatch: /global\.teardown\.ts/,
     },
     {
@@ -77,6 +91,7 @@ export default defineConfig({
       use: {
         browserName: 'chromium',
         channel: 'chrome',
+        storageState: STORAGE_STATE_FILE,
       },
       dependencies: ['setup'],
     },

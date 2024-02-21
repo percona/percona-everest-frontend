@@ -1,19 +1,26 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { TimeValue } from 'components/time-selection/time-selection.types';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { TestWrapper } from 'utils/test';
 import { Backups } from './backups.tsx';
-import { TimeValue } from 'components/time-selection/time-selection.types';
 
 vi.mock('hooks/api/backup-storages/useBackupStorages');
 vi.mock('hooks/api/db-cluster/useDbCluster');
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
   const methods = useForm({
     defaultValues: {
       backupsEnabled: true,
-      // pitrEnabled: true,
-      // pitrTime: '60',
       storageLocation: 'S3',
       selectedTime: TimeValue.hours,
       minute: 0,
@@ -28,29 +35,24 @@ const FormProviderWrapper = ({ children }: { children: React.ReactNode }) => {
 };
 
 describe('BackupsStep', () => {
-  it('should render nothing when backups are disabled', () => {
+  it('should render nothing when backups are disabled by non-existent storage location', () => {
     render(
-      <TestWrapper>
-        <FormProviderWrapper>
-          <Backups />
-        </FormProviderWrapper>
-      </TestWrapper>
+      <QueryClientProvider client={queryClient}>
+        <TestWrapper>
+          <FormProviderWrapper>
+            <Backups alreadyVisited={false} loadingDefaultsForEdition={false} />
+          </FormProviderWrapper>
+        </TestWrapper>
+      </QueryClientProvider>
     );
-    expect(
-      screen.getByTestId('text-input-storage-location')
-    ).toBeInTheDocument();
-    expect(
-      screen.getByTestId('switch-input-backups-enabled')
-    ).toBeInTheDocument();
 
-    fireEvent.click(screen.getByTestId('switch-input-backups-enabled'));
+    expect(
+      screen.getByTestId('switch-input-backups-enabled').querySelector('input')
+    ).toBeChecked();
+    expect(screen.getByTestId('no-storage-message')).toBeInTheDocument();
     expect(
       screen.queryByTestId('text-input-storage-location')
     ).not.toBeInTheDocument();
-    // expect(
-    //   screen.queryByTestId('switch-input-pitr-enabled')
-    // ).not.toBeInTheDocument();
-    // expect(screen.queryByTestId('pitr-time-minutes')).not.toBeInTheDocument();
     expect(
       screen.queryByTestId('select-input-selected-time')
     ).not.toBeInTheDocument();
@@ -76,30 +78,12 @@ describe('BackupsStep', () => {
   //   expect(screen.getByTestId('select-input-selected-time')).toBeInTheDocument();
   // });
 
-  // // it('should render pitr related fields when pitr is enabled', () => {
-  // //   render(
-  // //     <TestWrapper>
-  // //       <FormProviderWrapper>
-  // //         <ThirdStep />
-  // //       </FormProviderWrapper>
-  // //     </TestWrapper>
-  // //   );
-
   // //   expect(
   // //     screen.getByTestId('switch-input-backups-enabled')
   // //   ).toBeInTheDocument();
   // //   expect(screen.getByTestId('switch-input-pitr-enabled')).toBeInTheDocument();
   // //   expect(screen.getByTestId('pitr-time-minutes')).toBeInTheDocument();
   // // });
-
-  // // it('should render not pitr related fields when pitr is disabled', () => {
-  // //   render(
-  // //     <TestWrapper>
-  // //       <FormProviderWrapper>
-  // //         <ThirdStep />
-  // //       </FormProviderWrapper>
-  // //     </TestWrapper>
-  // //   );
 
   // //   expect(
   // //     screen.getByTestId('switch-input-backups-enabled')

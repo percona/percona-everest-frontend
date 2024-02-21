@@ -8,7 +8,9 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --fix",
     "format": "prettier .  --write",
     "rm-build-dir": "rm -rf dist",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "main": "dist/esm/index.js",
   "module": "dist/esm/index.js",
@@ -37,9 +39,17 @@
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.5",
+    "@storybook/addon-essentials": "^7.6.6",
+    "@storybook/addon-interactions": "^7.6.6",
+    "@storybook/addon-links": "^7.6.6",
+    "@storybook/blocks": "^7.6.6",
+    "@storybook/react": "^7.6.6",
+    "@storybook/react-vite": "^7.6.6",
+    "@storybook/test": "^7.6.6",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.0.0",
     "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-storybook": "^0.6.15",
     "jsdom": "^22.1.0",
     "prettier": "^3.0.3",
     "react": "^18.2.0",
@@ -49,6 +59,7 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-terser": "^7.0.2",
+    "storybook": "^7.6.6",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2",
     "vitest": "^0.34.6"
@@ -58,6 +69,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.15",
     "@mui/material": "^5.14.14",
+    "@mui/x-date-pickers": "^6.18.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }

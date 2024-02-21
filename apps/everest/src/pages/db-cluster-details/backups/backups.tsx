@@ -13,36 +13,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Alert } from '@mui/material';
+import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages.ts';
 import { useDbCluster } from 'hooks/api/db-cluster/useDbCluster';
 import { useDbClusters } from 'hooks/api/db-clusters/useDbClusters';
-import { DbEngineType } from 'shared-types/dbEngines.types';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { BackupsList } from './backups-list/backups-list';
+import { ScheduleModalContext } from './backups.context.ts';
+import { Messages } from './backups.messages.ts';
+import { NoStoragesMessage } from './no-storages-message/no-storages-message.tsx';
 import { ScheduledBackupModal } from './scheduled-backup-modal/scheduled-backup-modal';
 import { ScheduledBackupsList } from './scheduled-backups-list/scheduled-backups-list';
-import { ScheduleModalContext } from './backups.context.ts';
-import { Alert } from '@mui/material';
-import { Messages } from './backups.messages.ts';
 
 export const Backups = () => {
-  const { dbClusterName } = useParams();
-  const { data = [] } = useDbClusters();
+  const { dbClusterName, namespace = '' } = useParams();
+  const { data = [] } = useDbClusters(namespace);
+  const { data: backupStorages = [] } = useBackupStorages();
   const dbNameExists = data.find(
     (cluster) => cluster.metadata.name === dbClusterName
   );
-  const { data: dbCluster } = useDbCluster(dbClusterName || '', {
+  const { data: dbCluster } = useDbCluster(dbClusterName || '', namespace, {
     enabled: !!dbClusterName && !!dbNameExists,
   });
 
   const [mode, setMode] = useState<'new' | 'edit'>('new');
   const [openScheduleModal, setOpenScheduleModal] = useState(false);
   const [selectedScheduleName, setSelectedScheduleName] = useState<string>('');
-
-  const dbType = useMemo(
-    () => dbCluster?.spec?.engine?.type,
-    [dbCluster?.spec?.engine?.type]
-  );
 
   return (
     <ScheduleModalContext.Provider
@@ -55,19 +52,19 @@ export const Backups = () => {
         setSelectedScheduleName,
       }}
     >
-      {dbNameExists && (
-        <>
-          {!dbCluster?.spec?.backup?.enabled && (
-            <Alert severity="info">
-              {dbType === DbEngineType.POSTGRESQL
-                ? Messages.backupsDisabledPG
-                : Messages.backupsDisabled}
-            </Alert>
-          )}
-          {dbType !== DbEngineType.POSTGRESQL && <ScheduledBackupsList />}
-          <BackupsList />
-          {openScheduleModal && <ScheduledBackupModal />}
-        </>
+      {backupStorages.length === 0 ? (
+        <NoStoragesMessage />
+      ) : (
+        dbNameExists && (
+          <>
+            {!dbCluster?.spec?.backup?.enabled && (
+              <Alert severity="info">{Messages.backupsDisabled}</Alert>
+            )}
+            <ScheduledBackupsList />
+            <BackupsList />
+            {openScheduleModal && <ScheduledBackupModal />}
+          </>
+        )
       )}
     </ScheduleModalContext.Provider>
   );

@@ -40,7 +40,11 @@ export const usePausedDbCluster = (
           paused: shouldBePaused,
         },
       };
-      return updateDbClusterFn(dbClusterName, payload);
+      return updateDbClusterFn(
+        dbClusterName,
+        dbCluster?.metadata?.namespace,
+        payload
+      );
     },
     { ...options }
   );

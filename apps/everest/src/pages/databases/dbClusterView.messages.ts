@@ -12,6 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 export const Messages = {
   createDatabase: 'Create Database',
   statusProvider: {
@@ -31,7 +32,9 @@ export const Messages = {
     cpu: 'CPU',
     memory: 'Memory',
     disk: 'Disk',
+    nodes: 'Number of nodes',
     externalAccess: 'External Access',
+    monitoring: 'Monitoring',
     enabled: 'Enabled',
     disabled: 'Disabled',
   },
@@ -41,14 +44,16 @@ export const Messages = {
     restart: 'Restart',
     suspend: 'Suspend',
     resume: 'Resume',
+    restoreFromBackup: 'Restore from a backup',
+    createNewDbFromBackup: 'Create DB from a backup',
   },
   dbCluster: {
     noData: "You don't have any databases yet. Create one to get started.",
   },
   deleteModal: {
     header: 'Delete database',
-    content:
-      'Are you sure you want to permanently delete this database and any datasets it contains?',
+    content: (dbName: string) =>
+      `Are you sure you want to permanently delete "${dbName}" and any datasets it contains?`,
   },
   responseMessages: {
     restart: 'The database is being restarted',

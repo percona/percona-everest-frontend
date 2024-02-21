@@ -37,8 +37,15 @@ export interface Schedule {
   retentionCopies?: number;
   schedule: string;
 }
+
+export interface PITR {
+  enabled: boolean;
+  backupStorageName: string;
+}
+
 export interface Backup {
   enabled: boolean;
+  pitr?: PITR;
   schedules?: Array<Schedule>;
 }
 
@@ -91,11 +98,12 @@ export interface StatusSpec {
   status: DbClusterStatus;
   hostname: string;
   port: number;
+  activeStorage?: string;
 }
 
 export interface DbClusterMetadata {
   name: string;
-  namespace?: string;
+  namespace: string;
   annotations?: {
     'everest.percona.com/restart'?: string;
   };

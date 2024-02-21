@@ -13,13 +13,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {
-  useMutation,
-  UseMutationOptions,
-  useQuery,
-  UseQueryOptions,
-} from 'react-query';
+import { dbTypeToDbEngine } from '@percona/utils';
 import { createDbClusterFn, getDbClusterCredentialsFn } from 'api/dbClusterApi';
+import { getCronExpressionFromFormValues } from 'components/time-selection/time-selection.utils.ts';
+import { DbWizardType } from 'pages/database-form/database-form-schema.ts';
+import { generateShortUID } from 'pages/database-form/steps/first/utils.ts';
+import {
+  UseMutationOptions,
+  UseQueryOptions,
+  useMutation,
+  useQuery,
+} from 'react-query';
 import {
   ClusterCredentials,
   DataSource,
@@ -27,10 +31,6 @@ import {
   GetDbClusterCredentialsPayload,
   ProxyExposeType,
 } from 'shared-types/dbCluster.types';
-import { dbTypeToDbEngine } from '@percona/utils';
-import { getCronExpressionFromFormValues } from 'components/time-selection/time-selection.utils.ts';
-import { DbWizardType } from 'pages/database-form/database-form-schema.ts';
-import { generateShortUID } from 'pages/database-form/steps/first/utils.ts';
 
 type CreateDbClusterArgType = {
   dbPayload: DbWizardType;
@@ -57,10 +57,20 @@ const formValuesToPayloadMapping = (
     kind: 'DatabaseCluster',
     metadata: {
       name: dbPayload.dbName,
+      namespace: dbPayload.k8sNamespace || '',
     },
     spec: {
       backup: {
         enabled: dbPayload.backupsEnabled,
+        ...(dbPayload.pitrEnabled && {
+          pitr: {
+            enabled: dbPayload.pitrEnabled,
+            backupStorageName:
+              typeof dbPayload.pitrStorageLocation === 'string'
+                ? dbPayload.pitrStorageLocation
+                : dbPayload.pitrStorageLocation!.name,
+          },
+        }),
         ...(dbPayload.backupsEnabled && {
           schedules: [
             {
@@ -132,7 +142,8 @@ export const useCreateDbCluster = (
   return useMutation(
     ({ dbPayload, backupDataSource }: CreateDbClusterArgType) =>
       createDbClusterFn(
-        formValuesToPayloadMapping(dbPayload, backupDataSource)
+        formValuesToPayloadMapping(dbPayload, backupDataSource),
+        dbPayload.k8sNamespace || ''
       ),
     { ...options }
   );
@@ -140,11 +151,12 @@ export const useCreateDbCluster = (
 
 export const useDbClusterCredentials = (
   dbClusterName: string,
+  namespace: string,
   options?: UseQueryOptions<ClusterCredentials>
 ) => {
   return useQuery<GetDbClusterCredentialsPayload, unknown, ClusterCredentials>(
     `cluster-credentials-${dbClusterName}`,
-    () => getDbClusterCredentialsFn(dbClusterName),
+    () => getDbClusterCredentialsFn(dbClusterName, namespace),
     { ...options }
   );
 };

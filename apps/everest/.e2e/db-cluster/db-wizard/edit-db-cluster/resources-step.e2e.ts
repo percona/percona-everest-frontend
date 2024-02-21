@@ -20,12 +20,18 @@ import {
 } from '../../../utils/db-cluster';
 import { findDbAndClickActions } from '../../../utils/db-clusters-list';
 import { DbType } from '@percona/types';
+import { getTokenFromLocalStorage } from '../../../utils/localStorage';
+import { getNamespacesFn } from '../../../utils/namespaces';
 
 test.describe('DB Cluster Editing Resources Step (Mongo)', () => {
   const mongoDBName = 'mongo-db';
+  let namespace = '';
 
   test.beforeEach(async ({ request }) => {
-    await createDbClusterFn(request, {
+    const token = await getTokenFromLocalStorage();
+    const namespaces = await getNamespacesFn(token, request);
+    namespace = namespaces[0];
+    await createDbClusterFn(token, request, namespaces[0], {
       dbName: mongoDBName,
       dbType: DbType.Mongo,
       numberOfNodes: '5',
@@ -33,16 +39,12 @@ test.describe('DB Cluster Editing Resources Step (Mongo)', () => {
   });
 
   test.afterEach(async ({ request }) => {
-    await deleteDbClusterFn(request, mongoDBName);
+    const token = await getTokenFromLocalStorage();
+    await deleteDbClusterFn(token, request, mongoDBName, namespace);
   });
 
   test('Show the correct number of nodes during editing', async ({ page }) => {
     await page.goto('/databases');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-
     await findDbAndClickActions(page, mongoDBName, 'Edit');
 
     const nextStep = page.getByTestId('db-wizard-continue-button');
@@ -54,5 +56,12 @@ test.describe('DB Cluster Editing Resources Step (Mongo)', () => {
       .getByRole('button', { pressed: true })
       .filter({ hasText: '5 nodes' });
     expect(a).toBeTruthy();
+  });
+
+  test('Disable disk resize during edition', async ({ page }) => {
+    await page.goto('/databases');
+    await findDbAndClickActions(page, mongoDBName, 'Edit');
+    await page.getByTestId('button-edit-preview-resources').click();
+    await expect(page.getByTestId('text-input-disk')).toBeDisabled();
   });
 });

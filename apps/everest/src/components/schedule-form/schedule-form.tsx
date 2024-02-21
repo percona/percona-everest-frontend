@@ -13,48 +13,50 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { TimeSelection } from '../time-selection/time-selection';
-import { ScheduleFormFields } from './schedule-form.types.ts';
-import { Messages } from './schedule-form.messages.ts';
-import { Schedule } from 'shared-types/dbCluster.types.ts';
-import { BackupStorage } from 'shared-types/backupStorages.types.ts';
 import { AutoCompleteInput, LabeledContent, TextInput } from '@percona/ui-lib';
+import { BackupStorage } from 'shared-types/backupStorages.types.ts';
+import { Schedule } from 'shared-types/dbCluster.types.ts';
 import { AutoCompleteAutoFill } from '../auto-complete-auto-fill/auto-complete-auto-fill.tsx';
+import { TimeSelection } from '../time-selection/time-selection';
+import { Messages } from './schedule-form.messages.ts';
+import { ScheduleFormFields } from './schedule-form.types.ts';
 
 type ScheduleFormProps = {
-  mode: 'new' | 'edit' | 'editDbWizard' | 'newDbWizard';
+  allowScheduleSelection?: boolean;
+  disableStorageSelection?: boolean;
+  disableNameInput?: boolean;
+  autoFillLocation?: boolean;
   schedules: Schedule[];
   storageLocationFetching: boolean;
   storageLocationOptions: BackupStorage[];
 };
 export const ScheduleForm = ({
-  mode,
+  allowScheduleSelection,
+  disableStorageSelection = false,
+  disableNameInput,
+  autoFillLocation,
   schedules,
   storageLocationFetching,
   storageLocationOptions,
 }: ScheduleFormProps) => {
   const schedulesNamesList =
     (schedules && schedules.map((item) => item?.name)) || [];
-
   return (
     <>
-      {(mode === 'new' ||
-        mode === 'newDbWizard' ||
-        mode === 'editDbWizard') && (
-        <TextInput
-          name={ScheduleFormFields.scheduleName}
-          label={Messages.scheduleName.label}
-          textFieldProps={{
-            disabled: mode === 'editDbWizard' && schedules?.length === 1,
-          }}
-          isRequired
-        />
-      )}
-      {mode === 'edit' && (
+      {allowScheduleSelection ? (
         <AutoCompleteInput
           name={ScheduleFormFields.scheduleName}
           label={Messages.scheduleName.label}
           options={schedulesNamesList}
+          isRequired
+        />
+      ) : (
+        <TextInput
+          name={ScheduleFormFields.scheduleName}
+          label={Messages.scheduleName.label}
+          textFieldProps={{
+            disabled: disableNameInput,
+          }}
           isRequired
         />
       )}
@@ -73,7 +75,8 @@ export const ScheduleForm = ({
             typeof option === 'string' ? option : option.name,
         }}
         isRequired
-        enableFillFirst={mode === 'new' || mode === 'newDbWizard'}
+        enableFillFirst={autoFillLocation}
+        disabled={disableStorageSelection}
       />
     </>
   );

@@ -13,8 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { test as setup } from '@playwright/test';
+import { test as setup, expect } from '@playwright/test';
 import 'dotenv/config';
+import { getTokenFromLocalStorage } from './utils/localStorage';
+import { getNamespacesFn } from './utils/namespaces';
 const {
   EVEREST_LOCATION_BUCKET_NAME,
   EVEREST_LOCATION_ACCESS_KEY,
@@ -24,7 +26,9 @@ const {
 } = process.env;
 
 setup('Backup storage', async ({ request }) => {
-  await request.post('/v1/backup-storages/', {
+  const token = await getTokenFromLocalStorage();
+  const namespaces = await getNamespacesFn(token, request);
+  const response = await request.post('/v1/backup-storages/', {
     data: {
       name: 'ui-dev',
       description: 'CI test bucket',
@@ -32,10 +36,21 @@ setup('Backup storage', async ({ request }) => {
       bucketName: EVEREST_LOCATION_BUCKET_NAME,
       secretKey: EVEREST_LOCATION_SECRET_KEY,
       accessKey: EVEREST_LOCATION_ACCESS_KEY,
+      allowedNamespaces: [namespaces[0]],
       url: EVEREST_LOCATION_URL,
       region: EVEREST_LOCATION_REGION,
     },
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
+  expect(response.ok()).toBeTruthy();
+});
+
+setup('Close modal permanently', async ({ page }) => {
+  await page.goto('/');
+  await page.getByTestId('close-dialog-icon').click();
+  await page.context().storageState({ path: 'user.json' });
 });
 
 // setup('Monitoring setup', async ({ request }) => {

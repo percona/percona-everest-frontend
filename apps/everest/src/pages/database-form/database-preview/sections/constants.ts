@@ -2,12 +2,14 @@ import { PreviewSectionFive } from './section-five';
 import { BackupsPreviewSection } from './backups-section.tsx';
 import { AdvancedConfigurationsPreviewSection } from './advanced-configurations-section';
 import { PreviewSectionOne } from './section-one';
-import { PreviewSectionTwo } from './section-two';
+import { ResourcesPreviewSection } from './resources-section.tsx';
+import { PITRSection } from './pitr-section';
 
 export const previewSections = [
   PreviewSectionOne,
-  PreviewSectionTwo,
+  ResourcesPreviewSection,
   BackupsPreviewSection,
+  PITRSection,
   AdvancedConfigurationsPreviewSection,
   PreviewSectionFive,
 ];

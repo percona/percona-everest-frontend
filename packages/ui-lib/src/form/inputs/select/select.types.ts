@@ -23,6 +23,6 @@ export type SelectInputProps = {
   label?: string;
   labelProps?: LabeledContentProps;
   selectFieldProps?: SelectProps;
-  children?: React.ReactNode;
+  children?: React.ReactNode | React.ReactNode[];
   isRequired?: boolean;
 };

@@ -41,7 +41,7 @@ import { useDeleteSchedule } from 'hooks/api/backups/useScheduledBackups';
 import { ScheduleModalContext } from '../backups.context.ts';
 
 export const ScheduledBackupsList = () => {
-  const { dbClusterName } = useParams();
+  const { dbClusterName, namespace = '' } = useParams();
   const queryClient = useQueryClient();
 
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
@@ -51,12 +51,12 @@ export const ScheduledBackupsList = () => {
     setSelectedScheduleName: setSelectedScheduleToModalContext,
     setOpenScheduleModal,
   } = useContext(ScheduleModalContext);
-  const { data } = useDbCluster(dbClusterName!, {
+  const { data } = useDbCluster(dbClusterName!, namespace, {
     enabled: !!dbClusterName,
     refetchInterval: 10 * 1000,
   });
   const { mutate: deleteSchedule, isLoading: deletingSchedule } =
-    useDeleteSchedule(dbClusterName!);
+    useDeleteSchedule(dbClusterName!, namespace);
   const schedules = data && data?.spec?.backup?.schedules;
   const handleDelete = (scheduleName: string) => () => {
     setSelectedSchedule(scheduleName);
@@ -180,7 +180,7 @@ export const ScheduledBackupsList = () => {
           handleConfirm={handleConfirmDelete}
           disabledButtons={deletingSchedule}
         >
-          {Messages.deleteModal.content}
+          {Messages.deleteModal.content(selectedSchedule)}
         </ConfirmDialog>
       )}
     </>

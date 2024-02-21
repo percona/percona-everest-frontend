@@ -13,33 +13,59 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Alert, Box, Typography } from '@mui/material';
+import { Alert, Box, Button } from '@mui/material';
 import { SwitchInput } from '@percona/ui-lib';
+import {
+  BACKUP_STORAGES_QUERY_KEY,
+  useBackupStorages,
+  useCreateBackupStorage,
+} from 'hooks/api/backup-storages/useBackupStorages';
+import { CreateEditModalStorage } from 'pages/settings/storage-locations/createEditModal/create-edit-modal.tsx';
+import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { DbWizardFormFields } from '../../database-form.types';
-import { Messages } from './backups.messages.ts';
-import { ScheduleBackupSection } from './schedule-section/schedule-section.tsx';
+import { useQueryClient } from 'react-query';
+import { BackupStorage } from 'shared-types/backupStorages.types.ts';
+import { updateDataAfterCreate } from 'utils/generalOptimisticDataUpdate.ts';
+import { DbWizardFormFields, StepProps } from '../../database-form.types';
 import { useDatabasePageDefaultValues } from '../../useDatabaseFormDefaultValues.ts';
 import { useDatabasePageMode } from '../../useDatabasePageMode.ts';
-import { DbType } from '@percona/types';
-import { useEffect } from 'react';
+import { StepHeader } from '../step-header/step-header.tsx';
+import { Messages } from './backups.messages.ts';
+import { ScheduleBackupSection } from './schedule-section/schedule-section.tsx';
 
-export const Backups = () => {
+export const Backups = ({ alreadyVisited }: StepProps) => {
+  const queryClient = useQueryClient();
+  const { mutate: createBackupStorage, isLoading: creatingBackupStorage } =
+    useCreateBackupStorage();
+  const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
   const mode = useDatabasePageMode();
-  const { control, watch, setValue } = useFormContext();
+  const { control, watch, setValue, getFieldState, trigger } = useFormContext();
   const { dbClusterData } = useDatabasePageDefaultValues(mode);
+  const { data: backupStorages = [] } = useBackupStorages();
 
-  const [backupsEnabled, dbType] = watch([
+  const [backupsEnabled, dbType, selectedNamespace] = watch([
     DbWizardFormFields.backupsEnabled,
     DbWizardFormFields.dbType,
+    DbWizardFormFields.k8sNamespace,
   ]);
+
+  const availableBackupStorages = useMemo(
+    () =>
+      backupStorages.filter((item) =>
+        item.allowedNamespaces.includes(selectedNamespace)
+      ),
+    [selectedNamespace, backupStorages]
+  );
 
   // TODO should be removed after https://jira.percona.com/browse/EVEREST-509 + DEFAULT_VALUES should be changed from false to true for all databases
   useEffect(() => {
-    if (
-      dbType !== DbType.Postresql &&
-      (mode === 'new' || mode === 'restoreFromBackup')
-    ) {
+    const { isTouched } = getFieldState(DbWizardFormFields.backupsEnabled);
+
+    if (isTouched) {
+      return;
+    }
+
+    if (mode === 'new' || mode === 'restoreFromBackup') {
       setValue(DbWizardFormFields.backupsEnabled, true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,46 +77,97 @@ export const Backups = () => {
     mode === 'new' ? [] : dbClusterData?.spec?.backup?.schedules || [];
   const multiSchedules =
     mode === 'edit' && !!schedules && schedules?.length > 1;
-  const scheduleDisabled = multiSchedules || dbType === DbType.Postresql;
+  const scheduleDisabled = multiSchedules;
+
+  const handleSubmit = (_: boolean, data: BackupStorage) => {
+    handleCreateBackup(data);
+  };
+
+  const handleCreateBackup = (data: BackupStorage) => {
+    createBackupStorage(data, {
+      onSuccess: (newLocation) => {
+        updateDataAfterCreate(
+          queryClient,
+          BACKUP_STORAGES_QUERY_KEY
+        )(newLocation);
+        handleCloseModal();
+      },
+    });
+  };
+
+  const handleCloseModal = () => {
+    setOpenCreateEditModal(false);
+  };
+
+  useEffect(() => {
+    trigger();
+  }, [backupsEnabled]);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <Typography variant="h5">{Messages.backups}</Typography>
-      <Typography variant="subtitle2">{Messages.captionBackups}</Typography>
+      <StepHeader
+        pageTitle={Messages.backups}
+        pageDescription={Messages.captionBackups}
+      />
       <SwitchInput
         control={control}
         label={Messages.enableBackups}
         name={DbWizardFormFields.backupsEnabled}
-        switchFieldProps={{
-          disabled: dbType === DbType.Postresql,
-        }}
         formControlLabelProps={{
-          sx: { my: 1 },
+          sx: { mt: 1 },
         }}
       />
-      {backupsEnabled && (
-        <>
-          {(mode === 'new' || mode === 'restoreFromBackup') && (
-            <Alert severity="info">{Messages.youCanAddMoreSchedules}</Alert>
-          )}
-          {multiSchedules && (
-            <Alert severity="info">{Messages.youHaveMultipleSchedules}</Alert>
-          )}
-          {!scheduleDisabled && <ScheduleBackupSection />}
-        </>
-      )}
-      {dbType === DbType.Postresql && (
-        <Alert severity="info">
-          {Messages.schedulesUnavailableForPostgreSQL}
+      {backupsEnabled && availableBackupStorages.length === 0 && (
+        <Alert
+          severity="warning"
+          data-testid="no-storage-message"
+          action={
+            <Button
+              color="inherit"
+              size="small"
+              onClick={() => setOpenCreateEditModal(true)}
+            >
+              {Messages.addStorage}
+            </Button>
+          }
+        >
+          {Messages.noStoragesMessage(selectedNamespace)}
         </Alert>
       )}
-      {/* <Typography variant="h6">{Messages.pitr}</Typography>
-          <Typography variant="caption">{Messages.captionPitr}</Typography>
-          <SwitchInput
-            label={Messages.enablePitr}
-            name={DbWizardFormFields.pitrEnabled}
-          /> */}
-      {/* {pitrEnabled && <PitrEnabledSection />} */}
+      {backupsEnabled && availableBackupStorages.length > 0 && (
+        <>
+          {(mode === 'new' || mode === 'restoreFromBackup') && (
+            <Alert sx={{ mt: 1 }} severity="info">
+              {Messages.youCanAddMoreSchedules}
+            </Alert>
+          )}
+          {multiSchedules && (
+            <Alert sx={{ mt: 1 }} severity="info">
+              {Messages.youHaveMultipleSchedules}
+            </Alert>
+          )}
+          {!scheduleDisabled && (
+            <ScheduleBackupSection enableNameGeneration={!alreadyVisited} />
+          )}
+        </>
+      )}
+      {!backupsEnabled && (
+        <Alert
+          sx={{ mt: 1 }}
+          severity="info"
+          data-testid="pitr-no-backup-alert"
+        >
+          {Messages.pitrAlert}
+        </Alert>
+      )}
+      {openCreateEditModal && (
+        <CreateEditModalStorage
+          open={openCreateEditModal}
+          handleCloseModal={handleCloseModal}
+          handleSubmitModal={handleSubmit}
+          isLoading={creatingBackupStorage}
+        />
+      )}
     </Box>
   );
 };

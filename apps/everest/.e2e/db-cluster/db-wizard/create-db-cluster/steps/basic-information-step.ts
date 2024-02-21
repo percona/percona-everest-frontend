@@ -18,6 +18,7 @@ import { Page, expect } from '@playwright/test';
 export const basicInformationStepCheck = async (
   page: Page,
   engineVersions,
+  recommendedEngineVersions,
   storageClasses,
   clusterName
 ) => {
@@ -27,14 +28,11 @@ export const basicInformationStepCheck = async (
   const nrButtons = await dbEnginesButtons.count();
 
   expect(nrButtons).toBe(3);
+  expect(await dbEnginesButtons.first().textContent()).toBe('MySQL');
+  expect(await dbEnginesButtons.nth(1).textContent()).toBe('MongoDB');
+  expect(await dbEnginesButtons.nth(2).textContent()).toBe('PostgreSQL');
 
-  const mySqlButton = dbEnginesButtons.filter({ hasText: 'MySQL' });
-  const mongoButton = dbEnginesButtons.filter({ hasText: 'MongoDB' });
-
-  await expect(mySqlButton).toBeVisible();
-  await expect(mongoButton).toBeVisible();
-
-  await mongoButton.click();
+  await dbEnginesButtons.nth(1).click(); //MongoDB
   await page.getByTestId('select-db-version-button').click();
 
   const dbVersionOptions = page.getByRole('option');
@@ -43,6 +41,11 @@ export const basicInformationStepCheck = async (
     expect(
       dbVersionOptions.filter({ hasText: new RegExp(`^${version}$`) })
     ).toBeVisible()
+  );
+
+  const defaultOption = await page.getByRole('option', { selected: true });
+  expect(await defaultOption.textContent()).toBe(
+    recommendedEngineVersions.psmdb
   );
 
   await page.getByRole('option').filter({ hasText: '5.0.7-6' }).click();

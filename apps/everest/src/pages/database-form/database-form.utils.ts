@@ -20,7 +20,7 @@ import {
 } from 'shared-types/dbCluster.types';
 import { DbWizardFormFields, DbWizardMode } from './database-form.types';
 import { dbEngineToDbType } from '@percona/utils';
-import { matchFieldsValueToResourceSize } from './steps/second/second-step.utils';
+import { matchFieldsValueToResourceSize } from './steps/resources/resources-step.utils.ts';
 import { cpuParser, memoryParser } from 'utils/k8ResourceParser';
 import { generateShortUID } from './steps/first/utils';
 import { MAX_DB_CLUSTER_NAME_LENGTH } from 'consts';
@@ -32,9 +32,14 @@ import {
 } from './database-form.constants.ts';
 
 const getScheduleInfo = (mode: DbWizardMode, backup?: Backup) => {
-  if ((backup?.enabled && mode === 'new') || mode === 'edit') {
+  if (
+    (backup?.enabled && mode === 'new') ||
+    mode === 'edit' ||
+    mode === 'restoreFromBackup'
+  ) {
     const schedules = backup?.schedules;
     const firstSchedule = schedules && schedules[0];
+
     if (firstSchedule?.schedule && !!schedules && schedules?.length <= 1) {
       return {
         ...getFormValuesFromCronExpression(firstSchedule.schedule),
@@ -53,16 +58,22 @@ const getScheduleInfo = (mode: DbWizardMode, backup?: Backup) => {
 
 export const DbClusterPayloadToFormValues = (
   dbCluster: DbCluster,
-  mode: DbWizardMode
+  mode: DbWizardMode,
+  namespace: string
 ): DbWizardType => {
-  const scheduleInfo = getScheduleInfo(mode, dbCluster?.spec?.backup);
+  const backup = dbCluster?.spec?.backup;
 
   return {
-    [DbWizardFormFields.backupsEnabled]: !!dbCluster?.spec?.backup?.enabled,
+    [DbWizardFormFields.backupsEnabled]: !!backup?.enabled,
     [DbWizardFormFields.scheduleName]: `backup-${generateShortUID()}`,
-    // [DbWizardFormFields.pitrEnabled]: true,
-    // [DbWizardFormFields.pitrTime]: '60',
-    ...scheduleInfo,
+    [DbWizardFormFields.pitrEnabled]: backup?.pitr?.enabled || false,
+    [DbWizardFormFields.pitrStorageLocation]:
+      (backup?.pitr?.enabled && mode === 'new') || mode === 'edit'
+        ? backup?.pitr?.backupStorageName || null
+        : DB_WIZARD_DEFAULTS[DbWizardFormFields.pitrStorageLocation],
+    ...getScheduleInfo(mode, backup),
+    [DbWizardFormFields.k8sNamespace]:
+      namespace || DB_WIZARD_DEFAULTS[DbWizardFormFields.k8sNamespace],
     [DbWizardFormFields.dbType]: dbEngineToDbType(
       dbCluster?.spec?.engine?.type
     ),

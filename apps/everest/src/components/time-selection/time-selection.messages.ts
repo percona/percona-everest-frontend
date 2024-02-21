@@ -23,9 +23,9 @@ export const Messages = {
   infoText: (value: string) =>
     `Everest will create a backup of your database every ${value}`,
   getTimeText: {
-    hours: 'hours, starting at minute',
-    days: 'days, at',
-    weeks: 'weeks on',
-    months: 'months, on day',
+    hours: 'hour, starting at minute',
+    days: 'day, at',
+    weeks: 'week on',
+    months: 'month, on day',
   },
 };

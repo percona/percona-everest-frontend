@@ -14,12 +14,20 @@
 // limitations under the License.
 
 import { expect, test } from '@playwright/test';
-import { getEnginesVersions } from '../../../utils/database-engines';
+import {
+  getEnginesLatestRecommendedVersions,
+  getEnginesVersions,
+} from '../../../utils/database-engines';
+import { deleteDbClusterFn } from '../../../utils/db-cluster';
+import { getTokenFromLocalStorage } from '../../../utils/localStorage';
+import { getNamespacesFn } from '../../../utils/namespaces';
 import { getClusterDetailedInfo } from '../../../utils/storage-class';
 import { advancedConfigurationStepCheck } from './steps/advanced-configuration-step';
 import { backupsStepCheck } from './steps/backups-step';
 import { basicInformationStepCheck } from './steps/basic-information-step';
+import { pitrStepCheck } from './steps/pitr-step';
 import { resourcesStepCheck } from './steps/resources-step';
+import { moveBack, moveForward } from '../../../utils/db-wizard';
 
 test.describe('DB Cluster creation', () => {
   let engineVersions = {
@@ -29,11 +37,18 @@ test.describe('DB Cluster creation', () => {
   };
   let storageClasses = [];
   // let monitoringInstancesList = [];
+  let namespace = '';
 
   test.beforeAll(async ({ request }) => {
-    engineVersions = await getEnginesVersions(request);
+    const token = await getTokenFromLocalStorage();
+    const namespaces = await getNamespacesFn(token, request);
+    namespace = namespaces[0];
+    engineVersions = await getEnginesVersions(token, namespace, request);
 
-    const { storageClassNames = [] } = await getClusterDetailedInfo(request);
+    const { storageClassNames = [] } = await getClusterDetailedInfo(
+      token,
+      request
+    );
     storageClasses = storageClassNames;
 
     // monitoringInstancesList = await getMonitoringInstanceList(request);
@@ -41,11 +56,6 @@ test.describe('DB Cluster creation', () => {
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/databases/new');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-
     await page.getByTestId('toggle-button-group-input-db-type').waitFor();
     await page.getByTestId('select-input-db-version').waitFor();
   });
@@ -57,25 +67,74 @@ test.describe('DB Cluster creation', () => {
     // 3) check that the default parameters for MySQL are changed with parameters for the first available dbEngine
   });
 
+  test('Cluster defaults', async ({ page }) => {
+    const expectedNodesOrder = [3, 3, 2];
+    const dbEnginesButtons = page
+      .getByTestId('toggle-button-group-input-db-type')
+      .getByRole('button');
+
+    expect(await dbEnginesButtons.count()).toBe(3);
+    // MySQL is our default DB type
+    expect(await page.getByTestId('mysql-toggle-button')).toHaveAttribute(
+      'aria-pressed',
+      'true'
+    );
+
+    for (let i = 0; i < 3; i++) {
+      await dbEnginesButtons.nth(i).click();
+      expect(
+        await page.getByTestId('select-input-db-version').inputValue()
+      ).toBeDefined();
+
+      await moveForward(page);
+
+      expect(
+        await page.getByTestId(`toggle-button-nodes-${expectedNodesOrder[i]}`)
+      ).toHaveAttribute('aria-pressed', 'true');
+
+      // We click on the first button to make sure it always goes back to defaults afterwards
+      await page.getByTestId('toggle-button-nodes-1').click();
+
+      await moveBack(page);
+    }
+  });
+
   test('Cluster creation', async ({ page, request }) => {
     const clusterName = 'db-cluster-ui-test';
+    const token = await getTokenFromLocalStorage();
+    const recommendedEngineVersions = await getEnginesLatestRecommendedVersions(
+      token,
+      namespace,
+      request
+    );
+    let dbName = '';
+    let scheduleName = '';
 
     expect(storageClasses.length).toBeGreaterThan(0);
 
     await basicInformationStepCheck(
       page,
       engineVersions,
+      recommendedEngineVersions,
       storageClasses,
       clusterName
     );
+
+    dbName = await page.getByTestId('text-input-db-name').inputValue();
+
     await page.getByTestId('db-wizard-continue-button').click();
     await expect(page.getByText('Number of nodes: 3')).toBeVisible();
 
     await resourcesStepCheck(page);
     await page.getByTestId('db-wizard-continue-button').click();
 
-    // TODO uncomment step tests inside function
     await backupsStepCheck(page);
+    scheduleName = await page
+      .getByTestId('text-input-schedule-name')
+      .inputValue();
+    await page.getByTestId('db-wizard-continue-button').click();
+
+    await pitrStepCheck(page);
     await page.getByTestId('db-wizard-continue-button').click();
 
     await advancedConfigurationStepCheck(page);
@@ -85,6 +144,11 @@ test.describe('DB Cluster creation', () => {
     await page.getByTestId('button-edit-preview-basic-information').click();
     // Here we test that version wasn't reset to default
     await expect(page.getByText('Version: 5.0.7-6')).toBeVisible();
+
+    // Make sure name doesn't change when we go back to first step
+    expect(await page.getByTestId('text-input-db-name').inputValue()).toBe(
+      dbName
+    );
     await page.getByTestId('postgresql-toggle-button').click();
     await expect(page.getByText('Number of nodes: 2')).toBeVisible();
     // Now we change the number of nodes
@@ -95,6 +159,13 @@ test.describe('DB Cluster creation', () => {
     // Because 2 nodes is not valid for MongoDB, the default will be picked
     await page.getByTestId('mongodb-toggle-button').click();
     await expect(page.getByText('Number of nodes: 3')).toBeVisible();
+    await page.getByTestId('button-edit-preview-backups').click();
+
+    // Now we make sure schedule name hasn't changed
+    expect(
+      await page.getByTestId('text-input-schedule-name').inputValue()
+    ).toBe(scheduleName);
+
     await page.getByTestId('button-edit-preview-monitoring').click();
 
     // await monitoringStepCheck(page, monitoringInstancesList);
@@ -105,7 +176,12 @@ test.describe('DB Cluster creation', () => {
       page.getByText('Awesome! Your database is being created!')
     ).toBeVisible();
 
-    const response = await request.get('/v1/database-clusters');
+    const response = await request.get(
+      `/v1/namespaces/${namespace}/database-clusters`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
 
     expect(response.ok()).toBeTruthy();
     // TODO replace with correct payload typings from GET DB Clusters
@@ -115,10 +191,13 @@ test.describe('DB Cluster creation', () => {
       (cluster) => cluster.metadata.name === clusterName
     );
 
-    const deleteResponse = await request.delete(
-      `/v1/database-clusters/${addedCluster?.metadata.name}`
+    await deleteDbClusterFn(
+      token,
+      request,
+      addedCluster?.metadata.name,
+      namespace
     );
-    expect(deleteResponse.ok()).toBeTruthy();
+    //TODO: Add check for PITR ones backend is ready
 
     expect(addedCluster).not.toBeUndefined();
     expect(addedCluster?.spec.engine.type).toBe('psmdb');
@@ -135,6 +214,45 @@ test.describe('DB Cluster creation', () => {
     //   '192.168.1.0',
     // ]);
     expect(addedCluster?.spec.engine.storage.class).toBe(storageClasses[0]);
+  });
+
+  test('PITR should be disabled when backups toggle was not checked', async ({
+    page,
+  }) => {
+    expect(storageClasses.length).toBeGreaterThan(0);
+
+    const mySQLButton = page.getByTestId('mysql-toggle-button');
+    await mySQLButton.click();
+
+    await page.getByTestId('db-wizard-continue-button').click();
+    await page.getByTestId('db-wizard-continue-button').click();
+    const enabledBackupsCheckbox = page
+      .getByTestId('switch-input-backups-enabled')
+      .getByRole('checkbox');
+
+    await expect(enabledBackupsCheckbox).toBeChecked();
+    await page.getByTestId('db-wizard-continue-button').click();
+
+    const enabledPitrCheckbox = page
+      .getByTestId('switch-input-pitr-enabled-label')
+      .getByRole('checkbox');
+
+    await expect(enabledPitrCheckbox).not.toBeChecked();
+    await expect(enabledPitrCheckbox).not.toBeDisabled();
+    await enabledPitrCheckbox.setChecked(true);
+    await expect(enabledPitrCheckbox).toBeChecked();
+    await expect(
+      page.getByTestId('text-input-pitr-storage-location')
+    ).toBeVisible();
+
+    await page.getByTestId('db-wizard-previous-button').click();
+
+    await enabledBackupsCheckbox.setChecked(false);
+    await expect(page.getByTestId('pitr-no-backup-alert')).toBeVisible();
+    await page.getByTestId('db-wizard-continue-button').click();
+
+    await expect(enabledPitrCheckbox).not.toBeChecked();
+    await expect(enabledPitrCheckbox).toBeDisabled();
   });
 
   test.skip('Cancel wizard', async ({ page }) => {

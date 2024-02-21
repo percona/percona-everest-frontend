@@ -16,62 +16,82 @@ import { useQuery } from 'react-query';
 import {
   DbEngine,
   DbEngineStatus,
+  DbEngineType,
   EngineToolPayload,
   GetDbEnginesPayload,
 } from 'shared-types/dbEngines.types';
 import { getDbEnginesFn } from 'api/dbEngineApi';
 
-export const useDbEngines = () => {
+const DB_TYPE_ORDER_MAP: Record<DbEngineType, number> = {
+  // Lower is more important
+  [DbEngineType.PXC]: 1,
+  [DbEngineType.PSMDB]: 2,
+  [DbEngineType.POSTGRESQL]: 3,
+};
+
+export const dbEnginesQuerySelect = ({
+  items = [],
+}: GetDbEnginesPayload): DbEngine[] =>
+  items
+    .filter(
+      (item) => item.status && item.status.status === DbEngineStatus.INSTALLED
+    )
+    .map(({ spec: { type }, status }) => {
+      const {
+        status: engineStatus,
+        availableVersions,
+        operatorVersion,
+      } = status!;
+      const result: DbEngine = {
+        type,
+        operatorVersion,
+        status: engineStatus,
+        availableVersions: {
+          backup: [],
+          engine: [],
+          proxy: [],
+        },
+      };
+
+      ['backup', 'engine', 'proxy'].forEach(
+        // @ts-ignore
+        (toolName: keyof typeof availableVersions) => {
+          if (
+            !availableVersions ||
+            !Object.keys(availableVersions).length ||
+            !availableVersions[toolName]
+          ) {
+            return;
+          }
+
+          const tool: Record<string, EngineToolPayload> =
+            availableVersions[toolName];
+          const versions = Object.keys(tool);
+
+          versions.forEach((version) => {
+            result.availableVersions[toolName].push({
+              version,
+              ...tool[version],
+            });
+          });
+        }
+      );
+
+      return result;
+    })
+    .sort(
+      ({ type: dbTypeA }, { type: dbTypeB }) =>
+        DB_TYPE_ORDER_MAP[dbTypeA] - DB_TYPE_ORDER_MAP[dbTypeB]
+    );
+
+export const useDbEngines = (namespace: string) => {
   return useQuery<GetDbEnginesPayload, unknown, DbEngine[]>(
-    'dbEngines',
-    () => getDbEnginesFn(),
+    `dbEngines_${namespace}`,
+    () => getDbEnginesFn(namespace),
     {
-      select: ({ items = [] }) =>
-        items
-          .filter((item) => item.status.status === DbEngineStatus.INSTALLED)
-          .map(
-            ({
-              spec: { type },
-              status: { status, availableVersions, operatorVersion },
-            }) => {
-              const result: DbEngine = {
-                type,
-                operatorVersion,
-                status,
-                availableVersions: {
-                  backup: [],
-                  engine: [],
-                  proxy: [],
-                },
-              };
-
-              ['backup', 'engine', 'proxy'].forEach(
-                // @ts-ignore
-                (toolName: keyof typeof availableVersions) => {
-                  if (
-                    !availableVersions ||
-                    !Object.keys(availableVersions).length ||
-                    !availableVersions[toolName]
-                  ) {
-                    return;
-                  }
-
-                  const tool: Record<string, EngineToolPayload> =
-                    availableVersions[toolName];
-                  const versions = Object.keys(tool);
-
-                  versions.forEach((version) => {
-                    result.availableVersions[toolName].push({
-                      version,
-                      ...tool[version],
-                    });
-                  });
-                }
-              );
-
-              return result;
-            }
-          ),
+      select: dbEnginesQuerySelect,
+      enabled: !!namespace,
+      retry: 2,
     }
   );
 };

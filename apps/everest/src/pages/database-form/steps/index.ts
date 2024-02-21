@@ -13,16 +13,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import { FirstStep } from './first/first-step';
-import { SecondStep } from './second/second-step';
+import { ResourcesStep } from './resources/resources-step.tsx';
 import { Backups } from './backups/backups';
 import { AdvancedConfigurations } from './advanced-configurations/advanced-configurations';
-import { FifthStep } from './fifth/fifth-step';
+import { Monitoring } from './monitoring/monitoring';
+import PITRStep from './pitr';
 
 // TODO re-add steps after API is ready
 export const steps = [
   FirstStep,
-  SecondStep,
+  ResourcesStep,
   Backups,
+  PITRStep,
   AdvancedConfigurations,
-  FifthStep,
+  Monitoring,
 ];

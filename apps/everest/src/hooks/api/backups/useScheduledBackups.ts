@@ -1,9 +1,10 @@
-import { useMutation, UseMutationOptions } from 'react-query';
 import { updateDbClusterFn } from 'api/dbClusterApi';
-import { getCronExpressionFromFormValues } from 'components/time-selection/time-selection.utils';
-import { DbCluster, Schedule } from 'shared-types/dbCluster.types';
-import { useDbCluster } from '../db-cluster/useDbCluster';
 import { ScheduleFormData } from 'components/schedule-form/schedule-form-schema.ts';
+import { getCronExpressionFromFormValues } from 'components/time-selection/time-selection.utils';
+import { useMutation, UseMutationOptions } from 'react-query';
+import { Schedule } from 'shared-types/dbCluster.types';
+import { useDbCluster } from '../db-cluster/useDbCluster';
+import { DbCluster } from 'shared-types/dbCluster.types';
 
 const backupScheduleFormValuesToDbClusterPayload = (
   dbPayload: ScheduleFormData,
@@ -64,6 +65,7 @@ const backupScheduleFormValuesToDbClusterPayload = (
     spec: {
       ...dbCluster?.spec,
       backup: {
+        ...dbCluster.spec.backup,
         enabled: true,
         schedules: schedulesPayload,
       },
@@ -87,6 +89,7 @@ const deletedScheduleToDbClusterPayload = (
     spec: {
       ...dbCluster?.spec,
       backup: {
+        ...dbCluster.spec.backup,
         enabled: true,
         schedules: filteredSchedules,
       },
@@ -96,10 +99,11 @@ const deletedScheduleToDbClusterPayload = (
 
 export const useUpdateSchedules = (
   dbClusterName: string,
+  namespace: string,
   mode: 'new' | 'edit',
   options?: UseMutationOptions<unknown, unknown, ScheduleFormData, unknown>
 ) => {
-  const { data: dbCluster } = useDbCluster(dbClusterName);
+  const { data: dbCluster } = useDbCluster(dbClusterName, namespace);
 
   return useMutation(
     (dbPayload: ScheduleFormData) => {
@@ -108,7 +112,7 @@ export const useUpdateSchedules = (
         dbCluster!,
         mode
       );
-      return updateDbClusterFn(dbClusterName, payload);
+      return updateDbClusterFn(dbClusterName, namespace, payload);
     },
     { ...options }
   );
@@ -116,9 +120,10 @@ export const useUpdateSchedules = (
 
 export const useDeleteSchedule = (
   dbClusterName: string,
+  namespace: string,
   options?: UseMutationOptions<unknown, unknown, string, unknown>
 ) => {
-  const { data: dbCluster } = useDbCluster(dbClusterName);
+  const { data: dbCluster } = useDbCluster(dbClusterName, namespace);
 
   return useMutation(
     (scheduleName) => {
@@ -126,7 +131,7 @@ export const useDeleteSchedule = (
         scheduleName,
         dbCluster!
       );
-      return updateDbClusterFn(dbClusterName, payload);
+      return updateDbClusterFn(dbClusterName, namespace, payload);
     },
     { ...options }
   );

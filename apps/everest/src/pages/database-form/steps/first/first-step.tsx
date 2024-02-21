@@ -14,78 +14,179 @@
 // limitations under the License.
 
 import { FormGroup, MenuItem, Skeleton, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
+import { DbType } from '@percona/types';
 import {
+  AutoCompleteInput,
   DbToggleCard,
   SelectInput,
   TextInput,
   ToggleButtonGroupInput,
-  AutoCompleteInput,
 } from '@percona/ui-lib';
-import { DbType } from '@percona/types';
-import { useFormContext } from 'react-hook-form';
-import { useDbEngines } from 'hooks/api/db-engines/useDbEngines';
-import { DbEngineToolStatus } from 'shared-types/dbEngines.types';
 import { dbEngineToDbType, dbTypeToDbEngine } from '@percona/utils';
+import { useDbEngines } from 'hooks/api/db-engines/useDbEngines';
+import { useKubernetesClusterInfo } from 'hooks/api/kubernetesClusters/useKubernetesClusterInfo';
+import { useNamespaces } from 'hooks/api/namespaces/useNamespaces';
+import { useFormContext } from 'react-hook-form';
+import { DbEngineToolStatus } from 'shared-types/dbEngines.types';
+import { DB_WIZARD_DEFAULTS } from '../../database-form.constants';
 import { DbWizardFormFields, StepProps } from '../../database-form.types';
+import { useDatabasePageMode } from '../../useDatabasePageMode';
+import { StepHeader } from '../step-header/step-header.tsx';
+import { DEFAULT_NODES } from './first-step.constants';
 import { Messages } from './first-step.messages';
 import { generateShortUID } from './utils';
-import { useKubernetesClusterInfo } from 'hooks/api/kubernetesClusters/useKubernetesClusterInfo';
-import { useDatabasePageMode } from '../../useDatabasePageMode';
-import { DEFAULT_NODES } from './first-steps.constants';
-import { NODES_DB_TYPE_MAP } from '../../database-form.constants';
+
+// TODO change to api request's result
+// const dbEnvironmentOptions = [
+//   {
+//     value: 'dbEnvironmentOne',
+//     label: 'dbEnvironmentOneLabel',
+//   },
+//   {
+//     value: 'dbEnvironmentTwo',
+//     label: 'dbEnvironmentTwoLabel',
+//   },
+// ];
 
 export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
-  const { watch, setValue, getFieldState, getValues } = useFormContext();
-  const { data: dbEngines = [], isFetching: dbEnginesFetching } =
-    useDbEngines();
-  const { data: clusterInfo, isFetching: clusterInfoFetching } =
-    useKubernetesClusterInfo('wizard-k8-info');
-
   const mode = useDatabasePageMode();
 
-  // TODO change to api request's result
-  // const k8sNamespacesOptions = [
-  //   {
-  //     value: 'namespaceOne',
-  //     label: 'namespaceOneLabel',
-  //   },
-  //   {
-  //     value: 'namespaceTwo',
-  //     label: 'namespaceTwoLabel',
-  //   },
-  // ];
-  // const dbEnvironmentOptions = [
-  //   {
-  //     value: 'dbEnvironmentOne',
-  //     label: 'dbEnvironmentOneLabel',
-  //   },
-  //   {
-  //     value: 'dbEnvironmentTwo',
-  //     label: 'dbEnvironmentTwoLabel',
-  //   },
-  // ];
+  const { watch, setValue, getFieldState, resetField, getValues, trigger } =
+    useFormContext();
 
+  const { data: clusterInfo, isFetching: clusterInfoFetching } =
+    useKubernetesClusterInfo('wizard-k8-info');
+  const { data: namespaces = [], isFetching: namespacesFetching } =
+    useNamespaces();
   const dbType: DbType = watch(DbWizardFormFields.dbType);
   const dbVersion: DbType = watch(DbWizardFormFields.dbVersion);
+  const dbNamespace = watch(DbWizardFormFields.k8sNamespace);
+
+  const { data: dbEngines = [], isFetching: dbEnginesFetching } =
+    useDbEngines(dbNamespace);
   const dbEngine = dbTypeToDbEngine(dbType);
 
   const [dbVersions, setDbVersions] = useState(
     dbEngines.find((engine) => engine.type === dbEngine)
   );
 
+  const setRandomDbName = useCallback((type: DbType) => {
+    setValue(DbWizardFormFields.dbName, `${type}-${generateShortUID()}`, {
+      shouldValidate: true,
+    });
+  }, []);
+
+  const setDbVersionsForEngine = useCallback(() => {
+    const newVersions = dbEngines.find((engine) => engine.type === dbEngine);
+
+    setDbVersions(newVersions);
+  }, [dbEngine, dbEngines]);
+
+  const updateDbVersions = useCallback(() => {
+    const { isDirty: dbVersionDirty } = getFieldState(
+      DbWizardFormFields.dbVersion
+    );
+    setDbVersionsForEngine();
+
+    // Safety check
+    if (
+      dbVersionDirty ||
+      !dbVersions ||
+      !dbVersions.availableVersions.engine.length
+    ) {
+      return;
+    }
+
+    if (
+      ((mode === 'edit' || mode === 'restoreFromBackup') && !dbVersion) ||
+      mode === 'new'
+    ) {
+      const recommendedVersion = dbVersions.availableVersions.engine
+        .slice()
+        .reverse()
+        .find((version) => version.status === DbEngineToolStatus.RECOMMENDED);
+
+      setValue(
+        DbWizardFormFields.dbVersion,
+        recommendedVersion
+          ? recommendedVersion.version
+          : dbVersions.availableVersions.engine[0].version
+      );
+    }
+  }, [
+    dbVersion,
+    dbVersions,
+    getFieldState,
+    mode,
+    setDbVersionsForEngine,
+    setValue,
+  ]);
+
+  const onDbNamespaceChange = () => {
+    setValue(
+      DbWizardFormFields.monitoringInstance,
+      DB_WIZARD_DEFAULTS.monitoringInstance
+    );
+    setValue(DbWizardFormFields.monitoring, DB_WIZARD_DEFAULTS.monitoring);
+  };
+
+  const setDefaultsForDbType = useCallback((dbType: DbType) => {
+    setValue(DbWizardFormFields.dbType, dbType);
+    setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[dbType]);
+  }, []);
+
+  const onDbTypeChange = useCallback(
+    (newDbType: DbType) => {
+      const { isDirty: isNameDirty } = getFieldState(DbWizardFormFields.dbName);
+
+      resetField(DbWizardFormFields.dbVersion);
+
+      if (!isNameDirty) {
+        setRandomDbName(newDbType);
+      }
+
+      setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[newDbType]);
+      updateDbVersions();
+    },
+    [
+      getFieldState,
+      resetField,
+      setRandomDbName,
+      mode,
+      updateDbVersions,
+      getValues,
+      setValue,
+    ]
+  );
+
   useEffect(() => {
-    if (!dbType && mode === 'new' && dbEngines.length > 0) {
-      const defaultDbType = dbEngineToDbType(dbEngines[0].type);
-      if (defaultDbType) {
-        setValue(
-          DbWizardFormFields.dbType,
-          dbEngineToDbType(dbEngines[0].type)
-        );
+    if (mode !== 'new' || dbEngines.length <= 0) {
+      return;
+    }
+    const { isDirty: isNameDirty } = getFieldState(DbWizardFormFields.dbName);
+    const defaultDbType = dbEngineToDbType(dbEngines[0].type);
+
+    if (defaultDbType) {
+      if (!dbType) {
+        setDefaultsForDbType(defaultDbType);
+        setRandomDbName(defaultDbType);
+      } else if (!dbEngines.find((engine) => engine.type === dbEngine)) {
+        setDefaultsForDbType(defaultDbType);
+        if (!isNameDirty) {
+          setRandomDbName(defaultDbType);
+        }
       }
     }
-  }, [dbEngines, mode, setValue, dbType]);
+    updateDbVersions();
+  }, [
+    dbEngines,
+    dbType,
+    setRandomDbName,
+    updateDbVersions,
+    setDefaultsForDbType,
+  ]);
 
   useEffect(() => {
     const { isTouched: storageClassTouched } = getFieldState(
@@ -103,78 +204,51 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
         clusterInfo?.storageClassNames[0]
       );
     }
-  }, [clusterInfo, mode, setValue]);
+  }, [clusterInfo]);
 
   useEffect(() => {
-    if (!dbType) {
-      return;
-    }
-    const { isTouched: nameTouched } = getFieldState(DbWizardFormFields.dbName);
-    const { isDirty: dbVersionDirty } = getFieldState(
-      DbWizardFormFields.dbVersion
+    setDbVersionsForEngine();
+  }, [setDbVersionsForEngine]);
+
+  useEffect(() => {
+    const { isTouched: k8sNamespaceTouched } = getFieldState(
+      DbWizardFormFields.k8sNamespace
     );
-    const { isTouched: nodesTouched } = getFieldState(
-      DbWizardFormFields.numberOfNodes
-    );
-
-    if (!nameTouched && mode === 'new') {
-      setValue(DbWizardFormFields.dbName, `${dbType}-${generateShortUID()}`, {
-        shouldValidate: true,
-      });
+    if (!k8sNamespaceTouched && mode === 'new' && namespaces?.length > 0) {
+      setValue(DbWizardFormFields.k8sNamespace, namespaces[0]);
+      trigger(DbWizardFormFields.k8sNamespace);
     }
-
-    // We need to check if the previously selected number of nodes exists for the current DB type
-    // E.g. 2 nodes is only possible for PG
-    if (mode === 'new') {
-      if (nodesTouched) {
-        const numberOfNodes: string = getValues(
-          DbWizardFormFields.numberOfNodes
-        );
-        if (
-          !NODES_DB_TYPE_MAP[dbType].find((nodes) => nodes === numberOfNodes)
-        ) {
-          setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[dbType]);
-        }
-      } else {
-        setValue(DbWizardFormFields.numberOfNodes, DEFAULT_NODES[dbType]);
-      }
-    }
-
-    const newVersions = dbEngines.find((engine) => engine.type === dbEngine);
-
-    // Safety check
-    if (
-      dbVersionDirty ||
-      !newVersions ||
-      !newVersions.availableVersions.engine.length
-    ) {
-      return;
-    }
-
-    if (
-      ((mode === 'edit' || mode === 'restoreFromBackup') && !dbVersion) ||
-      mode === 'new'
-    ) {
-      const recommendedVersion = newVersions.availableVersions.engine.find(
-        (version) => version.status === DbEngineToolStatus.RECOMMENDED
-      );
-      setValue(
-        DbWizardFormFields.dbVersion,
-        recommendedVersion
-          ? recommendedVersion.version
-          : newVersions.availableVersions.engine[0].version
-      );
-    }
-    setDbVersions(newVersions);
-  }, [dbType, dbEngines, mode, setValue, getFieldState, dbEngine, dbVersion]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [namespaces, mode]);
 
   return (
     <>
-      <Typography variant="h5">{Messages.pageTitle}</Typography>
-      <Typography variant="subtitle2">{Messages.pageDescription}</Typography>
+      <StepHeader
+        pageTitle={Messages.pageTitle}
+        pageDescription={Messages.pageDescription}
+      />
       <FormGroup sx={{ mt: 2 }}>
+        <AutoCompleteInput
+          labelProps={{
+            sx: { mt: 1 },
+          }}
+          name={DbWizardFormFields.k8sNamespace}
+          label={Messages.labels.k8sNamespace}
+          loading={namespacesFetching}
+          options={namespaces || []}
+          disabled={
+            mode === 'edit' ||
+            mode === 'restoreFromBackup' ||
+            loadingDefaultsForEdition
+          }
+          onChange={onDbNamespaceChange}
+          autoCompleteProps={{
+            disableClearable: true,
+            isOptionEqualToValue: (option, value) => option === value,
+          }}
+        />
         {/* @ts-ignore */}
-        <Typography variant="sectionHeading" sx={{ mt: 1, mb: 0.5 }}>
+        <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
           {Messages.labels.dbType}
         </Typography>
         {dbEnginesFetching || !dbEngines.length ? (
@@ -190,6 +264,11 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
                   (mode === 'edit' || mode === 'restoreFromBackup') &&
                   dbType !== dbEngineToDbType(type)
                 }
+                onClick={() => {
+                  if (dbEngineToDbType(type) !== dbType) {
+                    onDbTypeChange(dbEngineToDbType(type));
+                  }
+                }}
               />
             ))}
           </ToggleButtonGroupInput>
@@ -202,33 +281,10 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
             disabled: mode === 'edit' || loadingDefaultsForEdition,
           }}
         />
-        {/* <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
-          {Messages.labels.k8sNamespace}
-        </Typography>
-        <Controller
-          control={control}
-          name={DbWizardFormFields.k8sNamespace}
-          render={({ field, fieldState: { error } }) => (
-            <Select
-              {...field}
-              variant="outlined"
-              error={error !== undefined}
-              inputProps={{
-                'data-testid': 'text-k8sNamespace',
-              }}
-            >
-              {k8sNamespacesOptions.map((item) => (
-                <MenuItem value={item.value} key={item.value}>
-                  {item.label}
-                </MenuItem>
-              ))}
-            </Select>
-          )}
-        />
-        <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
-          {Messages.labels.dbEnvironment}
-        </Typography>
-        <Controller
+        {/*<Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>*/}
+        {/*  {Messages.labels.dbEnvironment}*/}
+        {/*</Typography>*/}
+        {/*<Controller
           control={control}
           name={DbWizardFormFields.dbEnvironment}
           render={({ field, fieldState: { error } }) => (

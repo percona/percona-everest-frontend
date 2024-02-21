@@ -13,31 +13,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { useContext, useMemo } from 'react';
-import { useQueryClient } from 'react-query';
-import { useParams } from 'react-router-dom';
 import { FormDialog } from 'components/form-dialog';
-import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages';
-import { Messages as CommonMessages } from '../../db-cluster-details.messages';
-import { NoStoragesModal } from '../no-storages-modal/no-storages-modal';
 import {
   DB_CLUSTER_QUERY,
   useDbCluster,
 } from 'hooks/api/db-cluster/useDbCluster';
+import { useContext, useMemo } from 'react';
+import { useQueryClient } from 'react-query';
+import { useParams } from 'react-router-dom';
 import { Messages } from './scheduled-backup-modal.messages';
 
-import { scheduleModalDefaultValues } from './scheduled-backup-modal-utils';
-import { ScheduledBackupModalForm } from './scheduled-backup-modal-form/scheduled-backup-modal-form';
-import { useUpdateSchedules } from 'hooks/api/backups/useScheduledBackups';
-import { ScheduleModalContext } from '../backups.context.ts';
 import {
   ScheduleFormData,
   schema,
 } from 'components/schedule-form/schedule-form-schema.ts';
+import { useUpdateSchedules } from 'hooks/api/backups/useScheduledBackups';
+import { ScheduleModalContext } from '../backups.context.ts';
+import { ScheduledBackupModalForm } from './scheduled-backup-modal-form/scheduled-backup-modal-form';
+import { scheduleModalDefaultValues } from './scheduled-backup-modal-utils';
 
 export const ScheduledBackupModal = () => {
   const queryClient = useQueryClient();
-  const { dbClusterName } = useParams();
+  const { dbClusterName, namespace = '' } = useParams();
   const {
     mode = 'new',
     selectedScheduleName,
@@ -45,14 +42,13 @@ export const ScheduledBackupModal = () => {
     setOpenScheduleModal,
   } = useContext(ScheduleModalContext);
 
-  const { data: backupStorages = [] } = useBackupStorages();
-
-  const { data: dbCluster } = useDbCluster(dbClusterName!, {
+  const { data: dbCluster } = useDbCluster(dbClusterName!, namespace, {
     enabled: !!dbClusterName && mode === 'edit',
   });
 
   const { mutate: updateScheduledBackup, isLoading } = useUpdateSchedules(
     dbClusterName!,
+    namespace,
     mode
   );
 
@@ -89,16 +85,6 @@ export const ScheduledBackupModal = () => {
     () => scheduleModalDefaultValues(mode, selectedSchedule),
     [mode, selectedSchedule]
   );
-
-  if (!backupStorages.length) {
-    return (
-      <NoStoragesModal
-        isOpen={!!openScheduleModal}
-        subHead={CommonMessages.schedulesBackupModal.subHead}
-        closeModal={handleCloseScheduledBackupModal}
-      />
-    );
-  }
 
   return (
     <FormDialog

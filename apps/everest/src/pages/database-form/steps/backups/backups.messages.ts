@@ -19,11 +19,6 @@ export const Messages = {
   enableBackups: 'Enable backups',
   storageLocation: 'Storage location',
   repeatsEvery: 'Repeats',
-  enablePitr: 'Enable PITR',
-  pitr: 'Point-in-time Recovery (PITR)',
-  captionPitr:
-    'Point-in-time recovery provides continuous backups on your database to protect against accidental writes or deletes.',
-  pitrCreateHeader: 'Create PITR backup every',
   youCanAddMoreSchedules:
     'After creating the database, you can add more schedules from the Backups section in the DB cluster details view.',
   youHaveMultipleSchedules:
@@ -31,4 +26,9 @@ export const Messages = {
   // TODO Temporary message. Should be deleted after https://jira.percona.com/browse/EVEREST-509
   schedulesUnavailableForPostgreSQL:
     'Scheduled backups are currently unavailable for PostgreSQL databases. You can still enable on-demand backups from the Backups page in the database cluster view.',
+  pitrAlert:
+    'Point-in-time-recovery (PITR) relies on an active backup schedule. If you don’t configure a backup schedule now, PITR will be disabled in the next step of the wizard.',
+  addStorage: 'Add storage',
+  noStoragesMessage: (namespace: string) =>
+    `To enable backups for the ${namespace} namespace, first add a storage location within the same namespace. If you want to proceed without the backups, disable them.`,
 };

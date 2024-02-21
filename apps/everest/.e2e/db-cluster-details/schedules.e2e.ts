@@ -18,13 +18,20 @@ import { createDbClusterFn, deleteDbClusterFn } from '../utils/db-cluster';
 import { DBClusterDetailsTabs } from '../../src/pages/db-cluster-details/db-cluster-details.types';
 import { clickCreateSchedule } from './schedules.utils';
 import { findDbAndClickRow } from '../utils/db-clusters-list';
+import { getTokenFromLocalStorage } from '../utils/localStorage';
+import { storageLocationAutocompleteEmptyValidationCheck } from '../utils/db-wizard';
+import { getNamespacesFn } from '../utils/namespaces';
 
-test.describe.serial('Schedules List', () => {
+test.describe.serial('Schedules List', async () => {
   let scheduleName = 'test-name';
   const mySQLName = 'schedule-mysql';
+  let namespace = '';
 
   test.beforeAll(async ({ request }) => {
-    await createDbClusterFn(request, {
+    const token = await getTokenFromLocalStorage();
+    const namespaces = await getNamespacesFn(token, request);
+    namespace = namespaces[0];
+    await createDbClusterFn(token, request, namespaces[0], {
       dbName: mySQLName,
       dbType: 'mysql',
       numberOfNodes: '1',
@@ -36,16 +43,12 @@ test.describe.serial('Schedules List', () => {
   });
 
   test.afterAll(async ({ request }) => {
-    await deleteDbClusterFn(request, mySQLName);
+    const token = await getTokenFromLocalStorage();
+    await deleteDbClusterFn(token, request, mySQLName, namespace);
   });
 
   test('Create schedule', async ({ page }) => {
     await page.goto('/databases');
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-
     await findDbAndClickRow(page, mySQLName);
 
     const backupsTab = await page.getByTestId(DBClusterDetailsTabs.backups);
@@ -53,7 +56,6 @@ test.describe.serial('Schedules List', () => {
 
     const scheduledBackupsAccordion = page.getByTestId('scheduled-backups');
     await expect(scheduledBackupsAccordion).not.toBeVisible();
-    await page.pause();
 
     await clickCreateSchedule(page);
 
@@ -74,15 +76,7 @@ test.describe.serial('Schedules List', () => {
     );
     await expect(storageLocationField).not.toBeEmpty();
     await storageLocationField.click();
-    const clearLocationButton = page
-      .getByTestId('storage-location-autocomplete')
-      .getByTitle('Clear');
-    await clearLocationButton.click();
-    await expect(
-      page.getByText(
-        'Invalid option. Please make sure you added a storage location and select it from the dropdown'
-      )
-    ).toBeVisible();
+    await storageLocationAutocompleteEmptyValidationCheck(page);
     await page.getByRole('option').first().click();
     await expect(storageLocationField).not.toBeEmpty();
 
@@ -91,7 +85,7 @@ test.describe.serial('Schedules List', () => {
       .filter({ hasText: 'create' });
     await createScheduleButton.click();
 
-    expect(page.getByTestId('scheduled-backups')).toBeVisible();
+    await expect(page.getByTestId('scheduled-backups')).toBeVisible();
     await scheduledBackupsAccordion.click();
 
     expect(page.getByText('Every hour at minute 0')).toBeTruthy();
@@ -102,12 +96,7 @@ test.describe.serial('Schedules List', () => {
   test('Creating schedule with duplicate name shows validation error', async ({
     page,
   }) => {
-    await page.goto(`/databases/${mySQLName}/backups`);
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-
+    await page.goto(`/databases/${namespace}/${mySQLName}/backups`);
     await clickCreateSchedule(page);
 
     const createDialog = await page.getByRole('dialog');
@@ -142,12 +131,7 @@ test.describe.serial('Schedules List', () => {
   });
 
   test('Delete Schedule', async ({ page }) => {
-    await page.goto(`/databases/${mySQLName}/backups`);
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-
+    await page.goto(`/databases/${namespace}/${mySQLName}/backups`);
     const scheduledBackupsAccordion =
       await page.getByTestId('scheduled-backups');
     await scheduledBackupsAccordion.click();
@@ -162,12 +146,7 @@ test.describe.serial('Schedules List', () => {
   });
 
   test('Edit Schedule', async ({ page }) => {
-    await page.goto(`/databases/${mySQLName}/backups`);
-    const closeIcon = page.getByTestId('close-dialog-icon');
-    if (closeIcon) {
-      await closeIcon.click();
-    }
-
+    await page.goto(`/databases/${namespace}/${mySQLName}/backups`);
     const scheduledBackupsAccordion =
       await page.getByTestId('scheduled-backups');
     await scheduledBackupsAccordion.click();

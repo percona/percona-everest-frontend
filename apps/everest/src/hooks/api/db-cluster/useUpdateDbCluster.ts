@@ -61,6 +61,15 @@ const formValuesToPayloadOverrides = (
     weekDay,
   });
 
+  let pitrBackupStorageName = '';
+
+  if (dbPayload.pitrEnabled) {
+    pitrBackupStorageName =
+      typeof dbPayload.pitrStorageLocation === 'string'
+        ? dbPayload.pitrStorageLocation
+        : dbPayload.pitrStorageLocation!.name;
+  }
+
   return {
     apiVersion: 'everest.percona.com/v1alpha1',
     kind: 'DatabaseCluster',
@@ -70,6 +79,11 @@ const formValuesToPayloadOverrides = (
       backup: {
         ...dbCluster?.spec?.backup,
         enabled: dbPayload.backupsEnabled,
+        pitr: {
+          ...dbCluster?.spec?.backup?.pitr,
+          enabled: dbPayload.pitrEnabled,
+          backupStorageName: pitrBackupStorageName,
+        },
         ...(dbPayload.backupsEnabled && {
           schedules: getSchedules(dbCluster, dbPayload, backupSchedule),
         }),
@@ -129,7 +143,11 @@ export const useUpdateDbCluster = (
     ({ dbPayload, dbCluster }: UpdateDbClusterArgType) => {
       const dbClusterName = dbCluster?.metadata?.name;
       const payload = formValuesToPayloadOverrides(dbPayload, dbCluster);
-      return updateDbClusterFn(dbClusterName, payload);
+      return updateDbClusterFn(
+        dbClusterName,
+        dbPayload.k8sNamespace || '',
+        payload
+      );
     },
     { ...options }
   );

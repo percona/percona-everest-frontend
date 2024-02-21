@@ -19,14 +19,16 @@ import { getEnginesVersions } from './database-engines';
 import { getClusterDetailedInfo } from './storage-class';
 
 export const createDbClusterFn = async (
+  token: string,
   request: APIRequestContext,
+  namespace: string,
   customOptions?
 ) => {
-  const dbEngines = await getEnginesVersions(request);
+  const dbEngines = await getEnginesVersions(token, namespace, request);
   const dbType = customOptions?.dbType || 'mysql';
   const dbEngineType = dbTypeToDbEngine(dbType);
   const dbTypeVersions = dbEngines[dbEngineType];
-  const dbClusterInfo = await getClusterDetailedInfo(request);
+  const dbClusterInfo = await getClusterDetailedInfo(token, request);
   const storageClassNames = dbClusterInfo?.storageClassNames[0];
   const lastVersion = dbTypeVersions[dbTypeVersions.length - 1];
 
@@ -54,6 +56,7 @@ export const createDbClusterFn = async (
     kind: 'DatabaseCluster',
     metadata: {
       name: customOptions?.dbName || 'db-cluster-test-ui',
+      namespace,
     },
     spec: {
       engine: {
@@ -106,19 +109,32 @@ export const createDbClusterFn = async (
     },
   };
 
-  const response = await request.post('/v1/database-clusters', {
-    data: payload,
-  });
+  const response = await request.post(
+    `/v1/namespaces/${namespace}/database-clusters`,
+    {
+      data: payload,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   expect(response.ok()).toBeTruthy();
 };
 
 export const deleteDbClusterFn = async (
+  token: string,
   request: APIRequestContext,
-  clusterName: string
+  clusterName: string,
+  namespace: string
 ) => {
   const deleteResponse = await request.delete(
-    `/v1/database-clusters/${clusterName}`
+    `/v1/namespaces/${namespace}/database-clusters/${clusterName}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
   );
   expect(deleteResponse.ok()).toBeTruthy();
 };
