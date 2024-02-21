@@ -5,11 +5,9 @@ import { Messages as StorageLocationMessages } from 'components/schedule-form/sc
 import { Typography } from '@mui/material';
 import { Messages } from './pitr.messages';
 import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages';
-import { useDatabasePageMode } from 'pages/database-form/useDatabasePageMode';
 import { useFormContext } from 'react-hook-form';
 
 const PitrStorage = () => {
-  const mode = useDatabasePageMode();
   const { watch, setValue } = useFormContext();
   const [
     pitrEnabled,
