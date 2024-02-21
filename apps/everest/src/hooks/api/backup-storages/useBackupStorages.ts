@@ -34,7 +34,7 @@ export const useBackupStorages = (namespace: string = '') => {
     {
       ...(namespace && {
         select: (data) =>
-          data.filter((item) => item.targetNamespaces.includes(namespace)),
+          data.filter((item) => item.allowedNamespaces.includes(namespace)),
       }),
     }
   );
