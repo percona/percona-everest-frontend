@@ -365,5 +365,7 @@ test.describe('DB Cluster creation', () => {
     await expect(
       page.getByText(`Backups storage: ${storageName}`)
     ).toBeVisible();
+
+    await deleteDbClusterFn(token, request, clusterName, namespace);
   });
 });
