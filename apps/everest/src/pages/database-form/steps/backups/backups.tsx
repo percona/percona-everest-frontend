@@ -78,26 +78,26 @@ export const Backups = ({ alreadyVisited }: StepProps) => {
           sx: { mt: 1 },
         }}
       />
-      {backupsEnabled && backupStorages.length === 0 && (
-        <BackupsActionableAlert namespace={selectedNamespace} />
-      )}
-      {backupsEnabled && backupStorages.length > 0 && (
-        <>
-          {(mode === 'new' || mode === 'restoreFromBackup') && (
-            <Alert sx={{ mt: 1 }} severity="info">
-              {Messages.youCanAddMoreSchedules}
-            </Alert>
-          )}
-          {multiSchedules && (
-            <Alert sx={{ mt: 1 }} severity="info">
-              {Messages.youHaveMultipleSchedules}
-            </Alert>
-          )}
-          {!scheduleDisabled && (
-            <ScheduleBackupSection enableNameGeneration={!alreadyVisited} />
-          )}
-        </>
-      )}
+      {backupsEnabled &&
+        (backupStorages.length > 0 ? (
+          <>
+            {(mode === 'new' || mode === 'restoreFromBackup') && (
+              <Alert sx={{ mt: 1 }} severity="info">
+                {Messages.youCanAddMoreSchedules}
+              </Alert>
+            )}
+            {multiSchedules && (
+              <Alert sx={{ mt: 1 }} severity="info">
+                {Messages.youHaveMultipleSchedules}
+              </Alert>
+            )}
+            {!scheduleDisabled && (
+              <ScheduleBackupSection enableNameGeneration={!alreadyVisited} />
+            )}
+          </>
+        ) : (
+          <BackupsActionableAlert namespace={selectedNamespace} />
+        ))}
       {!backupsEnabled && (
         <Alert
           sx={{ mt: 1 }}
