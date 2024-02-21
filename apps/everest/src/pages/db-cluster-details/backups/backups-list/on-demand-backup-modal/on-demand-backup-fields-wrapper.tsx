@@ -17,7 +17,6 @@ export const OnDemandBackupFieldsWrapper = () => {
   });
   const { data: backupStorages = [], isFetching } =
     useBackupStorages(namespace);
-  console.log('backupStorages', backupStorages);
   const dbClusterActiveStorage = dbCluster?.status?.activeStorage;
 
   useEffect(() => {

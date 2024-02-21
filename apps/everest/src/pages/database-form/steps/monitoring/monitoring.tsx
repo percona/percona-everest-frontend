@@ -35,7 +35,7 @@ export const Monitoring = () => {
   const availableMonitoringInstances = useMemo(
     () =>
       (monitoringInstances || []).filter((item) =>
-        item.targetNamespaces.includes(selectedNamespace)
+        item.allowedNamespaces.includes(selectedNamespace)
       ),
     [monitoringInstances, selectedNamespace]
   );
@@ -58,10 +58,10 @@ export const Monitoring = () => {
   const handleSubmitModal = (
     // @ts-ignore
     _,
-    { name, url, targetNamespaces, ...pmmData }: EndpointFormType
+    { name, url, allowedNamespaces, ...pmmData }: EndpointFormType
   ) => {
     createMonitoringInstance(
-      { name, url, type: 'pmm', targetNamespaces, pmm: { ...pmmData } },
+      { name, url, type: 'pmm', allowedNamespaces, pmm: { ...pmmData } },
       {
         onSuccess: (newInstance) => {
           updateDataAfterCreate(
