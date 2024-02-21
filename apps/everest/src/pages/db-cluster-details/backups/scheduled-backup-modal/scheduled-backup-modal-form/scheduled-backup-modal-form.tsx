@@ -37,7 +37,7 @@ export const ScheduledBackupModalForm = () => {
     () =>
       dbCluster?.metadata.namespace
         ? backupStorages.filter((item) =>
-            item.targetNamespaces.includes(dbCluster?.metadata.namespace)
+            item.allowedNamespaces.includes(dbCluster?.metadata.namespace)
           )
         : [],
     [dbCluster?.metadata?.namespace, backupStorages]
