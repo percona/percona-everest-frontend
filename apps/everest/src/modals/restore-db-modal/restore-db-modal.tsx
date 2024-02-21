@@ -78,6 +78,17 @@ const RestoreDbModal = <T extends FieldValues>({
       defaultValues={defaultValues}
       values={{ ...defaultValues, pitrBackup: pitrData?.latestDate }}
       onSubmit={({ backupName, backupType, pitrBackup }) => {
+        let pointInTimeDate = '';
+        let pitrBackupName = '';
+
+        if (pitrData) {
+          pitrBackupName = pitrData.latestBackupName;
+        }
+
+        if (pitrBackup && pitrBackup instanceof Date) {
+          pointInTimeDate = pitrBackup.toISOString().split('.')[0] + 'Z';
+        }
+
         if (isNewClusterMode) {
           closeModal();
           const selectedBackup = backups?.find(
@@ -96,10 +107,10 @@ const RestoreDbModal = <T extends FieldValues>({
             navigate('/databases/new', {
               state: {
                 selectedDbCluster: dbCluster.metadata.name,
-                backupName: pitrData!.latestBackupName,
+                backupName: pitrBackupName,
                 namespace,
                 backupStorageName: selectedBackup,
-                pointInTimeDate: pitrBackup!.toISOString().split('.')[0] + 'Z',
+                pointInTimeDate: pointInTimeDate,
               },
             });
           }
@@ -117,9 +128,9 @@ const RestoreDbModal = <T extends FieldValues>({
           } else {
             restoreBackupFromPointInTime(
               {
-                backupName: pitrData!.latestBackupName,
+                backupName: pitrBackupName,
                 namespace,
-                pointInTimeDate: pitrBackup!.toISOString().split('.')[0] + 'Z',
+                pointInTimeDate: pointInTimeDate,
               },
               {
                 onSuccess() {
