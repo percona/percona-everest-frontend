@@ -15,7 +15,7 @@
 
 import { Alert, Box } from '@mui/material';
 import { SwitchInput } from '@percona/ui-lib';
-import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages';
+import { useBackupStoragesByNamespace } from 'hooks/api/backup-storages/useBackupStorages';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { DbWizardFormFields, StepProps } from '../../database-form.types';
@@ -36,7 +36,8 @@ export const Backups = ({ alreadyVisited }: StepProps) => {
     DbWizardFormFields.dbType,
     DbWizardFormFields.k8sNamespace,
   ]);
-  const { data: backupStorages = [] } = useBackupStorages(selectedNamespace);
+  const { data: backupStorages = [] } =
+    useBackupStoragesByNamespace(selectedNamespace);
 
   // TODO should be removed after https://jira.percona.com/browse/EVEREST-509 + DEFAULT_VALUES should be changed from false to true for all databases
   useEffect(() => {

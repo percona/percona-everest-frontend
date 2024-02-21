@@ -27,15 +27,20 @@ import {
 
 export const BACKUP_STORAGES_QUERY_KEY = 'backupStorages';
 
-export const useBackupStorages = (namespace: string = '') => {
+export const useBackupStorages = () => {
+  return useQuery<GetBackupStoragesPayload, unknown, BackupStorage[]>(
+    BACKUP_STORAGES_QUERY_KEY,
+    () => getBackupStoragesFn()
+  );
+};
+
+export const useBackupStoragesByNamespace = (namespace: string) => {
   return useQuery<GetBackupStoragesPayload, unknown, BackupStorage[]>(
     BACKUP_STORAGES_QUERY_KEY,
     () => getBackupStoragesFn(),
     {
-      ...(namespace && {
-        select: (data) =>
-          data.filter((item) => item.allowedNamespaces.includes(namespace)),
-      }),
+      select: (data) =>
+        data.filter((item) => item.allowedNamespaces.includes(namespace)),
     }
   );
 };

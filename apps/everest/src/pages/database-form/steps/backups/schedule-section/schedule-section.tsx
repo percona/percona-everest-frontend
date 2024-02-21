@@ -1,6 +1,6 @@
 import { DbType } from '@percona/types';
 import { ScheduleForm } from 'components/schedule-form/schedule-form.tsx';
-import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages.ts';
+import { useBackupStoragesByNamespace } from 'hooks/api/backup-storages/useBackupStorages.ts';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { DbWizardFormFields } from '../../../database-form.types.ts';
@@ -20,7 +20,7 @@ export const ScheduleBackupSection = ({
     DbWizardFormFields.k8sNamespace,
   ]);
   const { data: backupStorages = [], isFetching } =
-    useBackupStorages(selectedNamespace);
+    useBackupStoragesByNamespace(selectedNamespace);
 
   const schedules =
     mode === 'new' ? [] : dbClusterData?.spec?.backup?.schedules || [];

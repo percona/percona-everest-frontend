@@ -4,7 +4,7 @@ import { DbWizardFormFields } from 'pages/database-form/database-form.types';
 import { Messages as StorageLocationMessages } from 'components/schedule-form/schedule-form.messages';
 import { Typography } from '@mui/material';
 import { Messages } from './pitr.messages';
-import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages';
+import { useBackupStoragesByNamespace } from 'hooks/api/backup-storages/useBackupStorages';
 import { useFormContext } from 'react-hook-form';
 
 const PitrStorage = () => {
@@ -24,7 +24,7 @@ const PitrStorage = () => {
   ]);
 
   const { data: backupStorages = [], isFetching: loadingBackupStorages } =
-    useBackupStorages(selectedNamespace);
+    useBackupStoragesByNamespace(selectedNamespace);
 
   if (!pitrEnabled) {
     return null;
