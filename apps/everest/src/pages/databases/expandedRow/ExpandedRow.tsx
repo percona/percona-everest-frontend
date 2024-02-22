@@ -47,7 +47,7 @@ export const ExpandedRow = ({
     {
       enabled: !!isExpanded,
       staleTime: 10 * (60 * 1000),
-      cacheTime: 15 * (60 * 1000),
+      gcTime: 15 * (60 * 1000),
     }
   );
 
