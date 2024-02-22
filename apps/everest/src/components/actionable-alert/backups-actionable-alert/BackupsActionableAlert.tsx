@@ -8,12 +8,12 @@ import {
   useCreateBackupStorage,
 } from 'hooks/api/backup-storages/useBackupStorages';
 import { updateDataAfterCreate } from 'utils/generalOptimisticDataUpdate';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { BackupStorage } from 'shared-types/backupStorages.types';
 
 const BackupsActionableAlert = ({ namespace }: BackupsActionableAlertProps) => {
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
-  const { mutate: createBackupStorage, isLoading: creatingBackupStorage } =
+  const { mutate: createBackupStorage, isPending: creatingBackupStorage } =
     useCreateBackupStorage();
   const queryClient = useQueryClient();
 
