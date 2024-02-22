@@ -9,7 +9,7 @@ import {
 import { CreateEditEndpointModal } from 'pages/settings/monitoring-endpoints/createEditModal/create-edit-modal.tsx';
 import { EndpointFormType } from 'pages/settings/monitoring-endpoints/createEditModal/create-edit-modal.types.ts';
 import { useFormContext } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { updateDataAfterCreate } from 'utils/generalOptimisticDataUpdate.ts';
 import { DbWizardFormFields } from '../../database-form.types';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
@@ -24,7 +24,7 @@ export const Monitoring = () => {
   const selectedNamespace = watch(DbWizardFormFields.k8sNamespace);
 
   const mode = useDatabasePageMode();
-  const { mutate: createMonitoringInstance, isLoading: creatingInstance } =
+  const { mutate: createMonitoringInstance, isPending: creatingInstance } =
     useCreateMonitoringInstance();
   const { setValue } = useFormContext();
 
