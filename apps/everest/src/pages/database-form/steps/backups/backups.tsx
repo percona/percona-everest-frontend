@@ -23,7 +23,7 @@ import {
 import { CreateEditModalStorage } from 'pages/settings/storage-locations/createEditModal/create-edit-modal.tsx';
 import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { BackupStorage } from 'shared-types/backupStorages.types.ts';
 import { updateDataAfterCreate } from 'utils/generalOptimisticDataUpdate.ts';
 import { DbWizardFormFields, StepProps } from '../../database-form.types';
@@ -35,7 +35,7 @@ import { ScheduleBackupSection } from './schedule-section/schedule-section.tsx';
 
 export const Backups = ({ alreadyVisited }: StepProps) => {
   const queryClient = useQueryClient();
-  const { mutate: createBackupStorage, isLoading: creatingBackupStorage } =
+  const { mutate: createBackupStorage, isPending: creatingBackupStorage } =
     useCreateBackupStorage();
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
   const mode = useDatabasePageMode();
