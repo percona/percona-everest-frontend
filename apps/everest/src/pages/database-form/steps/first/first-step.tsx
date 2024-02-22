@@ -57,7 +57,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     useFormContext();
 
   const { data: clusterInfo, isFetching: clusterInfoFetching } =
-    useKubernetesClusterInfo('wizard-k8-info');
+    useKubernetesClusterInfo(['wizard-k8-info']);
   const { data: namespaces = [], isFetching: namespacesFetching } =
     useNamespaces();
   const dbType: DbType = watch(DbWizardFormFields.dbType);
