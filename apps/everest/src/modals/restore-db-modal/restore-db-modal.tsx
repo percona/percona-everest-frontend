@@ -53,11 +53,11 @@ const RestoreDbModal = <T extends FieldValues>({
     namespace
   );
 
-  const { mutate: restoreBackupFromBackup, isLoading: restoringFromBackup } =
+  const { mutate: restoreBackupFromBackup, isPending: restoringFromBackup } =
     useDbClusterRestoreFromBackup(dbCluster.metadata.name);
   const {
     mutate: restoreBackupFromPointInTime,
-    isLoading: restoringFromPointInTime,
+    isPending: restoringFromPointInTime,
   } = useDbClusterRestoreFromPointInTime(dbCluster.metadata.name);
 
   return (

@@ -29,7 +29,7 @@ export const useDatabasePageDefaultValues = (
 ): {
   defaultValues: DbWizardType;
   dbClusterData: DbCluster | undefined;
-  dbClusterRequestStatus: 'error' | 'idle' | 'loading' | 'success';
+  dbClusterRequestStatus: 'error' | 'idle' | 'pending' | 'success';
   isFetching: boolean;
 } => {
   const { state } = useLocation();
