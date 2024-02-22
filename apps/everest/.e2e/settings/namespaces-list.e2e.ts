@@ -29,7 +29,9 @@ test.describe('Namespaces List', () => {
     expect(page.getByText(namespaces[0])).toBeTruthy();
   });
 
-  test('Provisioning is working right', async ({ page }) => {
+  test('Provisioning of namespaces in CI is working right', async ({
+    page,
+  }) => {
     await page.goto('/settings/namespaces');
     const rows = page.locator('.MuiTableRow-root');
     await expect(rows.first()).toBeVisible();
