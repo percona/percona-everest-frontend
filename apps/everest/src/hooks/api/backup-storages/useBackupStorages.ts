@@ -42,7 +42,7 @@ export const useBackupStoragesByNamespace = (namespace: string) =>
     queryKey: [BACKUP_STORAGES_QUERY_KEY],
     queryFn: getBackupStoragesFn,
     select: (data) =>
-      data.filter((item) => item.allowedNamespaces.includes(namespace)),
+      data.filter((item) => item.allowedNamespaces?.includes(namespace)),
   });
 
 export const useCreateBackupStorage = (
