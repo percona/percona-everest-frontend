@@ -130,6 +130,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
       DB_WIZARD_DEFAULTS.monitoringInstance
     );
     setValue(DbWizardFormFields.monitoring, DB_WIZARD_DEFAULTS.monitoring);
+    setValue(DbWizardFormFields.storageLocation, null);
   };
 
   const setDefaultsForDbType = useCallback((dbType: DbType) => {

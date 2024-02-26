@@ -15,9 +15,9 @@
 
 import { ScheduleForm } from 'components/schedule-form/schedule-form.tsx';
 import { ScheduleFormFields } from 'components/schedule-form/schedule-form.types.ts';
-import { useBackupStorages } from 'hooks/api/backup-storages/useBackupStorages.ts';
+import { useBackupStoragesByNamespace } from 'hooks/api/backup-storages/useBackupStorages.ts';
 import { useDbCluster } from 'hooks/api/db-cluster/useDbCluster.ts';
-import { useContext, useEffect, useMemo } from 'react';
+import { useContext, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { ScheduleModalContext } from '../../backups.context.ts';
@@ -28,20 +28,11 @@ export const ScheduledBackupModalForm = () => {
   const { mode = 'new', setSelectedScheduleName } =
     useContext(ScheduleModalContext);
 
-  const { data: backupStorages = [], isFetching } = useBackupStorages();
+  const { data: backupStorages = [], isFetching } =
+    useBackupStoragesByNamespace(namespace);
   const { data: dbCluster } = useDbCluster(dbClusterName!, namespace, {
     enabled: !!dbClusterName && mode === 'edit',
   });
-
-  const availableBackupStorages = useMemo(
-    () =>
-      dbCluster?.metadata.namespace
-        ? backupStorages.filter((item) =>
-            item.allowedNamespaces.includes(dbCluster?.metadata.namespace)
-          )
-        : [],
-    [dbCluster?.metadata?.namespace, backupStorages]
-  );
 
   const dbClusterActiveStorage = dbCluster?.status?.activeStorage;
   const schedules = (dbCluster && dbCluster?.spec?.backup?.schedules) || [];
@@ -67,7 +58,7 @@ export const ScheduledBackupModalForm = () => {
       autoFillLocation={mode === 'new'}
       schedules={schedules}
       storageLocationFetching={isFetching}
-      storageLocationOptions={availableBackupStorages}
+      storageLocationOptions={backupStorages}
     />
   );
 };

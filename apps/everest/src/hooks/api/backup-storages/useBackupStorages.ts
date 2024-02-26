@@ -37,6 +37,14 @@ export const useBackupStorages = () =>
     queryFn: getBackupStoragesFn,
   });
 
+export const useBackupStoragesByNamespace = (namespace: string) =>
+  useQuery<GetBackupStoragesPayload, unknown, BackupStorage[]>({
+    queryKey: [BACKUP_STORAGES_QUERY_KEY],
+    queryFn: getBackupStoragesFn,
+    select: (data) =>
+      data.filter((item) => item.allowedNamespaces?.includes(namespace)),
+  });
+
 export const useCreateBackupStorage = (
   options?: UseMutationOptions<unknown, unknown, BackupStorage, unknown>
 ) =>
