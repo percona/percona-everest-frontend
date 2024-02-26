@@ -8,7 +8,7 @@ import { MaterialReactTable } from 'material-react-table';
 import { useEffect } from 'react';
 import { ICONS_OPACITY } from './table.constants';
 import { TableProps } from './table.types';
-
+import usePersistentColumnVisibility from './usePersistentColumnVisibility';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Table<T extends Record<string, any>>(props: TableProps<T>) {
   const {
@@ -20,7 +20,15 @@ function Table<T extends Record<string, any>>(props: TableProps<T>) {
     noDataMessage,
     emptyFilterResultsMessage = 'No data found',
     hideExpandAllIcon,
+    tableName,
+    state,
+    initialState,
   } = props;
+
+  const [columnVisibility, setColumnVisibility] = usePersistentColumnVisibility(
+    tableName,
+    {}
+  );
 
   const stopPropagation = (e: Event) => {
     e.stopPropagation();
@@ -92,6 +100,7 @@ function Table<T extends Record<string, any>>(props: TableProps<T>) {
       enableFullScreenToggle={false}
       enableSorting={!!data.length}
       autoResetAll={false}
+      onColumnVisibilityChange={setColumnVisibility}
       icons={{
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         KeyboardDoubleArrowDownIcon: (propsIcon: any) =>
@@ -206,6 +215,11 @@ function Table<T extends Record<string, any>>(props: TableProps<T>) {
       {...props}
       columns={customColumns}
       data={data}
+      state={{ columnVisibility, ...state }}
+      initialState={{
+        columnVisibility,
+        ...initialState,
+      }}
     />
   );
 }
