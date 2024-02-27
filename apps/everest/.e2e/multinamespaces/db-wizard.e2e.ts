@@ -16,10 +16,17 @@
 import { test, expect } from '@playwright/test';
 import { getTokenFromLocalStorage } from '../utils/localStorage';
 import { EVEREST_CI_NAMESPACES } from '../constants';
+import { getEnginesList } from '../utils/database-engines';
 
 test.describe('Namespaces DB Wizard', () => {
   test.beforeAll(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
+    const engines = await getEnginesList(
+      token,
+      EVEREST_CI_NAMESPACES.PG_ONLY,
+      request
+    );
+    console.log(engines);
   });
 
   test('Changing of the namespace cause update of dbEngines, dbVersions, dbName', async ({
@@ -32,22 +39,21 @@ test.describe('Namespaces DB Wizard', () => {
     // setting everest-pxc namespace
     const namespacesList = page.getByTestId('k8s-namespace-autocomplete');
     await namespacesList.click();
-    await page
-      .getByRole('option')
-      .allTextContents()
-      .then((contents) => {
-        console.log(contents);
-      });
+
     await page
       .getByRole('option', { name: EVEREST_CI_NAMESPACES.PXC_ONLY })
       .click();
 
     // checking and saving fields for pxc
+    const dbEnginesButtons = page
+      .getByTestId('toggle-button-group-input-db-type')
+      .getByRole('button');
+    expect(await dbEnginesButtons.count()).toBe(1);
+    await expect(page.getByTestId('mysql-toggle-button')).toBeVisible();
     await expect(page.getByTestId('mongodb-toggle-button')).not.toBeVisible();
     await expect(
       page.getByTestId('postgresql-toggle-button')
     ).not.toBeVisible();
-    await expect(page.getByTestId('mysql-toggle-button')).toBeVisible();
     await expect(page.getByTestId('text-input-db-name')).toHaveValue(
       /.*mysql.*/
     );

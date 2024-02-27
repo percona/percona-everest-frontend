@@ -25,7 +25,7 @@ export const createBackupStorageFn = async (
     bucketName: EVEREST_LOCATION_BUCKET_NAME,
     secretKey: EVEREST_LOCATION_SECRET_KEY,
     accessKey: EVEREST_LOCATION_ACCESS_KEY,
-    allowedNamespaces: [namespaces[0]],
+    allowedNamespaces: namespaces,
     url: EVEREST_LOCATION_URL,
     region: EVEREST_LOCATION_REGION,
   };

@@ -36,5 +36,8 @@ test.describe('Namespaces List', () => {
     const rows = page.locator('.MuiTableRow-root');
     await expect(rows.first()).toBeVisible();
     expect(await rows.count()).toBe(5);
+    expect(await page.getByRole('row', { name: 'postgresql' }).count()).toBe(2);
+    expect(await page.getByRole('row', { name: 'pxc' }).count()).toBe(2);
+    expect(await page.getByRole('row', { name: 'psmdb' }).count()).toBe(2);
   });
 });
