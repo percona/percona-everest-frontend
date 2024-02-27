@@ -57,7 +57,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
     useFormContext();
 
   const { data: clusterInfo, isFetching: clusterInfoFetching } =
-    useKubernetesClusterInfo('wizard-k8-info');
+    useKubernetesClusterInfo(['wizard-k8-info']);
   const { data: namespaces = [], isFetching: namespacesFetching } =
     useNamespaces();
   const dbType: DbType = watch(DbWizardFormFields.dbType);
@@ -130,6 +130,7 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
       DB_WIZARD_DEFAULTS.monitoringInstance
     );
     setValue(DbWizardFormFields.monitoring, DB_WIZARD_DEFAULTS.monitoring);
+    setValue(DbWizardFormFields.storageLocation, null);
   };
 
   const setDefaultsForDbType = useCallback((dbType: DbType) => {

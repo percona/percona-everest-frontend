@@ -32,6 +32,7 @@ import {
   checkSuccessOfUpdateAndGoToDbClustersList,
 } from './edit-db-cluster.utils';
 import { getNamespacesFn } from '../../../utils/namespaces';
+import { STORAGE_NAMES } from '../../../constants';
 
 test.describe.serial('DB Cluster Editing PITR Step', async () => {
   const mySQLName = 'db-pitr-mysql';
@@ -94,7 +95,9 @@ test.describe.serial('DB Cluster Editing PITR Step', async () => {
       'pitr-storage-location-autocomplete'
     );
     const storageOptions = page.getByRole('option');
-    await expect(storageOptions.filter({ hasText: 'ui-dev' })).toBeVisible();
+    await expect(
+      storageOptions.filter({ hasText: STORAGE_NAMES[0] })
+    ).toBeVisible();
     await storageOptions.first().click();
 
     // Check the preview actual value
