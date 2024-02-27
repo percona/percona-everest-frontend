@@ -15,8 +15,6 @@
 
 import { test as setup, expect } from '@playwright/test';
 import 'dotenv/config';
-import { getTokenFromLocalStorage } from './utils/localStorage';
-import { getNamespacesFn } from './utils/namespaces';
 import { createBackupStorageFn } from './utils/backup-storage';
 
 setup('Backup storage', async ({ request }) => {

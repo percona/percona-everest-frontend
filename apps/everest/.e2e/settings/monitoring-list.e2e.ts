@@ -57,8 +57,6 @@ test.describe('Monitoring List', () => {
     await page.getByRole('menuitem', { name: 'Edit' }).click();
     await page.getByTestId('confirm-dialog-delete').click();
 
-    await page.pause();
-
     // filling out the form
     await page.getByTestId('text-input-name').fill(monitoringEndpointName);
     const namespaces = page.getByTestId('text-input-target-namespaces');
@@ -74,7 +72,5 @@ test.describe('Monitoring List', () => {
 
     await findRowAndClickActions(page, monitoringEndpointName, 'Delete');
     await page.getByTestId('confirm-dialog-delete').click();
-
-    await page.pause();
   });
 });

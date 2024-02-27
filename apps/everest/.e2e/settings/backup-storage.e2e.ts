@@ -51,8 +51,6 @@ test.describe('Backup storage', () => {
       .fill(EVEREST_LOCATION_SECRET_KEY);
     await page.getByTestId('form-dialog-add').click();
 
-    await page.pause();
-
     await findRowAndClickActions(page, 'test-storage-name', 'Delete');
     await page.getByTestId('confirm-dialog-delete').click();
   });

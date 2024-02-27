@@ -29,8 +29,6 @@ test.describe('Namespaces DB Wizard', () => {
     const button = page.getByTestId('add-db-cluster-button');
     await button.click();
 
-    await page.pause();
-
     // setting everest-pxc namespace
     const namespacesList = page.getByTestId('k8s-namespace-autocomplete');
     await namespacesList.click();
