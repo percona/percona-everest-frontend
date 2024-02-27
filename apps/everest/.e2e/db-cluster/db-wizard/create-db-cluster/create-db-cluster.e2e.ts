@@ -122,23 +122,23 @@ test.describe('DB Cluster creation', () => {
 
     dbName = await page.getByTestId('text-input-db-name').inputValue();
 
-    await page.getByTestId('db-wizard-continue-button').click();
+    await moveForward(page);
     await expect(page.getByText('Number of nodes: 3')).toBeVisible();
 
     await resourcesStepCheck(page);
-    await page.getByTestId('db-wizard-continue-button').click();
+    await moveForward(page);
 
     await backupsStepCheck(page);
     scheduleName = await page
       .getByTestId('text-input-schedule-name')
       .inputValue();
-    await page.getByTestId('db-wizard-continue-button').click();
+    await moveForward(page);
 
     await pitrStepCheck(page);
-    await page.getByTestId('db-wizard-continue-button').click();
+    await moveForward(page);
 
     await advancedConfigurationStepCheck(page);
-    await page.getByTestId('db-wizard-continue-button').click();
+    await moveForward(page);
 
     // Test the mechanism for default number of nodes
     await page.getByTestId('button-edit-preview-basic-information').click();
@@ -224,14 +224,14 @@ test.describe('DB Cluster creation', () => {
     const mySQLButton = page.getByTestId('mysql-toggle-button');
     await mySQLButton.click();
 
-    await page.getByTestId('db-wizard-continue-button').click();
-    await page.getByTestId('db-wizard-continue-button').click();
+    await moveForward(page);
+    await moveForward(page);
     const enabledBackupsCheckbox = page
       .getByTestId('switch-input-backups-enabled')
       .getByRole('checkbox');
 
     await expect(enabledBackupsCheckbox).toBeChecked();
-    await page.getByTestId('db-wizard-continue-button').click();
+    await moveForward(page);
 
     const enabledPitrCheckbox = page
       .getByTestId('switch-input-pitr-enabled-label')
@@ -245,11 +245,11 @@ test.describe('DB Cluster creation', () => {
       page.getByTestId('text-input-pitr-storage-location')
     ).toBeVisible();
 
-    await page.getByTestId('db-wizard-previous-button').click();
+    await moveBack(page);
 
     await enabledBackupsCheckbox.setChecked(false);
     await expect(page.getByTestId('pitr-no-backup-alert')).toBeVisible();
-    await page.getByTestId('db-wizard-continue-button').click();
+    await moveForward(page);
 
     await expect(enabledPitrCheckbox).not.toBeChecked();
     await expect(enabledPitrCheckbox).toBeDisabled();
@@ -260,7 +260,7 @@ test.describe('DB Cluster creation', () => {
     await page.getByTestId('text-input-db-name').fill('new-cluster');
     await page.getByTestId('text-input-storage-class').click();
     await page.getByRole('option').first().click();
-    await page.getByTestId('db-wizard-continue-button').click();
+    await moveForward(page);
 
     await expect(
       page.getByRole('heading', {
@@ -271,7 +271,7 @@ test.describe('DB Cluster creation', () => {
     await page.getByTestId('toggle-button-nodes-3').click();
     await page.getByTestId('toggle-button-large').click();
     await page.getByTestId('text-input-disk').fill('150');
-    await page.getByTestId('db-wizard-continue-button').click();
+    await moveForward(page);
 
     // await expect(
     //   page.getByRole('heading', {
@@ -286,7 +286,7 @@ test.describe('DB Cluster creation', () => {
     // expect(storageOptions.filter({ hasText: 'ui-dev' })).toBeVisible();
     // await storageOptions.first().click();
     //
-    // await page.getByTestId('db-wizard-continue-button').click();
+    // await await moveForward(page);
 
     await expect(
       page.getByRole('heading', { name: 'Advanced Configurations' })

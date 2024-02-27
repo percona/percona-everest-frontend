@@ -174,7 +174,7 @@ jobs:
           go run cmd/everest/main.go install \
           --operator.mongodb \
           --skip-wizard \
-          --namespaces everest-psmdb
+          --namespaces everest-psmdb-only
 
       - name: Adding pxc namespace
         run: |
@@ -182,7 +182,7 @@ jobs:
           go run cmd/everest/main.go install \
           --operator.xtradb-cluster \
           --skip-wizard \
-          --namespaces everest-pxc
+          --namespaces everest-pxc-only
 
       - name: Adding pg namespace
         run: |
@@ -190,7 +190,7 @@ jobs:
           go run cmd/everest/main.go install \
           --operator.postgresql \
           --skip-wizard \
-          --namespaces everest-pg
+          --namespaces everest-pg-only
 
 
       - name: Change token
