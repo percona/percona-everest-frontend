@@ -27,7 +27,7 @@ const {
 } = process.env;
 
 
-setup('Backup storage', async ({ request }) => {
+setup('Backup storages', async ({ request }) => {
   const token = await getTokenFromLocalStorage();
   const namespaces = await getNamespacesFn(token, request);
   const promises = [];
