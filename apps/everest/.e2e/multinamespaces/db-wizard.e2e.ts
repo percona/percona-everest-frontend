@@ -38,7 +38,9 @@ test.describe('Namespaces DB Wizard', () => {
 
     // checking and saving fields for pxc
     await expect(page.getByTestId('mongodb-toggle-button')).not.toBeVisible();
-    await expect(page.getByTestId('postgresql-toggle-button')).not.toBeVisible();
+    await expect(
+      page.getByTestId('postgresql-toggle-button')
+    ).not.toBeVisible();
     await expect(page.getByTestId('mysql-toggle-button')).toBeVisible();
     await expect(page.getByTestId('text-input-db-name')).toHaveValue(
       /.*mysql.*/
@@ -61,7 +63,9 @@ test.describe('Namespaces DB Wizard', () => {
 
     // checking changes of all fields
     await expect(page.getByTestId('mongodb-toggle-button')).toBeVisible();
-    await expect(page.getByTestId('postgresql-toggle-button')).not.toBeVisible();
+    await expect(
+      page.getByTestId('postgresql-toggle-button')
+    ).not.toBeVisible();
     await expect(page.getByTestId('mysql-toggle-button')).not.toBeVisible();
     await expect(page.getByTestId('text-input-db-name')).toHaveValue(
       /.*mongodb.*/

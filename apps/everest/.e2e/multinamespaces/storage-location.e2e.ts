@@ -57,16 +57,16 @@ test.describe.serial('Namespaces: Storage Location availability', () => {
   test.afterAll(async ({ request }) => {
     await deleteStorageLocationFn(request, pxcStorageLocationName);
     await deleteDbClusterFn(
-        token,
-        request,
-        pgDbName,
-        EVEREST_CI_NAMESPACES.PG_ONLY
+      token,
+      request,
+      pgDbName,
+      EVEREST_CI_NAMESPACES.PG_ONLY
     );
     await deleteDbClusterFn(
-        token,
-        request,
-        pxcDbName,
-        EVEREST_CI_NAMESPACES.PXC_ONLY
+      token,
+      request,
+      pxcDbName,
+      EVEREST_CI_NAMESPACES.PXC_ONLY
     );
   });
 
