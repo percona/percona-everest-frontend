@@ -154,6 +154,12 @@ test.describe.serial('Namespaces: Storage Location availability', () => {
     await page.getByTestId('menu-button').click();
     await page.getByTestId('now-menu-item').click();
     await page.getByTestId('storage-location-autocomplete').click();
+    page
+      .getByRole('option')
+      .allTextContents()
+      .then((contents) => {
+        console.log(contents);
+      });
     expect(await page.getByRole('option').count()).toBe(0);
   });
 

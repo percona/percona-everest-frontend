@@ -33,6 +33,12 @@ test.describe('Namespaces DB Wizard', () => {
     const namespacesList = page.getByTestId('k8s-namespace-autocomplete');
     await namespacesList.click();
     await page
+      .getByRole('option')
+      .allTextContents()
+      .then((contents) => {
+        console.log(contents);
+      });
+    await page
       .getByRole('option', { name: EVEREST_CI_NAMESPACES.PXC_ONLY })
       .click();
 
