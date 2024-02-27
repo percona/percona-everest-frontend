@@ -19,23 +19,22 @@ import {
   deleteStorageLocationFn,
 } from '../utils/backup-storage';
 import { moveForward } from '../utils/db-wizard';
-import {EVEREST_CI_NAMESPACES} from "../constants";
-import {createDbClusterFn, deleteDbClusterFn} from "../utils/db-cluster";
-import {getTokenFromLocalStorage} from "../utils/localStorage";
-import {findDbAndClickRow} from "../utils/db-clusters-list";
-import {DBClusterDetailsTabs} from "../../src/pages/db-cluster-details/db-cluster-details.types";
+import { EVEREST_CI_NAMESPACES } from '../constants';
+import { createDbClusterFn, deleteDbClusterFn } from '../utils/db-cluster';
+import { getTokenFromLocalStorage } from '../utils/localStorage';
+import { findDbAndClickRow } from '../utils/db-clusters-list';
+import { DBClusterDetailsTabs } from '../../src/pages/db-cluster-details/db-cluster-details.types';
 
 test.describe.serial('Namespaces: Storage Location availability', () => {
   const pxcStorageLocationName = 'storage-location-pxc';
   const pgDbName = 'pg-db';
   const pxcDbName = 'pxc-db';
-  let token='';
-
+  let token = '';
 
   test.beforeAll(async ({ request }) => {
     token = await getTokenFromLocalStorage();
     await createBackupStorageFn(request, pxcStorageLocationName, [
-      EVEREST_CI_NAMESPACES.PXC_ONLY
+      EVEREST_CI_NAMESPACES.PXC_ONLY,
     ]);
   });
 
@@ -55,7 +54,9 @@ test.describe.serial('Namespaces: Storage Location availability', () => {
       'k8s-namespace-autocomplete'
     );
     await namespacesAutocomplete.click();
-    await page.getByRole('option', { name: EVEREST_CI_NAMESPACES.PXC_ONLY }).click();
+    await page
+      .getByRole('option', { name: EVEREST_CI_NAMESPACES.PXC_ONLY })
+      .click();
 
     // Resources Step
     await moveForward(page);
@@ -98,7 +99,9 @@ test.describe.serial('Namespaces: Storage Location availability', () => {
     );
     await namespacesAutocomplete.click();
     // setting namespace with no storage location for it
-    await page.getByRole('option', { name: EVEREST_CI_NAMESPACES.PSMDB_ONLY }).click();
+    await page
+      .getByRole('option', { name: EVEREST_CI_NAMESPACES.PSMDB_ONLY })
+      .click();
 
     // Resources Step
     await moveForward(page);
@@ -109,8 +112,9 @@ test.describe.serial('Namespaces: Storage Location availability', () => {
   });
 
   test('Storage Location autocomplete in create new backup modal has only available storages for namespace', async ({
-                                                                                            page, request,
-                                                                                          }) => {
+    page,
+    request,
+  }) => {
     await page.goto('/databases');
     await createDbClusterFn(token, request, EVEREST_CI_NAMESPACES.PG_ONLY, {
       dbName: pgDbName,
@@ -129,12 +133,18 @@ test.describe.serial('Namespaces: Storage Location availability', () => {
     await page.getByTestId('storage-location-autocomplete').click();
     expect(await page.getByRole('option').count()).toBe(0);
 
-    await deleteDbClusterFn(token, request, pgDbName, EVEREST_CI_NAMESPACES.PG_ONLY);
+    await deleteDbClusterFn(
+      token,
+      request,
+      pgDbName,
+      EVEREST_CI_NAMESPACES.PG_ONLY
+    );
   });
 
   test('Storage Location autocomplete in create schedule modal has only available storages for namespace', async ({
-                                                                                                                               page, request,
-                                                                                                                             }) => {
+    page,
+    request,
+  }) => {
     await page.goto('/databases');
     await createDbClusterFn(token, request, EVEREST_CI_NAMESPACES.PXC_ONLY, {
       dbName: pxcDbName,
@@ -158,6 +168,11 @@ test.describe.serial('Namespaces: Storage Location availability', () => {
     await page.getByTestId('storage-location-autocomplete').click();
     expect(await page.getByRole('option').count()).toBe(1);
 
-    await deleteDbClusterFn(token, request, pxcDbName, EVEREST_CI_NAMESPACES.PXC_ONLY);
+    await deleteDbClusterFn(
+      token,
+      request,
+      pxcDbName,
+      EVEREST_CI_NAMESPACES.PXC_ONLY
+    );
   });
 });
