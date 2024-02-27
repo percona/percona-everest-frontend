@@ -26,7 +26,6 @@ const {
   EVEREST_LOCATION_URL,
 } = process.env;
 
-
 setup('Backup storages', async ({ request }) => {
   const token = await getTokenFromLocalStorage();
   const namespaces = await getNamespacesFn(token, request);
@@ -34,22 +33,22 @@ setup('Backup storages', async ({ request }) => {
 
   STORAGE_NAMES.forEach(async (storage) => {
     promises.push(
-        request.post('/v1/backup-storages/', {
-          data: {
-            name: storage,
-            description: 'CI test bucket',
-            type: 's3',
-            bucketName: EVEREST_LOCATION_BUCKET_NAME,
-            secretKey: EVEREST_LOCATION_SECRET_KEY,
-            accessKey: EVEREST_LOCATION_ACCESS_KEY,
-            allowedNamespaces: [namespaces[0]],
-            url: EVEREST_LOCATION_URL,
-            region: EVEREST_LOCATION_REGION,
-          },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+      request.post('/v1/backup-storages/', {
+        data: {
+          name: storage,
+          description: 'CI test bucket',
+          type: 's3',
+          bucketName: EVEREST_LOCATION_BUCKET_NAME,
+          secretKey: EVEREST_LOCATION_SECRET_KEY,
+          accessKey: EVEREST_LOCATION_ACCESS_KEY,
+          allowedNamespaces: [namespaces[0]],
+          url: EVEREST_LOCATION_URL,
+          region: EVEREST_LOCATION_REGION,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
     );
   });
 
