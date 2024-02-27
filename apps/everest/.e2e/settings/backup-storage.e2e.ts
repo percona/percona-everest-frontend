@@ -53,7 +53,7 @@ test.describe('Backup storage', () => {
 
     await page.pause();
 
-    findRowAndClickActions(page, 'test-storage-name', 'Delete');
+    await findRowAndClickActions(page, 'test-storage-name', 'Delete');
     await page.getByTestId('confirm-dialog-delete').click();
   });
 });

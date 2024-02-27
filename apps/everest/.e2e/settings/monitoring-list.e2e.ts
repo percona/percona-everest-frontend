@@ -45,7 +45,7 @@ test.describe('Monitoring List', () => {
     await page.getByTestId('form-dialog-add').click();
 
     // checking that monitoring has been added
-    findRowAndClickActions(page, monitoringEndpointName);
+    await findRowAndClickActions(page, monitoringEndpointName);
   });
   test('Edit Monitoring Endpoint', async ({ page }) => {
     await page
@@ -72,7 +72,7 @@ test.describe('Monitoring List', () => {
 
     // checking that monitoring has been added
 
-    findRowAndClickActions(page, monitoringEndpointName, 'Delete');
+    await findRowAndClickActions(page, monitoringEndpointName, 'Delete');
     await page.getByTestId('confirm-dialog-delete').click();
 
     await page.pause();

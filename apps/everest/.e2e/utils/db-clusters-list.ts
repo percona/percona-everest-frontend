@@ -43,5 +43,5 @@ export const findDbAndClickActions = async (
   nameOfAction?: string
 ) => {
   page.getByTestId(`${dbName}-status`).filter({ hasText: 'Initializing' });
-  findRowAndClickActions(page, dbName, nameOfAction);
+  await findRowAndClickActions(page, dbName, nameOfAction);
 };
