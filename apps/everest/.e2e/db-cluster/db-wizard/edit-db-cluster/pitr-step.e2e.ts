@@ -23,7 +23,10 @@ import {
   findDbAndClickRow,
 } from '../../../utils/db-clusters-list';
 import { getTokenFromLocalStorage } from '../../../utils/localStorage';
-import { storageLocationAutocompleteEmptyValidationCheck } from '../../../utils/db-wizard';
+import {
+  moveForward,
+  storageLocationAutocompleteEmptyValidationCheck,
+} from '../../../utils/db-wizard';
 import {
   checkDbWizardEditSubmitIsAvailableAndClick,
   checkSuccessOfUpdateAndGoToDbClustersList,
@@ -57,11 +60,10 @@ test.describe.serial('DB Cluster Editing PITR Step', async () => {
     await page.goto('/databases');
     await findDbAndClickActions(page, mySQLName, 'Edit');
 
-    const nextStep = page.getByTestId('db-wizard-continue-button');
     // Go to Resources step
-    await nextStep.click();
+    await moveForward(page);
     // Go to Backups step
-    await nextStep.click();
+    await moveForward(page);
 
     // Check and fill in backups step
     expect(page.getByTestId('pitr-no-backup-alert'));
@@ -72,7 +74,7 @@ test.describe.serial('DB Cluster Editing PITR Step', async () => {
     await backupsCheckbox.setChecked(true);
 
     // Go to PITR step
-    await nextStep.click();
+    await moveForward(page);
 
     // Check PITR form
     const pitrCheckbox = page
@@ -103,9 +105,9 @@ test.describe.serial('DB Cluster Editing PITR Step', async () => {
     ).toHaveText('Enabled');
 
     // Go to Advanced Configuration step
-    await nextStep.click();
+    await moveForward(page);
     // Go to Monitoring step
-    await nextStep.click();
+    await moveForward(page);
 
     await checkDbWizardEditSubmitIsAvailableAndClick(page);
     await checkSuccessOfUpdateAndGoToDbClustersList(page);
@@ -113,13 +115,13 @@ test.describe.serial('DB Cluster Editing PITR Step', async () => {
     await findDbAndClickActions(page, mySQLName, 'Edit');
 
     // Go to Resources step
-    await nextStep.click();
+    await moveForward(page);
     // Go to Backups step
-    await nextStep.click();
+    await moveForward(page);
     await expect(backupsCheckbox).toBeChecked();
 
     // Go to PITR step
-    await nextStep.click();
+    await moveForward(page);
     await expect(pitrCheckbox).toBeChecked();
     await expect(pitrStorageLocation).toBeVisible();
     await expect(pitrStorageLocation).not.toBeEmpty();
@@ -131,14 +133,12 @@ test.describe.serial('DB Cluster Editing PITR Step', async () => {
     await page.goto('/databases');
     await findDbAndClickActions(page, mySQLName, 'Edit');
 
-    const nextStep = page.getByTestId('db-wizard-continue-button');
-
     // Go to Resources step
-    await nextStep.click();
+    await moveForward(page);
     // Go to Backups step
-    await nextStep.click();
+    await moveForward(page);
     // Go to PITR step
-    await nextStep.click();
+    await moveForward(page);
 
     // Check PITR step
     const pitrCheckbox = page
@@ -161,9 +161,9 @@ test.describe.serial('DB Cluster Editing PITR Step', async () => {
     ).toHaveText('Disabled');
 
     // Go to Advanced Configuration step
-    await nextStep.click();
+    await moveForward(page);
     // Go to Monitoring step
-    await nextStep.click();
+    await moveForward(page);
 
     await checkDbWizardEditSubmitIsAvailableAndClick(page);
     await checkSuccessOfUpdateAndGoToDbClustersList(page);

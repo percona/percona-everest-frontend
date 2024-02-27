@@ -17,34 +17,10 @@ import { test as setup, expect } from '@playwright/test';
 import 'dotenv/config';
 import { getTokenFromLocalStorage } from './utils/localStorage';
 import { getNamespacesFn } from './utils/namespaces';
-const {
-  EVEREST_LOCATION_BUCKET_NAME,
-  EVEREST_LOCATION_ACCESS_KEY,
-  EVEREST_LOCATION_SECRET_KEY,
-  EVEREST_LOCATION_REGION,
-  EVEREST_LOCATION_URL,
-} = process.env;
+import { createBackupStorageFn } from './utils/backup-storage';
 
 setup('Backup storage', async ({ request }) => {
-  const token = await getTokenFromLocalStorage();
-  const namespaces = await getNamespacesFn(token, request);
-  const response = await request.post('/v1/backup-storages/', {
-    data: {
-      name: 'ui-dev',
-      description: 'CI test bucket',
-      type: 's3',
-      bucketName: EVEREST_LOCATION_BUCKET_NAME,
-      secretKey: EVEREST_LOCATION_SECRET_KEY,
-      accessKey: EVEREST_LOCATION_ACCESS_KEY,
-      allowedNamespaces: [namespaces[0]],
-      url: EVEREST_LOCATION_URL,
-      region: EVEREST_LOCATION_REGION,
-    },
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  expect(response.ok()).toBeTruthy();
+  await createBackupStorageFn(request, 'ui-dev');
 });
 
 setup('Close modal permanently', async ({ page }) => {

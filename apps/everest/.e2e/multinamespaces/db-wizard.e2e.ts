@@ -15,14 +15,13 @@
 
 import { test, expect } from '@playwright/test';
 import { getTokenFromLocalStorage } from '../utils/localStorage';
+import { EVEREST_CI_NAMESPACES } from '../constants';
 
-test.describe.serial('Namespaces DB Wizard', () => {
-  let dbVersion = '';
+test.describe('Namespaces DB Wizard', () => {
   test.beforeAll(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
   });
 
-  // skip locally
   test('Changing of namespace cause updation of dbEngines, dbVersions, dbName', async ({
     page,
   }) => {
@@ -35,18 +34,22 @@ test.describe.serial('Namespaces DB Wizard', () => {
     // setting everest-pxc namespace
     const namespacesList = page.getByTestId('k8s-namespace-autocomplete');
     await namespacesList.click();
-    await page.getByRole('option', { name: 'everest-pxc' }).click();
+    await page
+      .getByRole('option', { name: EVEREST_CI_NAMESPACES.PXC_ONLY })
+      .click();
 
     // checking and saving fields for pxc
     const dbEnginesButtons = await page
       .getByTestId('toggle-button-group-input-db-type')
       .getByRole('button')
       .count();
-    expect(dbEnginesButtons).toBe(3); //1
+    expect(dbEnginesButtons).toBe(1);
     await expect(page.getByTestId('mysql-toggle-button')).toBeVisible();
+    await expect(page.getByTestId('text-input-db-name')).toHaveValue(
+      /.*mysql.*/
+    );
 
-    const name = page.getByTestId('text-input-db-name');
-    await expect(name).toHaveValue(/.*mysql.*/);
+    let dbVersion = '';
 
     page
       .getByTestId('select-input-db-version')
@@ -57,17 +60,23 @@ test.describe.serial('Namespaces DB Wizard', () => {
 
     //changing namespace to everest-psmdb
     await namespacesList.click();
-    await page.getByRole('option', { name: 'everest-psmdb' }).click();
+    await page
+      .getByRole('option', { name: EVEREST_CI_NAMESPACES.PSMDB_ONLY })
+      .click();
 
     // checking changes of all fields
-    expect(dbEnginesButtons).toBe(3); // 1
+    expect(dbEnginesButtons).toBe(1);
     const mongoDbBtn = page.getByTestId('mongodb-toggle-button');
     await expect(mongoDbBtn).toBeVisible();
-
-    await expect(name).toHaveValue(/.*mongo.*/);
-
-    expect(page.getByTestId('select-input-db-version').inputValue()).toBe(
-      dbVersion
+    await expect(page.getByTestId('text-input-db-name')).toHaveValue(
+      /.*mongodb.*/
     );
+
+    await page
+      .getByTestId('select-input-db-version')
+      .inputValue()
+      .then((value) => {
+        expect(value).not.toBe(dbVersion);
+      });
   });
 });
