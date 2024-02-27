@@ -53,7 +53,7 @@ setup('Backup storages', async ({ request }) => {
   });
 
   await (
-      await Promise.all(promises)
+    await Promise.all(promises)
   ).map((response) => expect(response.ok()).toBeTruthy());
 });
 
