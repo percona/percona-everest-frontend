@@ -1,28 +1,38 @@
-import { useState } from 'react';
+import { MRT_Updater, MRT_VisibilityState } from 'material-react-table';
+import { useEffect, useState } from 'react';
 
-const usePersistentColumnVisibility = (key: string, defaultValue: unknown) => {
+const usePersistentColumnVisibility = (
+  key: string
+): [
+  MRT_VisibilityState,
+  (updater: MRT_Updater<MRT_VisibilityState>) => void,
+] => {
   const [localStorageValue, setLocalStorageValue] = useState(() => {
     try {
       const value = localStorage.getItem(key);
       if (value) {
         return JSON.parse(value);
       }
-      localStorage.setItem(key, JSON.stringify(defaultValue));
-      return defaultValue;
+      return {};
     } catch (error) {
-      localStorage.setItem(key, JSON.stringify(defaultValue));
-      return defaultValue;
+      return {};
     }
   });
 
-  const setLocalStorageStateValue = (updater: unknown) => {
-    let result = null;
-    setLocalStorageValue((prevValues: unknown) => {
-      result = updater instanceof Function ? updater(prevValues) : updater;
-      return result;
-    });
-    localStorage.setItem(key, JSON.stringify(result));
+  const setLocalStorageStateValue = (
+    updater: MRT_Updater<MRT_VisibilityState>
+  ) => {
+    setLocalStorageValue((prevValues: MRT_VisibilityState) =>
+      updater instanceof Function ? updater(prevValues) : updater
+    );
   };
+
+  useEffect(() => {
+    if (Object.keys(localStorageValue).length > 0) {
+      localStorage.setItem(key, JSON.stringify(localStorageValue));
+    }
+  }, [localStorageValue]);
+
   return [localStorageValue, setLocalStorageStateValue];
 };
 
