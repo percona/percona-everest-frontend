@@ -15,10 +15,47 @@
 
 import { test as setup, expect } from '@playwright/test';
 import 'dotenv/config';
-import { createBackupStorageFn } from './utils/backup-storage';
+import { STORAGE_NAMES } from './constants';
+import { getTokenFromLocalStorage } from './utils/localStorage';
+import { getNamespacesFn } from './utils/namespaces';
+const {
+  EVEREST_LOCATION_BUCKET_NAME,
+  EVEREST_LOCATION_ACCESS_KEY,
+  EVEREST_LOCATION_SECRET_KEY,
+  EVEREST_LOCATION_REGION,
+  EVEREST_LOCATION_URL,
+} = process.env;
+
 
 setup('Backup storage', async ({ request }) => {
-  await createBackupStorageFn(request, 'ui-dev');
+  const token = await getTokenFromLocalStorage();
+  const namespaces = await getNamespacesFn(token, request);
+  const promises = [];
+
+  STORAGE_NAMES.forEach(async (storage) => {
+    promises.push(
+        request.post('/v1/backup-storages/', {
+          data: {
+            name: storage,
+            description: 'CI test bucket',
+            type: 's3',
+            bucketName: EVEREST_LOCATION_BUCKET_NAME,
+            secretKey: EVEREST_LOCATION_SECRET_KEY,
+            accessKey: EVEREST_LOCATION_ACCESS_KEY,
+            allowedNamespaces: [namespaces[0]],
+            url: EVEREST_LOCATION_URL,
+            region: EVEREST_LOCATION_REGION,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+    );
+  });
+
+  await (
+      await Promise.all(promises)
+  ).map((response) => expect(response.ok()).toBeTruthy());
 });
 
 setup('Close modal permanently', async ({ page }) => {

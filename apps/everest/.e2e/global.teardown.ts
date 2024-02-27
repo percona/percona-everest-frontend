@@ -15,11 +15,26 @@
 
 import { test as setup, expect } from '@playwright/test';
 import { getTokenFromLocalStorage } from './utils/localStorage';
-import { deleteStorageLocationFn } from './utils/backup-storage';
+import { STORAGE_NAMES } from './constants';
 
 setup.describe.serial('Teardown', () => {
   setup('Delete backup storage', async ({ request }) => {
-    await deleteStorageLocationFn(request, 'ui-dev');
+    const token = await getTokenFromLocalStorage();
+    const promises = [];
+
+    STORAGE_NAMES.forEach(async (name) => {
+      promises.push(
+        request.delete(`/v1/backup-storages/${name}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+      );
+    });
+
+    await (
+      await Promise.all(promises)
+    ).map((response) => expect(response.ok()).toBeTruthy());
   });
 
   // setup('Delete monitoring instances', async ({ request }) => {
