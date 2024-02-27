@@ -22,7 +22,7 @@ test.describe('Namespaces DB Wizard', () => {
     const token = await getTokenFromLocalStorage();
   });
 
-  test('Changing of namespace cause updation of dbEngines, dbVersions, dbName', async ({
+  test('Changing of the namespace cause update of dbEngines, dbVersions, dbName', async ({
     page,
   }) => {
     await page.goto('/databases');

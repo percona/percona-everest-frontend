@@ -36,10 +36,38 @@ test.describe.serial('Namespaces: Storage Location availability', () => {
     await createBackupStorageFn(request, pxcStorageLocationName, [
       EVEREST_CI_NAMESPACES.PXC_ONLY,
     ]);
+
+    await createDbClusterFn(token, request, EVEREST_CI_NAMESPACES.PG_ONLY, {
+      dbName: pgDbName,
+      dbType: 'postgresql',
+      numberOfNodes: '1',
+    });
+
+    await createDbClusterFn(token, request, EVEREST_CI_NAMESPACES.PXC_ONLY, {
+      dbName: pxcDbName,
+      dbType: 'mysql',
+      numberOfNodes: '1',
+      backup: {
+        enabled: true,
+        schedules: [],
+      },
+    });
   });
 
   test.afterAll(async ({ request }) => {
     await deleteStorageLocationFn(request, pxcStorageLocationName);
+    await deleteDbClusterFn(
+        token,
+        request,
+        pgDbName,
+        EVEREST_CI_NAMESPACES.PG_ONLY
+    );
+    await deleteDbClusterFn(
+        token,
+        request,
+        pxcDbName,
+        EVEREST_CI_NAMESPACES.PXC_ONLY
+    );
   });
 
   test('Storage Location autocomplete in DB Wizard has only storage locations in selected namespace', async ({
@@ -116,11 +144,6 @@ test.describe.serial('Namespaces: Storage Location availability', () => {
     request,
   }) => {
     await page.goto('/databases');
-    await createDbClusterFn(token, request, EVEREST_CI_NAMESPACES.PG_ONLY, {
-      dbName: pgDbName,
-      dbType: 'postgresql',
-      numberOfNodes: '1',
-    });
     await findDbAndClickRow(page, pgDbName);
 
     // go to backups tab in db-cluster details
@@ -132,13 +155,6 @@ test.describe.serial('Namespaces: Storage Location availability', () => {
     await page.getByTestId('now-menu-item').click();
     await page.getByTestId('storage-location-autocomplete').click();
     expect(await page.getByRole('option').count()).toBe(0);
-
-    await deleteDbClusterFn(
-      token,
-      request,
-      pgDbName,
-      EVEREST_CI_NAMESPACES.PG_ONLY
-    );
   });
 
   test('Storage Location autocomplete in create schedule modal has only available storages for namespace', async ({
@@ -146,16 +162,6 @@ test.describe.serial('Namespaces: Storage Location availability', () => {
     request,
   }) => {
     await page.goto('/databases');
-    await createDbClusterFn(token, request, EVEREST_CI_NAMESPACES.PXC_ONLY, {
-      dbName: pxcDbName,
-      dbType: 'mysql',
-      numberOfNodes: '1',
-      backup: {
-        enabled: true,
-        schedules: [],
-      },
-    });
-
     await findDbAndClickRow(page, pxcDbName);
 
     // go to backups tab in db-cluster details
@@ -167,12 +173,5 @@ test.describe.serial('Namespaces: Storage Location availability', () => {
     await page.getByTestId('schedule-menu-item').click();
     await page.getByTestId('storage-location-autocomplete').click();
     expect(await page.getByRole('option').count()).toBe(1);
-
-    await deleteDbClusterFn(
-      token,
-      request,
-      pxcDbName,
-      EVEREST_CI_NAMESPACES.PXC_ONLY
-    );
   });
 });
