@@ -173,6 +173,8 @@ jobs:
           cd CLI
           go run cmd/everest/main.go install \
           --operator.mongodb \
+          --operator.postgresql=false \
+          --operator.xtradb-cluster=false \
           --skip-wizard \
           --namespaces everest-psmdb-only
 
@@ -180,6 +182,8 @@ jobs:
         run: |
           cd CLI
           go run cmd/everest/main.go install \
+          --operator.mongodb=false \
+          --operator.postgresql=false \
           --operator.xtradb-cluster \
           --skip-wizard \
           --namespaces everest-pxc-only
@@ -188,7 +192,9 @@ jobs:
         run: |
           cd CLI
           go run cmd/everest/main.go install \
+          --operator.mongodb=false \
           --operator.postgresql \
+          --operator.xtradb-cluster=false \
           --skip-wizard \
           --namespaces everest-pg-only
 
