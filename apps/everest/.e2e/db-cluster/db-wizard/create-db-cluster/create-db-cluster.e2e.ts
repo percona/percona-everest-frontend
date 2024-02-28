@@ -74,26 +74,23 @@ test.describe('DB Cluster creation', () => {
       .getByTestId('toggle-button-group-input-db-type')
       .getByRole('button');
 
-    //TODO remove
-    dbEnginesButtons.allTextContents().then((value) => {
-      console.log('dbEngines', value);
-    });
     await expect(page.getByTestId('text-input-k8s-namespace')).not.toBeEmpty();
     //TODO remove
-    page
-      .getByTestId('text-input-k8s-namespace')
-      .textContent()
-      .then((value) => {
-        console.log(value);
-      });
+    dbEnginesButtons.allTextContents().then((value) => {
+      console.log('dbEngines before', value);
+    });
+
+    // setting everest-ui namespace
+    await page.getByTestId('k8s-namespace-autocomplete').click();
     await page
-      .getByTestId('text-input-k8s-namespace')
-      .fill(EVEREST_CI_NAMESPACES.EVEREST_UI);
+      .getByRole('option', { name: EVEREST_CI_NAMESPACES.EVEREST_UI })
+      .click();
 
     //TODO remove
     dbEnginesButtons.allTextContents().then((value) => {
-      console.log('dbEngines', value);
+      console.log('dbEngines aftwr', value);
     });
+
     expect(await dbEnginesButtons.count()).toBe(3);
     // MySQL is our default DB type
     expect(await page.getByTestId('mysql-toggle-button')).toHaveAttribute(
