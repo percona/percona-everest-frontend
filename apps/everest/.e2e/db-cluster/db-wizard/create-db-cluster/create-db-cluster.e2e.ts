@@ -20,7 +20,7 @@ import {
 } from '../../../utils/database-engines';
 import { deleteDbClusterFn } from '../../../utils/db-cluster';
 import { getTokenFromLocalStorage } from '../../../utils/localStorage';
-import { getNamespacesFn } from '../../../utils/namespaces';
+import { getNamespacesFn, setNamespace } from '../../../utils/namespaces';
 import { getClusterDetailedInfo } from '../../../utils/storage-class';
 import { advancedConfigurationStepCheck } from './steps/advanced-configuration-step';
 import { backupsStepCheck } from './steps/backups-step';
@@ -68,28 +68,18 @@ test.describe('DB Cluster creation', () => {
     // 3) check that the default parameters for MySQL are changed with parameters for the first available dbEngine
   });
 
-  test('Cluster defaults', async ({ page }) => {
+  test('Cluster defaults for namespaces with all operators', async ({
+    page,
+  }) => {
     const expectedNodesOrder = [3, 3, 2];
     const dbEnginesButtons = page
       .getByTestId('toggle-button-group-input-db-type')
       .getByRole('button');
 
     await expect(page.getByTestId('text-input-k8s-namespace')).not.toBeEmpty();
-    //TODO remove
-    dbEnginesButtons.allTextContents().then((value) => {
-      console.log('dbEngines before', value);
-    });
 
     // setting everest-ui namespace
-    await page.getByTestId('k8s-namespace-autocomplete').click();
-    await page
-      .getByRole('option', { name: EVEREST_CI_NAMESPACES.EVEREST_UI })
-      .click();
-
-    //TODO remove
-    dbEnginesButtons.allTextContents().then((value) => {
-      console.log('dbEngines aftwr', value);
-    });
+    await setNamespace(page, EVEREST_CI_NAMESPACES.EVEREST_UI);
 
     expect(await dbEnginesButtons.count()).toBe(3);
     // MySQL is our default DB type
@@ -245,6 +235,7 @@ test.describe('DB Cluster creation', () => {
     page,
   }) => {
     expect(storageClasses.length).toBeGreaterThan(0);
+    await setNamespace(page, EVEREST_CI_NAMESPACES.EVEREST_UI);
 
     const mySQLButton = page.getByTestId('mysql-toggle-button');
     await mySQLButton.click();
@@ -281,6 +272,7 @@ test.describe('DB Cluster creation', () => {
   });
 
   test.skip('Cancel wizard', async ({ page }) => {
+    await setNamespace(page, EVEREST_CI_NAMESPACES.EVEREST_UI);
     await page.getByTestId('mongodb-toggle-button').click();
     await page.getByTestId('text-input-db-name').fill('new-cluster');
     await page.getByTestId('text-input-storage-class').click();
@@ -327,10 +319,9 @@ test.describe('DB Cluster creation', () => {
   test('Multiple Mongo schedules', async ({ page, request }) => {
     const clusterName = 'multi-schedule-test';
     const token = await getTokenFromLocalStorage();
-    const namespaces = await getNamespacesFn(token, request);
     const recommendedEngineVersions = await getEnginesLatestRecommendedVersions(
       token,
-      namespaces[0],
+      namespace,
       request
     );
     let storageName: string;
@@ -363,7 +354,7 @@ test.describe('DB Cluster creation', () => {
     await page.getByTestId('db-wizard-submit-button').click();
     await expect(page.getByTestId('db-wizard-goto-db-clusters')).toBeVisible();
 
-    await page.goto(`/databases/${namespaces[0]}/${clusterName}/backups`);
+    await page.goto(`/databases/${namespace}/${clusterName}/backups`);
     await page.getByTestId('menu-button').click();
     await page.getByTestId('schedule-menu-item').click();
     await page.getByTestId('form-dialog-create').click();

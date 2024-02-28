@@ -14,6 +14,8 @@
 // limitations under the License.
 
 import { Page, expect } from '@playwright/test';
+import { setNamespace } from '../../../../utils/namespaces';
+import { EVEREST_CI_NAMESPACES } from '../../../../constants';
 
 export const basicInformationStepCheck = async (
   page: Page,
@@ -23,6 +25,7 @@ export const basicInformationStepCheck = async (
   clusterName
 ) => {
   expect(page.getByTestId('text-input-k8s-namespace')).not.toBeEmpty();
+  await setNamespace(page, EVEREST_CI_NAMESPACES.EVEREST_UI);
 
   const dbEnginesButtons = page
     .getByTestId('toggle-button-group-input-db-type')
