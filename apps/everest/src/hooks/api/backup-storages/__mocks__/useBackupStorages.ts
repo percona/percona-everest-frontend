@@ -32,3 +32,11 @@ const backupStorageMockData = {
 export const useBackupStorages = () => backupStorageMockData;
 
 export const useCreateBackupStorage = () => storageDataObject;
+
+export const useBackupStoragesByNamespace = (namespace: string) => {
+  return {
+    data: backupStorageMockData.data.filter((item) =>
+      item.allowedNamespaces.includes(namespace)
+    ),
+  };
+};

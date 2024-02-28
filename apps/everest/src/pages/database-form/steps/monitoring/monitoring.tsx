@@ -1,4 +1,4 @@
-import { Alert, Button, FormGroup } from '@mui/material';
+import { FormGroup } from '@mui/material';
 import { AutoCompleteInput, SwitchInput } from '@percona/ui-lib';
 import { useEffect, useState, useMemo } from 'react';
 import {
@@ -15,6 +15,7 @@ import { DbWizardFormFields } from '../../database-form.types';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 import { StepHeader } from '../step-header/step-header.tsx';
 import { Messages } from './monitoring.messages';
+import ActionableAlert from 'components/actionable-alert';
 
 export const Monitoring = () => {
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
@@ -103,22 +104,12 @@ export const Monitoring = () => {
         pageDescription={Messages.caption}
       />
       {!availableMonitoringInstances?.length && (
-        <Alert
-          severity="info"
-          sx={{ mt: 1 }}
+        <ActionableAlert
+          message={Messages.alertText(selectedNamespace)}
+          buttonMessage={Messages.addMonitoringEndpoint}
           data-testid="monitoring-warning"
-          action={
-            <Button
-              color="inherit"
-              size="small"
-              onClick={() => setOpenCreateEditModal(true)}
-            >
-              {Messages.addMonitoringEndpoint}
-            </Button>
-          }
-        >
-          {Messages.alertText(selectedNamespace)}
-        </Alert>
+          onClick={() => setOpenCreateEditModal(true)}
+        />
       )}
       <FormGroup sx={{ mt: 2 }}>
         <SwitchInput
