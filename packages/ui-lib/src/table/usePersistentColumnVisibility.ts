@@ -1,5 +1,9 @@
 import { MRT_Updater, MRT_VisibilityState } from 'material-react-table';
 import { useEffect, useState } from 'react';
+import {
+  hidePositiveUnnecessaryValues,
+  isObjectEmpty,
+} from './usePersistentColumnVisibility.utils';
 
 const usePersistentColumnVisibility = (
   key: string
@@ -7,17 +11,18 @@ const usePersistentColumnVisibility = (
   MRT_VisibilityState,
   (updater: MRT_Updater<MRT_VisibilityState>) => void,
 ] => {
-  const [localStorageValue, setLocalStorageValue] = useState(() => {
-    try {
-      const value = localStorage.getItem(key);
-      if (value) {
-        return JSON.parse(value);
+  const [localStorageValue, setLocalStorageValue] =
+    useState<MRT_VisibilityState>(() => {
+      try {
+        const value = localStorage.getItem(key);
+        if (value) {
+          return JSON.parse(value);
+        }
+        return {};
+      } catch (error) {
+        return {};
       }
-      return {};
-    } catch (error) {
-      return {};
-    }
-  });
+    });
 
   const setLocalStorageStateValue = (
     updater: MRT_Updater<MRT_VisibilityState>
@@ -28,8 +33,14 @@ const usePersistentColumnVisibility = (
   };
 
   useEffect(() => {
-    if (Object.keys(localStorageValue).length > 0) {
-      localStorage.setItem(key, JSON.stringify(localStorageValue));
+    if (isObjectEmpty(localStorageValue)) {
+      const clearedValues = hidePositiveUnnecessaryValues(localStorageValue);
+
+      if (isObjectEmpty(clearedValues)) {
+        localStorage.setItem(key, JSON.stringify(clearedValues));
+      } else {
+        localStorage.removeItem(key);
+      }
     }
   }, [localStorageValue]);
 
