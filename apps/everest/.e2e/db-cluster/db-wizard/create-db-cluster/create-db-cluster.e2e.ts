@@ -29,7 +29,7 @@ import { pitrStepCheck } from './steps/pitr-step';
 import { resourcesStepCheck } from './steps/resources-step';
 import { moveBack, moveForward } from '../../../utils/db-wizard';
 import { findDbAndClickActions } from '../../../utils/db-clusters-list';
-import { EVEREST_CI_NAMESPACES } from "../../../constants";
+import { EVEREST_CI_NAMESPACES } from '../../../constants';
 
 test.describe('DB Cluster creation', () => {
   let engineVersions = {
