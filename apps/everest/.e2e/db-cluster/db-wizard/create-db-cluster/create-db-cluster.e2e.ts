@@ -43,7 +43,8 @@ test.describe('DB Cluster creation', () => {
 
   test.beforeAll(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
-    await getNamespacesFn(token, request);
+    const namespaces = await getNamespacesFn(token, request);
+    console.log(namespaces);
     engineVersions = await getEnginesVersions(token, namespace, request);
 
     const { storageClassNames = [] } = await getClusterDetailedInfo(
@@ -76,21 +77,8 @@ test.describe('DB Cluster creation', () => {
       .getByTestId('toggle-button-group-input-db-type')
       .getByRole('button');
 
-    //TODO remove
-    dbEnginesButtons.allTextContents().then((value) => {
-      console.log('dbEnginesBefore', value);
-    });
     // setting everest-ui namespace
     await setNamespace(page, EVEREST_CI_NAMESPACES.EVEREST_UI);
-    //TODO remove
-    page
-      .getByTestId('text-input-k8s-namespace')
-      .inputValue()
-      .then((value) => console.log('namespaceValue', value));
-    //TODO remove
-    dbEnginesButtons.allTextContents().then((value) => {
-      console.log('dbEnginesAfter', value);
-    });
 
     expect(await dbEnginesButtons.count()).toBe(3);
     // MySQL is our default DB type
@@ -119,7 +107,6 @@ test.describe('DB Cluster creation', () => {
   });
 
   test('Cluster creation', async ({ page, request }) => {
-    await page.pause();
     const clusterName = 'db-cluster-ui-test';
     const token = await getTokenFromLocalStorage();
     const recommendedEngineVersions = await getEnginesLatestRecommendedVersions(
