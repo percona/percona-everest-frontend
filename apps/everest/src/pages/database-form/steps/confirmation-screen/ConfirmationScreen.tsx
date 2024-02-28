@@ -1,10 +1,10 @@
 import { Stack, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { Messages } from './sixth-step.messages';
+import { Messages } from './ConfirmationScreen.messages';
 import { useDatabasePageMode } from '../../useDatabasePageMode';
 
-export const SixthStep = () => {
+export const ConfirmationScreen = () => {
   const mode = useDatabasePageMode();
 
   return (

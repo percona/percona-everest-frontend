@@ -43,7 +43,7 @@ import { useUpdateDbCluster } from 'hooks/api/db-cluster/useUpdateDbCluster';
 import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
 import { DbWizardType } from './database-form-schema.ts';
 import { DatabasePreview } from './database-preview/database-preview';
-import { SixthStep } from './steps/sixth/sixth-step';
+import { ConfirmationScreen } from './steps/confirmation-screen/ConfirmationScreen.tsx';
 import { useDatabasePageDefaultValues } from './useDatabaseFormDefaultValues';
 import { useDatabasePageMode } from './useDatabasePageMode';
 import { useDbValidationSchema } from './useDbValidationSchema.ts';
@@ -193,7 +193,7 @@ export const DatabasePage = () => {
   );
 
   return formSubmitted ? (
-    <SixthStep />
+    <ConfirmationScreen />
   ) : (
     <>
       <Dialog open={closeModalIsOpen}>
