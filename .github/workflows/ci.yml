@@ -196,7 +196,7 @@ jobs:
           --operator.postgresql \
           --operator.xtradb-cluster=false \
           --skip-wizard \
-          --namespaces everest-ui-pxc
+          --namespaces everest-ui-pg
 
 
       - name: Change token
