@@ -16,6 +16,8 @@
 import { test, expect } from '@playwright/test';
 import { getTokenFromLocalStorage } from '../utils/localStorage';
 import { getNamespacesFn } from '../utils/namespaces';
+import { getEnginesList } from '../utils/database-engines';
+import { EVEREST_CI_NAMESPACES } from '../constants';
 
 test.describe('Namespaces List', () => {
   let namespaces = [];
@@ -31,13 +33,38 @@ test.describe('Namespaces List', () => {
 
   test('Provisioning of namespaces in CI is working right', async ({
     page,
+    request,
   }) => {
     await page.goto('/settings/namespaces');
     const rows = page.locator('.MuiTableRow-root');
     await expect(rows.first()).toBeVisible();
     expect(await rows.count()).toBe(5);
-    expect(await page.getByRole('row', { name: 'postgresql' }).count()).toBe(2);
     expect(await page.getByRole('row', { name: 'pxc' }).count()).toBe(2);
     expect(await page.getByRole('row', { name: 'psmdb' }).count()).toBe(2);
+    expect(await page.getByRole('row', { name: 'postgresql' }).count()).toBe(2);
+
+    // TODO remove after debugging in CI
+    const token = await getTokenFromLocalStorage();
+    const enginesPG = await getEnginesList(
+      token,
+      EVEREST_CI_NAMESPACES.PG_ONLY,
+      request
+    );
+    const enginesPXC = await getEnginesList(
+      token,
+      EVEREST_CI_NAMESPACES.PXC_ONLY,
+      request
+    );
+    const enginesPSMDB = await getEnginesList(
+      token,
+      EVEREST_CI_NAMESPACES.PSMDB_ONLY,
+      request
+    );
+    const enginesAll = await getEnginesList(
+      token,
+      EVEREST_CI_NAMESPACES.EVEREST_UI,
+      request
+    );
+    console.log(enginesAll, enginesPG, enginesPSMDB, enginesPXC);
   });
 });

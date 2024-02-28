@@ -19,16 +19,6 @@ import { EVEREST_CI_NAMESPACES } from '../constants';
 import { getEnginesList } from '../utils/database-engines';
 
 test.describe('Namespaces DB Wizard', () => {
-  test.beforeAll(async ({ request }) => {
-    const token = await getTokenFromLocalStorage();
-    const engines = await getEnginesList(
-      token,
-      EVEREST_CI_NAMESPACES.PG_ONLY,
-      request
-    );
-    console.log(engines);
-  });
-
   test('Changing of the namespace cause update of dbEngines, dbVersions, dbName', async ({
     page,
   }) => {
