@@ -25,17 +25,23 @@ export const basicInformationStepCheck = async (
   clusterName
 ) => {
   //TODO remove
-  page.getByTestId('text-input-k8s-namespace').inputValue().then(value => console.log('namespaceValue before', value));
+  page
+    .getByTestId('text-input-k8s-namespace')
+    .inputValue()
+    .then((value) => console.log('namespaceValue before', value));
   await setNamespace(page, EVEREST_CI_NAMESPACES.EVEREST_UI);
   //TODO remove
-  page.getByTestId('text-input-k8s-namespace').inputValue().then(value => console.log('namespaceValue after', value));
+  page
+    .getByTestId('text-input-k8s-namespace')
+    .inputValue()
+    .then((value) => console.log('namespaceValue after', value));
 
   const dbEnginesButtons = page
     .getByTestId('toggle-button-group-input-db-type')
     .getByRole('button');
 
   //TODO remove
-  dbEnginesButtons.allTextContents().then(value => {
+  dbEnginesButtons.allTextContents().then((value) => {
     console.log('dbEnginesBefore', value);
   });
 

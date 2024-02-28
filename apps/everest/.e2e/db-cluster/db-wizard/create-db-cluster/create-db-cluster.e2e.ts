@@ -77,15 +77,18 @@ test.describe('DB Cluster creation', () => {
       .getByRole('button');
 
     //TODO remove
-    dbEnginesButtons.allTextContents().then(value => {
+    dbEnginesButtons.allTextContents().then((value) => {
       console.log('dbEnginesBefore', value);
     });
     // setting everest-ui namespace
     await setNamespace(page, EVEREST_CI_NAMESPACES.EVEREST_UI);
     //TODO remove
-    page.getByTestId('text-input-k8s-namespace').inputValue().then(value => console.log('namespaceValue', value));
+    page
+      .getByTestId('text-input-k8s-namespace')
+      .inputValue()
+      .then((value) => console.log('namespaceValue', value));
     //TODO remove
-    dbEnginesButtons.allTextContents().then(value => {
+    dbEnginesButtons.allTextContents().then((value) => {
       console.log('dbEnginesAfter', value);
     });
 
@@ -245,10 +248,16 @@ test.describe('DB Cluster creation', () => {
   }) => {
     expect(storageClasses.length).toBeGreaterThan(0);
     //TODO remove
-    page.getByTestId('text-input-k8s-namespace').inputValue().then(value => console.log('namespaceValue', value));
+    page
+      .getByTestId('text-input-k8s-namespace')
+      .inputValue()
+      .then((value) => console.log('namespaceValue', value));
     await setNamespace(page, EVEREST_CI_NAMESPACES.EVEREST_UI);
     //TODO remove
-    page.getByTestId('text-input-k8s-namespace').inputValue().then(value => console.log('namespaceValue', value));
+    page
+      .getByTestId('text-input-k8s-namespace')
+      .inputValue()
+      .then((value) => console.log('namespaceValue', value));
 
     const mySQLButton = page.getByTestId('mysql-toggle-button');
     await mySQLButton.click();
