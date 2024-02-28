@@ -24,6 +24,29 @@ test.describe('Namespaces List', () => {
   test.beforeAll(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
     namespaces = await getNamespacesFn(token, request);
+
+    // TODO remove after debugging in CI
+    const enginesPG = await getEnginesList(
+        token,
+        EVEREST_CI_NAMESPACES.PG_ONLY,
+        request
+    );
+    const enginesPXC = await getEnginesList(
+        token,
+        EVEREST_CI_NAMESPACES.PXC_ONLY,
+        request
+    );
+    const enginesPSMDB = await getEnginesList(
+        token,
+        EVEREST_CI_NAMESPACES.PSMDB_ONLY,
+        request
+    );
+    const enginesAll = await getEnginesList(
+        token,
+        EVEREST_CI_NAMESPACES.EVEREST_UI,
+        request
+    );
+    console.log(enginesAll, enginesPG, enginesPSMDB, enginesPXC);
   });
 
   test('Namespace List displayed', async ({ page }) => {
@@ -33,7 +56,6 @@ test.describe('Namespaces List', () => {
 
   test('Provisioning of namespaces in CI is working right', async ({
     page,
-    request,
   }) => {
     await page.goto('/settings/namespaces');
     const rows = page.locator('.MuiTableRow-root');
@@ -43,28 +65,5 @@ test.describe('Namespaces List', () => {
     expect(await page.getByRole('row', { name: 'psmdb' }).count()).toBe(2);
     expect(await page.getByRole('row', { name: 'postgresql' }).count()).toBe(2);
 
-    // TODO remove after debugging in CI
-    const token = await getTokenFromLocalStorage();
-    const enginesPG = await getEnginesList(
-      token,
-      EVEREST_CI_NAMESPACES.PG_ONLY,
-      request
-    );
-    const enginesPXC = await getEnginesList(
-      token,
-      EVEREST_CI_NAMESPACES.PXC_ONLY,
-      request
-    );
-    const enginesPSMDB = await getEnginesList(
-      token,
-      EVEREST_CI_NAMESPACES.PSMDB_ONLY,
-      request
-    );
-    const enginesAll = await getEnginesList(
-      token,
-      EVEREST_CI_NAMESPACES.EVEREST_UI,
-      request
-    );
-    console.log(enginesAll, enginesPG, enginesPSMDB, enginesPXC);
   });
 });
