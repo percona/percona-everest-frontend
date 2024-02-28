@@ -3,7 +3,7 @@ export const STORAGE_NAMES = ['test-storage-1', 'test-storage-2'];
 
 export enum EVEREST_CI_NAMESPACES {
   EVEREST_UI = 'everest-ui',
-  PSMDB_ONLY = 'everest-psmdb-only',
-  PXC_ONLY = 'everest-pxc-only',
-  PG_ONLY = 'everest-pg-only',
+  PSMDB_ONLY = 'everest-ui-psmdb',
+  PXC_ONLY = 'everest-ui-pxc',
+  PG_ONLY = 'everest-ui-pg',
 }
