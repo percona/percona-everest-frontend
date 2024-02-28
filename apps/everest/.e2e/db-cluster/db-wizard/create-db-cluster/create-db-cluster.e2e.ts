@@ -43,6 +43,7 @@ test.describe('DB Cluster creation', () => {
 
   test.beforeAll(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
+    await getNamespacesFn(token, request);
     engineVersions = await getEnginesVersions(token, namespace, request);
 
     const { storageClassNames = [] } = await getClusterDetailedInfo(
@@ -73,6 +74,21 @@ test.describe('DB Cluster creation', () => {
       .getByTestId('toggle-button-group-input-db-type')
       .getByRole('button');
 
+    //TODO remove
+    dbEnginesButtons.allTextContents().then(value => {
+      console.log('dbEngines', value);
+    })
+    await expect(page.getByTestId('text-input-k8s-namespace')).not.toBeEmpty();
+    //TODO remove
+    page.getByTestId('text-input-k8s-namespace').textContent().then(value=>{
+      console.log(value);
+    })
+    await page.getByTestId('text-input-k8s-namespace').fill(EVEREST_CI_NAMESPACES.EVEREST_UI);
+
+    //TODO remove
+    dbEnginesButtons.allTextContents().then(value => {
+      console.log('dbEngines', value);
+    })
     expect(await dbEnginesButtons.count()).toBe(3);
     // MySQL is our default DB type
     expect(await page.getByTestId('mysql-toggle-button')).toHaveAttribute(
@@ -107,9 +123,9 @@ test.describe('DB Cluster creation', () => {
       namespace,
       request
     );
-    let dbName = '';
-    let scheduleName = '';
-    let storageName = '';
+    let dbName: string;
+    let scheduleName: string;
+    let storageName: string;
 
     expect(storageClasses.length).toBeGreaterThan(0);
 
@@ -315,7 +331,7 @@ test.describe('DB Cluster creation', () => {
       namespaces[0],
       request
     );
-    let storageName = '';
+    let storageName: string;
 
     await basicInformationStepCheck(
       page,
