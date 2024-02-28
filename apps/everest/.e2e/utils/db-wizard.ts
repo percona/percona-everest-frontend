@@ -47,8 +47,9 @@ export const setPitrEnabledStatus = async (page: Page, checked: boolean) => {
   expect(await checkbox.isChecked()).toBe(checked);
 };
 
-export const submitWizard = (page: Page) => {
-  page.getByTestId('db-wizard-submit-button').click();
+export const submitWizard = async (page: Page) => {
+  await page.getByTestId('db-wizard-submit-button').click();
+  await expect(page.getByTestId('db-wizard-goto-db-clusters')).toBeVisible();
 };
 
 export const goToLastAndSubmit = async (page: Page) => {
