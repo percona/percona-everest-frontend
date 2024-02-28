@@ -27,24 +27,24 @@ test.describe('Namespaces List', () => {
 
     // TODO remove after debugging in CI
     const enginesPG = await getEnginesList(
-        token,
-        EVEREST_CI_NAMESPACES.PG_ONLY,
-        request
+      token,
+      EVEREST_CI_NAMESPACES.PG_ONLY,
+      request
     );
     const enginesPXC = await getEnginesList(
-        token,
-        EVEREST_CI_NAMESPACES.PXC_ONLY,
-        request
+      token,
+      EVEREST_CI_NAMESPACES.PXC_ONLY,
+      request
     );
     const enginesPSMDB = await getEnginesList(
-        token,
-        EVEREST_CI_NAMESPACES.PSMDB_ONLY,
-        request
+      token,
+      EVEREST_CI_NAMESPACES.PSMDB_ONLY,
+      request
     );
     const enginesAll = await getEnginesList(
-        token,
-        EVEREST_CI_NAMESPACES.EVEREST_UI,
-        request
+      token,
+      EVEREST_CI_NAMESPACES.EVEREST_UI,
+      request
     );
     console.log(enginesAll, enginesPG, enginesPSMDB, enginesPXC);
   });
@@ -64,6 +64,5 @@ test.describe('Namespaces List', () => {
     expect(await page.getByRole('row', { name: 'pxc' }).count()).toBe(2);
     expect(await page.getByRole('row', { name: 'psmdb' }).count()).toBe(2);
     expect(await page.getByRole('row', { name: 'postgresql' }).count()).toBe(2);
-
   });
 });
