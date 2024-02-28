@@ -176,7 +176,7 @@ jobs:
           --operator.postgresql=false \
           --operator.xtradb-cluster=false \
           --skip-wizard \
-          --namespaces everest-ui-psmdb
+          --namespaces psmdb-only
 
       - name: Adding pxc namespace
         run: |
@@ -186,7 +186,7 @@ jobs:
           --operator.postgresql=false \
           --operator.xtradb-cluster \
           --skip-wizard \
-          --namespaces everest-ui-pxc
+          --namespaces pxc-only
 
       - name: Adding pg namespace
         run: |
@@ -196,7 +196,7 @@ jobs:
           --operator.postgresql \
           --operator.xtradb-cluster=false \
           --skip-wizard \
-          --namespaces everest-ui-pg
+          --namespaces pg-only
 
 
       - name: Change token
