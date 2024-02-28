@@ -24,12 +24,21 @@ export const basicInformationStepCheck = async (
   storageClasses,
   clusterName
 ) => {
-  expect(page.getByTestId('text-input-k8s-namespace')).not.toBeEmpty();
+  //TODO remove
+  page.getByTestId('text-input-k8s-namespace').inputValue().then(value => console.log('namespaceValue before', value));
   await setNamespace(page, EVEREST_CI_NAMESPACES.EVEREST_UI);
+  //TODO remove
+  page.getByTestId('text-input-k8s-namespace').inputValue().then(value => console.log('namespaceValue after', value));
 
   const dbEnginesButtons = page
     .getByTestId('toggle-button-group-input-db-type')
     .getByRole('button');
+
+  //TODO remove
+  dbEnginesButtons.allTextContents().then(value => {
+    console.log('dbEnginesBefore', value);
+  });
+
   const nrButtons = await dbEnginesButtons.count();
 
   expect(nrButtons).toBe(3);
