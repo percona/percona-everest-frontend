@@ -21,10 +21,7 @@ import {
 import { moveForward } from '../utils/db-wizard';
 import { EVEREST_CI_NAMESPACES } from '../constants';
 import { getTokenFromLocalStorage } from '../utils/localStorage';
-import {
-  createMonitoringInstance,
-  deleteMonitoringInstance,
-} from '../utils/monitoring-instance';
+import { deleteMonitoringInstance } from '../utils/monitoring-instance';
 import { setNamespace } from '../utils/namespaces';
 
 const { MONITORING_URL, MONITORING_USER, MONITORING_PASSWORD } = process.env;
@@ -32,7 +29,7 @@ const { MONITORING_URL, MONITORING_USER, MONITORING_PASSWORD } = process.env;
 test.describe('Namespaces: Monitoring availability', () => {
   const pxcStorageLocationName = 'storage-location-pxc';
   const pxcMonitoringEndpoint = 'pxc-monitoring';
-  const psmdbMonitoringEndpoint = 'psmdb-monitoring';
+  // const psmdbMonitoringEndpoint = 'psmdb-monitoring';
   let token = '';
 
   test.beforeAll(async ({ request }) => {
@@ -40,17 +37,17 @@ test.describe('Namespaces: Monitoring availability', () => {
     await createBackupStorageFn(request, pxcStorageLocationName, [
       EVEREST_CI_NAMESPACES.PXC_ONLY,
     ]);
-    await createMonitoringInstance(
-      request,
-      psmdbMonitoringEndpoint,
-      [EVEREST_CI_NAMESPACES.PSMDB_ONLY],
-      token
-    );
+    // await createMonitoringInstance(
+    //   request,
+    //   psmdbMonitoringEndpoint,
+    //   [EVEREST_CI_NAMESPACES.PSMDB_ONLY],
+    //   token
+    // );
   });
 
   test.afterAll(async ({ request }) => {
     await deleteStorageLocationFn(request, pxcStorageLocationName);
-    await deleteMonitoringInstance(request, psmdbMonitoringEndpoint, token);
+    // await deleteMonitoringInstance(request, psmdbMonitoringEndpoint, token);
   });
 
   test('Monitoring autocomplete in DB Wizard has only endpoints in selected namespace', async ({

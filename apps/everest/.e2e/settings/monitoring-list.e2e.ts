@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import { findRowAndClickActions } from '../utils/table';
 const { MONITORING_URL, MONITORING_USER, MONITORING_PASSWORD } = process.env;
 
@@ -40,13 +40,12 @@ test.describe.serial('Monitoring List', () => {
     // await findRowAndClickActions(page, monitoringEndpointName);
 
     // delete, REMOVE when next test will be allowed
-    await page.pause();
+
     await findRowAndClickActions(page, monitoringEndpointName, 'Delete');
     await page.getByTestId('confirm-dialog-delete').click();
   });
-  // TODO functionality is broken, the fix is needed, don't forget to remove "delete" action in test above
+  // TODO functionality is broken
   test.skip('Edit Monitoring Endpoint', async ({ page }) => {
-    await page.pause();
     await page
       .locator('.MuiTableRow-root')
       .filter({ hasText: monitoringEndpointName })

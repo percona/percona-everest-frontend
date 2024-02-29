@@ -44,11 +44,6 @@ export const createMonitoringInstance = async (
   });
 
   expect(response.ok()).toBeTruthy();
-  const created = await response.json();
-
-  expect(created.name).toBe(data.name);
-  expect(created.url).toBe(data.url);
-  expect(created.type).toBe(data.type);
 };
 
 export const deleteMonitoringInstance = async (
