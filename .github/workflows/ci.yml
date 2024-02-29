@@ -160,7 +160,7 @@ jobs:
 
       - name: Check PMM
         run: |
-          echo "MONITORING_URL = '${{ env.MONITORING_U }}'"
+          echo "URL = ${{ env.MONITORING_URL }}"
 
       - name: Run Provisioning
         run: |
