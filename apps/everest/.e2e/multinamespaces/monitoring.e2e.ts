@@ -88,6 +88,7 @@ test.describe('Namespaces: Monitoring availability', () => {
     await page.getByTestId('text-input-user').fill(MONITORING_USER);
     await page.getByTestId('text-input-password').fill(MONITORING_PASSWORD);
 
+    await expect(page.getByTestId('form-dialog-add')).toBeEnabled();
     await page.getByTestId('form-dialog-add').click();
 
     await expect(page.getByTestId('monitoring-warning')).not.toBeVisible();
