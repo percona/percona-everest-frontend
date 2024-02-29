@@ -74,6 +74,10 @@ export const DatabasePage = () => {
           ...(mode === 'restoreFromBackup' && {
             backupDataSource: {
               dbClusterBackupName: state?.backupName,
+              pitr: {
+                date: state?.pointInTimeDate,
+                type: 'date',
+              },
             },
           }),
         },
