@@ -40,7 +40,6 @@ test.describe('Namespaces: Monitoring availability', () => {
 
   test.afterAll(async ({ request }) => {
     await deleteStorageLocationFn(request, pxcStorageLocationName);
-    // await deleteMonitoringInstance(request, psmdbMonitoringEndpoint, token);
   });
 
   test('Monitoring autocomplete in DB Wizard has only endpoints in selected namespace', async ({

@@ -14,9 +14,7 @@
 // limitations under the License.
 
 import { test, expect } from '@playwright/test';
-import { getTokenFromLocalStorage } from '../utils/localStorage';
 import { EVEREST_CI_NAMESPACES } from '../constants';
-import { getEnginesList } from '../utils/database-engines';
 
 test.describe('Namespaces DB Wizard', () => {
   test('Changing of the namespace cause update of dbEngines, dbVersions, dbName', async ({
@@ -48,14 +46,9 @@ test.describe('Namespaces DB Wizard', () => {
       /.*mysql.*/
     );
 
-    let dbVersion = '';
-
-    page
+    const dbVersion = await page
       .getByTestId('select-input-db-version')
-      .inputValue()
-      .then((value) => {
-        dbVersion = value;
-      });
+      .inputValue();
 
     //changing namespace to everest-psmdb
     await namespacesList.click();
@@ -73,11 +66,8 @@ test.describe('Namespaces DB Wizard', () => {
       /.*mongodb.*/
     );
 
-    await page
-      .getByTestId('select-input-db-version')
-      .inputValue()
-      .then((value) => {
-        expect(value).not.toBe(dbVersion);
-      });
+    expect(
+      await page.getByTestId('select-input-db-version').inputValue()
+    ).not.toBe(dbVersion);
   });
 });

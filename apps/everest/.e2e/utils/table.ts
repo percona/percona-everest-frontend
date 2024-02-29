@@ -3,12 +3,8 @@ import { Page } from '@playwright/test';
 export const findRowAndClickActions = async (
   page: Page,
   name: string,
-  nameOfAction?: string,
-  before?: () => {}
+  nameOfAction?: string
 ) => {
-  if (before) {
-    before();
-  }
   // cluster actions menu click
   await page
     .locator('.MuiTableRow-root')

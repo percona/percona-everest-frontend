@@ -15,9 +15,9 @@ export const createBackupStorageFn = async (
   namespacesList?: string[]
 ) => {
   const token = await getTokenFromLocalStorage();
-  const namespaces: string[] = namespacesList
-    ??
-    : [(await getNamespacesFn(token, request))[0]];
+  const namespaces: string[] = namespacesList ?? [
+    (await getNamespacesFn(token, request))[0],
+  ];
   const data = {
     name: name,
     description: 'CI test bucket',
