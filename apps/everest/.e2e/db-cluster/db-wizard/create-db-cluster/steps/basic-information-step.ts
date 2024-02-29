@@ -14,8 +14,6 @@
 // limitations under the License.
 
 import { Page, expect } from '@playwright/test';
-import { setNamespace } from '../../../../utils/namespaces';
-import { EVEREST_CI_NAMESPACES } from '../../../../constants';
 
 export const basicInformationStepCheck = async (
   page: Page,
@@ -24,26 +22,9 @@ export const basicInformationStepCheck = async (
   storageClasses,
   clusterName
 ) => {
-  //TODO remove
-  page
-    .getByTestId('text-input-k8s-namespace')
-    .inputValue()
-    .then((value) => console.log('namespaceValue before', value));
-  await setNamespace(page, EVEREST_CI_NAMESPACES.EVEREST_UI);
-  //TODO remove
-  page
-    .getByTestId('text-input-k8s-namespace')
-    .inputValue()
-    .then((value) => console.log('namespaceValue after', value));
-
   const dbEnginesButtons = page
     .getByTestId('toggle-button-group-input-db-type')
     .getByRole('button');
-
-  //TODO remove
-  dbEnginesButtons.allTextContents().then((value) => {
-    console.log('dbEnginesBefore', value);
-  });
 
   const nrButtons = await dbEnginesButtons.count();
 

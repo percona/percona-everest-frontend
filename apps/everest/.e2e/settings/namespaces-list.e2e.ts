@@ -16,37 +16,12 @@
 import { test, expect } from '@playwright/test';
 import { getTokenFromLocalStorage } from '../utils/localStorage';
 import { getNamespacesFn } from '../utils/namespaces';
-import { getEnginesList } from '../utils/database-engines';
-import { EVEREST_CI_NAMESPACES } from '../constants';
 
 test.describe('Namespaces List', () => {
   let namespaces = [];
   test.beforeAll(async ({ request }) => {
     const token = await getTokenFromLocalStorage();
     namespaces = await getNamespacesFn(token, request);
-
-    // TODO remove after debugging in CI
-    const enginesPG = await getEnginesList(
-      token,
-      EVEREST_CI_NAMESPACES.PG_ONLY,
-      request
-    );
-    const enginesPXC = await getEnginesList(
-      token,
-      EVEREST_CI_NAMESPACES.PXC_ONLY,
-      request
-    );
-    const enginesPSMDB = await getEnginesList(
-      token,
-      EVEREST_CI_NAMESPACES.PSMDB_ONLY,
-      request
-    );
-    const enginesAll = await getEnginesList(
-      token,
-      EVEREST_CI_NAMESPACES.EVEREST_UI,
-      request
-    );
-    console.log(enginesAll, enginesPG, enginesPSMDB, enginesPXC);
   });
 
   test('Namespace List displayed', async ({ page }) => {
