@@ -161,6 +161,7 @@ jobs:
       - name: Check PMM
         run: |
           echo "URL = ${{ env.MONITORING_URL }}"
+          echo -n MONITORING_URL=$("http://" && kubectl get svc/monitoring-service -o json | jq -r '.spec.clusterIP')
 
       - name: Run Provisioning
         run: |

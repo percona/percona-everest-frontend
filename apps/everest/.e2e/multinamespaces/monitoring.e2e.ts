@@ -29,7 +29,6 @@ const { MONITORING_URL, MONITORING_USER, MONITORING_PASSWORD } = process.env;
 test.describe('Namespaces: Monitoring availability', () => {
   const pxcStorageLocationName = 'storage-location-pxc';
   const pxcMonitoringEndpoint = 'pxc-monitoring';
-  // const psmdbMonitoringEndpoint = 'psmdb-monitoring';
   let token = '';
 
   test.beforeAll(async ({ request }) => {
@@ -37,13 +36,6 @@ test.describe('Namespaces: Monitoring availability', () => {
     await createBackupStorageFn(request, pxcStorageLocationName, [
       EVEREST_CI_NAMESPACES.PXC_ONLY,
     ]);
-    console.log(MONITORING_URL);
-    // await createMonitoringInstance(
-    //   request,
-    //   psmdbMonitoringEndpoint,
-    //   [EVEREST_CI_NAMESPACES.PSMDB_ONLY],
-    //   token
-    // );
   });
 
   test.afterAll(async ({ request }) => {
