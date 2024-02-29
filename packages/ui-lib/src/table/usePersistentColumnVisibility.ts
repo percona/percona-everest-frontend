@@ -1,7 +1,7 @@
 import { MRT_Updater, MRT_VisibilityState } from 'material-react-table';
 import { useEffect, useState } from 'react';
 import {
-  hidePositiveUnnecessaryValues,
+  filterHiddenColumns,
   isObjectEmpty,
 } from './usePersistentColumnVisibility.utils';
 
@@ -33,11 +33,11 @@ const usePersistentColumnVisibility = (
   };
 
   useEffect(() => {
-    if (isObjectEmpty(localStorageValue)) {
-      const clearedValues = hidePositiveUnnecessaryValues(localStorageValue);
+    if (!isObjectEmpty(localStorageValue)) {
+      const hiddenColumns = filterHiddenColumns(localStorageValue);
 
-      if (isObjectEmpty(clearedValues)) {
-        localStorage.setItem(key, JSON.stringify(clearedValues));
+      if (!isObjectEmpty(hiddenColumns)) {
+        localStorage.setItem(key, JSON.stringify(hiddenColumns));
       } else {
         localStorage.removeItem(key);
       }

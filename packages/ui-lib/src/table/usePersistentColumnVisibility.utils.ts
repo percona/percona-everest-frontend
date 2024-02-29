@@ -1,15 +1,13 @@
 import { MRT_VisibilityState } from 'material-react-table';
 
-export const hidePositiveUnnecessaryValues = (
-  localStorageValue: MRT_VisibilityState
-) => {
-  const clearedValues: { [key: string]: boolean } = {};
+export const filterHiddenColumns = (localStorageValue: MRT_VisibilityState) => {
+  const hiddenColumns: { [key: string]: boolean } = {};
   for (const [key, value] of Object.entries(localStorageValue)) {
     if (!value) {
-      clearedValues[key] = value;
+      hiddenColumns[key] = value;
     }
   }
-  return clearedValues;
+  return hiddenColumns;
 };
 
-export const isObjectEmpty = (obj: object) => Object.keys(obj).length > 0;
+export const isObjectEmpty = (obj: object) => Object.keys(obj).length === 0;
