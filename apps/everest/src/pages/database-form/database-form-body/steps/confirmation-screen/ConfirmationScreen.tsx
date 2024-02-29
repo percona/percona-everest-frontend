@@ -4,7 +4,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { Messages } from './ConfirmationScreen.messages';
 import { useDatabasePageMode } from '../../../useDatabasePageMode';
 
-export const ConfirmationScreen = () => {
+const ConfirmationScreen = () => {
   const mode = useDatabasePageMode();
 
   return (
@@ -35,3 +35,5 @@ export const ConfirmationScreen = () => {
     </Stack>
   );
 };
+
+export default ConfirmationScreen;

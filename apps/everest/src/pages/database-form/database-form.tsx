@@ -13,25 +13,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Stack, Step, StepLabel } from '@mui/material';
 import { Stepper } from '@percona/ui-lib';
-import { useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { useLocation } from 'react-router-dom';
-import { steps } from './database-form-body/steps/index.ts';
-
 import { useCreateDbCluster } from 'hooks/api/db-cluster/useCreateDbCluster';
 import { useUpdateDbCluster } from 'hooks/api/db-cluster/useUpdateDbCluster';
-import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint.ts';
-import { DbWizardType } from './database-form-schema.ts';
-import { ConfirmationScreen } from './database-form-body/steps/confirmation-screen/ConfirmationScreen.tsx';
+import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
+import { steps } from './database-form-body/steps';
+import { DbWizardType } from './database-form-schema';
+import ConfirmationScreen from './database-form-body/steps/confirmation-screen';
 import { useDatabasePageDefaultValues } from './useDatabaseFormDefaultValues';
 import { useDatabasePageMode } from './useDatabasePageMode';
-import { useDbValidationSchema } from './useDbValidationSchema.ts';
-import DatabaseFormCancelDialog from './database-form-cancel-dialog/index.ts';
+import { useDbValidationSchema } from './useDbValidationSchema';
+import DatabaseFormCancelDialog from './database-form-cancel-dialog/index';
 import DatabaseFormBody from './database-form-body';
-import { DbWizardFormFields } from './database-form.types.ts';
+import { DbWizardFormFields } from './database-form.types';
 import DatabaseFormSideDrawer from './database-form-side-drawer';
 
 export const DatabasePage = () => {
@@ -66,20 +65,6 @@ export const DatabasePage = () => {
     trigger,
     handleSubmit,
   } = methods;
-
-  useEffect(() => {
-    // We disable the inputs on first step to make sure user doesn't change anything before all data is loaded
-    // When users change the inputs, it means all data was loaded and we should't change the defaults anymore at this point
-    // Because this effect relies on defaultValues, which comes from a hook that has dependencies that might be triggered somewhere else
-    // E.g. If defaults depend on monitoringInstances query, step four will cause this to re-rerender, because that step calls that query again
-    if (isDirty) {
-      return;
-    }
-
-    if (mode === 'edit' || mode === 'restoreFromBackup') {
-      reset(defaultValues);
-    }
-  }, [defaultValues, isDirty, reset, mode]);
 
   const onSubmit: SubmitHandler<DbWizardType> = (data) => {
     if (mode === 'new' || mode === 'restoreFromBackup') {
@@ -145,6 +130,20 @@ export const DatabasePage = () => {
     clearErrors();
     setActiveStep(order - 1);
   };
+
+  useEffect(() => {
+    // We disable the inputs on first step to make sure user doesn't change anything before all data is loaded
+    // When users change the inputs, it means all data was loaded and we should't change the defaults anymore at this point
+    // Because this effect relies on defaultValues, which comes from a hook that has dependencies that might be triggered somewhere else
+    // E.g. If defaults depend on monitoringInstances query, step four will cause this to re-rerender, because that step calls that query again
+    if (isDirty) {
+      return;
+    }
+
+    if (mode === 'edit' || mode === 'restoreFromBackup') {
+      reset(defaultValues);
+    }
+  }, [defaultValues, isDirty, reset, mode]);
 
   return formSubmitted ? (
     <ConfirmationScreen />
