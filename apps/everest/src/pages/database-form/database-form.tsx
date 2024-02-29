@@ -169,12 +169,12 @@ export const DatabasePage = () => {
             handleNextStep={handleNext}
             handlePreviousStep={handleBack}
           />
+          <DatabaseFormSideDrawer
+            activeStep={activeStep}
+            longestAchievedStep={longestAchievedStep}
+            handleSectionEdit={handleSectionEdit}
+          />
         </FormProvider>
-        <DatabaseFormSideDrawer
-          activeStep={activeStep}
-          longestAchievedStep={longestAchievedStep}
-          handleSectionEdit={handleSectionEdit}
-        />
       </Stack>
       <DatabaseFormCancelDialog
         open={cancelModalOpen}
