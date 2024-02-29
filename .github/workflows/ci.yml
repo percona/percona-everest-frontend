@@ -158,6 +158,10 @@ jobs:
         run: |
           echo -n MONITORING_URL=$("http://" && kubectl get svc/monitoring-service -o json | jq -r '.spec.clusterIP') >> $GITHUB_ENV
 
+      - name: Check PMM
+        run: |
+          echo "MONITORING_URL = '${{ env.MONITORING_U }}'"
+
       - name: Run Provisioning
         run: |
           cd CLI
