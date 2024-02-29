@@ -16,7 +16,7 @@ export const createBackupStorageFn = async (
 ) => {
   const token = await getTokenFromLocalStorage();
   const namespaces: string[] = namespacesList
-    ? namespacesList
+    ??
     : [(await getNamespacesFn(token, request))[0]];
   const data = {
     name: name,
