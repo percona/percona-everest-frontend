@@ -30,6 +30,7 @@ test.describe('Namespaces: Monitoring availability', () => {
   const pxcStorageLocationName = 'storage-location-pxc';
   const pxcMonitoringEndpoint = 'pxc-monitoring';
   // const psmdbMonitoringEndpoint = 'psmdb-monitoring';
+  console.log(MONITORING_URL);
   let token = '';
 
   test.beforeAll(async ({ request }) => {
