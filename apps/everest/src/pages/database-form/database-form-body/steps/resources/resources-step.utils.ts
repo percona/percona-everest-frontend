@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { ResourceSize } from './resources-step.types';
-import { DEFAULT_SIZES } from './resources-step.const';
+import { ResourceSize } from './resources-step.types.ts';
+import { DEFAULT_SIZES } from './resources-step.const.ts';
 import { DbCluster } from 'shared-types/dbCluster.types';
 import { memoryParser } from 'utils/k8ResourceParser';
 import { Messages } from './resources-step.messages.ts';

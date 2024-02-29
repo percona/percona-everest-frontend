@@ -16,10 +16,10 @@
 import { FormGroup, Stack } from '@mui/material';
 import { SwitchInput, TextInput, TextArray } from '@percona/ui-lib';
 import { useFormContext } from 'react-hook-form';
-import { Messages } from './advanced-configurations.messages';
-import { getParamsPlaceholderFromDbType } from './advanced-configurations.utils';
+import { Messages } from './advanced-configurations.messages.ts';
+import { getParamsPlaceholderFromDbType } from './advanced-configurations.utils.ts';
 
-import { DbWizardFormFields } from '../../database-form.types';
+import { DbWizardFormFields } from '../../../database-form.types.ts';
 import { StepHeader } from '../step-header/step-header.tsx';
 
 export const AdvancedConfigurations = () => {

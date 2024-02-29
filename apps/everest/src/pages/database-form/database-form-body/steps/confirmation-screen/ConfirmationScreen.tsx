@@ -2,7 +2,7 @@ import { Stack, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { Messages } from './ConfirmationScreen.messages';
-import { useDatabasePageMode } from '../../useDatabasePageMode';
+import { useDatabasePageMode } from '../../../useDatabasePageMode';
 
 export const ConfirmationScreen = () => {
   const mode = useDatabasePageMode();

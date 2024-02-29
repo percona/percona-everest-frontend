@@ -12,19 +12,23 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { FirstStep } from './first/first-step';
-import { ResourcesStep } from './resources/resources-step.tsx';
-import { Backups } from './backups/backups';
-import { AdvancedConfigurations } from './advanced-configurations/advanced-configurations';
-import { Monitoring } from './monitoring/monitoring';
-import PITRStep from './pitr';
+import { DbWizardFormFields } from '../../../database-form.types';
+import { ResourceSize } from './resources-step.types';
 
-// TODO re-add steps after API is ready
-export const steps = [
-  FirstStep,
-  ResourcesStep,
-  Backups,
-  PITRStep,
-  AdvancedConfigurations,
-  Monitoring,
-];
+export const DEFAULT_SIZES = {
+  [ResourceSize.small]: {
+    [DbWizardFormFields.cpu]: 1,
+    [DbWizardFormFields.memory]: 2,
+    [DbWizardFormFields.disk]: 25,
+  },
+  [ResourceSize.medium]: {
+    [DbWizardFormFields.cpu]: 4,
+    [DbWizardFormFields.memory]: 8,
+    [DbWizardFormFields.disk]: 100,
+  },
+  [ResourceSize.large]: {
+    [DbWizardFormFields.cpu]: 8,
+    [DbWizardFormFields.memory]: 32,
+    [DbWizardFormFields.disk]: 200,
+  },
+};

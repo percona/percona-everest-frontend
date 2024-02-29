@@ -5,14 +5,14 @@ import { useKubernetesClusterResourcesInfo } from 'hooks/api/kubernetesClusters/
 import { useActiveBreakpoint } from 'hooks/utils/useActiveBreakpoint';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { NODES_DB_TYPE_MAP } from '../../database-form.constants';
-import { DbWizardFormFields } from '../../database-form.types';
-import { useDatabasePageMode } from '../../useDatabasePageMode';
+import { NODES_DB_TYPE_MAP } from '../../../database-form.constants.ts';
+import { DbWizardFormFields } from '../../../database-form.types.ts';
+import { useDatabasePageMode } from '../../../useDatabasePageMode.ts';
 import { StepHeader } from '../step-header/step-header.tsx';
-import { ResourceInput } from './resource-input/resource-input';
-import { DEFAULT_SIZES } from './resources-step.const';
+import { ResourceInput } from './resource-input/resource-input.tsx';
+import { DEFAULT_SIZES } from './resources-step.const.ts';
 import { Messages } from './resources-step.messages.ts';
-import { ResourceSize } from './resources-step.types';
+import { ResourceSize } from './resources-step.types.ts';
 import {
   checkResourceText,
   humanizeResourceSizeMap,

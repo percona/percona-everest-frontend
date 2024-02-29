@@ -18,7 +18,7 @@ import { DbType } from '@percona/types';
 import { SwitchInput } from '@percona/ui-lib';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { DbWizardFormFields } from '../../database-form.types';
+import { DbWizardFormFields } from '../../../database-form.types';
 import { StepHeader } from '../step-header/step-header';
 import { Messages } from './pitr.messages';
 import PitrStorage from './pitr-storage';

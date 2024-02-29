@@ -3,9 +3,9 @@ import { ScheduleForm } from 'components/schedule-form/schedule-form.tsx';
 import { useBackupStoragesByNamespace } from 'hooks/api/backup-storages/useBackupStorages.ts';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { DbWizardFormFields } from '../../../database-form.types.ts';
-import { useDatabasePageDefaultValues } from '../../../useDatabaseFormDefaultValues.ts';
-import { useDatabasePageMode } from '../../../useDatabasePageMode.ts';
+import { DbWizardFormFields } from '../../../../database-form.types.ts';
+import { useDatabasePageDefaultValues } from '../../../../useDatabaseFormDefaultValues.ts';
+import { useDatabasePageMode } from '../../../../useDatabasePageMode.ts';
 import { generateShortUID } from '../../first/utils.ts';
 import { ScheduleBackupSectionProps } from './schedule-section.types.ts';
 

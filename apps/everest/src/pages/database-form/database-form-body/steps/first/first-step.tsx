@@ -30,13 +30,13 @@ import { useKubernetesClusterInfo } from 'hooks/api/kubernetesClusters/useKubern
 import { useNamespaces } from 'hooks/api/namespaces/useNamespaces';
 import { useFormContext } from 'react-hook-form';
 import { DbEngineToolStatus } from 'shared-types/dbEngines.types';
-import { DB_WIZARD_DEFAULTS } from '../../database-form.constants';
-import { DbWizardFormFields, StepProps } from '../../database-form.types';
-import { useDatabasePageMode } from '../../useDatabasePageMode';
+import { DB_WIZARD_DEFAULTS } from '../../../database-form.constants.ts';
+import { DbWizardFormFields, StepProps } from '../../../database-form.types.ts';
+import { useDatabasePageMode } from '../../../useDatabasePageMode.ts';
 import { StepHeader } from '../step-header/step-header.tsx';
-import { DEFAULT_NODES } from './first-step.constants';
-import { Messages } from './first-step.messages';
-import { generateShortUID } from './utils';
+import { DEFAULT_NODES } from './first-step.constants.ts';
+import { Messages } from './first-step.messages.ts';
+import { generateShortUID } from './utils.ts';
 
 // TODO change to api request's result
 // const dbEnvironmentOptions = [
