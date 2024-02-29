@@ -41,13 +41,13 @@ export const ExpandedRow = ({
     raw,
   } = row.original;
   const isExpanded = row.getIsExpanded();
-  const { isLoading, isFetching, data } = useDbClusterCredentials(
+  const { isPending, isFetching, data } = useDbClusterCredentials(
     databaseName,
     namespace,
     {
       enabled: !!isExpanded,
       staleTime: 10 * (60 * 1000),
-      cacheTime: 15 * (60 * 1000),
+      gcTime: 15 * (60 * 1000),
     }
   );
 
@@ -86,7 +86,7 @@ export const ExpandedRow = ({
           ))}
         />
         <LabelValue label="Port" value={port} />
-        {isLoading || isFetching ? (
+        {isPending || isFetching ? (
           <>
             <Skeleton width="300px" />
             <Skeleton width="300px" />

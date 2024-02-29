@@ -18,6 +18,7 @@ import AddIcon from '@mui/icons-material/Add';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { MenuItem } from '@mui/material';
 import { MenuButton, Table } from '@percona/ui-lib';
+import { useQueryClient } from '@tanstack/react-query';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
 import { StatusField } from 'components/status-field/status-field';
 import { DATE_FORMAT } from 'consts';
@@ -31,7 +32,6 @@ import { useDbCluster } from 'hooks/api/db-cluster/useDbCluster';
 import { useDbClusterRestoreFromBackup } from 'hooks/api/restores/useDbClusterRestore';
 import { MRT_ColumnDef } from 'material-react-table';
 import { useContext, useMemo, useState } from 'react';
-import { useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Backup, BackupStatus } from 'shared-types/backups.types';
 import { DbClusterStatus } from 'shared-types/dbCluster.types.ts';
@@ -57,9 +57,9 @@ export const BackupsList = () => {
     enabled: !!dbClusterName,
     refetchInterval: 10 * 1000,
   });
-  const { mutate: deleteBackup, isLoading: deletingBackup } =
+  const { mutate: deleteBackup, isPending: deletingBackup } =
     useDeleteBackup(namespace);
-  const { mutate: restoreBackup, isLoading: restoringBackup } =
+  const { mutate: restoreBackup, isPending: restoringBackup } =
     useDbClusterRestoreFromBackup(dbClusterName!);
   const { data: dbCluster } = useDbCluster(dbClusterName || '', namespace, {
     enabled: !!dbClusterName,
@@ -140,7 +140,9 @@ export const BackupsList = () => {
   const handleConfirmDelete = (backupName: string) => {
     deleteBackup(backupName, {
       onSuccess: () => {
-        queryClient.invalidateQueries([BACKUPS_QUERY_KEY, dbClusterName]);
+        queryClient.invalidateQueries({
+          queryKey: [BACKUPS_QUERY_KEY, dbClusterName],
+        });
         handleCloseDeleteDialog();
       },
     });
@@ -195,6 +197,7 @@ export const BackupsList = () => {
   return (
     <>
       <Table
+        tableName="backupList"
         noDataMessage={Messages.noData}
         data={backups}
         columns={columns}

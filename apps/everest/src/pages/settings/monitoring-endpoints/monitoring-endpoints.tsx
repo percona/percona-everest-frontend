@@ -1,27 +1,27 @@
-import { useMemo, useState } from 'react';
-import { Button, MenuItem } from '@mui/material';
 import { Add, Delete, Edit } from '@mui/icons-material';
-import { useQueryClient } from 'react-query';
+import { Button, MenuItem } from '@mui/material';
 import { Table } from '@percona/ui-lib';
+import { useQueryClient } from '@tanstack/react-query';
+import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
 import {
-  useMonitoringInstancesList,
-  useCreateMonitoringInstance,
   MONITORING_INSTANCES_QUERY_KEY,
+  useCreateMonitoringInstance,
   useDeleteMonitoringInstance,
+  useMonitoringInstancesList,
   useUpdateMonitoringInstance,
 } from 'hooks/api/monitoring/useMonitoringInstancesList';
 import { MRT_ColumnDef } from 'material-react-table';
+import { useMemo, useState } from 'react';
 import { MonitoringInstance } from 'shared-types/monitoring.types';
-import { CreateEditEndpointModal } from './createEditModal/create-edit-modal';
-import { EndpointFormType } from './createEditModal/create-edit-modal.types';
 import {
   updateDataAfterCreate,
   updateDataAfterDelete,
   updateDataAfterEdit,
 } from 'utils/generalOptimisticDataUpdate';
-import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
-import { Messages } from './monitoring-endpoints.messages';
 import { StorageLocationsFields } from '../storage-locations/storage-locations.types';
+import { CreateEditEndpointModal } from './createEditModal/create-edit-modal';
+import { EndpointFormType } from './createEditModal/create-edit-modal.types';
+import { Messages } from './monitoring-endpoints.messages';
 
 export const MonitoringEndpoints = () => {
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
@@ -29,11 +29,11 @@ export const MonitoringEndpoints = () => {
   const [selectedInstance, setSelectedInstance] =
     useState<MonitoringInstance>();
   const { data: monitoringInstances = [] } = useMonitoringInstancesList();
-  const { mutate: createMonitoringInstance, isLoading: creatingInstance } =
+  const { mutate: createMonitoringInstance, isPending: creatingInstance } =
     useCreateMonitoringInstance();
-  const { mutate: deleteMonitoringInstance, isLoading: removingInstance } =
+  const { mutate: deleteMonitoringInstance, isPending: removingInstance } =
     useDeleteMonitoringInstance();
-  const { mutate: updateMonitoringInstance, isLoading: updatingInstance } =
+  const { mutate: updateMonitoringInstance, isPending: updatingInstance } =
     useUpdateMonitoringInstance();
   const queryClient = useQueryClient();
   const columns = useMemo<MRT_ColumnDef<MonitoringInstance>[]>(
@@ -139,6 +139,7 @@ export const MonitoringEndpoints = () => {
   return (
     <>
       <Table
+        tableName="monitoringEndpoints"
         hideExpandAllIcon
         data={monitoringInstances}
         columns={columns}

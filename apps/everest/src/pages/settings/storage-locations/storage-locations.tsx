@@ -1,6 +1,7 @@
 import { Add, Delete, Edit } from '@mui/icons-material';
 import { Box, Button, MenuItem } from '@mui/material';
 import { Table } from '@percona/ui-lib';
+import { useQueryClient } from '@tanstack/react-query';
 import { ConfirmDialog } from 'components/confirm-dialog/confirm-dialog';
 import {
   BACKUP_STORAGES_QUERY_KEY,
@@ -12,7 +13,6 @@ import {
 import { type MRT_ColumnDef } from 'material-react-table';
 import { LabelValue } from 'pages/databases/expandedRow/LabelValue';
 import { useMemo, useState } from 'react';
-import { useQueryClient } from 'react-query';
 import { BackupStorage, StorageType } from 'shared-types/backupStorages.types';
 import {
   updateDataAfterCreate,
@@ -27,11 +27,11 @@ export const StorageLocations = () => {
   const queryClient = useQueryClient();
 
   const { data: backupStorages = [], isFetching } = useBackupStorages();
-  const { mutate: createBackupStorage, isLoading: creatingBackupStorage } =
+  const { mutate: createBackupStorage, isPending: creatingBackupStorage } =
     useCreateBackupStorage();
-  const { mutate: editBackupStorage, isLoading: editingBackupStorage } =
+  const { mutate: editBackupStorage, isPending: editingBackupStorage } =
     useEditBackupStorage();
-  const { mutate: deleteBackupStorage, isLoading: deletingBackupStorage } =
+  const { mutate: deleteBackupStorage, isPending: deletingBackupStorage } =
     useDeleteBackupStorage();
 
   const [openCreateEditModal, setOpenCreateEditModal] = useState(false);
@@ -152,6 +152,7 @@ export const StorageLocations = () => {
   return (
     <>
       <Table
+        tableName="storageLocations"
         noDataMessage={Messages.noData}
         hideExpandAllIcon
         state={{
