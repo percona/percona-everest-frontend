@@ -236,7 +236,6 @@ export const FirstStep = ({ loadingDefaultsForEdition }: StepProps) => {
             isOptionEqualToValue: (option, value) => option === value,
           }}
         />
-        {/* @ts-ignore */}
         <Typography variant="sectionHeading" sx={{ mt: 4, mb: 0.5 }}>
           {Messages.labels.dbType}
         </Typography>
