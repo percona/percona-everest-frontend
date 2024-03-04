@@ -1,4 +1,12 @@
-# Percona Everest Frontend
+# Percona Everest Frontend (Archived)
+
+**Note: This repository has been archived and its functionality has been merged into a consolidated repository.**
+
+For the latest updates and features, please visit the new repository:
+
+[Everest](https://github.com/percona/everest)
+
+#
 
 This code base is a monorepo that holds a number of packages, namely:
 
